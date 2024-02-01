@@ -1,0 +1,12 @@
+<svg width="65" height="64" viewBox="0 0 65 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Complete Tick">
+<circle id="Ellipse" cx="32.5" cy="32" r="32" fill="url(#paint0_linear_2078_35123)"/>
+<path id="Tick" d="M45.788 17.2468C43.5027 18.3863 32.1984 31.5829 26.0765 37.772L21.3845 32.9737C20.838 32.2992 19.671 30.1996 18.5581 31.5658L16.842 34.1173C15.7237 35.4835 16.9074 37.7255 17.7848 38.4274L25.3252 47.3522C26.206 48.0528 27.82 47.5152 28.9356 46.1477L29.8844 44.9836L29.8871 44.9822L47.4461 19.2581C48.5617 17.8864 51.1726 14.8186 45.7867 17.2468H45.788Z" fill="white"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_2078_35123" x1="-7.42661" y1="-7.92661" x2="148.816" y2="82.3793" gradientUnits="userSpaceOnUse">
+<stop stop-color="#0B8442"/>
+<stop offset="0.4385" stop-color="#A8E063"/>
+</linearGradient>
+</defs>
+</svg>

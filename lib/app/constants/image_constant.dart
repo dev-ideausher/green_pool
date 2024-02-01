@@ -1,0 +1,139 @@
+class ImageConstant {
+//SVGs
+  static String svgLogo = 'assets/images/splash/splash_logo.svg';
+
+//bottom nav bar
+  static String svgNavHome = 'assets/images/bottomnavbar/home.svg';
+  static String svgNavHomeFilled = 'assets/images/bottomnavbar/home_filled.svg';
+  static String svgNavCar = 'assets/images/bottomnavbar/car.svg';
+  static String svgNavCarFilled = 'assets/images/bottomnavbar/car_filled.svg';
+  static String svgNavMessages = 'assets/images/bottomnavbar/messages.svg';
+  static String svgNavMessagesFilled =
+      'assets/images/bottomnavbar/messages_filled.svg';
+  static String svgNavProfile = 'assets/images/bottomnavbar/profile.svg';
+  static String svgNavProfileFilled =
+      'assets/images/bottomnavbar/profile_filled.svg';
+
+//create account
+  static String svgGoogle = 'assets/images/createacc/google.svg';
+  static String svgFacebook = 'assets/images/createacc/facebook.svg';
+  static String svgApple = 'assets/images/createacc/apple.svg';
+  static String svgCompleteTick = 'assets/images/createacc/complete_tick.svg';
+  static String svgConfetti = 'assets/images/createacc/confetti.svg';
+  static String svgPinkCompleteTick =
+      'assets/images/createacc/pink_complete_tick.svg';
+
+//guideline
+  static String svgGuideline1 = 'assets/images/guidelines/guideline1.svg';
+  static String svgGuideline2 = 'assets/images/guidelines/guideline2.svg';
+  static String svgGuideline3 = 'assets/images/guidelines/guideline3.svg';
+  static String svgPinkGuideline1 =
+      'assets/images/guidelines/pink_guideline1.svg';
+  static String svgPinkGuideline2 =
+      'assets/images/guidelines/pink_guideline2.svg';
+  static String svgPinkGuideline3 =
+      'assets/images/guidelines/pink_guideline3.svg';
+
+//onboarding
+  static String svgOnboard1 = 'assets/images/onboarding/onboard1.svg';
+  static String svgOnboard2 = 'assets/images/onboarding/onboard2.svg';
+  static String svgOnboard3 = 'assets/images/onboarding/onboard3.svg';
+  static String svgGetStarted = 'assets/images/onboarding/getstarted.svg';
+
+//setup profile
+  static String svgAddPicture = 'assets/images/setupprofile/add_picture.svg';
+  static String svgAddID = 'assets/images/setupprofile/upload_id.svg';
+  static String svgAddVehicle = 'assets/images/setupprofile/upload_vehicle.svg';
+
+//icons
+  static String svgIconNoti = 'assets/images/icons/icons_notifications.svg';
+  static String svgIconBack = 'assets/images/icons/icons_back_arrow.svg';
+  static String svgIconBack30 = 'assets/images/icons/arrow-back-30.svg';
+  static String svgIconRightArrow = 'assets/images/icons/icons_right_arrow.svg';
+  static String svgIconClock = 'assets/images/icons/icons_clock.svg';
+  static String svgIconSend = 'assets/images/icons/icons_send.svg';
+  static String svgIconReorder = 'assets/images/icons/icons_reorder-three.svg';
+  static String svgIconAdd = 'assets/images/icons/icons_add_circle.svg';
+  static String svgIconCalendar = 'assets/images/icons/icons_calendar.svg';
+  static String svgIconPlus = 'assets/images/icons/icons_plus-circle.svg';
+  static String svgIconMinus = 'assets/images/icons/icons_minus-circle.svg';
+  static String svgIconLuggage = 'assets/images/icons/icons_bag.svg';
+  static String svgIconLuggageFilled =
+      'assets/images/icons/icons_bag_filled.svg';
+  static String svgIconCalendarClear =
+      'assets/images/icons/icons_calendar_clear.svg';
+  static String svgIconUpload = 'assets/images/icons/icons_upload.svg';
+  static String svgIconUploadPhoto =
+      'assets/images/icons/icons_upload_photo.svg';
+  static String svgIconCalendarTime =
+      'assets/images/icons/icons_calendar_time.svg';
+  static String svgIconProfilePic = 'assets/images/icons/profile_pic.svg';
+  static String svgIconFilter = 'assets/images/icons/icons_filter.svg';
+  static String svgIconMapView = 'assets/images/icons/icons_map_view.svg';
+  static String svgIconListView = 'assets/images/icons/icons_list_view.svg';
+  static String svgIconInfo = 'assets/images/icons/icons_info.svg';
+  static String svgIconTime = 'assets/images/icons/icons_time.svg';
+
+//home
+  static String svgPostRide = 'assets/images/home/PostRide.svg';
+  static String svgFindRide = 'assets/images/home/FindRide.svg';
+  static String svgPinkPostRide = 'assets/images/home/pink_PostRide.svg';
+  static String svgPinkFindRide = 'assets/images/home/pink_FindRide.svg';
+  static String svgSetupProfilePic = 'assets/images/home/setup_profilepic.svg';
+  static String svgSetupAdd = 'assets/images/home/setup_add.svg';
+  static String svgPinkSetupAdd = 'assets/images/home/pink_setup_add.svg';
+  static String svgRiderDriving = 'assets/images/home/driving.svg';
+  static String svgRiderNeedRide = 'assets/images/home/need_ride.svg';
+  static String svgPinkRiderDriving =
+      'assets/images/home/pink_RiderDriving.svg';
+  static String svgPinkRiderNeedRide =
+      'assets/images/home/pink_RiderNeedRide.svg';
+  static String svgAmenities1 = 'assets/images/home/amenities1.svg';
+  static String svgAmenities2 = 'assets/images/home/amenities2.svg';
+  static String svgAmenities3 = 'assets/images/home/amenities3.svg';
+  static String svgAmenities4 = 'assets/images/home/amenities4.svg';
+  static String svgAmenities5 = 'assets/images/home/amenities5.svg';
+  static String svgAmenities6 = 'assets/images/home/amenities6.svg';
+  static String svgAmenities7 = 'assets/images/home/amenities7.svg';
+  static String svgAmenities8 = 'assets/images/home/amenities8.svg';
+  static String svgAmenities9 = 'assets/images/home/amenities9.svg';
+  static String svgAmenities10 = 'assets/images/home/amenities10.svg';
+
+//profile
+  static String svgProfileAbout = 'assets/images/profile/about.svg';
+  static String svgProfileBug = 'assets/images/profile/bug.svg';
+  static String svgProfileCall = 'assets/images/profile/call.svg';
+  static String svgProfileEditPen = 'assets/images/profile/edit_pen.svg';
+  static String svgProfileFile = 'assets/images/profile/file.svg';
+  static String svgProfileFollow = 'assets/images/profile/follow.svg';
+  static String svgProfileHelp = 'assets/images/profile/help.svg';
+  static String svgProfileInsurance = 'assets/images/profile/insurance.svg';
+  static String svgProfileLock = 'assets/images/profile/lock.svg';
+  static String svgProfileLogout = 'assets/images/profile/logout.svg';
+  static String svgProfileCar = 'assets/images/profile/profile_car.svg';
+  static String svgProfileNoti = 'assets/images/profile/profile_noti.svg';
+  static String svgProfileSettings =
+      'assets/images/profile/profile_settings.svg';
+  static String svgProfileRefer = 'assets/images/profile/refer.svg';
+  static String svgProfileRideHistory =
+      'assets/images/profile/ride_history.svg';
+  static String svgProfileShieldPink = 'assets/images/profile/shield_pink.svg';
+  static String svgProfileStar = 'assets/images/profile/star.svg';
+  static String svgProfileDiscount =
+      'assets/images/profile/student_discount.svg';
+  static String svgProfileTerms = 'assets/images/profile/terms.svg';
+  static String svgProfileDetails = 'assets/images/profile/user_details.svg';
+  static String svgProfileWallet = 'assets/images/profile/wallet.svg';
+
+//PNGs
+  static String pngUserSquare = 'assets/images/messages/user_square.png';
+  static String pngIconProfilePic = 'assets/images/icons/profilepic.png';
+  static String gifRateUs = 'assets/images/profile/rate_us.gif';
+
+//my rides
+  static String pngEmptyPassenger = 'assets/images/myrides/empty_passenger.png';
+  static String pngPassenger1 = 'assets/images/myrides/passenger_1.png';
+  static String pngPassenger2 = 'assets/images/myrides/passenger_2.png';
+  static String pngPassenger3 = 'assets/images/myrides/passenger_3.png';
+  static String pngPassenger4 = 'assets/images/myrides/passenger_4.png';
+}

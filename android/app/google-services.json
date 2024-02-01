@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "523344243189",
+    "project_id": "greenpool-ccb5d",
+    "storage_bucket": "greenpool-ccb5d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:523344243189:android:200401933623e0d17e58bc",
+        "android_client_info": {
+          "package_name": "com.iu.green_pool"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "523344243189-plsqkvuc25upe32ds6eafvgcghmdtp4e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.iu.green_pool",
+            "certificate_hash": "d3339cdc383ea4ea40bb2e325633818afe73e231"
+          }
+        },
+        {
+          "client_id": "523344243189-2n62rsq7np5nm9221ilgo1s3rhmln5e4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAs_QL4LPuvaU23w-t0wOUJyUziRmSIlkE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "523344243189-2n62rsq7np5nm9221ilgo1s3rhmln5e4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "523344243189-hjgeqda20964cnts8ecgukouli961vb9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.iu.greenPool"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,316 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+
+import 'package:get/get.dart';
+import 'package:green_pool/app/components/green_pool_divider.dart';
+import 'package:green_pool/app/components/greenpool_appbar.dart';
+import 'package:green_pool/app/services/colors.dart';
+import 'package:green_pool/app/services/responsive_size.dart';
+import 'package:green_pool/app/services/text_style_util.dart';
+
+import '../../../constants/image_constant.dart';
+import '../../profile/controllers/profile_controller.dart';
+import '../controllers/ride_details_controller.dart';
+import 'copassenger_list.dart';
+
+class RideDetailsView extends GetView<RideDetailsController> {
+  const RideDetailsView({super.key});
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: const GreenPoolAppBar(
+        title: Text('Ride Details'),
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          //ride completed
+          Container(
+            padding: EdgeInsets.all(16.kh),
+            decoration: BoxDecoration(
+                color: Get.find<ProfileController>().isSwitched.value
+                    ? ColorUtil.kSecondaryPinkMode
+                    : ColorUtil.kSecondary07,
+                borderRadius: BorderRadius.circular(8.kh)),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Icon(
+                  Icons.check,
+                  size: 20.kh,
+                  color: ColorUtil.kSecondary01,
+                ).paddingOnly(right: 8.kw),
+                Text(
+                  'Completed Successfully',
+                  style: TextStyleUtil.k14Regular(),
+                ),
+              ],
+            ),
+          ).paddingOnly(top: 32.kh, bottom: 16.kh),
+
+          //details with pick up and drop off
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  //for profile pic and rating
+                  Stack(
+                    children: [
+                      Container(
+                        height: 64.kh,
+                        width: 64.kw,
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                        ),
+                        child: Image.asset(
+                          ImageConstant.pngIconProfilePic,
+                        ),
+                      ).paddingOnly(bottom: 8.kh),
+                      Positioned(
+                        top: 52.kh,
+                        left: 8.kw,
+                        child: Container(
+                          width: 48.kw,
+                          height: 20.kh,
+                          padding: EdgeInsets.symmetric(horizontal: 8.kw),
+                          decoration: BoxDecoration(
+                              color:
+                                  Get.find<ProfileController>().isSwitched.value
+                                      ? ColorUtil.kPrimary3PinkMode
+                                      : ColorUtil.kSecondary01,
+                              borderRadius: BorderRadius.circular(16.kh)),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.star,
+                                color: Get.find<ProfileController>()
+                                        .isSwitched
+                                        .value
+                                    ? ColorUtil.kWhiteColor
+                                    : ColorUtil.kYellowColor,
+                                size: 12.kh,
+                              ).paddingOnly(right: 2.kw),
+                              Text(
+                                '4.5',
+                                style: TextStyleUtil.k12Semibold(
+                                    color: Get.find<ProfileController>()
+                                            .isSwitched
+                                            .value
+                                        ? ColorUtil.kBlack02
+                                        : ColorUtil.kWhiteColor),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ).paddingOnly(right: 16.kw, bottom: 16.kh),
+                  //for name and date
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Savannah Nguyen',
+                              style: TextStyleUtil.k16Bold(),
+                            ),
+                            Text.rich(
+                              TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: 'Fare: ',
+                                    style: TextStyleUtil.k14Semibold(
+                                        color: ColorUtil.kSecondary01),
+                                  ),
+                                  TextSpan(
+                                    text: '\$ 8',
+                                    style: TextStyleUtil.k16Semibold(
+                                        fontSize: 16.kh,
+                                        color: ColorUtil.kSecondary01),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ).paddingOnly(bottom: 8.kh),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                SvgPicture.asset(
+                                  ImageConstant.svgIconCalendarTime,
+                                  colorFilter: ColorFilter.mode(
+                                      Get.find<ProfileController>()
+                                              .isSwitched
+                                              .value
+                                          ? ColorUtil.kPrimary3PinkMode
+                                          : ColorUtil.kSecondary01,
+                                      BlendMode.srcIn),
+                                ).paddingOnly(right: 4.kw),
+                                //might give problems with big names, have to cut short month names
+                                Text(
+                                  '07 Nov 2023, 3:00pm',
+                                  style: TextStyleUtil.k12Regular(
+                                      color: ColorUtil.kBlack03),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.time_to_leave,
+                                  size: 18.kh,
+                                  color: Get.find<ProfileController>()
+                                          .isSwitched
+                                          .value
+                                      ? ColorUtil.kPrimary3PinkMode
+                                      : ColorUtil.kSecondary01,
+                                ).paddingOnly(right: 8.kw),
+                                Text(
+                                  '2 seats',
+                                  style: TextStyleUtil.k14Regular(
+                                      color: ColorUtil.kBlack03),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              //middle divider
+              const GreenPoolDivider().paddingOnly(bottom: 16.kh),
+              Stack(
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        height: 10.kh,
+                        width: 10.kw,
+                        decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: ColorUtil.kGreenColor),
+                      ).paddingOnly(right: 8.kw),
+                      Text(
+                        'Pick up: ',
+                        style: TextStyleUtil.k14Semibold(
+                            color: ColorUtil.kBlack02),
+                      ).paddingOnly(right: 8.kw),
+                      Text(
+                        '1100 McIntosh St, Regina',
+                        style:
+                            TextStyleUtil.k14Regular(color: ColorUtil.kBlack02),
+                      ),
+                    ],
+                  ).paddingOnly(bottom: 30.kh),
+                  Positioned(
+                    top: 27.kh,
+                    child: Row(
+                      children: [
+                        Container(
+                          height: 10.kh,
+                          width: 10.kw,
+                          decoration: const BoxDecoration(
+                              shape: BoxShape.circle, color: ColorUtil.kError4),
+                        ).paddingOnly(right: 8.kw),
+                        Text(
+                          'Drop off: ',
+                          style: TextStyleUtil.k14Semibold(
+                              color: ColorUtil.kBlack02),
+                        ).paddingOnly(right: 8.kw),
+                        Text(
+                          '681 Chrislea Rd, Woodbridge',
+                          style: TextStyleUtil.k14Regular(
+                              color: ColorUtil.kBlack02),
+                        ),
+                      ],
+                    ),
+                  ),
+                  //line joining red and green dots
+                  Positioned(
+                    top: 10.kh,
+                    left: 4.5.kw,
+                    child: Container(
+                      height: 28.kh,
+                      width: 1.kw,
+                      color: ColorUtil.kBlack04,
+                    ),
+                  ),
+                ],
+              ).paddingOnly(bottom: 8.kh),
+              //bottom line
+              const GreenPoolDivider(),
+            ],
+          ).paddingOnly(bottom: 16.kh),
+
+          //co passengers
+          Text(
+            'Co-Pasengers',
+            style: TextStyleUtil.k14Bold(),
+          ).paddingOnly(bottom: 16.kh),
+          const CoPassengerList().paddingOnly(bottom: 16.kh),
+          const GreenPoolDivider().paddingOnly(bottom: 16.kh),
+
+          //Vehicle details
+          Text(
+            'Vehicle Details',
+            style: TextStyleUtil.k14Bold(),
+          ).paddingOnly(bottom: 16.kh),
+          Row(
+            children: [
+              Image.asset(
+                ImageConstant.pngUserSquare,
+                height: 64.kh,
+                width: 64.kw,
+                fit: BoxFit.cover,
+              ).paddingOnly(right: 8.kh),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Toyota Corolla',
+                    style: TextStyleUtil.k16Bold(color: ColorUtil.kBlack02),
+                  ).paddingOnly(bottom: 4.kh),
+                  Row(
+                    children: [
+                      Text(
+                        'Sedan',
+                        style: TextStyleUtil.k14Semibold(
+                            color: ColorUtil.kBlack03),
+                      ),
+                      Container(
+                        width: 1.kw,
+                        height: 16.kh,
+                        color: ColorUtil.kBlack03,
+                      ).paddingSymmetric(vertical: 2.5.kh, horizontal: 8.kw),
+                      Text(
+                        'ABC 123',
+                        style: TextStyleUtil.k14Semibold(
+                            color: ColorUtil.kBlack03),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
+          const GreenPoolDivider().paddingSymmetric(vertical: 16.kh),
+
+          //Bill details
+          Text(
+            'Bill Details',
+            style: TextStyleUtil.k14Bold(),
+          ).paddingOnly(bottom: 16.kh),
+          //TODO: bill details
+        ],
+      ).paddingSymmetric(horizontal: 16.kw),
+    );
+  }
+}
