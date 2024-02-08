@@ -1,19 +1,33 @@
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:green_pool/app/modules/rider_profile_setup/views/rider_review_pic.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../routes/app_pages.dart';
+import '../../../services/auth.dart';
 import '../../../services/dio/api_service.dart';
 import '../../../services/snackbar.dart';
-import '../../profile_setup/views/review_picture.dart';
+import '../../../services/storage.dart';
+import 'package:path/path.dart' as path;
+import 'package:dio/dio.dart' as dio;
 
 class RiderProfileSetupController extends GetxController {
-  var selectedProfileImagePath = ''.obs;
-  var selectedIDImagePath = ''.obs;
   RxBool isPicked = false.obs;
-  TextEditingController fullName = TextEditingController();
-  TextEditingController email = TextEditingController();
-  TextEditingController phoneNumber = TextEditingController();
+  bool isDriver = false;
+  Rx<File?> selectedProfileImagePath = Rx<File?>(null);
+  Rx<File?> selectedIDImagePath = Rx<File?>(null);
+  RxBool isProfileImagePicked = false.obs;
+  RxBool isIDPicked = false.obs;
+  TextEditingController fullName = TextEditingController(
+      text: Get.find<AuthService>().auth.currentUser?.displayName);
+  TextEditingController email = TextEditingController(
+      text: Get.find<AuthService>().auth.currentUser?.email);
+  TextEditingController phoneNumber = TextEditingController(
+      text: Get.find<AuthService>().auth.currentUser?.phoneNumber);
   TextEditingController gender = TextEditingController();
   TextEditingController city = TextEditingController();
   TextEditingController dateOfBirth = TextEditingController();
@@ -32,54 +46,96 @@ class RiderProfileSetupController extends GetxController {
   // void onClose() {
   //   super.onClose();
   // }
+  Future<void> setDate(BuildContext context) async {
+    DateTime? pickedDate = await showDatePicker(
+        context: context,
+        firstDate: DateTime(1950),
+        lastDate: DateTime(2025),
+        initialDate: DateTime.now());
 
-  void getProfileImage(ImageSource imageSource) async {
+    if (pickedDate != null) {
+      String formattedDate = pickedDate.toString().split(" ")[0];
+      dateOfBirth.text = formattedDate;
+    }
+  }
+
+  getProfileImage(ImageSource imageSource) async {
     final pickedFile = await ImagePicker().pickImage(source: imageSource);
     if (pickedFile != null) {
-      selectedProfileImagePath.value = pickedFile.path;
-      isPicked.value = true;
-      Get.back();
-      // Get.to( ReviewPictureView( imagePath: selectedProfileImagePath.value,));
+      selectedProfileImagePath.value = File(pickedFile.path);
+      update();
+      Get.off(RiderReviewPictureView(
+        imagePath: selectedProfileImagePath.value!,
+      ));
     } else {
       showMySnackbar(msg: 'No image selected');
     }
   }
 
-  void getIDImage(ImageSource imageSource) async {
+  getIDImage(ImageSource imageSource) async {
     final pickedIDFile = await ImagePicker().pickImage(source: imageSource);
     if (pickedIDFile != null) {
-      selectedIDImagePath.value = pickedIDFile.path;
+      selectedIDImagePath.value = File(pickedIDFile.path);
+      isIDPicked.value = true;
+      Get.back();
+      update();
     } else {
       showMySnackbar(msg: 'No image selected');
     }
   }
 
   //
-  Map<String, dynamic> userData = {};
+  Future<void> userDetailsAPI() async {
+    final File pickedImageFile = File(selectedProfileImagePath.value!.path);
+    final File pickedIDFile = File(selectedIDImagePath.value!.path);
+    String extension = pickedImageFile.path.split('.').last;
+    String mediaType;
 
+    if (extension == 'jpg' || extension == 'jpeg') {
+      mediaType = 'image/jpeg';
+    } else if (extension == 'png') {
+      mediaType = 'image/png';
+    } else {
+      mediaType = 'application/octet-stream';
+    }
 
-  void updateUserDetails()  {
-    userData = {
+    final userData = dio.FormData.fromMap({
       'fullName': fullName.text,
       'email': email.text,
       'phone': phoneNumber.text,
-      'gender': 'Male',
+      'gender': gender.text,
       'city': city.text,
-      'dob': DateTime.now().toString(),
-      // 'profilePic': dio.MultipartFile.fromFile(selectedProfileImagePath.value),
-    };
-  }
-
-  Future<void> userDetailsAPI() async {
-    updateUserDetails();
-    print("USER DATA: $userData");
-    APIManager.userDetails(body: userData).then((value) {
-      if (value.data['status']) {
-        showMySnackbar(msg: 'Details updated succesfully');
-        Get.offNamed(Routes.MATCHING_RIDES);
-      } else {
-        showMySnackbar(msg: 'Error in updating details');
-      }
+      'dob': dateOfBirth.text,
+      'profilePic': await dio.MultipartFile.fromFile(
+        pickedImageFile.path,
+        contentType: MediaType.parse(mediaType),
+        filename: path.basename(pickedImageFile.path),
+      ),
+      'idPic': await dio.MultipartFile.fromFile(
+        pickedIDFile.path,
+        contentType: MediaType.parse(mediaType),
+        filename: path.basename(pickedIDFile.path),
+      ),
     });
+    log("profile setup user data: $userData");
+
+    //TODO: how can i save gender and full name to display
+    try {
+      final responses = await APIManager.userDetails(body: userData);
+      showMySnackbar(msg: responses.data['message']);
+      Get.find<GetStorageService>().setUserName = fullName.text;
+      Get.find<GetStorageService>().setProfileStatus = true;
+      if (gender.text == "Female") {
+        Get.find<GetStorageService>().setFemale = true;
+      } else {
+        Get.find<GetStorageService>().setFemale = false;
+      }
+      // Get.find<GetStorageService>().setProfilePic =
+      //     File(selectedProfileImagePath.value!.path);
+      showMySnackbar(msg: responses.data['message']);
+      Get.offNamed(Routes.MATCHING_RIDES);
+    } catch (e) {
+      print("userDetailsAPI error: $e");
+    }
   }
 }

@@ -152,13 +152,11 @@ class AuthService extends GetxService {
     final userPhoneNumber = _firebaseAuth.currentUser?.phoneNumber;
     final userEmail = _firebaseAuth.currentUser?.email;
 
+    Get.find<GetStorageService>().setLoggedIn = true;
     Get.find<GetStorageService>().encjwToken = mytoken!;
     Get.find<GetStorageService>().setFirebaseUid = fireUid;
+    Get.find<GetStorageService>().setUserName = userName;
     log(Get.find<GetStorageService>().encjwToken);
-
-    print("user name: $userName");
-    print("user phone number: $userPhoneNumber");
-    print("user email: $userEmail");
     debugPrint('i am user id${Get.find<GetStorageService>().getFirebaseUid}');
   }
 

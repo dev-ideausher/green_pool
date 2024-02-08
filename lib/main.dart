@@ -1,3 +1,4 @@
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import 'app/modules/home/bindings/home_binding.dart';
@@ -10,6 +11,7 @@ import 'app/services/auth.dart';
 import 'app/services/colors.dart';
 import 'app/services/storage.dart';
 import 'firebase_options.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,6 +27,9 @@ Future<void> main() async {
     onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
     child: GetMaterialApp(
       theme: ThemeData(scaffoldBackgroundColor: ColorUtil.kBackgroundColor),
+      supportedLocales: const [
+        Locale("en"),
+      ],
       // theme: AppTheme.light,
       // darkTheme: AppTheme.dark,
       defaultTransition: Transition.fade,
@@ -35,6 +40,11 @@ Future<void> main() async {
       initialRoute: AppPages.INITIAL,
       initialBinding: HomeBinding(),
       getPages: AppPages.routes,
+      localizationsDelegates: const [
+        CountryLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
     ),
   ));
 }

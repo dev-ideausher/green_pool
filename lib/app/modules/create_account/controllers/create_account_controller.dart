@@ -2,25 +2,22 @@
 
 import 'dart:developer';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:green_pool/app/data/create_acc_data.dart';
-import 'package:green_pool/app/modules/verify/views/verification_done.dart';
+import 'package:green_pool/app/modules/verify/controllers/verify_controller.dart';
 import 'package:green_pool/app/services/snackbar.dart';
 
 import '../../../routes/app_pages.dart';
 import '../../../services/auth.dart';
-import '../../../services/dio/api_service.dart';
 
 class CreateAccountController extends GetxController {
   RxBool isVisible = false.obs;
   RxBool isChecked = false.obs;
   bool isDriver = false;
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   TextEditingController fullNameController = TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();
-  final _firebaseAuth = FirebaseAuth.instance;
 
   String countryCode = "+1";
 
@@ -28,6 +25,7 @@ class CreateAccountController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+
     isDriver = Get.arguments;
   }
 
@@ -49,10 +47,46 @@ class CreateAccountController extends GetxController {
     isVisible.toggle();
   }
 
-  nameValidator(String? value) {
-    if (value == null || value.isEmpty) {
-      return "Please enter your name";
+  checkValidation() async {
+    final isValid = formKey.currentState!.validate();
+
+    if (!isValid) {
+      return;
+    } else {
+      formKey.currentState!.save();
+      toggleCheckbox();
+      await otpAuth();
     }
+  }
+
+  String? nameValidator(String? value) {
+    // Check if the value is empty
+    if (value == null || value.isEmpty) {
+      return 'Please enter your name';
+    }
+
+    // Check if the value contains only letters (and optionally spaces)
+    final RegExp nameExp = RegExp(r'^[a-zA-Z\s]+$');
+    if (!nameExp.hasMatch(value)) {
+      return 'Please enter a valid name';
+    }
+
+    return null; // Return null if the value is valid
+  }
+
+  String? phoneNumberValidator(String? value) {
+    // Check if the value is empty
+    if (value == null || value.isEmpty) {
+      return 'Please enter your phone number';
+    }
+
+    // Check if the value contains exactly 10 digits
+    final RegExp phoneExp = RegExp(r'^[0-9]{10}$');
+    if (!phoneExp.hasMatch(value)) {
+      return 'Please enter a valid 10-digit phone number';
+    }
+
+    return null; // Return null if the value is valid
   }
 
   otpAuth() async {
@@ -62,13 +96,12 @@ class CreateAccountController extends GetxController {
         await Get.find<AuthService>()
             .mobileOtp(phoneno: countryCode + phoneNumberController.text);
 
-        await Get.toNamed(
-          Routes.VERIFY,
-          arguments: CreateAccData(
-              fullName: fullNameController.text,
-              isDriver: isDriver,
-              phoneNumber: phoneNumberController.text),
-        );
+        await Get.offNamed(Routes.VERIFY,
+            // arguments: CreateAccData(
+            //     fullName: fullNameController.text,
+            //     isDriver: isDriver,
+            //     phoneNumber: phoneNumberController.text),
+            arguments: isDriver);
       } else {
         showMySnackbar(msg: 'Terms and Conditions not accepted');
       }
@@ -77,30 +110,21 @@ class CreateAccountController extends GetxController {
     }
   }
 
-  googleAuth() async {
+  void googleAuth() async {
+    Get.lazyPut(() => VerifyController());
     try {
-      if (await Get.find<AuthService>().google()) {
-        Get.to(() => const VerificationDone());
-        Map<String, dynamic> userData = {
-          'fullName': "${_firebaseAuth.currentUser?.displayName}",
-          'phone': " ${_firebaseAuth.currentUser?.phoneNumber}",
-          'email': "  ${_firebaseAuth.currentUser?.email}",
-          'isTermsAccepted': true,
-        };
-        await onboardingAPI(userData: userData);
-      } else {
-        print("Status = false");
-      }
-    } catch (e) {
-      print('$e');
-    }
-  }
-
-  onboardingAPI({required Map<String, dynamic> userData}) async {
-    try {
-      await APIManager.postRegister(body: userData);
-    } on Exception catch (e) {
-      log(e.toString());
+      await Get.find<AuthService>().google();
+      await Get.find<VerifyController>().loginAPI();
+    } catch (error) {
+      log("$error");
     }
   }
 }
+
+// onboardingAPI() async {
+//   try {
+//     await APIManager.getLogin();
+//   } on Exception catch (e) {
+//     log(e.toString());
+//   }
+// }

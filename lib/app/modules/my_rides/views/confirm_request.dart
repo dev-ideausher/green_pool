@@ -19,9 +19,9 @@ class ConfirmRequest extends GetView<MyRidesController> {
   Widget build(BuildContext context) {
     return Obx(
       () => controller.mapViewType.value
-          ? const GoogleMap(
+          ? GoogleMap(
               initialCameraPosition: CameraPosition(
-                target: LatLng(19.07, 72.87),
+                target: LatLng(controller.latitude, controller.longitude),
                 zoom: 14,
               ),
               zoomGesturesEnabled: true,

@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/modules/home/views/bottom_navigation_view.dart';
 
 import '../../../routes/app_pages.dart';
@@ -20,9 +21,19 @@ class SplashController extends GetxController {
   }
 
   decideRouting() {
-    Get.find<GetStorageService>().getLoggedIn
-        ? Get.off(()=> const BottomNavigationView())
-        : Get.offNamed( Routes.ONBOARDING);
+    if (Get.find<GetStorageService>().getLoggedIn) {
+      if (Get.find<GetStorageService>().profileStatus) {
+        Get.off(() => const BottomNavigationView());
+      } else {
+        if (Get.find<HomeController>().findingRide.value) {
+          Get.offNamed(Routes.RIDER_PROFILE_SETUP, arguments: false);
+        } else {
+          Get.offNamed(Routes.PROFILE_SETUP, arguments: true);
+        }
+      }
+    } else {
+      Get.offNamed(Routes.ONBOARDING);
+    }
   }
 
   // @override

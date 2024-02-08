@@ -21,10 +21,11 @@ class DestinationView extends GetView<DestinationController> {
           children: [
             GreenPoolTextField(
               hintText: 'Enter destination address',
-              onTap: () {},
               autofocus: true,
+              onchanged: (value) {
+                controller.setSessionToken();
+              },
               enabled: true,
-              
               prefix: Icon(
                 Icons.location_on,
                 size: 24.kh,
@@ -33,6 +34,22 @@ class DestinationView extends GetView<DestinationController> {
                     : ColorUtil.kSecondary01,
               ),
             ).paddingOnly(top: 32.kh, bottom: 16.kh),
+            Expanded(
+              child: Obx(
+                () => ListView.builder(
+                    itemCount: controller.destinationList.length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        title: Text(
+                            controller.destinationList[index]['description']),
+                        onTap: () async {
+                          await controller.getLatLong(
+                              controller.destinationList[index]['place_id']);
+                        },
+                      );
+                    }),
+              ),
+            ),
           ],
         ).paddingSymmetric(horizontal: 16.kw));
   }

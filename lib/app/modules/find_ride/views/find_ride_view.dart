@@ -117,11 +117,7 @@ class FindRideView extends GetView<FindRideController> {
           ),
           const Expanded(child: SizedBox()),
           GreenPoolButton(
-            // onPressed: () => Get.find<ProfileController>().isSwitched.value
-            //     ? Get.toNamed(Routes.MATCHING_RIDES)
-            //     : Get.offNamed(Routes.CREATE_ACCOUNT),
             onPressed: () => controller.decideRouting(),
-
             padding: const EdgeInsets.all(0),
             label: 'Find matching rides',
           ).paddingSymmetric(vertical: 40.kh),

@@ -4,11 +4,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
-import 'package:green_pool/app/services/auth.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
+import '../../../services/storage.dart';
 import '../../profile/controllers/profile_controller.dart';
 import '../controllers/home_controller.dart';
 
@@ -28,9 +28,9 @@ class HomeView extends GetView<HomeController> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      // 'Welcome Alexander,',
-                      Get.find<AuthService>().auth.currentUser?.displayName ??
-                          'Welcome',
+                      Get.find<GetStorageService>().getLoggedIn
+                          ? "Welcome ${Get.find<GetStorageService>().getUserName}"
+                          : 'Welcome',
                       style: TextStyleUtil.k24Heading700(),
                     ).paddingOnly(bottom: 4.kh),
                     Text(

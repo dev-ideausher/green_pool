@@ -415,9 +415,7 @@ class UserInfoModel {
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['status'] = status;
-    if (data != null) {
-      data['data'] = this.data!.toJson();
-    }
+    data['data'] = this.data!.toJson();
     data['message'] = message;
     return data;
   }

@@ -1,10 +1,7 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
-import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -23,7 +20,7 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
   const RiderProfileSetupView({super.key});
   @override
   Widget build(BuildContext context) {
-    Get.lazyPut(()=>RiderProfileSetupController());
+    Get.lazyPut(() => RiderProfileSetupController());
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -57,24 +54,24 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
                       alignment: Alignment.bottomRight,
                       children: [
                         Obx(
-                        () => controller.isPicked.value
-                                     ?Container(
-                        decoration: const BoxDecoration(
-                        shape: BoxShape.circle,),
-                        child: ClipOval(
-                        child: SizedBox.fromSize(
-                        size: Size.fromRadius(44.kh),
-                        child: Image.file(File(controller.selectedProfileImagePath.value),
+                          () => controller.isProfileImagePicked.value
+                              ? Container(
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: ClipOval(
+                                    child: SizedBox.fromSize(
+                                      size: Size.fromRadius(44.kh),
+                                      child: Image.file(
+                                        controller
+                                            .selectedProfileImagePath.value!,
+                                      ),
                                     ),
-                    ),
-                 ),
-                ) : SvgPicture.asset(
-                             ImageConstant.svgSetupProfilePic
-                            
-                            ),
-                            
-                           
-                      ),
+                                  ),
+                                )
+                              : SvgPicture.asset(
+                                  ImageConstant.svgSetupProfilePic),
+                        ),
                         SvgPicture.asset(ImageConstant.svgSetupAdd),
                       ],
                     ).paddingOnly(bottom: 12.kh),
@@ -88,51 +85,50 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
             ).paddingOnly(bottom: 40.kh),
             const RichTextHeading(text: 'Full Name'),
             GreenPoolTextField(
-              hintText: 'NAME',
+              hintText: 'Enter name',
               controller: controller.fullName,
               suffix: SvgPicture.asset(ImageConstant.svgProfileEditPen),
             ).paddingOnly(bottom: 16.kh),
             const RichTextHeading(text: 'Email Address'),
             GreenPoolTextField(
-              hintText: 'Email Id',
+              hintText: 'Enter email Id',
               controller: controller.email,
               suffix: SvgPicture.asset(ImageConstant.svgProfileEditPen),
             ).paddingOnly(bottom: 16.kh),
             const RichTextHeading(text: 'Phone Number'),
-             GreenPoolTextField(
+            GreenPoolTextField(
               hintText: 'Enter phone number',
               controller: controller.phoneNumber,
             ).paddingOnly(bottom: 16.kh),
             const RichTextHeading(text: 'Gender'),
             GreenPoolDropDown(
               hintText: 'Select your Gender',
-              
               items: [
                 DropdownMenuItem(
-                    value: "1",
+                    value: "Male",
                     child: Text(
                       "Male",
                       style: TextStyleUtil.k14Regular(),
                     )),
                 DropdownMenuItem(
-                    value: "2",
+                    value: "Female",
                     child: Text(
                       "Female",
                       style: TextStyleUtil.k14Regular(),
                     )),
                 DropdownMenuItem(
-                    value: "3",
+                    value: "Prefer not to say",
                     child: Text(
                       "Prefer not to say",
                       style: TextStyleUtil.k14Regular(),
                     )),
               ],
               onChanged: (val) {
-
+                controller.gender.text = val.toString();
               },
             ).paddingOnly(bottom: 16.kh),
             const RichTextHeading(text: 'City Province'),
-             GreenPoolTextField(
+            GreenPoolTextField(
               //TODO: drop down city
               hintText: 'City',
               controller: controller.city,
@@ -153,9 +149,12 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
             ).paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
               //TODO: calender
-              hintText: 'D.O.B',
+              hintText: 'Enter date of birth',
               controller: controller.dateOfBirth,
+              readOnly: true,
+              onPressedSuffix: () => controller.setDate(context),
               suffix: SvgPicture.asset(ImageConstant.svgIconCalendar),
+              initialValue: controller.dateOfBirth.text,
             ).paddingOnly(bottom: 16.kh),
             const RichTextHeading(text: 'ID Verification'),
             GestureDetector(
@@ -173,23 +172,29 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
                 decoration: BoxDecoration(
                     color: ColorUtil.kGreyColor,
                     borderRadius: BorderRadius.circular(8.kh)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset(ImageConstant.svgIconUpload)
-                        .paddingOnly(right: 8.kw),
-                    Text(
-                      'Upload Photo',
-                      style:
-                          TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
-                    ),
-                  ],
+                child: Obx(
+                  () => controller.isIDPicked.value
+                      ? Image.file(
+                          controller.selectedIDImagePath.value!,
+                        )
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SvgPicture.asset(ImageConstant.svgIconUpload)
+                                .paddingOnly(right: 8.kw),
+                            Text(
+                              'Upload Photo',
+                              style: TextStyleUtil.k14Regular(
+                                  color: ColorUtil.kBlack03),
+                            ),
+                          ],
+                        ),
                 ),
               ),
             ),
             GreenPoolButton(
-              onPressed: () => Get.offNamed(Routes.MATCHING_RIDES),
-              // onPressed:()=> controller.userDetailsAPI(),
+              // onPressed: () => Get.offNamed(Routes.MATCHING_RIDES),
+              onPressed: () => controller.userDetailsAPI(),
               color: ColorUtil.kPrimary01,
               label: 'Proceed',
             ).paddingSymmetric(vertical: 40.kh),

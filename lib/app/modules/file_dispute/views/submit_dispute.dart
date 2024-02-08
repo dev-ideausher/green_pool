@@ -30,7 +30,6 @@ class SubmitDispute extends GetView<FileDisputeController> {
             ).paddingOnly(bottom: 8.kh),
             const GreenPoolTextField(
               hintText: 'Enter booking id',
-               
             ).paddingOnly(bottom: 16.kh),
             Text(
               'Dispute Description',
@@ -38,7 +37,6 @@ class SubmitDispute extends GetView<FileDisputeController> {
             ).paddingOnly(bottom: 8.kh),
             const GreenPoolTextField(
               hintText: 'Enter text here',
-               
               maxLines: 4,
             ).paddingOnly(bottom: 16.kh),
             Text(
@@ -48,6 +46,7 @@ class SubmitDispute extends GetView<FileDisputeController> {
             Container(
               height: 80.kh,
               width: 80.kw,
+              padding: EdgeInsets.all(30.kh),
               decoration: BoxDecoration(
                   color: ColorUtil.kGreyColor,
                   borderRadius: BorderRadius.circular(8.kh)),
@@ -55,7 +54,6 @@ class SubmitDispute extends GetView<FileDisputeController> {
                 height: 20.kh,
                 width: 20.kw,
                 child: SvgPicture.asset(
-                  //TODO:height
                   ImageConstant.svgIconUploadPhoto,
                 ),
               ),

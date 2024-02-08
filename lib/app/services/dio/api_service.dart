@@ -14,10 +14,26 @@ class APIManager {
   static Future<Response> postEmergencyDetails({required dynamic body}) async =>
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
           .post(Endpoints.emergencyContacts, data: jsonEncode(body));
+  
+  static Future<Response> postDriverPostRide({required dynamic body}) async =>
+      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+          .post(Endpoints.driverPostRide, data: jsonEncode(body));
 
   static Future<Response> postVehicleDetails({required dynamic body}) async =>
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
-          .post(Endpoints.vehicleDetails, data: jsonEncode(body));
+          .post(Endpoints.vehicleDetails,
+              data: body,
+              options: Options(headers: {
+                'Content-Type': 'multipart/form-data',
+              }));
+
+  static Future<Response> postBugReport({required dynamic body}) async =>
+      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+          .post(Endpoints.bugReport,
+              data: body,
+              options: Options(headers: {
+                'Content-Type': 'multipart/form-data',
+              }));
 
   ///Get api
   static Future<Response> getLogin() async =>
@@ -29,10 +45,10 @@ class APIManager {
           .get(Endpoints.userByID);
 
   // patch
-  static Future<dynamic> userDetails({required dynamic body}) async =>
+  static Future<Response> userDetails({required dynamic body}) async =>
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).patch(
         Endpoints.userDetails,
-        data: FormData.fromMap(body),
+        data: body,
         options: Options(
           headers: {
             'Content-Type': 'multipart/form-data',

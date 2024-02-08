@@ -5,16 +5,17 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
 import 'package:green_pool/app/modules/profile_setup/views/profile_setup_view.dart';
+import 'package:green_pool/app/modules/rider_profile_setup/controllers/rider_profile_setup_controller.dart';
+import 'package:green_pool/app/modules/rider_profile_setup/views/rider_profile_setup_view.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
-import '../controllers/profile_setup_controller.dart';
 
-class ReviewPictureView extends GetView<ProfileSetupController> {
+class RiderReviewPictureView extends GetView<RiderProfileSetupController> {
   final File imagePath;
-  const ReviewPictureView({
+  const RiderReviewPictureView({
     super.key,
     required this.imagePath,
   });
@@ -54,7 +55,7 @@ class ReviewPictureView extends GetView<ProfileSetupController> {
             const Expanded(child: SizedBox()),
             GreenPoolButton(
               onPressed: () {
-                Get.off(() => const ProfileSetupView());
+                Get.off(const RiderProfileSetupView());
                 controller.isProfileImagePicked.value = true;
               },
               label: 'Done',

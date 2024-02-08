@@ -9,12 +9,13 @@ class GreenPoolTextField extends StatelessWidget {
   final TextEditingController? controller;
   final String hintText;
   final String? initialValue;
-  final bool? obscureText;
-  final Function(String?)? onchanged;
+  final bool? obscureText, readOnly;
+  final Function(String?)? onchanged, onSaved;
   final int? maxLines;
   final bool? enabled, autofocus;
   final Widget? prefix, suffix;
   final Function()? onTap, onPressedSuffix;
+  final AutovalidateMode? autovalidateMode;
 
   const GreenPoolTextField(
       {super.key,
@@ -29,7 +30,11 @@ class GreenPoolTextField extends StatelessWidget {
       this.prefix,
       this.onTap,
       this.autofocus,
-      this.onPressedSuffix, this.initialValue});
+      this.onPressedSuffix,
+      this.initialValue,
+      this.readOnly,
+      this.autovalidateMode,
+      this.onSaved});
 
   @override
   Widget build(BuildContext context) {
@@ -40,13 +45,15 @@ class GreenPoolTextField extends StatelessWidget {
       onTap: onTap,
       onChanged: onchanged,
       validator: validator,
+      autovalidateMode: autovalidateMode,
       controller: controller,
+      onSaved: onSaved,
       obscureText: obscureText ?? false,
       autofocus: autofocus ?? false,
+      readOnly: readOnly ?? false,
       keyboardType: TextInputType.name,
       // initialValue: initialValue,
       decoration: InputDecoration(
-        
         suffixIcon: Padding(
           padding: EdgeInsets.only(right: 16.kw, left: 8.kw),
           child: IconButton(

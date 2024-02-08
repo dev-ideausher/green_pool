@@ -23,172 +23,186 @@ class SetupUser extends GetView<ProfileSetupController> {
   Widget build(BuildContext context) {
     Get.lazyPut(() => ProfileSetupController());
     return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Center(
-            child: Column(
-              children: [
-                GestureDetector(
-                  onTap: () => Get.to(() => AddPictureView(
-                        onPressedGallery: () {
-                          controller.getProfileImage(ImageSource.gallery);
-                        },
-                        onPressedSelfie: () {
-                          controller.getProfileImage(ImageSource.camera);
-                        },
-                      )),
-                  child: Stack(
-                    alignment: Alignment.bottomRight,
-                    children: [
-                      Obx(
-                        () => controller.isProfileImagePicked.value
-                            ? Container(
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                ),
-                                child: ClipOval(
-                                  child: SizedBox.fromSize(
-                                    size: Size.fromRadius(44.kh),
-                                    child: Image.file(
-                                      controller
-                                          .selectedProfileImagePath.value!,
+      child: Form(
+        key: controller.userFormKey,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Center(
+              child: Column(
+                children: [
+                  GestureDetector(
+                    onTap: () => Get.to(() => AddPictureView(
+                          onPressedGallery: () {
+                            controller.getProfileImage(ImageSource.gallery);
+                          },
+                          onPressedSelfie: () {
+                            controller.getProfileImage(ImageSource.camera);
+                          },
+                        )),
+                    child: Stack(
+                      alignment: Alignment.bottomRight,
+                      children: [
+                        Obx(
+                          () => controller.isProfileImagePicked.value
+                              ? Container(
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: ClipOval(
+                                    child: SizedBox.fromSize(
+                                      size: Size.fromRadius(44.kh),
+                                      child: Image.file(
+                                        controller
+                                            .selectedProfileImagePath.value!,
+                                      ),
                                     ),
                                   ),
-                                ),
-                              )
-                            : SvgPicture.asset(
-                                ImageConstant.svgSetupProfilePic),
-                      ),
-                      SvgPicture.asset(ImageConstant.svgSetupAdd),
-                    ],
-                  ).paddingOnly(bottom: 12.kh, top: 32.kh),
-                ),
-                Text(
-                  'Take or upload profile photo',
-                  style: TextStyleUtil.k16Regular(color: ColorUtil.kNeutral4),
-                ),
+                                )
+                              : SvgPicture.asset(
+                                  ImageConstant.svgSetupProfilePic),
+                        ),
+                        SvgPicture.asset(ImageConstant.svgSetupAdd),
+                      ],
+                    ).paddingOnly(bottom: 12.kh, top: 32.kh),
+                  ),
+                  Text(
+                    'Take or upload profile photo',
+                    style: TextStyleUtil.k16Regular(color: ColorUtil.kNeutral4),
+                  ),
+                ],
+              ),
+            ).paddingOnly(bottom: 40.kh),
+            const RichTextHeading(text: 'Full Name'),
+            GreenPoolTextField(
+              hintText: 'Enter name',
+              controller: controller.fullName,
+              validator: (value) => controller.nameValidator(value),
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              suffix: SvgPicture.asset(ImageConstant.svgProfileEditPen),
+            ).paddingOnly(bottom: 16.kh),
+            const RichTextHeading(text: 'Email Address'),
+            GreenPoolTextField(
+              hintText: 'Email Id',
+              controller: controller.email,
+              validator: (value) => controller.validateEmail(value),
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              suffix: SvgPicture.asset(ImageConstant.svgProfileEditPen),
+            ).paddingOnly(bottom: 16.kh),
+            const RichTextHeading(text: 'Phone Number'),
+            GreenPoolTextField(
+              hintText: 'Enter phone number',
+              // initialValue: FirebaseAuth.instance.currentUser?.phoneNumber.toString(),
+              controller: controller.phoneNumber,
+              validator: (value) => controller.phoneNumberValidator(value),
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+            ).paddingOnly(bottom: 16.kh),
+            const RichTextHeading(text: 'Gender'),
+            GreenPoolDropDown(
+              hintText: 'Select your Gender',
+              items: [
+                DropdownMenuItem(
+                    value: "Male",
+                    child: Text(
+                      "Male",
+                      style: TextStyleUtil.k14Regular(),
+                    )),
+                DropdownMenuItem(
+                    value: "Female",
+                    child: Text(
+                      "Female",
+                      style: TextStyleUtil.k14Regular(),
+                    )),
+                DropdownMenuItem(
+                    value: "Prefer not to say",
+                    child: Text(
+                      "Prefer not to say",
+                      style: TextStyleUtil.k14Regular(),
+                    )),
               ],
-            ),
-          ).paddingOnly(bottom: 40.kh),
-          const RichTextHeading(text: 'Full Name'),
-          GreenPoolTextField(
-            hintText: 'Enter your name here',
-            controller: controller.fullName,
-            suffix: SvgPicture.asset(ImageConstant.svgProfileEditPen),
-          ).paddingOnly(bottom: 16.kh),
-          const RichTextHeading(text: 'Email Address'),
-          GreenPoolTextField(
-            hintText: 'Email Id',
-            controller: controller.email,
-            suffix: SvgPicture.asset(ImageConstant.svgProfileEditPen),
-          ).paddingOnly(bottom: 16.kh),
-          const RichTextHeading(text: 'Phone Number'),
-          GreenPoolTextField(
-            hintText: 'Enter phone number',
-            // initialValue: FirebaseAuth.instance.currentUser?.phoneNumber.toString(),
-            controller: controller.phoneNumber,
-          ).paddingOnly(bottom: 16.kh),
-          const RichTextHeading(text: 'Gender'),
-          GreenPoolDropDown(
-            hintText: 'Select your Gender',
-            items: [
-              DropdownMenuItem(
-                  value: "Male",
-                  child: Text(
-                    "Male",
-                    style: TextStyleUtil.k14Regular(),
+              onChanged: (value) {
+                controller.gender.text = value.toString();
+              },
+              validator: (value) => controller.validateGender(value),
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+            ).paddingOnly(bottom: 16.kh),
+            const RichTextHeading(text: 'City Province'),
+            GreenPoolTextField(
+              //TODO: Drop down city
+              hintText: 'Select your city',
+              controller: controller.city,
+              validator: (value) => controller.validateCity(value),
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+            ).paddingOnly(bottom: 16.kh),
+            Text.rich(
+              TextSpan(
+                children: [
+                  TextSpan(
+                    text: 'Date of Birth ',
+                    style: TextStyleUtil.k14Semibold(),
+                  ),
+                  TextSpan(
+                    text: '(should be above 18)',
+                    style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack04),
+                  ),
+                ],
+              ),
+            ).paddingOnly(bottom: 8.kh),
+            GreenPoolTextField(
+              //TODO: calendar select
+              hintText: 'Select your date of birth',
+              suffix: SvgPicture.asset(ImageConstant.svgIconCalendar),
+              controller: controller.dateOfBirth,
+              readOnly: true,
+              initialValue: controller.dateOfBirth.text,
+              onPressedSuffix: () {
+                controller.setDate(context);
+              },
+              validator: (value) => controller.validateDOB(value),
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+            ).paddingOnly(bottom: 16.kh),
+            const RichTextHeading(text: 'ID Verification'),
+            GestureDetector(
+              onTap: () => Get.to(() => UploadIDView(
+                    onPressedGallery: () {
+                      controller.getIDImage(ImageSource.gallery);
+                    },
+                    onPressedSelfie: () {
+                      controller.getIDImage(ImageSource.camera);
+                    },
                   )),
-              DropdownMenuItem(
-                  value: "Female",
-                  child: Text(
-                    "Female",
-                    style: TextStyleUtil.k14Regular(),
-                  )),
-              DropdownMenuItem(
-                  value: "Prefer not to say",
-                  child: Text(
-                    "Prefer not to say",
-                    style: TextStyleUtil.k14Regular(),
-                  )),
-            ],
-            onChanged: (value) {
-              controller.gender.text = value.toString();
-            },
-          ).paddingOnly(bottom: 16.kh),
-          const RichTextHeading(text: 'City Province'),
-          GreenPoolTextField(
-            //TODO: Drop down city
-            hintText: 'Select your city',
-            controller: controller.city,
-          ).paddingOnly(bottom: 16.kh),
-          Text.rich(
-            TextSpan(
-              children: [
-                TextSpan(
-                  text: 'Date of Birth ',
-                  style: TextStyleUtil.k14Semibold(),
+              child: Container(
+                padding:
+                    EdgeInsets.symmetric(vertical: 68.kh, horizontal: 76.kw),
+                decoration: BoxDecoration(
+                    color: ColorUtil.kGreyColor,
+                    borderRadius: BorderRadius.circular(8.kh)),
+                child: Obx(
+                  () => controller.isIDPicked.value
+                      ? Image.file(
+                          controller.selectedIDImagePath.value!,
+                        )
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SvgPicture.asset(ImageConstant.svgIconUpload)
+                                .paddingOnly(right: 8.kw),
+                            Text(
+                              'Upload Photo',
+                              style: TextStyleUtil.k14Regular(
+                                  color: ColorUtil.kBlack03),
+                            ),
+                          ],
+                        ),
                 ),
-                TextSpan(
-                  text: '(should be above 18)',
-                  style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack04),
-                ),
-              ],
-            ),
-          ).paddingOnly(bottom: 8.kh),
-          GreenPoolTextField(
-            //TODO: calendar select
-            hintText: 'Select your date of birth',
-            suffix: SvgPicture.asset(ImageConstant.svgIconCalendar),
-            controller: controller.dateOfBirth,
-            onPressedSuffix: () {
-              showDatePicker(
-                  context: context,
-                  firstDate: DateTime(2000),
-                  lastDate: DateTime(2025),
-                  initialDate: DateTime.now());
-            },
-          ).paddingOnly(bottom: 16.kh),
-          const RichTextHeading(text: 'ID Verification'),
-          GestureDetector(
-            onTap: () => Get.to(() => UploadIDView(
-                  onPressedGallery: () {
-                    controller.getIDImage(ImageSource.gallery);
-                  },
-                  onPressedSelfie: () {
-                    controller.getIDImage(ImageSource.camera);
-                  },
-                )),
-            child: Container(
-              padding: EdgeInsets.symmetric(vertical: 68.kh, horizontal: 76.kw),
-              decoration: BoxDecoration(
-                  color: ColorUtil.kGreyColor,
-                  borderRadius: BorderRadius.circular(8.kh)),
-              child: Obx(
-                () => controller.isIDPicked.value
-                    ? Image.file(
-                        controller.selectedIDImagePath.value!,
-                      )
-                    : Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SvgPicture.asset(ImageConstant.svgIconUpload)
-                              .paddingOnly(right: 8.kw),
-                          Text(
-                            'Upload Photo',
-                            style: TextStyleUtil.k14Regular(
-                                color: ColorUtil.kBlack03),
-                          ),
-                        ],
-                      ),
               ),
             ),
-          ),
-          GreenPoolButton(
-            onPressed: () => controller.userDetailsAPI(),
-            label: 'Proceed',
-          ).paddingSymmetric(vertical: 40.kh),
-        ],
+            GreenPoolButton(
+              onPressed: () => controller.checkUserValidations(),
+              label: 'Proceed',
+            ).paddingSymmetric(vertical: 40.kh),
+          ],
+        ),
       ),
     );
   }

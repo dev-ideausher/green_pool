@@ -2,19 +2,17 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:green_pool/app/data/user_info_model.dart';
-import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
-import 'package:green_pool/app/modules/post_ride/views/carpool_schedule_view.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/auth.dart';
 
-import '../../../services/dio/api_service.dart';
-import '../../../services/storage.dart';
+import '../../verify/controllers/verify_controller.dart';
 
 class LoginController extends GetxController {
   TextEditingController phoneNumberController = TextEditingController();
   String countryCode = "+1";
   bool isDriver = false;
+  RxBool isActive = false.obs;
+  GlobalKey<FormState> loginKey = GlobalKey<FormState>();
 
   @override
   void onInit() {
@@ -22,15 +20,17 @@ class LoginController extends GetxController {
     isDriver = Get.arguments;
   }
 
-  // @override
-  // void onReady() {
-  //   super.onReady();
-  // }
+  checkLogin() async {
+    final isValid = loginKey.currentState!.validate();
 
-  // @override
-  // void onClose() {
-  //   super.onClose();
-  // }
+    if (!isValid) {
+      return;
+    } else {
+      loginKey.currentState!.save();
+      isActive.value = true;
+      await otpAuth();
+    }
+  }
 
   otpAuth() async {
     try {
@@ -38,59 +38,37 @@ class LoginController extends GetxController {
       await Get.find<AuthService>()
           .mobileOtp(phoneno: countryCode + phoneNumberController.text);
 
-      await Get.toNamed(
+      await Get.offNamed(
         Routes.VERIFY,
-        arguments: phoneNumberController.text,
+        arguments: isDriver,
       );
     } catch (e) {
       print('error: $e');
     }
   }
 
-  loginAPI() async {
+  String? phoneNumberValidator(String? value) {
+    // Check if the value is empty
+    if (value == null || value.isEmpty) {
+      return 'Please enter your phone number';
+    }
+
+    // Check if the value contains exactly 10 digits
+    final RegExp phoneExp = RegExp(r'^[0-9]{10}$');
+    if (!phoneExp.hasMatch(value)) {
+      return 'Please enter a valid 10-digit phone number';
+    }
+
+    return null; // Return null if the value is valid
+  }
+
+  void googleAuth() async {
     try {
-      final response = await APIManager.getLogin();
-      final userInfo = UserInfoModel.fromJson(response.data);
-
-      if (userInfo.status!) {
-        Get.find<GetStorageService>().setLoggedIn = true;
-
-        if (isDriver) {
-          // Get.toNamed(Routes.PROFILE_SETUP, arguments: isDriver);
-
-          //? the original flow
-          Get.off(() => const CarpoolScheduleView(), arguments: isDriver);
-        } else {
-          Get.offNamed(Routes.MATCHING_RIDES);
-        }
-
-        Get.find<GetStorageService>().setDriver = isDriver;
-      } else {
-        Get.toNamed(Routes.PROFILE_SETUP, arguments: isDriver);
-      }
-    } catch (e) {
-      log("error: $e");
+      Get.lazyPut(() => VerifyController());
+      await Get.find<AuthService>().google();
+      await Get.find<VerifyController>().loginAPI();
+    } catch (error) {
+      log("$error");
     }
-  }
-}
-
-googleAuth() async {
-  if (await Get.find<AuthService>().google()) {
-    await onboardingAPI();
-    if (Get.find<HomeController>().findingRide.value) {
-      Get.toNamed(Routes.MATCHING_RIDES);
-    } else {
-      Get.to(() => const CarpoolScheduleView());
-    }
-    Get.offAll(() => const CarpoolScheduleView());
-  }
-}
-
-onboardingAPI() async {
-  try {
-    await APIManager.getLogin();
-    // await APIManager.getUserByID();
-  } on Exception catch (e) {
-    log(e.toString());
   }
 }

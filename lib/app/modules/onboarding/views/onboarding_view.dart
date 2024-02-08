@@ -36,9 +36,9 @@ class OnboardingView extends GetView<OnboardingController> {
                         );
                         controller.pageIndex.value = 3;
                       },
-                      
                       padding: const EdgeInsets.all(0),
                       label: 'Skip',
+                      color: ColorUtil.kPrimary05,
                       fontSize: 14.kh,
                       width: 77.kw,
                       height: 37.kh,
@@ -64,7 +64,6 @@ class OnboardingView extends GetView<OnboardingController> {
                         onPressed: () {
                           Get.offAll(() => const BottomNavigationView());
                         },
-                        
                         label: 'Let’s Get Started !',
                       ).paddingOnly(bottom: 26.kh, top: 72.kh),
                     )
@@ -101,7 +100,6 @@ class OnboardingView extends GetView<OnboardingController> {
                               curve: Curves.linear,
                             );
                           },
-                          
                           padding: const EdgeInsets.all(0),
                           label: 'Next',
                           fontSize: 14.kh,

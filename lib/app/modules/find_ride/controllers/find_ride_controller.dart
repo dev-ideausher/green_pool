@@ -24,13 +24,12 @@ class FindRideController extends GetxController {
 
   decideRouting() {
     if (Get.find<GetStorageService>().getLoggedIn) {
+      //? for testing updateDetailsAPI
+      // Get.toNamed(Routes.RIDER_PROFILE_SETUP, arguments: isDriver);
+      //?original flow
       Get.toNamed(Routes.MATCHING_RIDES, arguments: isDriver);
-    }
-    //  else if (Get.find<GetStorageService>().getLoggedIn &&  Get.find<HomeController>().isDriver.value) {
-    //     Get.off(const CarpoolScheduleView());
-    //   }
-    else if (!Get.find<GetStorageService>().getLoggedIn) {
-      Get.offNamed(Routes.LOGIN, arguments: isDriver);
+    } else {
+      Get.offNamed(Routes.CREATE_ACCOUNT, arguments: isDriver);
     }
   }
 }

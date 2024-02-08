@@ -9,19 +9,24 @@ class GreenPoolDropDown extends StatelessWidget {
   final Widget? suffix, prefix;
   final List<DropdownMenuItem<Object>>? items;
   final Function(Object?)? onChanged;
+  final String? Function(Object?)? validator;
+  final AutovalidateMode? autovalidateMode;
   const GreenPoolDropDown(
       {super.key,
       required this.hintText,
       this.suffix,
       this.prefix,
       this.items,
-      this.onChanged});
+      this.onChanged,
+      this.validator, this.autovalidateMode});
 
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField(
       borderRadius: BorderRadius.circular(16.kw),
       elevation: 4,
+      validator: validator,
+      autovalidateMode: autovalidateMode,
       decoration: InputDecoration(
         contentPadding:
             EdgeInsets.symmetric(vertical: 16.kh, horizontal: 16.kw),

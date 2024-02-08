@@ -31,7 +31,7 @@ class GreenPoolChip extends StatelessWidget {
         backgroundColor: ColorUtil.kBackgroundColor,
         label: Row(
           children: [
-            controller.isSelectedList[selectedChipIndex].value
+            controller.luggageAllowance[selectedChipIndex].value
                 ? SvgPicture.asset(
                     ImageConstant.svgIconLuggageFilled,
                     colorFilter: ColorFilter.mode(
@@ -45,12 +45,12 @@ class GreenPoolChip extends StatelessWidget {
           ],
         ),
         disabledColor: Colors.transparent,
-        selected: controller.isSelectedList[selectedChipIndex].value,
+        selected: controller.luggageAllowance[selectedChipIndex].value,
         onPressed: () => controller.setSelected(selectedChipIndex),
-        side: controller.isSelectedList[selectedChipIndex].value
+        side: controller.luggageAllowance[selectedChipIndex].value
             ? BorderSide.none
             : const BorderSide(color: ColorUtil.kBlack06),
-        labelStyle: controller.isSelectedList[selectedChipIndex].value
+        labelStyle: controller.luggageAllowance[selectedChipIndex].value
             ? TextStyleUtil.k14Regular(
                 color: Get.find<ProfileController>().isSwitched.value
                     ? ColorUtil.kSecondary01

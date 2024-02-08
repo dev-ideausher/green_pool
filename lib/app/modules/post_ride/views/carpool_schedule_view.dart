@@ -98,150 +98,115 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                     fontSize: 16.kh, color: ColorUtil.kBlack02),
               ).paddingOnly(top: 24.kh, bottom: 16.kh),
 
-              Obx(
-                () => controller.tabIndex.value == 0
-                    ? Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Date',
-                            style: TextStyleUtil.k14Semibold(),
-                          ),
-                          GreenPoolTextField(
-                            //TODO: Calendar select
-                            hintText: 'Select date',
-                            onTap: () {},
-                            obscureText: false,
-                            enabled: true,
-                            suffix: SizedBox(
-                              child: SvgPicture.asset(
-                                ImageConstant.svgIconCalendar,
-                                height: 24.kh,
-                                width: 24.kw,
-                                colorFilter: ColorFilter.mode(
-                                    Get.find<ProfileController>()
-                                            .isSwitched
-                                            .value
-                                        ? ColorUtil.kPrimary3PinkMode
-                                        : ColorUtil.kSecondary01,
-                                    BlendMode.srcIn),
-                              ).paddingOnly(right: 16.kw),
-                            ),
-                            onPressedSuffix: () {
-                              showDatePicker(
-                                  context: context,
-                                  firstDate: DateTime(2000),
-                                  lastDate: DateTime(2025),
-                                  initialDate: DateTime.now());
-                            },
-                          ).paddingOnly(top: 8.kh, bottom: 16.kh),
-                          Text(
-                            'Time',
-                            style: TextStyleUtil.k14Semibold(),
-                          ),
-                          GreenPoolTextField(
-                            hintText: 'Select time',
-                            onTap: () {},
-                            obscureText: false,
-                            enabled: true,
-                          ).paddingOnly(top: 8.kh, bottom: 16.kh),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Date',
+                    style: TextStyleUtil.k14Semibold(),
+                  ),
+                  GreenPoolTextField(
+                      controller: controller.selectedDateOneTime,
+                      onchanged: (p0) {
+                        controller.selectedDateOneTime.text = p0.toString();
+                      },
+                      hintText: 'Select date',
+                      readOnly: true,
+                      initialValue: controller.selectedDateOneTime.text,
+                      obscureText: false,
+                      suffix: SizedBox(
+                        child: SvgPicture.asset(
+                          ImageConstant.svgIconCalendar,
+                          height: 24.kh,
+                          width: 24.kw,
+                          colorFilter: ColorFilter.mode(
+                              Get.find<ProfileController>().isSwitched.value
+                                  ? ColorUtil.kPrimary3PinkMode
+                                  : ColorUtil.kSecondary01,
+                              BlendMode.srcIn),
+                        ).paddingOnly(right: 16.kw),
+                      ),
+                      onPressedSuffix: () {
+                        controller.setDate(context);
+                      }).paddingOnly(top: 8.kh, bottom: 16.kh),
+                  Text(
+                    'Time',
+                    style: TextStyleUtil.k14Semibold(),
+                  ),
+                  GreenPoolTextField(
+                    //TODO: select time
+                    hintText: 'Select time',
+                    controller: controller.selectedTimeOneTime,
+                    onchanged: (p0) {
+                      controller.selectedTimeOneTime.text = p0.toString();
+                    },
+                    onTap: () {},
+                    obscureText: false,
+                    enabled: true,
+                  ).paddingOnly(top: 8.kh, bottom: 16.kh),
 
-                          //RETURN TRIP
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              //TODO: toggle switch
-                              Text(
-                                'Return trip',
-                                style:
-                                    TextStyleUtil.k16Semibold(fontSize: 16.kh),
-                              ),
-                              Obx(
-                                () => Transform.scale(
-                                  scale: 0.8.kh,
-                                  child: Switch(
-                                    value: controller.isReturn.value,
-                                    onChanged: (value) {
-                                      controller.isReturn.value = value;
-                                    },
-                                    inactiveThumbColor: ColorUtil.kNeutral1,
-                                    inactiveTrackColor:
-                                        Get.find<ProfileController>()
-                                                .isSwitched
-                                                .value
-                                            ? ColorUtil.kSecondaryPinkMode
-                                            : ColorUtil.kPrimary05,
-                                    activeTrackColor:
-                                        Get.find<ProfileController>()
-                                                .isSwitched
-                                                .value
-                                            ? ColorUtil.kPrimary3PinkMode
-                                            : ColorUtil.kSecondary01,
-                                    trackOutlineWidth:
-                                        const MaterialStatePropertyAll(0),
-                                    thumbColor: const MaterialStatePropertyAll(
-                                        ColorUtil.kWhiteColor),
-                                    trackOutlineColor:
-                                        const MaterialStatePropertyAll(
-                                            ColorUtil.kNeutral1),
-                                  ),
+                  //RETURN TRIP
+                  Obx(() => controller.tabIndex.value == 0
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            //TODO: toggle switch
+                            Text(
+                              'Return trip',
+                              style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
+                            ),
+                            Obx(
+                              () => Transform.scale(
+                                scale: 0.8.kh,
+                                child: Switch(
+                                  value: controller.isReturn.value,
+                                  onChanged: (value) {
+                                    controller.isReturn.value = value;
+                                  },
+                                  inactiveThumbColor: ColorUtil.kNeutral1,
+                                  inactiveTrackColor:
+                                      Get.find<ProfileController>()
+                                              .isSwitched
+                                              .value
+                                          ? ColorUtil.kSecondaryPinkMode
+                                          : ColorUtil.kPrimary05,
+                                  activeTrackColor:
+                                      Get.find<ProfileController>()
+                                              .isSwitched
+                                              .value
+                                          ? ColorUtil.kPrimary3PinkMode
+                                          : ColorUtil.kSecondary01,
+                                  trackOutlineWidth:
+                                      const MaterialStatePropertyAll(0),
+                                  thumbColor: const MaterialStatePropertyAll(
+                                      ColorUtil.kWhiteColor),
+                                  trackOutlineColor:
+                                      const MaterialStatePropertyAll(
+                                          ColorUtil.kNeutral1),
                                 ),
                               ),
-                            ],
-                          ),
-                        ],
-                      )
-                    : Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Date',
-                            style: TextStyleUtil.k14Semibold(),
-                          ),
-                          GreenPoolTextField(
-                            //TODO: Calendar select
-                            hintText: 'Select date',
-                            onTap: () {},
-                            obscureText: false,
-                            enabled: true,
-                            suffix: SizedBox(
-                              child: SvgPicture.asset(
-                                ImageConstant.svgIconCalendar,
-                                height: 24.kh,
-                                width: 24.kw,
-                                colorFilter: ColorFilter.mode(
-                                    Get.find<ProfileController>()
-                                            .isSwitched
-                                            .value
-                                        ? ColorUtil.kPrimary3PinkMode
-                                        : ColorUtil.kSecondary01,
-                                    BlendMode.srcIn),
-                              ).paddingOnly(right: 16.kw),
                             ),
-                          ).paddingOnly(top: 8.kh, bottom: 16.kh),
-                          Text(
-                            'Time',
-                            style: TextStyleUtil.k14Semibold(),
-                          ),
-                          GreenPoolTextField(
-                            hintText: 'Select time',
-                            onTap: () {},
-                            obscureText: false,
-                            enabled: true,
-                          ).paddingOnly(top: 8.kh, bottom: 16.kh),
-                          Text(
-                            'Returning at Time (same day)',
-                            style: TextStyleUtil.k14Semibold(),
-                          ),
-                          GreenPoolTextField(
-                            hintText: 'Select time',
-                            onTap: () {},
-                            obscureText: false,
-                            enabled: true,
-                          ).paddingOnly(top: 8.kh, bottom: 16.kh),
-                        ],
-                      ),
+                          ],
+                        )
+                      : Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Returning at Time (same day)',
+                              style: TextStyleUtil.k14Semibold(),
+                            ),
+                            GreenPoolTextField(
+                              hintText: 'Select time',
+                              onTap: () {},
+                              obscureText: false,
+                              //TODO: controller
+                              enabled: true,
+                            ).paddingOnly(top: 8.kh, bottom: 16.kh),
+                          ],
+                        )),
+                ],
               ),
+
               //if return trip then this option
               //TODO: if set on true and then selected recurring trip then it still stays. how to handle that
               Obx(
@@ -272,9 +237,19 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                           ),
                           GreenPoolTextField(
                             hintText: 'Select date',
-                            onTap: () {},
                             obscureText: false,
                             enabled: true,
+                            controller: controller.selectedDateReturnTrip,
+                            onchanged: (p0) {
+                              controller.selectedDateReturnTrip.text =
+                                  p0.toString();
+                            },
+                            initialValue:
+                                controller.selectedDateReturnTrip.text,
+                            onPressedSuffix: () {
+                              controller.setReturnDate(context);
+                            },
+                            readOnly: true,
                             suffix: SizedBox(
                               child: SvgPicture.asset(
                                 ImageConstant.svgIconCalendar,
@@ -298,6 +273,11 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                             hintText: 'Select time',
                             onTap: () {},
                             obscureText: false,
+                            controller: controller.selectedTimeReturnTrip,
+                            onchanged: (p0) {
+                              controller.selectedTimeReturnTrip.text =
+                                  p0.toString();
+                            },
                             enabled: true,
                           ).paddingOnly(top: 8.kh),
                         ],
@@ -388,10 +368,17 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                 'Luggage Allowance',
                 style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
               ),
-              Text(
-                'Luggage Weight : 5 Kg ',
-                style: TextStyleUtil.k14Semibold(color: ColorUtil.kBlack04),
-              ).paddingOnly(top: 4.kh, bottom: 16.kh),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    'Luggage Weight : ',
+                    style: TextStyleUtil.k14Semibold(color: ColorUtil.kBlack04),
+                  ).paddingOnly(top: 4.kh, bottom: 16.kh),
+
+                  // Text(controller.getTextAtIndex(index)),
+                ],
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
