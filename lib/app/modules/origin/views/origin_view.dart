@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
+import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../components/greenpool_textfield.dart';
@@ -15,17 +16,35 @@ class OriginView extends GetView<OriginController> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: GreenPoolAppBar(
-          title: controller.isOrigin.value
+          title: controller.locationValues.name == LocationValues.origin.name ||
+                  controller.locationValues.name ==
+                      LocationValues.findRideOrigin.name
               ? const Text('Origin')
-              : const Text('Destination'),
+              : controller.locationValues.name ==
+                          LocationValues.destination.name ||
+                      controller.locationValues.name ==
+                          LocationValues.findRideDestination.name
+                  ? const Text('Destination')
+                  : const Text('Add Stops'),
         ),
         body: Column(
           children: [
             Obx(
               () => GreenPoolTextField(
-                hintText: controller.isOrigin.value
+                hintText: controller.locationValues.name ==
+                            LocationValues.origin.name ||
+                        controller.locationValues.name ==
+                            LocationValues.findRideOrigin.name
                     ? 'Enter origin address'
-                    : 'Enter destination address',
+                    : controller.locationValues.name ==
+                                LocationValues.destination.name ||
+                            controller.locationValues.name ==
+                                LocationValues.findRideDestination.name
+                        ? 'Enter destination address'
+                        : controller.locationValues.name ==
+                                LocationValues.addStop1.name
+                            ? 'Add Stop 1'
+                            : 'Add stop 2',
                 controller: controller.originController,
                 onchanged: (value) {
                   controller.setSessionToken();
@@ -60,6 +79,8 @@ class OriginView extends GetView<OriginController> {
 
                             await controller.setLocationData(controller
                                 .addressSugestionList[index]['place_id']);
+
+                            Get.back();
                           },
                         ),
                       );

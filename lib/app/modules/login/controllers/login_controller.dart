@@ -27,7 +27,6 @@ class LoginController extends GetxController {
       return;
     } else {
       loginKey.currentState!.save();
-      isActive.value = true;
       await otpAuth();
     }
   }
@@ -56,6 +55,7 @@ class LoginController extends GetxController {
     // Check if the value contains exactly 10 digits
     final RegExp phoneExp = RegExp(r'^[0-9]{10}$');
     if (!phoneExp.hasMatch(value)) {
+      isActive.value = true;
       return 'Please enter a valid 10-digit phone number';
     }
 

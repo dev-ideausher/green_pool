@@ -63,19 +63,15 @@ class LoginView extends GetView<LoginController> {
                 ).paddingOnly(bottom: 12.kh),
                 //
 
-                Obx(
-                  () => GreenPoolButton(
-                    onPressed: () async {
-                      // await controller.otpAuth();
-                      await controller.checkLogin();
-                    },
-                    label: 'Login',
-                    color: controller.isActive.value
-                        ? ColorUtil.kPrimary01
-                        : ColorUtil.kPrimary06,
-                    isActive: controller.isActive.value,
-                  ).paddingSymmetric(vertical: 40.kh),
-                ),
+                GreenPoolButton(
+                  onPressed: () async {
+                    // await controller.otpAuth();
+                    await controller.checkLogin();
+                  },
+                  label: 'Login',
+                  // isActive: controller.isActive.value,
+                ).paddingSymmetric(vertical: 40.kh),
+
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,

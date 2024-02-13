@@ -50,6 +50,9 @@ class VerifyView extends GetView<VerifyController> {
                   controller: controller.otpController,
                   keyboardType: const TextInputType.numberWithOptions(),
                   closeKeyboardWhenCompleted: true,
+                  onCompleted: (value) async {
+                    await controller.verifyOTP();
+                  },
                   preFilledWidget: Text(
                     '0',
                     style: TextStyleUtil.k18Regular(color: ColorUtil.kBlack04),
@@ -100,6 +103,7 @@ class VerifyView extends GetView<VerifyController> {
           const Expanded(child: SizedBox()),
           GreenPoolButton(
             // onPressed: () => Get.toNamed(Routes.PROFILE_SETUP),
+
             onPressed: () async {
               await controller.verifyOTP();
             },

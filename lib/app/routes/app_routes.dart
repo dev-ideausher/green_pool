@@ -36,6 +36,8 @@ abstract class Routes {
   static const REPORT = _Paths.REPORT;
   static const HELP_SUPPORT = _Paths.HELP_SUPPORT;
   static const CHANGE_PASSWORD = _Paths.CHANGE_PASSWORD;
+  static const CARPOOL_SCHEDULE = _Paths.CARPOOL_SCHEDULE;
+  static const BOTTOM_NAVIGATION = _Paths.BOTTOM_NAVIGATION;
   static const FIND_RIDE = _Paths.FIND_RIDE;
   static const MATCHING_RIDES = _Paths.MATCHING_RIDES;
   static const DRIVER_DETAILS = _Paths.DRIVER_DETAILS;
@@ -49,6 +51,7 @@ abstract class Routes {
 abstract class _Paths {
   _Paths._();
   static const HOME = '/home';
+  static const BOTTOM_NAVIGATION = '/bottom_navigation_view';
   static const SPLASH = '/splash';
   static const ONBOARDING = '/onboarding';
   static const MY_RIDES = '/my-rides';
@@ -68,6 +71,7 @@ abstract class _Paths {
   static const ABOUT = '/about';
   static const PROFILE_SETUP = '/profile-setup';
   static const PROFILE_SETTINGS = '/profile-settings';
+  static const CARPOOL_SCHEDULE = '/carpool_schedule_view.dart';
   static const USER_DETAILS = '/user-details';
   static const VEHICLE_DETAILS = '/vehicle-details';
   static const EMERGENCY_CONTACTS = '/emergency-contacts';

@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:green_pool/app/modules/post_ride/views/carpool_schedule_view.dart';
 
 import '../modules/about/bindings/about_binding.dart';
 import '../modules/about/views/about_view.dart';
@@ -23,6 +24,7 @@ import '../modules/find_ride/views/find_ride_view.dart';
 import '../modules/help_support/bindings/help_support_binding.dart';
 import '../modules/help_support/views/help_support_view.dart';
 import '../modules/home/bindings/home_binding.dart';
+import '../modules/home/views/bottom_navigation_view.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
@@ -93,6 +95,11 @@ class AppPages {
       binding: HomeBinding(),
     ),
     GetPage(
+      name: _Paths.BOTTOM_NAVIGATION,
+      page: () => const BottomNavigationView(),
+      binding: HomeBinding(),
+    ),
+    GetPage(
       name: _Paths.SPLASH,
       page: () => const SplashView(),
       binding: SplashBinding(),
@@ -120,6 +127,11 @@ class AppPages {
     GetPage(
       name: _Paths.POST_RIDE,
       page: () => const PostRideView(),
+      binding: PostRideBinding(),
+    ),
+    GetPage(
+      name: _Paths.CARPOOL_SCHEDULE,
+      page: () => const CarpoolScheduleView(),
       binding: PostRideBinding(),
     ),
     GetPage(

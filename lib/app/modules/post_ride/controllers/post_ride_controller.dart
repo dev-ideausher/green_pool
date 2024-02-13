@@ -22,9 +22,9 @@ class PostRideController extends GetxController {
   TextEditingController selectedDateReturnTrip = TextEditingController();
   TextEditingController selectedTimeReturnTrip = TextEditingController();
   final RxInt count = 0.obs;
-  List<RxBool> luggageAllowance = List.generate(4, (index) => false.obs);
 
   List<RxBool> switchStates = List.generate(8, (index) => false.obs);
+
   RxBool isChecked = false.obs;
   bool isDriver = false;
   bool isOrigin = false;
@@ -35,14 +35,37 @@ class PostRideController extends GetxController {
   TextEditingController addStopsTextController = TextEditingController();
   TextEditingController stop1TextController = TextEditingController();
   TextEditingController stop2TextController = TextEditingController();
+  TextEditingController priceTextController = TextEditingController();
+  int pricePerSeat = 0;
 
   PostRideModel postRideModel = PostRideModel();
   RxDouble originLatitude = 0.0.obs;
   RxDouble originLongitude = 0.0.obs;
-  RxString originAddress = ''.obs;
   RxDouble destLatitude = 0.0.obs;
   RxDouble destLongitude = 0.0.obs;
-  RxString destinationAddress = ''.obs;
+  RxDouble stop1Lat = 0.0.obs;
+  RxDouble stop1Long = 0.0.obs;
+  RxDouble stop2Lat = 0.0.obs;
+  RxDouble stop2Long = 0.0.obs;
+  // RxString originAddress = ''.obs;
+  // RxString destinationAddress = ''.obs;
+
+  //luggage allowance
+  // List<RxBool> luggageAllowance = List.generate(4, (index) => false.obs);
+  RxBool noLuggage = false.obs;
+  RxBool smallLuggage = false.obs;
+  RxBool mediumLuggage = false.obs;
+  RxBool largeLuggage = false.obs;
+
+  //amenities
+  RxBool appreciatesConversation = false.obs;
+  RxBool enjoysMusic = false.obs;
+  RxBool smokeFree = false.obs;
+  RxBool petFriendly = false.obs;
+  RxBool winterTires = false.obs;
+  RxBool coolingOrHeating = false.obs;
+  RxBool babySeat = false.obs;
+  RxBool heatedSeats = false.obs;
 
   @override
   void onInit() {
@@ -71,7 +94,7 @@ class PostRideController extends GetxController {
       //? the original flow
       Get.to(() => const CarpoolScheduleView(), arguments: isDriver);
     } else {
-      Get.offNamed(Routes.CREATE_ACCOUNT, arguments: isDriver);
+      Get.toNamed(Routes.CREATE_ACCOUNT, arguments: isDriver);
     }
   }
 
@@ -83,18 +106,23 @@ class PostRideController extends GetxController {
       origin: PostRideModelRidesDetailsOrigin(
         latitude: originLongitude.value,
         longitude: originLatitude.value,
-        name: originAddress.value,
+        name: originTextController.value.text,
       ),
       destination: PostRideModelRidesDetailsDestination(
         latitude: destLatitude.value,
         longitude: destLongitude.value,
-        name: destinationAddress.value,
+        name: destinationTextController.value.text,
       ),
       stops: [
         PostRideModelRidesDetailsStops(
-          latitude: 24.56,
-          longitude: 77.77,
-          name: 'Vile Parle',
+          latitude: stop1Lat.value,
+          longitude: stop1Long.value,
+          name: stop1TextController.value.text,
+        ),
+        PostRideModelRidesDetailsStops(
+          latitude: stop2Lat.value,
+          longitude: stop2Long.value,
+          name: stop2TextController.value.text,
         ),
       ],
       // for trip type if tab index is 0 then one Time trip
@@ -102,13 +130,20 @@ class PostRideController extends GetxController {
       date: selectedDateOneTime.text,
       time: selectedTimeOneTime.text,
       //have to calculate distance between every stop and fair will be calculated accordingly
-      fair: 12,
+      fair: pricePerSeat,
       preferences: PostRideModelRidesDetailsPreferences(
         seatAvailable: count.value,
         luggageType: "M",
         other: [
           PostRideModelRidesDetailsPreferencesOther(
-            AppreciatesConversation: true,
+            AppreciatesConversation: appreciatesConversation.value,
+            EnjoysMusic: enjoysMusic.value,
+            SmokeFree: smokeFree.value,
+            PetFriendly: petFriendly.value,
+            WinterTires: winterTires.value,
+            CoolingOrHeating: coolingOrHeating.value,
+            BabySeat: babySeat.value,
+            HeatedSeats: heatedSeats.value,
           )
         ],
       ),
@@ -123,9 +158,11 @@ class PostRideController extends GetxController {
       final response =
           await APIManager.postDriverPostRide(body: postRideDataJson);
       showMySnackbar(msg: "Ride posted successfully");
+      await Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
       log(response.data.toString());
     } catch (e) {
-      throw Exception(e);
+      showMySnackbar(msg: 'Please fill in correct details');
+      // throw Exception(e);
     }
   }
 
@@ -197,7 +234,6 @@ class PostRideController extends GetxController {
     if (isChecked.value == true) {
       try {
         driverPostRideAPI();
-        Get.offAll(const BottomNavigationView());
       } catch (e) {
         throw Exception(e);
       }
@@ -206,12 +242,12 @@ class PostRideController extends GetxController {
     }
   }
 
-  void setSelected(int selectedIndex) {
-    //sets selected state of the luggage chip
-    for (int i = 0; i < luggageAllowance.length; i++) {
-      luggageAllowance[i](i == selectedIndex);
-    }
-  }
+  // void setSelected(int selectedIndex) {
+  //   //sets selected state of the luggage chip
+  //   for (int i = 0; i < luggageAllowance.length; i++) {
+  //     luggageAllowance[i](i == selectedIndex);
+  //   }
+  // }
 
   void toggleSwitch(int index) {
     //handles amenities toggle button
@@ -230,5 +266,27 @@ class PostRideController extends GetxController {
     if (count.value >= 1) {
       count.value--;
     }
+  }
+
+  void selectLuggage(RxBool selected) {
+    // to select the luggage choice chips
+    if (selected == noLuggage) {
+      smallLuggage.value = false;
+      mediumLuggage.value = false;
+      largeLuggage.value = false;
+    } else if (selected == smallLuggage) {
+      noLuggage.value = false;
+      mediumLuggage.value = false;
+      largeLuggage.value = false;
+    } else if (selected == mediumLuggage) {
+      noLuggage.value = false;
+      smallLuggage.value = false;
+      largeLuggage.value = false;
+    } else if (selected == largeLuggage) {
+      noLuggage.value = false;
+      smallLuggage.value = false;
+      mediumLuggage.value = false;
+    }
+    selected.value = true;
   }
 }

@@ -10,12 +10,14 @@ import '../controllers/post_ride_controller.dart';
 
 class Amenities extends GetView<PostRideController> {
   final String text, image;
-  final int index;
+  final bool value;
+  final Function(bool)? onChanged;
   const Amenities({
     super.key,
+    required this.value,
+    this.onChanged,
     required this.text,
     required this.image,
-    required this.index,
   });
 
   @override
@@ -35,28 +37,27 @@ class Amenities extends GetView<PostRideController> {
           style: TextStyleUtil.k14Semibold(),
         ),
         const Expanded(child: SizedBox()),
-        Obx(
-          () => Transform.scale(
-            scale: 0.8.kh,
-            child: Switch(
-              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              value: controller.switchStates[index].value,
-              onChanged: (value) {
-                // controller.isSwitched.value = value;
-                controller.toggleSwitch(index);
-              },
-              inactiveThumbColor: ColorUtil.kNeutral1,
-              inactiveTrackColor: Get.find<ProfileController>().isSwitched.value
-                  ? ColorUtil.kSecondaryPinkMode
-                  : ColorUtil.kPrimary05,
-              activeTrackColor: Get.find<ProfileController>().isSwitched.value
-                  ? ColorUtil.kPrimary3PinkMode
-                  : ColorUtil.kSecondary01,
-              trackOutlineWidth: const MaterialStatePropertyAll(0),
-              thumbColor: const MaterialStatePropertyAll(ColorUtil.kWhiteColor),
-              trackOutlineColor:
-                  const MaterialStatePropertyAll(ColorUtil.kNeutral1),
-            ),
+        Transform.scale(
+          scale: 0.8.kh,
+          child: Switch(
+            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            value: value,
+            // value: controller.switchStates[index].value,
+            onChanged: onChanged,
+            // onChanged: (value) {
+            //   controller.toggleSwitch(index);
+            // },
+            inactiveThumbColor: ColorUtil.kNeutral1,
+            inactiveTrackColor: Get.find<ProfileController>().isSwitched.value
+                ? ColorUtil.kSecondaryPinkMode
+                : ColorUtil.kPrimary05,
+            activeTrackColor: Get.find<ProfileController>().isSwitched.value
+                ? ColorUtil.kPrimary3PinkMode
+                : ColorUtil.kSecondary01,
+            trackOutlineWidth: const MaterialStatePropertyAll(0),
+            thumbColor: const MaterialStatePropertyAll(ColorUtil.kWhiteColor),
+            trackOutlineColor:
+                const MaterialStatePropertyAll(ColorUtil.kNeutral1),
           ),
         ),
       ],

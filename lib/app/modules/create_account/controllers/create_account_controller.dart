@@ -54,7 +54,6 @@ class CreateAccountController extends GetxController {
       return;
     } else {
       formKey.currentState!.save();
-      toggleCheckbox();
       await otpAuth();
     }
   }

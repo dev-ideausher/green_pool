@@ -14,10 +14,14 @@ class APIManager {
   static Future<Response> postEmergencyDetails({required dynamic body}) async =>
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
           .post(Endpoints.emergencyContacts, data: jsonEncode(body));
-  
+
   static Future<Response> postDriverPostRide({required dynamic body}) async =>
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
           .post(Endpoints.driverPostRide, data: jsonEncode(body));
+
+  static Future<Response> postRiderFindRide({required dynamic body}) async =>
+      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+          .post(Endpoints.riderFindRide, data: jsonEncode(body));
 
   static Future<Response> postVehicleDetails({required dynamic body}) async =>
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)

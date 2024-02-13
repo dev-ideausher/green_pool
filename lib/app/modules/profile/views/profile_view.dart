@@ -38,54 +38,61 @@ class ProfileView extends GetView<ProfileController> {
                         shape: BoxShape.circle, color: ColorUtil.kPrimary01),
                     child: ClipOval(
                       child: SizedBox.fromSize(
-                        size: Size.fromRadius(44.kh),
-                        child: Image.asset(
-                          ImageConstant.pngEmptyPassenger,
-                        ),
-                      ),
+                          size: Size.fromRadius(44.kh),
+                          child: SvgPicture.asset(
+                              ImageConstant.svgSetupProfilePic)),
                     ),
                   ).paddingOnly(bottom: 8.kh, top: 16.kh),
                   Text(
-                    Get.find<GetStorageService>().getLoggedIn
-                        ? Get.find<GetStorageService>().getUserName ?? "User"
-                        : 'User',
+                    // Get.find<GetStorageService>().getLoggedIn
+                    //     ? Get.find<GetStorageService>().getUserName ?? "User"
+                    // :
+                    'User',
                     style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
                   ).paddingOnly(bottom: 24.kh),
-                  Get.find<GetStorageService>().isFemale
-                      ? ProfileContainer(
-                          image: ImageConstant.svgProfileShieldPink,
-                          text: 'Activate Pink Mode',
-                          info: GestureDetector(
-                              onTap: () => Get.defaultDialog(
-                                  title: '',
-                                  content: Text(
-                                    "Travel with confidence in our 'Pink Mode'\nensuring safety and security with female\nriders and drivers.",
-                                    style: TextStyleUtil.k14Regular(
-                                        color: ColorUtil.kBlack03),
-                                  )),
-                              child:
-                                  SvgPicture.asset(ImageConstant.svgIconInfo)),
-                          child: Obx(
-                            () => Switch(
-                              materialTapTargetSize:
-                                  MaterialTapTargetSize.shrinkWrap,
-                              value: controller.isSwitched.value,
-                              onChanged: (value) {
-                                controller.isSwitched.value = value;
-                              },
-                              inactiveThumbColor: ColorUtil.kNeutral1,
-                              inactiveTrackColor: ColorUtil.kSecondaryPinkMode,
-                              activeTrackColor: ColorUtil.kPrimary2PinkMode,
-                              trackOutlineWidth:
-                                  const MaterialStatePropertyAll(0),
-                              thumbColor: const MaterialStatePropertyAll(
-                                  ColorUtil.kWhiteColor),
-                              trackOutlineColor: const MaterialStatePropertyAll(
-                                  ColorUtil.kNeutral1),
+                  // Get.find<GetStorageService>().isFemale
+                  //     ?
+                  ProfileContainer(
+                    image: ImageConstant.svgProfileShieldPink,
+                    text: 'Activate Pink Mode',
+                    info: GestureDetector(
+                        onTap: () => Get.dialog(
+                              useSafeArea: true,
+                              Center(
+                                child: Container(
+                                    padding: EdgeInsets.all(16.kh),
+                                    width: 80.w,
+                                    decoration: BoxDecoration(
+                                      color: ColorUtil.kWhiteColor,
+                                      borderRadius: BorderRadius.circular(8.kh),
+                                    ),
+                                    child: Text(
+                                      "Travel with confidence in our 'Pink Mode'\nensuring safety and security with female\nriders and drivers.",
+                                      style: TextStyleUtil.k14Regular(
+                                          color: ColorUtil.kBlack03),
+                                    )),
+                              ),
                             ),
-                          ),
-                        )
-                      : const SizedBox(),
+                        child: SvgPicture.asset(ImageConstant.svgIconInfo)),
+                    child: Obx(
+                      () => Switch(
+                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        value: controller.isSwitched.value,
+                        onChanged: (value) {
+                          controller.isSwitched.value = value;
+                        },
+                        inactiveThumbColor: ColorUtil.kNeutral1,
+                        inactiveTrackColor: ColorUtil.kSecondaryPinkMode,
+                        activeTrackColor: ColorUtil.kPrimary2PinkMode,
+                        trackOutlineWidth: const MaterialStatePropertyAll(0),
+                        thumbColor: const MaterialStatePropertyAll(
+                            ColorUtil.kWhiteColor),
+                        trackOutlineColor:
+                            const MaterialStatePropertyAll(ColorUtil.kNeutral1),
+                      ),
+                    ),
+                  ),
+                  // : const SizedBox(),
 
                   ProfileContainer(
                       onTap: () => Get.toNamed(Routes.PROFILE_SETTINGS),

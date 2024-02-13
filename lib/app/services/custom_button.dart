@@ -41,7 +41,7 @@ class GreenPoolButton extends StatelessWidget {
       height: height,
       width: width,
       child: ElevatedButton(
-        onPressed: isLoading ? () {} : onPressed,
+        onPressed: isLoading || !isActive ? () {} : onPressed,
         style: ElevatedButton.styleFrom(
           foregroundColor: ColorUtil.kWhiteColor,
           surfaceTintColor: ColorUtil.kSecondary07,
@@ -53,8 +53,12 @@ class GreenPoolButton extends StatelessWidget {
               (isBorder
                   ? Colors.transparent
                   : Get.find<ProfileController>().isSwitched.value
-                      ? ColorUtil.kPrimaryPinkMode
-                      : ColorUtil.kPrimary01),
+                      ? (isActive
+                          ? ColorUtil.kPrimaryPinkMode
+                          : ColorUtil.kSecondaryPinkMode)
+                      : (isActive
+                          ? ColorUtil.kPrimary01
+                          : ColorUtil.kPrimary06)),
           shape: RoundedRectangleBorder(
               side: isBorder
                   ? BorderSide(

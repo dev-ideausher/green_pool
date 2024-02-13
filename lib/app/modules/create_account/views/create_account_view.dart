@@ -62,7 +62,6 @@ class CreateAccountView extends GetView<CreateAccountController> {
                     controller.countryCode = countryCode.dialCode ?? "+1";
                   },
                   padding: const EdgeInsets.all(0),
-
                   initialSelection: 'US',
                   showFlag: true,
                   searchDecoration: InputDecoration(
@@ -71,9 +70,7 @@ class CreateAccountView extends GetView<CreateAccountController> {
                         borderRadius: BorderRadius.circular(8.kh)),
                     enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8.kh)),
-                  
                   ),
-                  
                 ),
                 onchanged: (String? value) =>
                     controller.phoneNumberController.text = value!,
@@ -124,9 +121,6 @@ class CreateAccountView extends GetView<CreateAccountController> {
                     // await controller.otpAuth();
                     await controller.checkValidation();
                   },
-                  color: controller.isChecked.value
-                      ? ColorUtil.kPrimary01
-                      : ColorUtil.kPrimary06,
                   isActive: controller.isChecked.value,
                   label: 'Sign Up',
                 ).paddingOnly(bottom: 16.kh),

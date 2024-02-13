@@ -12,6 +12,7 @@ import '../../../routes/app_pages.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
 import '../../../services/text_style_util.dart';
+import '../../origin/controllers/origin_controller.dart';
 import '../../profile/controllers/profile_controller.dart';
 import '../controllers/find_ride_controller.dart';
 
@@ -34,10 +35,11 @@ class FindRideView extends GetView<FindRideController> {
           GreenPoolTextField(
             hintText: 'Enter origin address',
             onTap: () {
-              Get.toNamed(Routes.ORIGIN);
+              Get.toNamed(Routes.ORIGIN,
+                  arguments: LocationValues.findRideOrigin);
             },
-            obscureText: false,
-            enabled: true,
+            controller: controller.riderOriginTextController,
+            readOnly: true,
             prefix: Icon(
               Icons.location_on,
               size: 24.kh,
@@ -53,9 +55,10 @@ class FindRideView extends GetView<FindRideController> {
           GreenPoolTextField(
             hintText: 'Enter a destination',
             onTap: () {
-              Get.toNamed(Routes.DESTINATION);
+              Get.toNamed(Routes.ORIGIN,
+                  arguments: LocationValues.findRideDestination);
             },
-            obscureText: false,
+            controller: controller.riderDestinationTextController,
             prefix: Icon(
               Icons.location_on,
               size: 24.kh,
@@ -63,7 +66,7 @@ class FindRideView extends GetView<FindRideController> {
                   ? ColorUtil.kPrimary3PinkMode
                   : ColorUtil.kSecondary01,
             ),
-            enabled: true,
+            readOnly: true,
           ).paddingOnly(top: 8.kh, bottom: 16.kh),
           Text(
             'Departure Date & Time',
@@ -75,7 +78,11 @@ class FindRideView extends GetView<FindRideController> {
                 width: 55.w,
                 child: GreenPoolTextField(
                   hintText: 'Enter Date',
-                  onTap: () {},
+                  controller: controller.date,
+                  readOnly: true,
+                  onTap: () {
+                    controller.setDate(context);
+                  },
                   prefix: SvgPicture.asset(
                     ImageConstant.svgIconCalendarClear,
                     colorFilter: ColorFilter.mode(
@@ -87,9 +94,10 @@ class FindRideView extends GetView<FindRideController> {
                 ).paddingOnly(top: 8.kh, bottom: 16.kh, right: 8.kw),
               ),
               SizedBox(
-                width: 35.w,
+                width: 36.w,
                 child: GreenPoolTextField(
-                  hintText: 'Enter Time',
+                  hintText: 'Time',
+                  controller: controller.time,
                   prefix: SvgPicture.asset(
                     ImageConstant.svgIconTime,
                     colorFilter: ColorFilter.mode(
@@ -108,6 +116,10 @@ class FindRideView extends GetView<FindRideController> {
           ).paddingOnly(bottom: 8.kh),
           GreenPoolTextField(
             hintText: 'Enter number of seats',
+            controller: controller.seatAvailable,
+            onchanged: (p0) {
+              controller.numberOfSeatAvailable = int.parse(p0!);
+            },
             prefix: Icon(
               Icons.time_to_leave,
               color: Get.find<ProfileController>().isSwitched.value

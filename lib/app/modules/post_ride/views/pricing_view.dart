@@ -53,7 +53,18 @@ class PricingView extends GetView {
             SizedBox(
                 width: 120.kw,
                 height: 53.kh,
-                child: const GreenPoolTextField(hintText: '\$')),
+                child: GreenPoolTextField(
+                  hintText: '',
+                  onchanged: (val) {
+                    controller.pricePerSeat = int.parse(val!);
+                  },
+                  prefix: Text(
+                    '\$',
+                    style: TextStyleUtil.k14Regular(
+                      color: ColorUtil.kBlack03,
+                    ),
+                  ),
+                )),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -80,7 +91,6 @@ class PricingView extends GetView {
             ).paddingOnly(bottom: 50.kh),
             GreenPoolButton(
               onPressed: () => Get.to(() => const GuidelinesView()),
-              
               label: 'Next',
             ),
           ],

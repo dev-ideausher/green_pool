@@ -112,7 +112,9 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                       },
                       hintText: 'Select date',
                       readOnly: true,
-                      initialValue: controller.selectedDateOneTime.text,
+                      initialValue: controller.selectedDateOneTime.value.text
+                          .split("TO")
+                          .toString(),
                       obscureText: false,
                       suffix: SizedBox(
                         child: SvgPicture.asset(
@@ -379,75 +381,114 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                   // Text(controller.getTextAtIndex(index)),
                 ],
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  GreenPoolChip(
+              Obx(
+                () => Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    GreenPoolChip(
                       controller: controller,
                       radius: 40.kh,
                       labelText: 'No',
-                      selectedChipIndex: 0),
-                  GreenPoolChip(
+                      selected: controller.noLuggage.value,
+                      onPressed: () =>
+                          controller.selectLuggage(controller.noLuggage),
+                    ),
+                    GreenPoolChip(
                       controller: controller,
                       radius: 40.kh,
                       labelText: 'S',
-                      selectedChipIndex: 1),
-                  GreenPoolChip(
+                      selected: controller.smallLuggage.value,
+                      onPressed: () =>
+                          controller.selectLuggage(controller.smallLuggage),
+                    ),
+                    GreenPoolChip(
                       controller: controller,
                       radius: 40.kh,
                       labelText: 'M',
-                      selectedChipIndex: 2),
-                  GreenPoolChip(
+                      selected: controller.mediumLuggage.value,
+                      onPressed: () =>
+                          controller.selectLuggage(controller.mediumLuggage),
+                    ),
+                    GreenPoolChip(
                       controller: controller,
                       radius: 40.kh,
                       labelText: 'L',
-                      selectedChipIndex: 3),
-                ],
+                      selected: controller.largeLuggage.value,
+                      onPressed: () =>
+                          controller.selectLuggage(controller.largeLuggage),
+                    ),
+                  ],
+                ),
               ),
               Text(
                 'Other',
                 style: TextStyleUtil.k16Bold(color: ColorUtil.kNeutral5),
               ).paddingOnly(top: 24.kh, bottom: 16.kh),
 
-              Amenities(
-                text: 'Appreciates Conversation',
-                image: ImageConstant.svgAmenities1,
-                index: 0,
+              Obx(
+                () => Amenities(
+                  text: 'Appreciates Conversation',
+                  image: ImageConstant.svgAmenities1,
+                  value: controller.appreciatesConversation.value,
+                  onChanged: (val) =>
+                      controller.appreciatesConversation.value = val,
+                ),
               ),
-              Amenities(
-                text: 'Enjoys Music',
-                image: ImageConstant.svgAmenities2,
-                index: 1,
+              Obx(
+                () => Amenities(
+                  text: 'Enjoys Music',
+                  image: ImageConstant.svgAmenities2,
+                  value: controller.enjoysMusic.value,
+                  onChanged: (val) => controller.enjoysMusic.value = val,
+                ),
               ),
-              Amenities(
-                text: 'Smoke-free',
-                image: ImageConstant.svgAmenities3,
-                index: 2,
+              Obx(
+                () => Amenities(
+                  text: 'Smoke-free',
+                  image: ImageConstant.svgAmenities3,
+                  value: controller.smokeFree.value,
+                  onChanged: (val) => controller.smokeFree.value = val,
+                ),
               ),
-              Amenities(
-                text: 'Pet-friendly',
-                image: ImageConstant.svgAmenities4,
-                index: 3,
+              Obx(
+                () => Amenities(
+                  text: 'Pet-friendly',
+                  image: ImageConstant.svgAmenities4,
+                  value: controller.petFriendly.value,
+                  onChanged: (val) => controller.petFriendly.value = val,
+                ),
               ),
-              Amenities(
-                text: 'Winter Tires',
-                image: ImageConstant.svgAmenities5,
-                index: 4,
+              Obx(
+                () => Amenities(
+                  text: 'Winter Tires',
+                  image: ImageConstant.svgAmenities5,
+                  value: controller.winterTires.value,
+                  onChanged: (val) => controller.winterTires.value = val,
+                ),
               ),
-              Amenities(
-                text: 'Cooling or Heating',
-                image: ImageConstant.svgAmenities6,
-                index: 5,
+              Obx(
+                () => Amenities(
+                  text: 'Cooling or Heating',
+                  image: ImageConstant.svgAmenities6,
+                  value: controller.coolingOrHeating.value,
+                  onChanged: (val) => controller.coolingOrHeating.value = val,
+                ),
               ),
-              Amenities(
-                text: 'Baby Seat',
-                image: ImageConstant.svgAmenities7,
-                index: 6,
+              Obx(
+                () => Amenities(
+                  text: 'Baby Seat',
+                  image: ImageConstant.svgAmenities7,
+                  value: controller.babySeat.value,
+                  onChanged: (val) => controller.babySeat.value = val,
+                ),
               ),
-              Amenities(
-                text: 'Heated Seats',
-                image: ImageConstant.svgAmenities8,
-                index: 7,
+              Obx(
+                () => Amenities(
+                  text: 'Heated Seats',
+                  image: ImageConstant.svgAmenities8,
+                  value: controller.heatedSeats.value,
+                  onChanged: (val) => controller.heatedSeats.value = val,
+                ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,

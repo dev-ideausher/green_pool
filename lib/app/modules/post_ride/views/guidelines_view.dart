@@ -120,13 +120,6 @@ class GuidelinesView extends GetView<PostRideController> {
               Obx(
                 () => GreenPoolButton(
                   onPressed: () => controller.setGuideLines(),
-                  color: controller.isChecked.value
-                      ? Get.find<ProfileController>().isSwitched.value
-                          ? ColorUtil.kPrimaryPinkMode
-                          : ColorUtil.kPrimary01
-                      : Get.find<ProfileController>().isSwitched.value
-                          ? ColorUtil.kSecondaryPinkMode
-                          : ColorUtil.kPrimary06,
                   isActive: controller.isChecked.value,
                   label: 'Publish Ride',
                 ).paddingSymmetric(vertical: 40.kh),

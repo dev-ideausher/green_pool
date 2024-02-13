@@ -6,7 +6,6 @@ import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/components/greenpool_textfield.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
 import 'package:green_pool/app/modules/origin/controllers/origin_controller.dart';
-import 'package:green_pool/app/modules/post_ride/views/carpool_schedule_view.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
@@ -20,11 +19,11 @@ class PostRideView extends GetView<PostRideController> {
   const PostRideView({super.key});
   @override
   Widget build(BuildContext context) {
-    // Get.lazyPut(() => OriginController());
     return Scaffold(
       appBar: const GreenPoolAppBar(
         title: Text('Post a Ride'),
       ),
+      resizeToAvoidBottomInset: false,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -35,7 +34,7 @@ class PostRideView extends GetView<PostRideController> {
           GreenPoolTextField(
             hintText: 'Enter origin address',
             onTap: () {
-              Get.toNamed(Routes.ORIGIN, arguments: true);
+              Get.toNamed(Routes.ORIGIN, arguments: LocationValues.origin);
             },
             controller: controller.originTextController,
             readOnly: true,
@@ -54,7 +53,7 @@ class PostRideView extends GetView<PostRideController> {
           GreenPoolTextField(
             hintText: 'Enter a destination',
             onTap: () {
-              Get.toNamed(Routes.ORIGIN, arguments: false);
+              Get.toNamed(Routes.ORIGIN, arguments: LocationValues.destination);
             },
             readOnly: true,
             controller: controller.destinationTextController,
@@ -73,12 +72,10 @@ class PostRideView extends GetView<PostRideController> {
           GreenPoolTextField(
             hintText: 'Add stops',
             onTap: () {
-              Get.toNamed(Routes.ADD_STOPS);
+              Get.toNamed(Routes.ORIGIN, arguments: LocationValues.addStop1);
             },
             controller: controller.stop1TextController,
-            onchanged: (p0) {
-              
-            },
+            readOnly: true,
             prefix: Icon(
               Icons.add_circle,
               size: 20.kh,
@@ -94,18 +91,14 @@ class PostRideView extends GetView<PostRideController> {
                       : ColorUtil.kSecondary01,
                   BlendMode.srcIn),
             ),
-            obscureText: false,
-            enabled: true,
           ).paddingOnly(top: 8.kh, bottom: 16.kh),
           GreenPoolTextField(
             hintText: 'Add stops',
             onTap: () {
-              Get.toNamed(Routes.ADD_STOPS);
+              Get.toNamed(Routes.ORIGIN, arguments: LocationValues.addStop2);
             },
             controller: controller.stop2TextController,
-            onchanged: (p0) {
-              
-            },
+            readOnly: true,
             prefix: Icon(
               Icons.add_circle,
               size: 20.kh,
@@ -121,8 +114,6 @@ class PostRideView extends GetView<PostRideController> {
                       : ColorUtil.kSecondary01,
                   BlendMode.srcIn),
             ),
-            obscureText: false,
-            enabled: true,
           ).paddingOnly(top: 8.kh, bottom: 16.kh),
           const Expanded(child: SizedBox()),
           Row(
