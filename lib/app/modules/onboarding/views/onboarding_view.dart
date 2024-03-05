@@ -47,7 +47,9 @@ class OnboardingView extends GetView<OnboardingController> {
             Expanded(
               child: PageView(
                 controller: controller.postController,
-                physics: const NeverScrollableScrollPhysics(),
+                onPageChanged: (value) {
+                  controller.pageIndex.value = value;
+                },
                 children: const [
                   //these are the pages that you can swipe and view
                   Onboard1View(),

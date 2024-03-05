@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
+import 'package:green_pool/app/modules/profile/controllers/profile_controller.dart';
 import 'package:green_pool/app/modules/profile/views/profile_container.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
@@ -18,24 +19,24 @@ class ProfileSettingsView extends GetView<ProfileSettingsController> {
     return Scaffold(
       appBar: const GreenPoolAppBar(
         title: Text('Profile'),
-        
       ),
       body: Column(
         children: [
           Container(
-            decoration: const BoxDecoration(
-                shape: BoxShape.circle, color: ColorUtil.kPrimary01),
+            decoration: const BoxDecoration(shape: BoxShape.circle),
             child: ClipOval(
               child: SizedBox.fromSize(
-                size: Size.fromRadius(44.kh),
-                child: Image.asset(
-                  ImageConstant.pngIconProfilePic,
-                ),
-              ),
+                  size: Size.fromRadius(44.kh),
+                  child: Image(
+                      height: 44.kh,
+                      width: 44.kw,
+                      image: NetworkImage(
+                          "${Get.find<ProfileController>().userInfo.value.data?.profilePic?.url}"))),
             ),
           ).paddingOnly(bottom: 8.kh, top: 16.kh),
           Text(
-            'Leslie Alexander',
+            Get.find<ProfileController>().userInfo.value.data?.fullName ??
+                "User",
             style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
           ).paddingOnly(bottom: 24.kh),
           ProfileContainer(

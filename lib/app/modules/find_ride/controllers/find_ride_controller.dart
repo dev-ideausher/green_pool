@@ -1,9 +1,11 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/data/find_ride_model.dart';
 
+import '../../../data/find_ride_response_model.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/dio/api_service.dart';
 import '../../../services/snackbar.dart';
@@ -13,9 +15,12 @@ class FindRideController extends GetxController {
   bool isDriver = false;
   TextEditingController seatAvailable = TextEditingController();
   int numberOfSeatAvailable = 0;
+  RxBool isActive = false.obs;
 
   TextEditingController date = TextEditingController();
-  TextEditingController time = TextEditingController();
+  TextEditingController departureDate = TextEditingController();
+  // TextEditingController time = TextEditingController();
+  TextEditingController selectedTime = TextEditingController();
   double riderOriginLat = 0.0;
   double riderOriginLong = 0.0;
   TextEditingController riderOriginTextController = TextEditingController();
@@ -23,6 +28,7 @@ class FindRideController extends GetxController {
   double riderDestinationLong = 0.0;
   TextEditingController riderDestinationTextController =
       TextEditingController();
+  // GlobalKey<FormState> validationKey = GlobalKey<FormState>();
 
   @override
   void onInit() {
@@ -45,25 +51,26 @@ class FindRideController extends GetxController {
       //? for testing updateDetailsAPI
       // Get.toNamed(Routes.RIDER_PROFILE_SETUP, arguments: isDriver);
       //?original flow
-      // Get.toNamed(Routes.MATCHING_RIDES, arguments: isDriver);
-      await driverPostRideAPI();
+      await riderPostRideAPI();
     } else {
-      Get.offNamed(Routes.CREATE_ACCOUNT, arguments: isDriver);
+      Get.toNamed(Routes.CREATE_ACCOUNT, arguments: isDriver);
     }
   }
 
-  driverPostRideAPI() async {
+  var rideresponse = FindRideResponseModel().obs;
+
+  riderPostRideAPI() async {
     final findRideData = FindRideModel(
-      ridesDetails: FindRideModelRidesDetails( 
+      ridesDetails: FindRideModelRidesDetails(
         date: date.value.text,
-        seatAvailable: numberOfSeatAvailable,
-        time: time.text,
-        destination: FindRideModelRidesDetailsDestination(
+        seatAvailable: int.parse(seatAvailable.value.text),
+        time: selectedTime.value.text,
+        origin: FindRideModelRidesDetailsOrigin(
           latitude: riderOriginLat,
           longitude: riderOriginLong,
           name: riderOriginTextController.value.text,
         ),
-        origin: FindRideModelRidesDetailsOrigin(
+        destination: FindRideModelRidesDetailsDestination(
           latitude: riderDestinationLat,
           longitude: riderDestinationLong,
           name: riderDestinationTextController.value.text,
@@ -74,11 +81,20 @@ class FindRideController extends GetxController {
       final findRideDataJson = findRideData.toJson();
       final response =
           await APIManager.postRiderFindRide(body: findRideDataJson);
-      showMySnackbar(msg: "Ride posted successfully");
-      await Get.offNamed(Routes.MATCHING_RIDES);
-      log(response.data.toString());
+
+      var data = jsonDecode(response.toString());
+      rideresponse.value = FindRideResponseModel.fromJson(data);
+      final String riderRideId = "${rideresponse.value.data![0]?.Id}";
+      log("this is riders ride id: $riderRideId");
+
+      if (rideresponse.value.status!) {
+        showMySnackbar(msg: "Ride posted successfully");
+      } else {
+        showMySnackbar(msg: "Ride already posted");
+      }
+
+      await Get.toNamed(Routes.MATCHING_RIDES, arguments: riderRideId);
     } catch (e) {
-      showMySnackbar(msg: 'Please fill in correct details');
       throw Exception(e);
     }
   }
@@ -86,13 +102,85 @@ class FindRideController extends GetxController {
   Future<void> setDate(BuildContext context) async {
     DateTime? pickedDate = await showDatePicker(
         context: context,
-        firstDate: DateTime(1950),
-        lastDate: DateTime(2025),
+        builder: (BuildContext context, Widget? child) {
+          return Theme(
+            // Define the custom theme for the date picker
+            data: ThemeData(
+              // Define the primary color
+              primaryColor: Colors.green,
+              // Define the color scheme for the date picker
+              colorScheme: ColorScheme.light(
+                // Define the primary color for the date picker
+                primary: Colors.green,
+                // Define the background color for the date picker
+                surface: Colors.white,
+                // Define the on-primary color for the date picker
+                onPrimary: Colors.white,
+              ),
+            ),
+            // Apply the custom theme to the child widget
+            child: child!,
+          );
+        },
+        firstDate: DateTime.now(),
+        lastDate: DateTime.now().add(const Duration(days: 3 * 30)),
         initialDate: DateTime.now());
 
     if (pickedDate != null) {
-      String formattedDate = pickedDate.toIso8601String();
-      date.text = formattedDate;
+      String isoFormattedDate = pickedDate.toIso8601String();
+      date.text = isoFormattedDate;
+      departureDate.text =
+          "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
+    }
+  }
+  // Future<void> setDate(BuildContext context) async {
+  //   DateTime minimumDate = DateTime.now();
+  //   DateTime? pickedDate = await showModalBottomSheet(
+  //     context: context,
+  //     builder: (BuildContext builder) {
+  //       return Container(
+  //         height: MediaQuery.of(context).size.height / 3,
+  //         child: CupertinoDatePicker(
+  //           initialDateTime: minimumDate,
+  //           minimumDate: minimumDate,
+  //           maximumDate: minimumDate.add(const Duration(days: 3 * 30)),
+  //           mode: CupertinoDatePickerMode.date,
+  //           onDateTimeChanged: (DateTime dateTime) {},
+  //         ),
+  //       );
+  //     },
+  //   );
+
+  //   if (pickedDate != null) {
+  //     String isoFormattedDate = pickedDate.toIso8601String();
+  //     date.text = isoFormattedDate;
+  //     departureDate.text =
+  //         "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
+  //   }
+  // }
+
+  Future<void> setTime(BuildContext context) async {
+    TimeOfDay? pickedTime = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+      initialEntryMode: TimePickerEntryMode.input,
+    );
+
+    if (pickedTime != null) {
+      String formattedTime = pickedTime.format(context);
+      selectedTime.text = formattedTime.toString();
+    }
+  }
+
+  setActiveState() {
+    if (riderOriginTextController.value.text.isNotEmpty &&
+        riderDestinationTextController.value.text.isNotEmpty &&
+        date.value.text.isNotEmpty &&
+        selectedTime.value.text.isNotEmpty &&
+        seatAvailable.value.text.isNotEmpty) {
+      isActive.value = true;
+    } else {
+      isActive.value = false;
     }
   }
 }

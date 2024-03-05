@@ -37,7 +37,7 @@ class StudentDiscountsView extends GetView<StudentDiscountsController> {
                           : ColorUtil.kPrimary01),
                 ),
                 TextSpan(
-                  text: ' discount after\nverifying their email ids',
+                  text: ' discount after\nverifying their Email ID',
                   style: TextStyleUtil.k16Bold(),
                 ),
               ],
@@ -61,10 +61,10 @@ class StudentDiscountsView extends GetView<StudentDiscountsController> {
             ),
           ).paddingOnly(bottom: 16.kh),
           Text(
-            'Student email Id',
+            'Student Email ID',
             style: TextStyleUtil.k14Semibold(),
           ).paddingOnly(bottom: 8.kh),
-          const GreenPoolTextField(hintText: 'Enter student email id'),
+          const GreenPoolTextField(hintText: 'Enter student Email ID'),
           const Expanded(child: SizedBox()),
           GreenPoolButton(
             onPressed: () {},

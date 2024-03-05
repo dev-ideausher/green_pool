@@ -11,14 +11,15 @@ import 'package:green_pool/app/services/storage.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:dio/dio.dart' as dio;
+import 'package:path/path.dart' as path;
 import '../../../services/auth.dart';
 import '../../../services/dio/api_service.dart';
-
-import 'package:path/path.dart' as path;
+import '../../profile/controllers/profile_controller.dart';
 
 class ProfileSetupController extends GetxController {
   final pageIndex = 0.obs;
   bool isDriver = false;
+  String name = '';
   Rx<File?> selectedProfileImagePath = Rx<File?>(null);
   Rx<File?> selectedIDImagePath = Rx<File?>(null);
   Rx<File?> selectedVehicleImagePath = Rx<File?>(null);
@@ -34,7 +35,9 @@ class ProfileSetupController extends GetxController {
   TextEditingController gender = TextEditingController();
   TextEditingController city = TextEditingController();
   TextEditingController dateOfBirth = TextEditingController();
+  TextEditingController formattedDateOfBirth = TextEditingController();
 
+  //for vehicle
   TextEditingController model = TextEditingController();
   TextEditingController color = TextEditingController();
   TextEditingController type = TextEditingController();
@@ -62,15 +65,24 @@ class ProfileSetupController extends GetxController {
   // }
 
   Future<void> setDate(BuildContext context) async {
+    DateTime lastDate = DateTime.now()
+        .subtract(const Duration(days: 18 * 365)); // Subtracting 18 years
+
+    DateTime initialDate =
+        DateTime.now().isAfter(lastDate) ? lastDate : DateTime.now();
+
     DateTime? pickedDate = await showDatePicker(
-        context: context,
-        firstDate: DateTime(1950),
-        lastDate: DateTime(2025),
-        initialDate: DateTime.now());
+      context: context,
+      firstDate: DateTime(1950),
+      lastDate: lastDate,
+      initialDate: initialDate,
+    );
 
     if (pickedDate != null) {
       String formattedDate = pickedDate.toString().split(" ")[0];
       dateOfBirth.text = formattedDate;
+      formattedDateOfBirth.text =
+          "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
     }
   }
 
@@ -79,9 +91,9 @@ class ProfileSetupController extends GetxController {
     if (pickedFile != null) {
       selectedProfileImagePath.value = File(pickedFile.path);
       update();
-      Get.off(ReviewPictureView(
-        imagePath: selectedProfileImagePath.value!,
-      ));
+      Get.to(() => ReviewPictureView(
+            imagePath: selectedProfileImagePath.value!,
+          ));
     } else {
       showMySnackbar(msg: 'No image selected');
     }
@@ -160,7 +172,7 @@ class ProfileSetupController extends GetxController {
       // Get.find<GetStorageService>().setProfilePic =
       //     File(selectedProfileImagePath.value!.path);
     } catch (e) {
-      print("userDetailsAPI error: $e");
+      throw Exception(e);
     }
   }
 
@@ -191,12 +203,17 @@ class ProfileSetupController extends GetxController {
       )
     });
 
-    try {
-      await APIManager.postVehicleDetails(body: vehicleData);
-      showMySnackbar(msg: "Profile Setup data filled successfully");
-      Get.off(() => const CarpoolScheduleView(), arguments: isDriver);
-    } catch (error) {
-      print("vehicleDetailsAPI error: $error");
+    if (Get.find<GetStorageService>().profileStatus == true) {
+      try {
+        await APIManager.postVehicleDetails(body: vehicleData);
+        showMySnackbar(msg: "Data filled successfully");
+        Get.off(() => const CarpoolScheduleView(), arguments: isDriver);
+        Get.find<ProfileController>().userInfoAPI();
+      } catch (e) {
+        throw Exception(e);
+      }
+    } else {
+      showMySnackbar(msg: 'Please fill in user details');
     }
   }
 
@@ -230,10 +247,10 @@ class ProfileSetupController extends GetxController {
       return 'Please enter your phone number';
     }
 
-    // Check if the value contains exactly 10 digits
-    final RegExp phoneExp = RegExp(r'^[0-9]{10}$');
+    // Check if the value contains a valid country code and phone number
+    final RegExp phoneExp = RegExp(r'^\+(\+1|91)?[0-9]{10,11}$');
     if (!phoneExp.hasMatch(value)) {
-      return 'Please enter a valid 10-digit phone number';
+      return 'Please enter a valid phone number';
     }
 
     return null; // Return null if the value is valid
@@ -262,12 +279,19 @@ class ProfileSetupController extends GetxController {
 
   String? validateModel(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Please select your Model';
+      return 'Please enter your model';
     }
+
+    // Check if the value contains only letters (and optionally spaces)
+    final RegExp nameExp = RegExp(r'^[a-zA-Z\s]+$');
+    if (!nameExp.hasMatch(value)) {
+      return 'Please enter a valid model';
+    }
+
     return null;
   }
 
-  String? validateType(Object? value) {
+  String? validateVehicleType(Object? value) {
     if (value == null) {
       return 'Please select your Vehicle type';
     }
@@ -285,6 +309,25 @@ class ProfileSetupController extends GetxController {
     if (value == null || value.isEmpty || value.length > 4) {
       return 'Please enter a correct year';
     }
+
+    // Check if value consists only of digits
+    if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
+      return 'Year must contain only digits';
+    }
+
+    // Parse the value to an integer
+    int year;
+    try {
+      year = int.parse(value);
+    } catch (e) {
+      return 'Invalid year format';
+    }
+
+    // Check if the year is within a valid range
+    if (year < 1000 || year > 9999) {
+      return 'Please enter a correct year';
+    }
+
     return null;
   }
 
@@ -292,13 +335,21 @@ class ProfileSetupController extends GetxController {
     if (value == null || value.isEmpty) {
       return 'Please enter a correct license number';
     }
+
+    // Check if value consists only of letters and digits and has a maximum length of 7
+    if (!RegExp(r'^[a-zA-Z0-9]{1,7}$').hasMatch(value)) {
+      return 'License plate must contain only letters and numbers';
+    }
+
     return null;
   }
 
   checkUserValidations() async {
     final isValid = userFormKey.currentState!.validate();
 
-    if (!isValid) {
+    if (!isValid &&
+        isProfileImagePicked.value == false &&
+        isIDPicked.value == false) {
       return showMySnackbar(msg: 'Please fill in all the details');
     } else {
       userFormKey.currentState!.save();

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:green_pool/app/modules/profile/controllers/profile_controller.dart';
 
 import '../constants/image_constant.dart';
 import 'enigma.dart';
@@ -11,6 +12,9 @@ class GetStorageService extends GetxService {
 
   Future<GetStorageService> initState() async {
     await GetStorage.init('runData');
+    intialiseIfNull();
+    // Get.put(ProfileController());
+    // Get.find<GetStorageService>().isPinkMode = isPinkMode;
     return this;
   }
 
@@ -20,8 +24,19 @@ class GetStorageService extends GetxService {
       _runData.read('isLogin') ?? false; // 2:follow system 1:dark 0:light
   set setLoggedIn(bool val) => _runData.write('isLogin', val);
 
+  int get themeMode =>
+      _runData.read('themeMode') ?? 2; // 2:follow system 1:dark 0:light
+  set themeMode(int value) => _runData.write('themeMode', value);
+
+  void intialiseIfNull() {
+    _runData.writeIfNull('themeMode', 0);
+  }
+
   bool get isDriver => _runData.read('isDriver') ?? false;
   set setDriver(bool val) => _runData.write('isDriver', val);
+
+  bool get isPinkMode => _runData.read('isPinkMode') ?? false;
+  set isPinkMode(bool val) => _runData.write('isPinkMode', val);
 
   bool get profileStatus => _runData.read('profileStatus') ?? false;
   set setProfileStatus(bool val) => _runData.write('profileStatus', val);

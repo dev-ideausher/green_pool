@@ -7,6 +7,7 @@ import '../services/text_style_util.dart';
 class GreenPoolDropDown extends StatelessWidget {
   final String hintText;
   final Widget? suffix, prefix;
+  final Color? color;
   final List<DropdownMenuItem<Object>>? items;
   final Function(Object?)? onChanged;
   final String? Function(Object?)? validator;
@@ -18,7 +19,9 @@ class GreenPoolDropDown extends StatelessWidget {
       this.prefix,
       this.items,
       this.onChanged,
-      this.validator, this.autovalidateMode});
+      this.validator,
+      this.autovalidateMode,
+      this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +37,7 @@ class GreenPoolDropDown extends StatelessWidget {
         fillColor: ColorUtil.kGreyColor,
         filled: true,
         hintStyle: TextStyleUtil.k14Regular(
-          color: ColorUtil.kBlack03,
+          color: color ?? ColorUtil.kBlack03,
         ),
         enabledBorder: UnderlineInputBorder(
             borderSide: const BorderSide(color: Colors.transparent),

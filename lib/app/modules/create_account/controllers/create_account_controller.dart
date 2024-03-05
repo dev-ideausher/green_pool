@@ -25,7 +25,6 @@ class CreateAccountController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-
     isDriver = Get.arguments;
   }
 
@@ -100,7 +99,11 @@ class CreateAccountController extends GetxController {
             //     fullName: fullNameController.text,
             //     isDriver: isDriver,
             //     phoneNumber: phoneNumberController.text),
-            arguments: isDriver);
+            arguments: {
+              'isDriver': isDriver,
+              'fullName': fullNameController.value.text,
+              'phoneNumber': phoneNumberController.value.text
+            });
       } else {
         showMySnackbar(msg: 'Terms and Conditions not accepted');
       }

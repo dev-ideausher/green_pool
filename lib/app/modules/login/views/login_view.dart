@@ -44,13 +44,16 @@ class LoginView extends GetView<LoginController> {
                   hintText: 'Enter here',
                   controller: controller.phoneNumberController,
                   validator: (value) => controller.phoneNumberValidator(value),
+                  onchanged: (v) {},
                   autovalidateMode: AutovalidateMode.onUserInteraction,
+                  autofocus: true,
                   prefix: CountryCodePicker(
                     onChanged: (countryCode) {
                       controller.countryCode = countryCode.dialCode ?? "+1";
                     },
                     padding: const EdgeInsets.all(0),
-                    initialSelection: 'US',
+                    initialSelection: 'CA',
+                    countryFilter: const ['CA', 'IN'],
                     showFlag: true,
                     searchDecoration: InputDecoration(
                       focusColor: ColorUtil.kNeutral6,

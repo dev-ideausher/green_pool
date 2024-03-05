@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
-import 'package:green_pool/app/modules/profile_setup/views/profile_setup_view.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
+import '../../../routes/app_pages.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
 import '../controllers/profile_setup_controller.dart';
@@ -54,7 +54,7 @@ class ReviewPictureView extends GetView<ProfileSetupController> {
             const Expanded(child: SizedBox()),
             GreenPoolButton(
               onPressed: () {
-                Get.off(() => const ProfileSetupView());
+                Get.until((route) => Get.currentRoute == Routes.PROFILE_SETUP);
                 controller.isProfileImagePicked.value = true;
               },
               label: 'Done',

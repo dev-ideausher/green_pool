@@ -32,11 +32,14 @@ class PostRideView extends GetView<PostRideController> {
             style: TextStyleUtil.k14Semibold(),
           ).paddingOnly(top: 32.kh),
           GreenPoolTextField(
+            controller: controller.originTextController,
             hintText: 'Enter origin address',
             onTap: () {
               Get.toNamed(Routes.ORIGIN, arguments: LocationValues.origin);
             },
-            controller: controller.originTextController,
+            onchanged: (v) {
+              controller.setActiveStatePostRideView();
+            },
             readOnly: true,
             prefix: Icon(
               Icons.location_on,
@@ -51,12 +54,16 @@ class PostRideView extends GetView<PostRideController> {
             style: TextStyleUtil.k14Semibold(),
           ),
           GreenPoolTextField(
+            controller: controller.destinationTextController,
             hintText: 'Enter a destination',
             onTap: () {
               Get.toNamed(Routes.ORIGIN, arguments: LocationValues.destination);
             },
+            onchanged: (v) {
+              controller.isActive.value = true;
+              print("is active value : ${controller.isActive.value}");
+            },
             readOnly: true,
-            controller: controller.destinationTextController,
             prefix: Icon(
               Icons.location_on,
               size: 24.kh,
@@ -116,19 +123,28 @@ class PostRideView extends GetView<PostRideController> {
             ),
           ).paddingOnly(top: 8.kh, bottom: 16.kh),
           const Expanded(child: SizedBox()),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              GreenPoolButton(
-                onPressed: () => controller.decideRouting(),
-                // onPressed: () => Get.to(const CarpoolScheduleView()),
-                padding: const EdgeInsets.all(0),
-                label: 'Next',
-                fontSize: 14.kh,
-                width: 120.kw,
-                height: 40.kh,
-              ).paddingSymmetric(vertical: 40.kh),
-            ],
+          Obx(
+            () => Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                
+                GreenPoolButton(
+                  onPressed: () => controller.decideRouting(),
+                  padding: const EdgeInsets.all(0),
+                  // isActive: controller.isActive.value,
+                  isActive:
+                      controller.originTextController.value.text.isNotEmpty &&
+                              controller.destinationTextController.value.text
+                                  .isNotEmpty
+                          ? controller.isActive.value
+                          : controller.isActive.value,
+                  label: 'Next',
+                  fontSize: 14.kh,
+                  width: 120.kw,
+                  height: 40.kh,
+                ).paddingSymmetric(vertical: 40.kh),
+              ],
+            ),
           ),
         ],
       ).paddingSymmetric(horizontal: 16.kw),

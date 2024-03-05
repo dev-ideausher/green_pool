@@ -5,8 +5,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
-import 'package:green_pool/app/modules/login/controllers/login_controller.dart';
-import 'package:green_pool/app/modules/verify/views/verification_done.dart';
+import 'package:green_pool/app/modules/profile/controllers/profile_controller.dart';
 import 'package:green_pool/app/services/snackbar.dart';
 import 'package:stacked_firebase_auth/stacked_firebase_auth.dart';
 
@@ -23,12 +22,15 @@ class VerifyController extends GetxController {
   CreateAccData createAccData = CreateAccData();
   final auth = FirebaseAuthenticationService();
   bool isDriver = false;
+  String fullName = '';
+  String phoneNumber = '';
 
   @override
   void onInit() {
     super.onInit();
     // createAccData.phoneNumber = Get.arguments.phoneNumber;
-    isDriver = Get.arguments;
+    isDriver = Get.arguments['isDriver'];
+    phoneNumber = Get.arguments['phoneNumber'];
   }
 
   // @override
@@ -57,29 +59,74 @@ class VerifyController extends GetxController {
   }
 
   loginAPI() async {
+    //   try {
+    //     final response = await APIManager.getLogin();
+    //     final userInfo = UserInfoModel.fromJson(response.data);
+    //     Get.find<GetStorageService>().setUserAppId = userInfo.data?.Id;
+
+    //     //? here if the profileStatus is not true which means it is a new user or the user did not fill the entire user data, so the user will be automatically redirected to the Profile Setup
+    //     if (userInfo.status! &&
+    //         userInfo.data!.profileStatus! &&
+    //         userInfo.data!.vehicleStatus!) {
+    //       Get.find<GetStorageService>().setLoggedIn = true;
+    //       Get.find<GetStorageService>().setProfileStatus = true;
+    //       Get.find<GetStorageService>().setDriver = isDriver;
+    //       Get.find<ProfileController>().userInfoAPI();
+
+    //       //? if user status is logged in then check whether the user is findingRide.
+    //       if (Get.find<HomeController>().findingRide.value) {
+    //         //? if user is not finding a ride then he should be redirected to Carpool schedule afte LOGIN
+    //         // Get.offNamed(Routes.FIND_RIDE, arguments: isDriver);
+    //         Get.back();
+    //       } else {
+    //         //? if user is finding a ride then he should be redirected to Matching ride
+    //         Get.off(() => const CarpoolScheduleView(), arguments: isDriver);
+    //       }
+    //     } else {
+    //       if (isDriver) {
+    //         Get.offNamed(Routes.PROFILE_SETUP, arguments: {
+    //           'isDriver': isDriver,
+    //           'fullName': fullName,
+    //         });
+    //       } else {
+    //         Get.offNamed(Routes.RIDER_PROFILE_SETUP, arguments: {
+    //           'isDriver': isDriver,
+    //           'fullName': fullName,
+    //         });
+    //       }
+    //     }
+    //   } catch (e) {
+    //     log("error: $e");
+    //   }
+    // }
+
     try {
       final response = await APIManager.getLogin();
       final userInfo = UserInfoModel.fromJson(response.data);
       Get.find<GetStorageService>().setUserAppId = userInfo.data?.Id;
 
       //? here if the profileStatus is not true which means it is a new user or the user did not fill the entire user data, so the user will be automatically redirected to the Profile Setup
-      if (userInfo.status! &&
-          userInfo.data!.profileStatus! &&
-          userInfo.data!.vehicleStatus!) {
+      if (userInfo.status!) {
+        if (Get.find<HomeController>().findingRide.value) {
+          if (userInfo.data!.profileStatus!) {
+            // Get.offNamed(Routes.FIND_RIDE, arguments: isDriver);
+            Get.back();
+          } else {
+            Get.offNamed(Routes.RIDER_PROFILE_SETUP, arguments: isDriver);
+          }
+        } else {
+          if (userInfo.data!.profileStatus! && userInfo.data!.vehicleStatus!) {
+            Get.off(() => const CarpoolScheduleView(), arguments: isDriver);
+            // Get.until((route) => Get.currentRoute == Routes.CARPOOL_SCHEDULE);
+          } else {
+            Get.offNamed(Routes.PROFILE_SETUP, arguments: isDriver);
+          }
+        }
         Get.find<GetStorageService>().setLoggedIn = true;
         Get.find<GetStorageService>().setProfileStatus = true;
         Get.find<GetStorageService>().setDriver = isDriver;
-
-        //? if user status is logged in then check whether the user is findingRide(from homeController).
-        if (Get.find<HomeController>().findingRide.value) {
-          //? if user is not finding a ride then he should be redirected to Carpool schedule afte LOGIN
-          Get.offNamed(Routes.MATCHING_RIDES, arguments: isDriver);
-        } else {
-          //? if user is finding a ride then he should be redirected to Matching ride
-          Get.off(() => const CarpoolScheduleView(), arguments: isDriver);
-        }
+        Get.find<ProfileController>().userInfoAPI();
       } else {
-        //? user does not exist so the user will be REGISTERED from backend OR redirected to the create acc page
         if (isDriver) {
           Get.offNamed(Routes.PROFILE_SETUP, arguments: isDriver);
         } else {
@@ -90,22 +137,4 @@ class VerifyController extends GetxController {
       log("error: $e");
     }
   }
-
-  // registerAPI({required Map<String, dynamic> userData}) async {
-  //   try {
-  //     final response = await APIManager.postRegister(body: userData);
-  //     print('STATUS CODE: ${response.statusCode}');
-  //     print('RESPONSE BODY: ${response.data}');
-
-  //     if (response.data['status']) {
-  //       Get.to(() => const VerificationDone(),
-  //           arguments: createAccData.isDriver);
-  //     } else {
-  //       showMySnackbar(msg: response.data['message']);
-  //       print('REGISTRATION FAILED');
-  //     }
-  //   } catch (e) {
-  //     log(" ERROR: $e");
-  //   }
-  // }
 }

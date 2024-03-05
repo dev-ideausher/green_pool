@@ -39,10 +39,13 @@ class LoginController extends GetxController {
 
       await Get.offNamed(
         Routes.VERIFY,
-        arguments: isDriver,
+        arguments: {
+          'isDriver': isDriver,
+          'phoneNumber': phoneNumberController.value.text
+        },
       );
     } catch (e) {
-      print('error: $e');
+      throw Exception(e);
     }
   }
 

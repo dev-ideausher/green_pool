@@ -3,14 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/components/greenpool_textfield.dart';
-import 'package:green_pool/app/modules/post_ride/views/guidelines_view.dart';
+import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../services/colors.dart';
 import '../../../services/text_style_util.dart';
+import '../controllers/post_ride_controller.dart';
 
-class PricingView extends GetView {
+class PricingView extends GetView<PostRideController> {
   const PricingView({super.key});
   @override
   Widget build(BuildContext context) {
@@ -51,13 +52,15 @@ class PricingView extends GetView {
               style: TextStyleUtil.k14Semibold(color: ColorUtil.kBlack04),
             ).paddingOnly(bottom: 8.kh),
             SizedBox(
-                width: 120.kw,
-                height: 53.kh,
+                width: 50.w,
+                height: 10.h,
                 child: GreenPoolTextField(
                   hintText: '',
-                  onchanged: (val) {
-                    controller.pricePerSeat = int.parse(val!);
-                  },
+                  onchanged: (val) => controller.setActiveStatePricing(),
+                  validator: (v) => controller.fareValidator(v),
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  autofocus: true,
+                  controller: controller.priceTextController,
                   prefix: Text(
                     '\$',
                     style: TextStyleUtil.k14Regular(
@@ -89,9 +92,12 @@ class PricingView extends GetView {
               hintText: 'Enter text here',
               maxLines: 8,
             ).paddingOnly(bottom: 50.kh),
-            GreenPoolButton(
-              onPressed: () => Get.to(() => const GuidelinesView()),
-              label: 'Next',
+            Obx(
+              () => GreenPoolButton(
+                onPressed: () => Get.toNamed(Routes.GUIDELINES_VIEW),
+                isActive: controller.isActivePricingButton.value,
+                label: 'Next',
+              ),
             ),
           ],
         ).paddingSymmetric(horizontal: 16.kw),

@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/modules/post_ride/controllers/post_ride_controller.dart';
 import 'package:green_pool/app/modules/post_ride/views/green_pool_chip.dart';
-import 'package:green_pool/app/modules/post_ride/views/pricing_view.dart';
+import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
@@ -106,16 +106,11 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                     style: TextStyleUtil.k14Semibold(),
                   ),
                   GreenPoolTextField(
-                      controller: controller.selectedDateOneTime,
-                      onchanged: (p0) {
-                        controller.selectedDateOneTime.text = p0.toString();
-                      },
+                      controller: controller.formattedOneTimeDate,
                       hintText: 'Select date',
                       readOnly: true,
-                      initialValue: controller.selectedDateOneTime.value.text
-                          .split("TO")
-                          .toString(),
-                      obscureText: false,
+                      onchanged: (val) =>
+                          controller.setActiveStateCarpoolSchedule(),
                       suffix: SizedBox(
                         child: SvgPicture.asset(
                           ImageConstant.svgIconCalendar,
@@ -128,7 +123,7 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                               BlendMode.srcIn),
                         ).paddingOnly(right: 16.kw),
                       ),
-                      onPressedSuffix: () {
+                      onTap: () {
                         controller.setDate(context);
                       }).paddingOnly(top: 8.kh, bottom: 16.kh),
                   Text(
@@ -136,15 +131,14 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                     style: TextStyleUtil.k14Semibold(),
                   ),
                   GreenPoolTextField(
-                    //TODO: select time
                     hintText: 'Select time',
                     controller: controller.selectedTimeOneTime,
-                    onchanged: (p0) {
-                      controller.selectedTimeOneTime.text = p0.toString();
+                    onchanged: (val) =>
+                        controller.setActiveStateCarpoolSchedule(),
+                    onTap: () {
+                      controller.setTime(context);
                     },
-                    onTap: () {},
-                    obscureText: false,
-                    enabled: true,
+                    readOnly: true,
                   ).paddingOnly(top: 8.kh, bottom: 16.kh),
 
                   //RETURN TRIP
@@ -199,10 +193,11 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                             ),
                             GreenPoolTextField(
                               hintText: 'Select time',
-                              onTap: () {},
-                              obscureText: false,
-                              //TODO: controller
-                              enabled: true,
+                              onTap: () {
+                                controller.setRecurringTime(context);
+                              },
+                              controller: controller.selectedRecurringTime,
+                              readOnly: true,
                             ).paddingOnly(top: 8.kh, bottom: 16.kh),
                           ],
                         )),
@@ -239,16 +234,8 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                           ),
                           GreenPoolTextField(
                             hintText: 'Select date',
-                            obscureText: false,
-                            enabled: true,
-                            controller: controller.selectedDateReturnTrip,
-                            onchanged: (p0) {
-                              controller.selectedDateReturnTrip.text =
-                                  p0.toString();
-                            },
-                            initialValue:
-                                controller.selectedDateReturnTrip.text,
-                            onPressedSuffix: () {
+                            controller: controller.formattedReturnDate,
+                            onTap: () {
                               controller.setReturnDate(context);
                             },
                             readOnly: true,
@@ -273,14 +260,11 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                           ),
                           GreenPoolTextField(
                             hintText: 'Select time',
-                            onTap: () {},
-                            obscureText: false,
-                            controller: controller.selectedTimeReturnTrip,
-                            onchanged: (p0) {
-                              controller.selectedTimeReturnTrip.text =
-                                  p0.toString();
+                            onTap: () {
+                              controller.setReturnTime(context);
                             },
-                            enabled: true,
+                            readOnly: true,
+                            controller: controller.selectedTimeReturnTrip,
                           ).paddingOnly(top: 8.kh),
                         ],
                       )
@@ -373,12 +357,13 @@ class CarpoolScheduleView extends GetView<PostRideController> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text(
-                    'Luggage Weight : ',
-                    style: TextStyleUtil.k14Semibold(color: ColorUtil.kBlack04),
-                  ).paddingOnly(top: 4.kh, bottom: 16.kh),
-
-                  // Text(controller.getTextAtIndex(index)),
+                  Obx(
+                    () => Text(
+                      'Luggage Weight : ${controller.selectedCHIP.value}',
+                      style:
+                          TextStyleUtil.k14Semibold(color: ColorUtil.kBlack04),
+                    ).paddingOnly(top: 4.kh, bottom: 16.kh),
+                  ),
                 ],
               ),
               Obx(
@@ -386,37 +371,42 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     GreenPoolChip(
-                      controller: controller,
-                      radius: 40.kh,
-                      labelText: 'No',
-                      selected: controller.noLuggage.value,
-                      onPressed: () =>
-                          controller.selectLuggage(controller.noLuggage),
-                    ),
+                        controller: controller,
+                        radius: 40.kh,
+                        labelText: 'No',
+                        selected: controller.selectedCHIP.value == 'No'
+                            ? true
+                            : false,
+                        onPressed: () {
+                          controller.selectedCHIP.value = 'No';
+                        }),
                     GreenPoolChip(
-                      controller: controller,
-                      radius: 40.kh,
-                      labelText: 'S',
-                      selected: controller.smallLuggage.value,
-                      onPressed: () =>
-                          controller.selectLuggage(controller.smallLuggage),
-                    ),
+                        controller: controller,
+                        radius: 40.kh,
+                        labelText: 'S',
+                        selected:
+                            controller.selectedCHIP.value == 'S' ? true : false,
+                        onPressed: () {
+                          controller.selectedCHIP.value = 'S';
+                        }),
                     GreenPoolChip(
-                      controller: controller,
-                      radius: 40.kh,
-                      labelText: 'M',
-                      selected: controller.mediumLuggage.value,
-                      onPressed: () =>
-                          controller.selectLuggage(controller.mediumLuggage),
-                    ),
+                        controller: controller,
+                        radius: 40.kh,
+                        labelText: 'M',
+                        selected:
+                            controller.selectedCHIP.value == 'M' ? true : false,
+                        onPressed: () {
+                          controller.selectedCHIP.value = 'M';
+                        }),
                     GreenPoolChip(
-                      controller: controller,
-                      radius: 40.kh,
-                      labelText: 'L',
-                      selected: controller.largeLuggage.value,
-                      onPressed: () =>
-                          controller.selectLuggage(controller.largeLuggage),
-                    ),
+                        controller: controller,
+                        radius: 40.kh,
+                        labelText: 'L',
+                        selected:
+                            controller.selectedCHIP.value == 'L' ? true : false,
+                        onPressed: () {
+                          controller.selectedCHIP.value = 'L';
+                        }),
                   ],
                 ),
               ),
@@ -494,8 +484,9 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   GreenPoolButton(
-                    onPressed: () => Get.to(() => const PricingView()),
+                    onPressed: () => Get.toNamed(Routes.PRICING_VIEW),
                     padding: const EdgeInsets.all(0),
+                    // isActive: controller.isActiveCarpoolButton.value,
                     label: 'Next',
                     fontSize: 14.kh,
                     width: 120.kw,

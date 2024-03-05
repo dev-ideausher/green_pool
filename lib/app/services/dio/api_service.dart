@@ -23,6 +23,11 @@ class APIManager {
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
           .post(Endpoints.riderFindRide, data: jsonEncode(body));
 
+  static Future<Response> postConfirmRide({required dynamic body}) async =>
+      // rider will send request to matching driver for a ride
+      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+          .post(Endpoints.riderRideRequest, data: jsonEncode(body));
+
   static Future<Response> postVehicleDetails({required dynamic body}) async =>
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
           .post(Endpoints.vehicleDetails,
@@ -44,9 +49,28 @@ class APIManager {
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
           .get(Endpoints.userLogin);
 
-  static Future<Response> getUserByID() async =>
+  static Future<Response> getUserByID() async => await DioClient(
+        Dio(),
+        showSnakbar: true,
+      ).get(Endpoints.userByID);
+
+  static Future<Response> getAllMyRides() async =>
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
-          .get(Endpoints.userByID);
+          .get(Endpoints.driverMyRides);
+
+  static Future<Response> getMatchingRides({required String rideId}) async =>
+      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+          .get(Endpoints.matchingRides + rideId);
+
+  static Future<Response> getAllDriverSendRequest(
+          {required String driverId}) async =>
+      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+          .get(Endpoints.allDriverSendRequests + driverId);
+
+  static Future<Response> getAllDriverConfirmRequest(
+          {required String driverRideId}) async =>
+      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+          .get(Endpoints.allDriverConfirmRequests + driverRideId);
 
   // patch
   static Future<Response> userDetails({required dynamic body}) async =>

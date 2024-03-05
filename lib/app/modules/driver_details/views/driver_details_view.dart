@@ -37,54 +37,17 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                     Stack(
                       children: [
                         Container(
-                          height: 64.kh,
-                          width: 64.kw,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                          ),
-                          child: Image.asset(
-                            ImageConstant.pngUserSquare,
-                            fit: BoxFit.cover,
-                          ),
-                        ).paddingOnly(bottom: 8.kh),
-                        Positioned(
-                          top: 52.kh,
-                          left: 8.kw,
-                          child: Container(
-                            width: 48.kw,
-                            height: 20.kh,
-                            padding: EdgeInsets.symmetric(horizontal: 8.kw),
-                            decoration: BoxDecoration(
-                                color: Get.find<ProfileController>()
-                                        .isSwitched
-                                        .value
-                                    ? ColorUtil.kPrimary3PinkMode
-                                    : ColorUtil.kSecondary01,
-                                borderRadius: BorderRadius.circular(16.kh)),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.star,
-                                  color: Get.find<ProfileController>()
-                                          .isSwitched
-                                          .value
-                                      ? ColorUtil.kWhiteColor
-                                      : ColorUtil.kYellowColor,
-                                  size: 12.kh,
-                                ).paddingOnly(right: 2.kw),
-                                Text(
-                                  '4.5',
-                                  style: TextStyleUtil.k12Semibold(
-                                      color: Get.find<ProfileController>()
-                                              .isSwitched
-                                              .value
-                                          ? ColorUtil.kBlack02
-                                          : ColorUtil.kWhiteColor),
-                                ),
-                              ],
+                            height: 74.kh,
+                            width: 74.kw,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
                             ),
-                          ),
-                        ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(8.kh),
+                              child: Image(
+                                  image: NetworkImage(
+                                      "${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.driverDetails?[0]?.idPic?.url}")),
+                            )).paddingOnly(bottom: 8.kh),
                       ],
                     ).paddingOnly(right: 16.kw, bottom: 16.kh),
                     //for name and date
@@ -96,7 +59,8 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'Sam Alexander',
+                                // 'Sam Alexander',
+                                "${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.driverDetails?[0]?.fullName}",
                                 style: TextStyleUtil.k16Bold(),
                               ),
                               Text.rich(
@@ -108,7 +72,8 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                                           color: ColorUtil.kSecondary01),
                                     ),
                                     TextSpan(
-                                      text: '\$ 8',
+                                      text:
+                                          '\$ ${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.fair}',
                                       style: TextStyleUtil.k16Semibold(
                                           fontSize: 16.kh,
                                           color: ColorUtil.kSecondary01),
@@ -135,7 +100,8 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                                   ).paddingOnly(right: 4.kw),
                                   //might give problems with big names, have to cut short month names
                                   Text(
-                                    '07 Nov 2023, 3:00pm',
+                                    // '07 Nov 2023, 3:00pm',
+                                    "${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.date.toString().split("T")[0]}  ${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.time}",
                                     style: TextStyleUtil.k12Regular(
                                         color: ColorUtil.kBlack03),
                                   ),
@@ -153,7 +119,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                                         : ColorUtil.kSecondary01,
                                   ).paddingOnly(right: 8.kw),
                                   Text(
-                                    '2 seats',
+                                    "${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.preferences?.seatAvailable} seats",
                                     style: TextStyleUtil.k14Regular(
                                         color: ColorUtil.kBlack03),
                                   ),
@@ -185,7 +151,8 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                               color: ColorUtil.kBlack02),
                         ).paddingOnly(right: 8.kw),
                         Text(
-                          '1100 McIntosh St, Regina',
+                          // '1100 McIntosh St, Regina',
+                          "${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.origin?.name}",
                           style: TextStyleUtil.k14Regular(
                               color: ColorUtil.kBlack02),
                         ),
@@ -208,7 +175,8 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                                 color: ColorUtil.kBlack02),
                           ).paddingOnly(right: 8.kw),
                           Text(
-                            '681 Chrislea Rd, Woodbridge',
+                            // '681 Chrislea Rd, Woodbridge',
+                            "${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.destination?.name}",
                             style: TextStyleUtil.k14Regular(
                                 color: ColorUtil.kBlack02),
                           ),
@@ -260,7 +228,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                           size: 12.kh,
                         ).paddingOnly(right: 4.kw),
                         Text(
-                          '4.5',
+                          "${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.totalRating}",
                           style: TextStyleUtil.k14Regular(),
                         ),
                       ]),
@@ -275,7 +243,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Text(
-                      '32 people',
+                      "${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.totalRiders} people",
                       style:
                           TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                     ),
@@ -289,7 +257,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Text(
-                      'in 2023',
+                      'in ${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.driverDetails?[0]?.createdAt.toString().split("-")[0]}',
                       style:
                           TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                     ),
@@ -305,7 +273,19 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
               'Co-Pasengers',
               style: TextStyleUtil.k14Bold(),
             ).paddingOnly(bottom: 16.kh),
-            const CoPassengerList().paddingOnly(bottom: 10.kh),
+            CoPassengerList(
+                    //TODO name(index issue) count(if 0 then what) and image
+
+                    //   itemcount: controller.matchingRidesmodel
+                    //       .data?[controller.matchingRideIndex]?.ridersDetatils?.length,
+                    //   image: Image(
+                    //     image: NetworkImage(
+                    //         "${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.ridersDetatils?[0]?.profilePic?.url}"),
+                    //   ),
+                    //   name:
+                    //       "${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.ridersDetatils?[0]?.fullName.toString().split(" ")[0]}\n${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.ridersDetatils?[0]?.fullName.toString().split(" ")[1]}",
+                    )
+                .paddingOnly(bottom: 10.kh),
             const GreenPoolDivider().paddingOnly(bottom: 16.kh),
 
             //Vehicle details
@@ -315,23 +295,28 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
             ).paddingOnly(bottom: 16.kh),
             Row(
               children: [
-                Image.asset(
-                  ImageConstant.pngUserSquare,
-                  height: 64.kh,
-                  width: 64.kw,
-                  fit: BoxFit.cover,
-                ).paddingOnly(right: 8.kh),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(8.kh),
+                  child: Image(
+                    height: 64.kh,
+                    width: 64.kw,
+                    image: NetworkImage(
+                        "${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.driverDetails?[0]?.vehicleDetails?[0]?.vehiclePic?.url}"),
+                  ).paddingOnly(right: 8.kh),
+                ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Toyota Corolla',
+                      // 'Toyota Corolla',
+                      "${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.driverDetails?[0]?.vehicleDetails?[0]?.model}",
                       style: TextStyleUtil.k16Bold(color: ColorUtil.kBlack02),
                     ).paddingOnly(bottom: 4.kh),
                     Row(
                       children: [
                         Text(
-                          'Sedan',
+                          // 'Sedan',
+                          "${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.driverDetails?[0]?.vehicleDetails?[0]?.type}",
                           style: TextStyleUtil.k14Semibold(
                               color: ColorUtil.kBlack03),
                         ),
@@ -341,7 +326,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                           color: ColorUtil.kBlack03,
                         ).paddingSymmetric(vertical: 2.5.kh, horizontal: 8.kw),
                         Text(
-                          'ABC 123',
+                          "${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.driverDetails?[0]?.vehicleDetails?[0]?.licencePlate}",
                           style: TextStyleUtil.k14Semibold(
                               color: ColorUtil.kBlack03),
                         ),
@@ -354,6 +339,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
             const GreenPoolDivider().paddingOnly(top: 8.kh, bottom: 16.kh),
 
             //Features available
+            ///TODO Features available
             Text(
               'Features available',
               style: TextStyleUtil.k14Bold(),
@@ -400,7 +386,8 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
             ),
             const GreenPoolDivider().paddingOnly(top: 8.kh),
             GreenPoolButton(
-              onPressed: () => Get.offAll(() => const BottomNavigationView()),
+              // onPressed: () => Get.offAll(() => const BottomNavigationView()),
+              onPressed: () => controller.confirmRideAPI(),
               label: 'Request Ride',
             ).paddingSymmetric(vertical: 40.kh),
           ],

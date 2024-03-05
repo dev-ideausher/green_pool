@@ -8,7 +8,7 @@ class GreenPoolTextField extends StatelessWidget {
   final String? Function(String?)? validator;
   final TextEditingController? controller;
   final String hintText;
-  final String? initialValue;
+  // final String? initialValue;
   final bool? obscureText, readOnly;
   final Function(String?)? onchanged, onSaved;
   final int? maxLines;
@@ -31,7 +31,7 @@ class GreenPoolTextField extends StatelessWidget {
       this.onTap,
       this.autofocus,
       this.onPressedSuffix,
-      this.initialValue,
+      // this.initialValue,
       this.readOnly,
       this.autovalidateMode,
       this.onSaved});

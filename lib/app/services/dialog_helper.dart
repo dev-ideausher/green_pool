@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../modules/profile/controllers/profile_controller.dart';
 import 'colors.dart';
 import 'responsive_size.dart';
 
@@ -24,8 +25,12 @@ class DialogHelper {
                       ),
                     ),
                     padding: EdgeInsets.all(12.kh),
-                    child: const Center(
-                      child: CircularProgressIndicator(),
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        color: Get.find<ProfileController>().isSwitched.value
+                            ? ColorUtil.kPrimary3PinkMode
+                            : ColorUtil.kPrimary01,
+                      ),
                     )),
               ),
               // message != null ? SizedBox(height: 8.kh) : const SizedBox(),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:green_pool/app/data/emergencyContactsModel.dart';
+import 'package:green_pool/app/data/emergency_contacts_model.dart';
 import 'package:green_pool/app/services/auth.dart';
 import 'package:green_pool/app/services/dio/api_service.dart';
 
@@ -33,7 +33,7 @@ class EmergencyContactsController extends GetxController {
         body: emergencyModel.toJson(),
       );
     } catch (e) {
-      print('emcontact error: $e');
+      throw Exception(e);
     }
   }
 }

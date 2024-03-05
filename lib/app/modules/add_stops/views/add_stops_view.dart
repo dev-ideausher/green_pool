@@ -30,9 +30,7 @@ class AddStopsView extends GetView<AddStopsController> {
                 color: Get.find<ProfileController>().isSwitched.value
                     ? ColorUtil.kPrimary3PinkMode
                     : ColorUtil.kSecondary01,
-              ), 
-              
-              
+              ),
             ).paddingOnly(top: 32.kh, bottom: 16.kh),
           ],
         ).paddingSymmetric(horizontal: 16.kw));

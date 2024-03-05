@@ -15,9 +15,12 @@ import '../../../services/storage.dart';
 import 'package:path/path.dart' as path;
 import 'package:dio/dio.dart' as dio;
 
+import '../../profile/controllers/profile_controller.dart';
+
 class RiderProfileSetupController extends GetxController {
   RxBool isPicked = false.obs;
   bool isDriver = false;
+  String name = '';
   Rx<File?> selectedProfileImagePath = Rx<File?>(null);
   Rx<File?> selectedIDImagePath = Rx<File?>(null);
   RxBool isProfileImagePicked = false.obs;
@@ -31,11 +34,15 @@ class RiderProfileSetupController extends GetxController {
   TextEditingController gender = TextEditingController();
   TextEditingController city = TextEditingController();
   TextEditingController dateOfBirth = TextEditingController();
+  TextEditingController formattedDateOfBirth = TextEditingController();
 
-  // @override
-  // void onInit() {
-  //   super.onInit();
-  // }
+  GlobalKey<FormState> userFormKey = GlobalKey<FormState>();
+
+  @override
+  void onInit() {
+    super.onInit();
+    isDriver = Get.arguments;
+  }
 
   // @override
   // void onReady() {
@@ -47,15 +54,24 @@ class RiderProfileSetupController extends GetxController {
   //   super.onClose();
   // }
   Future<void> setDate(BuildContext context) async {
+    DateTime lastDate = DateTime.now()
+        .subtract(const Duration(days: 18 * 365)); // Subtracting 18 years
+
+    DateTime initialDate =
+        DateTime.now().isAfter(lastDate) ? lastDate : DateTime.now();
+
     DateTime? pickedDate = await showDatePicker(
-        context: context,
-        firstDate: DateTime(1950),
-        lastDate: DateTime(2025),
-        initialDate: DateTime.now());
+      context: context,
+      firstDate: DateTime(1950),
+      lastDate: lastDate,
+      initialDate: initialDate,
+    );
 
     if (pickedDate != null) {
       String formattedDate = pickedDate.toString().split(" ")[0];
       dateOfBirth.text = formattedDate;
+      formattedDateOfBirth.text =
+          "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
     }
   }
 
@@ -64,9 +80,9 @@ class RiderProfileSetupController extends GetxController {
     if (pickedFile != null) {
       selectedProfileImagePath.value = File(pickedFile.path);
       update();
-      Get.off(RiderReviewPictureView(
-        imagePath: selectedProfileImagePath.value!,
-      ));
+      Get.to(() => RiderReviewPictureView(
+            imagePath: selectedProfileImagePath.value!,
+          ));
     } else {
       showMySnackbar(msg: 'No image selected');
     }
@@ -125,17 +141,86 @@ class RiderProfileSetupController extends GetxController {
       showMySnackbar(msg: responses.data['message']);
       Get.find<GetStorageService>().setUserName = fullName.text;
       Get.find<GetStorageService>().setProfileStatus = true;
-      if (gender.text == "Female") {
-        Get.find<GetStorageService>().setFemale = true;
-      } else {
-        Get.find<GetStorageService>().setFemale = false;
-      }
-      // Get.find<GetStorageService>().setProfilePic =
-      //     File(selectedProfileImagePath.value!.path);
-      showMySnackbar(msg: responses.data['message']);
-      Get.offNamed(Routes.MATCHING_RIDES);
+      // showMySnackbar(msg: responses.data['message']);
+      Get.find<ProfileController>().userInfoAPI();
+      // Get.offNamed(Routes.FIND_RIDE, arguments: isDriver);
+      Get.until((route) => Get.currentRoute == Routes.FIND_RIDE);
     } catch (e) {
-      print("userDetailsAPI error: $e");
+      throw Exception(e);
+    }
+  }
+
+  String? validateEmail(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter your email';
+    } else if (!GetUtils.isEmail(value)) {
+      return 'Please enter a valid email address';
+    }
+    return null;
+  }
+
+  String? nameValidator(String? value) {
+    // Check if the value is empty
+    if (value == null || value.isEmpty) {
+      return 'Please enter your name';
+    }
+
+    // Check if the value contains only letters (and optionally spaces)
+    final RegExp nameExp = RegExp(r'^[a-zA-Z\s]+$');
+    if (!nameExp.hasMatch(value)) {
+      return 'Please enter a valid name';
+    }
+
+    return null; // Return null if the value is valid
+  }
+
+  String? phoneNumberValidator(String? value) {
+    // Check if the value is empty
+    if (value == null || value.isEmpty) {
+      return 'Please enter your phone number';
+    }
+
+    // Check if the value contains a valid country code and phone number
+    final RegExp phoneExp = RegExp(r'^\+(\+1|91)?[0-9]{10,11}$');
+    if (!phoneExp.hasMatch(value)) {
+      return 'Please enter a valid phone number';
+    }
+
+    return null; // Return null if the value is valid
+  }
+
+  String? validateGender(Object? value) {
+    if (value == null) {
+      return 'Please select your gender';
+    }
+    return null;
+  }
+
+  String? validateCity(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please select your city';
+    }
+    return null;
+  }
+
+  String? validateDOB(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please select your Date of birth';
+    }
+    return null;
+  }
+
+  checkUserValidations() async {
+    final isValid = userFormKey.currentState!.validate();
+
+    if (!isValid
+        // && selectedIDImagePath.value!.path.isEmpty &&
+        // selectedProfileImagePath.value!.path.isEmpty
+        ) {
+      return showMySnackbar(msg: 'Please fill in all the details');
+    } else {
+      userFormKey.currentState!.save();
+      await userDetailsAPI();
     }
   }
 }

@@ -34,6 +34,9 @@ class FindRideView extends GetView<FindRideController> {
           ).paddingOnly(top: 32.kh),
           GreenPoolTextField(
             hintText: 'Enter origin address',
+            onchanged: (v) {
+              controller.setActiveState();
+            },
             onTap: () {
               Get.toNamed(Routes.ORIGIN,
                   arguments: LocationValues.findRideOrigin);
@@ -54,6 +57,9 @@ class FindRideView extends GetView<FindRideController> {
           ),
           GreenPoolTextField(
             hintText: 'Enter a destination',
+            onchanged: (v) {
+              controller.setActiveState();
+            },
             onTap: () {
               Get.toNamed(Routes.ORIGIN,
                   arguments: LocationValues.findRideDestination);
@@ -78,8 +84,11 @@ class FindRideView extends GetView<FindRideController> {
                 width: 55.w,
                 child: GreenPoolTextField(
                   hintText: 'Enter Date',
-                  controller: controller.date,
+                  controller: controller.departureDate,
                   readOnly: true,
+                  onchanged: (v) {
+                    controller.setActiveState();
+                  },
                   onTap: () {
                     controller.setDate(context);
                   },
@@ -97,7 +106,14 @@ class FindRideView extends GetView<FindRideController> {
                 width: 36.w,
                 child: GreenPoolTextField(
                   hintText: 'Time',
-                  controller: controller.time,
+                  controller: controller.selectedTime,
+                  onchanged: (v) {
+                    controller.setActiveState();
+                  },
+                  readOnly: true,
+                  onTap: () {
+                    controller.setTime(context);
+                  },
                   prefix: SvgPicture.asset(
                     ImageConstant.svgIconTime,
                     colorFilter: ColorFilter.mode(
@@ -117,8 +133,8 @@ class FindRideView extends GetView<FindRideController> {
           GreenPoolTextField(
             hintText: 'Enter number of seats',
             controller: controller.seatAvailable,
-            onchanged: (p0) {
-              controller.numberOfSeatAvailable = int.parse(p0!);
+            onchanged: (v) {
+              controller.setActiveState();
             },
             prefix: Icon(
               Icons.time_to_leave,
@@ -128,11 +144,14 @@ class FindRideView extends GetView<FindRideController> {
             ),
           ),
           const Expanded(child: SizedBox()),
-          GreenPoolButton(
-            onPressed: () => controller.decideRouting(),
-            padding: const EdgeInsets.all(0),
-            label: 'Find matching rides',
-          ).paddingSymmetric(vertical: 40.kh),
+          Obx(
+            () => GreenPoolButton(
+              padding: const EdgeInsets.all(0),
+              onPressed: () => controller.decideRouting(),
+              isActive: controller.isActive.value,
+              label: 'Find matching rides',
+            ).paddingSymmetric(vertical: 40.kh),
+          ),
         ],
       ).paddingSymmetric(horizontal: 16.kw),
     );

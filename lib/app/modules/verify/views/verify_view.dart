@@ -39,7 +39,7 @@ class VerifyView extends GetView<VerifyController> {
                           style: TextStyleUtil.k16Regular(
                               color: ColorUtil.kBlack04)),
                       TextSpan(
-                          text: controller.createAccData.phoneNumber,
+                          text: controller.phoneNumber,
                           style: TextStyleUtil.k16Regular()),
                     ],
                   ),
@@ -49,6 +49,7 @@ class VerifyView extends GetView<VerifyController> {
                   length: 6,
                   controller: controller.otpController,
                   keyboardType: const TextInputType.numberWithOptions(),
+                  autofocus: true,
                   closeKeyboardWhenCompleted: true,
                   onCompleted: (value) async {
                     await controller.verifyOTP();

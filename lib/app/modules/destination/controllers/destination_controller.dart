@@ -27,7 +27,7 @@ class DestinationController extends GetxController {
     String baseURL =
         'https://maps.googleapis.com/maps/api/place/autocomplete/json';
     String request =
-        '$baseURL?input=$input&key=$apiKey&sessiontoken=$_sessionToken';
+        '$baseURL?input=$input&radius=500&key=$apiKey&sessiontoken=$_sessionToken';
 
     var response = await http.get(Uri.parse(request));
 
@@ -55,7 +55,7 @@ class DestinationController extends GetxController {
       destinationLatitude.value = lat;
       destinationLongitude.value = long;
     } catch (e) {
-      print("getLatLong error: $e");
+      throw Exception(e);
     }
   }
 

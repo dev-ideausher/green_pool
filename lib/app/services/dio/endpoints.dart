@@ -21,11 +21,16 @@ class Endpoints {
   static const String bugReport = "company/appBugReportByUser";
   static const String driverPostRide = "driver/ride";
   static const String riderFindRide = "rider/ride";
+  static const String riderRideRequest = "rider/confirmRide";
 
   //get url
   static const String userLogin = "auth/login";
   static const String userByID = "user";
   static const String emergencyContacts = "user/emergencyContacts";
+  static const String driverMyRides = "driver/myrides";
+  static const String matchingRides = "rider/driversRequests/";
+  static const String allDriverSendRequests = "driver/sendRequestOfRiders/";
+  static const String allDriverConfirmRequests = "driver/ridersRequest/";
 
   //patch url
   static const String userDetails = "user/updateProfileDetails";

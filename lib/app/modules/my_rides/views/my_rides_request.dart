@@ -38,7 +38,13 @@ class RideRequests extends GetView<MyRidesController> {
           child: Column(
             children: [
               TabBar(
-                  onTap: (index) {},
+                  onTap: (index) async {
+                    if (index == 1) {
+                      await controller.allSendRequestAPI();
+                    } else {
+                      await controller.allConfirmRequestAPI();
+                    }
+                  },
                   indicatorSize: TabBarIndicatorSize.tab,
                   splashBorderRadius: BorderRadius.circular(4.kh),
                   unselectedLabelStyle:

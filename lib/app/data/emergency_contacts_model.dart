@@ -50,13 +50,13 @@ class EmergencyModel {
   });
   EmergencyModel.fromJson(Map<String, dynamic> json) {
     Id = json['_id']?.toString();
-  if (json['emergencyContacts'] != null) {
-  final v = json['emergencyContacts'];
-  final arr0 = <EmergencyModelEmergencyContacts>[];
-  v.forEach((v) {
-  arr0.add(EmergencyModelEmergencyContacts.fromJson(v));
-  });
-    emergencyContacts = arr0;
+    if (json['emergencyContacts'] != null) {
+      final v = json['emergencyContacts'];
+      final arr0 = <EmergencyModelEmergencyContacts>[];
+      v.forEach((v) {
+        arr0.add(EmergencyModelEmergencyContacts.fromJson(v));
+      });
+      emergencyContacts = arr0;
     }
   }
   Map<String, dynamic> toJson() {
@@ -65,9 +65,9 @@ class EmergencyModel {
     if (emergencyContacts != null) {
       final v = emergencyContacts;
       final arr0 = [];
-  v!.forEach((v) {
-  arr0.add(v!.toJson());
-  });
+      v!.forEach((v) {
+        arr0.add(v!.toJson());
+      });
       data['emergencyContacts'] = arr0;
     }
     return data;

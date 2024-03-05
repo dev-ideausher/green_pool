@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
 import 'package:stacked_firebase_auth/stacked_firebase_auth.dart';
-import '../routes/app_pages.dart';
 import 'snackbar.dart';
 import 'storage.dart';
 import 'dart:developer';
@@ -149,8 +148,8 @@ class AuthService extends GetxService {
     final mytoken = await _firebaseAuth.currentUser!.getIdToken(true);
     final fireUid = _firebaseAuth.currentUser!.uid;
     final userName = _firebaseAuth.currentUser?.displayName;
-    final userPhoneNumber = _firebaseAuth.currentUser?.phoneNumber;
-    final userEmail = _firebaseAuth.currentUser?.email;
+    // final userPhoneNumber = _firebaseAuth.currentUser?.phoneNumber;
+    // final userEmail = _firebaseAuth.currentUser?.email;
 
     Get.find<GetStorageService>().setLoggedIn = true;
     Get.find<GetStorageService>().encjwToken = mytoken!;
@@ -167,7 +166,7 @@ class AuthService extends GetxService {
     // firbase logout
     auth.logout();
     // navigate to login page
-    await Get.offAllNamed(Routes.ONBOARDING);
+    // await Get.offAll(Routes.ONBOARDING);
     await DialogHelper.hideDialog();
   }
 }

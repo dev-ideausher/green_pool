@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_workers/utils/debouncer.dart';
 import 'package:green_pool/app/modules/find_ride/controllers/find_ride_controller.dart';
+import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/modules/post_ride/controllers/post_ride_controller.dart';
 import 'package:green_pool/app/services/dio/endpoints.dart';
 import 'package:uuid/uuid.dart';
@@ -24,7 +25,7 @@ class OriginController extends GetxController {
   var uuid = const Uuid();
   String? _sessionToken;
   RxList<dynamic> addressSugestionList = [].obs;
-  final _debouncer = Debouncer(delay: const Duration(seconds: 1));
+  final debouncer = Debouncer(delay: const Duration(seconds: 1));
 
   RxBool isOrigin = false.obs;
   LocationValues locationValues = LocationValues.origin;
@@ -48,24 +49,31 @@ class OriginController extends GetxController {
 
   void setSessionToken() {
     _sessionToken ??= uuid.v4();
-    _debouncer(() => addressAutoComplete(originController.text));
+    debouncer(() => addressAutoComplete(originController.text));
   }
 
   addressAutoComplete(String input) async {
     //from search query to address suggestions
     String apiKey = Endpoints.googleApiKey;
-    String baseURL =
-        'https://maps.googleapis.com/maps/api/place/autocomplete/json';
-    String request =
-        '$baseURL?input=$input&key=$apiKey&sessiontoken=$_sessionToken';
+    String lat = Get.find<HomeController>().latitude.value.toString();
+    String long = Get.find<HomeController>().longitude.value.toString();
 
-    var response = await http.get(Uri.parse(request));
+    try {
+      String baseURL =
+          'https://maps.googleapis.com/maps/api/place/autocomplete/json';
+      String request =
+          '$baseURL?input=$input&location=$lat%$long&radius=500&key=$apiKey&sessiontoken=$_sessionToken';
 
-    if (response.statusCode == 200) {
-      addressSugestionList.value =
-          jsonDecode(response.body.toString())['predictions'];
-    } else {
-      throw Exception('Failed to load data');
+      var response = await http.get(Uri.parse(request));
+
+      if (response.statusCode == 200) {
+        addressSugestionList.value =
+            jsonDecode(response.body.toString())['predictions'];
+      } else {
+        throw Exception('Failed to load data');
+      }
+    } catch (e) {
+      throw Exception(e);
     }
   }
 
@@ -79,18 +87,22 @@ class OriginController extends GetxController {
       var response = await http.get(Uri.parse(request));
 
       final geometry = response.body;
-      print(geometry);
+
       double lat =
           jsonDecode(geometry)['result']['geometry']['location']['lat'];
       double long =
-          jsonDecode(geometry)['result']['geometry']['location']['lat'];
+          jsonDecode(geometry)['result']['geometry']['location']['lng'];
       String nameOfLocation =
-          jsonDecode(geometry)['result']['address_components'][0]['long_name'];
+          "${jsonDecode(geometry)['result']['address_components'][0]['long_name']},${jsonDecode(geometry)['result']['address_components'][1]['long_name']},${jsonDecode(geometry)['result']['address_components'][2]['long_name']}";
+      // List<Placemark> placemarks = await placemarkFromCoordinates(lat, long);
+
+      // String nameOfLocation =
+      // "${placemarks[0].street},${placemarks[0].locality},${placemarks[0].postalCode}";
 
       // setLocationData([lat, long, nameOfLocation]);
       return [lat, long, nameOfLocation];
     } catch (e) {
-      print("getLatLong error: $e");
+      log("getLatLong error: $e");
       throw Exception('Failed to load data');
     }
   }
@@ -99,7 +111,9 @@ class OriginController extends GetxController {
     // set lat and long to origin latlong if isOrigin is true
 
     try {
+      //? how to place this in getLatLong directly
       List<dynamic> fetchLatLong = await getLatLong(placeId);
+
       if (locationValues.name == LocationValues.origin.name) {
         Get.find<PostRideController>().originLatitude.value = fetchLatLong[0];
         Get.find<PostRideController>().originLongitude.value = fetchLatLong[1];

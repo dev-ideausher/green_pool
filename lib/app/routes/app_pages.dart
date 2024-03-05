@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 import 'package:green_pool/app/modules/post_ride/views/carpool_schedule_view.dart';
+import 'package:green_pool/app/modules/post_ride/views/guidelines_view.dart';
+import 'package:green_pool/app/modules/post_ride/views/pricing_view.dart';
 
 import '../modules/about/bindings/about_binding.dart';
 import '../modules/about/views/about_view.dart';
@@ -132,6 +134,16 @@ class AppPages {
     GetPage(
       name: _Paths.CARPOOL_SCHEDULE,
       page: () => const CarpoolScheduleView(),
+      binding: PostRideBinding(),
+    ),
+    GetPage(
+      name: _Paths.PRICING_VIEW,
+      page: () => const PricingView(),
+      binding: PostRideBinding(),
+    ),
+    GetPage(
+      name: _Paths.GUIDELINES_VIEW,
+      page: () => const GuidelinesView(),
       binding: PostRideBinding(),
     ),
     GetPage(

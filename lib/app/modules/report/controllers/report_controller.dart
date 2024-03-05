@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -68,7 +69,7 @@ class ReportController extends GetxController {
       final responses = await APIManager.postBugReport(body: bugReportData);
       showMySnackbar(msg: responses.data['message']);
     } catch (error) {
-      print("bugReportAPI error: $error");
+      log("bugReportAPI error: $error");
     }
   }
 }

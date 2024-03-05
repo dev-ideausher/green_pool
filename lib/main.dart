@@ -27,6 +27,7 @@ Future<void> main() async {
     onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
     child: GetMaterialApp(
       theme: ThemeData(scaffoldBackgroundColor: ColorUtil.kBackgroundColor),
+
       supportedLocales: const [
         Locale("en"),
       ],
@@ -52,5 +53,5 @@ Future<void> main() async {
 Future<void> initGetServices() async {
   await Get.putAsync<GetStorageService>(() => GetStorageService().initState());
   await Get.putAsync<AuthService>(() async => AuthService());
-  Get.put(ProfileController());
+  Get.lazyPut(() => ProfileController());
 }

@@ -83,7 +83,7 @@ class SetupUser extends GetView<ProfileSetupController> {
             ).paddingOnly(bottom: 16.kh),
             const RichTextHeading(text: 'Email Address'),
             GreenPoolTextField(
-              hintText: 'Email Id',
+              hintText: 'Email ID',
               controller: controller.email,
               validator: (value) => controller.validateEmail(value),
               autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -149,13 +149,11 @@ class SetupUser extends GetView<ProfileSetupController> {
               ),
             ).paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
-              //TODO: calendar select
               hintText: 'Select your date of birth',
               suffix: SvgPicture.asset(ImageConstant.svgIconCalendar),
-              controller: controller.dateOfBirth,
+              controller: controller.formattedDateOfBirth,
               readOnly: true,
-              initialValue: controller.dateOfBirth.text,
-              onPressedSuffix: () {
+              onTap: () {
                 controller.setDate(context);
               },
               validator: (value) => controller.validateDOB(value),
@@ -188,7 +186,7 @@ class SetupUser extends GetView<ProfileSetupController> {
                             SvgPicture.asset(ImageConstant.svgIconUpload)
                                 .paddingOnly(right: 8.kw),
                             Text(
-                              'Upload Photo',
+                              'Upload ID',
                               style: TextStyleUtil.k14Regular(
                                   color: ColorUtil.kBlack03),
                             ),

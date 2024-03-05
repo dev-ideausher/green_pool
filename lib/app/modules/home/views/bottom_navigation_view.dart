@@ -55,7 +55,7 @@ class BottomNavigationView extends GetView<HomeController> {
                 label: 'Home',
               ),
               BottomNavigationBarItem(
-                icon: controller.selectedIndex == 1
+                icon: controller.selectedIndex.value == 1
                     ? SvgPicture.asset(
                         ImageConstant.svgNavCarFilled,
                         colorFilter: ColorFilter.mode(
@@ -68,7 +68,7 @@ class BottomNavigationView extends GetView<HomeController> {
                 label: 'My Rides',
               ),
               BottomNavigationBarItem(
-                icon: controller.selectedIndex == 2
+                icon: controller.selectedIndex.value == 2
                     ? SvgPicture.asset(
                         ImageConstant.svgNavMessagesFilled,
                         colorFilter: ColorFilter.mode(
@@ -81,7 +81,7 @@ class BottomNavigationView extends GetView<HomeController> {
                 label: 'Messages',
               ),
               BottomNavigationBarItem(
-                icon: controller.selectedIndex == 3
+                icon: controller.selectedIndex.value == 3
                     ? SvgPicture.asset(
                         ImageConstant.svgNavProfileFilled,
                         colorFilter: ColorFilter.mode(

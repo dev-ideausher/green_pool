@@ -32,28 +32,25 @@ class VehicleDetailsView extends GetView<VehicleDetailsController> {
             GestureDetector(
               // onTap: () => Get.to(const VehiclePictureView()),
               child: Container(
-                padding:
-                    EdgeInsets.symmetric(vertical: 68.kh, horizontal: 76.kw),
-                decoration: BoxDecoration(
-                    color: ColorUtil.kGreyColor,
-                    borderRadius: BorderRadius.circular(8.kh)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset(ImageConstant.svgIconUpload)
-                        .paddingOnly(right: 8.kw),
-                    Text(
-                      'Upload Photo',
-                      style:
-                          TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
-                    ),
-                  ],
-                ),
-              ),
+                  padding:
+                      EdgeInsets.symmetric(vertical: 68.kh, horizontal: 76.kw),
+                  decoration: BoxDecoration(
+                      color: ColorUtil.kGreyColor,
+                      borderRadius: BorderRadius.circular(8.kh)),
+                  child: Image(
+                      image: NetworkImage(
+                          "${Get.find<ProfileController>().userInfo.value.data?.vehicleDetails?[0]!.vehiclePic!.url}"))),
             ).paddingOnly(bottom: 16.kh),
             const RichTextHeading(text: 'Model'),
             GreenPoolTextField(
-              hintText: 'Enter Vehicle model',
+              hintText: Get.find<ProfileController>()
+                      .userInfo
+                      .value
+                      .data
+                      ?.vehicleDetails?[0]
+                      ?.model ??
+                  'Enter Vehicle model',
+              readOnly: true,
               suffix: SvgPicture.asset(ImageConstant.svgProfileEditPen,
                   colorFilter: ColorFilter.mode(
                       Get.find<ProfileController>().isSwitched.value
@@ -63,7 +60,13 @@ class VehicleDetailsView extends GetView<VehicleDetailsController> {
             ).paddingOnly(bottom: 16.kh),
             const RichTextHeading(text: 'Type'),
             GreenPoolDropDown(
-              hintText: 'Select vehicle type',
+              hintText: Get.find<ProfileController>()
+                      .userInfo
+                      .value
+                      .data
+                      ?.vehicleDetails?[0]
+                      ?.type ??
+                  'Select vehicle type',
               items: [
                 DropdownMenuItem(
                     value: "1",
@@ -112,7 +115,13 @@ class VehicleDetailsView extends GetView<VehicleDetailsController> {
             ).paddingOnly(bottom: 16.kh),
             const RichTextHeading(text: 'Color'),
             GreenPoolDropDown(
-              hintText: 'Select car color',
+              hintText: Get.find<ProfileController>()
+                      .userInfo
+                      .value
+                      .data
+                      ?.vehicleDetails?[0]
+                      ?.color ??
+                  'Select car color',
               items: [
                 DropdownMenuItem(
                     value: "1",
@@ -179,7 +188,15 @@ class VehicleDetailsView extends GetView<VehicleDetailsController> {
             ).paddingOnly(bottom: 16.kh),
             const RichTextHeading(text: 'Year'),
             GreenPoolTextField(
-              hintText: 'Enter year',
+              hintText: Get.find<ProfileController>()
+                      .userInfo
+                      .value
+                      .data
+                      ?.vehicleDetails?[0]
+                      ?.year
+                      .toString() ??
+                  'Enter year',
+              readOnly: true,
               suffix: SvgPicture.asset(ImageConstant.svgProfileEditPen,
                   colorFilter: ColorFilter.mode(
                       Get.find<ProfileController>().isSwitched.value
@@ -189,7 +206,14 @@ class VehicleDetailsView extends GetView<VehicleDetailsController> {
             ).paddingOnly(bottom: 16.kh),
             const RichTextHeading(text: 'License Plate'),
             GreenPoolTextField(
-              hintText: 'License Number',
+              hintText: Get.find<ProfileController>()
+                      .userInfo
+                      .value
+                      .data
+                      ?.vehicleDetails?[0]
+                      ?.licencePlate ??
+                  'License plate',
+              readOnly: true,
               suffix: SvgPicture.asset(ImageConstant.svgProfileEditPen,
                   colorFilter: ColorFilter.mode(
                       Get.find<ProfileController>().isSwitched.value

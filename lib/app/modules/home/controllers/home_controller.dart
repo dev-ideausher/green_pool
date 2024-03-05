@@ -18,19 +18,22 @@ class HomeController extends GetxController {
   }
 
   @override
+  //! temporary basis - userInfoAPI
   void onInit() {
     super.onInit();
     Get.lazyPut(() => MyRidesController());
+
     _determinePosition().then((value) => {
           latitude.value = value.latitude,
           longitude.value = value.longitude,
         });
   }
 
-  // @override
-  // void onReady() {
-  //   super.onReady();
-  // }
+  @override
+  void onReady() async {
+    super.onReady();
+    await Get.find<ProfileController>().userInfoAPI();
+  }
 
   // @override
   // void onClose() {
