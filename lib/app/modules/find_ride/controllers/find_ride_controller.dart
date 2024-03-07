@@ -4,6 +4,8 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/data/find_ride_model.dart';
+import 'package:green_pool/app/modules/profile/controllers/profile_controller.dart';
+import 'package:green_pool/app/services/colors.dart';
 
 import '../../../data/find_ride_response_model.dart';
 import '../../../routes/app_pages.dart';
@@ -107,15 +109,22 @@ class FindRideController extends GetxController {
             // Define the custom theme for the date picker
             data: ThemeData(
               // Define the primary color
-              primaryColor: Colors.green,
+              primaryColor: Get.find<ProfileController>().isSwitched.value
+                  ? ColorUtil.kPrimaryPinkMode
+                  : ColorUtil.kPrimary01,
               // Define the color scheme for the date picker
               colorScheme: ColorScheme.light(
                 // Define the primary color for the date picker
-                primary: Colors.green,
+                primary: Get.find<ProfileController>().isSwitched.value
+                    ? ColorUtil.kPrimaryPinkMode
+                    : ColorUtil.kPrimary01,
                 // Define the background color for the date picker
                 surface: Colors.white,
                 // Define the on-primary color for the date picker
                 onPrimary: Colors.white,
+                secondary: Get.find<ProfileController>().isSwitched.value
+                    ? ColorUtil.kPrimaryPinkMode
+                    : ColorUtil.kPrimary01,
               ),
             ),
             // Apply the custom theme to the child widget
@@ -164,6 +173,33 @@ class FindRideController extends GetxController {
       context: context,
       initialTime: TimeOfDay.now(),
       initialEntryMode: TimePickerEntryMode.input,
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          // Define the custom theme for the date picker
+          data: ThemeData(
+            // Define the primary color
+            primaryColor: Get.find<ProfileController>().isSwitched.value
+                ? ColorUtil.kPrimaryPinkMode
+                : ColorUtil.kPrimary01,
+            // Define the color scheme for the date picker
+            colorScheme: ColorScheme.light(
+              // Define the primary color for the date picker
+              primary: Get.find<ProfileController>().isSwitched.value
+                  ? ColorUtil.kPrimaryPinkMode
+                  : ColorUtil.kPrimary01,
+              // Define the background color for the date picker
+              surface: Colors.white,
+              // Define the on-primary color for the date picker
+              onPrimary: Colors.white,
+              secondary: Get.find<ProfileController>().isSwitched.value
+                  ? ColorUtil.kPrimaryPinkMode
+                  : ColorUtil.kPrimary01,
+            ),
+          ),
+          // Apply the custom theme to the child widget
+          child: child!,
+        );
+      },
     );
 
     if (pickedTime != null) {

@@ -41,9 +41,6 @@ class GetStorageService extends GetxService {
   bool get profileStatus => _runData.read('profileStatus') ?? false;
   set setProfileStatus(bool val) => _runData.write('profileStatus', val);
 
-  bool get isFemale => _runData.read('isFemale') ?? false;
-  set setFemale(bool val) => _runData.write('isFemale', val);
-
   String get getFirebaseUid => _runData.read('firebaseUid') ?? '';
   set setFirebaseUid(String val) => _runData.write('firebaseUid', val);
 

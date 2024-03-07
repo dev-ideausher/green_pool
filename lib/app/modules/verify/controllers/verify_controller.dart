@@ -15,7 +15,6 @@ import '../../../routes/app_pages.dart';
 import '../../../services/auth.dart';
 import '../../../services/dio/api_service.dart';
 import '../../../services/storage.dart';
-import '../../post_ride/views/carpool_schedule_view.dart';
 
 class VerifyController extends GetxController {
   final otpController = TextEditingController();
@@ -116,8 +115,8 @@ class VerifyController extends GetxController {
           }
         } else {
           if (userInfo.data!.profileStatus! && userInfo.data!.vehicleStatus!) {
-            Get.off(() => const CarpoolScheduleView(), arguments: isDriver);
-            // Get.until((route) => Get.currentRoute == Routes.CARPOOL_SCHEDULE);
+            // Get.offNamed(Routes.CARPOOL_SCHEDULE, arguments: isDriver);
+            Get.until((route) => Get.currentRoute == Routes.POST_RIDE);
           } else {
             Get.offNamed(Routes.PROFILE_SETUP, arguments: isDriver);
           }

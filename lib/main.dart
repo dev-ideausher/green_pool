@@ -27,7 +27,6 @@ Future<void> main() async {
     onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
     child: GetMaterialApp(
       theme: ThemeData(scaffoldBackgroundColor: ColorUtil.kBackgroundColor),
-
       supportedLocales: const [
         Locale("en"),
       ],

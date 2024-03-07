@@ -40,6 +40,7 @@ class GreenPoolTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       enabled: enabled,
+
       style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack01),
       maxLines: maxLines ?? 1,
       onTap: onTap,

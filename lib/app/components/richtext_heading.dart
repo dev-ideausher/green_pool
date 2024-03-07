@@ -7,9 +7,11 @@ import '../services/text_style_util.dart';
 
 class RichTextHeading extends StatelessWidget {
   final String text;
+  final TextStyle? style;
   const RichTextHeading({
     super.key,
     required this.text,
+    this.style,
   });
 
   @override
@@ -19,7 +21,7 @@ class RichTextHeading extends StatelessWidget {
         children: [
           TextSpan(
             text: text,
-            style: TextStyleUtil.k14Semibold(),
+            style: style ?? TextStyleUtil.k14Semibold(),
           ),
           TextSpan(
             text: '*',
@@ -27,6 +29,6 @@ class RichTextHeading extends StatelessWidget {
           ),
         ],
       ),
-    ).paddingOnly(bottom: 8.kh);
+    );
   }
 }

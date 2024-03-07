@@ -8,10 +8,10 @@ import 'package:green_pool/app/services/snackbar.dart';
 
 import '../../../data/post_ride_model.dart';
 import '../../../routes/app_pages.dart';
+import '../../../services/colors.dart';
 import '../../../services/storage.dart';
 import '../../create_account/controllers/create_account_controller.dart';
 import '../../origin/controllers/origin_controller.dart';
-import '../views/carpool_schedule_view.dart';
 
 class PostRideController extends GetxController {
   RxInt tabIndex = 0.obs;
@@ -84,8 +84,6 @@ class PostRideController extends GetxController {
   //   super.onClose();
   // }
 
-  //! after logging in it should still check whether the user and vehicle data is filled or not: but it directly goes to the carpool schedule page
-
   decideRouting() {
     // Decides if the user is logged in and redirects accordingly
     if (Get.find<GetStorageService>().getLoggedIn) {
@@ -94,11 +92,7 @@ class PostRideController extends GetxController {
         showMySnackbar(msg: 'Please fill in vehicle details');
         Get.toNamed(Routes.PROFILE_SETUP, arguments: isDriver);
       } else {
-        //? for testing updateDetailsAPI
-        // Get.toNamed(Routes.PROFILE_SETUP, arguments: isDriver);
-
-        //? the original flow
-        Get.to(() => const CarpoolScheduleView(), arguments: isDriver);
+        Get.toNamed(Routes.CARPOOL_SCHEDULE, arguments: isDriver);
       }
     } else {
       Get.toNamed(Routes.CREATE_ACCOUNT, arguments: isDriver);
@@ -201,6 +195,33 @@ class PostRideController extends GetxController {
   Future<void> setDate(BuildContext context) async {
     DateTime? pickedDate = await showDatePicker(
       context: context,
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          // Define the custom theme for the date picker
+          data: ThemeData(
+            // Define the primary color
+            primaryColor: Get.find<ProfileController>().isSwitched.value
+                ? ColorUtil.kPrimaryPinkMode
+                : ColorUtil.kPrimary01,
+            // Define the color scheme for the date picker
+            colorScheme: ColorScheme.light(
+              // Define the primary color for the date picker
+              primary: Get.find<ProfileController>().isSwitched.value
+                  ? ColorUtil.kPrimaryPinkMode
+                  : ColorUtil.kPrimary01,
+              // Define the background color for the date picker
+              surface: Colors.white,
+              // Define the on-primary color for the date picker
+              onPrimary: Colors.white,
+              secondary: Get.find<ProfileController>().isSwitched.value
+                  ? ColorUtil.kPrimaryPinkMode
+                  : ColorUtil.kPrimary01,
+            ),
+          ),
+          // Apply the custom theme to the child widget
+          child: child!,
+        );
+      },
       firstDate: DateTime.now(),
       lastDate: DateTime.now().add(const Duration(days: 3 * 30)),
       initialDate: DateTime.now(),
@@ -217,6 +238,33 @@ class PostRideController extends GetxController {
   Future<void> setReturnDate(BuildContext context) async {
     DateTime? pickedDate = await showDatePicker(
         context: context,
+        builder: (BuildContext context, Widget? child) {
+          return Theme(
+            // Define the custom theme for the date picker
+            data: ThemeData(
+              // Define the primary color
+              primaryColor: Get.find<ProfileController>().isSwitched.value
+                  ? ColorUtil.kPrimaryPinkMode
+                  : ColorUtil.kPrimary01,
+              // Define the color scheme for the date picker
+              colorScheme: ColorScheme.light(
+                // Define the primary color for the date picker
+                primary: Get.find<ProfileController>().isSwitched.value
+                    ? ColorUtil.kPrimaryPinkMode
+                    : ColorUtil.kPrimary01,
+                // Define the background color for the date picker
+                surface: Colors.white,
+                // Define the on-primary color for the date picker
+                onPrimary: Colors.white,
+                secondary: Get.find<ProfileController>().isSwitched.value
+                    ? ColorUtil.kPrimaryPinkMode
+                    : ColorUtil.kPrimary01,
+              ),
+            ),
+            // Apply the custom theme to the child widget
+            child: child!,
+          );
+        },
         firstDate: DateTime.now(),
         lastDate: DateTime.now().add(const Duration(days: 3 * 30)),
         initialDate: DateTime.now());
@@ -232,6 +280,33 @@ class PostRideController extends GetxController {
   Future<void> setTime(BuildContext context) async {
     TimeOfDay? pickedTime = await showTimePicker(
       context: context,
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          // Define the custom theme for the date picker
+          data: ThemeData(
+            // Define the primary color
+            primaryColor: Get.find<ProfileController>().isSwitched.value
+                ? ColorUtil.kPrimaryPinkMode
+                : ColorUtil.kPrimary01,
+            // Define the color scheme for the date picker
+            colorScheme: ColorScheme.light(
+              // Define the primary color for the date picker
+              primary: Get.find<ProfileController>().isSwitched.value
+                  ? ColorUtil.kPrimaryPinkMode
+                  : ColorUtil.kPrimary01,
+              // Define the background color for the date picker
+              surface: Colors.white,
+              // Define the on-primary color for the date picker
+              onPrimary: Colors.white,
+              secondary: Get.find<ProfileController>().isSwitched.value
+                  ? ColorUtil.kPrimaryPinkMode
+                  : ColorUtil.kPrimary01,
+            ),
+          ),
+          // Apply the custom theme to the child widget
+          child: child!,
+        );
+      },
       initialTime: TimeOfDay.now(),
       initialEntryMode: TimePickerEntryMode.input,
     );
@@ -245,6 +320,33 @@ class PostRideController extends GetxController {
   Future<void> setReturnTime(BuildContext context) async {
     TimeOfDay? pickedTime = await showTimePicker(
       context: context,
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          // Define the custom theme for the date picker
+          data: ThemeData(
+            // Define the primary color
+            primaryColor: Get.find<ProfileController>().isSwitched.value
+                ? ColorUtil.kPrimaryPinkMode
+                : ColorUtil.kPrimary01,
+            // Define the color scheme for the date picker
+            colorScheme: ColorScheme.light(
+              // Define the primary color for the date picker
+              primary: Get.find<ProfileController>().isSwitched.value
+                  ? ColorUtil.kPrimaryPinkMode
+                  : ColorUtil.kPrimary01,
+              // Define the background color for the date picker
+              surface: Colors.white,
+              // Define the on-primary color for the date picker
+              onPrimary: Colors.white,
+              secondary: Get.find<ProfileController>().isSwitched.value
+                  ? ColorUtil.kPrimaryPinkMode
+                  : ColorUtil.kPrimary01,
+            ),
+          ),
+          // Apply the custom theme to the child widget
+          child: child!,
+        );
+      },
       initialTime: TimeOfDay.now(),
       initialEntryMode: TimePickerEntryMode.input,
     );
@@ -258,6 +360,33 @@ class PostRideController extends GetxController {
   Future<void> setRecurringTime(BuildContext context) async {
     TimeOfDay? pickedTime = await showTimePicker(
       context: context,
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          // Define the custom theme for the date picker
+          data: ThemeData(
+            // Define the primary color
+            primaryColor: Get.find<ProfileController>().isSwitched.value
+                ? ColorUtil.kPrimaryPinkMode
+                : ColorUtil.kPrimary01,
+            // Define the color scheme for the date picker
+            colorScheme: ColorScheme.light(
+              // Define the primary color for the date picker
+              primary: Get.find<ProfileController>().isSwitched.value
+                  ? ColorUtil.kPrimaryPinkMode
+                  : ColorUtil.kPrimary01,
+              // Define the background color for the date picker
+              surface: Colors.white,
+              // Define the on-primary color for the date picker
+              onPrimary: Colors.white,
+              secondary: Get.find<ProfileController>().isSwitched.value
+                  ? ColorUtil.kPrimaryPinkMode
+                  : ColorUtil.kPrimary01,
+            ),
+          ),
+          // Apply the custom theme to the child widget
+          child: child!,
+        );
+      },
       initialTime: TimeOfDay.now(),
       initialEntryMode: TimePickerEntryMode.input,
     );
@@ -320,11 +449,11 @@ class PostRideController extends GetxController {
 
 // ignore_for_file: unnecessary_null_comparison
   setActiveStatePostRideView() {
-    if (originTextController.value.text != null &&
-        destinationTextController.value.text != null) {
-      return isActive.value = true;
+    if (originTextController.value.text.isNotEmpty &&
+        destinationTextController.value.text.isNotEmpty) {
+      isActive.value = true;
     } else {
-      return isActive.value = false;
+      isActive.value = false;
     }
   }
 

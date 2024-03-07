@@ -10,7 +10,7 @@ class ProfileController extends GetxController {
   RxBool isSwitched = false.obs;
   // RxBool isSwitched = Get.find<GetStorageService>().isPinkMode;
   var userInfo = UserInfoModel().obs;
-  RxString fullName = "".obs;
+  RxString fullName = " ".obs;
 
   @override
   void onInit() {

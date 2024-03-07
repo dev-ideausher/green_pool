@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/modules/post_ride/controllers/post_ride_controller.dart';
 import 'package:green_pool/app/modules/post_ride/views/carpool_schedule_view.dart';
 import 'package:green_pool/app/modules/profile_setup/views/review_picture.dart';
+import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/snackbar.dart';
 import 'package:green_pool/app/services/storage.dart';
 import 'package:http_parser/http_parser.dart';
@@ -164,13 +165,6 @@ class ProfileSetupController extends GetxController {
       showMySnackbar(msg: responses.data['message']);
       Get.find<GetStorageService>().setUserName = fullName.text;
       Get.find<GetStorageService>().setProfileStatus = true;
-      if (gender.text == "Female") {
-        Get.find<GetStorageService>().setFemale = true;
-      } else {
-        Get.find<GetStorageService>().setFemale = false;
-      }
-      // Get.find<GetStorageService>().setProfilePic =
-      //     File(selectedProfileImagePath.value!.path);
     } catch (e) {
       throw Exception(e);
     }
@@ -207,8 +201,9 @@ class ProfileSetupController extends GetxController {
       try {
         await APIManager.postVehicleDetails(body: vehicleData);
         showMySnackbar(msg: "Data filled successfully");
-        Get.off(() => const CarpoolScheduleView(), arguments: isDriver);
         Get.find<ProfileController>().userInfoAPI();
+        // Get.offNamed(Routes.CARPOOL_SCHEDULE, arguments: isDriver);
+        Get.until((route) => Get.currentRoute == Routes.POST_RIDE);
       } catch (e) {
         throw Exception(e);
       }

@@ -7,8 +7,13 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/modules/verify/controllers/verify_controller.dart';
 import 'package:green_pool/app/services/snackbar.dart';
 
+import '../../../data/user_info_model.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/auth.dart';
+import '../../../services/dio/api_service.dart';
+import '../../../services/storage.dart';
+import '../../home/controllers/home_controller.dart';
+import '../../profile/controllers/profile_controller.dart';
 
 class CreateAccountController extends GetxController {
   RxBool isVisible = false.obs;
@@ -113,15 +118,55 @@ class CreateAccountController extends GetxController {
   }
 
   void googleAuth() async {
-    Get.lazyPut(() => VerifyController());
     try {
       await Get.find<AuthService>().google();
-      await Get.find<VerifyController>().loginAPI();
+      await loginAPI();
     } catch (error) {
-      log("$error");
+      log("google auth error: $error");
+      showMySnackbar(msg: "Error");
+    }
+  }
+
+  loginAPI() async {
+    try {
+      final response = await APIManager.getLogin();
+      final userInfo = UserInfoModel.fromJson(response.data);
+      Get.find<GetStorageService>().setUserAppId = userInfo.data?.Id;
+
+      //? here if the profileStatus is not true which means it is a new user or the user did not fill the entire user data, so the user will be automatically redirected to the Profile Setup
+      if (userInfo.status!) {
+        if (Get.find<HomeController>().findingRide.value) {
+          if (userInfo.data!.profileStatus!) {
+            // Get.offNamed(Routes.FIND_RIDE, arguments: isDriver);
+            Get.back();
+          } else {
+            Get.offNamed(Routes.RIDER_PROFILE_SETUP, arguments: isDriver);
+          }
+        } else {
+          if (userInfo.data!.profileStatus! && userInfo.data!.vehicleStatus!) {
+            // Get.offNamed(Routes.CARPOOL_SCHEDULE, arguments: isDriver);
+            Get.until((route) => Get.currentRoute == Routes.POST_RIDE);
+          } else {
+            Get.offNamed(Routes.PROFILE_SETUP, arguments: isDriver);
+          }
+        }
+        Get.find<GetStorageService>().setLoggedIn = true;
+        Get.find<GetStorageService>().setProfileStatus = true;
+        Get.find<GetStorageService>().setDriver = isDriver;
+        Get.find<ProfileController>().userInfoAPI();
+      } else {
+        if (isDriver) {
+          Get.offNamed(Routes.PROFILE_SETUP, arguments: isDriver);
+        } else {
+          Get.offNamed(Routes.RIDER_PROFILE_SETUP, arguments: isDriver);
+        }
+      }
+    } catch (e) {
+      log("error: $e");
     }
   }
 }
+
 
 // onboardingAPI() async {
 //   try {

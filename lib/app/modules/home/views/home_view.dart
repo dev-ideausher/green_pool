@@ -27,14 +27,12 @@ class HomeView extends GetView<HomeController> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Obx(
-                      () => Text(
-                        Get.find<GetStorageService>().getLoggedIn
-                            ? "Welcome ${Get.find<ProfileController>().fullName.value}"
-                            : 'Welcome',
-                        style: TextStyleUtil.k24Heading700(),
-                      ).paddingOnly(bottom: 4.kh),
-                    ),
+                    Text(
+                      Get.find<GetStorageService>().getLoggedIn
+                          ? "Welcome ${Get.find<ProfileController>().fullName.value}"
+                          : 'Welcome',
+                      style: TextStyleUtil.k24Heading700(),
+                    ).paddingOnly(bottom: 4.kh),
                     Text(
                       'What would you like to do today?',
                       style:

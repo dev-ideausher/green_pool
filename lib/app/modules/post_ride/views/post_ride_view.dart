@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/components/greenpool_textfield.dart';
+import 'package:green_pool/app/components/richtext_heading.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
 import 'package:green_pool/app/modules/origin/controllers/origin_controller.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
@@ -27,19 +28,17 @@ class PostRideView extends GetView<PostRideController> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Origin',
-            style: TextStyleUtil.k14Semibold(),
-          ).paddingOnly(top: 32.kh),
+          const RichTextHeading(text: 'Origin').paddingOnly(top: 32.kh),
           GreenPoolTextField(
-            controller: controller.originTextController,
             hintText: 'Enter origin address',
+            onchanged: (v) {
+              controller.setActiveStatePostRideView();
+              print("is active value : ${controller.isActive.value}");
+            },
             onTap: () {
               Get.toNamed(Routes.ORIGIN, arguments: LocationValues.origin);
             },
-            onchanged: (v) {
-              controller.setActiveStatePostRideView();
-            },
+            controller: controller.originTextController,
             readOnly: true,
             prefix: Icon(
               Icons.location_on,
@@ -49,20 +48,17 @@ class PostRideView extends GetView<PostRideController> {
                   : ColorUtil.kSecondary01,
             ),
           ).paddingOnly(top: 8.kh, bottom: 16.kh),
-          Text(
-            'Destination',
-            style: TextStyleUtil.k14Semibold(),
-          ),
+          const RichTextHeading(text: 'Destination'),
           GreenPoolTextField(
-            controller: controller.destinationTextController,
             hintText: 'Enter a destination',
+            onchanged: (v) {
+              controller.setActiveStatePostRideView();
+              print("is active value : ${controller.isActive.value}");
+            },
             onTap: () {
               Get.toNamed(Routes.ORIGIN, arguments: LocationValues.destination);
             },
-            onchanged: (v) {
-              controller.isActive.value = true;
-              print("is active value : ${controller.isActive.value}");
-            },
+            controller: controller.destinationTextController,
             readOnly: true,
             prefix: Icon(
               Icons.location_on,
@@ -123,28 +119,25 @@ class PostRideView extends GetView<PostRideController> {
             ),
           ).paddingOnly(top: 8.kh, bottom: 16.kh),
           const Expanded(child: SizedBox()),
-          Obx(
-            () => Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                
-                GreenPoolButton(
-                  onPressed: () => controller.decideRouting(),
-                  padding: const EdgeInsets.all(0),
-                  // isActive: controller.isActive.value,
-                  isActive:
-                      controller.originTextController.value.text.isNotEmpty &&
-                              controller.destinationTextController.value.text
-                                  .isNotEmpty
-                          ? controller.isActive.value
-                          : controller.isActive.value,
-                  label: 'Next',
-                  fontSize: 14.kh,
-                  width: 120.kw,
-                  height: 40.kh,
-                ).paddingSymmetric(vertical: 40.kh),
-              ],
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              GreenPoolButton(
+                onPressed: () => controller.decideRouting(),
+                padding: const EdgeInsets.all(0),
+                // isActive: controller.isActive.value,
+                // isActive:
+                //     controller.originTextController.value.text.isNotEmpty &&
+                //             controller.destinationTextController.value.text
+                //                 .isNotEmpty
+                //         ? controller.isActive.value
+                //         : controller.isActive.value,
+                label: 'Next',
+                fontSize: 14.kh,
+                width: 120.kw,
+                height: 40.kh,
+              ).paddingSymmetric(vertical: 40.kh),
+            ],
           ),
         ],
       ).paddingSymmetric(horizontal: 16.kw),

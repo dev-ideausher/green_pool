@@ -73,7 +73,7 @@ class SetupUser extends GetView<ProfileSetupController> {
                 ],
               ),
             ).paddingOnly(bottom: 40.kh),
-            const RichTextHeading(text: 'Full Name'),
+            const RichTextHeading(text: 'Full Name').paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
               hintText: 'Enter name',
               controller: controller.fullName,
@@ -81,7 +81,8 @@ class SetupUser extends GetView<ProfileSetupController> {
               autovalidateMode: AutovalidateMode.onUserInteraction,
               suffix: SvgPicture.asset(ImageConstant.svgProfileEditPen),
             ).paddingOnly(bottom: 16.kh),
-            const RichTextHeading(text: 'Email Address'),
+            const RichTextHeading(text: 'Email Address')
+                .paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
               hintText: 'Email ID',
               controller: controller.email,
@@ -89,7 +90,8 @@ class SetupUser extends GetView<ProfileSetupController> {
               autovalidateMode: AutovalidateMode.onUserInteraction,
               suffix: SvgPicture.asset(ImageConstant.svgProfileEditPen),
             ).paddingOnly(bottom: 16.kh),
-            const RichTextHeading(text: 'Phone Number'),
+            const RichTextHeading(text: 'Phone Number')
+                .paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
               hintText: 'Enter phone number',
               // initialValue: FirebaseAuth.instance.currentUser?.phoneNumber.toString(),
@@ -97,7 +99,7 @@ class SetupUser extends GetView<ProfileSetupController> {
               validator: (value) => controller.phoneNumberValidator(value),
               autovalidateMode: AutovalidateMode.onUserInteraction,
             ).paddingOnly(bottom: 16.kh),
-            const RichTextHeading(text: 'Gender'),
+            const RichTextHeading(text: 'Gender').paddingOnly(bottom: 8.kh),
             GreenPoolDropDown(
               hintText: 'Select your Gender',
               items: [
@@ -126,7 +128,8 @@ class SetupUser extends GetView<ProfileSetupController> {
               validator: (value) => controller.validateGender(value),
               autovalidateMode: AutovalidateMode.onUserInteraction,
             ).paddingOnly(bottom: 16.kh),
-            const RichTextHeading(text: 'City Province'),
+            const RichTextHeading(text: 'City Province')
+                .paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
               //TODO: Drop down city
               hintText: 'Select your city',
@@ -140,6 +143,10 @@ class SetupUser extends GetView<ProfileSetupController> {
                   TextSpan(
                     text: 'Date of Birth ',
                     style: TextStyleUtil.k14Semibold(),
+                  ),
+                  TextSpan(
+                    text: '*',
+                    style: TextStyleUtil.k14Regular(color: ColorUtil.kError3),
                   ),
                   TextSpan(
                     text: '(should be above 18)',
@@ -159,7 +166,8 @@ class SetupUser extends GetView<ProfileSetupController> {
               validator: (value) => controller.validateDOB(value),
               autovalidateMode: AutovalidateMode.onUserInteraction,
             ).paddingOnly(bottom: 16.kh),
-            const RichTextHeading(text: 'ID Verification'),
+            const RichTextHeading(text: 'ID Verification')
+                .paddingOnly(bottom: 8.kh),
             GestureDetector(
               onTap: () => Get.to(() => UploadIDView(
                     onPressedGallery: () {

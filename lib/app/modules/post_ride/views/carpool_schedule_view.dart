@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
+import 'package:green_pool/app/components/richtext_heading.dart';
 import 'package:green_pool/app/modules/post_ride/controllers/post_ride_controller.dart';
 import 'package:green_pool/app/modules/post_ride/views/green_pool_chip.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
@@ -101,10 +102,7 @@ class CarpoolScheduleView extends GetView<PostRideController> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Date',
-                    style: TextStyleUtil.k14Semibold(),
-                  ),
+                  const RichTextHeading(text: "Date"),
                   GreenPoolTextField(
                       controller: controller.formattedOneTimeDate,
                       hintText: 'Select date',
@@ -126,10 +124,7 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                       onTap: () {
                         controller.setDate(context);
                       }).paddingOnly(top: 8.kh, bottom: 16.kh),
-                  Text(
-                    'Time',
-                    style: TextStyleUtil.k14Semibold(),
-                  ),
+                  const RichTextHeading(text: 'Time'),
                   GreenPoolTextField(
                     hintText: 'Select time',
                     controller: controller.selectedTimeOneTime,
@@ -288,8 +283,8 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                   ),
                 ],
               ).paddingSymmetric(vertical: 32.kh),
-              Text(
-                'Number of Seats Available',
+              RichTextHeading(
+                text: 'Number of Seats Available',
                 style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
               ).paddingOnly(bottom: 4.kh),
               Text(
@@ -350,8 +345,8 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                       )),
                 ],
               ).paddingOnly(bottom: 24.kh),
-              Text(
-                'Luggage Allowance',
+              RichTextHeading(
+                text: 'Luggage Allowance',
                 style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
               ),
               Row(
@@ -410,11 +405,10 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                   ],
                 ),
               ),
-              Text(
-                'Other',
+              RichTextHeading(
+                text: 'Other',
                 style: TextStyleUtil.k16Bold(color: ColorUtil.kNeutral5),
               ).paddingOnly(top: 24.kh, bottom: 16.kh),
-
               Obx(
                 () => Amenities(
                   text: 'Appreciates Conversation',

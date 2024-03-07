@@ -83,12 +83,11 @@ class UserDetailsView extends GetView<UserDetailsController> {
                 ],
               ),
             ).paddingOnly(bottom: 40.kh),
-            const RichTextHeading(text: 'Full Name'),
+            const RichTextHeading(text: 'Full Name').paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
               hintText:
                   // Get.find<ProfileController>().userInfo.value.data?.fullName ??
                   "Full name",
-              readOnly: true,
               controller: controller.nameTextController,
               suffix: SvgPicture.asset(
                 ImageConstant.svgProfileEditPen,
@@ -99,15 +98,15 @@ class UserDetailsView extends GetView<UserDetailsController> {
                     BlendMode.srcIn),
               ),
             ).paddingOnly(bottom: 16.kh),
-            const RichTextHeading(text: 'Email Address'),
+            const RichTextHeading(text: 'Email Address')
+                .paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
               hintText:
                   // Get.find<ProfileController>().userInfo.value.data?.email ??
                   'Email ID',
-              readOnly: true,
               controller: controller.emailTextController,
             ).paddingOnly(bottom: 16.kh),
-            const RichTextHeading(text: 'Gender'),
+            const RichTextHeading(text: 'Gender').paddingOnly(bottom: 8.kh),
             GreenPoolDropDown(
               hintText:
                   Get.find<ProfileController>().userInfo.value.data?.gender ??
@@ -135,12 +134,12 @@ class UserDetailsView extends GetView<UserDetailsController> {
               ],
               onChanged: (v) {},
             ).paddingOnly(bottom: 16.kh),
-            const RichTextHeading(text: 'City Province'),
+            const RichTextHeading(text: 'City Province')
+                .paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
               //TODO: drop down city
               hintText: 'city',
               controller: controller.cityTextController,
-              readOnly: true,
             ).paddingOnly(bottom: 16.kh),
             Text.rich(
               TextSpan(
@@ -160,7 +159,6 @@ class UserDetailsView extends GetView<UserDetailsController> {
               hintText:
                   // Get.find<ProfileController>().userInfo.value.data?.dob ??
                   'D.O.B',
-              readOnly: true,
               controller: controller.dobTextController,
               suffix: SvgPicture.asset(
                 ImageConstant.svgIconCalendar,
@@ -171,7 +169,8 @@ class UserDetailsView extends GetView<UserDetailsController> {
                     BlendMode.srcIn),
               ),
             ).paddingOnly(bottom: 16.kh),
-            const RichTextHeading(text: 'ID Verification'),
+            const RichTextHeading(text: 'ID Verification')
+                .paddingOnly(bottom: 8.kh),
             GestureDetector(
               // onTap: () => Get.to(const UploadIDView()),
               onTap: () {

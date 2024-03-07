@@ -31,7 +31,7 @@ class RiderRideRequestView extends GetView<RiderRideRequestController> {
         children: [
           const RichTextHeading(
             text: 'Origin',
-          ).paddingOnly(top: 32.kh),
+          ).paddingOnly(top: 32.kh, bottom: 8.kh),
           GreenPoolTextField(
             hintText: 'Enter origin address',
             onTap: () {
@@ -49,7 +49,7 @@ class RiderRideRequestView extends GetView<RiderRideRequestController> {
           ).paddingOnly(top: 8.kh, bottom: 16.kh),
           const RichTextHeading(
             text: 'Destination',
-          ),
+          ).paddingOnly(bottom: 8.kh),
           GreenPoolTextField(
             hintText: 'Enter a destination',
             onTap: () {
@@ -65,7 +65,8 @@ class RiderRideRequestView extends GetView<RiderRideRequestController> {
             ),
             enabled: true,
           ).paddingOnly(top: 8.kh, bottom: 16.kh),
-          const RichTextHeading(text: 'Departure Date & Time'),
+          const RichTextHeading(text: 'Departure Date & Time')
+              .paddingOnly(bottom: 8.kh),
           Row(
             children: [
               SizedBox(

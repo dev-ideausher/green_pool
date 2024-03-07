@@ -83,15 +83,33 @@ class UserDetailsController extends GetxController {
     } else {
       mediaType = 'application/octet-stream';
     }
-
+    //TODO: only want to update anyone
     final userData = dio.FormData.fromMap({
-      'profilePic': await dio.MultipartFile.fromFile(
-        pickedImageFile.path,
-        contentType: MediaType.parse(mediaType),
-        filename: path.basename(pickedImageFile.path),
-      ),
-      'idPic': pickedIDFile.path.isEmpty
-          ? ''
+      'fullName': nameTextController.value.text.isEmpty
+          ? Get.find<ProfileController>().userInfo.value.data?.fullName
+          : nameTextController.value.text,
+      'email': emailTextController.value.text.isEmpty
+          ? Get.find<ProfileController>().userInfo.value.data?.email
+          : emailTextController.value.text,
+      'phone': Get.find<ProfileController>().userInfo.value.data?.phone,
+      'gender': genderValue.value == ""
+          ? Get.find<ProfileController>().userInfo.value.data?.gender
+          : genderValue.value,
+      'city': cityTextController.value.text.isEmpty
+          ? Get.find<ProfileController>().userInfo.value.data?.city
+          : cityTextController.value.text,
+      'dob': dobTextController.value.text.isEmpty
+          ? Get.find<ProfileController>().userInfo.value.data?.dob
+          : dobTextController.value.text,
+      'profilePic': isProfilePicUpdated.value
+          ? null
+          : await dio.MultipartFile.fromFile(
+              pickedImageFile.path,
+              contentType: MediaType.parse(mediaType),
+              filename: path.basename(pickedImageFile.path),
+            ),
+      'idPic': isIDPicUpdated.value
+          ? null
           : await dio.MultipartFile.fromFile(
               pickedIDFile.path,
               contentType: MediaType.parse(mediaType),

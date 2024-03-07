@@ -27,7 +27,7 @@ class SetupVehicle extends GetView<ProfileSetupController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const RichTextHeading(text: 'Vehicle Photo')
-                .paddingOnly(top: 32.kh),
+                .paddingOnly(top: 32.kh, bottom: 8.kh),
             GestureDetector(
               onTap: () => Get.to(() => VehiclePictureView(
                     onPressedGallery: () {
@@ -63,14 +63,14 @@ class SetupVehicle extends GetView<ProfileSetupController> {
                 ),
               ),
             ).paddingOnly(bottom: 16.kh),
-            const RichTextHeading(text: 'Model'),
+            const RichTextHeading(text: 'Model').paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
               hintText: 'Enter vehicle model',
               controller: controller.model,
               validator: (p0) => controller.validateModel(p0),
               autovalidateMode: AutovalidateMode.onUserInteraction,
             ).paddingOnly(bottom: 16.kh),
-            const RichTextHeading(text: 'Type'),
+            const RichTextHeading(text: 'Type').paddingOnly(bottom: 8.kh),
             GreenPoolDropDown(
               hintText: 'Select vehicle type',
               validator: (p0) => controller.validateVehicleType(p0),
@@ -123,7 +123,7 @@ class SetupVehicle extends GetView<ProfileSetupController> {
                 controller.type.text = val.toString();
               },
             ).paddingOnly(bottom: 16.kh),
-            const RichTextHeading(text: 'Color'),
+            const RichTextHeading(text: 'Color').paddingOnly(bottom: 8.kh),
             GreenPoolDropDown(
               hintText: 'Select vehicle color',
               autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -194,14 +194,15 @@ class SetupVehicle extends GetView<ProfileSetupController> {
                 controller.color.text = val.toString();
               },
             ).paddingOnly(bottom: 16.kh),
-            const RichTextHeading(text: 'Year'),
+            const RichTextHeading(text: 'Year').paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
               hintText: 'Enter year',
               controller: controller.year,
               validator: (p0) => controller.validateYear(p0),
               autovalidateMode: AutovalidateMode.onUserInteraction,
             ).paddingOnly(bottom: 16.kh),
-            const RichTextHeading(text: 'License Plate'),
+            const RichTextHeading(text: 'License Plate')
+                .paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
               hintText: 'License plate',
               controller: controller.licencePlate,

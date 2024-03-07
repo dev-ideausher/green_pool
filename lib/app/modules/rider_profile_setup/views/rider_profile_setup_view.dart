@@ -32,7 +32,7 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
                 Text(
                   'Profile Setup',
                   style: TextStyleUtil.k32Heading700(),
-                ).paddingOnly(bottom: 4.kh),
+                ).paddingOnly(bottom: 4.kh, top: 16.kh),
                 Text(
                   'Edit your profile details',
                   style: TextStyleUtil.k16Regular(color: ColorUtil.kBlack04),
@@ -83,7 +83,8 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
                     ],
                   ),
                 ).paddingOnly(bottom: 40.kh),
-                const RichTextHeading(text: 'Full Name'),
+                const RichTextHeading(text: 'Full Name')
+                    .paddingOnly(bottom: 8.kh),
                 GreenPoolTextField(
                   hintText: 'Enter name',
                   controller: controller.fullName,
@@ -91,7 +92,8 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   suffix: SvgPicture.asset(ImageConstant.svgProfileEditPen),
                 ).paddingOnly(bottom: 16.kh),
-                const RichTextHeading(text: 'Email Address'),
+                const RichTextHeading(text: 'Email Address')
+                    .paddingOnly(bottom: 8.kh),
                 GreenPoolTextField(
                   hintText: 'Enter Email ID',
                   controller: controller.email,
@@ -99,14 +101,15 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   suffix: SvgPicture.asset(ImageConstant.svgProfileEditPen),
                 ).paddingOnly(bottom: 16.kh),
-                const RichTextHeading(text: 'Phone Number'),
+                const RichTextHeading(text: 'Phone Number')
+                    .paddingOnly(bottom: 8.kh),
                 GreenPoolTextField(
                   hintText: 'Enter phone number',
                   controller: controller.phoneNumber,
                   validator: (value) => controller.phoneNumberValidator(value),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                 ).paddingOnly(bottom: 16.kh),
-                const RichTextHeading(text: 'Gender'),
+                const RichTextHeading(text: 'Gender').paddingOnly(bottom: 8.kh),
                 GreenPoolDropDown(
                   hintText: 'Select your Gender',
                   validator: (value) => controller.validateGender(value),
@@ -135,7 +138,8 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
                     controller.gender.text = val.toString();
                   },
                 ).paddingOnly(bottom: 16.kh),
-                const RichTextHeading(text: 'City Province'),
+                const RichTextHeading(text: 'City Province')
+                    .paddingOnly(bottom: 8.kh),
                 GreenPoolTextField(
                   //TODO: drop down city
                   hintText: 'City',
@@ -167,7 +171,8 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
                   onTap: () => controller.setDate(context),
                   suffix: SvgPicture.asset(ImageConstant.svgIconCalendar),
                 ).paddingOnly(bottom: 16.kh),
-                const RichTextHeading(text: 'ID Verification'),
+                const RichTextHeading(text: 'ID Verification')
+                    .paddingOnly(bottom: 8.kh),
                 GestureDetector(
                   onTap: () => Get.to(() => UploadIDView(
                         onPressedGallery: () {

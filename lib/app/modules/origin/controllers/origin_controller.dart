@@ -95,7 +95,6 @@ class OriginController extends GetxController {
       String nameOfLocation =
           "${jsonDecode(geometry)['result']['address_components'][0]['long_name']},${jsonDecode(geometry)['result']['address_components'][1]['long_name']},${jsonDecode(geometry)['result']['address_components'][2]['long_name']}";
       // List<Placemark> placemarks = await placemarkFromCoordinates(lat, long);
-
       // String nameOfLocation =
       // "${placemarks[0].street},${placemarks[0].locality},${placemarks[0].postalCode}";
 

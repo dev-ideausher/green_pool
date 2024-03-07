@@ -28,7 +28,7 @@ class VehicleDetailsView extends GetView<VehicleDetailsController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const RichTextHeading(text: 'Vehicle Photo')
-                .paddingOnly(top: 32.kh),
+                .paddingOnly(top: 32.kh, bottom: 8.kh),
             GestureDetector(
               // onTap: () => Get.to(const VehiclePictureView()),
               child: Container(
@@ -41,7 +41,7 @@ class VehicleDetailsView extends GetView<VehicleDetailsController> {
                       image: NetworkImage(
                           "${Get.find<ProfileController>().userInfo.value.data?.vehicleDetails?[0]!.vehiclePic!.url}"))),
             ).paddingOnly(bottom: 16.kh),
-            const RichTextHeading(text: 'Model'),
+            const RichTextHeading(text: 'Model').paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
               hintText: Get.find<ProfileController>()
                       .userInfo
@@ -58,7 +58,7 @@ class VehicleDetailsView extends GetView<VehicleDetailsController> {
                           : ColorUtil.kSecondary01,
                       BlendMode.srcIn)),
             ).paddingOnly(bottom: 16.kh),
-            const RichTextHeading(text: 'Type'),
+            const RichTextHeading(text: 'Type').paddingOnly(bottom: 8.kh),
             GreenPoolDropDown(
               hintText: Get.find<ProfileController>()
                       .userInfo
@@ -113,7 +113,7 @@ class VehicleDetailsView extends GetView<VehicleDetailsController> {
               ],
               onChanged: (v) {},
             ).paddingOnly(bottom: 16.kh),
-            const RichTextHeading(text: 'Color'),
+            const RichTextHeading(text: 'Color').paddingOnly(bottom: 8.kh),
             GreenPoolDropDown(
               hintText: Get.find<ProfileController>()
                       .userInfo
@@ -186,7 +186,7 @@ class VehicleDetailsView extends GetView<VehicleDetailsController> {
               ],
               onChanged: (v) {},
             ).paddingOnly(bottom: 16.kh),
-            const RichTextHeading(text: 'Year'),
+            const RichTextHeading(text: 'Year').paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
               hintText: Get.find<ProfileController>()
                       .userInfo
@@ -204,7 +204,8 @@ class VehicleDetailsView extends GetView<VehicleDetailsController> {
                           : ColorUtil.kSecondary01,
                       BlendMode.srcIn)),
             ).paddingOnly(bottom: 16.kh),
-            const RichTextHeading(text: 'License Plate'),
+            const RichTextHeading(text: 'License Plate')
+                .paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
               hintText: Get.find<ProfileController>()
                       .userInfo
