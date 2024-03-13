@@ -105,10 +105,8 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                   const RichTextHeading(text: "Date"),
                   GreenPoolTextField(
                       controller: controller.formattedOneTimeDate,
-                      hintText: 'Select date',
+                      hintText: 'Select Date',
                       readOnly: true,
-                      onchanged: (val) =>
-                          controller.setActiveStateCarpoolSchedule(),
                       suffix: SizedBox(
                         child: SvgPicture.asset(
                           ImageConstant.svgIconCalendar,
@@ -122,14 +120,16 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                         ).paddingOnly(right: 16.kw),
                       ),
                       onTap: () {
-                        controller.setDate(context);
+                        controller.setDate(context).then((value) =>
+                            controller.setActiveStateCarpoolSchedule());
                       }).paddingOnly(top: 8.kh, bottom: 16.kh),
-                  const RichTextHeading(text: 'Time'),
+                  Text(
+                    'Time',
+                    style: TextStyleUtil.k14Semibold(),
+                  ),
                   GreenPoolTextField(
-                    hintText: 'Select time',
+                    hintText: 'Select Time',
                     controller: controller.selectedTimeOneTime,
-                    onchanged: (val) =>
-                        controller.setActiveStateCarpoolSchedule(),
                     onTap: () {
                       controller.setTime(context);
                     },
@@ -405,8 +405,8 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                   ],
                 ),
               ),
-              RichTextHeading(
-                text: 'Other',
+              Text(
+                'Other',
                 style: TextStyleUtil.k16Bold(color: ColorUtil.kNeutral5),
               ).paddingOnly(top: 24.kh, bottom: 16.kh),
               Obx(
@@ -477,15 +477,17 @@ class CarpoolScheduleView extends GetView<PostRideController> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  GreenPoolButton(
-                    onPressed: () => Get.toNamed(Routes.PRICING_VIEW),
-                    padding: const EdgeInsets.all(0),
-                    // isActive: controller.isActiveCarpoolButton.value,
-                    label: 'Next',
-                    fontSize: 14.kh,
-                    width: 120.kw,
-                    height: 40.kh,
-                  ).paddingSymmetric(vertical: 40.kh),
+                  Obx(
+                    () => GreenPoolButton(
+                      onPressed: () => Get.toNamed(Routes.PRICING_VIEW),
+                      padding: const EdgeInsets.all(0),
+                      isActive: controller.isActiveCarpoolButton.value,
+                      label: 'Next',
+                      fontSize: 14.kh,
+                      width: 120.kw,
+                      height: 40.kh,
+                    ).paddingSymmetric(vertical: 40.kh),
+                  ),
                 ],
               ),
             ],

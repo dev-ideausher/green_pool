@@ -1,5 +1,6 @@
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 
 import 'app/modules/home/bindings/home_binding.dart';
 import 'package:flutter/material.dart';
@@ -52,5 +53,6 @@ Future<void> main() async {
 Future<void> initGetServices() async {
   await Get.putAsync<GetStorageService>(() => GetStorageService().initState());
   await Get.putAsync<AuthService>(() async => AuthService());
-  Get.lazyPut(() => ProfileController());
+  Get.put(HomeController());
+  Get.put(ProfileController());
 }

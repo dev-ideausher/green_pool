@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/modules/profile/controllers/profile_controller.dart';
 import 'package:green_pool/app/services/dio/api_service.dart';
 import 'package:green_pool/app/services/snackbar.dart';
@@ -27,6 +28,7 @@ class PostRideController extends GetxController {
   RxBool isActive = false.obs;
   RxBool isActiveCarpoolButton = false.obs;
   RxBool isActivePricingButton = false.obs;
+  RxBool isStop1Added = false.obs;
 
   TextEditingController selectedRecurringTime = TextEditingController();
 
@@ -87,7 +89,7 @@ class PostRideController extends GetxController {
   decideRouting() {
     // Decides if the user is logged in and redirects accordingly
     if (Get.find<GetStorageService>().getLoggedIn) {
-      if (Get.find<ProfileController>().userInfo.value.data?.vehicleStatus ==
+      if (Get.find<HomeController>().userInfo.value.data?.vehicleStatus ==
           false) {
         showMySnackbar(msg: 'Please fill in vehicle details');
         Get.toNamed(Routes.PROFILE_SETUP, arguments: isDriver);
@@ -131,7 +133,7 @@ class PostRideController extends GetxController {
       date: selectedDateOneTime.text,
       time: selectedTimeOneTime.text,
       //have to calculate distance between every stop and fair will be calculated accordingly
-      fair: int.parse(priceTextController.value.text),
+      fair: priceTextController.value.text,
       preferences: PostRideModelRidesDetailsPreferences(
         seatAvailable: count.value,
         luggageType: selectedCHIP.value,
@@ -162,7 +164,7 @@ class PostRideController extends GetxController {
       await Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
       log(response.data.toString());
     } catch (e) {
-      showMySnackbar(msg: 'Please fill in correct details');
+      showMySnackbar(msg: "$e");
       throw Exception(e);
     }
   }
@@ -170,7 +172,12 @@ class PostRideController extends GetxController {
   String? fareValidator(String? value) {
     // Check if the value is empty
     if (value == null || value.isEmpty) {
-      return 'Please enter a reasonable cost';
+      return 'Enter a reasonable cost';
+    }
+
+    // Check if the value is greater than 9999
+    if (double.parse(value) > 9999.99) {
+      return 'Cost value exceeded';
     }
 
     // Check if the value contains exactly 10 digits
@@ -464,28 +471,18 @@ class PostRideController extends GetxController {
   }
 
   setActiveStateCarpoolSchedule() {
-    if ((formattedOneTimeDate.value.text == null ||
-            formattedOneTimeDate.value.text == '') &&
-        (selectedTimeOneTime.value.text == null ||
-            selectedTimeOneTime.value.text == '')) {
-      isActiveCarpoolButton.value = false;
-    } else {
+    if (formattedOneTimeDate.value.text.isNotEmpty) {
       isActiveCarpoolButton.value = true;
+    } else {
+      isActiveCarpoolButton.value = false;
     }
   }
 
   setActiveStatePricing() {
-    if ((priceTextController.value.text == null ||
-        priceTextController.value.text == '' ||
-        priceTextController.value.text == '0')) {
+    String? validationResult = fareValidator(priceTextController.value.text);
+
+    if (validationResult != null) {
       isActivePricingButton.value = false;
-    } else if ((formattedOneTimeDate.value.text == null ||
-            formattedOneTimeDate.value.text == '') &&
-        (selectedTimeOneTime.value.text == null ||
-            selectedTimeOneTime.value.text == '')) {
-      isActivePricingButton.value = false;
-      showMySnackbar(
-          msg: 'Please select correct time and date for scheduling the ride');
     } else {
       isActivePricingButton.value = true;
     }

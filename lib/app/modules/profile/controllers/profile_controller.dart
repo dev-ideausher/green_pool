@@ -1,21 +1,15 @@
-import 'dart:convert';
-
 import 'package:get/get.dart';
-import 'package:green_pool/app/data/user_info_model.dart';
-import 'package:green_pool/app/services/dio/api_service.dart';
-
+import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import '../../../services/storage.dart';
 
 class ProfileController extends GetxController {
   RxBool isSwitched = false.obs;
+  var userInfo = Get.find<HomeController>().userInfo;
   // RxBool isSwitched = Get.find<GetStorageService>().isPinkMode;
-  var userInfo = UserInfoModel().obs;
-  RxString fullName = " ".obs;
 
   @override
   void onInit() {
     super.onInit();
-    userInfoAPI();
   }
 
   // @override
@@ -33,13 +27,5 @@ class ProfileController extends GetxController {
     Get.find<GetStorageService>().isPinkMode = isSwitched.value;
     print(Get.find<GetStorageService>().isPinkMode);
     return isSwitched.value;
-  }
-
-  userInfoAPI() async {
-    final response = await APIManager.getUserByID();
-    var data = jsonDecode(response.toString());
-    userInfo.value = UserInfoModel.fromJson(data);
-    print(response.data.toString());
-    fullName.value = userInfo.value.data!.fullName!;
   }
 }

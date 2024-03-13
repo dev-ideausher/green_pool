@@ -8,7 +8,9 @@ class GreenPoolTextField extends StatelessWidget {
   final String? Function(String?)? validator;
   final TextEditingController? controller;
   final String hintText;
+  final EdgeInsetsGeometry? suffixPadding;
   // final String? initialValue;
+  final TextInputType? keyboardType;
   final bool? obscureText, readOnly;
   final Function(String?)? onchanged, onSaved;
   final int? maxLines;
@@ -34,13 +36,14 @@ class GreenPoolTextField extends StatelessWidget {
       // this.initialValue,
       this.readOnly,
       this.autovalidateMode,
-      this.onSaved});
+      this.onSaved,
+      this.suffixPadding,
+      this.keyboardType});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       enabled: enabled,
-
       style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack01),
       maxLines: maxLines ?? 1,
       onTap: onTap,
@@ -52,11 +55,11 @@ class GreenPoolTextField extends StatelessWidget {
       obscureText: obscureText ?? false,
       autofocus: autofocus ?? false,
       readOnly: readOnly ?? false,
-      keyboardType: TextInputType.name,
+      keyboardType: keyboardType ?? TextInputType.name,
       // initialValue: initialValue,
       decoration: InputDecoration(
         suffixIcon: Padding(
-          padding: EdgeInsets.only(right: 16.kw, left: 8.kw),
+          padding: suffixPadding ?? EdgeInsets.only(right: 16.kw, left: 8.kw),
           child: IconButton(
             icon: suffix ?? const SizedBox(),
             onPressed: onPressedSuffix,

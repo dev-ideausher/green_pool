@@ -37,6 +37,7 @@ class ProfileSetupView extends GetView<ProfileSetupController> {
                   onTap:
                       (index) {}, //TODO: have to take index from here and if pressed proceed on user detials then the index should be increased by one so that we land on vehicle details
                   indicatorSize: TabBarIndicatorSize.tab,
+                  controller: controller.tabBarController,
                   splashBorderRadius: BorderRadius.circular(4.kh),
                   unselectedLabelStyle:
                       TextStyleUtil.k14Semibold(color: ColorUtil.kSecondary01),
@@ -61,9 +62,10 @@ class ProfileSetupView extends GetView<ProfileSetupController> {
                       ),
                     ),
                   ]),
-              const Expanded(
+              Expanded(
                 child: TabBarView(
-                  children: [SetupUser(), SetupVehicle()],
+                  controller: controller.tabBarController,
+                  children: const [SetupUser(), SetupVehicle()],
                 ),
               ),
             ],

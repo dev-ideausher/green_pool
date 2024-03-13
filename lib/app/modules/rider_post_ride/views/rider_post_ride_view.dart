@@ -76,7 +76,7 @@ class RiderPostRideView extends GetView<RiderPostRideController> {
               ).paddingOnly(bottom: 24.kh, top: 40.kh),
             ),
             GestureDetector(
-              onTap: () => Get.toNamed(Routes.RIDER_RIDE_REQUEST),
+              onTap: () => Get.toNamed(Routes.RIDER_MY_RIDE_REQUEST),
               child: Container(
                 width: 100.w,
                 height: 149.kh,

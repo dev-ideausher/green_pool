@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:green_pool/app/modules/my_rides/controllers/my_rides_controller.dart';
-import 'package:green_pool/app/modules/profile/controllers/profile_controller.dart';
 import 'package:geolocator/geolocator.dart';
+
+import '../../../data/user_info_model.dart';
+import '../../../services/dio/api_service.dart';
 
 class HomeController extends GetxController {
   final RxInt selectedIndex = 0.obs;
@@ -10,8 +13,11 @@ class HomeController extends GetxController {
   final RxBool findingRide = false.obs;
   RxDouble latitude = 0.0.obs;
   RxDouble longitude = 0.0.obs;
+  var userInfo = UserInfoModel().obs;
+  RxString welcomeText = "Welcome".obs;
+  
 
-  RxBool isPink = Get.find<ProfileController>().isSwitched.value.obs;
+  // RxBool isPink = Get.find<ProfileController>().isSwitched.value.obs;
 
   void changeTabIndex(int index) {
     selectedIndex.value = index;
@@ -21,8 +27,7 @@ class HomeController extends GetxController {
   //! temporary basis - userInfoAPI
   void onInit() {
     super.onInit();
-    Get.lazyPut(() => MyRidesController());
-
+    // Get.lazyPut(() => MyRidesController());
     _determinePosition().then((value) => {
           latitude.value = value.latitude,
           longitude.value = value.longitude,
@@ -32,13 +37,21 @@ class HomeController extends GetxController {
   @override
   void onReady() async {
     super.onReady();
-    await Get.find<ProfileController>().userInfoAPI();
+    userInfoAPI();
   }
 
   // @override
   // void onClose() {
   //   super.onClose();
   // }
+
+  userInfoAPI() async {
+    final response = await APIManager.getUserByID();
+    var data = jsonDecode(response.toString());
+    userInfo.value = UserInfoModel.fromJson(data);
+    print(response.data.toString());
+  }
+
   Future<Position> _determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;

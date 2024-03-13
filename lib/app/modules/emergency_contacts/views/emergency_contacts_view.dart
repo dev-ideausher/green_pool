@@ -45,6 +45,7 @@ class EmergencyContactsView extends GetView<EmergencyContactsController> {
           ).paddingOnly(bottom: 8.kh),
           GreenPoolTextField(
             hintText: 'Enter phone number',
+            keyboardType: TextInputType.phone,
             controller: controller.emergencyNumber1,
             // onchanged: (value) {
             //     controller.emergencyContacts1.phone = value;
@@ -69,6 +70,7 @@ class EmergencyContactsView extends GetView<EmergencyContactsController> {
           ).paddingOnly(bottom: 8.kh),
           GreenPoolTextField(
             hintText: 'Enter phone number',
+            keyboardType: TextInputType.phone,
             controller: controller.emergencyNumber2,
             // onchanged: (value) {
             //     controller.emergencyContacts1.phone = value;

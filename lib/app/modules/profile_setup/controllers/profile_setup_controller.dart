@@ -3,8 +3,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/modules/post_ride/controllers/post_ride_controller.dart';
-import 'package:green_pool/app/modules/post_ride/views/carpool_schedule_view.dart';
 import 'package:green_pool/app/modules/profile_setup/views/review_picture.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/snackbar.dart';
@@ -15,9 +15,9 @@ import 'package:dio/dio.dart' as dio;
 import 'package:path/path.dart' as path;
 import '../../../services/auth.dart';
 import '../../../services/dio/api_service.dart';
-import '../../profile/controllers/profile_controller.dart';
 
-class ProfileSetupController extends GetxController {
+class ProfileSetupController extends GetxController
+    with GetSingleTickerProviderStateMixin {
   final pageIndex = 0.obs;
   bool isDriver = false;
   String name = '';
@@ -33,15 +33,19 @@ class ProfileSetupController extends GetxController {
       text: Get.find<AuthService>().auth.currentUser?.email);
   TextEditingController phoneNumber = TextEditingController(
       text: Get.find<AuthService>().auth.currentUser?.phoneNumber);
-  TextEditingController gender = TextEditingController();
+  // TextEditingController gender = TextEditingController();
+  RxString gender = 'Prefer not to say'.obs;
   TextEditingController city = TextEditingController();
   TextEditingController dateOfBirth = TextEditingController();
   TextEditingController formattedDateOfBirth = TextEditingController();
+  late TabController tabBarController;
 
   //for vehicle
   TextEditingController model = TextEditingController();
-  TextEditingController color = TextEditingController();
-  TextEditingController type = TextEditingController();
+  // TextEditingController color = TextEditingController();
+  // TextEditingController type = TextEditingController();
+  RxString color = "Silver".obs;
+  RxString type = "Sedan".obs;
   TextEditingController year = TextEditingController();
   TextEditingController licencePlate = TextEditingController();
 
@@ -53,6 +57,7 @@ class ProfileSetupController extends GetxController {
     super.onInit();
     Get.lazyPut(() => PostRideController());
     isDriver = Get.arguments;
+    tabBarController = TabController(length: 2, vsync: this);
   }
 
   // @override
@@ -143,7 +148,7 @@ class ProfileSetupController extends GetxController {
       'fullName': fullName.text,
       'email': email.text,
       'phone': phoneNumber.text,
-      'gender': gender.text,
+      'gender': gender.value,
       'city': city.text,
       'dob': dateOfBirth.text,
       'profilePic': await dio.MultipartFile.fromFile(
@@ -165,6 +170,7 @@ class ProfileSetupController extends GetxController {
       showMySnackbar(msg: responses.data['message']);
       Get.find<GetStorageService>().setUserName = fullName.text;
       Get.find<GetStorageService>().setProfileStatus = true;
+      tabBarController.index = 1;
     } catch (e) {
       throw Exception(e);
     }
@@ -186,8 +192,8 @@ class ProfileSetupController extends GetxController {
     final vehicleData = dio.FormData.fromMap({
       'driverId': Get.find<GetStorageService>().getUserAppId,
       'model': model.text,
-      'type': type.text,
-      'color': color.text,
+      'type': type.value,
+      'color': color.value,
       'year': year.text,
       'licencePlate': licencePlate.text,
       'vehiclePic': await dio.MultipartFile.fromFile(
@@ -201,7 +207,7 @@ class ProfileSetupController extends GetxController {
       try {
         await APIManager.postVehicleDetails(body: vehicleData);
         showMySnackbar(msg: "Data filled successfully");
-        Get.find<ProfileController>().userInfoAPI();
+        Get.find<HomeController>().userInfoAPI();
         // Get.offNamed(Routes.CARPOOL_SCHEDULE, arguments: isDriver);
         Get.until((route) => Get.currentRoute == Routes.POST_RIDE);
       } catch (e) {
@@ -343,8 +349,8 @@ class ProfileSetupController extends GetxController {
     final isValid = userFormKey.currentState!.validate();
 
     if (!isValid &&
-        isProfileImagePicked.value == false &&
-        isIDPicked.value == false) {
+        isProfileImagePicked.value != true &&
+        isIDPicked.value != true) {
       return showMySnackbar(msg: 'Please fill in all the details');
     } else {
       userFormKey.currentState!.save();
@@ -355,7 +361,7 @@ class ProfileSetupController extends GetxController {
   checkVehicleValidations() async {
     final isValid = vehicleFormKey.currentState!.validate();
 
-    if (!isValid) {
+    if (!isValid && selectedVehicleImagePath.value!.path.isEmpty) {
       return showMySnackbar(msg: 'Please fill in all the details');
     } else {
       vehicleFormKey.currentState!.save();

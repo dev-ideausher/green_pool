@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:io';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:green_pool/app/modules/profile/controllers/profile_controller.dart';
 
 import '../constants/image_constant.dart';
 import 'enigma.dart';

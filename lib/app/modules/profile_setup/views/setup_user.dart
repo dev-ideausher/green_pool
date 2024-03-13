@@ -86,6 +86,7 @@ class SetupUser extends GetView<ProfileSetupController> {
             GreenPoolTextField(
               hintText: 'Email ID',
               controller: controller.email,
+              keyboardType: TextInputType.emailAddress,
               validator: (value) => controller.validateEmail(value),
               autovalidateMode: AutovalidateMode.onUserInteraction,
               suffix: SvgPicture.asset(ImageConstant.svgProfileEditPen),
@@ -102,6 +103,7 @@ class SetupUser extends GetView<ProfileSetupController> {
             const RichTextHeading(text: 'Gender').paddingOnly(bottom: 8.kh),
             GreenPoolDropDown(
               hintText: 'Select your Gender',
+              value: controller.gender.value,
               items: [
                 DropdownMenuItem(
                     value: "Male",
@@ -123,7 +125,7 @@ class SetupUser extends GetView<ProfileSetupController> {
                     )),
               ],
               onChanged: (value) {
-                controller.gender.text = value.toString();
+                controller.gender.value = value.toString();
               },
               validator: (value) => controller.validateGender(value),
               autovalidateMode: AutovalidateMode.onUserInteraction,

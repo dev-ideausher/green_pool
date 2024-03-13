@@ -31,12 +31,16 @@ class PostRideView extends GetView<PostRideController> {
           const RichTextHeading(text: 'Origin').paddingOnly(top: 32.kh),
           GreenPoolTextField(
             hintText: 'Enter origin address',
+            keyboardType: TextInputType.streetAddress,
             onchanged: (v) {
               controller.setActiveStatePostRideView();
               print("is active value : ${controller.isActive.value}");
             },
             onTap: () {
-              Get.toNamed(Routes.ORIGIN, arguments: LocationValues.origin);
+              Get.toNamed(Routes.ORIGIN, arguments: LocationValues.origin)
+                  ?.then((value) {
+                controller.setActiveStatePostRideView();
+              });
             },
             controller: controller.originTextController,
             readOnly: true,
@@ -51,12 +55,16 @@ class PostRideView extends GetView<PostRideController> {
           const RichTextHeading(text: 'Destination'),
           GreenPoolTextField(
             hintText: 'Enter a destination',
+            keyboardType: TextInputType.streetAddress,
             onchanged: (v) {
               controller.setActiveStatePostRideView();
               print("is active value : ${controller.isActive.value}");
             },
             onTap: () {
-              Get.toNamed(Routes.ORIGIN, arguments: LocationValues.destination);
+              Get.toNamed(Routes.ORIGIN, arguments: LocationValues.destination)
+                  ?.then((value) {
+                controller.setActiveStatePostRideView();
+              });
             },
             controller: controller.destinationTextController,
             readOnly: true,
@@ -74,8 +82,10 @@ class PostRideView extends GetView<PostRideController> {
           ),
           GreenPoolTextField(
             hintText: 'Add stops',
+            keyboardType: TextInputType.streetAddress,
             onTap: () {
-              Get.toNamed(Routes.ORIGIN, arguments: LocationValues.addStop1);
+              Get.toNamed(Routes.ORIGIN, arguments: LocationValues.addStop1)
+                  ?.then((value) => controller.isStop1Added.value = true);
             },
             controller: controller.stop1TextController,
             readOnly: true,
@@ -95,48 +105,50 @@ class PostRideView extends GetView<PostRideController> {
                   BlendMode.srcIn),
             ),
           ).paddingOnly(top: 8.kh, bottom: 16.kh),
-          GreenPoolTextField(
-            hintText: 'Add stops',
-            onTap: () {
-              Get.toNamed(Routes.ORIGIN, arguments: LocationValues.addStop2);
-            },
-            controller: controller.stop2TextController,
-            readOnly: true,
-            prefix: Icon(
-              Icons.add_circle,
-              size: 20.kh,
-              color: Get.find<ProfileController>().isSwitched.value
-                  ? ColorUtil.kPrimary3PinkMode
-                  : ColorUtil.kSecondary01,
-            ),
-            suffix: SvgPicture.asset(
-              ImageConstant.svgIconReorder,
-              colorFilter: ColorFilter.mode(
-                  Get.find<ProfileController>().isSwitched.value
-                      ? ColorUtil.kPrimary3PinkMode
-                      : ColorUtil.kSecondary01,
-                  BlendMode.srcIn),
-            ),
-          ).paddingOnly(top: 8.kh, bottom: 16.kh),
+          Obx(
+            () => controller.isStop1Added.value
+                ? GreenPoolTextField(
+                    hintText: 'Add stops',
+                    keyboardType: TextInputType.streetAddress,
+                    onTap: () {
+                      Get.toNamed(Routes.ORIGIN,
+                          arguments: LocationValues.addStop2);
+                    },
+                    controller: controller.stop2TextController,
+                    readOnly: true,
+                    prefix: Icon(
+                      Icons.add_circle,
+                      size: 20.kh,
+                      color: Get.find<ProfileController>().isSwitched.value
+                          ? ColorUtil.kPrimary3PinkMode
+                          : ColorUtil.kSecondary01,
+                    ),
+                    suffix: SvgPicture.asset(
+                      ImageConstant.svgIconReorder,
+                      colorFilter: ColorFilter.mode(
+                          Get.find<ProfileController>().isSwitched.value
+                              ? ColorUtil.kPrimary3PinkMode
+                              : ColorUtil.kSecondary01,
+                          BlendMode.srcIn),
+                    ),
+                  ).paddingOnly(top: 8.kh, bottom: 16.kh)
+                : const SizedBox(),
+          ),
           const Expanded(child: SizedBox()),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              GreenPoolButton(
-                onPressed: () => controller.decideRouting(),
-                padding: const EdgeInsets.all(0),
-                // isActive: controller.isActive.value,
-                // isActive:
-                //     controller.originTextController.value.text.isNotEmpty &&
-                //             controller.destinationTextController.value.text
-                //                 .isNotEmpty
-                //         ? controller.isActive.value
-                //         : controller.isActive.value,
-                label: 'Next',
-                fontSize: 14.kh,
-                width: 120.kw,
-                height: 40.kh,
-              ).paddingSymmetric(vertical: 40.kh),
+              Obx(
+                () => GreenPoolButton(
+                  onPressed: () => controller.decideRouting(),
+                  padding: const EdgeInsets.all(0),
+                  isActive: controller.isActive.value,
+                  label: 'Next',
+                  fontSize: 14.kh,
+                  width: 120.kw,
+                  height: 40.kh,
+                ).paddingSymmetric(vertical: 40.kh),
+              ),
             ],
           ),
         ],

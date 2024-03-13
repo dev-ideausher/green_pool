@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/modules/rider_profile_setup/views/rider_review_pic.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
@@ -14,8 +15,6 @@ import '../../../services/snackbar.dart';
 import '../../../services/storage.dart';
 import 'package:path/path.dart' as path;
 import 'package:dio/dio.dart' as dio;
-
-import '../../profile/controllers/profile_controller.dart';
 
 class RiderProfileSetupController extends GetxController {
   RxBool isPicked = false.obs;
@@ -142,7 +141,7 @@ class RiderProfileSetupController extends GetxController {
       Get.find<GetStorageService>().setUserName = fullName.text;
       Get.find<GetStorageService>().setProfileStatus = true;
       // showMySnackbar(msg: responses.data['message']);
-      Get.find<ProfileController>().userInfoAPI();
+      Get.find<HomeController>().userInfoAPI();
       // Get.offNamed(Routes.FIND_RIDE, arguments: isDriver);
       Get.until((route) => Get.currentRoute == Routes.FIND_RIDE);
     } catch (e) {

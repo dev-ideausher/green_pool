@@ -949,7 +949,7 @@ class MatchingRidesModelData {
   "isStarted": false,
   "isCompleted": false,
   "isCancelled": false,
-  "fair": 28,
+  "fair": "28",
   "riders": [
     "65c22d5672eca065a18fa015"
   ],
@@ -1075,7 +1075,7 @@ class MatchingRidesModelData {
   bool? isStarted;
   bool? isCompleted;
   bool? isCancelled;
-  int? fair;
+  String? fair;
   List<String?>? riders;
   String? createdAt;
   String? updatedAt;
@@ -1156,7 +1156,7 @@ class MatchingRidesModelData {
     isStarted = json['isStarted'];
     isCompleted = json['isCompleted'];
     isCancelled = json['isCancelled'];
-    fair = json['fair']?.toInt();
+    fair = json['fair']?.toString();
     if (json['riders'] != null) {
       final v = json['riders'];
       final arr0 = <String>[];
@@ -1364,7 +1364,7 @@ class MatchingRidesModel {
       "isStarted": false,
       "isCompleted": false,
       "isCancelled": false,
-      "fair": 28,
+      "fair": "28",
       "riders": [
         "65c22d5672eca065a18fa015"
       ],

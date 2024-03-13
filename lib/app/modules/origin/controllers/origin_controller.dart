@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_workers/utils/debouncer.dart';
 import 'package:green_pool/app/modules/find_ride/controllers/find_ride_controller.dart';
@@ -92,11 +93,12 @@ class OriginController extends GetxController {
           jsonDecode(geometry)['result']['geometry']['location']['lat'];
       double long =
           jsonDecode(geometry)['result']['geometry']['location']['lng'];
-      String nameOfLocation =
-          "${jsonDecode(geometry)['result']['address_components'][0]['long_name']},${jsonDecode(geometry)['result']['address_components'][1]['long_name']},${jsonDecode(geometry)['result']['address_components'][2]['long_name']}";
-      // List<Placemark> placemarks = await placemarkFromCoordinates(lat, long);
       // String nameOfLocation =
-      // "${placemarks[0].street},${placemarks[0].locality},${placemarks[0].postalCode}";
+      //     "${jsonDecode(geometry)['result']['address_components'][0]['long_name']},${jsonDecode(geometry)['result']['address_components'][1]['long_name']},${jsonDecode(geometry)['result']['address_components'][2]['long_name']}";
+      List<Placemark> placemarks = await placemarkFromCoordinates(lat, long);
+      String nameOfLocation =
+          "${placemarks[0].street}, ${placemarks[0].locality}";
+      print(placemarks[0].toString());
 
       // setLocationData([lat, long, nameOfLocation]);
       return [lat, long, nameOfLocation];

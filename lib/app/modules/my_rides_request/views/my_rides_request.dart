@@ -2,22 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
+import 'package:green_pool/app/modules/my_rides_request/controllers/my_rides_request_controller.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../constants/image_constant.dart';
 import '../../../services/colors.dart';
 import '../../../services/text_style_util.dart';
 import '../../profile/controllers/profile_controller.dart';
-import '../controllers/my_rides_controller.dart';
 import 'confirm_request.dart';
 import 'send_request.dart';
 
-class RideRequests extends GetView<MyRidesController> {
-  const RideRequests({super.key});
+class MyRideRequestsView extends GetView<MyRidesRequestController> {
+  const MyRideRequestsView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    Get.lazyPut(() => MyRidesController());
+    Get.lazyPut(() => MyRidesRequestController());
     return Scaffold(
       appBar: GreenPoolAppBar(
         title: const Text('My Rides'),
@@ -80,6 +80,7 @@ class RideRequests extends GetView<MyRidesController> {
                   ]).paddingSymmetric(horizontal: 16.kw),
               const Expanded(
                 child: TabBarView(
+                  physics: NeverScrollableScrollPhysics(),
                   children: [ConfirmRequest(), SendRequest()],
                 ),
               ),

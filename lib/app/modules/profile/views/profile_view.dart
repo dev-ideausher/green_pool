@@ -40,7 +40,8 @@ class ProfileView extends GetView<ProfileController> {
                               : ColorUtil.kPrimary01,
                         )),
                         GreenPoolButton(
-                          onPressed: () => controller.userInfoAPI(),
+                          onPressed: () =>
+                              Get.find<HomeController>().userInfoAPI(),
                           label: 'Refresh',
                         ),
                       ],
@@ -74,7 +75,7 @@ class ProfileView extends GetView<ProfileController> {
                                 style:
                                     TextStyleUtil.k16Semibold(fontSize: 16.kh),
                               ).paddingOnly(bottom: 24.kh),
-                              controller.userInfo.value.data!.gender != "Female"
+                              controller.userInfo.value.data!.gender == "Female"
                                   ? ProfileContainer(
                                       image: ImageConstant.svgProfileShieldPink,
                                       text: 'Activate Pink Mode',

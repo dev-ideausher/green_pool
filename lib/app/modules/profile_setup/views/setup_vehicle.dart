@@ -73,6 +73,7 @@ class SetupVehicle extends GetView<ProfileSetupController> {
             const RichTextHeading(text: 'Type').paddingOnly(bottom: 8.kh),
             GreenPoolDropDown(
               hintText: 'Select vehicle type',
+              value: controller.type.value,
               validator: (p0) => controller.validateVehicleType(p0),
               autovalidateMode: AutovalidateMode.onUserInteraction,
               items: [
@@ -120,12 +121,13 @@ class SetupVehicle extends GetView<ProfileSetupController> {
                     )),
               ],
               onChanged: (val) {
-                controller.type.text = val.toString();
+                controller.type.value = val.toString();
               },
             ).paddingOnly(bottom: 16.kh),
             const RichTextHeading(text: 'Color').paddingOnly(bottom: 8.kh),
             GreenPoolDropDown(
               hintText: 'Select vehicle color',
+              value: controller.color.value,
               autovalidateMode: AutovalidateMode.onUserInteraction,
               validator: (p0) => controller.validateColor(p0),
               items: [
@@ -191,7 +193,7 @@ class SetupVehicle extends GetView<ProfileSetupController> {
                     )),
               ],
               onChanged: (val) {
-                controller.color.text = val.toString();
+                controller.color.value = val.toString();
               },
             ).paddingOnly(bottom: 16.kh),
             const RichTextHeading(text: 'Year').paddingOnly(bottom: 8.kh),

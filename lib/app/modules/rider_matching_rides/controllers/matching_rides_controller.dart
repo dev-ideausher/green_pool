@@ -32,8 +32,6 @@ class MatchingRidesController extends GetxController {
       final response = await APIManager.getMatchingRides(rideId: riderRideId);
       var data = jsonDecode(response.toString());
       matchingRideResponse.value = MatchingRidesModel.fromJson(data);
-      
-
       // log("This is driver ride Id: ${matchingRideResponse.value.data?[0]?.Id}");
     } catch (e) {
       throw Exception(e);

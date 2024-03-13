@@ -5,7 +5,6 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
-import 'package:green_pool/app/modules/profile/controllers/profile_controller.dart';
 import 'package:green_pool/app/services/snackbar.dart';
 import 'package:stacked_firebase_auth/stacked_firebase_auth.dart';
 
@@ -124,7 +123,7 @@ class VerifyController extends GetxController {
         Get.find<GetStorageService>().setLoggedIn = true;
         Get.find<GetStorageService>().setProfileStatus = true;
         Get.find<GetStorageService>().setDriver = isDriver;
-        Get.find<ProfileController>().userInfoAPI();
+        Get.find<HomeController>().userInfoAPI();
       } else {
         if (isDriver) {
           Get.offNamed(Routes.PROFILE_SETUP, arguments: isDriver);

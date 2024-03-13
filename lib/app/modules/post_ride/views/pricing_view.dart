@@ -56,6 +56,7 @@ class PricingView extends GetView<PostRideController> {
                 height: 10.h,
                 child: GreenPoolTextField(
                   hintText: '',
+                  keyboardType: const TextInputType.numberWithOptions(),
                   onchanged: (val) => controller.setActiveStatePricing(),
                   validator: (v) => controller.fareValidator(v),
                   autovalidateMode: AutovalidateMode.onUserInteraction,

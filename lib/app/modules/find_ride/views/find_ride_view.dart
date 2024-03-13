@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
+import 'package:green_pool/app/components/richtext_heading.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
@@ -28,12 +29,10 @@ class FindRideView extends GetView<FindRideController> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Origin',
-            style: TextStyleUtil.k14Semibold(),
-          ).paddingOnly(top: 32.kh),
+          const RichTextHeading(text: 'Origin').paddingOnly(top: 32.kh),
           GreenPoolTextField(
             hintText: 'Enter origin address',
+            keyboardType: TextInputType.streetAddress,
             onchanged: (v) {
               controller.setActiveState();
             },
@@ -51,12 +50,10 @@ class FindRideView extends GetView<FindRideController> {
                   : ColorUtil.kSecondary01,
             ),
           ).paddingOnly(top: 8.kh, bottom: 16.kh),
-          Text(
-            'Destination',
-            style: TextStyleUtil.k14Semibold(),
-          ),
+          const RichTextHeading(text: 'Destination'),
           GreenPoolTextField(
             hintText: 'Enter a destination',
+            keyboardType: TextInputType.streetAddress,
             onchanged: (v) {
               controller.setActiveState();
             },
@@ -81,14 +78,14 @@ class FindRideView extends GetView<FindRideController> {
           Row(
             children: [
               SizedBox(
-                width: 55.w,
+                width: 53.w,
                 child: GreenPoolTextField(
                   hintText: 'Enter Date',
                   controller: controller.departureDate,
                   readOnly: true,
-                  onchanged: (v) {
-                    controller.setActiveState();
-                  },
+                  // onchanged: (v) {
+                  //   controller.setActiveState();
+                  // },
                   onTap: () {
                     controller.setDate(context);
                   },
@@ -102,14 +99,14 @@ class FindRideView extends GetView<FindRideController> {
                   ),
                 ).paddingOnly(top: 8.kh, bottom: 16.kh, right: 8.kw),
               ),
-              SizedBox(
-                width: 36.w,
+              Flexible(
                 child: GreenPoolTextField(
                   hintText: 'Time',
                   controller: controller.selectedTime,
-                  onchanged: (v) {
-                    controller.setActiveState();
-                  },
+                  suffixPadding: EdgeInsets.all(0.kh),
+                  // onchanged: (v) {
+                  //   controller.setActiveState();
+                  // },
                   readOnly: true,
                   onTap: () {
                     controller.setTime(context);
@@ -126,13 +123,12 @@ class FindRideView extends GetView<FindRideController> {
               ),
             ],
           ).paddingOnly(bottom: 16.kh),
-          Text(
-            'Seats available',
-            style: TextStyleUtil.k14Semibold(),
-          ).paddingOnly(bottom: 8.kh),
+          const RichTextHeading(text: 'Seats available')
+              .paddingOnly(bottom: 8.kh),
           GreenPoolTextField(
             hintText: 'Enter number of seats',
             controller: controller.seatAvailable,
+            keyboardType: TextInputType.number,
             onchanged: (v) {
               controller.setActiveState();
             },

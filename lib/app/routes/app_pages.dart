@@ -5,16 +5,12 @@ import 'package:green_pool/app/modules/post_ride/views/pricing_view.dart';
 
 import '../modules/about/bindings/about_binding.dart';
 import '../modules/about/views/about_view.dart';
-import '../modules/add_stops/bindings/add_stops_binding.dart';
-import '../modules/add_stops/views/add_stops_view.dart';
 import '../modules/change_password/bindings/change_password_binding.dart';
 import '../modules/change_password/views/change_password_view.dart';
 import '../modules/chat_page/bindings/chat_page_binding.dart';
 import '../modules/chat_page/views/chat_page_view.dart';
 import '../modules/create_account/bindings/create_account_binding.dart';
 import '../modules/create_account/views/create_account_view.dart';
-import '../modules/destination/bindings/destination_binding.dart';
-import '../modules/destination/views/destination_view.dart';
 import '../modules/driver_details/bindings/driver_details_binding.dart';
 import '../modules/driver_details/views/driver_details_view.dart';
 import '../modules/emergency_contacts/bindings/emergency_contacts_binding.dart';
@@ -34,6 +30,8 @@ import '../modules/messages/bindings/messages_binding.dart';
 import '../modules/messages/views/messages_view.dart';
 import '../modules/my_rides/bindings/my_rides_binding.dart';
 import '../modules/my_rides/views/my_rides_view.dart';
+import '../modules/my_rides_request/bindings/my_rides_request_binding.dart';
+import '../modules/my_rides_request/views/my_rides_request.dart';
 import '../modules/notifications/bindings/notifications_binding.dart';
 import '../modules/notifications/views/notifications_view.dart';
 import '../modules/onboarding/bindings/onboarding_binding.dart';
@@ -66,8 +64,8 @@ import '../modules/rider_post_ride/bindings/rider_post_ride_binding.dart';
 import '../modules/rider_post_ride/views/rider_post_ride_view.dart';
 import '../modules/rider_profile_setup/bindings/rider_profile_setup_binding.dart';
 import '../modules/rider_profile_setup/views/rider_profile_setup_view.dart';
-import '../modules/rider_ride_request/bindings/rider_ride_request_binding.dart';
-import '../modules/rider_ride_request/views/rider_ride_request_view.dart';
+import '../modules/rider_my_ride_request/bindings/rider_ride_request_binding.dart';
+import '../modules/rider_my_ride_request/views/rider_my_ride_request_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
 import '../modules/student_discounts/bindings/student_discounts_binding.dart';
@@ -117,6 +115,11 @@ class AppPages {
       binding: MyRidesBinding(),
     ),
     GetPage(
+      name: _Paths.MY_RIDES_REQUEST,
+      page: () => const MyRideRequestsView(),
+      binding: MyRidesRequestBinding(),
+    ),
+    GetPage(
       name: _Paths.MESSAGES,
       page: () => const MessagesView(),
       binding: MessagesBinding(),
@@ -155,16 +158,6 @@ class AppPages {
       name: _Paths.ORIGIN,
       page: () => const OriginView(),
       binding: OriginBinding(),
-    ),
-    GetPage(
-      name: _Paths.DESTINATION,
-      page: () => const DestinationView(),
-      binding: DestinationBinding(),
-    ),
-    GetPage(
-      name: _Paths.ADD_STOPS,
-      page: () => const AddStopsView(),
-      binding: AddStopsBinding(),
     ),
     GetPage(
       name: _Paths.CHAT_PAGE,
@@ -287,9 +280,9 @@ class AppPages {
       binding: RiderPostRideBinding(),
     ),
     GetPage(
-      name: _Paths.RIDER_RIDE_REQUEST,
-      page: () => const RiderRideRequestView(),
-      binding: RiderRideRequestBinding(),
+      name: _Paths.RIDER_MY_RIDE_REQUEST,
+      page: () => const RiderMyRideRequestView(),
+      binding: RiderMyRideRequestBinding(),
     ),
     GetPage(
       name: _Paths.RIDER_FILTER,

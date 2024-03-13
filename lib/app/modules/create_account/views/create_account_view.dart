@@ -54,6 +54,7 @@ class CreateAccountView extends GetView<CreateAccountController> {
               ).paddingOnly(bottom: 8.kh),
               GreenPoolTextField(
                 hintText: 'Enter here',
+                keyboardType: TextInputType.phone,
                 controller: controller.phoneNumberController,
                 validator: (value) => controller.phoneNumberValidator(value),
                 autovalidateMode: AutovalidateMode.onUserInteraction,

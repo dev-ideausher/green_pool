@@ -9,6 +9,7 @@ abstract class Routes {
   static const SPLASH = _Paths.SPLASH;
   static const ONBOARDING = _Paths.ONBOARDING;
   static const MY_RIDES = _Paths.MY_RIDES;
+  static const MY_RIDES_REQUEST = _Paths.MY_RIDES_REQUEST;
   static const MESSAGES = _Paths.MESSAGES;
   static const PROFILE = _Paths.PROFILE;
   static const POST_RIDE = _Paths.POST_RIDE;
@@ -45,7 +46,7 @@ abstract class Routes {
   static const DRIVER_DETAILS = _Paths.DRIVER_DETAILS;
   static const RIDER_PROFILE_SETUP = _Paths.RIDER_PROFILE_SETUP;
   static const RIDER_POST_RIDE = _Paths.RIDER_POST_RIDE;
-  static const RIDER_RIDE_REQUEST = _Paths.RIDER_RIDE_REQUEST;
+  static const RIDER_MY_RIDE_REQUEST = _Paths.RIDER_MY_RIDE_REQUEST;
   static const RIDER_FILTER = _Paths.RIDER_FILTER;
   static const RIDER_MY_RIDES = _Paths.RIDER_MY_RIDES;
 }
@@ -68,6 +69,7 @@ abstract class _Paths {
   static const CREATE_ACCOUNT = '/create-account';
   static const VERIFY = '/verify';
   static const TERMS_CONDITIONS = '/terms-conditions';
+  static const MY_RIDES_REQUEST = '/my_rides_request';
   static const LOGIN = '/login';
   static const FORGOT_PASSWORD = '/forgot-password';
   static const ABOUT = '/about';
@@ -92,7 +94,7 @@ abstract class _Paths {
   static const DRIVER_DETAILS = '/driver-details';
   static const RIDER_PROFILE_SETUP = '/rider-profile-setup';
   static const RIDER_POST_RIDE = '/rider-post-ride';
-  static const RIDER_RIDE_REQUEST = '/rider-ride-request';
+  static const RIDER_MY_RIDE_REQUEST = '/rider-ride-request';
   static const RIDER_FILTER = '/rider-filter';
   static const RIDER_MY_RIDES = '/rider-my-rides';
 }

@@ -211,8 +211,6 @@ class FindRideController extends GetxController {
   setActiveState() {
     if (riderOriginTextController.value.text.isNotEmpty &&
         riderDestinationTextController.value.text.isNotEmpty &&
-        date.value.text.isNotEmpty &&
-        selectedTime.value.text.isNotEmpty &&
         seatAvailable.value.text.isNotEmpty) {
       isActive.value = true;
     } else {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:green_pool/app/modules/home/views/bottom_navigation_view.dart';
+import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
@@ -64,7 +64,7 @@ class OnboardingView extends GetView<OnboardingController> {
                   ? Center(
                       child: GreenPoolButton(
                         onPressed: () {
-                          Get.offAll(() => const BottomNavigationView());
+                          Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
                         },
                         label: 'Let’s Get Started !',
                       ).paddingOnly(bottom: 26.kh, top: 72.kh),

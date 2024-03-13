@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
@@ -120,7 +121,7 @@ class UserDetailsController extends GetxController {
       final responses = await APIManager.userDetails(body: userData);
       showMySnackbar(msg: responses.data['message']);
       //! how will this refresh and the image will display?
-      Get.find<ProfileController>().userInfoAPI();
+      Get.find<HomeController>().userInfoAPI();
       Get.until((route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
     } catch (e) {
       log("updateDetailsAPI error: $e");

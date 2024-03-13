@@ -8,6 +8,7 @@ class GreenPoolDropDown extends StatelessWidget {
   final String hintText;
   final Widget? suffix, prefix;
   final Color? color;
+  final dynamic value;
   final List<DropdownMenuItem<Object>>? items;
   final Function(Object?)? onChanged;
   final String? Function(Object?)? validator;
@@ -21,13 +22,15 @@ class GreenPoolDropDown extends StatelessWidget {
       this.onChanged,
       this.validator,
       this.autovalidateMode,
-      this.color});
+      this.color,
+      this.value});
 
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField(
       borderRadius: BorderRadius.circular(16.kw),
       elevation: 4,
+      value: value,
       validator: validator,
       autovalidateMode: autovalidateMode,
       decoration: InputDecoration(

@@ -8,7 +8,6 @@ import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../constants/image_constant.dart';
-import '../../../services/colors.dart';
 import '../../../services/text_style_util.dart';
 import '../controllers/profile_settings_controller.dart';
 

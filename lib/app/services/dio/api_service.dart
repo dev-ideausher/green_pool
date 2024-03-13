@@ -28,6 +28,18 @@ class APIManager {
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
           .post(Endpoints.riderRideRequest, data: jsonEncode(body));
 
+  static Future<Response> postDriverSendRiderRequest(
+          {required dynamic body}) async =>
+      // driver will send request to rider for a ride
+      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+          .post(Endpoints.driverRideRequest, data: jsonEncode(body));
+
+  static Future<Response> postAcceptRiderRequest(
+          {required dynamic body}) async =>
+      // driver will accept the request send by a rider
+      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+          .post(Endpoints.acceptRidersRequest, data: jsonEncode(body));
+
   static Future<Response> postVehicleDetails({required dynamic body}) async =>
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
           .post(Endpoints.vehicleDetails,
@@ -71,6 +83,11 @@ class APIManager {
           {required String driverRideId}) async =>
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
           .get(Endpoints.allDriverConfirmRequests + driverRideId);
+
+  static Future<Response> getAllRiderConfirmRequest(
+          {required String driverRideId}) async =>
+      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+          .get(Endpoints.acceptDriversRequest + driverRideId);
 
   // patch
   static Future<Response> userDetails({required dynamic body}) async =>

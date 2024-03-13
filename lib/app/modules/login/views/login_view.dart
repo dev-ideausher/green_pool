@@ -43,6 +43,7 @@ class LoginView extends GetView<LoginController> {
                 GreenPoolTextField(
                   hintText: 'Enter here',
                   controller: controller.phoneNumberController,
+                  keyboardType: TextInputType.phone,
                   validator: (value) => controller.phoneNumberValidator(value),
                   onchanged: (v) {},
                   autovalidateMode: AutovalidateMode.onUserInteraction,
