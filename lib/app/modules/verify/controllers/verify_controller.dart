@@ -18,7 +18,7 @@ import '../../../services/storage.dart';
 class VerifyController extends GetxController {
   final otpController = TextEditingController();
   CreateAccData createAccData = CreateAccData();
-  final auth = FirebaseAuthenticationService();
+
   bool isDriver = false;
   String fullName = '';
   String phoneNumber = '';
