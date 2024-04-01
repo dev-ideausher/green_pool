@@ -6,7 +6,7 @@ import 'package:green_pool/app/constants/image_constant.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/modules/home/views/home_view.dart';
 import 'package:green_pool/app/modules/messages/views/messages_view.dart';
-import 'package:green_pool/app/modules/my_rides/views/my_rides_view.dart';
+import 'package:green_pool/app/modules/my_rides_page/views/my_rides_page_view.dart';
 import 'package:green_pool/app/modules/profile/views/profile_view.dart';
 
 import '../../../services/colors.dart';
@@ -102,7 +102,7 @@ class BottomNavigationView extends GetView<HomeController> {
         },
         children: const [
           HomeView(),
-          MyRidesView(),
+          MyRidesPageView(),
           MessagesView(),
           ProfileView(),
         ],

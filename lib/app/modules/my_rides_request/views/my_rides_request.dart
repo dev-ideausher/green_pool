@@ -1,3 +1,4 @@
+//! contains tab bar for Confirm Request view and Send Request view (my_rides_view -> my_ride_details (view matching rides)) 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';

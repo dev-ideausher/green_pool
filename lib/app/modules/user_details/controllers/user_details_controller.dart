@@ -10,22 +10,25 @@ import 'package:image_picker/image_picker.dart';
 
 import '../../../services/dio/api_service.dart';
 import '../../../services/snackbar.dart';
-import '../../profile/controllers/profile_controller.dart';
+// import '../../profile/controllers/profile_controller.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:path/path.dart' as path;
 
 class UserDetailsController extends GetxController {
   RxString genderValue = "".obs;
+  var userInformation = Get.find<HomeController>().userInfo.value.data;
   TextEditingController nameTextController = TextEditingController(
-      text: Get.find<ProfileController>().userInfo.value.data?.fullName);
+      text: Get.find<HomeController>().userInfo.value.data?.fullName);
   TextEditingController emailTextController = TextEditingController(
-      text: Get.find<ProfileController>().userInfo.value.data?.email);
+      text: Get.find<HomeController>().userInfo.value.data?.email);
+  TextEditingController phoneTextController = TextEditingController(
+      text: Get.find<HomeController>().userInfo.value.data?.phone);
   TextEditingController cityTextController = TextEditingController(
-      text: Get.find<ProfileController>().userInfo.value.data?.city);
+      text: Get.find<HomeController>().userInfo.value.data?.city);
   TextEditingController dobTextController = TextEditingController(
-      text: Get.find<ProfileController>().userInfo.value.data?.dob);
-  Rx<File?> selectedProfileImagePath = Rx<File?>(null);
-  Rx<File?> selectedIDImagePath = Rx<File?>(null);
+      text: Get.find<HomeController>().userInfo.value.data?.dob);
+  Rx<File?>? selectedProfileImagePath = Rx<File?>(null);
+  Rx<File?>? selectedIDImagePath = Rx<File?>(null);
   RxBool isProfilePicUpdated = false.obs;
   RxBool isIDPicUpdated = false.obs;
 
@@ -48,7 +51,7 @@ class UserDetailsController extends GetxController {
   getProfileImage(ImageSource imageSource) async {
     final pickedFile = await ImagePicker().pickImage(source: imageSource);
     if (pickedFile != null) {
-      selectedProfileImagePath.value = File(pickedFile.path);
+      selectedProfileImagePath!.value = File(pickedFile.path);
       showMySnackbar(msg: 'Image selected');
       update();
       isProfilePicUpdated.value = true;
@@ -60,7 +63,7 @@ class UserDetailsController extends GetxController {
   getIDImage(ImageSource imageSource) async {
     final pickedIDFile = await ImagePicker().pickImage(source: imageSource);
     if (pickedIDFile != null) {
-      selectedIDImagePath.value = File(pickedIDFile.path);
+      selectedIDImagePath!.value = File(pickedIDFile.path);
       showMySnackbar(msg: 'Image selected');
       update();
       isIDPicUpdated.value = true;
@@ -72,56 +75,140 @@ class UserDetailsController extends GetxController {
   }
 
   Future<void> updateDetailsAPI() async {
-    final File pickedImageFile = File(selectedProfileImagePath.value!.path);
-    final File pickedIDFile = File(selectedIDImagePath.value!.path);
-    String extension = pickedImageFile.path.split('.').last;
-    String mediaType;
+    final File? pickedImageFile = selectedProfileImagePath!.value;
+    final File? pickedIDFile = selectedIDImagePath!.value;
 
-    if (extension == 'jpg' || extension == 'jpeg') {
+    String profileExtension = pickedImageFile?.path.split('.').last ?? '';
+    String verificationIDExtension = pickedIDFile?.path.split('.').last ?? '';
+    String mediaType;
+    String idMediaType;
+
+    if (profileExtension == 'jpg' || profileExtension == 'jpeg') {
       mediaType = 'image/jpeg';
-    } else if (extension == 'png') {
+    } else if (profileExtension == 'png') {
       mediaType = 'image/png';
     } else {
       mediaType = 'application/octet-stream';
     }
-    //TODO: only want to update anyone
-    final userData = dio.FormData.fromMap({
-      'fullName': nameTextController.value.text.isEmpty
-          ? Get.find<ProfileController>().userInfo.value.data?.fullName
-          : nameTextController.value.text,
-      'email': emailTextController.value.text.isEmpty
-          ? Get.find<ProfileController>().userInfo.value.data?.email
-          : emailTextController.value.text,
-      'phone': Get.find<ProfileController>().userInfo.value.data?.phone,
-      'gender': genderValue.value == ""
-          ? Get.find<ProfileController>().userInfo.value.data?.gender
-          : genderValue.value,
-      'city': cityTextController.value.text.isEmpty
-          ? Get.find<ProfileController>().userInfo.value.data?.city
-          : cityTextController.value.text,
-      'dob': dobTextController.value.text.isEmpty
-          ? Get.find<ProfileController>().userInfo.value.data?.dob
-          : dobTextController.value.text,
-      'profilePic': isProfilePicUpdated.value
-          ? null
-          : await dio.MultipartFile.fromFile(
-              pickedImageFile.path,
-              contentType: MediaType.parse(mediaType),
-              filename: path.basename(pickedImageFile.path),
-            ),
-      'idPic': isIDPicUpdated.value
-          ? null
-          : await dio.MultipartFile.fromFile(
-              pickedIDFile.path,
-              contentType: MediaType.parse(mediaType),
-              filename: path.basename(pickedIDFile.path),
-            ),
-    });
+
+    if (verificationIDExtension == 'jpg' || verificationIDExtension == 'jpeg') {
+      idMediaType = 'image/jpeg';
+    } else if (verificationIDExtension == 'png') {
+      idMediaType = 'image/png';
+    } else {
+      idMediaType = 'application/octet-stream';
+    }
+
+    dio.FormData userData;
+
+    if (isProfilePicUpdated.value == true && isIDPicUpdated.value == true) {
+      userData = dio.FormData.fromMap({
+        'fullName': nameTextController.value.text.isEmpty
+            ? userInformation?.fullName
+            : nameTextController.value.text,
+        'email': emailTextController.value.text.isEmpty
+            ? userInformation?.email
+            : emailTextController.value.text,
+        'phone': userInformation?.phone,
+        'gender': genderValue.value == ""
+            ? userInformation?.gender
+            : genderValue.value,
+        'city': cityTextController.value.text.isEmpty
+            ? userInformation?.city
+            : cityTextController.value.text,
+        'dob': dobTextController.value.text.isEmpty
+            ? userInformation?.dob
+            : dobTextController.value.text,
+        if (pickedIDFile != null)
+          'idPic': await dio.MultipartFile.fromFile(
+            pickedIDFile.path,
+            contentType: MediaType.parse(idMediaType),
+            filename: path.basename(pickedIDFile.path),
+          ),
+        if (pickedImageFile != null)
+          'profilePic': await dio.MultipartFile.fromFile(
+            pickedImageFile.path,
+            contentType: MediaType.parse(mediaType),
+            filename: path.basename(pickedImageFile.path),
+          ),
+      });
+    } else if (isIDPicUpdated.value == true) {
+      userData = dio.FormData.fromMap({
+        'fullName': nameTextController.value.text.isEmpty
+            ? userInformation?.fullName
+            : nameTextController.value.text,
+        'email': emailTextController.value.text.isEmpty
+            ? userInformation?.email
+            : emailTextController.value.text,
+        'phone': userInformation?.phone,
+        'gender': genderValue.value == ""
+            ? userInformation?.gender
+            : genderValue.value,
+        'city': cityTextController.value.text.isEmpty
+            ? userInformation?.city
+            : cityTextController.value.text,
+        'dob': dobTextController.value.text.isEmpty
+            ? userInformation?.dob
+            : dobTextController.value.text,
+        if (pickedIDFile != null)
+          'idPic': await dio.MultipartFile.fromFile(
+            pickedIDFile.path,
+            contentType: MediaType.parse(idMediaType),
+            filename: path.basename(pickedIDFile.path),
+          ),
+      });
+    } else if (isProfilePicUpdated.value == true) {
+      userData = dio.FormData.fromMap({
+        'fullName': nameTextController.value.text.isEmpty
+            ? userInformation?.fullName
+            : nameTextController.value.text,
+        'email': emailTextController.value.text.isEmpty
+            ? userInformation?.email
+            : emailTextController.value.text,
+        'phone': userInformation?.phone,
+        'gender': genderValue.value == ""
+            ? userInformation?.gender
+            : genderValue.value,
+        'city': cityTextController.value.text.isEmpty
+            ? userInformation?.city
+            : cityTextController.value.text,
+        'dob': dobTextController.value.text.isEmpty
+            ? userInformation?.dob
+            : dobTextController.value.text,
+        if (pickedImageFile != null)
+          'profilePic': await dio.MultipartFile.fromFile(
+            pickedImageFile.path,
+            contentType: MediaType.parse(mediaType),
+            filename: path.basename(pickedImageFile.path),
+          ),
+      });
+    } else {
+      userData = dio.FormData.fromMap({
+        'fullName': nameTextController.value.text.isEmpty
+            ? userInformation?.fullName
+            : nameTextController.value.text,
+        'email': emailTextController.value.text.isEmpty
+            ? userInformation?.email
+            : emailTextController.value.text,
+        'phone': userInformation?.phone,
+        'gender': genderValue.value == ""
+            ? userInformation?.gender
+            : genderValue.value,
+        'city': cityTextController.value.text.isEmpty
+            ? userInformation?.city
+            : cityTextController.value.text,
+        'dob': dobTextController.value.text.isEmpty
+            ? userInformation?.dob
+            : dobTextController.value.text,
+      });
+    }
+
     try {
-      final responses = await APIManager.userDetails(body: userData);
-      showMySnackbar(msg: responses.data['message']);
-      //! how will this refresh and the image will display?
+      final response = await APIManager.userDetails(body: userData);
+      showMySnackbar(msg: response.data['message']);
+      // Refresh user info after update
       Get.find<HomeController>().userInfoAPI();
+      // Navigate back to home screen
       Get.until((route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
     } catch (e) {
       log("updateDetailsAPI error: $e");

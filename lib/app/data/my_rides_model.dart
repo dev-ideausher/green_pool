@@ -461,6 +461,7 @@ class MyRidesModelData {
   "driverId": "65c228fd32f497dc57fdeff8",
   "riderId": "65c228fd32f497dc57fdeff8",
   "seatAvailable": 1,
+  "rideStatus": "Confirm",
   "origin": {
     "name": "Bandra Terminus,Naupada,Bandra East,Mumbai",
     "type": "Point",
@@ -549,6 +550,7 @@ class MyRidesModelData {
   String? driverId;
   String? riderId;
   int? seatAvailable;
+  String? rideStatus;
   MyRidesModelDataOrigin? origin;
   MyRidesModelDataDestination? destination;
   List<MyRidesModelDataStops?>? stops;
@@ -572,6 +574,7 @@ class MyRidesModelData {
     this.driverId,
     this.riderId,
     this.seatAvailable,
+    this.rideStatus,
     this.origin,
     this.destination,
     this.stops,
@@ -595,6 +598,7 @@ class MyRidesModelData {
     driverId = json['driverId']?.toString();
     riderId = json['riderId']?.toString();
     seatAvailable = json['seatAvailable']?.toInt();
+    rideStatus = json['rideStatus']?.toString();
     origin = (json['origin'] != null)
         ? MyRidesModelDataOrigin.fromJson(json['origin'])
         : null;
@@ -641,6 +645,7 @@ class MyRidesModelData {
     data['driverId'] = driverId;
     data['riderId'] = riderId;
     data['seatAvailable'] = seatAvailable;
+    data['rideStatus'] = rideStatus;
     if (origin != null) {
       data['origin'] = origin!.toJson();
     }
@@ -695,6 +700,7 @@ class MyRidesModel {
       "driverId": "65c228fd32f497dc57fdeff8",
       "riderId": "65c228fd32f497dc57fdeff8",
       "seatAvailable": 1,
+      "rideStatus": "Confirm",
       "origin": {
         "name": "Bandra Terminus,Naupada,Bandra East,Mumbai",
         "type": "Point",

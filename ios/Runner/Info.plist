@@ -39,10 +39,17 @@
 	<true/>
 	<key>MKDirectionsApplicationSupportedModes</key>
 	<array/>
+	<key>NSLocationTemporaryUsageDescriptionDictionary</key>
+          <dict>
+            <key>YourPurposeKey</key>
+            <string>The App requires temporary access to the device&apos;s precise location.</string>
+          </dict>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>This app needs access to location when in the background.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This app needs access to location when open.</string>
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>Your location is required for fetch local doctor</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>
@@ -67,5 +74,9 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	 <key>NSPhotoLibraryUsageDescription</key>
+     <string>Photo Library Use</string>
+     <key>NSCameraUsageDescription</key>
+     <string>Camera Library Use</string>
 </dict>
 </plist>

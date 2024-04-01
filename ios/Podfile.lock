@@ -13,27 +13,27 @@ PODS:
   - FBSDKCoreKit_Basics (16.3.1)
   - FBSDKLoginKit (16.3.1):
     - FBSDKCoreKit (= 16.3.1)
-  - Firebase/Auth (10.20.0):
+  - Firebase/Auth (10.22.0):
     - Firebase/CoreOnly
-    - FirebaseAuth (~> 10.20.0)
-  - Firebase/CoreOnly (10.20.0):
-    - FirebaseCore (= 10.20.0)
-  - firebase_auth (4.17.6):
-    - Firebase/Auth (= 10.20.0)
+    - FirebaseAuth (~> 10.22.0)
+  - Firebase/CoreOnly (10.22.0):
+    - FirebaseCore (= 10.22.0)
+  - firebase_auth (4.18.0):
+    - Firebase/Auth (= 10.22.0)
     - firebase_core
     - Flutter
-  - firebase_core (2.25.5):
-    - Firebase/CoreOnly (= 10.20.0)
+  - firebase_core (2.27.2):
+    - Firebase/CoreOnly (= 10.22.0)
     - Flutter
   - FirebaseAppCheckInterop (10.23.0)
-  - FirebaseAuth (10.20.0):
+  - FirebaseAuth (10.22.0):
     - FirebaseAppCheckInterop (~> 10.17)
     - FirebaseCore (~> 10.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.8)
     - GoogleUtilities/Environment (~> 7.8)
     - GTMSessionFetcher/Core (< 4.0, >= 2.1)
     - RecaptchaInterop (~> 100.0)
-  - FirebaseCore (10.20.0):
+  - FirebaseCore (10.22.0):
     - FirebaseCoreInternal (~> 10.0)
     - GoogleUtilities/Environment (~> 7.12)
     - GoogleUtilities/Logger (~> 7.12)
@@ -62,7 +62,7 @@ PODS:
   - google_sign_in_ios (0.0.1):
     - Flutter
     - FlutterMacOS
-    - GoogleSignIn (~> 7.0)
+    - GoogleSignIn (~> 7.0.0)
   - GoogleMaps (6.2.1):
     - GoogleMaps/Maps (= 6.2.1)
   - GoogleMaps/Base (6.2.1)
@@ -240,29 +240,29 @@ SPEC CHECKSUMS:
   FBSDKCoreKit: 5e4dd478947ab1bcc887e8cfadeae0727af1a942
   FBSDKCoreKit_Basics: cd7b5f5d1e8868c26706917919d058999ca672c3
   FBSDKLoginKit: 572cca0bc6c90067ef197187697cb3b584310c52
-  Firebase: 10c8cb12fb7ad2ae0c09ffc86cd9c1ab392a0031
-  firebase_auth: b237f065b2afc6bd7962124e1cbacdbef31036e6
-  firebase_core: c8628c7ce80f79439149549052bff22f6784fbf5
+  Firebase: 797fd7297b7e1be954432743a0b3f90038e45a71
+  firebase_auth: a5ecfe2441e1802beb8e07a6d5fa3f0cf309a4dd
+  firebase_core: cc49b6648d6dd7570d9273a616cb1205260db91e
   FirebaseAppCheckInterop: a1955ce8c30f38f87e7d091630e871e91154d65d
-  FirebaseAuth: 9c5c400d2c3055d8ae3a0284944c86fa95d48dac
-  FirebaseCore: 28045c1560a2600d284b9c45a904fe322dc890b6
+  FirebaseAuth: bbe4c68f958504ba9e54aee181adbdf5b664fbc6
+  FirebaseCore: 0326ec9b05fbed8f8716cddbf0e36894a13837f7
   FirebaseCoreInternal: 6a292e6f0bece1243a737e81556e56e5e19282e3
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_facebook_auth: c8700ab1770f3d8e5e7456220e4f3bbcdb831454
   flutter_image_compress_common: ec1d45c362c9d30a3f6a0426c297f47c52007e3e
   flutter_localization: f43b18844a2b3d2c71fd64f04ffd6b1e64dd54d4
   flutter_secure_storage: 23fc622d89d073675f2eaa109381aefbcf5a49be
-  geocoding_ios: a389ea40f6f548de6e63006a2e31bf66ff80769a
-  geolocator_apple: 9157311f654584b9bb72686c55fc02a97b73f461
-  google_maps_flutter_ios: d1318b4ff711612cab16862d7a87e31a7403d458
-  google_sign_in_ios: 1bfaf6607b44cd1b24c4d4bc39719870440f9ce1
+  geocoding_ios: d7460f56e80e118d57678efe5c2cdc888739ff18
+  geolocator_apple: 6cbaf322953988e009e5ecb481f07efece75c450
+  google_maps_flutter_ios: f135b968a67c05679e0a53538e900b5c174b0d99
+  google_sign_in_ios: 7c205d44fdc266640375c6ac33d96ba3983dbe02
   GoogleMaps: 20d7b12be49a14287f797e88e0e31bc4156aaeb4
   GoogleSignIn: b232380cf495a429b8095d3178a8d5855b42e842
   GoogleUtilities: d053d902a8edaa9904e1bd00c37535385b8ed152
   GTMAppAuth: 99fb010047ba3973b7026e45393f51f27ab965ae
   GTMSessionFetcher: 0e876eea9782ec6462e91ab872711c357322c94f
   image_cropper: a3291c624a953049bc6a02e1f8c8ceb162a24b25
-  image_picker_ios: 99dfe1854b4fa34d0364e74a78448a0151025425
+  image_picker_ios: b545a5f16c0fa88e3ecbbce3ed4de45567a8ec18
   libwebp: 1786c9f4ff8a279e4dac1e8f385004d5fc253009
   Mantle: c5aa8794a29a022dfbbfc9799af95f477a69b62d
   package_info_plus: 115f4ad11e0698c8c1c5d8a689390df880f47e85
@@ -276,7 +276,7 @@ SPEC CHECKSUMS:
   smart_auth: 4bedbc118723912d0e45a07e8ab34039c19e04f2
   sqflite: 673a0e54cc04b7d6dba8d24fb8095b31c3a99eec
   TOCropViewController: edfd4f25713d56905ad1e0b9f5be3fbe0f59c863
-  url_launcher_ios: bbd758c6e7f9fd7b5b1d4cde34d2b95fcce5e812
+  url_launcher_ios: 6116280ddcfe98ab8820085d8d76ae7449447586
 
 PODFILE CHECKSUM: 819463e6a0290f5a72f145ba7cde16e8b6ef0796
 

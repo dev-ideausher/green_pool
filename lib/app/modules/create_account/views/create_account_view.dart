@@ -79,6 +79,26 @@ class CreateAccountView extends GetView<CreateAccountController> {
               ).paddingOnly(bottom: 12.kh),
               //
 
+              //
+              // Text(
+              //   'Password',
+              //   style: TextStyleUtil.k14Semibold(),
+              // ).paddingOnly(bottom: 8.kh),
+              // Obx(
+              //   ()=> GreenPoolTextField(
+              //     hintText: 'Enter password here',
+              //     suffix: controller.isVisible.value ? Icon(Icons.visibility, size: 20.kh,color: ColorUtil.kSecondary01,) : Icon(Icons.visibility_off_sharp, size: 20.kh,color: ColorUtil.kSecondary01,),
+              //     onPressedSuffix: () {
+              //       controller.setVisible();
+              //     },
+              //     obscureText: !controller.isVisible.value,
+              //     controller: controller.passwordTextController,
+              //     validator: (value) => controller.passwordValidator(value),
+              //     autovalidateMode: AutovalidateMode.onUserInteraction,
+              //   ).paddingOnly(bottom: 12.kh),
+              // ),
+              //
+
               Row(
                 children: [
                   Obx(

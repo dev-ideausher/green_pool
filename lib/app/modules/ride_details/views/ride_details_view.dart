@@ -1,3 +1,4 @@
+//! ride details after ride history in profile
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -252,7 +253,7 @@ class RideDetailsView extends GetView<RideDetailsController> {
 
           //co passengers
           Text(
-            'Co-Pasengers',
+            'Co-Passengers',
             style: TextStyleUtil.k14Bold(),
           ).paddingOnly(bottom: 16.kh),
           const CoPassengerList().paddingOnly(bottom: 16.kh),

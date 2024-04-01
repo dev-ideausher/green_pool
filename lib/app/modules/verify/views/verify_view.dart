@@ -16,7 +16,7 @@ class VerifyView extends GetView<VerifyController> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: const GreenPoolAppBar(),
+      appBar:  GreenPoolAppBar(appBarSize: 60.kh,),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

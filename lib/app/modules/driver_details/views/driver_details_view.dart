@@ -1,3 +1,4 @@
+//! driver details after matching rides page
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -11,6 +12,7 @@ import '../../../components/greenpool_appbar.dart';
 import '../../../constants/image_constant.dart';
 import '../../../services/colors.dart';
 import '../../../services/text_style_util.dart';
+import '../../post_ride/views/amenities.dart';
 import '../../ride_details/views/copassenger_list.dart';
 import '../controllers/driver_details_controller.dart';
 
@@ -45,7 +47,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                               borderRadius: BorderRadius.circular(8.kh),
                               child: Image(
                                   image: NetworkImage(
-                                      "${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.driverDetails?[0]?.idPic?.url}")),
+                                      "${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.driverDetails?[0]?.profilePic?.url}")),
                             )).paddingOnly(bottom: 8.kh),
                       ],
                     ).paddingOnly(right: 16.kw, bottom: 16.kh),
@@ -72,7 +74,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                                     ),
                                     TextSpan(
                                       text:
-                                          '\$ ${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.fair}',
+                                          '\$ ${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.origin?.originDestinationFair}',
                                       style: TextStyleUtil.k16Semibold(
                                           fontSize: 16.kh,
                                           color: ColorUtil.kSecondary01),
@@ -118,7 +120,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                                         : ColorUtil.kSecondary01,
                                   ).paddingOnly(right: 8.kw),
                                   Text(
-                                    "${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.preferences?.seatAvailable} seats",
+                                    "${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.seatAvailable} seats",
                                     style: TextStyleUtil.k14Regular(
                                         color: ColorUtil.kBlack03),
                                   ),
@@ -269,22 +271,26 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
 
             //co passengers
             Text(
-              'Co-Pasengers',
+              'Co-Passengers',
               style: TextStyleUtil.k14Bold(),
             ).paddingOnly(bottom: 16.kh),
-            CoPassengerList(
-                    //TODO name(index issue) count(if 0 then what) and image
-
-                    //   itemcount: controller.matchingRidesmodel
-                    //       .data?[controller.matchingRideIndex]?.ridersDetatils?.length,
-                    //   image: Image(
-                    //     image: NetworkImage(
-                    //         "${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.ridersDetatils?[0]?.profilePic?.url}"),
-                    //   ),
-                    //   name:
-                    //       "${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.ridersDetatils?[0]?.fullName.toString().split(" ")[0]}\n${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.ridersDetatils?[0]?.fullName.toString().split(" ")[1]}",
-                    )
-                .paddingOnly(bottom: 10.kh),
+            controller.matchingRidesmodel.data?[controller.matchingRideIndex]
+                        ?.ridersDetatils?.length ==
+                    0
+                ? const SizedBox()
+                : CoPassengerList(
+                    itemcount: controller
+                        .matchingRidesmodel
+                        .data?[controller.matchingRideIndex]
+                        ?.ridersDetatils
+                        ?.length,
+                    image: Image(
+                      image: NetworkImage(
+                          "${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.ridersDetatils?[0]?.profilePic?.url}"),
+                    ),
+                    name:
+                        "${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.ridersDetatils?[0]?.fullName.toString().split(" ")[0]}\n${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.ridersDetatils?[0]?.fullName.toString().split(" ")[1]}",
+                  ).paddingOnly(bottom: 10.kh),
             const GreenPoolDivider().paddingOnly(bottom: 16.kh),
 
             //Vehicle details
@@ -338,51 +344,85 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
             const GreenPoolDivider().paddingOnly(top: 8.kh, bottom: 16.kh),
 
             //Features available
-            ///TODO Features available
+
             Text(
               'Features available',
               style: TextStyleUtil.k14Bold(),
             ).paddingOnly(bottom: 16.kh),
 
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    SvgPicture.asset(
-                      ImageConstant.svgAmenities3,
-                      colorFilter: ColorFilter.mode(
-                          Get.find<ProfileController>().isSwitched.value
-                              ? ColorUtil.kPrimary3PinkMode
-                              : ColorUtil.kSecondary01,
-                          BlendMode.srcIn),
-                    ).paddingOnly(right: 8.kw),
-                    Text(
-                      'No Smoking',
-                      style:
-                          TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    SvgPicture.asset(
-                      ImageConstant.svgAmenities4,
-                      colorFilter: ColorFilter.mode(
-                          Get.find<ProfileController>().isSwitched.value
-                              ? ColorUtil.kPrimary3PinkMode
-                              : ColorUtil.kSecondary01,
-                          BlendMode.srcIn),
-                    ).paddingOnly(right: 8.kw),
-                    Text(
-                      'Pets allowed',
-                      style:
-                          TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+            controller.matchingRidesmodel.data?[0]?.preferences?.other
+                        ?.AppreciatesConversation ==
+                    true
+                ? Amenities(
+                        toggleSwitch: false,
+                        text: "Appreciates Conversation",
+                        image: ImageConstant.svgAmenities1)
+                    .paddingOnly(bottom: 8.kh)
+                : const SizedBox(),
+            controller.matchingRidesmodel.data?[0]?.preferences?.other
+                        ?.EnjoysMusic ==
+                    true
+                ? Amenities(
+                        toggleSwitch: false,
+                        text: "Enjoys Music",
+                        image: ImageConstant.svgAmenities2)
+                    .paddingOnly(bottom: 8.kh)
+                : const SizedBox(),
+            controller.matchingRidesmodel.data?[0]?.preferences?.other
+                        ?.SmokeFree ==
+                    true
+                ? Amenities(
+                        toggleSwitch: false,
+                        text: "Some-Free",
+                        image: ImageConstant.svgAmenities3)
+                    .paddingOnly(bottom: 8.kh)
+                : const SizedBox(),
+            controller.matchingRidesmodel.data?[0]?.preferences?.other
+                        ?.PetFriendly ==
+                    true
+                ? Amenities(
+                        toggleSwitch: false,
+                        text: "Pet-friendly",
+                        image: ImageConstant.svgAmenities4)
+                    .paddingOnly(bottom: 8.kh)
+                : const SizedBox(),
+            controller.matchingRidesmodel.data?[0]?.preferences?.other
+                        ?.WinterTires ==
+                    true
+                ? Amenities(
+                        toggleSwitch: false,
+                        text: "Winter Tires",
+                        image: ImageConstant.svgAmenities5)
+                    .paddingOnly(bottom: 8.kh)
+                : const SizedBox(),
+            controller.matchingRidesmodel.data?[0]?.preferences?.other
+                        ?.CoolingOrHeating ==
+                    true
+                ? Amenities(
+                        toggleSwitch: false,
+                        text: "Cooling or Heating",
+                        image: ImageConstant.svgAmenities6)
+                    .paddingOnly(bottom: 8.kh)
+                : const SizedBox(),
+            controller.matchingRidesmodel.data?[0]?.preferences?.other
+                        ?.BabySeat ==
+                    true
+                ? Amenities(
+                        toggleSwitch: false,
+                        text: "Baby Seats",
+                        image: ImageConstant.svgAmenities7)
+                    .paddingOnly(bottom: 8.kh)
+                : const SizedBox(),
+            controller.matchingRidesmodel.data?[0]?.preferences?.other
+                        ?.HeatedSeats ==
+                    true
+                ? Amenities(
+                        toggleSwitch: false,
+                        text: "Heated Seats",
+                        image: ImageConstant.svgAmenities8)
+                    .paddingOnly(bottom: 8.kh)
+                : const SizedBox(),
+
             const GreenPoolDivider().paddingOnly(top: 8.kh),
             GreenPoolButton(
               // onPressed: () => Get.offAll(() => const BottomNavigationView()),

@@ -1,26 +1,23 @@
-import 'dart:convert';
 import 'package:get/get.dart';
-
-import '../../../data/matching_rides_model.dart';
-import '../../../services/dio/api_service.dart';
+import '../../find_ride/controllers/find_ride_controller.dart';
 
 class MatchingRidesController extends GetxController {
   String riderRideId = '';
   String driverRideId = '';
   String minStopDistance = '';
-  var matchingRideResponse = MatchingRidesModel().obs;
+  var matchingRideResponse =
+      Get.find<FindRideController>().matchingRideResponse;
 
-  @override
-  void onInit() {
-    super.onInit();
-    riderRideId = Get.arguments;
-  }
+  // @override
+  // void onInit() {
+    // super.onInit();
+    // riderRideId = Get.arguments;
+  // }
 
-  @override
-  void onReady() {
-    super.onReady();
-    matchingRidesAPI();
-  }
+  // @override
+  // void onReady() {
+  //   super.onReady();
+  // }
 
   // @override
   // void onClose() {
@@ -28,13 +25,12 @@ class MatchingRidesController extends GetxController {
   // }
 
   matchingRidesAPI() async {
-    try {
-      final response = await APIManager.getMatchingRides(rideId: riderRideId);
-      var data = jsonDecode(response.toString());
-      matchingRideResponse.value = MatchingRidesModel.fromJson(data);
-      // log("This is driver ride Id: ${matchingRideResponse.value.data?[0]?.Id}");
-    } catch (e) {
-      throw Exception(e);
-    }
+    // try {
+    //   final response = await APIManager.getMatchingRides();
+    //   var data = jsonDecode(response.toString());
+    //   matchingRideResponse.value = MatchingRidesModel.fromJson(data);
+    // } catch (e) {
+    //   throw Exception(e);
+    // }
   }
 }

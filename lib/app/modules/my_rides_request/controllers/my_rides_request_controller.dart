@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:get/get.dart';
 
 import '../../../data/accept_rider_request_model.dart';
@@ -92,19 +93,18 @@ class MyRidesRequestController extends GetxController {
 
     final String ridePostId = "${confirmRequestModel.value.data?[index]?.Id}";
 
-    final Map<String, dynamic> status = {
-      'confirmByDriver': true,
-    };
-
     final Map<String, dynamic> rideData = {
       "ridePostId": ridePostId,
-      "status": status,
+      "status": {
+        'confirmByDriver': true,
+      },
     };
 
     try {
       final acceptRiderResponse =
           await APIManager.postAcceptRiderRequest(body: rideData);
       var data = jsonDecode(acceptRiderResponse.toString());
+      log(data);
       acceptRiderRequestModel.value = AcceptRiderRequestModel.fromJson(data);
     } catch (e) {
       throw Exception(e);

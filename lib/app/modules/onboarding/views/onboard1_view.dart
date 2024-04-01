@@ -19,12 +19,12 @@ class Onboard1View extends GetView {
           width: 348.kw,
         ).paddingOnly(bottom: 3.kh),
         Text(
-          'Lorem ipsum dolor sit amet consectetur.',
+          'Find carpool effortlessly\nwith Greenpool',
           style: TextStyleUtil.k24Heading700(),
           textAlign: TextAlign.center,
         ).paddingOnly(bottom: 16.kh),
         Text(
-          'Torem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.',
+          "Discover the convenience of sharing rides\nwith Greenpool. Whether you're a driver\nlooking to share your journey or a rider in\nneed of a ride, we've got you covered.",
           style: TextStyleUtil.k16Regular(color: ColorUtil.kBlack04),
           textAlign: TextAlign.center,
         )

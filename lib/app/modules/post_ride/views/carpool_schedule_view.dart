@@ -21,7 +21,7 @@ class CarpoolScheduleView extends GetView<PostRideController> {
   const CarpoolScheduleView({super.key});
   @override
   Widget build(BuildContext context) {
-    Get.lazyPut(() => PostRideController());
+    // Get.lazyPut(() => PostRideController());
     return Scaffold(
       appBar: const GreenPoolAppBar(
         title: Text('Post a Ride'),
@@ -92,53 +92,54 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                       ),
                     ]),
               ).paddingOnly(top: 24.kh),
+              Obx(() => controller.tabIndex.value == 0
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Enter the specific date and time, specifying  am (morning) or pm (afternoon)',
+                          style: TextStyleUtil.k16Semibold(
+                              fontSize: 16.kh, color: ColorUtil.kBlack02),
+                        ).paddingOnly(top: 24.kh, bottom: 16.kh),
 
-              Text(
-                'Enter the specific date and time, specifying  am (morning) or pm (afternoon)',
-                style: TextStyleUtil.k16Semibold(
-                    fontSize: 16.kh, color: ColorUtil.kBlack02),
-              ).paddingOnly(top: 24.kh, bottom: 16.kh),
+                        const RichTextHeading(text: "Date"),
+                        GreenPoolTextField(
+                            controller: controller.formattedOneTimeDate,
+                            hintText: 'Select Date',
+                            readOnly: true,
+                            suffix: SizedBox(
+                              child: SvgPicture.asset(
+                                ImageConstant.svgIconCalendar,
+                                height: 24.kh,
+                                width: 24.kw,
+                                colorFilter: ColorFilter.mode(
+                                    Get.find<ProfileController>()
+                                            .isSwitched
+                                            .value
+                                        ? ColorUtil.kPrimary3PinkMode
+                                        : ColorUtil.kSecondary01,
+                                    BlendMode.srcIn),
+                              ).paddingOnly(right: 16.kw),
+                            ),
+                            onTap: () {
+                              controller.setDate(context).then((value) =>
+                                  controller.setActiveStateCarpoolSchedule());
+                            }).paddingOnly(top: 8.kh, bottom: 16.kh),
+                        Text(
+                          'Time',
+                          style: TextStyleUtil.k14Semibold(),
+                        ),
+                        GreenPoolTextField(
+                          hintText: 'Select Time',
+                          controller: controller.selectedTimeOneTime,
+                          onTap: () {
+                            controller.setTime(context);
+                          },
+                          readOnly: true,
+                        ).paddingOnly(top: 8.kh, bottom: 16.kh),
 
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const RichTextHeading(text: "Date"),
-                  GreenPoolTextField(
-                      controller: controller.formattedOneTimeDate,
-                      hintText: 'Select Date',
-                      readOnly: true,
-                      suffix: SizedBox(
-                        child: SvgPicture.asset(
-                          ImageConstant.svgIconCalendar,
-                          height: 24.kh,
-                          width: 24.kw,
-                          colorFilter: ColorFilter.mode(
-                              Get.find<ProfileController>().isSwitched.value
-                                  ? ColorUtil.kPrimary3PinkMode
-                                  : ColorUtil.kSecondary01,
-                              BlendMode.srcIn),
-                        ).paddingOnly(right: 16.kw),
-                      ),
-                      onTap: () {
-                        controller.setDate(context).then((value) =>
-                            controller.setActiveStateCarpoolSchedule());
-                      }).paddingOnly(top: 8.kh, bottom: 16.kh),
-                  Text(
-                    'Time',
-                    style: TextStyleUtil.k14Semibold(),
-                  ),
-                  GreenPoolTextField(
-                    hintText: 'Select Time',
-                    controller: controller.selectedTimeOneTime,
-                    onTap: () {
-                      controller.setTime(context);
-                    },
-                    readOnly: true,
-                  ).paddingOnly(top: 8.kh, bottom: 16.kh),
-
-                  //RETURN TRIP
-                  Obx(() => controller.tabIndex.value == 0
-                      ? Row(
+                        //RETURN TRIP
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             //TODO: toggle switch
@@ -178,93 +179,216 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                               ),
                             ),
                           ],
-                        )
-                      : Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Returning at Time (same day)',
-                              style: TextStyleUtil.k14Semibold(),
-                            ),
-                            GreenPoolTextField(
-                              hintText: 'Select time',
-                              onTap: () {
-                                controller.setRecurringTime(context);
-                              },
-                              controller: controller.selectedRecurringTime,
-                              readOnly: true,
-                            ).paddingOnly(top: 8.kh, bottom: 16.kh),
-                          ],
-                        )),
-                ],
-              ),
+                        ),
 
-              //if return trip then this option
-              //TODO: if set on true and then selected recurring trip then it still stays. how to handle that
-              Obx(
-                () => controller.isReturn.value
-                    ? Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
+                        //if return trip then this option
+                        controller.isReturn.value
+                            ? Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'Select Date and Time of Arrival',
+                                        style: TextStyleUtil.k16Semibold(
+                                            fontSize: 16.kh),
+                                      ),
+                                      Expanded(
+                                        child: Container(
+                                          height: 1.kh,
+                                          color: ColorUtil.kNeutral2,
+                                        ).paddingOnly(left: 8.kw),
+                                      ),
+                                    ],
+                                  ).paddingSymmetric(vertical: 16.kh),
+                                  const RichTextHeading(text: "Date"),
+                                  GreenPoolTextField(
+                                    hintText: 'Select Date',
+                                    controller: controller.formattedReturnDate,
+                                    onTap: () {
+                                      controller.setReturnDate(context);
+                                    },
+                                    readOnly: true,
+                                    suffix: SizedBox(
+                                      child: SvgPicture.asset(
+                                        ImageConstant.svgIconCalendar,
+                                        height: 24.kh,
+                                        width: 24.kw,
+                                        colorFilter: ColorFilter.mode(
+                                            Get.find<ProfileController>()
+                                                    .isSwitched
+                                                    .value
+                                                ? ColorUtil.kPrimary3PinkMode
+                                                : ColorUtil.kSecondary01,
+                                            BlendMode.srcIn),
+                                      ).paddingOnly(right: 16.kw),
+                                    ),
+                                  ).paddingOnly(top: 8.kh, bottom: 16.kh),
+                                  Text(
+                                    'Time',
+                                    style: TextStyleUtil.k14Semibold(),
+                                  ),
+                                  GreenPoolTextField(
+                                    hintText: 'Select Time',
+                                    onTap: () {
+                                      controller.setReturnTime(context);
+                                    },
+                                    readOnly: true,
+                                    controller:
+                                        controller.selectedTimeReturnTrip,
+                                  ).paddingOnly(top: 8.kh),
+                                ],
+                              )
+                            : const SizedBox(),
+                      ],
+                    )
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Select the days and time, specifying  am (morning) or pm (afternoon)',
+                          style: TextStyleUtil.k16Semibold(
+                              fontSize: 16.kh, color: ColorUtil.kBlack02),
+                        ).paddingOnly(top: 24.kh, bottom: 16.kh),
+                        const RichTextHeading(text: 'Day')
+                            .paddingOnly(bottom: 8.kh),
+                        Obx(
+                          () => Row(
+                            // recurring days selection
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              Text(
-                                'Select Date and Time of Arrival',
-                                style:
-                                    TextStyleUtil.k16Semibold(fontSize: 16.kh),
-                              ),
-                              Expanded(
-                                child: Container(
-                                  height: 1.kh,
-                                  color: ColorUtil.kNeutral2,
-                                ).paddingOnly(left: 8.kw),
-                              ),
+                              GreenPoolChip(
+                                  controller: controller,
+                                  radius: 8.kh,
+                                  label: const SizedBox(),
+                                  textPadding: 0.0.kh,
+                                  padding: EdgeInsets.all(0.kh),
+                                  labelText: 'Mon',
+                                  selected: controller.isMonday.value,
+                                  onPressed: () {
+                                    controller.isMonday.value =
+                                        !controller.isMonday.value;
+                                    controller.isMonday.value
+                                        ? controller.addDays(1)
+                                        : controller.removeDays(1);
+                                    controller.setActiveStateCarpoolSchedule();
+                                  }),
+                              GreenPoolChip(
+                                  controller: controller,
+                                  radius: 8.kh,
+                                  label: const SizedBox(),
+                                  textPadding: 0.0.kh,
+                                  padding: EdgeInsets.all(0.kh),
+                                  labelText: 'Tue',
+                                  selected: controller.isTuesday.value,
+                                  onPressed: () {
+                                    controller.isTuesday.value =
+                                        !controller.isTuesday.value;
+                                    controller.isTuesday.value
+                                        ? controller.addDays(2)
+                                        : controller.removeDays(2);
+                                    controller.setActiveStateCarpoolSchedule();
+                                  }),
+                              GreenPoolChip(
+                                  controller: controller,
+                                  radius: 8.kh,
+                                  label: const SizedBox(),
+                                  textPadding: 0.0.kh,
+                                  padding: EdgeInsets.all(0.kh),
+                                  labelText: 'Wed',
+                                  selected: controller.isWednesday.value,
+                                  onPressed: () {
+                                    controller.isWednesday.value =
+                                        !controller.isWednesday.value;
+                                    controller.isWednesday.value
+                                        ? controller.addDays(3)
+                                        : controller.removeDays(3);
+                                    controller.setActiveStateCarpoolSchedule();
+                                  }),
+                              GreenPoolChip(
+                                  controller: controller,
+                                  radius: 8.kh,
+                                  label: const SizedBox(),
+                                  textPadding: 0.0.kh,
+                                  padding: EdgeInsets.all(0.kh),
+                                  labelText: 'Thu',
+                                  selected: controller.isThursDay.value,
+                                  onPressed: () {
+                                    controller.isThursDay.value =
+                                        !controller.isThursDay.value;
+                                    controller.isThursDay.value
+                                        ? controller.addDays(4)
+                                        : controller.removeDays(4);
+                                    controller.setActiveStateCarpoolSchedule();
+                                  }),
+                              GreenPoolChip(
+                                  controller: controller,
+                                  radius: 8.kh,
+                                  label: const SizedBox(),
+                                  textPadding: 0.0.kh,
+                                  padding: EdgeInsets.all(0.kh),
+                                  labelText: 'Fri ',
+                                  selected: controller.isFriday.value,
+                                  onPressed: () {
+                                    controller.isFriday.value =
+                                        !controller.isFriday.value;
+                                    controller.isFriday.value
+                                        ? controller.addDays(5)
+                                        : controller.removeDays(5);
+                                    controller.setActiveStateCarpoolSchedule();
+                                  }),
+                              GreenPoolChip(
+                                  controller: controller,
+                                  radius: 8.kh,
+                                  label: const SizedBox(),
+                                  textPadding: 0.0.kh,
+                                  padding: EdgeInsets.all(0.kh),
+                                  labelText: 'Sat',
+                                  selected: controller.isSaturday.value,
+                                  onPressed: () {
+                                    controller.isSaturday.value =
+                                        !controller.isSaturday.value;
+                                    controller.isSaturday.value
+                                        ? controller.addDays(6)
+                                        : controller.removeDays(6);
+                                    controller.setActiveStateCarpoolSchedule();
+                                  }),
+                              GreenPoolChip(
+                                  controller: controller,
+                                  radius: 8.kh,
+                                  label: const SizedBox(),
+                                  textPadding: 0.0.kh,
+                                  padding: EdgeInsets.all(0.kh),
+                                  labelText: 'Sun',
+                                  selected: controller.isSunday.value,
+                                  onPressed: () {
+                                    controller.isSunday.value =
+                                        !controller.isSunday.value;
+                                    controller.isSunday.value
+                                        ? controller.addDays(7)
+                                        : controller.removeDays(7);
+                                    controller.setActiveStateCarpoolSchedule();
+                                  }),
                             ],
-                          ).paddingSymmetric(vertical: 16.kh),
-                          Text(
-                            'Date',
-                            style: TextStyleUtil.k14Semibold(),
-                          ),
-                          GreenPoolTextField(
-                            hintText: 'Select date',
-                            controller: controller.formattedReturnDate,
-                            onTap: () {
-                              controller.setReturnDate(context);
-                            },
-                            readOnly: true,
-                            suffix: SizedBox(
-                              child: SvgPicture.asset(
-                                ImageConstant.svgIconCalendar,
-                                height: 24.kh,
-                                width: 24.kw,
-                                colorFilter: ColorFilter.mode(
-                                    Get.find<ProfileController>()
-                                            .isSwitched
-                                            .value
-                                        ? ColorUtil.kPrimary3PinkMode
-                                        : ColorUtil.kSecondary01,
-                                    BlendMode.srcIn),
-                              ).paddingOnly(right: 16.kw),
-                            ),
-                          ).paddingOnly(top: 8.kh, bottom: 16.kh),
-                          Text(
-                            'Time',
-                            style: TextStyleUtil.k14Semibold(),
-                          ),
-                          GreenPoolTextField(
-                            hintText: 'Select time',
-                            onTap: () {
-                              controller.setReturnTime(context);
-                            },
-                            readOnly: true,
-                            controller: controller.selectedTimeReturnTrip,
-                          ).paddingOnly(top: 8.kh),
-                        ],
-                      )
-                    : const SizedBox(),
-              ),
+                          ).paddingOnly(bottom: 8.kh),
+                        ),
+                        Text(
+                          'Time',
+                          style: TextStyleUtil.k14Semibold(),
+                        ),
+                        GreenPoolTextField(
+                          hintText: 'Select Time',
+                          controller: controller.selectedRecurringTime,
+                          onTap: () {
+                            controller.setRecurringTime(context);
+                          },
+                          readOnly: true,
+                        ).paddingOnly(top: 8.kh, bottom: 16.kh),
+                      ],
+                    )),
 
               //PREFERENCES
               Row(
@@ -411,19 +535,21 @@ class CarpoolScheduleView extends GetView<PostRideController> {
               ).paddingOnly(top: 24.kh, bottom: 16.kh),
               Obx(
                 () => Amenities(
-                  text: 'Appreciates Conversation',
-                  image: ImageConstant.svgAmenities1,
-                  value: controller.appreciatesConversation.value,
-                  onChanged: (val) =>
-                      controller.appreciatesConversation.value = val,
-                ),
+                    text: 'Appreciates Conversation',
+                    image: ImageConstant.svgAmenities1,
+                    value: controller.appreciatesConversation.value,
+                    onChanged: (val) {
+                      controller.appreciatesConversation.value = val;
+                    }),
               ),
               Obx(
                 () => Amenities(
                   text: 'Enjoys Music',
                   image: ImageConstant.svgAmenities2,
                   value: controller.enjoysMusic.value,
-                  onChanged: (val) => controller.enjoysMusic.value = val,
+                  onChanged: (val) {
+                    controller.enjoysMusic.value = val;
+                  },
                 ),
               ),
               Obx(
@@ -431,7 +557,9 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                   text: 'Smoke-free',
                   image: ImageConstant.svgAmenities3,
                   value: controller.smokeFree.value,
-                  onChanged: (val) => controller.smokeFree.value = val,
+                  onChanged: (val) {
+                    controller.smokeFree.value = val;
+                  },
                 ),
               ),
               Obx(
@@ -439,7 +567,9 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                   text: 'Pet-friendly',
                   image: ImageConstant.svgAmenities4,
                   value: controller.petFriendly.value,
-                  onChanged: (val) => controller.petFriendly.value = val,
+                  onChanged: (val) {
+                    controller.petFriendly.value = val;
+                  },
                 ),
               ),
               Obx(
@@ -447,7 +577,9 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                   text: 'Winter Tires',
                   image: ImageConstant.svgAmenities5,
                   value: controller.winterTires.value,
-                  onChanged: (val) => controller.winterTires.value = val,
+                  onChanged: (val) {
+                    controller.winterTires.value = val;
+                  },
                 ),
               ),
               Obx(
@@ -455,7 +587,9 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                   text: 'Cooling or Heating',
                   image: ImageConstant.svgAmenities6,
                   value: controller.coolingOrHeating.value,
-                  onChanged: (val) => controller.coolingOrHeating.value = val,
+                  onChanged: (val) {
+                    controller.coolingOrHeating.value = val;
+                  },
                 ),
               ),
               Obx(
@@ -463,7 +597,9 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                   text: 'Baby Seat',
                   image: ImageConstant.svgAmenities7,
                   value: controller.babySeat.value,
-                  onChanged: (val) => controller.babySeat.value = val,
+                  onChanged: (val) {
+                    controller.babySeat.value = val;
+                  },
                 ),
               ),
               Obx(
@@ -471,7 +607,9 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                   text: 'Heated Seats',
                   image: ImageConstant.svgAmenities8,
                   value: controller.heatedSeats.value,
-                  onChanged: (val) => controller.heatedSeats.value = val,
+                  onChanged: (val) {
+                    controller.heatedSeats.value = val;
+                  },
                 ),
               ),
               Row(

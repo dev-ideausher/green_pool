@@ -22,7 +22,6 @@ abstract class Routes {
   static const VERIFY = _Paths.VERIFY;
   static const TERMS_CONDITIONS = _Paths.TERMS_CONDITIONS;
   static const LOGIN = _Paths.LOGIN;
-  static const FORGOT_PASSWORD = _Paths.FORGOT_PASSWORD;
   static const ABOUT = _Paths.ABOUT;
   static const PROFILE_SETUP = _Paths.PROFILE_SETUP;
   static const PROFILE_SETTINGS = _Paths.PROFILE_SETTINGS;
@@ -49,6 +48,21 @@ abstract class Routes {
   static const RIDER_MY_RIDE_REQUEST = _Paths.RIDER_MY_RIDE_REQUEST;
   static const RIDER_FILTER = _Paths.RIDER_FILTER;
   static const RIDER_MY_RIDES = _Paths.RIDER_MY_RIDES;
+  static const FORGOT_PASSWORD = _Paths.FORGOT_PASSWORD;
+  static const MY_RIDES_ONE_TIME = _Paths.MY_RIDES_ONE_TIME;
+  static const MY_RIDES_RECURRING = _Paths.MY_RIDES_RECURRING;
+  static const FORGOT_PASSWORD_OTP = _Paths.FORGOT_PASSWORD_OTP;
+  static const RESET_PASSWORD = _Paths.RESET_PASSWORD;
+  static const PASSWORD_CHANGED = _Paths.PASSWORD_CHANGED;
+  static const MY_RIDES_DETAILS = _Paths.MY_RIDES_DETAILS;
+  static const MY_RIDES_PAGE = _Paths.MY_RIDES_PAGE;
+  static const RIDER_MY_RIDES_DETAILS = _Paths.RIDER_MY_RIDES_DETAILS;
+  static const RIDER_MY_RIDES_SEND_DETAILS = _Paths.RIDER_MY_RIDES_SEND_DETAILS;
+  static const RIDER_MY_RIDES_CONFIRM_DETAILS =
+      _Paths.RIDER_MY_RIDES_CONFIRM_DETAILS;
+  static const RIDER_CONFIRMED_RIDE_DETAILS =
+      _Paths.RIDER_CONFIRMED_RIDE_DETAILS;
+  static const START_RIDE = _Paths.START_RIDE;
 }
 
 abstract class _Paths {
@@ -71,7 +85,6 @@ abstract class _Paths {
   static const TERMS_CONDITIONS = '/terms-conditions';
   static const MY_RIDES_REQUEST = '/my_rides_request';
   static const LOGIN = '/login';
-  static const FORGOT_PASSWORD = '/forgot-password';
   static const ABOUT = '/about';
   static const PROFILE_SETUP = '/profile-setup';
   static const PROFILE_SETTINGS = '/profile-settings';
@@ -97,4 +110,18 @@ abstract class _Paths {
   static const RIDER_MY_RIDE_REQUEST = '/rider-ride-request';
   static const RIDER_FILTER = '/rider-filter';
   static const RIDER_MY_RIDES = '/rider-my-rides';
+  static const FORGOT_PASSWORD = '/forgot-password';
+  static const MY_RIDES_ONE_TIME = '/my-rides-one-time';
+  static const MY_RIDES_RECURRING = '/my-rides-recurring';
+  static const FORGOT_PASSWORD_OTP = '/forgot-password-otp';
+  static const RESET_PASSWORD = '/reset-password';
+  static const PASSWORD_CHANGED = '/password-changed';
+  static const MY_RIDES_DETAILS = '/my-rides-details';
+  static const MY_RIDES_PAGE = '/my-rides-page';
+  static const RIDER_MY_RIDES_DETAILS = '/rider-my-rides-details';
+  static const RIDER_MY_RIDES_SEND_DETAILS = '/rider-my-rides-send-details';
+  static const RIDER_MY_RIDES_CONFIRM_DETAILS =
+      '/rider-my-rides-confirm-details';
+  static const RIDER_CONFIRMED_RIDE_DETAILS = '/rider-confirmed-ride-details';
+  static const START_RIDE = '/start-ride';
 }

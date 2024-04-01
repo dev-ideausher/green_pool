@@ -1,6 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
@@ -32,7 +33,6 @@ class UserDetailsView extends GetView<UserDetailsController> {
               child: Column(
                 children: [
                   GestureDetector(
-                    // onTap: () => Get.to(const AddPictureView()),
                     onTap: () {
                       controller.getProfileImage(ImageSource.gallery);
                     },
@@ -44,30 +44,40 @@ class UserDetailsView extends GetView<UserDetailsController> {
                             decoration: const BoxDecoration(
                               shape: BoxShape.circle,
                             ),
-                            child: controller.isProfilePicUpdated.value
-                                ? ClipOval(
-                                    child: SizedBox.fromSize(
-                                        size: Size.fromRadius(50.kh),
-                                        child: Image.file(controller
-                                            .selectedProfileImagePath.value!)))
-                                : ClipOval(
-                                    child: SizedBox.fromSize(
-                                        size: Size.fromRadius(50.kh),
-                                        child: Image(
+                            child:
+                                controller.isProfilePicUpdated?.value ?? false
+                                    ? ClipOval(
+                                        child: SizedBox.fromSize(
+                                          size: Size.fromRadius(50.kh),
+                                          child: Image.file(controller
+                                                  .selectedProfileImagePath
+                                                  ?.value ??
+                                              File('')),
+                                        ),
+                                      )
+                                    : ClipOval(
+                                        child: SizedBox.fromSize(
+                                          size: Size.fromRadius(50.kh),
+                                          child: Image(
                                             height: 50.kh,
                                             width: 50.kw,
                                             image: NetworkImage(
-                                                "${Get.find<ProfileController>().userInfo.value.data?.profilePic?.url}"))
-                                        //         ??
-                                        // Image.asset(
-                                        //   ImageConstant.pngIconProfilePic,
-                                        // ),
+                                              Get.find<ProfileController>()
+                                                      .userInfo
+                                                      .value
+                                                      .data
+                                                      ?.profilePic
+                                                      ?.url ??
+                                                  '',
+                                            ),
+                                          ),
                                         ),
-                                  ),
+                                      ),
                           ),
                         ),
                         SvgPicture.asset(
-                          Get.find<ProfileController>().isSwitched.value
+                          Get.find<ProfileController>().isSwitched?.value ??
+                                  false
                               ? ImageConstant.svgPinkSetupAdd
                               : ImageConstant.svgSetupAdd,
                         ),
@@ -83,59 +93,65 @@ class UserDetailsView extends GetView<UserDetailsController> {
             ).paddingOnly(bottom: 40.kh),
             const RichTextHeading(text: 'Full Name').paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
-              hintText:
-                  // Get.find<ProfileController>().userInfo.value.data?.fullName ??
-                  "Full name",
+              hintText: 'Full name',
               controller: controller.nameTextController,
               suffix: SvgPicture.asset(
                 ImageConstant.svgProfileEditPen,
                 colorFilter: ColorFilter.mode(
-                    Get.find<ProfileController>().isSwitched.value
-                        ? ColorUtil.kPrimary3PinkMode
-                        : ColorUtil.kSecondary01,
-                    BlendMode.srcIn),
+                  Get.find<ProfileController>().isSwitched.value
+                      ? ColorUtil.kPrimary3PinkMode
+                      : ColorUtil.kSecondary01,
+                  BlendMode.srcIn,
+                ),
               ),
             ).paddingOnly(bottom: 16.kh),
             const RichTextHeading(text: 'Email Address')
                 .paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
-              hintText:
-                  // Get.find<ProfileController>().userInfo.value.data?.email ??
-                  'Email ID',
+              hintText: 'Email ID',
               controller: controller.emailTextController,
+            ).paddingOnly(bottom: 16.kh),
+            const RichTextHeading(text: 'Phone number')
+                .paddingOnly(bottom: 8.kh),
+            GreenPoolTextField(
+              hintText: 'Phone number',
+              controller: controller.phoneTextController,
+              readOnly: true,
             ).paddingOnly(bottom: 16.kh),
             const RichTextHeading(text: 'Gender').paddingOnly(bottom: 8.kh),
             GreenPoolDropDown(
-              hintText:
-                  Get.find<ProfileController>().userInfo.value.data?.gender ??
-                      "Gender",
+              hintText: "${controller.userInformation?.gender}",
               color: ColorUtil.kBlack01,
               items: [
                 DropdownMenuItem(
-                    value: "Male",
-                    child: Text(
-                      "Male",
-                      style: TextStyleUtil.k14Regular(),
-                    )),
+                  value: "Male",
+                  child: Text(
+                    "Male",
+                    style: TextStyleUtil.k14Regular(),
+                  ),
+                ),
                 DropdownMenuItem(
-                    value: "Female",
-                    child: Text(
-                      "Female",
-                      style: TextStyleUtil.k14Regular(),
-                    )),
+                  value: "Female",
+                  child: Text(
+                    "Female",
+                    style: TextStyleUtil.k14Regular(),
+                  ),
+                ),
                 DropdownMenuItem(
-                    value: "Prefer not to say",
-                    child: Text(
-                      "Prefer not to say",
-                      style: TextStyleUtil.k14Regular(),
-                    )),
+                  value: "Prefer not to say",
+                  child: Text(
+                    "Prefer not to say",
+                    style: TextStyleUtil.k14Regular(),
+                  ),
+                ),
               ],
-              onChanged: (v) {},
+              onChanged: (v) {
+                controller.genderValue.value = v.toString();
+              },
             ).paddingOnly(bottom: 16.kh),
             const RichTextHeading(text: 'City Province')
                 .paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
-              //TODO: drop down city
               hintText: 'city',
               controller: controller.cityTextController,
             ).paddingOnly(bottom: 16.kh),
@@ -154,52 +170,47 @@ class UserDetailsView extends GetView<UserDetailsController> {
               ),
             ).paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
-              hintText:
-                  // Get.find<ProfileController>().userInfo.value.data?.dob ??
-                  'D.O.B',
+              hintText: 'D.O.B',
               controller: controller.dobTextController,
               suffix: SvgPicture.asset(
                 ImageConstant.svgIconCalendar,
                 colorFilter: ColorFilter.mode(
-                    Get.find<ProfileController>().isSwitched.value
-                        ? ColorUtil.kPrimary3PinkMode
-                        : ColorUtil.kSecondary01,
-                    BlendMode.srcIn),
+                  Get.find<ProfileController>().isSwitched?.value ?? false
+                      ? ColorUtil.kPrimary3PinkMode
+                      : ColorUtil.kSecondary01,
+                  BlendMode.srcIn,
+                ),
               ),
             ).paddingOnly(bottom: 16.kh),
             const RichTextHeading(text: 'ID Verification')
                 .paddingOnly(bottom: 8.kh),
             GestureDetector(
-              // onTap: () => Get.to(const UploadIDView()),
               onTap: () {
                 controller.getIDImage(ImageSource.gallery);
               },
               child: Obx(
                 () => Container(
-                    padding: EdgeInsets.symmetric(
-                        vertical: 68.kh, horizontal: 76.kw),
-                    decoration: BoxDecoration(
-                        color: ColorUtil.kGreyColor,
-                        borderRadius: BorderRadius.circular(8.kh)),
-                    child: controller.isIDPicUpdated.value
-                        ? Image.file(controller.selectedIDImagePath.value!)
-                        : Image(
-                            image: NetworkImage(
-                                "${Get.find<ProfileController>().userInfo.value.data?.idPic?.url}"))
-                    //         ??
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.center,
-                    //   children: [
-                    //     SvgPicture.asset(ImageConstant.svgIconUpload)
-                    //         .paddingOnly(right: 8.kw),
-                    //     Text(
-                    //       'Upload Photo',
-                    //       style: TextStyleUtil.k14Regular(
-                    //           color: ColorUtil.kBlack03),
-                    //     ),
-                    //   ],
-                    // ),
-                    ),
+                  padding:
+                      EdgeInsets.symmetric(vertical: 68.kh, horizontal: 76.kw),
+                  decoration: BoxDecoration(
+                    color: ColorUtil.kGreyColor,
+                    borderRadius: BorderRadius.circular(8.kh),
+                  ),
+                  child: controller.isIDPicUpdated?.value == true
+                      ? Image.file(
+                          controller.selectedIDImagePath?.value ?? File(''))
+                      : Image(
+                          image: NetworkImage(
+                            Get.find<ProfileController>()
+                                    .userInfo
+                                    .value
+                                    .data
+                                    ?.idPic
+                                    ?.url ??
+                                '',
+                          ),
+                        ),
+                ),
               ),
             ),
             GreenPoolButton(

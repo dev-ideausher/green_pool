@@ -34,7 +34,6 @@ class PostRideView extends GetView<PostRideController> {
             keyboardType: TextInputType.streetAddress,
             onchanged: (v) {
               controller.setActiveStatePostRideView();
-              print("is active value : ${controller.isActive.value}");
             },
             onTap: () {
               Get.toNamed(Routes.ORIGIN, arguments: LocationValues.origin)
@@ -58,7 +57,6 @@ class PostRideView extends GetView<PostRideController> {
             keyboardType: TextInputType.streetAddress,
             onchanged: (v) {
               controller.setActiveStatePostRideView();
-              print("is active value : ${controller.isActive.value}");
             },
             onTap: () {
               Get.toNamed(Routes.ORIGIN, arguments: LocationValues.destination)
@@ -83,6 +81,10 @@ class PostRideView extends GetView<PostRideController> {
           GreenPoolTextField(
             hintText: 'Add stops',
             keyboardType: TextInputType.streetAddress,
+            fillColor: Colors.transparent,
+            border: OutlineInputBorder(
+                borderSide: const BorderSide(color: ColorUtil.kBlack06),
+                borderRadius: BorderRadius.circular(8.kh)),
             onTap: () {
               Get.toNamed(Routes.ORIGIN, arguments: LocationValues.addStop1)
                   ?.then((value) => controller.isStop1Added.value = true);
@@ -110,6 +112,10 @@ class PostRideView extends GetView<PostRideController> {
                 ? GreenPoolTextField(
                     hintText: 'Add stops',
                     keyboardType: TextInputType.streetAddress,
+                    fillColor: Colors.transparent,
+                    border: OutlineInputBorder(
+                        borderSide: const BorderSide(color: ColorUtil.kBlack06),
+                        borderRadius: BorderRadius.circular(8.kh)),
                     onTap: () {
                       Get.toNamed(Routes.ORIGIN,
                           arguments: LocationValues.addStop2);

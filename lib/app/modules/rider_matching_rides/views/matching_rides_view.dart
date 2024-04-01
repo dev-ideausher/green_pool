@@ -1,11 +1,14 @@
+//! contains matching drivers after Find A Ride page
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
+import 'package:green_pool/app/modules/find_ride/controllers/find_ride_controller.dart';
 import 'package:green_pool/app/modules/profile/controllers/profile_controller.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
+import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../components/green_pool_divider.dart';
@@ -28,6 +31,59 @@ class MatchingRidesView extends GetView<MatchingRidesController> {
           ),
         ],
       ),
+      bottomSheet: GreenPoolButton(
+        //TODO: remove color under the button
+        onPressed: () async {
+          try {
+            await Get.find<FindRideController>().riderPostRideAPI();
+
+            await Get.bottomSheet(
+              Container(
+                  padding: EdgeInsets.all(24.kh),
+                  height: 390.kh,
+                  width: 100.w,
+                  decoration: BoxDecoration(
+                      color: ColorUtil.kWhiteColor,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(40.kh),
+                          topRight: Radius.circular(40.kh))),
+                  child: Column(
+                    children: [
+                      Text(
+                        'Request Alert Created\nSuccessfully!',
+                        style: TextStyleUtil.k18Heading600(),
+                        textAlign: TextAlign.center,
+                      ).paddingOnly(bottom: 24.kh),
+                      SvgPicture.asset(
+                        ImageConstant.svgCompleteTick,
+                        height: 64.kh,
+                        width: 64.kw,
+                      ).paddingOnly(bottom: 16.kh),
+                      Text(
+                        "Ride alert created succesfully!",
+                        textAlign: TextAlign.center,
+                        style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
+                      ).paddingOnly(bottom: 4.kh),
+                      Text(
+                        "Will send you the matching ride alert.",
+                        textAlign: TextAlign.center,
+                        style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
+                      ).paddingOnly(bottom: 40.kh),
+                      GreenPoolButton(
+                          label: 'Continue',
+                          onPressed: () {
+                            Get.until((route) =>
+                                Get.currentRoute == Routes.BOTTOM_NAVIGATION);
+                          }),
+                    ],
+                  )),
+            );
+          } catch (e) {
+            throw Exception(e);
+          }
+        },
+        label: "Create a ride alert",
+      ).paddingOnly(bottom: 24.kh),
       body: Obx(
         () => controller.matchingRideResponse.value.data == null
             ? Center(
@@ -176,7 +232,7 @@ class MatchingRidesView extends GetView<MatchingRidesController> {
                                                           TextSpan(
                                                             // text: '\$3.50',
                                                             text:
-                                                                "\$ ${controller.matchingRideResponse.value.data![index]?.fair}",
+                                                                "\$ ${controller.matchingRideResponse.value.data![index]?.origin?.originDestinationFair}",
                                                             style: TextStyleUtil
                                                                 .k16Bold(
                                                                     color: ColorUtil
@@ -234,7 +290,7 @@ class MatchingRidesView extends GetView<MatchingRidesController> {
                                                         ).paddingOnly(
                                                             right: 8.kw),
                                                         Text(
-                                                          '${controller.matchingRideResponse.value.data![index]?.preferences?.seatAvailable} seats',
+                                                          '${controller.matchingRideResponse.value.data![index]?.seatAvailable ?? "0"} seats',
                                                           style: TextStyleUtil
                                                               .k14Regular(
                                                                   color: ColorUtil

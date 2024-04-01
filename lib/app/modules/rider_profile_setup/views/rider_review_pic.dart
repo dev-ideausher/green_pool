@@ -14,7 +14,7 @@ import '../../../services/custom_button.dart';
 
 class RiderReviewPictureView extends GetView<RiderProfileSetupController> {
   final File imagePath;
-  const RiderReviewPictureView({
+  const RiderReviewPictureView({super.key, 
     required this.imagePath,
   });
 

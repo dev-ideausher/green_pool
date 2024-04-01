@@ -36,7 +36,7 @@ class ImageConstant {
 
 //onboarding
   static String svgOnboard1 = 'assets/images/onboarding/onboard1.svg';
-  static String svgOnboard2 = 'assets/images/onboarding/onboard2.svg';
+  static String pngOnboard2 = 'assets/images/onboarding/onboard2.png';
   static String svgOnboard3 = 'assets/images/onboarding/onboard3.svg';
   static String svgGetStarted = 'assets/images/onboarding/getstarted.svg';
 
@@ -58,6 +58,7 @@ class ImageConstant {
   static String svgIconPlus = 'assets/images/icons/icons_plus-circle.svg';
   static String svgIconMinus = 'assets/images/icons/icons_minus-circle.svg';
   static String svgIconLuggage = 'assets/images/icons/icons_bag.svg';
+  static String svgIconLocation = 'assets/images/icons/icons_location.svg';
   static String svgIconLuggageFilled =
       'assets/images/icons/icons_bag_filled.svg';
   static String svgIconCalendarClear =
@@ -98,6 +99,7 @@ class ImageConstant {
   static String svgAmenities8 = 'assets/images/home/amenities8.svg';
   static String svgAmenities9 = 'assets/images/home/amenities9.svg';
   static String svgAmenities10 = 'assets/images/home/amenities10.svg';
+  static String svgNoRides = 'assets/images/home/no_rides.svg';
 
 //profile
   static String svgProfileAbout = 'assets/images/profile/about.svg';

@@ -1,18 +1,10 @@
+//! contains requests view after tapping on the rider tile in my rides
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
-import 'package:green_pool/app/constants/image_constant.dart';
-import 'package:green_pool/app/modules/home/views/bottom_navigation_view.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
-import '../../../components/greenpool_textfield.dart';
-
-import '../../../components/richtext_heading.dart';
-import '../../../routes/app_pages.dart';
 import '../../../services/colors.dart';
-import '../../../services/custom_button.dart';
 import '../../../services/text_style_util.dart';
 import '../../profile/controllers/profile_controller.dart';
 import '../controllers/rider_my_ride_request_controller.dart';
@@ -24,8 +16,8 @@ class RiderMyRideRequestView extends GetView<RiderMyRideRequestController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: GreenPoolAppBar(
-        title: const Text('My Rides'),
+      appBar: const GreenPoolAppBar(
+        title:  Text('My Rides'),
       ),
       body: SafeArea(
         child: DefaultTabController(

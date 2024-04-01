@@ -27,7 +27,9 @@ Future<void> main() async {
   return runApp(GestureDetector(
     onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
     child: GetMaterialApp(
-      theme: ThemeData(scaffoldBackgroundColor: ColorUtil.kBackgroundColor),
+      theme: ThemeData(
+        scaffoldBackgroundColor: ColorUtil.kBackgroundColor,
+      ),
       supportedLocales: const [
         Locale("en"),
       ],

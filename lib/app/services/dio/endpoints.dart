@@ -22,15 +22,18 @@ class Endpoints {
   static const String driverPostRide = "driver/ride";
   static const String riderFindRide = "rider/ride";
   static const String riderRideRequest = "rider/confirmRide";
-  static const String driverRideRequest = "driver/confirmRide"; //driver will send request to rider (from send request view)
+  static const String driverRideRequest =
+      "driver/confirmRide"; //driver will send request to rider (from send request view)
 
   //get url
   static const String userLogin = "auth/login";
   static const String userByID = "user";
   static const String emergencyContacts = "user/emergencyContacts";
   static const String driverMyRides = "driver/myrides";
+  static const String driverMyRidesDetails = "driver/myrides?rideId=";
   static const String matchingRides =
-      "rider/driversRequests/"; // to get matching rides according to the Find ride data
+      "rider/driversRequests"; // to get matching rides according to the Find ride data
+  static const String riderAllSendRequests = 'rider/driversRequests?rideId=';
   static const String allDriverSendRequests =
       "driver/sendRequestOfRiders/"; // to get riders in send request column
   static const String allDriverConfirmRequests =

@@ -8,9 +8,9 @@ import 'package:green_pool/app/modules/profile/controllers/profile_controller.da
 import 'package:green_pool/app/services/colors.dart';
 
 import '../../../data/find_ride_response_model.dart';
+import '../../../data/matching_rides_model.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/dio/api_service.dart';
-import '../../../services/snackbar.dart';
 import '../../../services/storage.dart';
 
 class FindRideController extends GetxController {
@@ -23,6 +23,7 @@ class FindRideController extends GetxController {
   TextEditingController departureDate = TextEditingController();
   // TextEditingController time = TextEditingController();
   TextEditingController selectedTime = TextEditingController();
+  TextEditingController descriptionTextController = TextEditingController();
   double riderOriginLat = 0.0;
   double riderOriginLong = 0.0;
   TextEditingController riderOriginTextController = TextEditingController();
@@ -31,6 +32,7 @@ class FindRideController extends GetxController {
   TextEditingController riderDestinationTextController =
       TextEditingController();
   // GlobalKey<FormState> validationKey = GlobalKey<FormState>();
+  var matchingRideResponse = MatchingRidesModel().obs;
 
   @override
   void onInit() {
@@ -53,13 +55,47 @@ class FindRideController extends GetxController {
       //? for testing updateDetailsAPI
       // Get.toNamed(Routes.RIDER_PROFILE_SETUP, arguments: isDriver);
       //?original flow
-      await riderPostRideAPI();
+      // await riderPostRideAPI();
+      //?new flow
+      await getMatchingRidesAPI();
     } else {
       Get.toNamed(Routes.CREATE_ACCOUNT, arguments: isDriver);
     }
   }
 
   var rideresponse = FindRideResponseModel().obs;
+
+  getMatchingRidesAPI() async {
+    final findRideData = FindRideModel(
+      ridesDetails: FindRideModelRidesDetails(
+        date: date.value.text,
+        seatAvailable: int.parse(seatAvailable.value.text),
+        time: selectedTime.value.text,
+        description: descriptionTextController.value.text,
+        origin: FindRideModelRidesDetailsOrigin(
+          latitude: riderOriginLat,
+          longitude: riderOriginLong,
+          name: riderOriginTextController.value.text,
+        ),
+        destination: FindRideModelRidesDetailsDestination(
+          latitude: riderDestinationLat,
+          longitude: riderDestinationLong,
+          name: riderDestinationTextController.value.text,
+        ),
+      ),
+    );
+
+    try {
+      final findRideDataJson = findRideData.toJson();
+      final response =
+          await APIManager.postMatchngRides(body: findRideDataJson);
+      var data = jsonDecode(response.toString());
+      matchingRideResponse.value = MatchingRidesModel.fromJson(data);
+      Get.toNamed(Routes.MATCHING_RIDES);
+    } catch (error) {
+      throw Exception(error);
+    }
+  }
 
   riderPostRideAPI() async {
     final findRideData = FindRideModel(
@@ -89,13 +125,13 @@ class FindRideController extends GetxController {
       final String riderRideId = "${rideresponse.value.data![0]?.Id}";
       log("this is riders ride id: $riderRideId");
 
-      if (rideresponse.value.status!) {
-        showMySnackbar(msg: "Ride posted successfully");
-      } else {
-        showMySnackbar(msg: "Ride already posted");
-      }
+      // if (rideresponse.value.status!) {
+      //   showMySnackbar(msg: "Ride posted successfully");
+      // } else {
+      //   showMySnackbar(msg: "Ride already posted");
+      // }
 
-      await Get.toNamed(Routes.MATCHING_RIDES, arguments: riderRideId);
+      // await Get.toNamed(Routes.MATCHING_RIDES, arguments: riderRideId);
     } catch (e) {
       throw Exception(e);
     }
@@ -142,6 +178,7 @@ class FindRideController extends GetxController {
           "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
     }
   }
+
   // Future<void> setDate(BuildContext context) async {
   //   DateTime minimumDate = DateTime.now();
   //   DateTime? pickedDate = await showModalBottomSheet(
@@ -159,7 +196,6 @@ class FindRideController extends GetxController {
   //       );
   //     },
   //   );
-
   //   if (pickedDate != null) {
   //     String isoFormattedDate = pickedDate.toIso8601String();
   //     date.text = isoFormattedDate;
@@ -216,5 +252,20 @@ class FindRideController extends GetxController {
     } else {
       isActive.value = false;
     }
+  }
+
+  String? seatsValidator(int? value) {
+    // Check if the value is null
+    if (value == null) {
+      return 'Please enter a value';
+    }
+
+    // Check if the integer value is between 1 and 6
+    if (value < 1 || value > 6) {
+      return 'Please enter an integer between 1 and 6';
+    }
+
+    // If all validations pass, return null (indicating no error)
+    return null;
   }
 }

@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../../components/dropdown_textfield.dart';
 import '../../../components/greenpool_textfield.dart';
@@ -30,27 +33,29 @@ class VehicleDetailsView extends GetView<VehicleDetailsController> {
             const RichTextHeading(text: 'Vehicle Photo')
                 .paddingOnly(top: 32.kh, bottom: 8.kh),
             GestureDetector(
-              // onTap: () => Get.to(const VehiclePictureView()),
-              child: Container(
-                  padding:
-                      EdgeInsets.symmetric(vertical: 68.kh, horizontal: 76.kw),
-                  decoration: BoxDecoration(
-                      color: ColorUtil.kGreyColor,
-                      borderRadius: BorderRadius.circular(8.kh)),
-                  child: Image(
-                      image: NetworkImage(
-                          "${Get.find<ProfileController>().userInfo.value.data?.vehicleDetails?[0]!.vehiclePic!.url}"))),
+              onTap: () {
+                controller.getProfileImage(ImageSource.gallery);
+              },
+              child: Obx(
+                () => Container(
+                    padding: EdgeInsets.symmetric(
+                        vertical: 68.kh, horizontal: 76.kw),
+                    decoration: BoxDecoration(
+                        color: ColorUtil.kGreyColor,
+                        borderRadius: BorderRadius.circular(8.kh)),
+                    child: controller.isVehiclePicUpdated?.value == true
+                        ? Image.file(
+                            controller.selectedVehicleImagePath?.value ??
+                                File(''))
+                        : Image(
+                            image: NetworkImage(
+                                "${controller.vehicleInfoModel!.vehiclePic!.url}"))),
+              ),
             ).paddingOnly(bottom: 16.kh),
             const RichTextHeading(text: 'Model').paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
-              hintText: Get.find<ProfileController>()
-                      .userInfo
-                      .value
-                      .data
-                      ?.vehicleDetails?[0]
-                      ?.model ??
-                  'Enter Vehicle model',
-              readOnly: true,
+              hintText: 'Enter Vehicle model',
+              controller: controller.modelTextController,
               suffix: SvgPicture.asset(ImageConstant.svgProfileEditPen,
                   colorFilter: ColorFilter.mode(
                       Get.find<ProfileController>().isSwitched.value
@@ -60,143 +65,130 @@ class VehicleDetailsView extends GetView<VehicleDetailsController> {
             ).paddingOnly(bottom: 16.kh),
             const RichTextHeading(text: 'Type').paddingOnly(bottom: 8.kh),
             GreenPoolDropDown(
-              hintText: Get.find<ProfileController>()
-                      .userInfo
-                      .value
-                      .data
-                      ?.vehicleDetails?[0]
-                      ?.type ??
-                  'Select vehicle type',
+              hintText: '${controller.vehicleInfoModel?.type}',
+              color: ColorUtil.kBlack01,
               items: [
                 DropdownMenuItem(
-                    value: "1",
+                    value: "Hatchback",
                     child: Text(
                       "Hatchback",
                       style: TextStyleUtil.k14Regular(),
                     )),
                 DropdownMenuItem(
-                    value: "2",
+                    value: "Coupe",
                     child: Text(
                       "Coupe",
                       style: TextStyleUtil.k14Regular(),
                     )),
                 DropdownMenuItem(
-                    value: "3",
+                    value: "Convertible",
                     child: Text(
                       "Convertible",
                       style: TextStyleUtil.k14Regular(),
                     )),
                 DropdownMenuItem(
-                    value: "4",
+                    value: "Sedan",
                     child: Text(
                       "Sedan",
                       style: TextStyleUtil.k14Regular(),
                     )),
                 DropdownMenuItem(
-                    value: "5",
+                    value: "SUV",
                     child: Text(
                       "SUV",
                       style: TextStyleUtil.k14Regular(),
                     )),
                 DropdownMenuItem(
-                    value: "6",
+                    value: "Truck",
                     child: Text(
                       "Truck",
                       style: TextStyleUtil.k14Regular(),
                     )),
                 DropdownMenuItem(
-                    value: "7",
+                    value: "Van",
                     child: Text(
                       "Van",
                       style: TextStyleUtil.k14Regular(),
                     )),
               ],
-              onChanged: (v) {},
+              onChanged: (v) {
+                controller.vehicletypeValue.value = v.toString();
+              },
             ).paddingOnly(bottom: 16.kh),
             const RichTextHeading(text: 'Color').paddingOnly(bottom: 8.kh),
             GreenPoolDropDown(
-              hintText: Get.find<ProfileController>()
-                      .userInfo
-                      .value
-                      .data
-                      ?.vehicleDetails?[0]
-                      ?.color ??
-                  'Select car color',
+              hintText: '${controller.vehicleInfoModel?.color}',
+              color: ColorUtil.kBlack01,
               items: [
                 DropdownMenuItem(
-                    value: "1",
+                    value: "Silver",
                     child: Text(
                       "Silver",
                       style: TextStyleUtil.k14Regular(),
                     )),
                 DropdownMenuItem(
-                    value: "2",
+                    value: "Black",
                     child: Text(
                       "Black",
                       style: TextStyleUtil.k14Regular(),
                     )),
                 DropdownMenuItem(
-                    value: "3",
+                    value: "White",
                     child: Text(
                       "White",
                       style: TextStyleUtil.k14Regular(),
                     )),
                 DropdownMenuItem(
-                    value: "4",
+                    value: "Dark Grey",
                     child: Text(
                       "Dark Grey",
                       style: TextStyleUtil.k14Regular(),
                     )),
                 DropdownMenuItem(
-                    value: "5",
+                    value: "Light Grey",
                     child: Text(
                       "Light Grey",
                       style: TextStyleUtil.k14Regular(),
                     )),
                 DropdownMenuItem(
-                    value: "6",
+                    value: "Red",
                     child: Text(
                       "Red",
                       style: TextStyleUtil.k14Regular(),
                     )),
                 DropdownMenuItem(
-                    value: "7",
+                    value: "Blue",
                     child: Text(
                       "Blue",
                       style: TextStyleUtil.k14Regular(),
                     )),
                 DropdownMenuItem(
-                    value: "8",
+                    value: "Light Blue",
                     child: Text(
                       "Light Blue",
                       style: TextStyleUtil.k14Regular(),
                     )),
                 DropdownMenuItem(
-                    value: "9",
+                    value: "Dark Blue",
                     child: Text(
                       "Dark Blue",
                       style: TextStyleUtil.k14Regular(),
                     )),
                 DropdownMenuItem(
-                    value: "10",
+                    value: "Brown",
                     child: Text(
                       "Brown",
                       style: TextStyleUtil.k14Regular(),
                     )),
               ],
-              onChanged: (v) {},
+              onChanged: (v) {
+                controller.colorValue.value = v.toString();
+              },
             ).paddingOnly(bottom: 16.kh),
             const RichTextHeading(text: 'Year').paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
-              hintText: Get.find<ProfileController>()
-                      .userInfo
-                      .value
-                      .data
-                      ?.vehicleDetails?[0]
-                      ?.year
-                      .toString() ??
-                  'Enter year',
-              readOnly: true,
+              hintText: 'Enter year',
+              controller: controller.yearTextController,
               suffix: SvgPicture.asset(ImageConstant.svgProfileEditPen,
                   colorFilter: ColorFilter.mode(
                       Get.find<ProfileController>().isSwitched.value
@@ -207,14 +199,8 @@ class VehicleDetailsView extends GetView<VehicleDetailsController> {
             const RichTextHeading(text: 'License Plate')
                 .paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
-              hintText: Get.find<ProfileController>()
-                      .userInfo
-                      .value
-                      .data
-                      ?.vehicleDetails?[0]
-                      ?.licencePlate ??
-                  'License plate',
-              readOnly: true,
+              hintText: 'License plate',
+              controller: controller.licenseTextController,
               suffix: SvgPicture.asset(ImageConstant.svgProfileEditPen,
                   colorFilter: ColorFilter.mode(
                       Get.find<ProfileController>().isSwitched.value
@@ -223,7 +209,9 @@ class VehicleDetailsView extends GetView<VehicleDetailsController> {
                       BlendMode.srcIn)),
             ),
             GreenPoolButton(
-              onPressed: () => Get.back(),
+              onPressed: () {
+                controller.updateVehicleDetailsAPI();
+              },
               label: 'Save',
             ).paddingSymmetric(vertical: 40.kh),
           ],

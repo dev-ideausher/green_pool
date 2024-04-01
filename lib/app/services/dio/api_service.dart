@@ -23,6 +23,15 @@ class APIManager {
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
           .post(Endpoints.riderFindRide, data: jsonEncode(body));
 
+  static Future<Response> postMatchngRides({required dynamic body}) async =>
+      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+          .post(Endpoints.matchingRides, data: jsonEncode(body));
+
+  static Future<Response> postAllRiderSendRequest(
+          {required dynamic rideId}) async =>
+      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+          .post(Endpoints.riderAllSendRequests + rideId);
+
   static Future<Response> postConfirmRide({required dynamic body}) async =>
       // rider will send request to matching driver for a ride
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
@@ -70,9 +79,14 @@ class APIManager {
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
           .get(Endpoints.driverMyRides);
 
-  static Future<Response> getMatchingRides({required String rideId}) async =>
+  static Future<Response> getMyRidesDetails({required String rideId}) async =>
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
-          .get(Endpoints.matchingRides + rideId);
+          .get(Endpoints.driverMyRidesDetails + rideId);
+
+  // static Future<Response> getMatchingRides(
+  //         {required Map<String, dynamic>? body}) async =>
+  //     await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+  //         .get(Endpoints.matchingRides, queryParameters: body);
 
   static Future<Response> getAllDriverSendRequest(
           {required String driverId}) async =>
@@ -93,6 +107,16 @@ class APIManager {
   static Future<Response> userDetails({required dynamic body}) async =>
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).patch(
         Endpoints.userDetails,
+        data: body,
+        options: Options(
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        ),
+      );
+  static Future<Response> updateVehicleDetails({required dynamic body}) async =>
+      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).patch(
+        Endpoints.vehicleDetails,
         data: body,
         options: Options(
           headers: {

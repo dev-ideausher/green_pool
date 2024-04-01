@@ -24,16 +24,16 @@ class PostRideController extends GetxController {
   TextEditingController selectedDateReturnTrip = TextEditingController();
   TextEditingController formattedReturnDate = TextEditingController();
   TextEditingController selectedTimeReturnTrip = TextEditingController();
+  TextEditingController descriptionTextController = TextEditingController();
   final RxInt count = 1.obs;
   RxBool isActive = false.obs;
+  RxBool viewPrice = false.obs;
   RxBool isActiveCarpoolButton = false.obs;
   RxBool isActivePricingButton = false.obs;
   RxBool isStop1Added = false.obs;
 
   TextEditingController selectedRecurringTime = TextEditingController();
-
   List<RxBool> switchStates = List.generate(8, (index) => false.obs);
-
   RxBool isChecked = false.obs;
   bool isDriver = false;
 
@@ -51,6 +51,11 @@ class PostRideController extends GetxController {
   TextEditingController stop2TextController = TextEditingController();
 
   TextEditingController priceTextController = TextEditingController();
+  TextEditingController price2TextController = TextEditingController();
+  TextEditingController price3TextController = TextEditingController();
+  TextEditingController price4TextController = TextEditingController();
+  TextEditingController price5TextController = TextEditingController();
+  TextEditingController price6TextController = TextEditingController();
 
   //luggage allowance
   RxBool noLuggage = false.obs;
@@ -68,6 +73,17 @@ class PostRideController extends GetxController {
   RxBool coolingOrHeating = false.obs;
   RxBool babySeat = false.obs;
   RxBool heatedSeats = false.obs;
+
+  //for Days of week
+  // List<String> daysOfWeek = [];
+  RxBool isMonday = false.obs;
+  RxBool isTuesday = false.obs;
+  RxBool isWednesday = false.obs;
+  RxBool isThursDay = false.obs;
+  RxBool isFriday = false.obs;
+  RxBool isSaturday = false.obs;
+  RxBool isSunday = false.obs;
+  List<int?>? daysOfWeek = <int>[].obs;
 
   @override
   void onInit() {
@@ -110,6 +126,7 @@ class PostRideController extends GetxController {
         latitude: originLatitude.value,
         longitude: originLongitude.value,
         name: originTextController.value.text,
+        originDestinationFair: priceTextController.value.text,
       ),
       destination: PostRideModelRidesDetailsDestination(
         latitude: destLatitude.value,
@@ -117,28 +134,39 @@ class PostRideController extends GetxController {
         name: destinationTextController.value.text,
       ),
       stops: [
+        //? is stop 1 added?
         PostRideModelRidesDetailsStops(
-          latitude: stop1Lat.value,
-          longitude: stop1Long.value,
-          name: stop1TextController.value.text,
-        ),
+            latitude: stop1Lat.value,
+            longitude: stop1Long.value,
+            name: stop1TextController.value.text,
+            originToStopFair: isStop1Added.value ? "10" : "",
+            stopToStopFair:
+                stop2TextController.value.text.isNotEmpty ? "20" : "",
+            stopTodestinationFair: isStop1Added.value ? 30 : null),
+
+        //? is stop 2 added?
         PostRideModelRidesDetailsStops(
-          latitude: stop2Lat.value,
-          longitude: stop2Long.value,
-          name: stop2TextController.value.text,
-        ),
+            latitude: stop2Lat.value,
+            longitude: stop2Long.value,
+            name: stop2TextController.value.text,
+            originToStopFair:
+                stop2TextController.value.text.isNotEmpty ? "40" : "",
+            stopTodestinationFair:
+                stop2TextController.value.text.isNotEmpty ? 50 : null),
       ],
       // for trip type if tab index is 0 then one Time trip
       tripType: tripType.value,
-      date: selectedDateOneTime.text,
-      time: selectedTimeOneTime.text,
-      //have to calculate distance between every stop and fair will be calculated accordingly
-      fair: priceTextController.value.text,
+      date: tabIndex.value == 1 ? "" : selectedDateOneTime.text,
+      time: tabIndex.value == 1
+          ? selectedRecurringTime.text
+          : selectedTimeOneTime.text,
+      recurringTrip:
+          PostRideModelRidesDetailsRecurringTrip(recurringTripDays: daysOfWeek),
+      seatAvailable: count.value,
+      description: descriptionTextController.value.text,
       preferences: PostRideModelRidesDetailsPreferences(
-        seatAvailable: count.value,
-        luggageType: selectedCHIP.value,
-        other: [
-          PostRideModelRidesDetailsPreferencesOther(
+          luggageType: selectedCHIP.value,
+          other: PostRideModelRidesDetailsPreferencesOther(
             AppreciatesConversation: appreciatesConversation.value,
             EnjoysMusic: enjoysMusic.value,
             SmokeFree: smokeFree.value,
@@ -147,24 +175,20 @@ class PostRideController extends GetxController {
             CoolingOrHeating: coolingOrHeating.value,
             BabySeat: babySeat.value,
             HeatedSeats: heatedSeats.value,
-          )
-        ],
-      ),
+          )),
       returnTrip: PostRideModelRidesDetailsReturnTrip(
-        isReturnTrip: isReturn.value,
-        returnDate: selectedDateReturnTrip.text,
-        returnTime: selectedTimeReturnTrip.text,
+        isReturnTrip: tabIndex.value != 1 ? isReturn.value : false,
+        returnDate: tabIndex.value != 1 ? selectedDateReturnTrip.text : "",
+        returnTime: tabIndex.value != 1 ? selectedTimeReturnTrip.text : "",
       ),
     ));
     try {
       final postRideDataJson = postRideData.toJson();
-      final response =
-          await APIManager.postDriverPostRide(body: postRideDataJson);
+      log(postRideDataJson.toString());
+      await APIManager.postDriverPostRide(body: postRideDataJson);
       showMySnackbar(msg: "Ride posted successfully");
       await Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
-      log(response.data.toString());
     } catch (e) {
-      showMySnackbar(msg: "$e");
       throw Exception(e);
     }
   }
@@ -177,7 +201,7 @@ class PostRideController extends GetxController {
 
     // Check if the value is greater than 9999
     if (double.parse(value) > 9999.99) {
-      return 'Cost value exceeded';
+      return 'Cost exceeded';
     }
 
     // Check if the value contains exactly 10 digits
@@ -428,13 +452,6 @@ class PostRideController extends GetxController {
     }
   }
 
-  // void setSelected(int selectedIndex) {
-  //   //sets selected state of the luggage chip
-  //   for (int i = 0; i < luggageAllowance.length; i++) {
-  //     luggageAllowance[i](i == selectedIndex);
-  //   }
-  // }
-
   void toggleSwitch(int index) {
     //handles amenities toggle button
     switchStates[index].value = !switchStates[index].value;
@@ -454,7 +471,6 @@ class PostRideController extends GetxController {
     }
   }
 
-// ignore_for_file: unnecessary_null_comparison
   setActiveStatePostRideView() {
     if (originTextController.value.text.isNotEmpty &&
         destinationTextController.value.text.isNotEmpty) {
@@ -471,7 +487,9 @@ class PostRideController extends GetxController {
   }
 
   setActiveStateCarpoolSchedule() {
-    if (formattedOneTimeDate.value.text.isNotEmpty) {
+    if (tabIndex.value == 0
+        ? formattedOneTimeDate.value.text.isNotEmpty
+        : daysOfWeek!.isNotEmpty) {
       isActiveCarpoolButton.value = true;
     } else {
       isActiveCarpoolButton.value = false;
@@ -486,5 +504,13 @@ class PostRideController extends GetxController {
     } else {
       isActivePricingButton.value = true;
     }
+  }
+
+  void addDays(int heading) {
+    daysOfWeek?.add(heading);
+  }
+
+  void removeDays(int heading) {
+    daysOfWeek?.remove(heading);
   }
 }

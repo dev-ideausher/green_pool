@@ -80,7 +80,8 @@ class FindRideModelRidesDetails {
   },
   "date": "2024-01-02T07:00:17.320+00:00",
   "time": "11:00 AM",
-  "seatAvailable": 2
+  "seatAvailable": 2,
+  "description": ""
 } 
 */
 
@@ -89,6 +90,7 @@ class FindRideModelRidesDetails {
   String? date;
   String? time;
   int? seatAvailable;
+  String? description;
 
   FindRideModelRidesDetails({
     this.origin,
@@ -96,6 +98,7 @@ class FindRideModelRidesDetails {
     this.date,
     this.time,
     this.seatAvailable,
+    this.description,
   });
   FindRideModelRidesDetails.fromJson(Map<String, dynamic> json) {
     origin = (json['origin'] != null)
@@ -107,6 +110,7 @@ class FindRideModelRidesDetails {
     date = json['date']?.toString();
     time = json['time']?.toString();
     seatAvailable = json['seatAvailable']?.toInt();
+    description = json['description']?.toString();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -119,6 +123,7 @@ class FindRideModelRidesDetails {
     data['date'] = date;
     data['time'] = time;
     data['seatAvailable'] = seatAvailable;
+    data['description'] = description;
     return data;
   }
 }
@@ -139,7 +144,8 @@ class FindRideModel {
     },
     "date": "2024-01-02T07:00:17.320+00:00",
     "time": "11:00 AM",
-    "seatAvailable": 2
+    "seatAvailable": 2,
+    "description": ""
   }
 } 
 */

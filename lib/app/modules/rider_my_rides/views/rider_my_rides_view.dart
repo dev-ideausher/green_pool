@@ -1,16 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
-import 'package:green_pool/app/services/colors.dart';
-import 'package:green_pool/app/services/custom_button.dart';
-import 'package:green_pool/app/services/responsive_size.dart';
 
-import '../../../components/green_pool_divider.dart';
-import '../../../constants/image_constant.dart';
-import '../../../services/text_style_util.dart';
-import '../../profile/controllers/profile_controller.dart';
 import '../controllers/rider_my_rides_controller.dart';
+
+//! shifted the code in my_rides_view
 
 class RiderMyRidesView extends GetView<RiderMyRidesController> {
   const RiderMyRidesView({super.key});

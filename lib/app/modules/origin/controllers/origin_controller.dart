@@ -99,7 +99,7 @@ class OriginController extends GetxController {
       String nameOfLocation =
           "${placemarks[0].street}, ${placemarks[0].locality}";
       print(placemarks[0].toString());
-
+      //TODO: set loaction data (get lat long is being called twice)
       // setLocationData([lat, long, nameOfLocation]);
       return [lat, long, nameOfLocation];
     } catch (e) {

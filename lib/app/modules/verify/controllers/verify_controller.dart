@@ -18,7 +18,7 @@ import '../../../services/storage.dart';
 class VerifyController extends GetxController {
   final otpController = TextEditingController();
   CreateAccData createAccData = CreateAccData();
-
+  final auth = FirebaseAuthenticationService();
   bool isDriver = false;
   String fullName = '';
   String phoneNumber = '';
@@ -57,47 +57,6 @@ class VerifyController extends GetxController {
   }
 
   loginAPI() async {
-    //   try {
-    //     final response = await APIManager.getLogin();
-    //     final userInfo = UserInfoModel.fromJson(response.data);
-    //     Get.find<GetStorageService>().setUserAppId = userInfo.data?.Id;
-
-    //     //? here if the profileStatus is not true which means it is a new user or the user did not fill the entire user data, so the user will be automatically redirected to the Profile Setup
-    //     if (userInfo.status! &&
-    //         userInfo.data!.profileStatus! &&
-    //         userInfo.data!.vehicleStatus!) {
-    //       Get.find<GetStorageService>().setLoggedIn = true;
-    //       Get.find<GetStorageService>().setProfileStatus = true;
-    //       Get.find<GetStorageService>().setDriver = isDriver;
-    //       Get.find<ProfileController>().userInfoAPI();
-
-    //       //? if user status is logged in then check whether the user is findingRide.
-    //       if (Get.find<HomeController>().findingRide.value) {
-    //         //? if user is not finding a ride then he should be redirected to Carpool schedule afte LOGIN
-    //         // Get.offNamed(Routes.FIND_RIDE, arguments: isDriver);
-    //         Get.back();
-    //       } else {
-    //         //? if user is finding a ride then he should be redirected to Matching ride
-    //         Get.off(() => const CarpoolScheduleView(), arguments: isDriver);
-    //       }
-    //     } else {
-    //       if (isDriver) {
-    //         Get.offNamed(Routes.PROFILE_SETUP, arguments: {
-    //           'isDriver': isDriver,
-    //           'fullName': fullName,
-    //         });
-    //       } else {
-    //         Get.offNamed(Routes.RIDER_PROFILE_SETUP, arguments: {
-    //           'isDriver': isDriver,
-    //           'fullName': fullName,
-    //         });
-    //       }
-    //     }
-    //   } catch (e) {
-    //     log("error: $e");
-    //   }
-    // }
-
     try {
       final response = await APIManager.getLogin();
       final userInfo = UserInfoModel.fromJson(response.data);

@@ -1,7 +1,4 @@
 import 'package:get/get.dart';
-import 'package:green_pool/app/modules/post_ride/views/carpool_schedule_view.dart';
-import 'package:green_pool/app/modules/post_ride/views/guidelines_view.dart';
-import 'package:green_pool/app/modules/post_ride/views/pricing_view.dart';
 
 import '../modules/about/bindings/about_binding.dart';
 import '../modules/about/views/about_view.dart';
@@ -19,6 +16,10 @@ import '../modules/file_dispute/bindings/file_dispute_binding.dart';
 import '../modules/file_dispute/views/file_dispute_view.dart';
 import '../modules/find_ride/bindings/find_ride_binding.dart';
 import '../modules/find_ride/views/find_ride_view.dart';
+import '../modules/forgot_password/bindings/forgot_password_binding.dart';
+import '../modules/forgot_password/views/forgot_password_view.dart';
+import '../modules/forgot_password_otp/bindings/forgot_password_otp_binding.dart';
+import '../modules/forgot_password_otp/views/forgot_password_otp_view.dart';
 import '../modules/help_support/bindings/help_support_binding.dart';
 import '../modules/help_support/views/help_support_view.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -28,8 +29,14 @@ import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 import '../modules/messages/bindings/messages_binding.dart';
 import '../modules/messages/views/messages_view.dart';
-import '../modules/my_rides/bindings/my_rides_binding.dart';
-import '../modules/my_rides/views/my_rides_view.dart';
+import '../modules/my_rides_details/bindings/my_rides_details_binding.dart';
+import '../modules/my_rides_details/views/my_rides_details_view.dart';
+import '../modules/my_rides_one_time/bindings/my_rides_binding.dart';
+import '../modules/my_rides_one_time/views/my_rides_one_time_view.dart';
+import '../modules/my_rides_page/bindings/my_rides_page_binding.dart';
+import '../modules/my_rides_page/views/my_rides_page_view.dart';
+import '../modules/my_rides_recurring/bindings/my_rides_recurring_binding.dart';
+import '../modules/my_rides_recurring/views/my_rides_recurring_view.dart';
 import '../modules/my_rides_request/bindings/my_rides_request_binding.dart';
 import '../modules/my_rides_request/views/my_rides_request.dart';
 import '../modules/notifications/bindings/notifications_binding.dart';
@@ -38,8 +45,13 @@ import '../modules/onboarding/bindings/onboarding_binding.dart';
 import '../modules/onboarding/views/onboarding_view.dart';
 import '../modules/origin/bindings/origin_binding.dart';
 import '../modules/origin/views/origin_view.dart';
+import '../modules/password_changed/bindings/password_changed_binding.dart';
+import '../modules/password_changed/views/password_changed_view.dart';
 import '../modules/post_ride/bindings/post_ride_binding.dart';
+import '../modules/post_ride/views/carpool_schedule_view.dart';
+import '../modules/post_ride/views/guidelines_view.dart';
 import '../modules/post_ride/views/post_ride_view.dart';
+import '../modules/post_ride/views/pricing_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
 import '../modules/profile_settings/bindings/profile_settings_binding.dart';
@@ -50,24 +62,34 @@ import '../modules/push_notifications/bindings/push_notifications_binding.dart';
 import '../modules/push_notifications/views/push_notifications_view.dart';
 import '../modules/report/bindings/report_binding.dart';
 import '../modules/report/views/report_view.dart';
+import '../modules/reset_password/bindings/reset_password_binding.dart';
+import '../modules/reset_password/views/reset_password_view.dart';
 import '../modules/ride_details/bindings/ride_details_binding.dart';
 import '../modules/ride_details/views/ride_details_view.dart';
 import '../modules/ride_history/bindings/ride_history_binding.dart';
 import '../modules/ride_history/views/ride_history_view.dart';
+import '../modules/rider_confirmed_ride_details/bindings/rider_confirmed_ride_details_binding.dart';
+import '../modules/rider_confirmed_ride_details/views/rider_confirmed_ride_details_view.dart';
 import '../modules/rider_filter/bindings/rider_filter_binding.dart';
 import '../modules/rider_filter/views/rider_filter_view.dart';
 import '../modules/rider_matching_rides/bindings/matching_rides_binding.dart';
 import '../modules/rider_matching_rides/views/matching_rides_view.dart';
+import '../modules/rider_my_ride_request/bindings/rider_ride_request_binding.dart';
+import '../modules/rider_my_ride_request/views/rider_my_ride_request_view.dart';
 import '../modules/rider_my_rides/bindings/rider_my_rides_binding.dart';
 import '../modules/rider_my_rides/views/rider_my_rides_view.dart';
+import '../modules/rider_my_rides_confirm_details/bindings/rider_my_rides_confirm_details_binding.dart';
+import '../modules/rider_my_rides_confirm_details/views/rider_my_rides_confirm_details_view.dart';
+import '../modules/rider_my_rides_send_details/bindings/rider_my_rides_send_details_binding.dart';
+import '../modules/rider_my_rides_send_details/views/rider_my_rides_send_details_view.dart';
 import '../modules/rider_post_ride/bindings/rider_post_ride_binding.dart';
 import '../modules/rider_post_ride/views/rider_post_ride_view.dart';
 import '../modules/rider_profile_setup/bindings/rider_profile_setup_binding.dart';
 import '../modules/rider_profile_setup/views/rider_profile_setup_view.dart';
-import '../modules/rider_my_ride_request/bindings/rider_ride_request_binding.dart';
-import '../modules/rider_my_ride_request/views/rider_my_ride_request_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
+import '../modules/start_ride/bindings/start_ride_binding.dart';
+import '../modules/start_ride/views/start_ride_view.dart';
 import '../modules/student_discounts/bindings/student_discounts_binding.dart';
 import '../modules/student_discounts/views/student_discounts_view.dart';
 import '../modules/terms_conditions/bindings/terms_conditions_binding.dart';
@@ -111,8 +133,8 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.MY_RIDES,
-      page: () => const MyRidesView(),
-      binding: MyRidesBinding(),
+      page: () => const MyRidesOneTimeView(),
+      binding: MyRidesOneTimeBinding(),
     ),
     GetPage(
       name: _Paths.MY_RIDES_REQUEST,
@@ -293,6 +315,61 @@ class AppPages {
       name: _Paths.RIDER_MY_RIDES,
       page: () => const RiderMyRidesView(),
       binding: RiderMyRidesBinding(),
+    ),
+    GetPage(
+      name: _Paths.FORGOT_PASSWORD,
+      page: () => const ForgotPasswordView(),
+      binding: ForgotPasswordBinding(),
+    ),
+    GetPage(
+      name: _Paths.MY_RIDES_RECURRING,
+      page: () => const MyRidesRecurringView(),
+      binding: MyRidesRecurringBinding(),
+    ),
+    GetPage(
+      name: _Paths.FORGOT_PASSWORD_OTP,
+      page: () => const ForgotPasswordOtpView(),
+      binding: ForgotPasswordOtpBinding(),
+    ),
+    GetPage(
+      name: _Paths.RESET_PASSWORD,
+      page: () => const ResetPasswordView(),
+      binding: ResetPasswordBinding(),
+    ),
+    GetPage(
+      name: _Paths.PASSWORD_CHANGED,
+      page: () => const PasswordChanged(),
+      binding: PasswordChangedBinding(),
+    ),
+    GetPage(
+      name: _Paths.MY_RIDES_DETAILS,
+      page: () => const MyRidesDetailsView(),
+      binding: MyRidesDetailsBinding(),
+    ),
+    GetPage(
+      name: _Paths.MY_RIDES_PAGE,
+      page: () => const MyRidesPageView(),
+      binding: MyRidesPageBinding(),
+    ),
+    GetPage(
+      name: _Paths.RIDER_MY_RIDES_SEND_DETAILS,
+      page: () => const RiderMyRidesSendDetailsView(),
+      binding: RiderMyRidesSendDetailsBinding(),
+    ),
+    GetPage(
+      name: _Paths.RIDER_MY_RIDES_CONFIRM_DETAILS,
+      page: () => const RiderMyRidesConfirmDetailsView(),
+      binding: RiderMyRidesConfirmDetailsBinding(),
+    ),
+    GetPage(
+      name: _Paths.RIDER_CONFIRMED_RIDE_DETAILS,
+      page: () => const RiderConfirmedRideDetailsView(),
+      binding: RiderConfirmedRideDetailsBinding(),
+    ),
+    GetPage(
+      name: _Paths.START_RIDE,
+      page: () => const StartRideView(),
+      binding: StartRideBinding(),
     ),
   ];
 }

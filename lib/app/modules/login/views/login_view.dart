@@ -36,6 +36,7 @@ class LoginView extends GetView<LoginController> {
                   'Enter your login details',
                   style: TextStyleUtil.k16Regular(color: ColorUtil.kBlack04),
                 ).paddingOnly(bottom: 40.kh),
+                //
                 Text(
                   'Phone Number',
                   style: TextStyleUtil.k14Semibold(),
@@ -66,6 +67,48 @@ class LoginView extends GetView<LoginController> {
                   ),
                 ).paddingOnly(bottom: 12.kh),
                 //
+
+                //
+                // Text(
+                //   'Password',
+                //   style: TextStyleUtil.k14Semibold(),
+                // ).paddingOnly(bottom: 8.kh),
+                // Obx(
+                //   ()=> GreenPoolTextField(
+                //     hintText: 'Enter password here',
+                //     suffix: controller.isVisible.value ? Icon(Icons.visibility, size: 20.kh,color: ColorUtil.kSecondary01,) : Icon(Icons.visibility_off_sharp, size: 20.kh,color: ColorUtil.kSecondary01,),
+                //     onPressedSuffix: () {
+                //       controller.setVisible();
+                //     },
+                //     obscureText: !controller.isVisible.value,
+                //     controller: controller.passwordTextController,
+                //     validator: (value) => controller.passwordValidator(value),
+                //     autovalidateMode: AutovalidateMode.onUserInteraction,
+                //   ).paddingOnly(bottom: 12.kh),
+                // ),
+                //
+
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.end,
+                //   children: [
+                //     Text.rich(
+                //       TextSpan(
+                //         children: [
+                //           TextSpan(
+                //             text: "Forgot password?",
+                //             style: TextStyleUtil.k14Semibold(
+                //                 color: ColorUtil.kBlack03),
+                //             recognizer: TapGestureRecognizer()
+                //               ..onTap = () => Get.toNamed(
+                //                   Routes.FORGOT_PASSWORD,
+                //                   arguments: controller.isDriver),
+                //           ),
+                //         ],
+                //       ),
+                //       textAlign: TextAlign.center,
+                //     ),
+                //   ],
+                // ),
 
                 GreenPoolButton(
                   onPressed: () async {
@@ -104,7 +147,7 @@ class LoginView extends GetView<LoginController> {
                     //TODO: googleAuth
                     controller.googleAuth();
                   },
-                ).paddingOnly(bottom: 76.kh),
+                ),
                 const Expanded(child: SizedBox()),
                 Center(
                   child: Text.rich(

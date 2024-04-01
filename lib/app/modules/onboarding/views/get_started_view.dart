@@ -20,14 +20,14 @@ class GetStartedView extends GetView {
             ImageConstant.svgGetStarted,
             height: 348.kh,
             width: 348.kw,
-          ).paddingOnly(bottom: 3.kh),
-        ),
+          ),
+        ).paddingOnly(bottom: 3.kh),
         Text(
-          "Lets's Get\nStarted",
+          "Save money ,\nShare rides &\nSocialize",
           style: TextStyleUtil.k32Heading700(),
-        ).paddingOnly(bottom: 16.kh),
+        ).paddingOnly(bottom: 14.kh),
         Text(
-          'Torem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.',
+          "Let's make environment greener and\ncommuting smarter together!",
           style: TextStyleUtil.k16Regular(color: ColorUtil.kBlack04),
         )
       ],

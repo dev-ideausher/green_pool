@@ -5,6 +5,8 @@ import '../controllers/my_rides_recurring_controller.dart';
 class MyRidesRecurringBinding extends Bindings {
   @override
   void dependencies() {
-    Get.put(() => MyRidesRecurringController());
+    Get.lazyPut<MyRidesRecurringController>(
+      () => MyRidesRecurringController(),
+    );
   }
 }

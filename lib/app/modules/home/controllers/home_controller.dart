@@ -1,8 +1,10 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:green_pool/app/services/storage.dart';
 
 import '../../../data/user_info_model.dart';
 import '../../../services/dio/api_service.dart';
@@ -15,7 +17,6 @@ class HomeController extends GetxController {
   RxDouble longitude = 0.0.obs;
   var userInfo = UserInfoModel().obs;
   RxString welcomeText = "Welcome".obs;
-  
 
   // RxBool isPink = Get.find<ProfileController>().isSwitched.value.obs;
 
@@ -46,10 +47,12 @@ class HomeController extends GetxController {
   // }
 
   userInfoAPI() async {
-    final response = await APIManager.getUserByID();
-    var data = jsonDecode(response.toString());
-    userInfo.value = UserInfoModel.fromJson(data);
-    print(response.data.toString());
+    if (Get.find<GetStorageService>().getLoggedIn == true) {
+      final response = await APIManager.getUserByID();
+      var data = jsonDecode(response.toString());
+      userInfo.value = UserInfoModel.fromJson(data);
+      log("User info API called");
+    } else {}
   }
 
   Future<Position> _determinePosition() async {

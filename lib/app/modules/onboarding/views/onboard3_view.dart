@@ -20,15 +20,15 @@ class Onboard3View extends GetView {
           width: 348.kw,
         ).paddingOnly(bottom: 3.kh),
         Text(
-          'Lorem ipsum dolor sit amet consectetur.',
+          'Seamless ride sharing platform.',
           style: TextStyleUtil.k24Heading700(),
           textAlign: TextAlign.center,
         ).paddingOnly(bottom: 16.kh),
         Text(
-          'Torem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis.',
+          'Discover seamless Carpooling trip searches\nand rides with our unique features.\nExplore now.',
           style: TextStyleUtil.k16Regular(color: ColorUtil.kBlack04),
           textAlign: TextAlign.center,
-        )
+        ),
       ],
     ).paddingSymmetric(horizontal: 20.kw);
   }

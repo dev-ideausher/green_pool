@@ -3,14 +3,15 @@ import 'dart:developer';
 
 import 'package:get/get.dart';
 import 'package:green_pool/app/data/request_ride_by_rider_model.dart';
-import 'package:green_pool/app/modules/rider_matching_rides/controllers/matching_rides_controller.dart';
+import 'package:green_pool/app/modules/find_ride/controllers/find_ride_controller.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 
 import '../../../services/dio/api_service.dart';
 
 class DriverDetailsController extends GetxController {
+  // TODO: matching ride response
   var matchingRidesmodel =
-      Get.find<MatchingRidesController>().matchingRideResponse.value;
+      Get.find<FindRideController>().matchingRideResponse.value;
   int matchingRideIndex = 0;
   String riderRideId = '';
   String driverRideId = '';

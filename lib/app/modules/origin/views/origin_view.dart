@@ -1,3 +1,4 @@
+//! contains the view after tapping the search tiles in post A Ride and find A Ride
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';

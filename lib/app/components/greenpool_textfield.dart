@@ -8,7 +8,10 @@ class GreenPoolTextField extends StatelessWidget {
   final String? Function(String?)? validator;
   final TextEditingController? controller;
   final String hintText;
-  final EdgeInsetsGeometry? suffixPadding;
+  // final EdgeInsetsGeometry? suffixPadding;
+  final Color? fillColor;
+  final bool? isSuffixNeeded;
+  final InputBorder? border;
   // final String? initialValue;
   final TextInputType? keyboardType;
   final bool? obscureText, readOnly;
@@ -37,8 +40,11 @@ class GreenPoolTextField extends StatelessWidget {
       this.readOnly,
       this.autovalidateMode,
       this.onSaved,
-      this.suffixPadding,
-      this.keyboardType});
+      // this.suffixPadding,
+      this.keyboardType,
+      this.fillColor,
+      this.border,
+      this.isSuffixNeeded});
 
   @override
   Widget build(BuildContext context) {
@@ -58,13 +64,17 @@ class GreenPoolTextField extends StatelessWidget {
       keyboardType: keyboardType ?? TextInputType.name,
       // initialValue: initialValue,
       decoration: InputDecoration(
-        suffixIcon: Padding(
-          padding: suffixPadding ?? EdgeInsets.only(right: 16.kw, left: 8.kw),
-          child: IconButton(
-            icon: suffix ?? const SizedBox(),
-            onPressed: onPressedSuffix,
-          ),
-        ),
+        suffixIcon: isSuffixNeeded ?? true
+            ? Padding(
+                padding:
+                    // suffixPadding ??
+                    EdgeInsets.only(right: 16.kw, left: 8.kw),
+                child: IconButton(
+                  icon: suffix ?? const SizedBox(),
+                  onPressed: onPressedSuffix,
+                ),
+              )
+            : const SizedBox(),
         prefixIcon: Padding(
           padding: EdgeInsets.only(left: 16.kw, right: 8.kw),
           child: prefix,
@@ -74,14 +84,15 @@ class GreenPoolTextField extends StatelessWidget {
         contentPadding:
             EdgeInsets.symmetric(vertical: 16.kh, horizontal: 16.kw),
         hintText: hintText,
-        fillColor: ColorUtil.kGreyColor,
+        fillColor: fillColor ?? ColorUtil.kGreyColor,
         filled: true,
         hintStyle: TextStyleUtil.k14Regular(
           color: ColorUtil.kBlack03,
         ),
-        enabledBorder: UnderlineInputBorder(
-            borderSide: const BorderSide(color: Colors.transparent),
-            borderRadius: BorderRadius.circular(8.kh)),
+        enabledBorder: border ??
+            UnderlineInputBorder(
+                borderSide: const BorderSide(color: Colors.transparent),
+                borderRadius: BorderRadius.circular(8.kh)),
         focusedBorder: UnderlineInputBorder(
             borderSide: const BorderSide(color: Colors.transparent),
             borderRadius: BorderRadius.circular(8.kh)),

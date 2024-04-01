@@ -33,7 +33,7 @@ class RiderMyRideRequestController extends GetxController {
 
   method() async {
     await allRiderConfirmRequestAPI();
-    await allRiderSendRequestAPI();
+    // await allRiderSendRequestAPI();
   }
 
   allRiderConfirmRequestAPI() async {
@@ -49,9 +49,11 @@ class RiderMyRideRequestController extends GetxController {
   }
 
   allRiderSendRequestAPI() async {
+    //TODO: matching rides
+    // to view list of drivers available on same route in SendRequest View (riders side)
     try {
       final response =
-          await APIManager.getMatchingRides(rideId: rideIdFromMyRides);
+          await APIManager.postAllRiderSendRequest(rideId: rideIdFromMyRides);
       var data = jsonDecode(response.toString());
       riderSendRequestModel.value = RiderSendRequestModel.fromJson(data);
       // log("This is driver ride Id: ${matchingRideResponse.value.data?[0]?.Id}");
@@ -73,7 +75,7 @@ class RiderMyRideRequestController extends GetxController {
     final Map<String, dynamic> rideData = {
       "riderRideId":
           rideIdFromMyRides, //! rideId is  riders ride Id in this case
-      "driverRideId": driverRideId, //!this is drivers ride id not rider Id
+      "driverRideId": driverRideId,
       "distance":
           minStopDistance, //! lowest among minStop dist and distFrom origin
     };

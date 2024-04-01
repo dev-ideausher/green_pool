@@ -7,10 +7,10 @@ class ProfileController extends GetxController {
   var userInfo = Get.find<HomeController>().userInfo;
   // RxBool isSwitched = Get.find<GetStorageService>().isPinkMode;
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
+  // @override
+  // void onInit() {
+  //   super.onInit();
+  // }
 
   // @override
   // void onReady() {
@@ -25,7 +25,6 @@ class ProfileController extends GetxController {
   bool toggleSwitch() {
     isSwitched.value = !isSwitched.value;
     Get.find<GetStorageService>().isPinkMode = isSwitched.value;
-    print(Get.find<GetStorageService>().isPinkMode);
     return isSwitched.value;
   }
 }
