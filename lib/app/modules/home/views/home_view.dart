@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
+import 'package:green_pool/app/modules/home/views/welcome_tile.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
@@ -15,6 +16,7 @@ import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
+
   @override
   Widget build(BuildContext context) {
     Get.lazyPut(() => ProfileController());
@@ -22,34 +24,7 @@ class HomeView extends GetView<HomeController> {
       body: SafeArea(
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Obx(
-                      () => Text(
-                        Get.find<GetStorageService>().getLoggedIn
-                            ? "Welcome ${controller.userInfo.value.data?.fullName ?? "..."}"
-                            : controller.welcomeText.value,
-                        style: TextStyleUtil.k24Heading700(),
-                      ).paddingOnly(bottom: 4.kh),
-                    ),
-                    Text(
-                      'What would you like to do today?',
-                      style:
-                          TextStyleUtil.k14Regular(color: ColorUtil.kBlack04),
-                    )
-                  ],
-                ),
-                GestureDetector(
-                    onTap: () {
-                      Get.toNamed(Routes.NOTIFICATIONS);
-                    },
-                    child: SvgPicture.asset(ImageConstant.svgIconNoti)),
-              ],
-            ).paddingSymmetric(vertical: 40.kh),
+            const WelcomeTile(),
             Obx(
               () => GestureDetector(
                 onTap: () {
@@ -77,9 +52,7 @@ class HomeView extends GetView<HomeController> {
                     children: [
                       Positioned(
                           right: 0,
-                          left: Get.find<ProfileController>().isSwitched.value
-                              ? 0
-                              : null,
+                          left: Get.find<ProfileController>().isSwitched.value ? 0 : null,
                           bottom: 0,
                           child: Get.find<ProfileController>().isSwitched.value
                               ? SvgPicture.asset(
@@ -139,9 +112,7 @@ class HomeView extends GetView<HomeController> {
                     Obx(
                       () => Positioned(
                           right: 0.kw,
-                          left: Get.find<ProfileController>().isSwitched.value
-                              ? 0
-                              : null,
+                          left: Get.find<ProfileController>().isSwitched.value ? 0 : null,
                           bottom: 0.kh,
                           child: Get.find<ProfileController>().isSwitched.value
                               ? SvgPicture.asset(

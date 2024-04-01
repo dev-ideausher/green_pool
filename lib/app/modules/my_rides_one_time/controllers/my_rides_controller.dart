@@ -61,6 +61,6 @@ class MyRidesOneTimeController extends GetxController {
   }
 
   void viewDetails(MyRidesModelData myRidesModelData) {
-    Get.toNamed(Routes.MY_RIDES_DETAILS, arguments: myRidesModelData.Id);
+    Get.toNamed(Routes.MY_RIDES_DETAILS, arguments: myRidesModelData);
   }
 }

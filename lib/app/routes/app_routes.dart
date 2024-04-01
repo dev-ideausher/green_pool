@@ -63,6 +63,7 @@ abstract class Routes {
   static const RIDER_CONFIRMED_RIDE_DETAILS =
       _Paths.RIDER_CONFIRMED_RIDE_DETAILS;
   static const START_RIDE = _Paths.START_RIDE;
+  static const POST_RIDE_STEP_ONE = _Paths.POST_RIDE_STEP_ONE;
 }
 
 abstract class _Paths {
@@ -124,4 +125,5 @@ abstract class _Paths {
       '/rider-my-rides-confirm-details';
   static const RIDER_CONFIRMED_RIDE_DETAILS = '/rider-confirmed-ride-details';
   static const START_RIDE = '/start-ride';
+  static const POST_RIDE_STEP_ONE = '/post-ride-step-one';
 }

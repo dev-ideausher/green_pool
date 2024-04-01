@@ -9,7 +9,7 @@ import '../../../data/my_rides_model.dart';
 import '../../../services/dio/api_service.dart';
 
 class MyRidesDetailsController extends GetxController {
-  var myRideDetailsModel = MyRidesDetailsModel().obs;
+  final Rx<MyRidesDetailsModel> myRideDetailsModel = MyRidesDetailsModel().obs;
   final Rx<MyRidesModelData> myRidesModelData = MyRidesModelData().obs;
 
   @override
@@ -47,6 +47,7 @@ class MyRidesDetailsController extends GetxController {
       final response = await APIManager.getMyRidesDetails(rideId: myRidesModelData.value.Id ?? "");
       var data = jsonDecode(response.toString());
       myRideDetailsModel.value = MyRidesDetailsModel.fromJson(data);
+      print(myRideDetailsModel.value);
     } catch (e) {
       debugPrint(e.toString());
     }

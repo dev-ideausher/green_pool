@@ -52,6 +52,8 @@ import '../modules/post_ride/views/carpool_schedule_view.dart';
 import '../modules/post_ride/views/guidelines_view.dart';
 import '../modules/post_ride/views/post_ride_view.dart';
 import '../modules/post_ride/views/pricing_view.dart';
+import '../modules/post_ride_step_one/bindings/post_ride_step_one_binding.dart';
+import '../modules/post_ride_step_one/views/post_ride_step_one_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
 import '../modules/profile_settings/bindings/profile_settings_binding.dart';
@@ -370,6 +372,11 @@ class AppPages {
       name: _Paths.START_RIDE,
       page: () => const StartRideView(),
       binding: StartRideBinding(),
+    ),
+    GetPage(
+      name: _Paths.POST_RIDE_STEP_ONE,
+      page: () => const PostRideStepOneView(),
+      binding: PostRideStepOneBinding(),
     ),
   ];
 }
