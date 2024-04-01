@@ -19,6 +19,7 @@ class Socials extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
+
       children: [
         ElevatedButton(
           onPressed: onPressedGoogle ?? () {},
@@ -59,7 +60,7 @@ class Socials extends StatelessWidget {
             height: 24.kh,
             width: 24.kw,
           ),
-        ).paddingSymmetric(horizontal: 16.kw),
+        ).paddingSymmetric(horizontal: 12.kw),
         ElevatedButton(
           onPressed: onPressedApple ?? () {},
           style: ElevatedButton.styleFrom(

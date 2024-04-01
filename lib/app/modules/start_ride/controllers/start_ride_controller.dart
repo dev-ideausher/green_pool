@@ -1,5 +1,9 @@
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:get/get.dart';
+import 'package:get/get_rx/get_rx.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:green_pool/app/data/my_rides_model.dart';
 import 'package:green_pool/app/services/dio/endpoints.dart';
@@ -10,53 +14,82 @@ class StartRideController extends GetxController {
   double latitude = Get.find<HomeController>().latitude.value;
   double longitude = Get.find<HomeController>().longitude.value;
   late GoogleMapController mapController;
-  Set<Marker> markers = <Marker>{}.obs;
+  final Set<Marker> markers = <Marker>{}.obs;
   final RxList<LatLng> polylineCoordinates = <LatLng>[].obs;
   BitmapDescriptor sourceIcon = BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen);
   BitmapDescriptor destinationIcon = BitmapDescriptor.defaultMarker;
-  final Rx<MyRidesModel> myRidesModel = MyRidesModel().obs;
-  int index = 0;
+  final Rx<MyRidesModelData> myRidesModel = MyRidesModelData().obs;
+  RxBool isLoad = true.obs;
 
   @override
-  void onInit() {
+  Future<void> onInit() async {
     super.onInit();
-    myRidesModel.value = Get.arguments['model'];
-    index = Get.arguments['index'];
-    getPolyPoints();
+    myRidesModel.value = Get.arguments;
+    await getPolyPoints();
+    isLoad.value = false;
   }
 
-  // @override
-  // void onReady() {
-  //   super.onReady();
-  // }
-
-  // @override
-  // void onClose() {
-  //   super.onClose();
-  // }
-
-  void onMapCreated(GoogleMapController controller) {
+  Future<void> onMapCreated(GoogleMapController controller) async {
     mapController = controller;
-    // mapController.setMapStyle(DespiiUtil.mapStyle);
+    mapController.animateCamera(CameraUpdate.newCameraPosition(
+      CameraPosition(
+        bearing: 270.0,
+        target: LatLng(
+            myRidesModel.value.origin?.coordinates?.last ?? //source
+                0.0,
+            myRidesModel.value.origin?.coordinates?.first ?? 0.0),
+        tilt: 30.0,
+        zoom: 17.0,
+      ),
+    ));
+    mapController.animateCamera(CameraUpdate.newLatLngBounds(boundsFromLatLngList(polylineCoordinates), 60));
+
+    polylineCoordinates.refresh();
   }
 
-  void getPolyPoints() async {
-    PolylinePoints polylinePoints = PolylinePoints();
-
-    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-        Endpoints.googleApiKey,
-        PointLatLng(
-            myRidesModel.value.data?[index]?.origin?.coordinates?.last ?? //source
-                19.0635747,
-            myRidesModel.value.data?[index]?.origin?.coordinates?.first ?? 72.84047029999999),
-        PointLatLng(
-            myRidesModel.value.data?[index]?.destination?.coordinates?.last ?? //destination
-                0.0,
-            myRidesModel.value.data?[index]?.destination?.coordinates?.first ?? 0.0));
-    if (result.points.isNotEmpty) {
-      polylineCoordinates.assignAll(
-        result.points.map((PointLatLng point) => LatLng(point.latitude, point.longitude)).toList(),
-      );
+  Future<void> getPolyPoints() async {
+    try {
+      PolylinePoints polylinePoints = PolylinePoints();
+      final List<double?> originCoordinates = myRidesModel.value.origin?.coordinates ?? [0.0, 0.0];
+      final List<double?> destinationCoordinates = myRidesModel.value.destination?.coordinates ?? [0.0, 0.0];
+      PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+          Endpoints.googleApiKey, PointLatLng(originCoordinates.last!, originCoordinates.first!), PointLatLng(destinationCoordinates.last!, destinationCoordinates.first!));
+      if (result.points.isNotEmpty) {
+        polylineCoordinates.assignAll(result.points.map((point) => LatLng(point.latitude, point.longitude)).toList());
+      }
+      polylineCoordinates.refresh();
+      addMarkers(LatLng(originCoordinates.last!, originCoordinates.first!));
+      addMarkers(LatLng(destinationCoordinates.last!, destinationCoordinates.first!));
+    } catch (e) {
+      debugPrint(e.toString());
     }
+  }
+
+  addMarkers(LatLng carLocation) async {
+    String imgurl = "https://www.fluttercampus.com/img/car.png";
+    Uint8List bytes = (await NetworkAssetBundle(Uri.parse(imgurl)).load(imgurl)).buffer.asUint8List();
+    markers.add(Marker(
+      markerId: MarkerId(carLocation.toString()),
+      position: carLocation, //position of marker
+      infoWindow: const InfoWindow(
+        title: 'Car Point ',
+        snippet: 'Car Marker',
+      ),
+      icon: BitmapDescriptor.fromBytes(bytes), //Icon for Marker
+    ));
+  }
+
+  LatLngBounds boundsFromLatLngList(List<LatLng> list) {
+    double minLat = list.first.latitude;
+    double maxLat = list.first.latitude;
+    double minLng = list.first.longitude;
+    double maxLng = list.first.longitude;
+    for (LatLng point in list) {
+      if (point.latitude < minLat) minLat = point.latitude;
+      if (point.latitude > maxLat) maxLat = point.latitude;
+      if (point.longitude < minLng) minLng = point.longitude;
+      if (point.longitude > maxLng) maxLng = point.longitude;
+    }
+    return LatLngBounds(southwest: LatLng(minLat, minLng), northeast: LatLng(maxLat, maxLng));
   }
 }

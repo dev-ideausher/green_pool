@@ -8,47 +8,47 @@ import 'package:tuple/tuple.dart';
 import 'package:encrypt/encrypt.dart' as encrypt;
 
 String passphrase = 'password';
-
-String? encryptAESCryptoJS(String plainText) {
+String encryptAESCryptoJS(String plainText) {
   try {
-    final salt = genRandomWithNonZero(8);
-    var keyndIV = deriveKeyAndIV(passphrase, salt);
-    final key = encrypt.Key(keyndIV.item1);
-    final iv = encrypt.IV(keyndIV.item2);
-
-    final encrypter = encrypt.Encrypter(
-        encrypt.AES(key, mode: encrypt.AESMode.cbc, padding: "PKCS7"));
-    final encrypted = encrypter.encrypt(plainText, iv: iv);
-    Uint8List encryptedBytesWithSalt = Uint8List.fromList(
-        createUint8ListFromString("Salted__") + salt + encrypted.bytes);
-    return base64.encode(encryptedBytesWithSalt);
+    if (plainText.isEmpty) {
+      return "";
+    } else {
+      final salt = genRandomWithNonZero(8);
+      var keyndIV = deriveKeyAndIV(passphrase ?? '', salt);
+      final key = encrypt.Key(keyndIV.item1);
+      final iv = encrypt.IV(keyndIV.item2);
+      final encrypter = encrypt.Encrypter(encrypt.AES(key, mode: encrypt.AESMode.cbc, padding: "PKCS7"));
+      final encrypted = encrypter.encrypt(plainText, iv: iv);
+      Uint8List encryptedBytesWithSalt = Uint8List.fromList(createUint8ListFromString("Salted__") + salt + encrypted.bytes);
+      return base64.encode(encryptedBytesWithSalt);
+    }
   } catch (error) {
-    print(error);
+    return "";
   }
-  return null;
 }
 
-String? decryptAESCryptoJS(String encrypted) {
+String decryptAESCryptoJS(String encrypted) {
   try {
-    Uint8List encryptedBytesWithSalt = base64.decode(encrypted);
-
-    Uint8List encryptedBytes =
-    encryptedBytesWithSalt.sublist(16, encryptedBytesWithSalt.length);
-    final salt = encryptedBytesWithSalt.sublist(8, 16);
-    var keyndIV = deriveKeyAndIV(passphrase, salt);
-    final key = encrypt.Key(keyndIV.item1);
-    final iv = encrypt.IV(keyndIV.item2);
-
-    final encrypter = encrypt.Encrypter(
-        encrypt.AES(key, mode: encrypt.AESMode.cbc, padding: "PKCS7"));
-    final decrypted =
-    encrypter.decrypt64(base64.encode(encryptedBytes), iv: iv);
-    return decrypted;
+    if (encrypted.isEmpty) {
+      return "";
+    } else {
+      Uint8List encryptedBytesWithSalt = base64.decode(encrypted);
+      Uint8List encryptedBytes = encryptedBytesWithSalt.sublist(16, encryptedBytesWithSalt.length);
+      final salt = encryptedBytesWithSalt.sublist(8, 16);
+      var keyndIV = deriveKeyAndIV(passphrase ?? '', salt);
+      final key = encrypt.Key(keyndIV.item1);
+      final iv = encrypt.IV(keyndIV.item2);
+      final encrypter = encrypt.Encrypter(encrypt.AES(key, mode: encrypt.AESMode.cbc, padding: "PKCS7"));
+      final decrypted = encrypter.decrypt64(base64.encode(encryptedBytes), iv: iv);
+      return decrypted;
+    }
   } catch (error) {
-    print(error);
+    return "";
   }
-  return null;
 }
+
+
+
 
 Tuple2<Uint8List, Uint8List> deriveKeyAndIV(String passphrase, Uint8List salt) {
   var password = createUint8ListFromString(passphrase);

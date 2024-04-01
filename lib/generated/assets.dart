@@ -35,6 +35,7 @@ class Assets {
   static const String homeDriving = 'assets/images/home/driving.svg';
   static const String homeFindRide = 'assets/images/home/FindRide.svg';
   static const String homeNeedRide = 'assets/images/home/need_ride.svg';
+  static const String homeNoRides = 'assets/images/home/no_rides.svg';
   static const String homePinkFindRide = 'assets/images/home/pink_FindRide.svg';
   static const String homePinkPostRide = 'assets/images/home/pink_PostRide.svg';
   static const String homePinkRiderDriving = 'assets/images/home/pink_RiderDriving.svg';
@@ -77,6 +78,8 @@ class Assets {
   static const String myridesPassenger2 = 'assets/images/myrides/passenger_2.png';
   static const String myridesPassenger3 = 'assets/images/myrides/passenger_3.png';
   static const String myridesPassenger4 = 'assets/images/myrides/passenger_4.png';
+  static const String navigationDestinationLocation = 'assets/images/navigation/destination_location.png';
+  static const String navigationSourceLocation = 'assets/images/navigation/source_location.png';
   static const String onboardingGetstarted = 'assets/images/onboarding/getstarted.svg';
   static const String onboardingOnboard1 = 'assets/images/onboarding/onboard1.svg';
   static const String onboardingOnboard2 = 'assets/images/onboarding/onboard2.png';
