@@ -57,7 +57,7 @@ class APIManager {
         showSnakbar: true,
       ).get(Endpoints.userByID);
 
-  static Future<Response> getAllMyRides() async => await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).get(Endpoints.driverMyRides);
+  static Future<Response> getAllMyRides() async => await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false).get(Endpoints.driverMyRides);
 
   static Future<Response> getMyRidesDetails({required String rideId}) async =>
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).get(Endpoints.driverMyRidesDetails + rideId);

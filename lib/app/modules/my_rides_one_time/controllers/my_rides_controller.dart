@@ -14,8 +14,10 @@ class MyRidesOneTimeController extends GetxController {
   RxBool isDriver = Get.find<GetStorageService>().isDriver.obs;
 
   RxString ridePostId = ''.obs;
-  var myRidesModel = MyRidesModel().obs;
+
+  final RxList<MyRidesModelData> myRidesModelData = <MyRidesModelData>[].obs;
   var confirmRequestModel = DriverCofirmRequestModel().obs;
+  final RxBool isLoad = true.obs;
 
   // @override
   // void onInit() {
@@ -23,9 +25,10 @@ class MyRidesOneTimeController extends GetxController {
   // }
 
   @override
-  void onReady() {
+  Future<void> onReady() async {
     super.onReady();
-    myRidesApi();
+    await myRidesApi();
+    isLoad.value = false;
   }
 
   // @override
@@ -37,7 +40,14 @@ class MyRidesOneTimeController extends GetxController {
     try {
       final response = await APIManager.getAllMyRides();
       var data = jsonDecode(response.toString());
-      myRidesModel.value = MyRidesModel.fromJson(data);
+
+      final mData = MyRidesModel.fromJson(data);
+      myRidesModelData.value = mData.data!;
+      myRidesModelData.value.forEach((element) {
+        if (element.isCancelled ?? false) {
+          myRidesModelData.remove(element);
+        }
+      });
     } catch (e) {
       throw Exception(e);
     }

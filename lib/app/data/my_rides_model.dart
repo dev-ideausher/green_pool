@@ -16,10 +16,12 @@ class MyRidesModelDataRidersProfilePic {
     this.key,
     this.url,
   });
+
   MyRidesModelDataRidersProfilePic.fromJson(Map<String, dynamic> json) {
     key = json['key']?.toString();
     url = json['url']?.toString();
   }
+
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['key'] = key;
@@ -43,10 +45,12 @@ class MyRidesModelDataRidersIdPic {
     this.key,
     this.url,
   });
+
   MyRidesModelDataRidersIdPic.fromJson(Map<String, dynamic> json) {
     key = json['key']?.toString();
     url = json['url']?.toString();
   }
+
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['key'] = key;
@@ -121,6 +125,7 @@ class MyRidesModelDataRiders {
     this.profilePic,
     this.status,
   });
+
   MyRidesModelDataRiders.fromJson(Map<String, dynamic> json) {
     Id = json['_id']?.toString();
     fullName = json['fullName']?.toString();
@@ -136,14 +141,11 @@ class MyRidesModelDataRiders {
     firebaseSignInProvider = json['firebaseSignInProvider']?.toString();
     createdAt = json['createdAt']?.toString();
     updatedAt = json['updatedAt']?.toString();
-    idPic = (json['idPic'] != null)
-        ? MyRidesModelDataRidersIdPic.fromJson(json['idPic'])
-        : null;
-    profilePic = (json['profilePic'] != null)
-        ? MyRidesModelDataRidersProfilePic.fromJson(json['profilePic'])
-        : null;
+    idPic = (json['idPic'] != null) ? MyRidesModelDataRidersIdPic.fromJson(json['idPic']) : null;
+    profilePic = (json['profilePic'] != null) ? MyRidesModelDataRidersProfilePic.fromJson(json['profilePic']) : null;
     status = json['status']?.toString();
   }
+
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['_id'] = Id;
@@ -182,7 +184,7 @@ class MyRidesModelDataPreferencesOther {
   "CoolingOrHeating": false,
   "BabySeat": false,
   "HeatedSeats": false
-} 
+}
 */
 
   bool? AppreciatesConversation;
@@ -204,6 +206,7 @@ class MyRidesModelDataPreferencesOther {
     this.BabySeat,
     this.HeatedSeats,
   });
+
   MyRidesModelDataPreferencesOther.fromJson(Map<String, dynamic> json) {
     AppreciatesConversation = json['AppreciatesConversation'];
     EnjoysMusic = json['EnjoysMusic'];
@@ -214,6 +217,7 @@ class MyRidesModelDataPreferencesOther {
     BabySeat = json['BabySeat'];
     HeatedSeats = json['HeatedSeats'];
   }
+
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['AppreciatesConversation'] = AppreciatesConversation;
@@ -243,7 +247,7 @@ class MyRidesModelDataPreferences {
     "BabySeat": false,
     "HeatedSeats": false
   }
-} 
+}
 */
 
   int? seatAvailable;
@@ -255,13 +259,13 @@ class MyRidesModelDataPreferences {
     this.luggageType,
     this.other,
   });
+
   MyRidesModelDataPreferences.fromJson(Map<String, dynamic> json) {
     seatAvailable = json['seatAvailable']?.toInt();
     luggageType = json['luggageType']?.toString();
-    other = (json['other'] != null)
-        ? MyRidesModelDataPreferencesOther.fromJson(json['other'])
-        : null;
+    other = (json['other'] != null) ? MyRidesModelDataPreferencesOther.fromJson(json['other']) : null;
   }
+
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['seatAvailable'] = seatAvailable;
@@ -279,7 +283,7 @@ class MyRidesModelDataReturnTrip {
   "isReturnTrip": false,
   "returnDate": null,
   "returnTime": ""
-} 
+}
 */
 
   bool? isReturnTrip;
@@ -291,11 +295,13 @@ class MyRidesModelDataReturnTrip {
     this.returnDate,
     this.returnTime,
   });
+
   MyRidesModelDataReturnTrip.fromJson(Map<String, dynamic> json) {
     isReturnTrip = json['isReturnTrip'];
     returnDate = json['returnDate']?.toString();
     returnTime = json['returnTime']?.toString();
   }
+
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['isReturnTrip'] = isReturnTrip;
@@ -314,7 +320,7 @@ class MyRidesModelDataStops {
     72.8697339
   ],
   "_id": "65dc067d9076ae011b9bdee4"
-} 
+}
 */
 
   String? name;
@@ -328,6 +334,7 @@ class MyRidesModelDataStops {
     this.coordinates,
     this.Id,
   });
+
   MyRidesModelDataStops.fromJson(Map<String, dynamic> json) {
     name = json['name']?.toString();
     type = json['type']?.toString();
@@ -341,6 +348,7 @@ class MyRidesModelDataStops {
     }
     Id = json['_id']?.toString();
   }
+
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['name'] = name;
@@ -366,7 +374,7 @@ class MyRidesModelDataDestination {
   "coordinates": [
     72.856673
   ]
-} 
+}
 */
 
   String? name;
@@ -378,6 +386,7 @@ class MyRidesModelDataDestination {
     this.type,
     this.coordinates,
   });
+
   MyRidesModelDataDestination.fromJson(Map<String, dynamic> json) {
     name = json['name']?.toString();
     type = json['type']?.toString();
@@ -390,6 +399,7 @@ class MyRidesModelDataDestination {
       coordinates = arr0;
     }
   }
+
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['name'] = name;
@@ -414,7 +424,7 @@ class MyRidesModelDataOrigin {
   "coordinates": [
     19.0635747
   ]
-} 
+}
 */
 
   String? name;
@@ -426,6 +436,7 @@ class MyRidesModelDataOrigin {
     this.type,
     this.coordinates,
   });
+
   MyRidesModelDataOrigin.fromJson(Map<String, dynamic> json) {
     name = json['name']?.toString();
     type = json['type']?.toString();
@@ -438,6 +449,7 @@ class MyRidesModelDataOrigin {
       coordinates = arr0;
     }
   }
+
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['name'] = name;
@@ -543,7 +555,7 @@ class MyRidesModelData {
       "status": "active"
     }
   ]
-} 
+}
 */
 
   String? Id;
@@ -593,18 +605,15 @@ class MyRidesModelData {
     this.updatedAt,
     this.riders,
   });
+
   MyRidesModelData.fromJson(Map<String, dynamic> json) {
     Id = json['_id']?.toString();
     driverId = json['driverId']?.toString();
     riderId = json['riderId']?.toString();
     seatAvailable = json['seatAvailable']?.toInt();
     rideStatus = json['rideStatus']?.toString();
-    origin = (json['origin'] != null)
-        ? MyRidesModelDataOrigin.fromJson(json['origin'])
-        : null;
-    destination = (json['destination'] != null)
-        ? MyRidesModelDataDestination.fromJson(json['destination'])
-        : null;
+    origin = (json['origin'] != null) ? MyRidesModelDataOrigin.fromJson(json['origin']) : null;
+    destination = (json['destination'] != null) ? MyRidesModelDataDestination.fromJson(json['destination']) : null;
     if (json['stops'] != null) {
       final v = json['stops'];
       final arr0 = <MyRidesModelDataStops>[];
@@ -616,14 +625,10 @@ class MyRidesModelData {
     tripType = json['tripType']?.toString();
     date = json['date']?.toString();
     time = json['time']?.toString();
-    returnTrip = (json['returnTrip'] != null)
-        ? MyRidesModelDataReturnTrip.fromJson(json['returnTrip'])
-        : null;
+    returnTrip = (json['returnTrip'] != null) ? MyRidesModelDataReturnTrip.fromJson(json['returnTrip']) : null;
     arrivalDate = json['arrivalDate']?.toString();
     arrivalTime = json['arrivalTime']?.toString();
-    preferences = (json['preferences'] != null)
-        ? MyRidesModelDataPreferences.fromJson(json['preferences'])
-        : null;
+    preferences = (json['preferences'] != null) ? MyRidesModelDataPreferences.fromJson(json['preferences']) : null;
     isStarted = json['isStarted'];
     isCompleted = json['isCompleted'];
     isCancelled = json['isCancelled'];
@@ -639,6 +644,7 @@ class MyRidesModelData {
       riders = arr0;
     }
   }
+
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['_id'] = Id;
@@ -789,13 +795,14 @@ class MyRidesModel {
 
   bool? status;
   String? message;
-  List<MyRidesModelData?>? data;
+  List<MyRidesModelData>? data;
 
   MyRidesModel({
     this.status,
     this.message,
     this.data,
   });
+
   MyRidesModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message']?.toString();
@@ -808,6 +815,7 @@ class MyRidesModel {
       this.data = arr0;
     }
   }
+
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['status'] = status;

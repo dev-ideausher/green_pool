@@ -27,13 +27,11 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
       body: SafeArea(
         child: Get.find<GetStorageService>().getLoggedIn
             ? Obx(
-                () => controller.myRidesModel.value.data == null
+                () => controller.isLoad.value
                     ? Center(
-                        child: CircularProgressIndicator(
-                          color: Get.find<ProfileController>().isSwitched.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kPrimary01,
-                        ),
+                        child: CircularProgressIndicator(),
                       )
-                    : controller.myRidesModel.value.data!.isEmpty
+                    : controller.myRidesModelData.isEmpty
                         ? Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -48,7 +46,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                         : Column(
                             children: [
                               // Obx(
-                              //   () => controller.myRidesModel.value.data![0]?.driverId == ''
+                              //   () => controller.myRidesModelData[0]?.driverId == ''
                               //       ? const SizedBox()
                               //       : GestureDetector(
                               //           onTap: () => Get.to(() => const RideRequests()),
@@ -89,15 +87,15 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                               Obx(
                                 () => Expanded(
                                   child: ListView.builder(
-                                    itemCount: controller.myRidesModel.value.data?.length,
+                                    itemCount: controller.myRidesModelData?.length,
                                     itemBuilder: (context, index) {
-                                      if (controller.myRidesModel.value.data![index]?.driverId != null) {
+                                      if (controller.myRidesModelData[index]?.driverId != null) {
                                         return GestureDetector(
                                           // check whether ride is cancelled
-                                          onTap: controller.myRidesModel.value.data?[index]?.isCancelled == true
+                                          onTap: controller.myRidesModelData[index]?.isCancelled == true
                                               ? () {}
                                               : () {
-                                                  controller.viewDetails(controller.myRidesModel.value.data![index]!);
+                                                  controller.viewDetails(controller.myRidesModelData[index]!);
                                                 },
                                           child: Container(
                                             padding: EdgeInsets.all(16.kh),
@@ -110,7 +108,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                 Row(
                                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                   children: [
-                                                    controller.myRidesModel.value.data![index]?.time == ""
+                                                    controller.myRidesModelData[index]?.time == ""
                                                         ? Row(
                                                             children: [
                                                               SvgPicture.asset(
@@ -121,23 +119,21 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                               ).paddingOnly(right: 4.kw),
                                                               Text(
                                                                 // '07 November 2023',
-                                                                controller.myRidesModel.value.data![index]?.date?.split('T')[0] ?? "DD/MM/YYYY",
+                                                                controller.myRidesModelData[index]?.date?.split('T')[0] ?? "DD/MM/YYYY",
                                                                 style: TextStyleUtil.k12Regular(color: ColorUtil.kBlack03),
                                                               ),
                                                             ],
                                                           ).paddingOnly(bottom: 8.kh)
                                                         : Text(
                                                             // '10:30 am',
-                                                            "${controller.myRidesModel.value.data![index]?.time}",
+                                                            "${controller.myRidesModelData[index]?.time}",
                                                             style: TextStyleUtil.k16Bold(),
                                                           ),
                                                     SizedBox(
                                                       height: 24.kh,
                                                       width: 28.w,
                                                       child: ListView.builder(
-                                                        itemCount: controller.myRidesModel.value.data![index]?.riders?.length == 0
-                                                            ? 4
-                                                            : controller.myRidesModel.value.data![index]?.riders?.length,
+                                                        itemCount: controller.myRidesModelData[index]?.riders?.length == 0 ? 4 : controller.myRidesModelData[index]?.riders?.length,
                                                         reverse: true,
                                                         scrollDirection: Axis.horizontal,
                                                         itemBuilder: (context, index1) {
@@ -148,12 +144,12 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                             child: ClipOval(
                                                               child: SizedBox.fromSize(
                                                                 size: Size.fromRadius(12.kh),
-                                                                child: controller.myRidesModel.value.data![index]?.riders?.length == 0
+                                                                child: controller.myRidesModelData[index]?.riders?.length == 0
                                                                     ? Image.asset(
                                                                         ImageConstant.pngEmptyPassenger,
                                                                       )
                                                                     : Image(
-                                                                        image: NetworkImage("${controller.myRidesModel.value.data![index]?.riders?[index1]?.profilePic?.url}"),
+                                                                        image: NetworkImage("${controller.myRidesModelData[index]?.riders?[index1]?.profilePic?.url}"),
                                                                       ),
                                                               ),
                                                             ),
@@ -254,7 +250,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                     // ),
                                                   ],
                                                 ).paddingOnly(bottom: 8.kh),
-                                                controller.myRidesModel.value.data![index]?.time == ""
+                                                controller.myRidesModelData[index]?.time == ""
                                                     ? const SizedBox()
                                                     : Row(
                                                         children: [
@@ -266,7 +262,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                           ).paddingOnly(right: 4.kw),
                                                           Text(
                                                             // '07 November 2023',
-                                                            controller.myRidesModel.value.data![index]?.date?.split('T')[0] ?? "DD/MM/YYYY",
+                                                            controller.myRidesModelData[index]?.date?.split('T')[0] ?? "DD/MM/YYYY",
                                                             style: TextStyleUtil.k12Regular(color: ColorUtil.kBlack03),
                                                           ),
                                                         ],
@@ -288,7 +284,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                         Expanded(
                                                           child: Text(
                                                             // '1100 McIntosh St, Regina',
-                                                            controller.myRidesModel.value.data![index]?.origin?.name ?? 'Origin',
+                                                            controller.myRidesModelData[index]?.origin?.name ?? 'Origin',
                                                             style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack02),
                                                             overflow: TextOverflow.ellipsis,
                                                           ),
@@ -306,7 +302,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                           ).paddingOnly(right: 8.kw),
                                                           Text(
                                                             // '681 Chrislea Rd, Woodbridge',
-                                                            controller.myRidesModel.value.data![index]?.destination?.name ?? 'Destination',
+                                                            controller.myRidesModelData[index]?.destination?.name ?? 'Destination',
                                                             style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack02),
                                                             overflow: TextOverflow.ellipsis,
                                                           ),
@@ -330,18 +326,18 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                   color: ColorUtil.kBlack07,
                                                 ).paddingOnly(bottom: 16.kh),
                                                 Obx(
-                                                  () => controller.myRidesModel.value.data?[index]?.isCancelled == true
+                                                  () => controller.myRidesModelData[index]?.isCancelled == true
                                                       ? Text(
                                                           "Ride is cancelled",
                                                           style: TextStyleUtil.k16Bold(color: ColorUtil.kError2),
                                                         )
-                                                      : isToday(controller.myRidesModel.value.data?[index]?.date ?? "")
+                                                      : isToday(controller.myRidesModelData[index]?.date ?? "")
                                                           ? Row(
                                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                               children: [
                                                                 GreenPoolButton(
                                                                     onPressed: () {
-                                                                      Get.toNamed(Routes.START_RIDE, arguments: controller.myRidesModel.value.data?[index]);
+                                                                      Get.toNamed(Routes.START_RIDE, arguments: controller.myRidesModelData[index]);
                                                                     },
                                                                     width: 144.kw,
                                                                     height: 40.kh,
@@ -350,7 +346,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                                     label: 'Start Ride'),
                                                                 GreenPoolButton(
                                                                   onPressed: () {
-                                                                    controller.cancelRideAPI(controller.myRidesModel.value.data![index]!);
+                                                                    controller.cancelRideAPI(controller.myRidesModelData[index]!);
                                                                   },
                                                                   width: 144.kw,
                                                                   height: 40.kh,
@@ -368,7 +364,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                               alignment: Alignment.topRight,
                                                               child: GreenPoolButton(
                                                                 onPressed: () {
-                                                                  controller.viewDetails(controller.myRidesModel.value.data![index]!);
+                                                                  controller.viewDetails(controller.myRidesModelData[index]!);
                                                                 },
                                                                 width: 144.kw,
                                                                 height: 40.kh,
@@ -387,12 +383,12 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                         );
                                       } else {
                                         return GestureDetector(
-                                          onTap: controller.myRidesModel.value.data?[index]!.rideStatus == "Confirmed"
+                                          onTap: controller.myRidesModelData[index]!.rideStatus == "Confirmed"
                                               ? () {
                                                   Get.toNamed(Routes.RIDER_CONFIRMED_RIDE_DETAILS);
                                                 }
                                               : () {
-                                                  Get.toNamed(Routes.RIDER_MY_RIDE_REQUEST, arguments: controller.myRidesModel.value.data?[index]?.Id);
+                                                  Get.toNamed(Routes.RIDER_MY_RIDE_REQUEST, arguments: controller.myRidesModelData[index]?.Id);
                                                 },
                                           child: Container(
                                             padding: EdgeInsets.all(16.kh),
@@ -403,7 +399,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                             child: Column(
                                               crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
-                                                controller.myRidesModel.value.data?[index]!.rideStatus == "Confirmed"
+                                                controller.myRidesModelData[index]!.rideStatus == "Confirmed"
                                                     ? Row(
                                                         children: [
                                                           //for profile pic and rating
@@ -467,7 +463,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                                             style: TextStyleUtil.k14Semibold(color: ColorUtil.kSecondary01),
                                                                           ),
                                                                           TextSpan(
-                                                                            text: '\$ ${controller.myRidesModel.value.data?[index]?.fair}',
+                                                                            text: '\$ ${controller.myRidesModelData[index]?.fair}',
                                                                             style: TextStyleUtil.k16Semibold(fontSize: 16.kh, color: ColorUtil.kSecondary01),
                                                                           ),
                                                                         ],
@@ -488,7 +484,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                                         ).paddingOnly(right: 4.kw),
                                                                         Text(
                                                                           // '07 Nov 2023, 3:00pm',
-                                                                          '${controller.myRidesModel.value.data?[index]?.date.toString().split("T")[0] ?? " "}  ${controller.myRidesModel.value.data?[index]?.time ?? " "}',
+                                                                          '${controller.myRidesModelData[index]?.date.toString().split("T")[0] ?? " "}  ${controller.myRidesModelData[index]?.time ?? " "}',
                                                                           style: TextStyleUtil.k12Regular(color: ColorUtil.kBlack03),
                                                                         ),
                                                                       ],
@@ -502,7 +498,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                                               Get.find<ProfileController>().isSwitched.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01,
                                                                         ).paddingOnly(right: 8.kw),
                                                                         Text(
-                                                                          '${controller.myRidesModel.value.data?[index]?.seatAvailable} seats',
+                                                                          '${controller.myRidesModelData[index]?.seatAvailable} seats',
                                                                           style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                                                                         ),
                                                                       ],
@@ -517,10 +513,10 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                     : const SizedBox(),
 
                                                 // time view if not confirmed by rider
-                                                controller.myRidesModel.value.data?[index]!.rideStatus != "Confirmed"
+                                                controller.myRidesModelData[index]!.rideStatus != "Confirmed"
                                                     ? Row(
                                                         children: [
-                                                          controller.myRidesModel.value.data?[index]?.date == null
+                                                          controller.myRidesModelData[index]?.date == null
                                                               ? const SizedBox()
                                                               : SvgPicture.asset(
                                                                   ImageConstant.svgIconCalendarTime,
@@ -528,18 +524,18 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                                       Get.find<ProfileController>().isSwitched.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01,
                                                                       BlendMode.srcIn),
                                                                 ).paddingOnly(right: 4.kw),
-                                                          controller.myRidesModel.value.data?[index]?.date == null
+                                                          controller.myRidesModelData[index]?.date == null
                                                               ? const SizedBox()
                                                               : Text(
                                                                   // '07 Nov 2023, 3:00pm',
-                                                                  '${controller.myRidesModel.value.data?[index]?.date.toString().split("T")[0] ?? " "}  ${controller.myRidesModel.value.data?[index]?.time ?? " "}',
+                                                                  '${controller.myRidesModelData[index]?.date.toString().split("T")[0] ?? " "}  ${controller.myRidesModelData[index]?.time ?? " "}',
                                                                   style: TextStyleUtil.k16Bold(),
                                                                 ),
                                                         ],
                                                       ).paddingOnly(bottom: 16.kh)
                                                     : const SizedBox(),
                                                 //middle divider
-                                                controller.myRidesModel.value.data?[index]?.date == null ? const SizedBox() : const GreenPoolDivider().paddingOnly(bottom: 16.kh),
+                                                controller.myRidesModelData[index]?.date == null ? const SizedBox() : const GreenPoolDivider().paddingOnly(bottom: 16.kh),
                                                 Stack(
                                                   children: [
                                                     Row(
@@ -551,7 +547,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                         ).paddingOnly(right: 8.kw),
                                                         Text(
                                                           // '1100 McIntosh St, Regina',
-                                                          "${controller.myRidesModel.value.data?[index]?.origin?.name}",
+                                                          "${controller.myRidesModelData[index]?.origin?.name}",
                                                           style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack02),
                                                         ),
                                                       ],
@@ -567,7 +563,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                           ).paddingOnly(right: 8.kw),
                                                           Text(
                                                             // '681 Chrislea Rd, Woodbridge',
-                                                            "${controller.myRidesModel.value.data?[index]?.destination?.name}",
+                                                            "${controller.myRidesModelData[index]?.destination?.name}",
                                                             style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack02),
                                                           ),
                                                         ],
@@ -588,7 +584,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                 //bottom line
                                                 const GreenPoolDivider(),
                                                 // rides matching your request
-                                                controller.myRidesModel.value.data?[index]!.rideStatus != "Confirmed"
+                                                controller.myRidesModelData[index]!.rideStatus != "Confirmed"
                                                     ? Container(
                                                         width: 100.w,
                                                         padding: EdgeInsetsDirectional.symmetric(horizontal: 16.kw, vertical: 8.kh),
@@ -606,7 +602,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                             width: 144.kw,
                                                             padding: EdgeInsets.all(0.kh),
                                                             onPressed: () {
-                                                              controller.viewDetails(controller.myRidesModel.value.data![index]!);
+                                                              controller.viewDetails(controller.myRidesModelData[index]!);
                                                             },
                                                             label: 'View Details',
                                                             fontSize: 14.kh,
@@ -617,7 +613,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                             height: 40.kh,
                                                             width: 144.kw,
                                                             padding: EdgeInsets.all(0.kh),
-                                                            onPressed: () => controller.cancelRideAPI(controller.myRidesModel.value.data![index]!),
+                                                            onPressed: () => controller.cancelRideAPI(controller.myRidesModelData[index]!),
                                                             isBorder: true,
                                                             label: 'Cancel Ride',
                                                             fontSize: 14.kh,
