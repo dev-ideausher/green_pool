@@ -85,6 +85,8 @@ class PostRideController extends GetxController {
   RxBool isSunday = false.obs;
   List<int?>? daysOfWeek = <int>[].obs;
 
+  final RxString luggageWeight = ''.obs;
+
   @override
   void onInit() {
     super.onInit();
