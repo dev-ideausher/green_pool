@@ -15,6 +15,7 @@ import 'onboard3_view.dart';
 
 class OnboardingView extends GetView<OnboardingController> {
   const OnboardingView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +39,7 @@ class OnboardingView extends GetView<OnboardingController> {
                       },
                       padding: const EdgeInsets.all(0),
                       label: 'Skip',
-                      color:controller.pageIndex.value == 1 ? ColorUtil.kSecondaryPinkMode :   ColorUtil.kPrimary05,
+                      color: controller.pageIndex.value == 1 ? ColorUtil.kSecondaryPinkMode : ColorUtil.kPrimary05,
                       fontSize: 14.kh,
                       width: 77.kw,
                       height: 37.kh,
@@ -59,63 +60,64 @@ class OnboardingView extends GetView<OnboardingController> {
                 ],
               ),
             ),
-
           ],
         ),
       ),
-      bottomSheet:          Obx(
-            () => controller.pageIndex.value == 3
-            ? Center(
-          child: GreenPoolButton(
-            onPressed: () {
-              Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
-            },
-            label: 'Let’s Get Started !',
-          ).paddingOnly(bottom: 26.kh, top: 72.kh),
-        )
-            : Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SmoothPageIndicator(
-              controller: controller.postController,
-              count: 3,
-              effect: CustomizableEffect(
-                spacing: 16.kw,
-                // activeDotColor: ColorUtil.kSecondary01,
-                // dotColor: ColorUtil.kSecondary05,
+      bottomSheet: Container(
+        color: Colors.grey.shade50,
+        child: Obx(
+          () => controller.pageIndex.value == 3
+              ? Center(
+                  child: GreenPoolButton(
+                    onPressed: () {
+                      Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
+                    },
+                    label: 'Let’s Get Started !',
+                  ).paddingOnly(bottom: 26.kh, top: 72.kh),
+                )
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SmoothPageIndicator(
+                      controller: controller.postController,
+                      count: 3,
+                      effect: CustomizableEffect(
+                        spacing: 16.kw,
+                        // activeDotColor: ColorUtil.kSecondary01,
+                        // dotColor: ColorUtil.kSecondary05,
 
-                dotDecoration: DotDecoration(
-                    color:controller.pageIndex.value == 1 ? ColorUtil.kSecondaryPinkMode: ColorUtil.kSecondary05,
-                    borderRadius: BorderRadius.circular(100.kh),
-                    height: 10.kh,
-                    width: 10.kw),
-                activeDotDecoration: DotDecoration(
-                  color:controller.pageIndex.value == 1 ? ColorUtil.kPrimary2PinkMode: ColorUtil.kSecondary01,
-                  height: 14.kh,
-                  width: 14.kw,
-                  borderRadius: BorderRadius.circular(100.kh),
-                ),
-              ),
-            ),
-            GreenPoolButton(
-              onPressed: () {
-                controller.pageIndex.value++;
-                controller.postController.animateToPage(
-                  controller.pageIndex.value,
-                  duration: const Duration(milliseconds: 500),
-                  curve: Curves.linear,
-                );
-              },
-              padding: const EdgeInsets.all(0),
-              color: controller.pageIndex.value == 1 ? ColorUtil.kPrimary2PinkMode : ColorUtil.kPrimary01,
-              label: 'Next',
-              fontSize: 14.kh,
-              width: 120.kw,
-              height: 40.kh,
-            ),
-          ],
-        ).paddingOnly(
-            top: 72.kh, bottom: 36.kh, left: 20.kw, right: 20.kw),
+                        dotDecoration: DotDecoration(
+                            color: controller.pageIndex.value == 1 ? ColorUtil.kSecondaryPinkMode : ColorUtil.kSecondary05,
+                            borderRadius: BorderRadius.circular(100.kh),
+                            height: 10.kh,
+                            width: 10.kw),
+                        activeDotDecoration: DotDecoration(
+                          color: controller.pageIndex.value == 1 ? ColorUtil.kPrimary2PinkMode : ColorUtil.kSecondary01,
+                          height: 14.kh,
+                          width: 14.kw,
+                          borderRadius: BorderRadius.circular(100.kh),
+                        ),
+                      ),
+                    ),
+                    GreenPoolButton(
+                      onPressed: () {
+                        controller.pageIndex.value++;
+                        controller.postController.animateToPage(
+                          controller.pageIndex.value,
+                          duration: const Duration(milliseconds: 500),
+                          curve: Curves.linear,
+                        );
+                      },
+                      padding: const EdgeInsets.all(0),
+                      color: controller.pageIndex.value == 1 ? ColorUtil.kPrimary2PinkMode : ColorUtil.kPrimary01,
+                      label: 'Next',
+                      fontSize: 14.kh,
+                      width: 120.kw,
+                      height: 40.kh,
+                    ),
+                  ],
+                ).paddingOnly(top: 72.kh, bottom: 36.kh, left: 20.kw, right: 20.kw),
+        ),
       ),
     );
   }
