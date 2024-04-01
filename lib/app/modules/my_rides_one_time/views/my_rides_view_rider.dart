@@ -14,7 +14,9 @@ import '../../profile/controllers/profile_controller.dart';
 
 class RiderMyRidesView extends GetView<MyRidesOneTimeController> {
   final int? index;
+
   const RiderMyRidesView({super.key, this.index});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -26,8 +28,7 @@ class RiderMyRidesView extends GetView<MyRidesOneTimeController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          controller.confirmRequestModel.value.data?[index!]!.confirmByRider !=
-                  true
+          controller.confirmRequestModel.value.data?[index!]!.confirmByRider != true
               ? const SizedBox()
               : Row(
                   children: [
@@ -52,31 +53,18 @@ class RiderMyRidesView extends GetView<MyRidesOneTimeController> {
                             height: 20.kh,
                             padding: EdgeInsets.symmetric(horizontal: 8.kw),
                             decoration: BoxDecoration(
-                                color: Get.find<ProfileController>()
-                                        .isSwitched
-                                        .value
-                                    ? ColorUtil.kPrimary3PinkMode
-                                    : ColorUtil.kSecondary01,
+                                color: Get.find<ProfileController>().isSwitched.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01,
                                 borderRadius: BorderRadius.circular(16.kh)),
                             child: Row(
                               children: [
                                 Icon(
                                   Icons.star,
-                                  color: Get.find<ProfileController>()
-                                          .isSwitched
-                                          .value
-                                      ? ColorUtil.kWhiteColor
-                                      : ColorUtil.kYellowColor,
+                                  color: Get.find<ProfileController>().isSwitched.value ? ColorUtil.kWhiteColor : ColorUtil.kYellowColor,
                                   size: 12.kh,
                                 ).paddingOnly(right: 2.kw),
                                 Text(
                                   '4.5',
-                                  style: TextStyleUtil.k12Semibold(
-                                      color: Get.find<ProfileController>()
-                                              .isSwitched
-                                              .value
-                                          ? ColorUtil.kBlack02
-                                          : ColorUtil.kWhiteColor),
+                                  style: TextStyleUtil.k12Semibold(color: Get.find<ProfileController>().isSwitched.value ? ColorUtil.kBlack02 : ColorUtil.kWhiteColor),
                                 ),
                               ],
                             ),
@@ -101,15 +89,11 @@ class RiderMyRidesView extends GetView<MyRidesOneTimeController> {
                                   children: [
                                     TextSpan(
                                       text: 'Fare: ',
-                                      style: TextStyleUtil.k14Semibold(
-                                          color: ColorUtil.kSecondary01),
+                                      style: TextStyleUtil.k14Semibold(color: ColorUtil.kSecondary01),
                                     ),
                                     TextSpan(
-                                      text:
-                                          '\$ ${controller.myRidesModel.value.data?[index!]?.fair ?? " "}',
-                                      style: TextStyleUtil.k16Semibold(
-                                          fontSize: 16.kh,
-                                          color: ColorUtil.kSecondary01),
+                                      text: '\$ ${controller.myRidesModelData.value[index!]?.fair ?? " "}',
+                                      style: TextStyleUtil.k16Semibold(fontSize: 16.kh, color: ColorUtil.kSecondary01),
                                     ),
                                   ],
                                 ),
@@ -123,19 +107,13 @@ class RiderMyRidesView extends GetView<MyRidesOneTimeController> {
                                 children: [
                                   SvgPicture.asset(
                                     ImageConstant.svgIconCalendarTime,
-                                    colorFilter: ColorFilter.mode(
-                                        Get.find<ProfileController>()
-                                                .isSwitched
-                                                .value
-                                            ? ColorUtil.kPrimary3PinkMode
-                                            : ColorUtil.kSecondary01,
-                                        BlendMode.srcIn),
+                                    colorFilter:
+                                        ColorFilter.mode(Get.find<ProfileController>().isSwitched.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01, BlendMode.srcIn),
                                   ).paddingOnly(right: 4.kw),
                                   Text(
                                     // '07 Nov 2023, 3:00pm',
-                                    '${controller.myRidesModel.value.data?[index!]?.date.toString().split("T")[0] ?? " "}  ${controller.myRidesModel.value.data?[index!]?.time ?? " "}',
-                                    style: TextStyleUtil.k12Regular(
-                                        color: ColorUtil.kBlack03),
+                                    '${controller.myRidesModelData.value[index!]?.date.toString().split("T")[0] ?? " "}  ${controller.myRidesModelData.value?[index!]?.time ?? " "}',
+                                    style: TextStyleUtil.k12Regular(color: ColorUtil.kBlack03),
                                   ),
                                 ],
                               ),
@@ -144,16 +122,11 @@ class RiderMyRidesView extends GetView<MyRidesOneTimeController> {
                                   Icon(
                                     Icons.time_to_leave,
                                     size: 18.kh,
-                                    color: Get.find<ProfileController>()
-                                            .isSwitched
-                                            .value
-                                        ? ColorUtil.kPrimary3PinkMode
-                                        : ColorUtil.kSecondary01,
+                                    color: Get.find<ProfileController>().isSwitched.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01,
                                   ).paddingOnly(right: 8.kw),
                                   Text(
-                                    '${controller.myRidesModel.value.data?[index!]?.seatAvailable}',
-                                    style: TextStyleUtil.k14Regular(
-                                        color: ColorUtil.kBlack03),
+                                    '${controller.myRidesModelData.value[index!]?.seatAvailable}',
+                                    style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                                   ),
                                 ],
                               ),
@@ -166,21 +139,16 @@ class RiderMyRidesView extends GetView<MyRidesOneTimeController> {
                 ),
 
           // time view if not confirmed by rider
-          controller.confirmRequestModel.value.data?[index!]!.confirmByRider !=
-                  true
+          controller.confirmRequestModel.value.data?[index!]!.confirmByRider != true
               ? Row(
                   children: [
                     SvgPicture.asset(
                       ImageConstant.svgIconCalendarTime,
-                      colorFilter: ColorFilter.mode(
-                          Get.find<ProfileController>().isSwitched.value
-                              ? ColorUtil.kPrimary3PinkMode
-                              : ColorUtil.kSecondary01,
-                          BlendMode.srcIn),
+                      colorFilter: ColorFilter.mode(Get.find<ProfileController>().isSwitched.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01, BlendMode.srcIn),
                     ).paddingOnly(right: 4.kw),
                     Text(
                       // '07 Nov 2023, 3:00pm',
-                      '${controller.myRidesModel.value.data?[index!]?.date.toString().split("T")[0] ?? " "}  ${controller.myRidesModel.value.data?[index!]?.time ?? " "}',
+                      '${controller.myRidesModelData.value[index!]?.date.toString().split("T")[0] ?? " "}  ${controller.myRidesModelData.value[index!]?.time ?? " "}',
                       style: TextStyleUtil.k16Bold(),
                     ),
                   ],
@@ -195,12 +163,11 @@ class RiderMyRidesView extends GetView<MyRidesOneTimeController> {
                   Container(
                     height: 10.kh,
                     width: 10.kw,
-                    decoration: const BoxDecoration(
-                        shape: BoxShape.circle, color: ColorUtil.kGreenColor),
+                    decoration: const BoxDecoration(shape: BoxShape.circle, color: ColorUtil.kGreenColor),
                   ).paddingOnly(right: 8.kw),
                   Text(
                     // '1100 McIntosh St, Regina',
-                    "${controller.myRidesModel.value.data?[index!]?.origin?.name}",
+                    "${controller.myRidesModelData.value[index!]?.origin?.name}",
                     style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack02),
                   ),
                 ],
@@ -212,14 +179,12 @@ class RiderMyRidesView extends GetView<MyRidesOneTimeController> {
                     Container(
                       height: 10.kh,
                       width: 10.kw,
-                      decoration: const BoxDecoration(
-                          shape: BoxShape.circle, color: ColorUtil.kError4),
+                      decoration: const BoxDecoration(shape: BoxShape.circle, color: ColorUtil.kError4),
                     ).paddingOnly(right: 8.kw),
                     Text(
                       // '681 Chrislea Rd, Woodbridge',
-                      "${controller.myRidesModel.value.data?[index!]?.destination?.name}",
-                      style:
-                          TextStyleUtil.k14Regular(color: ColorUtil.kBlack02),
+                      "${controller.myRidesModelData.value[index!]?.destination?.name}",
+                      style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack02),
                     ),
                   ],
                 ),
@@ -238,14 +203,10 @@ class RiderMyRidesView extends GetView<MyRidesOneTimeController> {
           ).paddingOnly(bottom: 8.kh),
           //bottom line
           const GreenPoolDivider(),
-          controller.confirmRequestModel.value.data?[index!]!.confirmByRider !=
-                  true
+          controller.confirmRequestModel.value.data?[index!]!.confirmByRider != true
               ? Container(
-                  padding: EdgeInsetsDirectional.symmetric(
-                      horizontal: 16.kw, vertical: 8.kh),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(4.kh),
-                      color: ColorUtil.kSecondary01),
+                  padding: EdgeInsetsDirectional.symmetric(horizontal: 16.kw, vertical: 8.kh),
+                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(4.kh), color: ColorUtil.kSecondary01),
                 )
               : Row(
                   children: [
@@ -254,13 +215,8 @@ class RiderMyRidesView extends GetView<MyRidesOneTimeController> {
                       onPressed: () {},
                       isBorder: true,
                       label: 'Cancel Ride',
-                      borderColor:
-                          Get.find<ProfileController>().isSwitched.value
-                              ? ColorUtil.kPrimary3PinkMode
-                              : ColorUtil.kSecondary01,
-                      labelColor: Get.find<ProfileController>().isSwitched.value
-                          ? ColorUtil.kPrimary3PinkMode
-                          : ColorUtil.kSecondary01,
+                      borderColor: Get.find<ProfileController>().isSwitched.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01,
+                      labelColor: Get.find<ProfileController>().isSwitched.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01,
                     ),
                   ],
                 ),
