@@ -1,28 +1,22 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/data/my_rides_details_model.dart';
 
+import '../../../data/my_rides_model.dart';
 import '../../../services/dio/api_service.dart';
 
 class MyRidesDetailsController extends GetxController {
-  // var myRidesModel = Get.find<MyRidesController>().myRidesModel.value;
   var myRideDetailsModel = MyRidesDetailsModel().obs;
-  String driverId = '';
-  String origin = '';
-
-  int index = 0;
+  final Rx<MyRidesModelData> myRidesModelData = MyRidesModelData().obs;
 
   @override
   void onInit() {
     super.onInit();
-    driverId = Get.arguments['driverId'];
-    index = Get.arguments['index'];
-    final origin = Get.arguments['origin'];
-    final destination = Get.arguments['destination'];
-
-    myRidesDetailsAPI(origin, destination);
+    myRidesModelData.value = Get.arguments;
+    myRidesDetailsAPI();
   }
 
   // @override
@@ -48,20 +42,13 @@ class MyRidesDetailsController extends GetxController {
   //     throw Exception(e);
   //   }
   // }
-  myRidesDetailsAPI(origin, destination) async {
-    log("ride id that is coming from my_rides_one_time: $driverId");
+  myRidesDetailsAPI() async {
     try {
-      final response = await APIManager.getMyRidesDetails(rideId: driverId);
+      final response = await APIManager.getMyRidesDetails(rideId: myRidesModelData.value.Id ?? "");
       var data = jsonDecode(response.toString());
-
       myRideDetailsModel.value = MyRidesDetailsModel.fromJson(data);
-      List<MyRidesDetailsModelData> mList = [];
-      mList.add(MyRidesDetailsModelData(
-          origin: MyRidesDetailsModelDataOrigin(name: origin),
-          destination: MyRidesDetailsModelDataDestination(name: destination)));
-      myRideDetailsModel.value.data = mList;
     } catch (e) {
-      throw Exception(e);
+      debugPrint(e.toString());
     }
   }
 }

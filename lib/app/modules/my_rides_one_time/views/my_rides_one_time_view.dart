@@ -97,14 +97,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                           onTap: controller.myRidesModel.value.data?[index]?.isCancelled == true
                                               ? () {}
                                               : () {
-                                                  controller.driverRideId.value = "${controller.myRidesModel.value.data?[index]?.Id}";
-
-                                                  Get.toNamed(Routes.MY_RIDES_DETAILS, arguments: {
-                                                    'driverId': controller.driverRideId.value,
-                                                    'index': index,
-                                                    'origin': controller.myRidesModel.value.data?[index]?.origin?.name,
-                                                    'destination': controller.myRidesModel.value.data?[index]?.destination?.name,
-                                                  });
+                                                  controller.viewDetails(controller.myRidesModel.value.data![index]!);
                                                 },
                                           child: Container(
                                             padding: EdgeInsets.all(16.kh),
@@ -357,7 +350,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                                     label: 'Start Ride'),
                                                                 GreenPoolButton(
                                                                   onPressed: () {
-                                                                    controller.cancelRideAPI(index);
+                                                                    controller.cancelRideAPI(controller.myRidesModel.value.data![index]!);
                                                                   },
                                                                   width: 144.kw,
                                                                   height: 40.kh,
@@ -375,7 +368,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                               alignment: Alignment.topRight,
                                                               child: GreenPoolButton(
                                                                 onPressed: () {
-                                                                  controller.cancelRideAPI(index);
+                                                                  controller.viewDetails(controller.myRidesModel.value.data![index]!);
                                                                 },
                                                                 width: 144.kw,
                                                                 height: 40.kh,
@@ -399,9 +392,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                   Get.toNamed(Routes.RIDER_CONFIRMED_RIDE_DETAILS);
                                                 }
                                               : () {
-                                                  controller.driverRideId.value = "${controller.myRidesModel.value.data?[index]?.Id}";
-                                                  print("driver id from my rides one time ${controller.driverRideId.value}");
-                                                  Get.toNamed(Routes.RIDER_MY_RIDE_REQUEST, arguments: controller.driverRideId.value);
+                                                  Get.toNamed(Routes.RIDER_MY_RIDE_REQUEST, arguments: controller.myRidesModel.value.data?[index]?.Id);
                                                 },
                                           child: Container(
                                             padding: EdgeInsets.all(16.kh),
@@ -614,7 +605,9 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                             height: 40.kh,
                                                             width: 144.kw,
                                                             padding: EdgeInsets.all(0.kh),
-                                                            onPressed: () {},
+                                                            onPressed: () {
+                                                              controller.viewDetails(controller.myRidesModel.value.data![index]!);
+                                                            },
                                                             label: 'View Details',
                                                             fontSize: 14.kh,
                                                             borderColor: Get.find<ProfileController>().isSwitched.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01,
@@ -624,7 +617,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                             height: 40.kh,
                                                             width: 144.kw,
                                                             padding: EdgeInsets.all(0.kh),
-                                                            onPressed: () {},
+                                                            onPressed: () => controller.cancelRideAPI(controller.myRidesModel.value.data![index]!),
                                                             isBorder: true,
                                                             label: 'Cancel Ride',
                                                             fontSize: 14.kh,
