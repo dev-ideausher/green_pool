@@ -91,7 +91,7 @@ class FindRideController extends GetxController {
           await APIManager.postMatchngRides(body: findRideDataJson);
       var data = jsonDecode(response.toString());
       matchingRideResponse.value = MatchingRidesModel.fromJson(data);
-      Get.toNamed(Routes.MATCHING_RIDES);
+      Get.toNamed(Routes.MATCHING_RIDES, arguments: findRideDataJson);
     } catch (error) {
       throw Exception(error);
     }
@@ -119,7 +119,6 @@ class FindRideController extends GetxController {
       final findRideDataJson = findRideData.toJson();
       final response =
           await APIManager.postRiderFindRide(body: findRideDataJson);
-
       var data = jsonDecode(response.toString());
       rideresponse.value = FindRideResponseModel.fromJson(data);
       final String riderRideId = "${rideresponse.value.data![0]?.Id}";

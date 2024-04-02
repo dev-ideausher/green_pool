@@ -116,7 +116,7 @@ class MatchingRidesView extends GetView<MatchingRidesController> {
                                   Get.toNamed(Routes.DRIVER_DETAILS,
                                       arguments: {
                                         'index': index,
-                                        'riderRideId': controller.riderRideId,
+                                        'rideDetails': controller.rideDetails,
                                         'driverRideId': controller.driverRideId,
                                         'distance': controller.minStopDistance,
                                       });

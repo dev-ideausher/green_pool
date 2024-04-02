@@ -140,7 +140,6 @@ class CreateAccountView extends GetView<CreateAccountController> {
               Obx(
                 () => GreenPoolButton(
                   onPressed: () async {
-                    // await controller.otpAuth();
                     await controller.checkValidation();
                   },
                   isActive: controller.isChecked.value,

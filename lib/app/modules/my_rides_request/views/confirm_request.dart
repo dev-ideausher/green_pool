@@ -27,7 +27,7 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
                     : ColorUtil.kPrimary01,
               ),
             )
-          : controller.confirmRequestModel.value.data!.isNotEmpty
+          : controller.confirmRequestModel.value.data!.isEmpty
               ? Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -229,8 +229,8 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
                                       label: 'Accept',
                                       onPressed: () async {
                                         try {
-                                          // await controller
-                                          //     .acceptRidersRequestAPI(index);
+                                          await controller
+                                              .acceptRidersRequestAPI(index);
                                           await Get.bottomSheet(
                                             Container(
                                                 padding: EdgeInsets.all(24.kh),
@@ -273,7 +273,7 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
                                                       ),
                                                       Center(
                                                         child: Text(
-                                                          "Booking Id: ${controller.acceptRiderRequestModel.value.data?.Id}",
+                                                          "Booking Id: ${controller.confirmRequestModel.value.data?[index]?.Id}",
                                                           textAlign:
                                                               TextAlign.center,
                                                           style: TextStyleUtil
@@ -478,8 +478,48 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
                                         } catch (e) {
                                           throw Exception(e);
                                         }
+                                      },
+                                    ),
+                                    GreenPoolButton(
+                                      onPressed: () async {
+                                        try {
+                                          await controller
+                                              .rejectRidersRequestAPI(index);
+                                        } catch (e) {
+                                          throw Exception(e);
+                                        }
+                                      },
+                                      width: 144.kw,
+                                      height: 40.kh,
+                                      padding: EdgeInsets.all(8.kh),
+                                      fontSize: 14.kh,
+                                      isBorder: true,
+                                      borderColor: Get.find<ProfileController>()
+                                              .isSwitched
+                                              .value
+                                          ? ColorUtil.kPrimary3PinkMode
+                                          : ColorUtil.kSecondary01,
+                                      labelColor: Get.find<ProfileController>()
+                                              .isSwitched
+                                              .value
+                                          ? ColorUtil.kPrimary3PinkMode
+                                          : ColorUtil.kSecondary01,
+                                      label: 'Reject',
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ).paddingOnly(bottom: 16.kh),
+                        );
+                      },
+                    ).paddingOnly(top: 32.kh, left: 16.kw, right: 16.kw),
+    );
+  }
+}
 
-                                        //?this bottomsheet is for map view
+
+//?this bottomsheet is for map view
                                         // await Get.bottomSheet(
                                         //   controller.acceptRiderRequestModel.value
                                         //               .status ==
@@ -843,35 +883,3 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
                                         //             ),
                                         //           )),
                                         // );
-                                      },
-                                    ),
-                                    GreenPoolButton(
-                                      onPressed: () {},
-                                      width: 144.kw,
-                                      height: 40.kh,
-                                      padding: EdgeInsets.all(8.kh),
-                                      fontSize: 14.kh,
-                                      isBorder: true,
-                                      borderColor: Get.find<ProfileController>()
-                                              .isSwitched
-                                              .value
-                                          ? ColorUtil.kPrimary3PinkMode
-                                          : ColorUtil.kSecondary01,
-                                      labelColor: Get.find<ProfileController>()
-                                              .isSwitched
-                                              .value
-                                          ? ColorUtil.kPrimary3PinkMode
-                                          : ColorUtil.kSecondary01,
-                                      label: 'Reject',
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ).paddingOnly(bottom: 16.kh),
-                        );
-                      },
-                    ).paddingOnly(top: 32.kh, left: 16.kw, right: 16.kw),
-    );
-  }
-}

@@ -26,7 +26,6 @@ class VerifyController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    // createAccData.phoneNumber = Get.arguments.phoneNumber;
     isDriver = Get.arguments['isDriver'];
     phoneNumber = Get.arguments['phoneNumber'];
   }
@@ -64,19 +63,19 @@ class VerifyController extends GetxController {
 
       //? here if the profileStatus is not true which means it is a new user or the user did not fill the entire user data, so the user will be automatically redirected to the Profile Setup
       if (userInfo.status!) {
-        if (Get.find<HomeController>().findingRide.value) {
+        if (isDriver == false) {
           if (userInfo.data!.profileStatus!) {
             // Get.offNamed(Routes.FIND_RIDE, arguments: isDriver);
             Get.back();
           } else {
-            Get.offNamed(Routes.RIDER_PROFILE_SETUP, arguments: isDriver);
+            Get.offNamed(Routes.RIDER_PROFILE_SETUP);
           }
         } else {
           if (userInfo.data!.profileStatus! && userInfo.data!.vehicleStatus!) {
             // Get.offNamed(Routes.CARPOOL_SCHEDULE, arguments: isDriver);
             Get.until((route) => Get.currentRoute == Routes.POST_RIDE);
           } else {
-            Get.offNamed(Routes.PROFILE_SETUP, arguments: isDriver);
+            Get.offNamed(Routes.PROFILE_SETUP);
           }
         }
         Get.find<GetStorageService>().setLoggedIn = true;
@@ -85,9 +84,9 @@ class VerifyController extends GetxController {
         Get.find<HomeController>().userInfoAPI();
       } else {
         if (isDriver) {
-          Get.offNamed(Routes.PROFILE_SETUP, arguments: isDriver);
+          Get.offNamed(Routes.PROFILE_SETUP);
         } else {
-          Get.offNamed(Routes.RIDER_PROFILE_SETUP, arguments: isDriver);
+          Get.offNamed(Routes.RIDER_PROFILE_SETUP);
         }
       }
     } catch (e) {

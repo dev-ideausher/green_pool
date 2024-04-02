@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:green_pool/app/modules/my_rides_one_time/controllers/my_rides_controller.dart';
+import 'package:green_pool/app/modules/my_rides_one_time/controllers/my_rides_one_time_controller.dart';
 import 'package:green_pool/app/modules/my_rides_one_time/views/my_rides_one_time_view.dart';
 import 'package:green_pool/app/modules/my_rides_recurring/views/my_rides_recurring_view.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
@@ -35,7 +35,7 @@ class MyRidesPageView extends GetView<MyRidesPageController> {
                             // await controller.allSendRequestAPI();
                           } else {
                             // await controller.allConfirmRequestAPI();
-                            Get.find<MyRidesOneTimeController>().myRidesApi();
+                            Get.find<MyRidesOneTimeController>().myRidesAPI();
                           }
                         },
                         indicatorSize: TabBarIndicatorSize.tab,

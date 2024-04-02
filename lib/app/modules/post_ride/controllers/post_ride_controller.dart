@@ -110,9 +110,9 @@ class PostRideController extends GetxController {
       if (Get.find<HomeController>().userInfo.value.data?.vehicleStatus ==
           false) {
         showMySnackbar(msg: 'Please fill in vehicle details');
-        Get.toNamed(Routes.PROFILE_SETUP, arguments: isDriver);
+        Get.toNamed(Routes.PROFILE_SETUP);
       } else {
-        Get.toNamed(Routes.CARPOOL_SCHEDULE, arguments: isDriver);
+        Get.toNamed(Routes.CARPOOL_SCHEDULE);
       }
     } else {
       Get.toNamed(Routes.CREATE_ACCOUNT, arguments: isDriver);

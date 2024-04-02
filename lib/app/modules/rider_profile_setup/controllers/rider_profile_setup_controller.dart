@@ -18,7 +18,6 @@ import 'package:dio/dio.dart' as dio;
 
 class RiderProfileSetupController extends GetxController {
   RxBool isPicked = false.obs;
-  bool isDriver = false;
   String name = '';
   Rx<File?> selectedProfileImagePath = Rx<File?>(null);
   Rx<File?> selectedIDImagePath = Rx<File?>(null);
@@ -37,11 +36,10 @@ class RiderProfileSetupController extends GetxController {
 
   GlobalKey<FormState> userFormKey = GlobalKey<FormState>();
 
-  @override
-  void onInit() {
-    super.onInit();
-    isDriver = Get.arguments;
-  }
+  // @override
+  // void onInit() {
+  //   super.onInit();
+  // }
 
   // @override
   // void onReady() {

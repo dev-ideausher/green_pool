@@ -2,17 +2,17 @@ import 'package:get/get.dart';
 import '../../find_ride/controllers/find_ride_controller.dart';
 
 class MatchingRidesController extends GetxController {
-  String riderRideId = '';
+  Map<String, dynamic>? rideDetails;
   String driverRideId = '';
   String minStopDistance = '';
   var matchingRideResponse =
       Get.find<FindRideController>().matchingRideResponse;
 
-  // @override
-  // void onInit() {
-    // super.onInit();
-    // riderRideId = Get.arguments;
-  // }
+  @override
+  void onInit() {
+    super.onInit();
+    rideDetails = Get.arguments;
+  }
 
   // @override
   // void onReady() {

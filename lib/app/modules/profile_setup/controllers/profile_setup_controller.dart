@@ -19,7 +19,6 @@ import '../../../services/dio/api_service.dart';
 class ProfileSetupController extends GetxController
     with GetSingleTickerProviderStateMixin {
   final pageIndex = 0.obs;
-  bool isDriver = false;
   String name = '';
   Rx<File?> selectedProfileImagePath = Rx<File?>(null);
   Rx<File?> selectedIDImagePath = Rx<File?>(null);
@@ -56,7 +55,6 @@ class ProfileSetupController extends GetxController
   void onInit() {
     super.onInit();
     Get.lazyPut(() => PostRideController());
-    isDriver = Get.arguments;
     tabBarController = TabController(length: 2, vsync: this);
   }
 

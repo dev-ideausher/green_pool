@@ -222,7 +222,6 @@ class SendRequest extends GetView<MyRidesRequestController> {
                                 height: 1.kh,
                                 color: ColorUtil.kBlack07,
                               ).paddingOnly(bottom: 16.kh),
-
                               //
 
                               //

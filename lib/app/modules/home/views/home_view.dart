@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
 import 'package:green_pool/app/modules/home/views/welcome_tile.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
@@ -52,7 +51,9 @@ class HomeView extends GetView<HomeController> {
                     children: [
                       Positioned(
                           right: 0,
-                          left: Get.find<ProfileController>().isSwitched.value ? 0 : null,
+                          left: Get.find<ProfileController>().isSwitched.value
+                              ? 0
+                              : null,
                           bottom: 0,
                           child: Get.find<ProfileController>().isSwitched.value
                               ? SvgPicture.asset(
@@ -88,7 +89,6 @@ class HomeView extends GetView<HomeController> {
               onTap: () {
                 Get.toNamed(Routes.FIND_RIDE, arguments: false);
                 controller.findingRide.value = true;
-                print(Get.find<GetStorageService>().encjwToken);
               },
               child: Container(
                 width: 100.w,
@@ -112,7 +112,9 @@ class HomeView extends GetView<HomeController> {
                     Obx(
                       () => Positioned(
                           right: 0.kw,
-                          left: Get.find<ProfileController>().isSwitched.value ? 0 : null,
+                          left: Get.find<ProfileController>().isSwitched.value
+                              ? 0
+                              : null,
                           bottom: 0.kh,
                           child: Get.find<ProfileController>().isSwitched.value
                               ? SvgPicture.asset(

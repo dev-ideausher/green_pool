@@ -92,57 +92,51 @@ class CreateAccountController extends GetxController {
   }
 
   String? passwordValidator(String? value) {
-  // Check if the value is empty
-  if (value == null || value.isEmpty) {
-    return 'Please enter your password';
-  }
+    // Check if the value is empty
+    if (value == null || value.isEmpty) {
+      return 'Please enter your password';
+    }
 
-  // Check if the password meets the criteria (e.g., length, complexity)
-  // For example, let's enforce a minimum length of 8 characters and at least one uppercase letter, one lowercase letter, one digit, and one special character.
-  final RegExp upperCaseRegExp = RegExp(r'[A-Z]');
-  final RegExp lowerCaseRegExp = RegExp(r'[a-z]');
-  final RegExp digitRegExp = RegExp(r'[0-9]');
-  final RegExp specialCharacterRegExp = RegExp(r'[!@#\$%^&*(),.?":{}|<>]');
+    // Check if the password meets the criteria (e.g., length, complexity)
+    // For example, let's enforce a minimum length of 8 characters and at least one uppercase letter, one lowercase letter, one digit, and one special character.
+    final RegExp upperCaseRegExp = RegExp(r'[A-Z]');
+    final RegExp lowerCaseRegExp = RegExp(r'[a-z]');
+    final RegExp digitRegExp = RegExp(r'[0-9]');
+    final RegExp specialCharacterRegExp = RegExp(r'[!@#\$%^&*(),.?":{}|<>]');
 
-  if (value.length < 8) {
-    return 'Password must be at least 8 characters long';
-  }
+    if (value.length < 8) {
+      return 'Password must be at least 8 characters long';
+    }
 
-  if (!upperCaseRegExp.hasMatch(value)) {
-    return 'Password must contain at least one uppercase letter';
-  }
+    if (!upperCaseRegExp.hasMatch(value)) {
+      return 'Password must contain at least one uppercase letter';
+    }
 
-  if (!lowerCaseRegExp.hasMatch(value)) {
-    return 'Password must contain at least one lowercase letter';
-  }
+    if (!lowerCaseRegExp.hasMatch(value)) {
+      return 'Password must contain at least one lowercase letter';
+    }
 
-  if (!digitRegExp.hasMatch(value)) {
-    return 'Password must contain at least one digit';
-  }
+    if (!digitRegExp.hasMatch(value)) {
+      return 'Password must contain at least one digit';
+    }
 
-  if (!specialCharacterRegExp.hasMatch(value)) {
-    return 'Password must contain at least one special character';
+    if (!specialCharacterRegExp.hasMatch(value)) {
+      return 'Password must contain at least one special character';
+    }
+    return null; // Return null if the value is valid
   }
-  return null; // Return null if the value is valid
-}
 
   otpAuth() async {
     try {
-      print("phone number: ${phoneNumberController.text}");
       if (isChecked.value == true) {
         await Get.find<AuthService>()
             .mobileOtp(phoneno: countryCode + phoneNumberController.text);
 
-        await Get.offNamed(Routes.VERIFY,
-            // arguments: CreateAccData(
-            //     fullName: fullNameController.text,
-            //     isDriver: isDriver,
-            //     phoneNumber: phoneNumberController.text),
-            arguments: {
-              'isDriver': isDriver,
-              'fullName': fullNameController.value.text,
-              'phoneNumber': phoneNumberController.value.text
-            });
+        await Get.offNamed(Routes.VERIFY, arguments: {
+          'isDriver': isDriver,
+          'fullName': fullNameController.value.text,
+          'phoneNumber': phoneNumberController.value.text
+        });
       } else {
         showMySnackbar(msg: 'Terms and Conditions not accepted');
       }

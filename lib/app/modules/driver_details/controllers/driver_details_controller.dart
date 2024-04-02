@@ -13,7 +13,7 @@ class DriverDetailsController extends GetxController {
   var matchingRidesmodel =
       Get.find<FindRideController>().matchingRideResponse.value;
   int matchingRideIndex = 0;
-  String riderRideId = '';
+  Map<String, dynamic>? rideDetails;
   String driverRideId = '';
   String minStopDistance = '';
   var requestRideModel = RequestRideByRiderModel().obs;
@@ -22,7 +22,7 @@ class DriverDetailsController extends GetxController {
   void onInit() {
     super.onInit();
     matchingRideIndex = Get.arguments['index'];
-    riderRideId = Get.arguments['riderRideId'];
+    rideDetails = Get.arguments['rideDetails'];
     driverRideId = Get.arguments['driverRideId'];
     minStopDistance = Get.arguments['distance'];
   }
@@ -38,16 +38,17 @@ class DriverDetailsController extends GetxController {
   // }
 
   confirmRideAPI() async {
-    final Map<String, String> rideData = {
-      "riderRideId": riderRideId,
+    final Map<String, dynamic> rideData = {
+      "ridesDetails": rideDetails,
       "driverRideId": driverRideId,
       "distance": minStopDistance,
     };
     try {
       final response = await APIManager.postConfirmRide(body: rideData);
       var data = jsonDecode(response.toString());
+      log(data.toString());
       requestRideModel.value = RequestRideByRiderModel.fromJson(data);
-      log("ride $riderRideId");
+      log("ride $rideDetails");
       log("driver $driverRideId");
       Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
 

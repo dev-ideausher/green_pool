@@ -31,46 +31,6 @@ class MyRidesRequestController extends GetxController {
     mapViewType.value = !mapViewType.value;
   }
 
-  allSendRequestAPI() async {
-    try {
-      final sendReqResponse =
-          await APIManager.getAllDriverSendRequest(driverId: driverRideId);
-      var data = jsonDecode(sendReqResponse.toString());
-      sendRequestModel.value = DriverSendRequestModel.fromJson(data);
-      //!
-      //TODO index instead of 0
-      // riderRideId = "${sendRequestModel.value.data?[0]?.Id}";
-      // distance = sendRequestModel.value.data?[0]?.minStopDistance;
-      //for distance
-      //check which is smaller
-      //distanceFromOrigin or minStopDistance
-    } catch (e) {
-      throw Exception(e);
-    }
-  }
-
-  sendRiderRequestAPI(int index) async {
-    final String riderRideId = "${sendRequestModel.value.data?[index]?.Id}";
-    final int? distance = sendRequestModel.value.data?[index]?.minStopDistance;
-
-    final Map<String, dynamic> rideData = {
-      "riderRideId": riderRideId,
-      "driverRideId": driverRideId,
-      "distance": distance,
-    };
-
-    try {
-      // driver will send request to the customer (from send request view)
-      final sendRiderRequestResponse =
-          await APIManager.postDriverSendRiderRequest(body: rideData);
-      var data = jsonDecode(sendRiderRequestResponse.toString());
-      sendRiderRequestModel.value = SendRiderRequestModel.fromJson(data);
-      showMySnackbar(msg: 'Request sent successfully');
-    } catch (e) {
-      throw Exception(e);
-    }
-  }
-
   allConfirmRequestAPI() async {
     // this api will show all the confirmed rides (which the customer has confrimed that they will go with the particular driver)
     try {
@@ -79,10 +39,6 @@ class MyRidesRequestController extends GetxController {
           driverRideId: driverRideId);
       var data = jsonDecode(confirmReqResponse.toString());
       confirmRequestModel.value = DriverCofirmRequestModel.fromJson(data);
-      //!
-      //TODO index instead of 0
-      // ridePostId = "${confirmRequestModel.value.data?[0]?.Id}";
-      // print(ridePostId);
     } catch (e) {
       throw Exception(e);
     }
@@ -90,22 +46,58 @@ class MyRidesRequestController extends GetxController {
 
   acceptRidersRequestAPI(int index) async {
     // to accept the ride requests that have been sent by the customer
-
     final String ridePostId = "${confirmRequestModel.value.data?[index]?.Id}";
 
-    final Map<String, dynamic> rideData = {
-      "ridePostId": ridePostId,
-      "status": {
-        'confirmByDriver': true,
-      },
-    };
+    final Map<String, dynamic> rideData = {"ridePostId": ridePostId};
 
     try {
       final acceptRiderResponse =
           await APIManager.postAcceptRiderRequest(body: rideData);
       var data = jsonDecode(acceptRiderResponse.toString());
-      log(data);
       acceptRiderRequestModel.value = AcceptRiderRequestModel.fromJson(data);
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  rejectRidersRequestAPI(int index) async {
+    final String ridePostId = "${confirmRequestModel.value.data?[index]?.Id}";
+
+    final Map<String, dynamic> rideData = {"ridePostId": ridePostId};
+
+    try {
+      final rejectRiderResponse =
+          await APIManager.postRejectRiderRequest(body: rideData);
+      var data = jsonDecode(rejectRiderResponse.toString());
+      showMySnackbar(msg: 'Request rejected successfully!');
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  allSendRequestAPI() async {
+    try {
+      final sendReqResponse =
+          await APIManager.getAllDriverSendRequest(driverId: driverRideId);
+      var data = jsonDecode(sendReqResponse.toString());
+      sendRequestModel.value = DriverSendRequestModel.fromJson(data);
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  sendRiderRequestAPI(int index) async {
+    final String riderRideId = "${sendRequestModel.value.data?[index]?.Id}";
+
+    final Map<String, dynamic> rideData = {"ridePostId": riderRideId};
+
+    try {
+      // driver will send request to the customer (from send request view)
+      final sendRiderRequestResponse =
+          await APIManager.postDriverSendRiderRequest(body: rideData);
+      var data = jsonDecode(sendRiderRequestResponse.toString());
+      sendRiderRequestModel.value = SendRiderRequestModel.fromJson(data);
+      showMySnackbar(msg: 'Request sent successfully');
     } catch (e) {
       throw Exception(e);
     }
