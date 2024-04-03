@@ -590,7 +590,7 @@ class MyRidesModelDataOrigin {
 
   String? name;
   String? type;
-  List<double?>? coordinates;
+  List<double>? coordinates;
 
   MyRidesModelDataOrigin({
     this.name,

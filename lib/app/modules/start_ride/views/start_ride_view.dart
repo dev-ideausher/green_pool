@@ -20,7 +20,7 @@ class StartRideView extends GetView<StartRideController> {
       bottomSheet: Container(
         height: 230.kh,
         padding: EdgeInsets.symmetric(horizontal: 16.kw),
-        decoration: BoxDecoration(color: ColorUtil.kWhiteColor),
+        decoration: const BoxDecoration(color: ColorUtil.kWhiteColor),
         child: Column(
           children: [
             Row(
@@ -53,8 +53,8 @@ class StartRideView extends GetView<StartRideController> {
                 ),
               ],
             ),
-            GreenPoolDivider().paddingOnly(top: 8.kh, bottom: 16.kh),
-            OriginToDestination(origin: "Origin", destination: "Destination"),
+            const GreenPoolDivider().paddingOnly(top: 8.kh, bottom: 16.kh),
+            const OriginToDestination(origin: "Origin", destination: "Destination"),
             GreenPoolButton(
               onPressed: () {},
               label: "Start Ride",

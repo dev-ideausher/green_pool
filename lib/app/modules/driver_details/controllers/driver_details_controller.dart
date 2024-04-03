@@ -39,7 +39,7 @@ class DriverDetailsController extends GetxController {
 
   confirmRideAPI() async {
     final Map<String, dynamic> rideData = {
-      "ridesDetails": rideDetails,
+      "ridesDetails": rideDetails!["ridesDetails"],
       "driverRideId": driverRideId,
       "distance": minStopDistance,
     };
