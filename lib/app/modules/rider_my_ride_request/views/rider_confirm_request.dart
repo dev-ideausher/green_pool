@@ -280,7 +280,7 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                   label: 'Accept',
                                   onPressed: () async {
                                     await controller
-                                        .confirmRideByRiderAPI(index);
+                                        .acceptDriversRequestAPI(index);
                                     await Get.bottomSheet(
                                       Container(
                                           padding: EdgeInsets.all(24.kh),
@@ -691,7 +691,9 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                   },
                                 ),
                                 GreenPoolButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    controller.rejectDriversRequestAPI(index);
+                                  },
                                   width: 144.kw,
                                   height: 40.kh,
                                   padding: EdgeInsets.all(8.kh),

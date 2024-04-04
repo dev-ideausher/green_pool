@@ -61,30 +61,36 @@ class OriginView extends GetView<OriginController> {
             ),
             Expanded(
               child: Obx(
-                () => ListView.builder(
-                    itemCount: controller.addressSugestionList.length,
-                    itemBuilder: (context, index) {
-                      return Container(
-                        decoration: BoxDecoration(
-                            border: Border(
-                                bottom: BorderSide(
-                                    width: 1.kh, color: ColorUtil.kNeutral7)),
-                            borderRadius: BorderRadius.circular(8.kh)),
-                        child: ListTile(
-                          title: Text(controller.addressSugestionList[index]
-                              ['description']),
-                          onTap: () async {
-                            await controller.getLatLong(controller
-                                .addressSugestionList[index]['place_id']);
-
-                            await controller.setLocationData(controller
-                                .addressSugestionList[index]['place_id']);
-
-                            Get.back();
-                          },
+                () => controller.isLoading.value
+                    ? Center(
+                        child: CircularProgressIndicator(
+                          color: Get.find<ProfileController>().isSwitched.value
+                              ? ColorUtil.kPrimary3PinkMode
+                              : ColorUtil.kPrimary01,
                         ),
-                      );
-                    }),
+                      )
+                    : ListView.builder(
+                        itemCount: controller.addressSugestionList.length,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            decoration: BoxDecoration(
+                                border: Border(
+                                    bottom: BorderSide(
+                                        width: 1.kh,
+                                        color: ColorUtil.kNeutral7)),
+                                borderRadius: BorderRadius.circular(8.kh)),
+                            child: ListTile(
+                              title: Text(controller.addressSugestionList[index]
+                                  ['description']),
+                              onTap: () async {
+                                await controller.setLocationData(controller
+                                    .addressSugestionList[index]['place_id']);
+
+                                Get.back();
+                              },
+                            ),
+                          );
+                        }),
               ),
             ),
           ],

@@ -3,6 +3,8 @@ import 'dart:developer';
 
 import 'package:get/get.dart';
 import 'package:green_pool/app/data/rider_confirm_request_model.dart';
+import 'package:green_pool/app/routes/app_pages.dart';
+import 'package:green_pool/app/services/snackbar.dart';
 import '../../../data/confirm_ride_by_rider_model.dart';
 import '../../../data/rider_send_request_model.dart';
 import '../../../services/dio/api_service.dart';
@@ -49,7 +51,6 @@ class RiderMyRideRequestController extends GetxController {
   }
 
   allRiderSendRequestAPI() async {
-    //TODO: matching rides
     // to view list of drivers available on same route in SendRequest View (riders side)
     try {
       final response =
@@ -62,62 +63,72 @@ class RiderMyRideRequestController extends GetxController {
     }
   }
 
-  sendRideByRiderAPI(int index) async {
+  sendRideRequestToDriverAPI(int index) async {
     //rider will send request to matching drivers going on the same path (in rider send request section)
     // and
     //rider can accept the request sent by driver (in rider confirm request section)
 
     final String driverRideId =
         "${riderSendRequestModel.value.data?[index]?.Id}";
-    final int? minStopDistance =
-        riderSendRequestModel.value.data?[index]?.minStopDistance;
+    final String driverId =
+        "${riderSendRequestModel.value.data?[index]?.driverId}";
 
     final Map<String, dynamic> rideData = {
       "riderRideId":
           rideIdFromMyRides, //! rideId is  riders ride Id in this case
       "driverRideId": driverRideId,
-      "distance":
-          minStopDistance, //! lowest among minStop dist and distFrom origin
+      "driverId": driverId
     };
     try {
-      final response = await APIManager.postConfirmRide(body: rideData);
-      var data = jsonDecode(response.toString());
-      confirmRideByRiderModel.value = ConfirmRideByRiderModel.fromJson(data);
-      log("driverRideId $driverRideId");
-      log("riderRideid $rideIdFromMyRides");
-      log("minStopDist $minStopDistance");
-
+      final response = await APIManager.postSendRequestToDriver(body: rideData);
+      // var data = jsonDecode(response.toString());
+      // confirmRideByRiderModel.value = ConfirmRideByRiderModel.fromJson(data);
       // log("This is driver ride Id: ${matchingRideResponse.value.data?[0]?.Id}");
     } catch (e) {
       throw Exception(e);
     }
   }
 
-  confirmRideByRiderAPI(int index) async {
+  acceptDriversRequestAPI(int index) async {
     //rider will send request to matching drivers going on the same path (in rider send request section)
     // and
     //rider can accept the request sent by driver (in rider confirm request section)
 
     final String riderRideId =
-        "${riderConfirmRequestModel.value.data?[index]?.riderRideId}";
-    final String driverId =
-        "${riderConfirmRequestModel.value.data?[index]?.driverRideId}";
-    final String? minStopDistance =
-        riderConfirmRequestModel.value.data?[index]?.distance;
+        "${riderConfirmRequestModel.value.data?[index]?.Id}";
 
     final Map<String, dynamic> rideData = {
-      "riderRideId": riderRideId,
-      "driverRideId": driverId,
-      "distance": int.parse(minStopDistance!),
+      "ridePostId": riderRideId,
     };
     try {
-      final response = await APIManager.postConfirmRide(body: rideData);
+      final response = await APIManager.acceptDriversRequest(body: rideData);
       var data = jsonDecode(response.toString());
-      confirmRideByRiderModel.value = ConfirmRideByRiderModel.fromJson(data);
-      log("driverRideId $driverId");
-      log("riderRideid $riderRideId");
-      log("minStopDist $minStopDistance");
+      log(data.toString());
+      // confirmRideByRiderModel.value = ConfirmRideByRiderModel.fromJson(data);
+      // log("This is driver ride Id: ${matchingRideResponse.value.data?[0]?.Id}");
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
 
+  rejectDriversRequestAPI(int index) async {
+    //rider will send request to matching drivers going on the same path (in rider send request section)
+    // and
+    //rider can accept the request sent by driver (in rider confirm request section)
+
+    final String riderRideId =
+        "${riderConfirmRequestModel.value.data?[index]?.Id}";
+
+    final Map<String, dynamic> rideData = {
+      "ridePostId": riderRideId,
+    };
+    try {
+      final response = await APIManager.rejectDriversRequest(body: rideData);
+      showMySnackbar(msg: "Ride rejected successfully");
+      Get.back();
+      var data = jsonDecode(response.toString());
+      log(data.toString());
+      // confirmRideByRiderModel.value = ConfirmRideByRiderModel.fromJson(data);
       // log("This is driver ride Id: ${matchingRideResponse.value.data?[0]?.Id}");
     } catch (e) {
       throw Exception(e);

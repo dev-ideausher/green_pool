@@ -324,38 +324,35 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                   height: 1.kh,
                                                   color: ColorUtil.kBlack07,
                                                 ).paddingOnly(bottom: 16.kh),
-                                                Obx(() => controller
-                                                                .myRidesModelData[
-                                                                    index]
-                                                                ?.isCancelled ==
-                                                            true
-                                                        ? Text(
-                                                            "Ride is cancelled",
-                                                            style: TextStyleUtil
-                                                                .k16Bold(
-                                                                    color: ColorUtil
-                                                                        .kError2),
-                                                          )
-                                                        :
-                                                        // isToday(controller
-                                                        //             .myRidesModelData[
-                                                        //                 index]
-                                                        //             ?.date ??
-                                                        //         "")
-                                                        //     ?
-                                                        Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceBetween,
-                                                            children: [
-                                                              GreenPoolButton(
+                                                Obx(
+                                                  () => controller
+                                                              .myRidesModelData[
+                                                                  index]
+                                                              ?.isCancelled ==
+                                                          true
+                                                      ? Text(
+                                                          "Ride is cancelled",
+                                                          style: TextStyleUtil
+                                                              .k16Bold(
+                                                                  color: ColorUtil
+                                                                      .kError2),
+                                                        )
+                                                      : controller
+                                                                  .myRidesModelData[
+                                                                      index]
+                                                                  ?.date ==
+                                                              ""
+                                                          ? Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceBetween,
+                                                              children: [
+                                                                GreenPoolButton(
                                                                   onPressed:
                                                                       () {
-                                                                    Get.toNamed(
-                                                                        Routes
-                                                                            .START_RIDE,
-                                                                        arguments:
-                                                                            controller.myRidesModelData[index]);
+                                                                    controller.viewDetails(
+                                                                        controller
+                                                                            .myRidesModelData[index]!);
                                                                   },
                                                                   width: 144.kw,
                                                                   height: 40.kh,
@@ -365,122 +362,201 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                                               .kh),
                                                                   fontSize:
                                                                       14.kh,
+                                                                  borderColor: Get.find<
+                                                                              ProfileController>()
+                                                                          .isSwitched
+                                                                          .value
+                                                                      ? ColorUtil
+                                                                          .kPrimary3PinkMode
+                                                                      : ColorUtil
+                                                                          .kSecondary01,
+                                                                  labelColor: Get.find<
+                                                                              ProfileController>()
+                                                                          .isSwitched
+                                                                          .value
+                                                                      ? ColorUtil
+                                                                          .kPrimary3PinkMode
+                                                                      : ColorUtil
+                                                                          .kSecondary01,
                                                                   label:
-                                                                      'Start Ride'),
-                                                              GreenPoolButton(
-                                                                onPressed: () {
-                                                                  controller.cancelRideAPI(
-                                                                      controller
-                                                                              .myRidesModelData[
-                                                                          index]!);
-                                                                },
-                                                                width: 144.kw,
-                                                                height: 40.kh,
-                                                                padding:
-                                                                    EdgeInsets
-                                                                        .all(8
-                                                                            .kh),
-                                                                fontSize: 14.kh,
-                                                                isBorder: true,
-                                                                borderColor: Get.find<
-                                                                            ProfileController>()
-                                                                        .isSwitched
-                                                                        .value
-                                                                    ? ColorUtil
-                                                                        .kPrimary3PinkMode
-                                                                    : ColorUtil
-                                                                        .kSecondary01,
-                                                                labelColor: Get.find<
-                                                                            ProfileController>()
-                                                                        .isSwitched
-                                                                        .value
-                                                                    ? ColorUtil
-                                                                        .kPrimary3PinkMode
-                                                                    : ColorUtil
-                                                                        .kSecondary01,
-                                                                label:
-                                                                    'Cancel Ride',
-                                                              ),
-                                                            ],
-                                                          )
-                                                    // : Row(
-                                                    //     mainAxisAlignment:
-                                                    //         MainAxisAlignment
-                                                    //             .spaceBetween,
-                                                    //     children: [
-                                                    //       GreenPoolButton(
-                                                    //         onPressed:
-                                                    //             () {
-                                                    //           controller.viewDetails(
-                                                    //               controller
-                                                    //                   .myRidesModelData[index]!);
-                                                    //         },
-                                                    //         width: 144.kw,
-                                                    //         height: 40.kh,
-                                                    //         padding:
-                                                    //             EdgeInsets
-                                                    //                 .all(8
-                                                    //                     .kh),
-                                                    //         fontSize:
-                                                    //             14.kh,
-                                                    //         borderColor: Get.find<
-                                                    //                     ProfileController>()
-                                                    //                 .isSwitched
-                                                    //                 .value
-                                                    //             ? ColorUtil
-                                                    //                 .kPrimary3PinkMode
-                                                    //             : ColorUtil
-                                                    //                 .kSecondary01,
-                                                    //         labelColor: Get.find<
-                                                    //                     ProfileController>()
-                                                    //                 .isSwitched
-                                                    //                 .value
-                                                    //             ? ColorUtil
-                                                    //                 .kPrimary3PinkMode
-                                                    //             : ColorUtil
-                                                    //                 .kSecondary01,
-                                                    //         label:
-                                                    //             "View details",
-                                                    //       ),
-                                                    //       GreenPoolButton(
-                                                    //         onPressed:
-                                                    //             () {
-                                                    //           controller.cancelRideAPI(
-                                                    //               controller
-                                                    //                   .myRidesModelData[index]!);
-                                                    //         },
-                                                    //         width: 144.kw,
-                                                    //         height: 40.kh,
-                                                    //         padding:
-                                                    //             EdgeInsets
-                                                    //                 .all(8
-                                                    //                     .kh),
-                                                    //         fontSize:
-                                                    //             14.kh,
-                                                    //         isBorder:
-                                                    //             true,
-                                                    //         borderColor: Get.find<
-                                                    //                     ProfileController>()
-                                                    //                 .isSwitched
-                                                    //                 .value
-                                                    //             ? ColorUtil
-                                                    //                 .kPrimary3PinkMode
-                                                    //             : ColorUtil
-                                                    //                 .kSecondary01,
-                                                    //         labelColor: Get.find<
-                                                    //                     ProfileController>()
-                                                    //                 .isSwitched
-                                                    //                 .value
-                                                    //             ? ColorUtil
-                                                    //                 .kPrimary3PinkMode
-                                                    //             : ColorUtil
-                                                    //                 .kSecondary01,
-                                                    //         label:
-                                                    //             'Cancel Ride',
-                                                    //       ),
-                                                    //     ],
-                                                    //   ),
-                                                    ),
+                                                                      "View details",
+                                                                ),
+                                                                GreenPoolButton(
+                                                                  onPressed:
+                                                                      () {
+                                                                    controller.cancelRideAPI(
+                                                                        controller
+                                                                            .myRidesModelData[index]!);
+                                                                  },
+                                                                  width: 144.kw,
+                                                                  height: 40.kh,
+                                                                  padding:
+                                                                      EdgeInsets
+                                                                          .all(8
+                                                                              .kh),
+                                                                  fontSize:
+                                                                      14.kh,
+                                                                  isBorder:
+                                                                      true,
+                                                                  borderColor: Get.find<
+                                                                              ProfileController>()
+                                                                          .isSwitched
+                                                                          .value
+                                                                      ? ColorUtil
+                                                                          .kPrimary3PinkMode
+                                                                      : ColorUtil
+                                                                          .kSecondary01,
+                                                                  labelColor: Get.find<
+                                                                              ProfileController>()
+                                                                          .isSwitched
+                                                                          .value
+                                                                      ? ColorUtil
+                                                                          .kPrimary3PinkMode
+                                                                      : ColorUtil
+                                                                          .kSecondary01,
+                                                                  label:
+                                                                      'Cancel Ride',
+                                                                ),
+                                                              ],
+                                                            )
+                                                          : isToday(controller
+                                                                      .myRidesModelData[
+                                                                          index]
+                                                                      ?.date ??
+                                                                  "")
+                                                              ? Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .spaceBetween,
+                                                                  children: [
+                                                                    GreenPoolButton(
+                                                                        onPressed:
+                                                                            () {
+                                                                          Get.toNamed(
+                                                                              Routes.START_RIDE,
+                                                                              arguments: controller.myRidesModelData[index]);
+                                                                        },
+                                                                        width: 144
+                                                                            .kw,
+                                                                        height: 40
+                                                                            .kh,
+                                                                        padding:
+                                                                            EdgeInsets.all(8
+                                                                                .kh),
+                                                                        fontSize: 14
+                                                                            .kh,
+                                                                        label:
+                                                                            'Start Ride'),
+                                                                    GreenPoolButton(
+                                                                      onPressed:
+                                                                          () {
+                                                                        controller
+                                                                            .cancelRideAPI(controller.myRidesModelData[index]!);
+                                                                      },
+                                                                      width: 144
+                                                                          .kw,
+                                                                      height:
+                                                                          40.kh,
+                                                                      padding: EdgeInsets
+                                                                          .all(8
+                                                                              .kh),
+                                                                      fontSize:
+                                                                          14.kh,
+                                                                      isBorder:
+                                                                          true,
+                                                                      borderColor: Get.find<ProfileController>()
+                                                                              .isSwitched
+                                                                              .value
+                                                                          ? ColorUtil
+                                                                              .kPrimary3PinkMode
+                                                                          : ColorUtil
+                                                                              .kSecondary01,
+                                                                      labelColor: Get.find<ProfileController>()
+                                                                              .isSwitched
+                                                                              .value
+                                                                          ? ColorUtil
+                                                                              .kPrimary3PinkMode
+                                                                          : ColorUtil
+                                                                              .kSecondary01,
+                                                                      label:
+                                                                          'Cancel Ride',
+                                                                    ),
+                                                                  ],
+                                                                )
+                                                              : Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .spaceBetween,
+                                                                  children: [
+                                                                    GreenPoolButton(
+                                                                      onPressed:
+                                                                          () {
+                                                                        controller
+                                                                            .viewDetails(controller.myRidesModelData[index]!);
+                                                                      },
+                                                                      width: 144
+                                                                          .kw,
+                                                                      height:
+                                                                          40.kh,
+                                                                      padding: EdgeInsets
+                                                                          .all(8
+                                                                              .kh),
+                                                                      fontSize:
+                                                                          14.kh,
+                                                                      borderColor: Get.find<ProfileController>()
+                                                                              .isSwitched
+                                                                              .value
+                                                                          ? ColorUtil
+                                                                              .kPrimary3PinkMode
+                                                                          : ColorUtil
+                                                                              .kSecondary01,
+                                                                      labelColor: Get.find<ProfileController>()
+                                                                              .isSwitched
+                                                                              .value
+                                                                          ? ColorUtil
+                                                                              .kPrimary3PinkMode
+                                                                          : ColorUtil
+                                                                              .kSecondary01,
+                                                                      label:
+                                                                          "View details",
+                                                                    ),
+                                                                    GreenPoolButton(
+                                                                      onPressed:
+                                                                          () {
+                                                                        controller
+                                                                            .cancelRideAPI(controller.myRidesModelData[index]!);
+                                                                      },
+                                                                      width: 144
+                                                                          .kw,
+                                                                      height:
+                                                                          40.kh,
+                                                                      padding: EdgeInsets
+                                                                          .all(8
+                                                                              .kh),
+                                                                      fontSize:
+                                                                          14.kh,
+                                                                      isBorder:
+                                                                          true,
+                                                                      borderColor: Get.find<ProfileController>()
+                                                                              .isSwitched
+                                                                              .value
+                                                                          ? ColorUtil
+                                                                              .kPrimary3PinkMode
+                                                                          : ColorUtil
+                                                                              .kSecondary01,
+                                                                      labelColor: Get.find<ProfileController>()
+                                                                              .isSwitched
+                                                                              .value
+                                                                          ? ColorUtil
+                                                                              .kPrimary3PinkMode
+                                                                          : ColorUtil
+                                                                              .kSecondary01,
+                                                                      label:
+                                                                          'Cancel Ride',
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                ),
                                               ],
                                             ),
                                           ).paddingOnly(bottom: 16.kh),

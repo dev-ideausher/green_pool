@@ -309,7 +309,8 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                   fontSize: 14.kh,
                                   label: 'Request',
                                   onPressed: () async {
-                                    await controller.sendRideByRiderAPI(index);
+                                    await controller
+                                        .sendRideRequestToDriverAPI(index);
                                     await Get.bottomSheet(
                                       Container(
                                           padding: EdgeInsets.all(24.kh),

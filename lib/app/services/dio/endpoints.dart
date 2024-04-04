@@ -24,8 +24,9 @@ class Endpoints {
   static const String driverPostRide = "driver/ride";
   static const String riderFindRide = "rider/ride";
   static const String riderRideRequest = "rider/confirmRide";
-  static const String driverRideRequest =
-      "driver/confirmRide"; //driver will send request to rider (from send request view)
+  static const String sendRequestToRider =
+      "driver/sendRequestToRider"; // to send request to riders from Send Requests view
+  static const String sendRequestToDriver = "rider/sendReuestToDriver";
 
   //get url
   static const String userLogin = "auth/login";
@@ -44,9 +45,11 @@ class Endpoints {
       "driver/confirmRide"; // to accept the riders request from Confirm Request View
   static const String rejectRidersRequest =
       "driver/cancelRide"; // to reject the riders request from Confirm Request View
-  static const String acceptDriversRequest =
-      "rider/requestSendByDriver/"; // to accept the drivers request from Confirm Request View (my rides me find a ride waale container pe tap karke jo confirm req wala view aayega)
+  static const String viewDriversRequest =
+      "rider/requestSendByDriver/"; // to view the drivers request from Confirm Request View
 
   //patch url
   static const String userDetails = "user/updateProfileDetails";
+  static const String acceptDriversRequest = "rider/acceptConfirmRide";
+  static const String rejectDriversRequest = "rider/rejectConfirmRide";
 }

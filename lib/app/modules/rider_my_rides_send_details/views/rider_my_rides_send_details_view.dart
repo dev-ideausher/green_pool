@@ -463,7 +463,7 @@ class RiderMyRidesSendDetailsView
                   onPressed: () async {
                     try {
                       await Get.find<RiderMyRideRequestController>()
-                          .sendRideByRiderAPI(controller.index);
+                          .sendRideRequestToDriverAPI(controller.index);
                       showMySnackbar(msg: "Request sent successfully!");
                       Get.until((route) =>
                           Get.currentRoute == Routes.BOTTOM_NAVIGATION);

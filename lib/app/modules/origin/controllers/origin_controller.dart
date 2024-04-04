@@ -27,7 +27,7 @@ class OriginController extends GetxController {
   String? _sessionToken;
   RxList<dynamic> addressSugestionList = [].obs;
   final debouncer = Debouncer(delay: const Duration(seconds: 1));
-
+  RxBool isLoading = false.obs;
   RxBool isOrigin = false.obs;
   LocationValues locationValues = LocationValues.origin;
 
@@ -60,6 +60,7 @@ class OriginController extends GetxController {
     String long = Get.find<HomeController>().longitude.value.toString();
 
     try {
+      isLoading.value = true;
       String baseURL =
           'https://maps.googleapis.com/maps/api/place/autocomplete/json';
       String request =
@@ -73,6 +74,7 @@ class OriginController extends GetxController {
       } else {
         throw Exception('Failed to load data');
       }
+      isLoading.value = false;
     } catch (e) {
       throw Exception(e);
     }
@@ -93,14 +95,9 @@ class OriginController extends GetxController {
           jsonDecode(geometry)['result']['geometry']['location']['lat'];
       double long =
           jsonDecode(geometry)['result']['geometry']['location']['lng'];
-      // String nameOfLocation =
-      //     "${jsonDecode(geometry)['result']['address_components'][0]['long_name']},${jsonDecode(geometry)['result']['address_components'][1]['long_name']},${jsonDecode(geometry)['result']['address_components'][2]['long_name']}";
       List<Placemark> placemarks = await placemarkFromCoordinates(lat, long);
       String nameOfLocation =
           "${placemarks[0].street}, ${placemarks[0].locality}";
-      print(placemarks[0].toString());
-      //TODO: set loaction data (get lat long is being called twice)
-      // setLocationData([lat, long, nameOfLocation]);
       return [lat, long, nameOfLocation];
     } catch (e) {
       log("getLatLong error: $e");

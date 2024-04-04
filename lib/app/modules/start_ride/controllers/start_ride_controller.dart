@@ -19,7 +19,8 @@ class StartRideController extends GetxController {
   late GoogleMapController mapController;
   final Set<Marker> markers = <Marker>{}.obs;
   final RxList<LatLng> polylineCoordinates = <LatLng>[].obs;
-  BitmapDescriptor sourceIcon = BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen);
+  BitmapDescriptor sourceIcon =
+      BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen);
   BitmapDescriptor destinationIcon = BitmapDescriptor.defaultMarker;
   final Rx<MyRidesModelData> myRidesModel = MyRidesModelData().obs;
   RxBool isLoad = true.obs;
@@ -28,8 +29,14 @@ class StartRideController extends GetxController {
   Future<void> onInit() async {
     super.onInit();
     myRidesModel.value = Get.arguments;
-    myRidesModel.value.origin?.coordinates = [74.9454334456202, 30.211063461596073];
-    myRidesModel.value.destination?.coordinates = [74.91410641185684, 30.321220704270132];
+    myRidesModel.value.origin?.coordinates = [
+      74.9454334456202,
+      30.211063461596073
+    ];
+    myRidesModel.value.destination?.coordinates = [
+      74.91410641185684,
+      30.321220704270132
+    ];
     await getPolyPoints();
     //myRidesModel.value.isStarted! ? null :
     isLoad.value = false;
@@ -48,7 +55,8 @@ class StartRideController extends GetxController {
         zoom: 17.0,
       ),
     ));
-    mapController.animateCamera(CameraUpdate.newLatLngBounds(boundsFromLatLngList(polylineCoordinates), 60));
+    mapController.animateCamera(CameraUpdate.newLatLngBounds(
+        boundsFromLatLngList(polylineCoordinates), 60));
 
     polylineCoordinates.refresh();
     onChangeLocation();
@@ -57,17 +65,25 @@ class StartRideController extends GetxController {
   Future<void> getPolyPoints() async {
     try {
       PolylinePoints polylinePoints = PolylinePoints();
-      final List<double?> originCoordinates = myRidesModel.value.origin?.coordinates ?? [0.0, 0.0];
-      final List<double?> destinationCoordinates = myRidesModel.value.destination?.coordinates ?? [0.0, 0.0];
+      final List<double?> originCoordinates =
+          myRidesModel.value.origin?.coordinates ?? [0.0, 0.0];
+      final List<double?> destinationCoordinates =
+          myRidesModel.value.destination?.coordinates ?? [0.0, 0.0];
       PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-          Endpoints.googleApiKey, PointLatLng(originCoordinates.last!, originCoordinates.first!), PointLatLng(destinationCoordinates.last!, destinationCoordinates.first!));
+          Endpoints.googleApiKey,
+          PointLatLng(originCoordinates.last!, originCoordinates.first!),
+          PointLatLng(
+              destinationCoordinates.last!, destinationCoordinates.first!));
       if (result.points.isNotEmpty) {
-        polylineCoordinates.assignAll(result.points.map((point) => LatLng(point.latitude, point.longitude)).toList());
+        polylineCoordinates.assignAll(result.points
+            .map((point) => LatLng(point.latitude, point.longitude))
+            .toList());
       }
       polylineCoordinates.refresh();
       markers.clear();
       addMarkers(LatLng(originCoordinates.last!, originCoordinates.first!));
-      addMarkers(LatLng(destinationCoordinates.last!, destinationCoordinates.first!));
+      addMarkers(
+          LatLng(destinationCoordinates.last!, destinationCoordinates.first!));
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -75,7 +91,9 @@ class StartRideController extends GetxController {
 
   addMarkers(LatLng carLocation) async {
     String imgurl = "https://www.fluttercampus.com/img/car.png";
-    Uint8List bytes = (await NetworkAssetBundle(Uri.parse(imgurl)).load(imgurl)).buffer.asUint8List();
+    Uint8List bytes = (await NetworkAssetBundle(Uri.parse(imgurl)).load(imgurl))
+        .buffer
+        .asUint8List();
     markers.add(Marker(
       markerId: MarkerId(carLocation.toString()),
       position: carLocation, //position of marker
@@ -98,7 +116,8 @@ class StartRideController extends GetxController {
       if (point.longitude < minLng) minLng = point.longitude;
       if (point.longitude > maxLng) maxLng = point.longitude;
     }
-    return LatLngBounds(southwest: LatLng(minLat, minLng), northeast: LatLng(maxLat, maxLng));
+    return LatLngBounds(
+        southwest: LatLng(minLat, minLng), northeast: LatLng(maxLat, maxLng));
   }
 
   StreamSubscription<Position>? positionStream;
@@ -109,7 +128,9 @@ class StartRideController extends GetxController {
       distanceFilter: 100,
     );
 
-    positionStream = Geolocator.getPositionStream(locationSettings: locationSettings).listen((Position? position) async {
+    positionStream =
+        Geolocator.getPositionStream(locationSettings: locationSettings)
+            .listen((Position? position) async {
       if (position != null) {
         final currentLat = position.latitude;
         final currentLong = position.longitude;

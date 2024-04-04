@@ -89,12 +89,15 @@ class MyRidesRequestController extends GetxController {
   sendRiderRequestAPI(int index) async {
     final String riderRideId = "${sendRequestModel.value.data?[index]?.Id}";
 
-    final Map<String, dynamic> rideData = {"ridePostId": riderRideId};
+    final Map<String, dynamic> rideData = {
+      "riderRideId": riderRideId,
+      "driverRideId": driverRideId
+    };
 
     try {
       // driver will send request to the customer (from send request view)
       final sendRiderRequestResponse =
-          await APIManager.postDriverSendRiderRequest(body: rideData);
+          await APIManager.postSendRequestToRider(body: rideData);
       var data = jsonDecode(sendRiderRequestResponse.toString());
       sendRiderRequestModel.value = SendRiderRequestModel.fromJson(data);
       showMySnackbar(msg: 'Request sent successfully');

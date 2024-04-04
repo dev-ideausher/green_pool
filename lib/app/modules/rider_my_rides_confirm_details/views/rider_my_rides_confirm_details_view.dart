@@ -479,7 +479,7 @@ class RiderMyRidesConfirmDetailsView
                   onPressed: () async {
                     try {
                       await Get.find<RiderMyRideRequestController>()
-                          .confirmRideByRiderAPI(controller.index);
+                          .acceptDriversRequestAPI(controller.index);
                       showMySnackbar(msg: "Request accepted!");
                       Get.until((route) =>
                           Get.currentRoute == Routes.BOTTOM_NAVIGATION);

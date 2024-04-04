@@ -54,7 +54,10 @@ class StartRideView extends GetView<StartRideController> {
               ],
             ),
             const GreenPoolDivider().paddingOnly(top: 8.kh, bottom: 16.kh),
-            const OriginToDestination(origin: "Origin", destination: "Destination"),
+            OriginToDestination(
+                origin: "${controller.myRidesModel.value.origin?.name}",
+                destination:
+                    "${controller.myRidesModel.value.destination?.name}"),
             GreenPoolButton(
               onPressed: () {},
               label: "Start Ride",
