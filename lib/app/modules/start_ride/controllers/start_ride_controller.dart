@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +11,9 @@ import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:green_pool/app/data/my_rides_model.dart';
+import 'package:green_pool/app/services/dio/api_service.dart';
 import 'package:green_pool/app/services/dio/endpoints.dart';
+import 'package:green_pool/app/services/snackbar.dart';
 
 import '../../home/controllers/home_controller.dart';
 
@@ -24,6 +28,7 @@ class StartRideController extends GetxController {
   BitmapDescriptor destinationIcon = BitmapDescriptor.defaultMarker;
   final Rx<MyRidesModelData> myRidesModel = MyRidesModelData().obs;
   RxBool isLoad = true.obs;
+  RxBool isRideStarted = false.obs;
 
   @override
   Future<void> onInit() async {
@@ -147,6 +152,20 @@ class StartRideController extends GetxController {
         polylineCoordinates.refresh();
       }
     });
+  }
+
+  startRideAPI() async {
+    try {
+      final response = await APIManager.startRide(
+          body: {"driverRideId": myRidesModel.value.Id});
+      isRideStarted.value = true;
+      var data = jsonDecode(response.toString());
+      //TODO: start ride model
+      log(data.toString());
+      showMySnackbar(msg: "${response.statusMessage}");
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 
   @override

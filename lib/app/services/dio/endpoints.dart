@@ -9,7 +9,7 @@ class Endpoints {
       : 'AIzaSyBq5jpn2f8NAb4pb562ejP2YCg47uX1_nU';
 
   // base url
-  static const String baseUrl = "http://51.20.170.89:4000/v1/";
+  static const String baseUrl = "https://api.greenpool.ca/v1/";
 
   // receiveTimeout
   static const int receiveTimeout = 15000;
@@ -27,6 +27,7 @@ class Endpoints {
   static const String sendRequestToRider =
       "driver/sendRequestToRider"; // to send request to riders from Send Requests view
   static const String sendRequestToDriver = "rider/sendReuestToDriver";
+  static const String rateAnyUser = "user/ratingByUser";
 
   //get url
   static const String userLogin = "auth/login";
@@ -52,4 +53,7 @@ class Endpoints {
   static const String userDetails = "user/updateProfileDetails";
   static const String acceptDriversRequest = "rider/acceptConfirmRide";
   static const String rejectDriversRequest = "rider/rejectConfirmRide";
+  static const String startRide = "driver/startRideByDriver";
+  static const String notificationPreferences =
+      "user/updateNotificationPreferences";
 }

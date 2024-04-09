@@ -61,6 +61,6 @@ class OriginToDestination extends StatelessWidget {
           ),
         ),
       ],
-    ).paddingOnly(bottom: 8.kh);
+    );
   }
 }

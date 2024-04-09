@@ -23,9 +23,10 @@ class APIManager {
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
           .post(Endpoints.riderFindRide, data: jsonEncode(body));
 
-  static Future<Response> postMatchngRides({required dynamic body}) async =>
+  static Future<Response> postMatchngRides(
+          {required dynamic body, String queryParam = ""}) async =>
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
-          .post(Endpoints.matchingRides, data: jsonEncode(body));
+          .post(Endpoints.matchingRides + queryParam, data: jsonEncode(body));
 
   static Future<Response> postAllRiderSendRequest(
           {required dynamic rideId}) async =>
@@ -60,6 +61,10 @@ class APIManager {
       // driver will reject the request send by a rider
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
           .post(Endpoints.rejectRidersRequest, data: jsonEncode(body));
+
+  static Future<Response> postRateUsers({required dynamic body}) async =>
+      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+          .post(Endpoints.rateAnyUser, data: jsonEncode(body));
 
   static Future<Response> postVehicleDetails({required dynamic body}) async =>
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
@@ -142,6 +147,19 @@ class APIManager {
   static Future<Response> rejectDriversRequest({required dynamic body}) async =>
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).patch(
         Endpoints.rejectDriversRequest,
+        data: body,
+      );
+
+  static Future<Response> startRide({required dynamic body}) async =>
+      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).patch(
+        Endpoints.startRide,
+        data: body,
+      );
+
+  static Future<Response> notificationPreferences(
+          {required dynamic body}) async =>
+      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).patch(
+        Endpoints.notificationPreferences,
         data: body,
       );
 }

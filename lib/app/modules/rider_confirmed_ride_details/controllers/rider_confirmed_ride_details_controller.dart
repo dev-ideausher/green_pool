@@ -1,23 +1,23 @@
 import 'package:get/get.dart';
 
-class RiderConfirmedRideDetailsController extends GetxController {
-  //TODO: Implement RiderConfirmedRideDetailsController
+import '../../../data/my_rides_model.dart';
 
-  final count = 0.obs;
+class RiderConfirmedRideDetailsController extends GetxController {
+  final Rx<MyRidesModelData> myRidesModel = MyRidesModelData().obs;
+
   @override
   void onInit() {
     super.onInit();
+    myRidesModel.value = Get.arguments;
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
+  // @override
+  // void onReady() {
+  //   super.onReady();
+  // }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
+  // @override
+  // void onClose() {
+  //   super.onClose();
+  // }
 }

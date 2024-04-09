@@ -64,6 +64,10 @@ abstract class Routes {
       _Paths.RIDER_CONFIRMED_RIDE_DETAILS;
   static const START_RIDE = _Paths.START_RIDE;
   static const POST_RIDE_STEP_ONE = _Paths.POST_RIDE_STEP_ONE;
+  static const MY_RIDES_RECURRING_DETAILS = _Paths.MY_RIDES_RECURRING_DETAILS;
+  static const RATING_DRIVER_SIDE = _Paths.RATING_DRIVER_SIDE;
+  static const RATING_RIDER_SIDE = _Paths.RATING_RIDER_SIDE;
+  static const RIDER_START_RIDE_MAP = _Paths.RIDER_START_RIDE_MAP;
 }
 
 abstract class _Paths {
@@ -126,4 +130,8 @@ abstract class _Paths {
   static const RIDER_CONFIRMED_RIDE_DETAILS = '/rider-confirmed-ride-details';
   static const START_RIDE = '/start-ride';
   static const POST_RIDE_STEP_ONE = '/post-ride-step-one';
+  static const MY_RIDES_RECURRING_DETAILS = '/my-rides-recurring-details';
+  static const RATING_DRIVER_SIDE = '/rating-driver-side';
+  static const RATING_RIDER_SIDE = '/rating-rider-side';
+  static const RIDER_START_RIDE_MAP = '/rider-start-ride-map';
 }

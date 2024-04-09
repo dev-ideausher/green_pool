@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/services/colors.dart';
+import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
@@ -39,16 +40,16 @@ class PushNotificationsView extends GetView<PushNotificationsController> {
                       side: BorderSide(
                         color: Get.find<ProfileController>().isSwitched.value
                             ? ColorUtil.kPrimary3PinkMode
-                            : ColorUtil.kPrimary01,
+                            : ColorUtil.kSecondary01,
                       ),
                       splashRadius: 4.kh,
-                      value: controller.isChecked[0].value,
+                      value: controller.trips.value,
                       activeColor:
                           Get.find<ProfileController>().isSwitched.value
                               ? ColorUtil.kPrimary3PinkMode
                               : ColorUtil.kPrimary01,
                       onChanged: (value) {
-                        controller.setChecked(0);
+                        controller.trips.value = value!;
                       },
                     ),
                   ),
@@ -70,16 +71,16 @@ class PushNotificationsView extends GetView<PushNotificationsController> {
                       side: BorderSide(
                         color: Get.find<ProfileController>().isSwitched.value
                             ? ColorUtil.kPrimary3PinkMode
-                            : ColorUtil.kPrimary01,
+                            : ColorUtil.kSecondary01,
                       ),
                       splashRadius: 4.kh,
-                      value: controller.isChecked[1].value,
+                      value: controller.alerts.value,
                       activeColor:
                           Get.find<ProfileController>().isSwitched.value
                               ? ColorUtil.kPrimary3PinkMode
                               : ColorUtil.kPrimary01,
                       onChanged: (value) {
-                        controller.setChecked(1);
+                        controller.alerts.value = value!;
                       },
                     ),
                   ),
@@ -101,16 +102,16 @@ class PushNotificationsView extends GetView<PushNotificationsController> {
                       side: BorderSide(
                         color: Get.find<ProfileController>().isSwitched.value
                             ? ColorUtil.kPrimary3PinkMode
-                            : ColorUtil.kPrimary01,
+                            : ColorUtil.kSecondary01,
                       ),
                       splashRadius: 4.kh,
-                      value: controller.isChecked[2].value,
+                      value: controller.payments.value,
                       activeColor:
                           Get.find<ProfileController>().isSwitched.value
                               ? ColorUtil.kPrimary3PinkMode
                               : ColorUtil.kPrimary01,
                       onChanged: (value) {
-                        controller.setChecked(2);
+                        controller.payments.value = value!;
                       },
                     ),
                   ),
@@ -132,16 +133,16 @@ class PushNotificationsView extends GetView<PushNotificationsController> {
                       side: BorderSide(
                         color: Get.find<ProfileController>().isSwitched.value
                             ? ColorUtil.kPrimary3PinkMode
-                            : ColorUtil.kPrimary01,
+                            : ColorUtil.kSecondary01,
                       ),
                       splashRadius: 4.kh,
-                      value: controller.isChecked[3].value,
+                      value: controller.transactions.value,
                       activeColor:
                           Get.find<ProfileController>().isSwitched.value
                               ? ColorUtil.kPrimary3PinkMode
                               : ColorUtil.kPrimary01,
                       onChanged: (value) {
-                        controller.setChecked(3);
+                        controller.transactions.value = value!;
                       },
                     ),
                   ),
@@ -163,22 +164,29 @@ class PushNotificationsView extends GetView<PushNotificationsController> {
                       side: BorderSide(
                         color: Get.find<ProfileController>().isSwitched.value
                             ? ColorUtil.kPrimary3PinkMode
-                            : ColorUtil.kPrimary01,
+                            : ColorUtil.kSecondary01,
                       ),
                       splashRadius: 4.kh,
-                      value: controller.isChecked[4].value,
+                      value: controller.offers.value,
                       activeColor:
                           Get.find<ProfileController>().isSwitched.value
                               ? ColorUtil.kPrimary3PinkMode
                               : ColorUtil.kPrimary01,
                       onChanged: (value) {
-                        controller.setChecked(4);
+                        controller.offers.value = value!;
                       },
                     ),
                   ),
                 ),
               ],
             ).paddingOnly(bottom: 16.kh),
+            const Expanded(child: SizedBox()),
+            GreenPoolButton(
+              onPressed: () {
+                controller.notificationPreferencesAPI();
+              },
+              label: "Save",
+            ).paddingSymmetric(vertical: 40.kh),
           ],
         ).paddingSymmetric(horizontal: 16.kw));
   }

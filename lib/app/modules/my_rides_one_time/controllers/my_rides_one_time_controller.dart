@@ -54,7 +54,7 @@ class MyRidesOneTimeController extends GetxController {
       final cancelRideResponse =
           await APIManager.postRejectRiderRequest(body: rideData);
       var data = jsonDecode(cancelRideResponse.toString());
-      log("cancel ride api: ${data.toString()}");
+      myRidesAPI();
     } catch (e) {
       throw Exception(e);
     }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:get/get.dart';
+import 'package:green_pool/app/components/origin_to_destination.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 
@@ -60,19 +61,13 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                       if (controller.myRidesModelData[index]
                                               ?.driverId !=
                                           null) {
-                                        return GestureDetector(
-                                          // check whether ride is cancelled
-                                          onTap: controller
-                                                      .myRidesModelData[index]
-                                                      ?.isCancelled ==
-                                                  true
-                                              ? () {}
-                                              : () {
-                                                  controller.viewDetails(
-                                                      controller
-                                                              .myRidesModelData[
-                                                          index]!);
-                                                },
+                                        return
+                                            // --------------- for driver tile -----------------//
+                                            GestureDetector(
+                                          onTap: () {
+                                            controller.viewDetails(controller
+                                                .myRidesModelData[index]!);
+                                          },
                                           child: Container(
                                             padding: EdgeInsets.all(16.kh),
                                             decoration: BoxDecoration(
@@ -121,7 +116,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                                         ?.date
                                                                         ?.split(
                                                                             'T')[0] ??
-                                                                    "DD/MM/YYYY",
+                                                                    "",
                                                                 style: TextStyleUtil
                                                                     .k12Regular(
                                                                         color: ColorUtil
@@ -138,19 +133,19 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                           ),
                                                     SizedBox(
                                                       height: 24.kh,
-                                                      width: 28.w,
+                                                      width: 170.kw,
                                                       child: ListView.builder(
                                                         itemCount: controller
                                                                     .myRidesModelData[
                                                                         index]
-                                                                    ?.riders
+                                                                    ?.postsInfo
                                                                     ?.length ==
                                                                 0
                                                             ? 4
                                                             : controller
                                                                 .myRidesModelData[
                                                                     index]
-                                                                ?.riders
+                                                                ?.postsInfo
                                                                 ?.length,
                                                         reverse: true,
                                                         scrollDirection:
@@ -172,7 +167,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                                 child: controller
                                                                             .myRidesModelData[
                                                                                 index]
-                                                                            ?.riders
+                                                                            ?.postsInfo
                                                                             ?.length ==
                                                                         0
                                                                     ? Image
@@ -182,7 +177,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                                       )
                                                                     : Image(
                                                                         image: NetworkImage(
-                                                                            "${controller.myRidesModelData[index]?.riders?[index1]?.profilePic?.url}"),
+                                                                            "${controller.myRidesModelData[index]?.postsInfo?[index1]?.riderPostsDetails?[0]?.ridersDetails?[0]?.profilePic?.url}"),
                                                                       ),
                                                               ),
                                                             ),
@@ -193,6 +188,9 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                     ),
                                                   ],
                                                 ).paddingOnly(bottom: 8.kh),
+
+                                                //-------------------- if rider has done "Find a Ride" and has not selected any time ----------------
+
                                                 controller
                                                             .myRidesModelData[
                                                                 index]
@@ -224,7 +222,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                                     ?.date
                                                                     ?.split(
                                                                         'T')[0] ??
-                                                                "DD/MM/YYYY",
+                                                                "",
                                                             style: TextStyleUtil
                                                                 .k12Regular(
                                                                     color: ColorUtil
@@ -238,86 +236,19 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                   height: 1.kh,
                                                   color: ColorUtil.kBlack07,
                                                 ).paddingOnly(bottom: 16.kh),
-                                                Stack(
-                                                  children: [
-                                                    Row(
-                                                      children: [
-                                                        Container(
-                                                          height: 10.kh,
-                                                          width: 10.kw,
-                                                          decoration:
-                                                              const BoxDecoration(
-                                                                  shape: BoxShape
-                                                                      .circle,
-                                                                  color: ColorUtil
-                                                                      .kGreenColor),
-                                                        ).paddingOnly(
-                                                            right: 8.kw),
-                                                        Expanded(
-                                                          child: Text(
-                                                            // '1100 McIntosh St, Regina',
-                                                            controller
-                                                                    .myRidesModelData[
-                                                                        index]
-                                                                    ?.origin
-                                                                    ?.name ??
-                                                                'Origin',
-                                                            style: TextStyleUtil
-                                                                .k14Regular(
-                                                                    color: ColorUtil
-                                                                        .kBlack02),
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .ellipsis,
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ).paddingOnly(
-                                                        bottom: 30.kh),
-                                                    Positioned(
-                                                      top: 27.kh,
-                                                      child: Row(
-                                                        children: [
-                                                          Container(
-                                                            height: 10.kh,
-                                                            width: 10.kw,
-                                                            decoration: const BoxDecoration(
-                                                                shape: BoxShape
-                                                                    .circle,
-                                                                color: ColorUtil
-                                                                    .kError4),
-                                                          ).paddingOnly(
-                                                              right: 8.kw),
-                                                          Text(
-                                                            // '681 Chrislea Rd, Woodbridge',
-                                                            controller
-                                                                    .myRidesModelData[
-                                                                        index]
-                                                                    ?.destination
-                                                                    ?.name ??
-                                                                'Destination',
-                                                            style: TextStyleUtil
-                                                                .k14Regular(
-                                                                    color: ColorUtil
-                                                                        .kBlack02),
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .ellipsis,
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    Positioned(
-                                                      top: 10.kh,
-                                                      left: 4.5.kw,
-                                                      child: Container(
-                                                        height: 28.kh,
-                                                        width: 1.kw,
-                                                        color:
-                                                            ColorUtil.kBlack04,
-                                                      ),
-                                                    ),
-                                                  ],
+                                                OriginToDestination(
+                                                  origin: controller
+                                                          .myRidesModelData[
+                                                              index]
+                                                          ?.origin
+                                                          ?.name ??
+                                                      'Origin',
+                                                  destination: controller
+                                                          .myRidesModelData[
+                                                              index]
+                                                          ?.destination
+                                                          ?.name ??
+                                                      'Destination',
                                                 ).paddingOnly(bottom: 8.kh),
                                                 Container(
                                                   width: 100.w,
@@ -338,10 +269,15 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                                       .kError2),
                                                         )
                                                       : controller
-                                                                  .myRidesModelData[
-                                                                      index]
-                                                                  ?.date ==
-                                                              ""
+                                                                      .myRidesModelData[
+                                                                          index]
+                                                                      ?.date ==
+                                                                  "" ||
+                                                              controller
+                                                                      .myRidesModelData[
+                                                                          index]
+                                                                      ?.date ==
+                                                                  null
                                                           ? Row(
                                                               mainAxisAlignment:
                                                                   MainAxisAlignment
@@ -562,14 +498,20 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                           ).paddingOnly(bottom: 16.kh),
                                         );
                                       } else {
-                                        return GestureDetector(
+                                        return
+                                            //---------------- for rider tile ------------------//
+                                            GestureDetector(
                                           onTap: controller
                                                       .myRidesModelData[index]!
                                                       .rideStatus ==
                                                   "Confirmed"
                                               ? () {
-                                                  Get.toNamed(Routes
-                                                      .RIDER_CONFIRMED_RIDE_DETAILS);
+                                                  Get.toNamed(
+                                                      Routes
+                                                          .RIDER_CONFIRMED_RIDE_DETAILS,
+                                                      arguments: controller
+                                                              .myRidesModelData[
+                                                          index]);
                                                 }
                                               : () {
                                                   Get.toNamed(
@@ -591,6 +533,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
+                                                // ---------------- if rider and driver both have confirmed the ride ------------------- //
                                                 controller
                                                             .myRidesModelData[
                                                                 index]!
@@ -609,10 +552,9 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                                   shape: BoxShape
                                                                       .circle,
                                                                 ),
-                                                                child:
-                                                                    Image.asset(
-                                                                  ImageConstant
-                                                                      .pngIconProfilePic,
+                                                                child: Image(
+                                                                  image: NetworkImage(
+                                                                      "${controller.myRidesModelData[index].confirmDriverDetails?[0]?.driverPostsDetails?[0]?.driverDetails?[0]?.profilePic?.url}"),
                                                                 ),
                                                               ).paddingOnly(
                                                                   bottom: 8.kh),
@@ -652,6 +594,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                                           right:
                                                                               2.kw),
                                                                       Text(
+                                                                        //TODO: data needed Rating of driver
                                                                         '4.5',
                                                                         style: TextStyleUtil.k12Semibold(
                                                                             color: Get.find<ProfileController>().isSwitched.value
@@ -679,7 +622,8 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                                           .spaceBetween,
                                                                   children: [
                                                                     Text(
-                                                                      'Savannah Nguyen',
+                                                                      // 'Savannah Nguyen',
+                                                                      "${controller.myRidesModelData[index].confirmDriverDetails?[0]?.driverPostsDetails?[0]?.driverDetails?[0]?.fullName}",
                                                                       style: TextStyleUtil
                                                                           .k16Bold(),
                                                                     ),
@@ -694,7 +638,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                                           ),
                                                                           TextSpan(
                                                                             text:
-                                                                                '\$ ${controller.myRidesModelData[index]?.fair}',
+                                                                                '\$ ${controller.myRidesModelData[index].confirmDriverDetails?[0]?.driverPostsDetails?[0]?.origin?.originDestinationFair}',
                                                                             style:
                                                                                 TextStyleUtil.k16Semibold(fontSize: 16.kh, color: ColorUtil.kSecondary01),
                                                                           ),
@@ -724,7 +668,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                                                 4.kw),
                                                                         Text(
                                                                           // '07 Nov 2023, 3:00pm',
-                                                                          '${controller.myRidesModelData[index]?.date.toString().split("T")[0] ?? " "}  ${controller.myRidesModelData[index]?.time ?? " "}',
+                                                                          '${controller.myRidesModelData[index].confirmDriverDetails?[0]?.driverPostsDetails?[0]?.date.toString().split("T")[0] ?? " "}  ${controller.myRidesModelData[index]?.time ?? " "}',
                                                                           style:
                                                                               TextStyleUtil.k12Regular(color: ColorUtil.kBlack03),
                                                                         ),
@@ -744,7 +688,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                                             right:
                                                                                 8.kw),
                                                                         Text(
-                                                                          '${controller.myRidesModelData[index]?.seatAvailable} seats',
+                                                                          '${controller.myRidesModelData[index].confirmDriverDetails?[0]?.driverPostsDetails?[0]?.seatAvailable} seats',
                                                                           style:
                                                                               TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                                                                         ),
@@ -767,6 +711,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                         "Confirmed"
                                                     ? Row(
                                                         children: [
+                                                          // ----------- if rider has not seleted any date while doing "Find a Ride" -------------//
                                                           controller
                                                                       .myRidesModelData[
                                                                           index]
@@ -815,102 +760,20 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                     : const GreenPoolDivider()
                                                         .paddingOnly(
                                                             bottom: 16.kh),
-                                                Stack(
-                                                  children: [
-                                                    Row(
-                                                      children: [
-                                                        Container(
-                                                          height: 10.kh,
-                                                          width: 10.kw,
-                                                          decoration:
-                                                              const BoxDecoration(
-                                                                  shape: BoxShape
-                                                                      .circle,
-                                                                  color: ColorUtil
-                                                                      .kGreenColor),
-                                                        ).paddingOnly(
-                                                            right: 8.kw),
-                                                        Text(
-                                                          // '1100 McIntosh St, Regina',
-                                                          "${controller.myRidesModelData[index]?.origin?.name}",
-                                                          style: TextStyleUtil
-                                                              .k14Regular(
-                                                                  color: ColorUtil
-                                                                      .kBlack02),
-                                                        ),
-                                                      ],
-                                                    ).paddingOnly(
-                                                        bottom: 30.kh),
-                                                    Positioned(
-                                                      top: 27.kh,
-                                                      child: Row(
-                                                        children: [
-                                                          Container(
-                                                            height: 10.kh,
-                                                            width: 10.kw,
-                                                            decoration: const BoxDecoration(
-                                                                shape: BoxShape
-                                                                    .circle,
-                                                                color: ColorUtil
-                                                                    .kError4),
-                                                          ).paddingOnly(
-                                                              right: 8.kw),
-                                                          Text(
-                                                            // '681 Chrislea Rd, Woodbridge',
-                                                            "${controller.myRidesModelData[index]?.destination?.name}",
-                                                            style: TextStyleUtil
-                                                                .k14Regular(
-                                                                    color: ColorUtil
-                                                                        .kBlack02),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    //line joining red and green dots
-                                                    Positioned(
-                                                      top: 10.kh,
-                                                      left: 4.5.kw,
-                                                      child: Container(
-                                                        height: 28.kh,
-                                                        width: 1.kw,
-                                                        color:
-                                                            ColorUtil.kBlack04,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ).paddingOnly(bottom: 8.kh),
-                                                //bottom line
-                                                const GreenPoolDivider(),
-                                                // rides matching your request
+                                                OriginToDestination(
+                                                        origin:
+                                                            "${controller.myRidesModelData[index]?.origin?.name}",
+                                                        destination:
+                                                            "${controller.myRidesModelData[index]?.destination?.name}")
+                                                    .paddingOnly(bottom: 8.kh),
+
+                                                // view details button and cancel ride button
                                                 controller
                                                             .myRidesModelData[
                                                                 index]!
                                                             .rideStatus !=
                                                         "Confirmed"
-                                                    ? Container(
-                                                        width: 100.w,
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .symmetric(
-                                                                    horizontal:
-                                                                        16.kw,
-                                                                    vertical:
-                                                                        8.kh),
-                                                        decoration: BoxDecoration(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        4.kh),
-                                                            color: ColorUtil
-                                                                .kSecondary01),
-                                                        child: Text(
-                                                          "0 rides matching your request.",
-                                                          style: TextStyleUtil
-                                                              .k14Semibold(
-                                                                  color: ColorUtil
-                                                                      .kWhiteColor),
-                                                        ),
-                                                      )
+                                                    ? const SizedBox()
                                                     : Row(
                                                         mainAxisAlignment:
                                                             MainAxisAlignment
@@ -923,10 +786,13 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                                 EdgeInsets.all(
                                                                     0.kh),
                                                             onPressed: () {
-                                                              controller.viewDetails(
-                                                                  controller
-                                                                          .myRidesModelData[
-                                                                      index]!);
+                                                              Get.toNamed(
+                                                                  Routes
+                                                                      .RIDER_CONFIRMED_RIDE_DETAILS,
+                                                                  arguments:
+                                                                      controller
+                                                                              .myRidesModelData[
+                                                                          index]);
                                                             },
                                                             label:
                                                                 'View Details',
@@ -954,11 +820,12 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                             padding:
                                                                 EdgeInsets.all(
                                                                     0.kh),
-                                                            onPressed: () => controller
-                                                                .cancelRideAPI(
-                                                                    controller
-                                                                            .myRidesModelData[
-                                                                        index]!),
+                                                            onPressed: () {
+                                                              // controller.cancelRideAPI(
+                                                              //     controller
+                                                              //             .myRidesModelData[
+                                                              //         index]!);
+                                                            },
                                                             isBorder: true,
                                                             label:
                                                                 'Cancel Ride',

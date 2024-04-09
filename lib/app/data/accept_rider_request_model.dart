@@ -70,7 +70,9 @@ class AcceptRiderRequestModel {
   AcceptRiderRequestModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message']?.toString();
-    data = (json['data'] != null) ? AcceptRiderRequestModelData.fromJson(json['data']) : null;
+    data = (json['data'] != null)
+        ? AcceptRiderRequestModelData.fromJson(json['data'])
+        : null;
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};

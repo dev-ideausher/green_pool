@@ -37,6 +37,8 @@ import '../modules/my_rides_page/bindings/my_rides_page_binding.dart';
 import '../modules/my_rides_page/views/my_rides_page_view.dart';
 import '../modules/my_rides_recurring/bindings/my_rides_recurring_binding.dart';
 import '../modules/my_rides_recurring/views/my_rides_recurring_view.dart';
+import '../modules/my_rides_recurring_details/bindings/my_rides_recurring_details_binding.dart';
+import '../modules/my_rides_recurring_details/views/my_rides_recurring_details_view.dart';
 import '../modules/my_rides_request/bindings/my_rides_request_binding.dart';
 import '../modules/my_rides_request/views/my_rides_request.dart';
 import '../modules/notifications/bindings/notifications_binding.dart';
@@ -62,6 +64,10 @@ import '../modules/profile_setup/bindings/profile_setup_binding.dart';
 import '../modules/profile_setup/views/profile_setup_view.dart';
 import '../modules/push_notifications/bindings/push_notifications_binding.dart';
 import '../modules/push_notifications/views/push_notifications_view.dart';
+import '../modules/rating_driver_side/bindings/rating_driver_side_binding.dart';
+import '../modules/rating_driver_side/views/rating_driver_side_view.dart';
+import '../modules/rating_rider_side/bindings/rating_rider_side_binding.dart';
+import '../modules/rating_rider_side/views/rating_rider_side_view.dart';
 import '../modules/report/bindings/report_binding.dart';
 import '../modules/report/views/report_view.dart';
 import '../modules/reset_password/bindings/reset_password_binding.dart';
@@ -88,6 +94,8 @@ import '../modules/rider_post_ride/bindings/rider_post_ride_binding.dart';
 import '../modules/rider_post_ride/views/rider_post_ride_view.dart';
 import '../modules/rider_profile_setup/bindings/rider_profile_setup_binding.dart';
 import '../modules/rider_profile_setup/views/rider_profile_setup_view.dart';
+import '../modules/rider_start_ride_map/bindings/rider_start_ride_map_binding.dart';
+import '../modules/rider_start_ride_map/views/rider_start_ride_map_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
 import '../modules/start_ride/bindings/start_ride_binding.dart';
@@ -377,6 +385,26 @@ class AppPages {
       name: _Paths.POST_RIDE_STEP_ONE,
       page: () => const PostRideStepOneView(),
       binding: PostRideStepOneBinding(),
+    ),
+    GetPage(
+      name: _Paths.MY_RIDES_RECURRING_DETAILS,
+      page: () => const MyRidesRecurringDetailsView(),
+      binding: MyRidesRecurringDetailsBinding(),
+    ),
+    GetPage(
+      name: _Paths.RATING_DRIVER_SIDE,
+      page: () => const RatingDriverSideView(),
+      binding: RatingDriverSideBinding(),
+    ),
+    GetPage(
+      name: _Paths.RATING_RIDER_SIDE,
+      page: () => const RatingRiderSideView(),
+      binding: RatingRiderSideBinding(),
+    ),
+    GetPage(
+      name: _Paths.RIDER_START_RIDE_MAP,
+      page: () => const RiderStartRideMapView(),
+      binding: RiderStartRideMapBinding(),
     ),
   ];
 }

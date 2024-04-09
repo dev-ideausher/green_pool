@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:green_pool/app/services/push_notification_service.dart';
 import 'package:green_pool/app/services/storage.dart';
 
 import '../../../data/user_info_model.dart';
@@ -25,14 +27,14 @@ class HomeController extends GetxController {
   }
 
   @override
-  //! temporary basis - userInfoAPI
-  void onInit() {
+  Future<void> onInit() async {
     super.onInit();
-    // Get.lazyPut(() => MyRidesController());
+
     _determinePosition().then((value) => {
           latitude.value = value.latitude,
           longitude.value = value.longitude,
         });
+    await setupMessage();
   }
 
   @override
@@ -51,8 +53,19 @@ class HomeController extends GetxController {
       final response = await APIManager.getUserByID();
       var data = jsonDecode(response.toString());
       userInfo.value = UserInfoModel.fromJson(data);
+      PushNotificationService.subFcm("${userInfo.value.data?.Id}");
       log("User info API called");
     } else {}
+  }
+
+  setupMessage() async {
+    await PushNotificationService().setupInteractedMessage();
+    RemoteMessage? initialMessage =
+        await FirebaseMessaging.instance.getInitialMessage();
+    if (initialMessage != null) {
+      PushNotificationService().saveNotification(initialMessage);
+      // App received a notification when it was killed
+    }
   }
 
   Future<Position> _determinePosition() async {

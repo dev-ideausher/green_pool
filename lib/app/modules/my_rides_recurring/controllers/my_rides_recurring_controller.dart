@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 
 class MyRidesRecurringController extends GetxController {
   RxBool isScheduled = false.obs;
+  int itemCount = 3;
 
   // @override
   // void onInit() {

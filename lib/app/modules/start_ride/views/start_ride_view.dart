@@ -31,7 +31,7 @@ class StartRideView extends GetView<StartRideController> {
                   height: 24.kh,
                   width: 28.w,
                   child: ListView.builder(
-                    itemCount: 4,
+                    itemCount: controller.myRidesModel.value.postsInfo?.length,
                     reverse: true,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index1) {
@@ -42,9 +42,15 @@ class StartRideView extends GetView<StartRideController> {
                         child: ClipOval(
                           child: SizedBox.fromSize(
                             size: Size.fromRadius(12.kh),
-                            child: Image.asset(
-                              ImageConstant.pngEmptyPassenger,
-                            ),
+                            child:
+                                controller.myRidesModel.value.postsInfo!.isEmpty
+                                    ? Image.asset(
+                                        ImageConstant.pngEmptyPassenger,
+                                      )
+                                    : Image(
+                                        image: NetworkImage(
+                                            "${controller.myRidesModel.value.postsInfo?[index1]?.riderPostsDetails?[0]?.ridersDetails?[0]?.profilePic?.url}"),
+                                      ),
                           ),
                         ),
                       ).paddingOnly(right: 4.kw);
@@ -59,7 +65,9 @@ class StartRideView extends GetView<StartRideController> {
                 destination:
                     "${controller.myRidesModel.value.destination?.name}"),
             GreenPoolButton(
-              onPressed: () {},
+              onPressed: () {
+                controller.startRideAPI();
+              },
               label: "Start Ride",
             ).paddingSymmetric(vertical: 16.kh),
           ],

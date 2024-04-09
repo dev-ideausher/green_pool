@@ -30,21 +30,11 @@ class ProfileView extends GetView<ProfileController> {
       body: Get.find<GetStorageService>().getLoggedIn
           ? Obx(
               () => controller.userInfo.value.data == null
-                  ? Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Center(
-                            child: CircularProgressIndicator(
-                          color: Get.find<ProfileController>().isSwitched.value
-                              ? ColorUtil.kPrimary3PinkMode
-                              : ColorUtil.kPrimary01,
-                        )),
-                        GreenPoolButton(
-                          onPressed: () =>
-                              Get.find<HomeController>().userInfoAPI(),
-                          label: 'Refresh',
-                        ),
-                      ],
+                  ? Center(
+                      child: Text(
+                        "Oops! Something went wrong",
+                        style: TextStyleUtil.k18Heading600(),
+                      ),
                     )
                   : controller.userInfo.value.data?.profileStatus == false
                       ? Center(

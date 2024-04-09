@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
+import 'package:green_pool/app/components/origin_to_destination.dart';
 import 'package:green_pool/app/modules/profile/controllers/profile_controller.dart';
 import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
@@ -135,67 +136,12 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                 ).paddingOnly(top: 32.kh),
                 //middle divider
                 const GreenPoolDivider().paddingOnly(bottom: 16.kh),
-                Stack(
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          height: 10.kh,
-                          width: 10.kw,
-                          decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: ColorUtil.kGreenColor),
-                        ).paddingOnly(right: 8.kw),
-                        Text(
-                          'Pick up: ',
-                          style: TextStyleUtil.k14Semibold(
-                              color: ColorUtil.kBlack02),
-                        ).paddingOnly(right: 8.kw),
-                        Text(
-                          // '1100 McIntosh St, Regina',
-                          "${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.origin?.name}",
-                          style: TextStyleUtil.k14Regular(
-                              color: ColorUtil.kBlack02),
-                        ),
-                      ],
-                    ).paddingOnly(bottom: 30.kh),
-                    Positioned(
-                      top: 27.kh,
-                      child: Row(
-                        children: [
-                          Container(
-                            height: 10.kh,
-                            width: 10.kw,
-                            decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: ColorUtil.kError4),
-                          ).paddingOnly(right: 8.kw),
-                          Text(
-                            'Drop off: ',
-                            style: TextStyleUtil.k14Semibold(
-                                color: ColorUtil.kBlack02),
-                          ).paddingOnly(right: 8.kw),
-                          Text(
-                            // '681 Chrislea Rd, Woodbridge',
-                            "${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.destination?.name}",
-                            style: TextStyleUtil.k14Regular(
-                                color: ColorUtil.kBlack02),
-                          ),
-                        ],
-                      ),
-                    ),
-                    //line joining red and green dots
-                    Positioned(
-                      top: 10.kh,
-                      left: 4.5.kw,
-                      child: Container(
-                        height: 28.kh,
-                        width: 1.kw,
-                        color: ColorUtil.kBlack04,
-                      ),
-                    ),
-                  ],
-                ).paddingOnly(bottom: 8.kh),
+                OriginToDestination(
+                        origin:
+                            "${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.origin?.name}",
+                        destination:
+                            "${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.destination?.name}")
+                    .paddingOnly(bottom: 8.kh),
                 //bottom line
                 const GreenPoolDivider(),
               ],

@@ -74,6 +74,7 @@ class ImageConstant {
   static String svgIconListView = 'assets/images/icons/icons_list_view.svg';
   static String svgIconInfo = 'assets/images/icons/icons_info.svg';
   static String svgIconTime = 'assets/images/icons/icons_time.svg';
+  static String pngIconProfilePic = 'assets/images/icons/profilepic.png';
 
 //home
   static String svgPostRide = 'assets/images/home/PostRide.svg';
@@ -126,11 +127,10 @@ class ImageConstant {
   static String svgProfileTerms = 'assets/images/profile/terms.svg';
   static String svgProfileDetails = 'assets/images/profile/user_details.svg';
   static String svgProfileWallet = 'assets/images/profile/wallet.svg';
+  static String gifRateUs = 'assets/images/profile/rate_us.gif';
 
 //PNGs
   static String pngUserSquare = 'assets/images/messages/user_square.png';
-  static String pngIconProfilePic = 'assets/images/icons/profilepic.png';
-  static String gifRateUs = 'assets/images/profile/rate_us.gif';
 
 //my rides
   static String pngEmptyPassenger = 'assets/images/myrides/empty_passenger.png';
@@ -138,4 +138,11 @@ class ImageConstant {
   static String pngPassenger2 = 'assets/images/myrides/passenger_2.png';
   static String pngPassenger3 = 'assets/images/myrides/passenger_3.png';
   static String pngPassenger4 = 'assets/images/myrides/passenger_4.png';
+
+//navigation
+  static String svgRideCompleted =
+      'assets/images/navigation/ride_completed.svg';
+  static String pngSourceIcon = 'assets/images/navigation/source_location.png';
+  static String pngDestinationIcon =
+      'assets/images/navigation/destination_location.png';
 }
