@@ -2883,6 +2883,7 @@ class MyRidesModelData {
       "HeatedSeats": false
     }
   },
+  "description": "ride from andheri to malad west.",
   "isStarted": true,
   "isCompleted": false,
   "isCancelled": false,
@@ -3193,6 +3194,7 @@ class MyRidesModelData {
   String? arrivalDate;
   String? arrivalTime;
   MyRidesModelDataPreferences? preferences;
+  String? description;
   bool? isStarted;
   bool? isCompleted;
   bool? isCancelled;
@@ -3220,6 +3222,7 @@ class MyRidesModelData {
     this.arrivalDate,
     this.arrivalTime,
     this.preferences,
+    this.description,
     this.isStarted,
     this.isCompleted,
     this.isCancelled,
@@ -3264,6 +3267,7 @@ class MyRidesModelData {
     preferences = (json['preferences'] != null)
         ? MyRidesModelDataPreferences.fromJson(json['preferences'])
         : null;
+    description = json['description']?.toString();
     isStarted = json['isStarted'];
     isCompleted = json['isCompleted'];
     isCancelled = json['isCancelled'];
@@ -3330,6 +3334,7 @@ class MyRidesModelData {
     if (preferences != null) {
       data['preferences'] = preferences!.toJson();
     }
+    data['description'] = description;
     data['isStarted'] = isStarted;
     data['isCompleted'] = isCompleted;
     data['isCancelled'] = isCancelled;
@@ -3432,6 +3437,7 @@ class MyRidesModel {
           "HeatedSeats": false
         }
       },
+      "description": "ride from andheri to malad west.",
       "isStarted": true,
       "isCompleted": false,
       "isCancelled": false,

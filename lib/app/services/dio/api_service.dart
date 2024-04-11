@@ -24,9 +24,11 @@ class APIManager {
           .post(Endpoints.riderFindRide, data: jsonEncode(body));
 
   static Future<Response> postMatchngRides(
-          {required dynamic body, String queryParam = ""}) async =>
-      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
-          .post(Endpoints.matchingRides + queryParam, data: jsonEncode(body));
+          {required dynamic body, dynamic queryParam}) async =>
+      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).post(
+          Endpoints.matchingRides,
+          data: jsonEncode(body),
+          queryParameters: queryParam);
 
   static Future<Response> postAllRiderSendRequest(
           {required dynamic rideId}) async =>
@@ -96,6 +98,10 @@ class APIManager {
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false)
           .get(Endpoints.driverMyRides);
 
+  static Future<Response> getAllRecurringRides() async =>
+      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+          .get(Endpoints.allRecurringRides);
+
   static Future<Response> getMyRidesDetails({required String rideId}) async =>
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
           .get(Endpoints.driverMyRidesDetails + rideId);
@@ -153,6 +159,12 @@ class APIManager {
   static Future<Response> startRide({required dynamic body}) async =>
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).patch(
         Endpoints.startRide,
+        data: body,
+      );
+
+  static Future<Response> endRide({required dynamic body}) async =>
+      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).patch(
+        Endpoints.endRide,
         data: body,
       );
 

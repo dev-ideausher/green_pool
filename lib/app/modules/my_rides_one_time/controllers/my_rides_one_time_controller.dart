@@ -36,7 +36,6 @@ class MyRidesOneTimeController extends GetxController {
     try {
       final response = await APIManager.getAllMyRides();
       var data = jsonDecode(response.toString());
-
       final mData = MyRidesModel.fromJson(data);
       myRidesModelData.value = mData.data!
           .where((element) => !(element.isCancelled ?? false))

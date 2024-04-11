@@ -360,7 +360,7 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                     ),
                     // Wrap(
                     // children: [
-                    //TODO: description data needed
+                    // //TODO: description data needed
                     // Text("${controller.myRidesModelData.value.description}")
                     // ],
                     // ),

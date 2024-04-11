@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:green_pool/app/components/green_pool_divider.dart';
 import 'package:green_pool/app/components/origin_to_destination.dart';
@@ -64,12 +65,21 @@ class StartRideView extends GetView<StartRideController> {
                 origin: "${controller.myRidesModel.value.origin?.name}",
                 destination:
                     "${controller.myRidesModel.value.destination?.name}"),
-            GreenPoolButton(
-              onPressed: () {
-                controller.startRideAPI();
-              },
-              label: "Start Ride",
-            ).paddingSymmetric(vertical: 16.kh),
+            Obx(
+              () => GreenPoolButton(
+                onPressed: controller.isRideStarted.value
+                    ? () async {
+                        //end ride and go to rating page
+                        await controller.endRideAPI();
+                        //in between rider picked up and dropped
+                      }
+                    : () async {
+                        await controller.startRideAPI();
+                      },
+                label:
+                    controller.isRideStarted.value ? "End Ride" : "Start Ride",
+              ).paddingSymmetric(vertical: 16.kh),
+            ),
           ],
         ).paddingOnly(top: 24.kh),
       ),

@@ -186,7 +186,6 @@ class PostRideController extends GetxController {
     ));
     try {
       final postRideDataJson = postRideData.toJson();
-      log(postRideDataJson.toString());
       await APIManager.postDriverPostRide(body: postRideDataJson);
       showMySnackbar(msg: "Ride posted successfully");
       await Get.offAllNamed(Routes.BOTTOM_NAVIGATION);

@@ -35,6 +35,7 @@ class Endpoints {
   static const String emergencyContacts = "user/emergencyContacts";
   static const String driverMyRides = "driver/myrides";
   static const String driverMyRidesDetails = "driver/myrides?rideId=";
+  static const String allRecurringRides = "driver/recurringRides";
   static const String matchingRides =
       "rider/driversRequests"; // to get matching rides according to the Find ride data
   static const String riderAllSendRequests = 'rider/driversRequests?rideId=';
@@ -54,6 +55,7 @@ class Endpoints {
   static const String acceptDriversRequest = "rider/acceptConfirmRide";
   static const String rejectDriversRequest = "rider/rejectConfirmRide";
   static const String startRide = "driver/startRideByDriver";
+  static const String endRide = "driver/endRideByDriver";
   static const String notificationPreferences =
       "user/updateNotificationPreferences";
 }

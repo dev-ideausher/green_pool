@@ -11,6 +11,8 @@ import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:green_pool/app/data/my_rides_model.dart';
+import 'package:green_pool/app/data/start_ride_model.dart';
+import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/dio/api_service.dart';
 import 'package:green_pool/app/services/dio/endpoints.dart';
 import 'package:green_pool/app/services/snackbar.dart';
@@ -29,6 +31,7 @@ class StartRideController extends GetxController {
   final Rx<MyRidesModelData> myRidesModel = MyRidesModelData().obs;
   RxBool isLoad = true.obs;
   RxBool isRideStarted = false.obs;
+  var startRideResponse = StartRideModel().obs;
 
   @override
   Future<void> onInit() async {
@@ -158,11 +161,20 @@ class StartRideController extends GetxController {
     try {
       final response = await APIManager.startRide(
           body: {"driverRideId": myRidesModel.value.Id});
-      isRideStarted.value = true;
       var data = jsonDecode(response.toString());
-      //TODO: start ride model
-      log(data.toString());
+      isRideStarted.value = true;
       showMySnackbar(msg: "${response.statusMessage}");
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
+  endRideAPI() async {
+    try {
+      final response = await APIManager.endRide(
+          body: {"driverRideId": myRidesModel.value.Id});
+      log("END RIDE EXECUTED--------> ${response.statusMessage}}");
+      Get.offNamed(Routes.RATING_DRIVER_SIDE, arguments: myRidesModel.value);
     } catch (e) {
       debugPrint(e.toString());
     }

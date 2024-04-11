@@ -9,11 +9,13 @@ import '../../profile/controllers/profile_controller.dart';
 import '../controllers/rider_filter_controller.dart';
 
 class FilterList extends GetView<RiderFilterController> {
-  final int index;
   final String image, text;
+  final bool value;
+  final Function(bool?) onChanged;
   const FilterList({
     super.key,
-    required this.index,
+    required this.value,
+    required this.onChanged,
     required this.image,
     required this.text,
   });
@@ -38,16 +40,12 @@ class FilterList extends GetView<RiderFilterController> {
         SizedBox(
           height: 18.kh,
           width: 18.kw,
-          child: Obx(
-            () => Checkbox(
-              value: controller.isChecked[index].value,
-              activeColor: Get.find<ProfileController>().isSwitched.value
-                  ? ColorUtil.kPrimary3PinkMode
-                  : ColorUtil.kSecondary01,
-              onChanged: (value) {
-                controller.toggleSwitch(index);
-              },
-            ),
+          child: Checkbox(
+            value: value,
+            activeColor: Get.find<ProfileController>().isSwitched.value
+                ? ColorUtil.kPrimary3PinkMode
+                : ColorUtil.kSecondary01,
+            onChanged: onChanged,
           ),
         ),
       ],

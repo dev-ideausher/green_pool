@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import '../../../routes/app_pages.dart';
 import '../../find_ride/controllers/find_ride_controller.dart';
 
 class MatchingRidesController extends GetxController {
@@ -32,5 +33,12 @@ class MatchingRidesController extends GetxController {
     // } catch (e) {
     //   throw Exception(e);
     // }
+  }
+
+  toFilter() {
+    Get.toNamed(Routes.RIDER_FILTER, arguments: rideDetails)?.then((value) {
+      matchingRideResponse.value = value;
+      matchingRideResponse.refresh();
+    });
   }
 }

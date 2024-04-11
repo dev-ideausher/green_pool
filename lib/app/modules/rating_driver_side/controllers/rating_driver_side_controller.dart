@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/snackbar.dart';
 
 import '../../../data/my_rides_model.dart';
@@ -23,6 +24,7 @@ class RatingDriverSideController extends GetxController {
         body: data,
       );
       showMySnackbar(msg: "Thankyou for rating!");
+      Get.until((route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
     } catch (e) {
       debugPrint(e.toString());
     }

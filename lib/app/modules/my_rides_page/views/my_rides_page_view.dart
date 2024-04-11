@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/modules/my_rides_one_time/controllers/my_rides_one_time_controller.dart';
 import 'package:green_pool/app/modules/my_rides_one_time/views/my_rides_one_time_view.dart';
+import 'package:green_pool/app/modules/my_rides_recurring/controllers/my_rides_recurring_controller.dart';
 import 'package:green_pool/app/modules/my_rides_recurring/views/my_rides_recurring_view.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
@@ -18,6 +19,7 @@ class MyRidesPageView extends GetView<MyRidesPageController> {
   const MyRidesPageView({super.key});
   @override
   Widget build(BuildContext context) {
+    Get.put(MyRidesRecurringController());
     return Scaffold(
       appBar: const GreenPoolAppBar(
         title: Text('My Rides'),
@@ -33,9 +35,12 @@ class MyRidesPageView extends GetView<MyRidesPageController> {
                         onTap: (index) async {
                           if (index == 1) {
                             // await controller.allSendRequestAPI();
+                            await Get.find<MyRidesRecurringController>()
+                                .allRecurringRidesAPI();
                           } else {
                             // await controller.allConfirmRequestAPI();
-                            Get.find<MyRidesOneTimeController>().myRidesAPI();
+                            await Get.find<MyRidesOneTimeController>()
+                                .myRidesAPI();
                           }
                         },
                         indicatorSize: TabBarIndicatorSize.tab,

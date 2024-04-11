@@ -25,65 +25,69 @@ class MatchingRidesView extends GetView<MatchingRidesController> {
         title: const Text('Matching Rides'),
         actions: [
           GestureDetector(
-            onTap: () => Get.toNamed(Routes.RIDER_FILTER),
+            onTap: () {
+              controller.toFilter();
+            },
             child: SvgPicture.asset(ImageConstant.svgIconFilter)
                 .paddingOnly(right: 16.kw),
           ),
         ],
       ),
-      bottomSheet: GreenPoolButton(
-        //TODO: remove color under the button
-        onPressed: () async {
-          try {
-            await Get.find<FindRideController>().riderPostRideAPI();
+      bottomSheet: Container(
+        color: ColorUtil.kBackgroundColor,
+        child: GreenPoolButton(
+          onPressed: () async {
+            try {
+              await Get.find<FindRideController>().riderPostRideAPI();
 
-            await Get.bottomSheet(
-              Container(
-                  padding: EdgeInsets.all(24.kh),
-                  height: 390.kh,
-                  width: 100.w,
-                  decoration: BoxDecoration(
-                      color: ColorUtil.kWhiteColor,
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(40.kh),
-                          topRight: Radius.circular(40.kh))),
-                  child: Column(
-                    children: [
-                      Text(
-                        'Request Alert Created\nSuccessfully!',
-                        style: TextStyleUtil.k18Heading600(),
-                        textAlign: TextAlign.center,
-                      ).paddingOnly(bottom: 24.kh),
-                      SvgPicture.asset(
-                        ImageConstant.svgCompleteTick,
-                        height: 64.kh,
-                        width: 64.kw,
-                      ).paddingOnly(bottom: 16.kh),
-                      Text(
-                        "Ride alert created succesfully!",
-                        textAlign: TextAlign.center,
-                        style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
-                      ).paddingOnly(bottom: 4.kh),
-                      Text(
-                        "Will send you the matching ride alert.",
-                        textAlign: TextAlign.center,
-                        style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
-                      ).paddingOnly(bottom: 40.kh),
-                      GreenPoolButton(
-                          label: 'Continue',
-                          onPressed: () {
-                            Get.until((route) =>
-                                Get.currentRoute == Routes.BOTTOM_NAVIGATION);
-                          }),
-                    ],
-                  )),
-            );
-          } catch (e) {
-            throw Exception(e);
-          }
-        },
-        label: "Create a ride alert",
-      ).paddingOnly(bottom: 24.kh),
+              await Get.bottomSheet(
+                Container(
+                    padding: EdgeInsets.all(24.kh),
+                    height: 390.kh,
+                    width: 100.w,
+                    decoration: BoxDecoration(
+                        color: ColorUtil.kWhiteColor,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(40.kh),
+                            topRight: Radius.circular(40.kh))),
+                    child: Column(
+                      children: [
+                        Text(
+                          'Request Alert Created\nSuccessfully!',
+                          style: TextStyleUtil.k18Heading600(),
+                          textAlign: TextAlign.center,
+                        ).paddingOnly(bottom: 24.kh),
+                        SvgPicture.asset(
+                          ImageConstant.svgCompleteTick,
+                          height: 64.kh,
+                          width: 64.kw,
+                        ).paddingOnly(bottom: 16.kh),
+                        Text(
+                          "Ride alert created succesfully!",
+                          textAlign: TextAlign.center,
+                          style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
+                        ).paddingOnly(bottom: 4.kh),
+                        Text(
+                          "Will send you the matching ride alert.",
+                          textAlign: TextAlign.center,
+                          style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
+                        ).paddingOnly(bottom: 40.kh),
+                        GreenPoolButton(
+                            label: 'Continue',
+                            onPressed: () {
+                              Get.until((route) =>
+                                  Get.currentRoute == Routes.BOTTOM_NAVIGATION);
+                            }),
+                      ],
+                    )),
+              );
+            } catch (e) {
+              throw Exception(e);
+            }
+          },
+          label: "Create a ride alert",
+        ).paddingOnly(bottom: 24.kh),
+      ),
       body: Obx(
         () => controller.matchingRideResponse.value.data == null
             ? Center(
