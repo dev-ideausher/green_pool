@@ -22,8 +22,7 @@ class RiderFilterController extends GetxController {
   RxBool babySeat = false.obs;
   RxBool heatedSeats = false.obs;
   bool preferenceAdded = false;
-  var matchingRideResponse =
-      Get.find<FindRideController>().matchingRideResponse;
+  var matchingRideResponse = Get.find<FindRideController>().matchingRideResponse;
 
   @override
   void onInit() {
@@ -48,19 +47,17 @@ class RiderFilterController extends GetxController {
 
   filterRideAPI() async {
     String queryParam = "";
-    final Map<String, dynamic> preferences = {
-      "sortByCloseToDeparture": closeToDeparture.value,
-      "preferences": {
-        "AppreciatesConversation": appreciatesConvo.value,
-        "EnjoysMusic": enjoysMusic.value,
-        "CoolingOrHeating": coolOrHeat.value,
-        "SmokeFree": smokeFree.value,
-        "PetFriendly": petFriendly.value,
-        "WinterTires": winterTires.value,
-        "BabySeats": babySeat.value,
-        "HeatedSeats": heatedSeats.value
-      }
+    var preferencesData = {
+      "AppreciatesConversation": appreciatesConvo.value,
+      "EnjoysMusic": enjoysMusic.value,
+      "CoolingOrHeating": coolOrHeat.value,
+      "SmokeFree": smokeFree.value,
+      "PetFriendly": petFriendly.value,
+      "WinterTires": winterTires.value,
+      "BabySeats": babySeat.value,
+      "HeatedSeats": heatedSeats.value
     };
+    final Map<String, dynamic> preferences = {"sortByCloseToDeparture": closeToDeparture.value, "preferences": jsonEncode(preferencesData)};
 
     if (appreciatesConvo.value == true ||
         enjoysMusic.value == true ||
@@ -78,16 +75,13 @@ class RiderFilterController extends GetxController {
     if (closeToarrival.value == true) {
       if (closeToDeparture.value == true) {
         if (preferenceAdded) {
-          queryParam = preferences.toString() +
-              "&sortBycloseToArrival=${closeToarrival.value}&sortByCloseToDeparture=${closeToDeparture.value}";
+          queryParam = preferences.toString() + "&sortBycloseToArrival=${closeToarrival.value}&sortByCloseToDeparture=${closeToDeparture.value}";
         } else {
-          queryParam =
-              "sortBycloseToArrival=${closeToarrival.value}&sortByCloseToDeparture=${closeToDeparture.value}";
+          queryParam = "sortBycloseToArrival=${closeToarrival.value}&sortByCloseToDeparture=${closeToDeparture.value}";
         }
       } else {
         if (preferenceAdded) {
-          queryParam = preferences.toString() +
-              "&sortBycloseToArrival=${closeToarrival.value}";
+          queryParam = preferences.toString() + "&sortBycloseToArrival=${closeToarrival.value}";
         } else {
           queryParam = "sortBycloseToArrival=${closeToarrival.value}";
         }
@@ -95,16 +89,13 @@ class RiderFilterController extends GetxController {
     } else if (closeToDeparture.value == true) {
       if (closeToarrival.value == true) {
         if (preferenceAdded) {
-          queryParam = preferences.toString() +
-              "&sortBycloseToArrival=${closeToarrival.value}&sortByCloseToDeparture=${closeToDeparture.value}";
+          queryParam = preferences.toString() + "&sortBycloseToArrival=${closeToarrival.value}&sortByCloseToDeparture=${closeToDeparture.value}";
         } else {
-          queryParam =
-              "sortBycloseToArrival=${closeToarrival.value}&sortByCloseToDeparture=${closeToDeparture.value}";
+          queryParam = "sortBycloseToArrival=${closeToarrival.value}&sortByCloseToDeparture=${closeToDeparture.value}";
         }
       } else {
         if (preferenceAdded) {
-          queryParam = preferences.toString() +
-              "&sortByCloseToDeparture=${closeToDeparture.value}";
+          queryParam = preferences.toString() + "&sortByCloseToDeparture=${closeToDeparture.value}";
         } else {
           queryParam = "sortByCloseToDeparture=${closeToDeparture.value}";
         }
@@ -118,8 +109,7 @@ class RiderFilterController extends GetxController {
     }
 
     try {
-      final response = await APIManager.postMatchngRides(
-          body: rideDetails, queryParam: preferences);
+      final response = await APIManager.postMatchngRides(body: rideDetails, queryParam: preferences);
       var data = jsonDecode(response.toString());
       matchingRideResponse.value = MatchingRidesModel.fromJson(data);
       Get.back(result: matchingRideResponse.value);
