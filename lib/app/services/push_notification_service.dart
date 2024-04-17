@@ -4,6 +4,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
+import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../routes/app_pages.dart';
@@ -52,12 +53,21 @@ class PushNotificationService {
       onDidReceiveNotificationResponse: (NotificationResponse details) {
         if (actionData != null) {
           if (actionData!.data["type"] == "Start_Ride") {
-            print(actionData!.data.toString());
-          } else {
-            
+            Get.toNamed(Routes.RIDER_START_RIDE_MAP);
+          } else if (actionData!.data["type"] == "End_Ride") {
+            //TODO: HAVE TO SET A CHECK FOR RIDER
+            //? one thing that can be done is that in response of end ride the data will contain who was driver and who were the companions and then from there we can maybe check and navigate them to corresponding pages
+            //? OR else set driver state from home controller and store it in storage service
+            if (Get.find<HomeController>().userInfo.value.data?.isDriver ==
+                true) {
+              Get.offNamed(Routes.RATING_DRIVER_SIDE);
+            } else {
+              Get.offNamed(Routes.RATING_RIDER_SIDE);
+            }
           }
-          print(details);
-        } else {}
+        }
+        print(details);
+
         // if (actionData != null) {
         //   if (actionData!.data["type"] == "Start_Ride") {
         //     Map<String, dynamic> jsond = json.decode(actionData!.data["rideDetails"]);

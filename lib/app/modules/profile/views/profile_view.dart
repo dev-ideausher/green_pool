@@ -10,6 +10,7 @@ import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/auth.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/custom_button.dart';
+import 'package:green_pool/app/services/push_notification_service.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../services/storage.dart';
@@ -102,6 +103,7 @@ class ProfileView extends GetView<ProfileController> {
                                           value: controller.isSwitched.value,
                                           onChanged: (value) {
                                             controller.toggleSwitch();
+                                            controller.pinkModeAPI();
                                           },
                                           inactiveThumbColor:
                                               ColorUtil.kNeutral1,
@@ -146,9 +148,6 @@ class ProfileView extends GetView<ProfileController> {
                                       Get.toNamed(Routes.STUDENT_DISCOUNTS),
                                   image: ImageConstant.svgProfileDiscount,
                                   text: "Student Discount"),
-                              ProfileContainer(
-                                  image: ImageConstant.svgProfileInsurance,
-                                  text: "Insurance"),
                               ProfileContainer(
                                   onTap: () => Get.bottomSheet(
                                         Container(
@@ -334,6 +333,8 @@ class ProfileView extends GetView<ProfileController> {
                                                     .value = 0;
                                                 Get.offAllNamed(
                                                     Routes.ONBOARDING);
+                                                PushNotificationService.unsubFcm(
+                                                    "${controller.userInfo.value.data?.Id}");
                                               },
                                               height: 40.kh,
                                               width: 144.kw,

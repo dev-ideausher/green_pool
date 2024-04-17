@@ -14,7 +14,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:path/path.dart' as path;
 import '../../../services/auth.dart';
+import '../../../services/colors.dart';
 import '../../../services/dio/api_service.dart';
+import '../../profile/controllers/profile_controller.dart';
 
 class ProfileSetupController extends GetxController
     with GetSingleTickerProviderStateMixin {
@@ -27,16 +29,19 @@ class ProfileSetupController extends GetxController
   RxBool isIDPicked = false.obs;
   RxBool isVehicleImagePicked = false.obs;
   TextEditingController fullName = TextEditingController(
-      text: Get.find<AuthService>().auth.currentUser?.displayName);
+      text: Get.find<HomeController>().userInfo.value.data?.fullName);
   TextEditingController email = TextEditingController(
-      text: Get.find<AuthService>().auth.currentUser?.email);
+      text: Get.find<HomeController>().userInfo.value.data?.email);
   TextEditingController phoneNumber = TextEditingController(
-      text: Get.find<AuthService>().auth.currentUser?.phoneNumber);
+      text: Get.find<HomeController>().userInfo.value.data?.phone ??
+          Get.find<AuthService>().auth.currentUser?.phoneNumber);
   // TextEditingController gender = TextEditingController();
   RxString gender = 'Prefer not to say'.obs;
-  TextEditingController city = TextEditingController();
+  TextEditingController city = TextEditingController(
+      text: Get.find<HomeController>().userInfo.value.data?.city);
   TextEditingController dateOfBirth = TextEditingController();
-  TextEditingController formattedDateOfBirth = TextEditingController();
+  TextEditingController formattedDateOfBirth = TextEditingController(
+      text: Get.find<HomeController>().userInfo.value.data?.dob);
   late TabController tabBarController;
 
   //for vehicle
@@ -70,7 +75,7 @@ class ProfileSetupController extends GetxController
 
   Future<void> setDate(BuildContext context) async {
     DateTime lastDate = DateTime.now()
-        .subtract(const Duration(days: 18 * 365)); // Subtracting 18 years
+        .subtract(const Duration(days: 18 * 365));
 
     DateTime initialDate =
         DateTime.now().isAfter(lastDate) ? lastDate : DateTime.now();
@@ -80,6 +85,33 @@ class ProfileSetupController extends GetxController
       firstDate: DateTime(1950),
       lastDate: lastDate,
       initialDate: initialDate,
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          // Define the custom theme for the date picker
+          data: ThemeData(
+            // Define the primary color
+            primaryColor: Get.find<ProfileController>().isSwitched.value
+                ? ColorUtil.kPrimaryPinkMode
+                : ColorUtil.kPrimary01,
+            // Define the color scheme for the date picker
+            colorScheme: ColorScheme.light(
+              // Define the primary color for the date picker
+              primary: Get.find<ProfileController>().isSwitched.value
+                  ? ColorUtil.kPrimaryPinkMode
+                  : ColorUtil.kPrimary01,
+              // Define the background color for the date picker
+              surface: ColorUtil.kWhiteColor,
+              // Define the on-primary color for the date picker
+              onPrimary: ColorUtil.kBlack01,
+              secondary: Get.find<ProfileController>().isSwitched.value
+                  ? ColorUtil.kPrimaryPinkMode
+                  : ColorUtil.kPrimary01,
+            ),
+          ),
+          // Apply the custom theme to the child widget
+          child: child!,
+        );
+      },
     );
 
     if (pickedDate != null) {
@@ -132,7 +164,9 @@ class ProfileSetupController extends GetxController
     final File pickedImageFile = File(selectedProfileImagePath.value!.path);
     final File pickedIDFile = File(selectedIDImagePath.value!.path);
     String extension = pickedImageFile.path.split('.').last;
+    String idExtension = pickedIDFile.path.split('.').last;
     String mediaType;
+    String idMediaType;
 
     if (extension == 'jpg' || extension == 'jpeg') {
       mediaType = 'image/jpeg';
@@ -140,6 +174,13 @@ class ProfileSetupController extends GetxController
       mediaType = 'image/png';
     } else {
       mediaType = 'application/octet-stream';
+    }
+    if (idExtension == 'jpg' || idExtension == 'jpeg') {
+      idMediaType = 'image/jpeg';
+    } else if (idExtension == 'png') {
+      idMediaType = 'image/png';
+    } else {
+      idMediaType = 'application/octet-stream';
     }
 
     final userData = dio.FormData.fromMap({
@@ -156,13 +197,12 @@ class ProfileSetupController extends GetxController
       ),
       'idPic': await dio.MultipartFile.fromFile(
         pickedIDFile.path,
-        contentType: MediaType.parse(mediaType),
+        contentType: MediaType.parse(idMediaType),
         filename: path.basename(pickedIDFile.path),
       ),
     });
     log("profile setup user data: $userData");
 
-    //TODO: how can i save full name to display
     try {
       final responses = await APIManager.userDetails(body: userData);
       showMySnackbar(msg: responses.data['message']);
@@ -346,24 +386,30 @@ class ProfileSetupController extends GetxController
   checkUserValidations() async {
     final isValid = userFormKey.currentState!.validate();
 
-    if (!isValid &&
-        isProfileImagePicked.value != true &&
-        isIDPicked.value != true) {
+    if (!isValid) {
       return showMySnackbar(msg: 'Please fill in all the details');
     } else {
-      userFormKey.currentState!.save();
-      await userDetailsAPI();
+      if (isProfileImagePicked.value != true || isIDPicked.value != true) {
+        return showMySnackbar(msg: 'Please upload the required images');
+      } else {
+        userFormKey.currentState!.save();
+        await userDetailsAPI();
+      }
     }
   }
 
   checkVehicleValidations() async {
     final isValid = vehicleFormKey.currentState!.validate();
 
-    if (!isValid && selectedVehicleImagePath.value!.path.isEmpty) {
+    if (!isValid) {
       return showMySnackbar(msg: 'Please fill in all the details');
     } else {
-      vehicleFormKey.currentState!.save();
-      await vehicleDetailsAPI();
+      if (selectedVehicleImagePath.value!.path.isEmpty) {
+        return showMySnackbar(msg: 'Please upload the required images');
+      } else {
+        vehicleFormKey.currentState!.save();
+        await vehicleDetailsAPI();
+      }
     }
   }
 }

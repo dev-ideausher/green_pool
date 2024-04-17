@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:ffi';
 
 import 'package:get/get.dart';
 import 'package:green_pool/app/data/rider_confirm_request_model.dart';
@@ -14,6 +15,7 @@ class RiderMyRideRequestController extends GetxController {
   var riderSendRequestModel = RiderSendRequestModel().obs;
   var confirmRideByRiderModel = ConfirmRideByRiderModel().obs;
   String rideIdFromMyRides = '';
+  RxBool isLoading = false.obs;
 
   @override
   void onInit() {
@@ -41,10 +43,12 @@ class RiderMyRideRequestController extends GetxController {
   allRiderConfirmRequestAPI() async {
     try {
       // need driver id which will come from confirm ride by rider
+      isLoading.value = true;
       final confirmReqResponse = await APIManager.getAllRiderConfirmRequest(
           driverRideId: rideIdFromMyRides);
       var data = jsonDecode(confirmReqResponse.toString());
       riderConfirmRequestModel.value = RiderConfirmRequestModel.fromJson(data);
+      isLoading.value = false;
     } catch (e) {
       throw Exception(e);
     }
@@ -53,11 +57,12 @@ class RiderMyRideRequestController extends GetxController {
   allRiderSendRequestAPI() async {
     // to view list of drivers available on same route in SendRequest View (riders side)
     try {
+      isLoading.value = true;
       final response =
           await APIManager.postAllRiderSendRequest(rideId: rideIdFromMyRides);
       var data = jsonDecode(response.toString());
       riderSendRequestModel.value = RiderSendRequestModel.fromJson(data);
-      // log("This is driver ride Id: ${matchingRideResponse.value.data?[0]?.Id}");
+      isLoading.value = false;
     } catch (e) {
       throw Exception(e);
     }

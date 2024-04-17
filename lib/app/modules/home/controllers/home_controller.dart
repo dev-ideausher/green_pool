@@ -31,7 +31,7 @@ class HomeController extends GetxController {
   Future<void> onInit() async {
     super.onInit();
 
-    _determinePosition().then((value) => {
+    await _determinePosition().then((value) => {
           latitude.value = value.latitude,
           longitude.value = value.longitude,
         });
@@ -40,11 +40,19 @@ class HomeController extends GetxController {
   }
 
   void onChangeLocation() {
-    const LocationSettings locationSettings = LocationSettings(accuracy: LocationAccuracy.bestForNavigation, distanceFilter: 100);
-    Geolocator.getPositionStream(locationSettings: locationSettings).listen((Position? position) async {
+    const LocationSettings locationSettings = LocationSettings(
+        accuracy: LocationAccuracy.bestForNavigation, distanceFilter: 100);
+    Geolocator.getPositionStream(locationSettings: locationSettings)
+        .listen((Position? position) async {
       if (position != null) {
-        DatabaseReference databaseReference = FirebaseDatabase.instance.ref().child('locations');
-        databaseReference.child(Get.find<GetStorageService>().getFirebaseUid).set({'latitude': position.latitude, 'longitude': position.longitude});
+        DatabaseReference databaseReference =
+            FirebaseDatabase.instance.ref().child('locations');
+        databaseReference
+            .child(Get.find<GetStorageService>().getFirebaseUid)
+            .set({
+          'latitude': position.latitude,
+          'longitude': position.longitude
+        });
       }
     });
   }
@@ -72,7 +80,8 @@ class HomeController extends GetxController {
 
   setupMessage() async {
     await PushNotificationService().setupInteractedMessage();
-    RemoteMessage? initialMessage = await FirebaseMessaging.instance.getInitialMessage();
+    RemoteMessage? initialMessage =
+        await FirebaseMessaging.instance.getInitialMessage();
     if (initialMessage != null) {
       PushNotificationService().saveNotification(initialMessage);
       // App received a notification when it was killed
@@ -97,7 +106,8 @@ class HomeController extends GetxController {
     }
 
     if (permission == LocationPermission.deniedForever) {
-      return Future.error('Location permissions are permanently denied, we cannot request permissions.');
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
     }
 
     return await Geolocator.getCurrentPosition();

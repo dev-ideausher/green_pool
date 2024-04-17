@@ -9,7 +9,6 @@ import 'package:green_pool/app/routes/app_pages.dart';
 import '../../../services/dio/api_service.dart';
 
 class DriverDetailsController extends GetxController {
-  // TODO: matching ride response
   var matchingRidesmodel =
       Get.find<FindRideController>().matchingRideResponse.value;
   int matchingRideIndex = 0;

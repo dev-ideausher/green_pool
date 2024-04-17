@@ -17,7 +17,7 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => controller.riderSendRequestModel.value.data == null
+      () => controller.isLoading.value
           ? Center(
               child: CircularProgressIndicator(
                 color: Get.find<ProfileController>().isSwitched.value
@@ -112,8 +112,9 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                                       .riderSendRequestModel
                                                       .value
                                                       .data?[index]
-                                                      ?.totalRating
-                                                      .toString() ??
+                                                      ?.driverDetails?[0]!
+                                                      .totalRating
+                                                      ?.toStringAsFixed(1) ??
                                                   '0.0',
                                               style: TextStyleUtil.k12Semibold(
                                                   color: Get.find<
@@ -200,7 +201,7 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                                 ? const SizedBox()
                                                 : Text(
                                                     // '07 July 2023, 3:00pm',
-                                                    "${controller.riderSendRequestModel.value.data![index]?.date?.split('T')[0]}    ${controller.riderSendRequestModel.value.data![index]?.time}",
+                                                    "${controller.riderSendRequestModel.value.data![index]?.date?.split('T')[0] ?? ""}    ${controller.riderSendRequestModel.value.data![index]?.time ?? ""}",
                                                     style: TextStyleUtil
                                                         .k12Regular(
                                                             color: ColorUtil
@@ -223,7 +224,7 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                                       : ColorUtil.kSecondary01,
                                             ).paddingOnly(right: 8.kw),
                                             Text(
-                                              '${controller.riderSendRequestModel.value.data![index]?.preferences?.seatAvailable ?? "0"} seats',
+                                              '${controller.riderSendRequestModel.value.data![index]?.seatAvailable ?? "0"} seats',
                                               style: TextStyleUtil.k14Regular(
                                                   color: ColorUtil.kBlack03),
                                             ),

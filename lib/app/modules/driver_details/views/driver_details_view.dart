@@ -175,7 +175,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                           size: 12.kh,
                         ).paddingOnly(right: 4.kw),
                         Text(
-                          "${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.totalRating}",
+                          "${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.driverDetails?[0]?.rating}",
                           style: TextStyleUtil.k14Regular(),
                         ),
                       ]),
@@ -190,7 +190,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Text(
-                      "${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.totalRiders} people",
+                      "${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.driverDetails?[0]?.totalRiders} people",
                       style:
                           TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                     ),

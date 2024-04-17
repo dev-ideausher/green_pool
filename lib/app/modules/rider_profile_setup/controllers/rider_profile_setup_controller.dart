@@ -10,11 +10,14 @@ import 'package:image_picker/image_picker.dart';
 
 import '../../../routes/app_pages.dart';
 import '../../../services/auth.dart';
+import '../../../services/colors.dart';
 import '../../../services/dio/api_service.dart';
 import '../../../services/snackbar.dart';
 import '../../../services/storage.dart';
 import 'package:path/path.dart' as path;
 import 'package:dio/dio.dart' as dio;
+
+import '../../profile/controllers/profile_controller.dart';
 
 class RiderProfileSetupController extends GetxController {
   RxBool isPicked = false.obs;
@@ -62,6 +65,35 @@ class RiderProfileSetupController extends GetxController {
       firstDate: DateTime(1950),
       lastDate: lastDate,
       initialDate: initialDate,
+      
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+
+          // Define the custom theme for the date picker
+          data: ThemeData(
+            // Define the primary color
+            primaryColor: Get.find<ProfileController>().isSwitched.value
+                ? ColorUtil.kPrimaryPinkMode
+                : ColorUtil.kPrimary01,
+            // Define the color scheme for the date picker
+            colorScheme: ColorScheme.light(
+              // Define the primary color for the date picker
+              primary: Get.find<ProfileController>().isSwitched.value
+                  ? ColorUtil.kPrimaryPinkMode
+                  : ColorUtil.kPrimary01,
+              // Define the background color for the date picker
+              surface: ColorUtil.kWhiteColor,
+              // Define the on-primary color for the date picker
+              onPrimary: ColorUtil.kBlack01,
+              secondary: Get.find<ProfileController>().isSwitched.value
+                  ? ColorUtil.kPrimaryPinkMode
+                  : ColorUtil.kPrimary01,
+            ),
+          ),
+          // Apply the custom theme to the child widget
+          child: child!,
+        );
+      },
     );
 
     if (pickedDate != null) {
@@ -132,7 +164,6 @@ class RiderProfileSetupController extends GetxController {
     });
     log("profile setup user data: $userData");
 
-    //TODO: how can i save gender and full name to display
     try {
       final responses = await APIManager.userDetails(body: userData);
       showMySnackbar(msg: responses.data['message']);

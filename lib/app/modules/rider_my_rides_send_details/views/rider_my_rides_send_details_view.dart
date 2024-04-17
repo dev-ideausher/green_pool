@@ -144,7 +144,7 @@ class RiderMyRidesSendDetailsView
                                         : ColorUtil.kSecondary01,
                                   ).paddingOnly(right: 8.kw),
                                   Text(
-                                    "${controller.riderSendRequestModel.value.data?[controller.index]?.preferences?.seatAvailable} seats",
+                                    "${controller.riderSendRequestModel.value.data?[controller.index]?.seatAvailable} seats",
                                     style: TextStyleUtil.k14Regular(
                                         color: ColorUtil.kBlack03),
                                   ),
@@ -253,7 +253,7 @@ class RiderMyRidesSendDetailsView
                           size: 12.kh,
                         ).paddingOnly(right: 4.kw),
                         Text(
-                          "${controller.riderSendRequestModel.value.data?[controller.index]?.totalRating}",
+                          "${controller.riderSendRequestModel.value.data?[controller.index]?.driverDetails?[0]?.totalRating}",
                           style: TextStyleUtil.k14Regular(),
                         ),
                       ]),
@@ -268,7 +268,7 @@ class RiderMyRidesSendDetailsView
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Text(
-                      "${controller.riderSendRequestModel.value.data?[controller.index]?.totalRiders} people",
+                      "${controller.riderSendRequestModel.value.data?[controller.index]?.driverDetails?[0]?.totalRiders} people",
                       style:
                           TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                     ),

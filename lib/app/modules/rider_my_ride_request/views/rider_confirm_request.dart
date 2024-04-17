@@ -18,7 +18,7 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => controller.riderConfirmRequestModel.value.data == null
+      () => controller.isLoading.value
           ? Center(
               child: CircularProgressIndicator(
                 color: Get.find<ProfileController>().isSwitched.value

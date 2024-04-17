@@ -59,15 +59,15 @@ class RideDetailsView extends GetView<RideDetailsController> {
                   Stack(
                     children: [
                       Container(
-                        height: 64.kh,
-                        width: 64.kw,
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                        ),
-                        child: Image.asset(
-                          ImageConstant.pngIconProfilePic,
-                        ),
-                      ).paddingOnly(bottom: 8.kh),
+                              height: 64.kh,
+                              width: 64.kw,
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                              ),
+                              child: Image(
+                                  image: NetworkImage(
+                                      "${controller.rideHistory.value.driverBookingDetails?[0]?.driverDetails?[0]?.profilePic?.url}")))
+                          .paddingOnly(bottom: 8.kh),
                       Positioned(
                         top: 52.kh,
                         left: 8.kw,
@@ -93,7 +93,7 @@ class RideDetailsView extends GetView<RideDetailsController> {
                                 size: 12.kh,
                               ).paddingOnly(right: 2.kw),
                               Text(
-                                '4.5',
+                                '${controller.rideHistory.value.driverBookingDetails?[0]?.driverDetails?[0]?.rating!.toStringAsFixed(1)}',
                                 style: TextStyleUtil.k12Semibold(
                                     color: Get.find<ProfileController>()
                                             .isSwitched
@@ -116,7 +116,7 @@ class RideDetailsView extends GetView<RideDetailsController> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Savannah Nguyen',
+                              '${controller.rideHistory.value.driverBookingDetails?[0]?.driverDetails?[0]?.fullName}',
                               style: TextStyleUtil.k16Bold(),
                             ),
                             Text.rich(
@@ -128,7 +128,8 @@ class RideDetailsView extends GetView<RideDetailsController> {
                                         color: ColorUtil.kSecondary01),
                                   ),
                                   TextSpan(
-                                    text: '\$ 8',
+                                    text:
+                                        '\$ ${controller.rideHistory.value.driverBookingDetails?[0]?.origin?.originDestinationFair}',
                                     style: TextStyleUtil.k16Semibold(
                                         fontSize: 16.kh,
                                         color: ColorUtil.kSecondary01),
@@ -155,7 +156,8 @@ class RideDetailsView extends GetView<RideDetailsController> {
                                 ).paddingOnly(right: 4.kw),
                                 //might give problems with big names, have to cut short month names
                                 Text(
-                                  '07 Nov 2023, 3:00pm',
+                                  // '07 Nov 2023, 3:00pm',
+                                  "${controller.rideHistory.value.driverBookingDetails?[0]?.date.toString().split("T").first ?? ""}  ${controller.rideHistory.value.driverBookingDetails?[0]?.time ?? ""}",
                                   style: TextStyleUtil.k12Regular(
                                       color: ColorUtil.kBlack03),
                                 ),
@@ -173,7 +175,7 @@ class RideDetailsView extends GetView<RideDetailsController> {
                                       : ColorUtil.kSecondary01,
                                 ).paddingOnly(right: 8.kw),
                                 Text(
-                                  '2 seats',
+                                  '${controller.rideHistory.value.driverBookingDetails?[0]?.seatAvailable} seats',
                                   style: TextStyleUtil.k14Regular(
                                       color: ColorUtil.kBlack03),
                                 ),
@@ -205,7 +207,7 @@ class RideDetailsView extends GetView<RideDetailsController> {
                             color: ColorUtil.kBlack02),
                       ).paddingOnly(right: 8.kw),
                       Text(
-                        '1100 McIntosh St, Regina',
+                        '${controller.rideHistory.value.driverBookingDetails?[0]?.origin?.name}',
                         style:
                             TextStyleUtil.k14Regular(color: ColorUtil.kBlack02),
                       ),
@@ -227,7 +229,7 @@ class RideDetailsView extends GetView<RideDetailsController> {
                               color: ColorUtil.kBlack02),
                         ).paddingOnly(right: 8.kw),
                         Text(
-                          '681 Chrislea Rd, Woodbridge',
+                          '${controller.rideHistory.value.driverBookingDetails?[0]?.destination?.name}',
                           style: TextStyleUtil.k14Regular(
                               color: ColorUtil.kBlack02),
                         ),

@@ -1,24 +1,43 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
+import 'package:green_pool/app/data/recurring_ride_details_model.dart';
+import 'package:green_pool/app/services/dio/api_service.dart';
 
 class MyRidesRecurringDetailsController extends GetxController {
-  //TODO: Implement MyRidesRecurringDetailsController
   int numberOfDays = 7;
+  String rideId = "";
+  var recurringModel = RecurringRideDetailsModel().obs;
+  RxBool isLoading = false.obs;
 
-  final count = 0.obs;
   @override
-  void onInit() {
+  Future<void> onInit() async {
     super.onInit();
+    rideId = Get.arguments;
+    await recurringRideDetailsAPI();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
+  // @override
+  // void onReady() {
+  //   super.onReady();
+  // }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
+  // @override
+  // void onClose() {
+  //   super.onClose();
+  // }
 
-  void increment() => count.value++;
+  recurringRideDetailsAPI() async {
+    try {
+      isLoading.value = true;
+      final String driverRideId = "/$rideId";
+      final response =
+          await APIManager.getRecurringRideDetails(rideId: driverRideId);
+      var data = jsonDecode(response.toString());
+      recurringModel.value = RecurringRideDetailsModel.fromJson(data);
+      isLoading.value = false;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
 }

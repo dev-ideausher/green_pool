@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:get/get.dart';
 import 'package:green_pool/app/data/driver_cofirm_request_model.dart';
@@ -34,26 +33,46 @@ class MyRidesOneTimeController extends GetxController {
 
   myRidesAPI() async {
     try {
+      isLoad.value = true;
       final response = await APIManager.getAllMyRides();
       var data = jsonDecode(response.toString());
       final mData = MyRidesModel.fromJson(data);
       myRidesModelData.value = mData.data!
           .where((element) => !(element.isCancelled ?? false))
           .toList();
+      isLoad.value = false;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  riderCancelRideAPI(MyRidesModelData myRidesModelData) async {
+    final Map<String, dynamic> riderRideId = {
+      "rideRideId": myRidesModelData.Id,
+    };
+    try {
+      isLoad.value = true;
+      final cancelRideResponse =
+          await APIManager.riderCancelRide(body: riderRideId);
+      var data = jsonDecode(cancelRideResponse.toString());
+      await myRidesAPI();
+      isLoad.value = false;
     } catch (e) {
       throw Exception(e);
     }
   }
 
   cancelRideAPI(MyRidesModelData myRidesModelData) async {
-    final Map<String, dynamic> rideData = {
+    final Map<String, dynamic> driverRideId = {
       "driverRideId": myRidesModelData.Id,
     };
     try {
+      isLoad.value = true;
       final cancelRideResponse =
-          await APIManager.postRejectRiderRequest(body: rideData);
+          await APIManager.cancelRide(body: driverRideId);
       var data = jsonDecode(cancelRideResponse.toString());
-      myRidesAPI();
+      await myRidesAPI();
+      isLoad.value = false;
     } catch (e) {
       throw Exception(e);
     }

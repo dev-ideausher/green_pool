@@ -151,7 +151,6 @@ class CreateAccountController extends GetxController {
       await loginAPI();
     } catch (error) {
       log("google auth error: $error");
-      showMySnackbar(msg: "Error");
     }
   }
 

@@ -86,7 +86,6 @@ class SetupUser extends GetView<ProfileSetupController> {
             GreenPoolTextField(
               hintText: 'Email ID',
               controller: controller.email,
-              keyboardType: TextInputType.emailAddress,
               validator: (value) => controller.validateEmail(value),
               autovalidateMode: AutovalidateMode.onUserInteraction,
               suffix: SvgPicture.asset(ImageConstant.svgProfileEditPen),

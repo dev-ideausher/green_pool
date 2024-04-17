@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
+import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/modules/profile/controllers/profile_controller.dart';
 import 'package:green_pool/app/modules/profile/views/profile_container.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
@@ -30,26 +31,27 @@ class ProfileSettingsView extends GetView<ProfileSettingsController> {
                       height: 44.kh,
                       width: 44.kw,
                       image: NetworkImage(
-                          "${Get.find<ProfileController>().userInfo.value.data?.profilePic?.url}"))),
+                          "${Get.find<HomeController>().userInfo.value.data?.profilePic?.url}"))),
             ),
           ).paddingOnly(bottom: 8.kh, top: 16.kh),
           Text(
-            Get.find<ProfileController>().userInfo.value.data?.fullName ??
-                "User",
+            Get.find<HomeController>().userInfo.value.data?.fullName ?? "User",
             style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
           ).paddingOnly(bottom: 24.kh),
           ProfileContainer(
               onTap: () => Get.toNamed(Routes.USER_DETAILS),
               image: ImageConstant.svgProfileDetails,
               text: 'User Details'),
-          ProfileContainer(
-              onTap: () => Get.toNamed(Routes.VEHICLE_DETAILS),
-              image: ImageConstant.svgProfileCar,
-              text: 'Vehicle Details'),
-          ProfileContainer(
-              onTap: () => Get.toNamed(Routes.CHANGE_PASSWORD),
-              image: ImageConstant.svgProfileLock,
-              text: 'Change Password'),
+          Get.find<HomeController>().userInfo.value.data?.vehicleStatus == true
+              ? ProfileContainer(
+                  onTap: () => Get.toNamed(Routes.VEHICLE_DETAILS),
+                  image: ImageConstant.svgProfileCar,
+                  text: 'Vehicle Details')
+              : const SizedBox(),
+          // ProfileContainer(
+          //     onTap: () => Get.toNamed(Routes.CHANGE_PASSWORD),
+          //     image: ImageConstant.svgProfileLock,
+          //     text: 'Change Password'),
           ProfileContainer(
               onTap: () => Get.toNamed(Routes.EMERGENCY_CONTACTS),
               image: ImageConstant.svgProfileCall,

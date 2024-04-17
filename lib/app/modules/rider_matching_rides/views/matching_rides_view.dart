@@ -193,7 +193,9 @@ class MatchingRidesView extends GetView<MatchingRidesController> {
                                                                 .matchingRideResponse
                                                                 .value
                                                                 .data?[index]
-                                                                ?.totalRating
+                                                                ?.driverDetails?[
+                                                                    0]
+                                                                ?.rating
                                                                 .toString() ??
                                                             '0.0',
                                                         style: TextStyleUtil.k12Semibold(

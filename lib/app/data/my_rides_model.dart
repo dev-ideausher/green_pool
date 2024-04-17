@@ -83,7 +83,9 @@ class MyRidesModelDataPostsInfoRiderPostsDetailsRidersDetails {
     "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/cf6fb022-721c-4cc0-a182-acdfc3074ae0-profile%20pic%201.jpg"
   },
   "status": "active",
-  "city": "Jaipur"
+  "city": "Jaipur",
+  "rating": 0,
+  "totalRides": 0
 } 
 */
 
@@ -105,6 +107,8 @@ class MyRidesModelDataPostsInfoRiderPostsDetailsRidersDetails {
   MyRidesModelDataPostsInfoRiderPostsDetailsRidersDetailsProfilePic? profilePic;
   String? status;
   String? city;
+  int? rating;
+  int? totalRides;
 
   MyRidesModelDataPostsInfoRiderPostsDetailsRidersDetails({
     this.Id,
@@ -125,6 +129,8 @@ class MyRidesModelDataPostsInfoRiderPostsDetailsRidersDetails {
     this.profilePic,
     this.status,
     this.city,
+    this.rating,
+    this.totalRides,
   });
   MyRidesModelDataPostsInfoRiderPostsDetailsRidersDetails.fromJson(
       Map<String, dynamic> json) {
@@ -152,6 +158,8 @@ class MyRidesModelDataPostsInfoRiderPostsDetailsRidersDetails {
         : null;
     status = json['status']?.toString();
     city = json['city']?.toString();
+    rating = json['rating']?.toInt();
+    totalRides = json['totalRides']?.toInt();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -177,6 +185,8 @@ class MyRidesModelDataPostsInfoRiderPostsDetailsRidersDetails {
     }
     data['status'] = status;
     data['city'] = city;
+    data['rating'] = rating;
+    data['totalRides'] = totalRides;
     return data;
   }
 }
@@ -328,7 +338,9 @@ class MyRidesModelDataPostsInfoRiderPostsDetails {
         "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/cf6fb022-721c-4cc0-a182-acdfc3074ae0-profile%20pic%201.jpg"
       },
       "status": "active",
-      "city": "Jaipur"
+      "city": "Jaipur",
+      "rating": 0,
+      "totalRides": 0
     }
   ]
 } 
@@ -525,7 +537,9 @@ class MyRidesModelDataPostsInfo {
             "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/cf6fb022-721c-4cc0-a182-acdfc3074ae0-profile%20pic%201.jpg"
           },
           "status": "active",
-          "city": "Jaipur"
+          "city": "Jaipur",
+          "rating": 0,
+          "totalRides": 0
         }
       ]
     }
@@ -1123,6 +1137,8 @@ class MyRidesModelDataConfirmDriverDetailsDriverPostsDetailsDriverDetails {
     "transactions": false,
     "offers": false
   },
+  "rating": 0,
+  "totalRides": 0,
   "vehicleDetails": [
     {
       "_id": "65c23bef32f497dc57fdf002",
@@ -1167,6 +1183,8 @@ class MyRidesModelDataConfirmDriverDetailsDriverPostsDetailsDriverDetails {
   bool? pinkMode;
   MyRidesModelDataConfirmDriverDetailsDriverPostsDetailsDriverDetailsNotificationPreferences?
       notificationPreferences;
+  int? rating;
+  int? totalRides;
   List<MyRidesModelDataConfirmDriverDetailsDriverPostsDetailsDriverDetailsVehicleDetails?>?
       vehicleDetails;
 
@@ -1191,6 +1209,8 @@ class MyRidesModelDataConfirmDriverDetailsDriverPostsDetailsDriverDetails {
     this.city,
     this.pinkMode,
     this.notificationPreferences,
+    this.rating,
+    this.totalRides,
     this.vehicleDetails,
   });
   MyRidesModelDataConfirmDriverDetailsDriverPostsDetailsDriverDetails.fromJson(
@@ -1224,6 +1244,8 @@ class MyRidesModelDataConfirmDriverDetailsDriverPostsDetailsDriverDetails {
         ? MyRidesModelDataConfirmDriverDetailsDriverPostsDetailsDriverDetailsNotificationPreferences
             .fromJson(json['notificationPreferences'])
         : null;
+    rating = json['rating']?.toInt();
+    totalRides = json['totalRides']?.toInt();
     if (json['vehicleDetails'] != null) {
       final v = json['vehicleDetails'];
       final arr0 =
@@ -1264,6 +1286,8 @@ class MyRidesModelDataConfirmDriverDetailsDriverPostsDetailsDriverDetails {
     if (notificationPreferences != null) {
       data['notificationPreferences'] = notificationPreferences!.toJson();
     }
+    data['rating'] = rating;
+    data['totalRides'] = totalRides;
     if (vehicleDetails != null) {
       final v = vehicleDetails;
       final arr0 = [];
@@ -1758,6 +1782,8 @@ class MyRidesModelDataConfirmDriverDetailsDriverPostsDetails {
         "transactions": false,
         "offers": false
       },
+      "rating": 0,
+      "totalRides": 0,
       "vehicleDetails": [
         {
           "_id": "65c23bef32f497dc57fdf002",
@@ -2212,6 +2238,8 @@ class MyRidesModelDataConfirmDriverDetails {
             "transactions": false,
             "offers": false
           },
+          "rating": 0,
+          "totalRides": 0,
           "vehicleDetails": [
             {
               "_id": "65c23bef32f497dc57fdf002",
@@ -2538,7 +2566,6 @@ class MyRidesModelDataPreferencesOther {
 class MyRidesModelDataPreferences {
 /*
 {
-  "seatAvailable": 3,
   "luggageType": "M",
   "other": {
     "AppreciatesConversation": false,
@@ -2553,17 +2580,14 @@ class MyRidesModelDataPreferences {
 } 
 */
 
-  int? seatAvailable;
   String? luggageType;
   MyRidesModelDataPreferencesOther? other;
 
   MyRidesModelDataPreferences({
-    this.seatAvailable,
     this.luggageType,
     this.other,
   });
   MyRidesModelDataPreferences.fromJson(Map<String, dynamic> json) {
-    seatAvailable = json['seatAvailable']?.toInt();
     luggageType = json['luggageType']?.toString();
     other = (json['other'] != null)
         ? MyRidesModelDataPreferencesOther.fromJson(json['other'])
@@ -2571,7 +2595,6 @@ class MyRidesModelDataPreferences {
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
-    data['seatAvailable'] = seatAvailable;
     data['luggageType'] = luggageType;
     if (other != null) {
       data['other'] = other!.toJson();
@@ -2870,7 +2893,6 @@ class MyRidesModelData {
   "arrivalDate": null,
   "arrivalTime": null,
   "preferences": {
-    "seatAvailable": 3,
     "luggageType": "M",
     "other": {
       "AppreciatesConversation": false,
@@ -3039,6 +3061,8 @@ class MyRidesModelData {
                 "transactions": false,
                 "offers": false
               },
+              "rating": 0,
+              "totalRides": 0,
               "vehicleDetails": [
                 {
                   "_id": "65c23bef32f497dc57fdf002",
@@ -3168,7 +3192,9 @@ class MyRidesModelData {
                 "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/cf6fb022-721c-4cc0-a182-acdfc3074ae0-profile%20pic%201.jpg"
               },
               "status": "active",
-              "city": "Jaipur"
+              "city": "Jaipur",
+              "rating": 0,
+              "totalRides": 0
             }
           ]
         }
@@ -3424,7 +3450,6 @@ class MyRidesModel {
       "arrivalDate": null,
       "arrivalTime": null,
       "preferences": {
-        "seatAvailable": 3,
         "luggageType": "M",
         "other": {
           "AppreciatesConversation": false,
@@ -3593,6 +3618,8 @@ class MyRidesModel {
                     "transactions": false,
                     "offers": false
                   },
+                  "rating": 0,
+                  "totalRides": 0,
                   "vehicleDetails": [
                     {
                       "_id": "65c23bef32f497dc57fdf002",
@@ -3722,7 +3749,9 @@ class MyRidesModel {
                     "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/cf6fb022-721c-4cc0-a182-acdfc3074ae0-profile%20pic%201.jpg"
                   },
                   "status": "active",
-                  "city": "Jaipur"
+                  "city": "Jaipur",
+                  "rating": 0,
+                  "totalRides": 0
                 }
               ]
             }

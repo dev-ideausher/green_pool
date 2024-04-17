@@ -184,7 +184,6 @@ class FindRideResponseModel {
 {
   "status": false,
   "message": "Ride Post already exists.",
-  TODO: should it be in array?
   "data": [
     {
       "origin": {

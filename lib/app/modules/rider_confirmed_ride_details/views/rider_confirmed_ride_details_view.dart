@@ -101,10 +101,9 @@ class RiderConfirmedRideDetailsView
                                             : ColorUtil.kSecondary01,
                                         BlendMode.srcIn),
                                   ).paddingOnly(right: 4.kw),
-                                  //might give problems with big names, have to cut short month names
                                   Text(
                                     // '07 Nov 2023, 3:00pm',
-                                    "${controller.myRidesModel.value.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.date.toString().split("T")[0]}  ${controller.myRidesModel.value.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.time}",
+                                    "${controller.myRidesModel.value.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.date.toString().split("T")[0] ?? ""}  ${controller.myRidesModel.value.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.time ?? ""}",
                                     style: TextStyleUtil.k12Regular(
                                         color: ColorUtil.kBlack03),
                                   ),
@@ -176,8 +175,8 @@ class RiderConfirmedRideDetailsView
                           size: 12.kh,
                         ).paddingOnly(right: 4.kw),
                         Text(
-                          "tot rating",
-                          // "${controller.myRidesModel.value.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.driverDetails?[0]?.totalRating}",
+                          // "tot rating",
+                          "${controller.myRidesModel.value.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.driverDetails?[0]?.rating}",
                           style: TextStyleUtil.k14Regular(),
                         ),
                       ]),
@@ -192,8 +191,8 @@ class RiderConfirmedRideDetailsView
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Text(
-                      "people ride with",
-                      // "${controller.myRidesModel.value.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.totalRiders} people",
+                      // "people ride with",
+                      "${controller.myRidesModel.value.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.driverDetails?[0]?.totalRides}",
                       style:
                           TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                     ),
@@ -226,7 +225,13 @@ class RiderConfirmedRideDetailsView
             controller.myRidesModel.value.confirmDriverDetails?[0]
                         ?.driverPostsDetails?[0]?.ridersDetails!.length ==
                     0
-                ? const SizedBox()
+                ? Container(
+                    child: Center(
+                        child: Text(
+                      "No co-passengers are available at the moment",
+                      style: TextStyleUtil.k14Bold(),
+                    )),
+                  )
                 : CoPassengerList(
                     itemcount: controller
                         .myRidesModel
@@ -235,16 +240,16 @@ class RiderConfirmedRideDetailsView
                         ?.driverPostsDetails?[0]
                         ?.ridersDetails!
                         .length,
-                    // image: Image(
-                    //   image: NetworkImage(
-                    //       "${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.ridersDetatils?[0]?.profilePic?.url}"),
-                    // ),
-                    // name:
-                    //     "${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.ridersDetatils?[0]?.fullName.toString().split(" ")[0]}\n${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.ridersDetatils?[0]?.fullName.toString().split(" ")[1]}",
+                    image: Image(
+                      image: NetworkImage(
+                          "${controller.myRidesModel.value.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.ridersDetails?[0]?.profilePic?.url}"),
+                    ),
+                    name:
+                        "${controller.myRidesModel.value.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.ridersDetails?[0]?.fullName.toString().split(" ").first}\n${controller.myRidesModel.value.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.ridersDetails?[0]?.fullName.toString().split(" ").last}",
                   ).paddingOnly(bottom: 10.kh),
             const GreenPoolDivider().paddingOnly(bottom: 16.kh),
 
-            //Vehicle details
+            // Vehicle details
             // Text(
             //   'Vehicle Details',
             //   style: TextStyleUtil.k14Bold(),
@@ -257,7 +262,7 @@ class RiderConfirmedRideDetailsView
             //         height: 64.kh,
             //         width: 64.kw,
             //         image: NetworkImage(
-            //             "${controller.myRidesModel.value.vehicleDetails?[0]?.vehiclePic?.url}"),
+            //             "${controller.myRidesModel.value.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.driverDetails?[0]?.vehicleDetails?[0]?.vehiclePic?.url}"),
             //       ).paddingOnly(right: 8.kh),
             //     ),
             //     Column(

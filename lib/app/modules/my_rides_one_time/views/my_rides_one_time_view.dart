@@ -594,8 +594,8 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                                           right:
                                                                               2.kw),
                                                                       Text(
-                                                                        //TODO: data needed Rating of driver
-                                                                        '4.5',
+                                                                        // '4.5',
+                                                                        "${controller.myRidesModelData.value?[index]?.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.driverDetails?[0]?.rating}",
                                                                         style: TextStyleUtil.k12Semibold(
                                                                             color: Get.find<ProfileController>().isSwitched.value
                                                                                 ? ColorUtil.kBlack02
@@ -821,10 +821,10 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                                 EdgeInsets.all(
                                                                     0.kh),
                                                             onPressed: () {
-                                                              // controller.cancelRideAPI(
-                                                              //     controller
-                                                              //             .myRidesModelData[
-                                                              //         index]!);
+                                                              controller.riderCancelRideAPI(
+                                                                  controller
+                                                                          .myRidesModelData[
+                                                                      index]!);
                                                             },
                                                             isBorder: true,
                                                             label:

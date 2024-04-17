@@ -1,13 +1,16 @@
 import 'package:get/get.dart';
 
+import '../../../data/ride_history_model.dart';
+
 class RideDetailsController extends GetxController {
-  
+  final Rx<RideHistoryModelData> rideHistory = RideHistoryModelData().obs;
 
   // final count = 0.obs;
-  // @override
-  // void onInit() {
-  //   super.onInit();
-  // }
+  @override
+  void onInit() {
+    super.onInit();
+    rideHistory.value = Get.arguments;
+  }
 
   // @override
   // void onReady() {

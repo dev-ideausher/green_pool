@@ -5,8 +5,7 @@ import 'client.dart';
 import 'endpoints.dart';
 
 class APIManager {
-  ///Post API
-
+  //--------------------Post API--------------------//
   static Future<Response> postRegister({required dynamic body}) async =>
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
           .post(Endpoints.register, data: jsonEncode(body));
@@ -32,7 +31,7 @@ class APIManager {
 
   static Future<Response> postAllRiderSendRequest(
           {required dynamic rideId}) async =>
-      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false)
           .post(Endpoints.riderAllSendRequests + rideId);
 
   static Future<Response> postConfirmRide({required dynamic body}) async =>
@@ -84,7 +83,7 @@ class APIManager {
                 'Content-Type': 'multipart/form-data',
               }));
 
-  ///Get api
+  //--------------------Get api--------------------//
   static Future<Response> getLogin() async =>
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
           .get(Endpoints.userLogin);
@@ -98,9 +97,18 @@ class APIManager {
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false)
           .get(Endpoints.driverMyRides);
 
+  static Future<Response> getRideHistory() async =>
+      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false)
+          .get(Endpoints.rideHistory);
+
   static Future<Response> getAllRecurringRides() async =>
-      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false)
           .get(Endpoints.allRecurringRides);
+
+  static Future<Response> getRecurringRideDetails(
+          {required String rideId}) async =>
+      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+          .get(Endpoints.recurringRideDetails + rideId);
 
   static Future<Response> getMyRidesDetails({required String rideId}) async =>
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
@@ -118,10 +126,10 @@ class APIManager {
 
   static Future<Response> getAllRiderConfirmRequest(
           {required String driverRideId}) async =>
-      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false)
           .get(Endpoints.viewDriversRequest + driverRideId);
 
-  // patch
+  //--------------------patch--------------------//
   static Future<Response> userDetails({required dynamic body}) async =>
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).patch(
         Endpoints.userDetails,
@@ -173,5 +181,20 @@ class APIManager {
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).patch(
         Endpoints.notificationPreferences,
         data: body,
+      );
+  static Future<Response> cancelRide({required dynamic body}) async =>
+      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).patch(
+        Endpoints.cancelRide,
+        data: body,
+      );
+  static Future<Response> riderCancelRide({required dynamic body}) async =>
+      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).patch(
+        Endpoints.riderCancelRide,
+        data: body,
+      );
+
+  static Future<Response> enablePinkMode() async =>
+      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).patch(
+        Endpoints.pinkMode,
       );
 }

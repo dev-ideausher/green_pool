@@ -357,13 +357,12 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                     Text(
                       "Description",
                       style: TextStyleUtil.k14Semibold(),
+                    ).paddingOnly(bottom: 8.kh),
+                    Wrap(
+                      children: [
+                        Text("${controller.myRidesModelData.value.description}")
+                      ],
                     ),
-                    // Wrap(
-                    // children: [
-                    // //TODO: description data needed
-                    // Text("${controller.myRidesModelData.value.description}")
-                    // ],
-                    // ),
                     GreenPoolButton(
                         label: "View Matching Riders",
                         onPressed: () {

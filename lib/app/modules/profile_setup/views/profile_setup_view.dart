@@ -35,7 +35,7 @@ class ProfileSetupView extends GetView<ProfileSetupController> {
               ).paddingOnly(bottom: 24.kh),
               TabBar(
                   onTap:
-                      (index) {}, //TODO: have to take index from here and if pressed proceed on user detials then the index should be increased by one so that we land on vehicle details
+                      (index) {},
                   indicatorSize: TabBarIndicatorSize.tab,
                   controller: controller.tabBarController,
                   splashBorderRadius: BorderRadius.circular(4.kh),

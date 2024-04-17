@@ -118,70 +118,70 @@ class UserDetailsView extends GetView<UserDetailsController> {
               controller: controller.phoneTextController,
               readOnly: true,
             ).paddingOnly(bottom: 16.kh),
-            const RichTextHeading(text: 'Gender').paddingOnly(bottom: 8.kh),
-            GreenPoolDropDown(
-              hintText: "${controller.userInformation?.gender}",
-              color: ColorUtil.kBlack01,
-              items: [
-                DropdownMenuItem(
-                  value: "Male",
-                  child: Text(
-                    "Male",
-                    style: TextStyleUtil.k14Regular(),
-                  ),
-                ),
-                DropdownMenuItem(
-                  value: "Female",
-                  child: Text(
-                    "Female",
-                    style: TextStyleUtil.k14Regular(),
-                  ),
-                ),
-                DropdownMenuItem(
-                  value: "Prefer not to say",
-                  child: Text(
-                    "Prefer not to say",
-                    style: TextStyleUtil.k14Regular(),
-                  ),
-                ),
-              ],
-              onChanged: (v) {
-                controller.genderValue.value = v.toString();
-              },
-            ).paddingOnly(bottom: 16.kh),
+            // const RichTextHeading(text: 'Gender').paddingOnly(bottom: 8.kh),
+            // GreenPoolDropDown(
+            //   hintText: "${controller.userInformation?.gender}",
+            //   color: ColorUtil.kBlack01,
+            //   items: [
+            //     DropdownMenuItem(
+            //       value: "Male",
+            //       child: Text(
+            //         "Male",
+            //         style: TextStyleUtil.k14Regular(),
+            //       ),
+            //     ),
+            //     DropdownMenuItem(
+            //       value: "Female",
+            //       child: Text(
+            //         "Female",
+            //         style: TextStyleUtil.k14Regular(),
+            //       ),
+            //     ),
+            //     DropdownMenuItem(
+            //       value: "Prefer not to say",
+            //       child: Text(
+            //         "Prefer not to say",
+            //         style: TextStyleUtil.k14Regular(),
+            //       ),
+            //     ),
+            //   ],
+            //   onChanged: (v) {
+            //     controller.genderValue.value = v.toString();
+            //   },
+            // ).paddingOnly(bottom: 16.kh),
             const RichTextHeading(text: 'City Province')
                 .paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
               hintText: 'city',
               controller: controller.cityTextController,
             ).paddingOnly(bottom: 16.kh),
-            Text.rich(
-              TextSpan(
-                children: [
-                  TextSpan(
-                    text: 'Date of Birth ',
-                    style: TextStyleUtil.k14Semibold(),
-                  ),
-                  TextSpan(
-                    text: '(should be above 18)',
-                    style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack04),
-                  ),
-                ],
-              ),
-            ).paddingOnly(bottom: 8.kh),
-            GreenPoolTextField(
-              hintText: 'D.O.B',
-              controller: controller.dobTextController,
-              suffix: SvgPicture.asset(
-                ImageConstant.svgIconCalendar,
-                colorFilter: ColorFilter.mode(
-                  Get.find<ProfileController>().isSwitched?.value ?? false
-                      ? ColorUtil.kPrimary3PinkMode
-                      : ColorUtil.kSecondary01,
-                  BlendMode.srcIn,
-                ),
-              ),
-            ).paddingOnly(bottom: 16.kh),
+            // Text.rich(
+            //   TextSpan(
+            //     children: [
+            //       TextSpan(
+            //         text: 'Date of Birth ',
+            //         style: TextStyleUtil.k14Semibold(),
+            //       ),
+            //       TextSpan(
+            //         text: '(should be above 18)',
+            //         style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack04),
+            //       ),
+            //     ],
+            //   ),
+            // ).paddingOnly(bottom: 8.kh),
+            // GreenPoolTextField(
+            //   hintText: 'D.O.B',
+            //   controller: controller.dobTextController,
+            //   suffix: SvgPicture.asset(
+            //     ImageConstant.svgIconCalendar,
+            //     colorFilter: ColorFilter.mode(
+            //       Get.find<ProfileController>().isSwitched?.value ?? false
+            //           ? ColorUtil.kPrimary3PinkMode
+            //           : ColorUtil.kSecondary01,
+            //       BlendMode.srcIn,
+            //     ),
+            //   ),
+            // ).paddingOnly(bottom: 16.kh),
             const RichTextHeading(text: 'ID Verification')
                 .paddingOnly(bottom: 8.kh),
             GestureDetector(

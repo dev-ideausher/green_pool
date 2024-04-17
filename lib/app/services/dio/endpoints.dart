@@ -21,6 +21,7 @@ class Endpoints {
   static const String register = "auth/register";
   static const String vehicleDetails = "driver/vehicledetails";
   static const String bugReport = "company/appBugReportByUser";
+  static const String fileDispute = "fileDispute";
   static const String driverPostRide = "driver/ride";
   static const String riderFindRide = "rider/ride";
   static const String riderRideRequest = "rider/confirmRide";
@@ -36,6 +37,8 @@ class Endpoints {
   static const String driverMyRides = "driver/myrides";
   static const String driverMyRidesDetails = "driver/myrides?rideId=";
   static const String allRecurringRides = "driver/recurringRides";
+  static const String recurringRideDetails = "driver/recurringRides/";
+  static const String rideHistory = "rider/rideHistory";
   static const String matchingRides =
       "rider/driversRequests"; // to get matching rides according to the Find ride data
   static const String riderAllSendRequests = 'rider/driversRequests?rideId=';
@@ -56,6 +59,9 @@ class Endpoints {
   static const String rejectDriversRequest = "rider/rejectConfirmRide";
   static const String startRide = "driver/startRideByDriver";
   static const String endRide = "driver/endRideByDriver";
+  static const String pinkMode = "user/updatePinkMode";
   static const String notificationPreferences =
       "user/updateNotificationPreferences";
+  static const String cancelRide = "driver/cancelRideByMyRides";
+  static const String riderCancelRide = "rider/cancelRideByMyRides";
 }

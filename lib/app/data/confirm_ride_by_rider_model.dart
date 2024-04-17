@@ -1120,7 +1120,6 @@ class ConfirmRideByRiderModel {
           73.8567437
         ]
       },
-      TODO: recurring trip and return trip data
       "recurringTrip": {
         "recurringTripIds": [
           "121212"

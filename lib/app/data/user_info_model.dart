@@ -263,6 +263,7 @@ class UserInfoModelData {
   "dob": "1996-02-22",
   "gender": "Female",
   "isDriver": true,
+  "rating": 4.2,
   "referralCode": "V0280Q1170",
   "profileStatus": true,
   "vehicleStatus": true,
@@ -326,6 +327,7 @@ class UserInfoModelData {
   String? dob;
   String? gender;
   bool? isDriver;
+  double? rating;
   String? referralCode;
   bool? profileStatus;
   bool? vehicleStatus;
@@ -350,6 +352,7 @@ class UserInfoModelData {
     this.dob,
     this.gender,
     this.isDriver,
+    this.rating,
     this.referralCode,
     this.profileStatus,
     this.vehicleStatus,
@@ -374,6 +377,7 @@ class UserInfoModelData {
     dob = json['dob']?.toString();
     gender = json['gender']?.toString();
     isDriver = json['isDriver'];
+    rating = json['rating']?.toDouble();
     referralCode = json['referralCode']?.toString();
     profileStatus = json['profileStatus'];
     vehicleStatus = json['vehicleStatus'];
@@ -420,6 +424,7 @@ class UserInfoModelData {
     data['dob'] = dob;
     data['gender'] = gender;
     data['isDriver'] = isDriver;
+    data['rating'] = rating;
     data['referralCode'] = referralCode;
     data['profileStatus'] = profileStatus;
     data['vehicleStatus'] = vehicleStatus;
@@ -471,6 +476,7 @@ class UserInfoModel {
     "dob": "1996-02-22",
     "gender": "Female",
     "isDriver": true,
+    "rating": 4.2,
     "referralCode": "V0280Q1170",
     "profileStatus": true,
     "vehicleStatus": true,

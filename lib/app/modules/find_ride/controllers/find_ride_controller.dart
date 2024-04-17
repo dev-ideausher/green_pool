@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/data/find_ride_model.dart';
+import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/modules/profile/controllers/profile_controller.dart';
 import 'package:green_pool/app/services/colors.dart';
 
@@ -52,12 +53,12 @@ class FindRideController extends GetxController {
 
   decideRouting() async {
     if (Get.find<GetStorageService>().getLoggedIn) {
-      //? for testing updateDetailsAPI
-      // Get.toNamed(Routes.RIDER_PROFILE_SETUP, arguments: isDriver);
-      //?original flow
-      // await riderPostRideAPI();
-      //?new flow
-      await getMatchingRidesAPI();
+      if (Get.find<HomeController>().userInfo.value.data?.profileStatus ==
+          true) {
+        await getMatchingRidesAPI();
+      } else {
+        Get.toNamed(Routes.RIDER_PROFILE_SETUP);
+      }
     } else {
       Get.toNamed(Routes.CREATE_ACCOUNT, arguments: isDriver);
     }
