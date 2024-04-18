@@ -9,18 +9,15 @@ class DioClient {
 
   bool isOverlayLoader;
   bool showSnakbar;
+  String? baseUrl;
 
-  DioClient(this._dio,
-      {this.isOverlayLoader = false, this.showSnakbar = false}) {
+  DioClient(this._dio, {this.isOverlayLoader = false, this.showSnakbar = false,this.baseUrl}) {
     _dio
-      ..options.baseUrl = Endpoints.baseUrl
-      ..options.connectTimeout =
-          const Duration(milliseconds: Endpoints.connectionTimeout)
-      ..options.receiveTimeout =
-          const Duration(milliseconds: Endpoints.receiveTimeout)
+      ..options.baseUrl = baseUrl ?? Endpoints.baseUrl
+      ..options.connectTimeout = const Duration(milliseconds: Endpoints.connectionTimeout)
+      ..options.receiveTimeout = const Duration(milliseconds: Endpoints.receiveTimeout)
       ..options.responseType = ResponseType.json
-      ..interceptors.add(AppInterceptors(
-          isOverlayLoader: isOverlayLoader, showSnakbar: showSnakbar));
+      ..interceptors.add(AppInterceptors(isOverlayLoader: isOverlayLoader, showSnakbar: showSnakbar));
   }
 
 // Get:-----------------------------------------------------------------------

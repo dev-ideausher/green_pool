@@ -48,6 +48,8 @@ class GetStorageService extends GetxService {
 
   String? get getUserAppId => _runData.read('userAppId') ?? '';
   set setUserAppId(String? val) => _runData.write('userAppId', val);
+  String? get profilePicUrl => _runData.read('profilePicUrl') ?? '';
+  set profilePicUrl(String? val) => _runData.write('profilePicUrl', val);
 
 //!
   File? get profilePic =>

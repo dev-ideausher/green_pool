@@ -93,7 +93,7 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
                                             size: Size.fromRadius(20.kh),
                                             child: Image(
                                               image: NetworkImage(
-                                                  "${controller.confirmRequestModel.value.data?[index]?.rideDetails?[0]?.riderDetails?[0]?.profilePic?.url}"),
+                                                  "${controller.confirmRequestModel.value.data?[index]?.rideDetails?[0]?.riderDetails?.profilePic?.url}"),
                                             )),
                                       ),
                                     ).paddingOnly(right: 8.kw),
@@ -102,7 +102,7 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          "${controller.confirmRequestModel.value.data?[index]?.rideDetails?[0]?.riderDetails?[0]?.fullName}",
+                                          "${controller.confirmRequestModel.value.data?[index]?.rideDetails?[0]?.riderDetails?.fullName}",
                                           style: TextStyleUtil.k16Semibold(
                                               fontSize: 16.kh),
                                         ).paddingOnly(bottom: 8.kh),
@@ -309,7 +309,7 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
                                                                       child:
                                                                           Image(
                                                                         image: NetworkImage(
-                                                                            "${controller.confirmRequestModel.value.data?[index]?.rideDetails?[0]?.riderDetails?[0]?.profilePic?.url}"),
+                                                                            "${controller.confirmRequestModel.value.data?[index]?.rideDetails?[0]?.riderDetails?.profilePic?.url}"),
                                                                       )),
                                                             ),
                                                           ).paddingOnly(
@@ -320,7 +320,7 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
                                                                     .start,
                                                             children: [
                                                               Text(
-                                                                "${controller.confirmRequestModel.value.data?[index]?.rideDetails?[0]?.riderDetails?[0]?.fullName}",
+                                                                "${controller.confirmRequestModel.value.data?[index]?.rideDetails?[0]?.riderDetails?.fullName}",
                                                                 style: TextStyleUtil
                                                                     .k16Semibold(
                                                                         fontSize:
@@ -476,7 +476,7 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
                                                 )),
                                           );
                                         } catch (e) {
-                                          throw Exception(e);
+                                           debugPrint(e.toString());
                                         }
                                       },
                                     ),

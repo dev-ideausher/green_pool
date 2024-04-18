@@ -159,7 +159,7 @@ class CreateAccountController extends GetxController {
       final response = await APIManager.getLogin();
       final userInfo = UserInfoModel.fromJson(response.data);
       Get.find<GetStorageService>().setUserAppId = userInfo.data?.Id;
-
+      Get.find<GetStorageService>().profilePicUrl = userInfo.data?.profilePic?.url??"";
       //? here if the profileStatus is not true which means it is a new user or the user did not fill the entire user data, so the user will be automatically redirected to the Profile Setup
       if (userInfo.status!) {
         if (Get.find<HomeController>().findingRide.value) {

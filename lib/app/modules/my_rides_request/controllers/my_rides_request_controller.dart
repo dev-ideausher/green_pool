@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../data/accept_rider_request_model.dart';
@@ -16,7 +17,7 @@ class MyRidesRequestController extends GetxController {
   double latitude = Get.find<HomeController>().latitude.value;
   double longitude = Get.find<HomeController>().longitude.value;
   var sendRequestModel = DriverSendRequestModel().obs;
-  var acceptRiderRequestModel = AcceptRiderRequestModel().obs;
+
   var confirmRequestModel = DriverCofirmRequestModel().obs;
   var sendRiderRequestModel = SendRiderRequestModel().obs;
 
@@ -35,12 +36,11 @@ class MyRidesRequestController extends GetxController {
     // this api will show all the confirmed rides (which the customer has confrimed that they will go with the particular driver)
     try {
       // need driver id which will come from confirm ride by rider
-      final confirmReqResponse = await APIManager.getAllDriverConfirmRequest(
-          driverRideId: driverRideId);
+      final confirmReqResponse = await APIManager.getAllDriverConfirmRequest(driverRideId: driverRideId);
       var data = jsonDecode(confirmReqResponse.toString());
       confirmRequestModel.value = DriverCofirmRequestModel.fromJson(data);
     } catch (e) {
-      throw Exception(e);
+      debugPrint(e.toString());
     }
   }
 
@@ -51,10 +51,9 @@ class MyRidesRequestController extends GetxController {
     final Map<String, dynamic> rideData = {"ridePostId": ridePostId};
 
     try {
-      final acceptRiderResponse =
-          await APIManager.postAcceptRiderRequest(body: rideData);
+      final acceptRiderResponse = await APIManager.postAcceptRiderRequest(body: rideData);
       var data = jsonDecode(acceptRiderResponse.toString());
-      acceptRiderRequestModel.value = AcceptRiderRequestModel.fromJson(data);
+      showMySnackbar(msg: data['message'] ?? 'Request accepted successfully!');
     } catch (e) {
       throw Exception(e);
     }
@@ -66,8 +65,7 @@ class MyRidesRequestController extends GetxController {
     final Map<String, dynamic> rideData = {"ridePostId": ridePostId};
 
     try {
-      final rejectRiderResponse =
-          await APIManager.postRejectRiderRequest(body: rideData);
+      final rejectRiderResponse = await APIManager.postRejectRiderRequest(body: rideData);
       var data = jsonDecode(rejectRiderResponse.toString());
       showMySnackbar(msg: 'Request rejected successfully!');
     } catch (e) {
@@ -77,8 +75,7 @@ class MyRidesRequestController extends GetxController {
 
   allSendRequestAPI() async {
     try {
-      final sendReqResponse =
-          await APIManager.getAllDriverSendRequest(driverId: driverRideId);
+      final sendReqResponse = await APIManager.getAllDriverSendRequest(driverId: driverRideId);
       var data = jsonDecode(sendReqResponse.toString());
       sendRequestModel.value = DriverSendRequestModel.fromJson(data);
     } catch (e) {
@@ -89,15 +86,11 @@ class MyRidesRequestController extends GetxController {
   sendRiderRequestAPI(int index) async {
     final String riderRideId = "${sendRequestModel.value.data?[index]?.Id}";
 
-    final Map<String, dynamic> rideData = {
-      "riderRideId": riderRideId,
-      "driverRideId": driverRideId
-    };
+    final Map<String, dynamic> rideData = {"riderRideId": riderRideId, "driverRideId": driverRideId};
 
     try {
       // driver will send request to the customer (from send request view)
-      final sendRiderRequestResponse =
-          await APIManager.postSendRequestToRider(body: rideData);
+      final sendRiderRequestResponse = await APIManager.postSendRequestToRider(body: rideData);
       var data = jsonDecode(sendRiderRequestResponse.toString());
       sendRiderRequestModel.value = SendRiderRequestModel.fromJson(data);
       showMySnackbar(msg: 'Request sent successfully');

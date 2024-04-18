@@ -2,9 +2,11 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/modules/rider_profile_setup/views/rider_review_pic.dart';
+import 'package:green_pool/app/services/gp_util.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -26,12 +28,9 @@ class RiderProfileSetupController extends GetxController {
   Rx<File?> selectedIDImagePath = Rx<File?>(null);
   RxBool isProfileImagePicked = false.obs;
   RxBool isIDPicked = false.obs;
-  TextEditingController fullName = TextEditingController(
-      text: Get.find<AuthService>().auth.currentUser?.displayName);
-  TextEditingController email = TextEditingController(
-      text: Get.find<AuthService>().auth.currentUser?.email);
-  TextEditingController phoneNumber = TextEditingController(
-      text: Get.find<AuthService>().auth.currentUser?.phoneNumber);
+  TextEditingController fullName = TextEditingController(text: Get.find<AuthService>().auth.currentUser?.displayName);
+  TextEditingController email = TextEditingController(text: Get.find<AuthService>().auth.currentUser?.email);
+  TextEditingController phoneNumber = TextEditingController(text: Get.find<AuthService>().auth.currentUser?.phoneNumber);
   TextEditingController gender = TextEditingController();
   TextEditingController city = TextEditingController();
   TextEditingController dateOfBirth = TextEditingController();
@@ -54,40 +53,30 @@ class RiderProfileSetupController extends GetxController {
   //   super.onClose();
   // }
   Future<void> setDate(BuildContext context) async {
-    DateTime lastDate = DateTime.now()
-        .subtract(const Duration(days: 18 * 365)); // Subtracting 18 years
+    DateTime lastDate = DateTime.now().subtract(const Duration(days: 18 * 365)); // Subtracting 18 years
 
-    DateTime initialDate =
-        DateTime.now().isAfter(lastDate) ? lastDate : DateTime.now();
+    DateTime initialDate = DateTime.now().isAfter(lastDate) ? lastDate : DateTime.now();
 
     DateTime? pickedDate = await showDatePicker(
       context: context,
       firstDate: DateTime(1950),
       lastDate: lastDate,
       initialDate: initialDate,
-      
       builder: (BuildContext context, Widget? child) {
         return Theme(
-
           // Define the custom theme for the date picker
           data: ThemeData(
             // Define the primary color
-            primaryColor: Get.find<ProfileController>().isSwitched.value
-                ? ColorUtil.kPrimaryPinkMode
-                : ColorUtil.kPrimary01,
+            primaryColor: Get.find<ProfileController>().isSwitched.value ? ColorUtil.kPrimaryPinkMode : ColorUtil.kPrimary01,
             // Define the color scheme for the date picker
             colorScheme: ColorScheme.light(
               // Define the primary color for the date picker
-              primary: Get.find<ProfileController>().isSwitched.value
-                  ? ColorUtil.kPrimaryPinkMode
-                  : ColorUtil.kPrimary01,
+              primary: Get.find<ProfileController>().isSwitched.value ? ColorUtil.kPrimaryPinkMode : ColorUtil.kPrimary01,
               // Define the background color for the date picker
               surface: ColorUtil.kWhiteColor,
               // Define the on-primary color for the date picker
               onPrimary: ColorUtil.kBlack01,
-              secondary: Get.find<ProfileController>().isSwitched.value
-                  ? ColorUtil.kPrimaryPinkMode
-                  : ColorUtil.kPrimary01,
+              secondary: Get.find<ProfileController>().isSwitched.value ? ColorUtil.kPrimaryPinkMode : ColorUtil.kPrimary01,
             ),
           ),
           // Apply the custom theme to the child widget
@@ -99,13 +88,12 @@ class RiderProfileSetupController extends GetxController {
     if (pickedDate != null) {
       String formattedDate = pickedDate.toString().split(" ")[0];
       dateOfBirth.text = formattedDate;
-      formattedDateOfBirth.text =
-          "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
+      formattedDateOfBirth.text = "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
     }
   }
 
   getProfileImage(ImageSource imageSource) async {
-    final pickedFile = await ImagePicker().pickImage(source: imageSource);
+    XFile? pickedFile = await GpUtil.compressImage(imageSource);
     if (pickedFile != null) {
       selectedProfileImagePath.value = File(pickedFile.path);
       update();
@@ -118,7 +106,8 @@ class RiderProfileSetupController extends GetxController {
   }
 
   getIDImage(ImageSource imageSource) async {
-    final pickedIDFile = await ImagePicker().pickImage(source: imageSource);
+    XFile? pickedIDFile = await GpUtil.compressImage(imageSource);
+
     if (pickedIDFile != null) {
       selectedIDImagePath.value = File(pickedIDFile.path);
       isIDPicked.value = true;

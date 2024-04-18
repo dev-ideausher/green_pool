@@ -1,36 +1,32 @@
+import 'dart:convert';
+
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
+import '../../../data/my_rides_details_model.dart';
 import '../../../data/my_rides_model.dart';
+import '../../../services/dio/api_service.dart';
 
 class MyRidesDetailsController extends GetxController {
-  // final Rx<MyRidesDetailsModel> myRideDetailsModel = MyRidesDetailsModel().obs;
-  final Rx<MyRidesModelData> myRidesModelData = MyRidesModelData().obs;
+  final Rx<MyRidesDetailsModel> myRidesModelData = MyRidesDetailsModel().obs;
+  final RxBool isLoad = true.obs;
 
   @override
-  void onInit() {
+  Future<void> onInit() async {
     super.onInit();
-    myRidesModelData.value = Get.arguments;
-    // myRidesDetailsAPI();
+
+    await myRidesDetailsAPI(Get.arguments);
+    isLoad.value = false;
   }
 
-  // @override
-  // void onReady() {
-  //   super.onReady();
-  // }
-
-  // @override
-  // void onClose() {
-  //   super.onClose();
-  // }
-
-  // myRidesDetailsAPI() async {
-  //   try {
-  //     final response = await APIManager.getMyRidesDetails(rideId: myRidesModelData.value.Id ?? "");
-  //     var data = jsonDecode(response.toString());
-  //     myRideDetailsModel.value = MyRidesDetailsModel.fromJson(data);
-  //     print(myRideDetailsModel.value);
-  //   } catch (e) {
-  //     debugPrint(e.toString());
-  //   }
-  // }
+  myRidesDetailsAPI(String rideId) async {
+    try {
+      final response = await APIManager.getMyRidesDetails(rideId: rideId);
+      var data = jsonDecode(response.toString());
+      myRidesModelData.value = MyRidesDetailsModel.fromJson(data);
+      print(myRidesModelData.value);
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
 }

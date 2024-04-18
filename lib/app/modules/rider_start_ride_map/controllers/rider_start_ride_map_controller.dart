@@ -1,53 +1,68 @@
 import 'dart:async';
 
+import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:green_pool/app/data/chat_arg.dart';
+import 'package:green_pool/app/routes/app_pages.dart';
+import 'package:green_pool/app/services/dio/api_service.dart';
+import 'package:green_pool/app/services/gp_util.dart';
+import 'package:url_launcher/url_launcher.dart';
 
+import '../../../data/live_location_model.dart';
+import '../../../data/my_rides_model.dart';
+import '../../../res/strings.dart';
+import '../../../services/dio/endpoints.dart';
 import '../../home/controllers/home_controller.dart';
 
 class RiderStartRideMapController extends GetxController {
-  double latitude = Get.find<HomeController>().latitude.value;
-  double longitude = Get.find<HomeController>().longitude.value;
   late GoogleMapController mapController;
   final Set<Marker> markers = <Marker>{}.obs;
   final RxList<LatLng> polylineCoordinates = <LatLng>[].obs;
+  final Rx<MyRidesModelData> myRidesModel = MyRidesModelData().obs;
+  final RxDouble currentLat = 0.0.obs;
+  final RxDouble currentLong = 0.0.obs;
 
-  // @override
-  // void onInit() {
-  //   super.onInit();
-  // }
+  final RxDouble destinationLat = 0.0.obs;
+  final RxDouble destinationLong = 0.0.obs;
+  final RxBool isLoad = true.obs;
+  final RxBool isArrival = false.obs;
+  final RxString arrivalTime = "N/A".obs;
+  final RxBool isPickUp = false.obs;
 
-  // @override
-  // void onReady() {
-  //   super.onReady();
-  // }
-
-  // @override
-  // void onClose() {
-  //   super.onClose();
-  // }
+  @override
+  void onInit() {
+    super.onInit();
+    myRidesModel.value = Get.arguments;
+    isArrival.value = myRidesModel.value.confirmDriverDetails?.first?.driverPostsDetails?.first?.isStarted ?? false;
+    if (myRidesModel.value.confirmDriverDetails?.first?.pickUpStatus?.isPickUp ?? false) {
+      isArrival.value = false;
+      isPickUp.value = true;
+      destinationLat.value = myRidesModel.value.destination?.coordinates?.last ?? 0.0;
+      destinationLong.value = myRidesModel.value.destination?.coordinates?.first ?? 0.0;
+    } else {
+      destinationLat.value = myRidesModel.value.origin?.coordinates?.last ?? 0.0;
+      destinationLong.value = myRidesModel.value.origin?.coordinates?.first ?? 0.0;
+    }
+    isLoad.value = false;
+  }
 
   Future<void> onMapCreated(GoogleMapController controller) async {
     mapController = controller;
     mapController.animateCamera(CameraUpdate.newCameraPosition(
       CameraPosition(
         bearing: 270.0,
-        target: LatLng(latitude, longitude),
-        // LatLng(
-        //     myRidesModel.value.origin?.coordinates?.last ?? //source
-        //         0.0,
-        //     myRidesModel.value.origin?.coordinates?.first ?? 0.0),
+        target: LatLng(destinationLat.value, destinationLong.value),
         tilt: 30.0,
         zoom: 17.0,
       ),
     ));
-    mapController.animateCamera(CameraUpdate.newLatLngBounds(
-        boundsFromLatLngList(polylineCoordinates), 60));
-
     polylineCoordinates.refresh();
-    liveUpdateLocation();
+    onChangeLocation();
   }
 
   LatLngBounds boundsFromLatLngList(List<LatLng> list) {
@@ -61,47 +76,123 @@ class RiderStartRideMapController extends GetxController {
       if (point.longitude < minLng) minLng = point.longitude;
       if (point.longitude > maxLng) maxLng = point.longitude;
     }
-    return LatLngBounds(
-        southwest: LatLng(minLat, minLng), northeast: LatLng(maxLat, maxLng));
+    return LatLngBounds(southwest: LatLng(minLat, minLng), northeast: LatLng(maxLat, maxLng));
   }
 
   StreamSubscription<Position>? driversPositionStream;
 
-  void liveUpdateLocation() async {
-    const LocationSettings locationSettings = LocationSettings(
-      accuracy: LocationAccuracy.high,
-      distanceFilter: 100,
-    );
-    try {
-      driversPositionStream =
-          await Geolocator.getPositionStream(locationSettings: locationSettings)
-              .listen((Position? position) async {
-        if (position != null) {
-          final currentLat = position.latitude;
-          final currentLong = position.longitude;
-          // myRidesModel.value.origin?.coordinates = [currentLong, currentLat];
-          mapController.animateCamera(
-            CameraUpdate.newCameraPosition(
-              CameraPosition(
-                zoom: 13.5,
-                target: LatLng(currentLat, currentLong),
-              ),
-            ),
-          );
-          // await getPolyPoints();
-          polylineCoordinates.refresh();
+  void onChangeLocation() {
+    FirebaseDatabase.instance.ref().child('locations').child(myRidesModel.value.confirmDriverDetails?.first?.driverPostsDetails?.first?.driverId ?? "").onValue.listen(
+        (event) async {
+      var data = event.snapshot.value;
+      if (data is Map) {
+        final liveLocation = LiveLocationModel.fromMap(Map<String, dynamic>.from(data));
+        currentLat.value = liveLocation.latitude ?? 0.0;
+        currentLong.value = liveLocation.longitude ?? 0.0;
+        mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(bearing: 270.0, target: LatLng(currentLat.value, currentLong.value), tilt: 30.0, zoom: 17.0)));
+        if (isArrival.value) {
+          getArrivalTime(currentLat.value, currentLong.value, destinationLat.value, destinationLong.value);
         }
-      });
-      // Timer.periodic(const Duration(minutes: 1), (Timer t) {
-      //   if (Get.find<GetStorageService>().isRider &&
-      //       Get.find<GetStorageService>().jwToken.isNotEmpty) {
-      //     sendLocationToServer(currentPosition);
-      //   } else {
-      //     t.cancel();
-      //   }
-      // });
+      }
+      drawPolyline();
+    }, onError: (Object error) {
+      debugPrint("Error: $error");
+    });
+  }
+
+  drawPolyline() async {
+    try {
+      markers.clear();
+
+      PolylineResult result = await PolylinePoints().getRouteBetweenCoordinates(
+          Endpoints.googleApiKey, PointLatLng(currentLat.value, currentLong.value), PointLatLng(destinationLat.value, destinationLong.value),
+          travelMode: TravelMode.driving);
+      if (result.points.isNotEmpty) {
+        polylineCoordinates.assignAll(result.points.map((PointLatLng point) => LatLng(point.latitude, point.longitude)).toList());
+        addMarker(polylineCoordinates.first, /*sourceMark!,*/ 0.0);
+        addMarker(polylineCoordinates.last, /*destinationMark!,*/ 0.0);
+        mapController.animateCamera(CameraUpdate.newLatLngBounds(GpUtil.boundsFromLatLngList(polylineCoordinates), 70));
+      }
     } catch (e) {
-      debugPrint('Error getting location: $e');
+      debugPrint('Error in drawPolyline: $e');
+    }
+  }
+
+  void addMarker(LatLng position, double d) {
+    markers.add(Marker(markerId: MarkerId(position.toString()), position: position, icon: BitmapDescriptor.defaultMarker, rotation: 0));
+  }
+
+  void getArrivalTime(double latitude, double longitude, double destinationLat, double destinationLong) async {
+    try {
+      final response = await APIManager.getArrivalTime(origin: ("$latitude,$longitude"), destination: ("$latitude,$longitude"));
+      final data = response.data;
+      final routes = data['routes'] as List<dynamic>;
+      if (routes.isNotEmpty) {
+        final route = routes[0];
+        final legs = route['legs'] as List<dynamic>;
+        if (legs.isNotEmpty) {
+          final leg = legs[0];
+          final duration = leg['duration'] as Map<String, dynamic>;
+          final durationText = duration['text'] as String;
+          arrivalTime.value = durationText;
+        }
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
+  String getMsg() {
+    if (isArrival.value) {
+      return arrivalTime.value.contains("1 min") ? Strings.yourRideIsArrived : "${Strings.yourRideIsArrivingIn} ${arrivalTime.value}.";
+    } else {
+      if (isLessThanFiveMinutes(arrivalTime.value)) {
+        return Strings.youAreAboutToReachYourDestination;
+      } else {
+        return Strings.youWillReachYourDestinationIn + arrivalTime.value;
+      }
+    }
+  }
+
+  bool isLessThanFiveMinutes(String minutesString) {
+    try {
+      int minutes = int.parse(minutesString.split(' ')[0]);
+      return minutes < 5;
+    } catch (e) {
+      // Handle parsing errors, invalid format, etc.
+      print('Error parsing minutes: $e');
+      return false;
+    }
+  }
+
+  callToDriver() async {
+    final url = Uri.parse('tel:${myRidesModel.value.confirmDriverDetails?.first?.driverPostsDetails?.first?.driverDetails?.first?.phone}');
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  chatWithDriver() async {
+    try {
+      final res = await APIManager.getChatRoomId(
+          receiverId: myRidesModel.value.confirmDriverDetails?.first?.driverPostsDetails?.first?.driverId ?? "", ridePostId: myRidesModel.value.Id ?? "");
+      Get.toNamed(Routes.CHAT_PAGE,
+          arguments: ChatArg(
+              chatRoomId: res.data["chatChannelId"] ?? "",
+              rideId: myRidesModel.value.Id ?? "",
+              id: myRidesModel.value.confirmDriverDetails?.first?.driverPostsDetails?.first?.driverId,
+              name: myRidesModel.value.confirmDriverDetails?.first?.driverPostsDetails?.first?.driverDetails?.first?.fullName,
+              image: myRidesModel.value.confirmDriverDetails?.first?.driverPostsDetails?.first?.driverDetails?.first?.profilePic?.url));
+    } catch (e) {
+      Get.toNamed(Routes.CHAT_PAGE,
+          arguments: ChatArg(
+              rideId: myRidesModel.value.Id ?? "",
+              id: myRidesModel.value.confirmDriverDetails?.first?.driverPostsDetails?.first?.driverId,
+              name: myRidesModel.value.confirmDriverDetails?.first?.driverPostsDetails?.first?.driverDetails?.first?.fullName,
+              image: myRidesModel.value.confirmDriverDetails?.first?.driverPostsDetails?.first?.driverDetails?.first?.profilePic?.url));
+      debugPrint(e.toString());
     }
   }
 }

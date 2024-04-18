@@ -21,6 +21,7 @@ class MyRidesView extends GetView<MyRidesController> {
 
   @override
   Widget build(BuildContext context) {
+
     Get.lazyPut(() => MyRidesController());
     return Scaffold(
       appBar: const GreenPoolAppBar(

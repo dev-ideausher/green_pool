@@ -37,9 +37,7 @@ class MyRidesOneTimeController extends GetxController {
       final response = await APIManager.getAllMyRides();
       var data = jsonDecode(response.toString());
       final mData = MyRidesModel.fromJson(data);
-      myRidesModelData.value = mData.data!
-          .where((element) => !(element.isCancelled ?? false))
-          .toList();
+      myRidesModelData.value = mData.data!.where((element) => !(element.isCancelled ?? false)).toList();
       isLoad.value = false;
     } catch (e) {
       throw Exception(e);
@@ -52,8 +50,7 @@ class MyRidesOneTimeController extends GetxController {
     };
     try {
       isLoad.value = true;
-      final cancelRideResponse =
-          await APIManager.riderCancelRide(body: riderRideId);
+      final cancelRideResponse = await APIManager.riderCancelRide(body: riderRideId);
       var data = jsonDecode(cancelRideResponse.toString());
       await myRidesAPI();
       isLoad.value = false;
@@ -68,8 +65,7 @@ class MyRidesOneTimeController extends GetxController {
     };
     try {
       isLoad.value = true;
-      final cancelRideResponse =
-          await APIManager.cancelRide(body: driverRideId);
+      final cancelRideResponse = await APIManager.cancelRide(body: driverRideId);
       var data = jsonDecode(cancelRideResponse.toString());
       await myRidesAPI();
       isLoad.value = false;
@@ -79,6 +75,22 @@ class MyRidesOneTimeController extends GetxController {
   }
 
   void viewDetails(MyRidesModelData myRidesModelData) {
-    Get.toNamed(Routes.MY_RIDES_DETAILS, arguments: myRidesModelData);
+  /*  if (myRidesModelData.confirmDriverDetails?.first?.driverPostsDetails?.first?.isStarted ?? false) {
+      Get.toNamed(Routes.START_RIDE, arguments: myRidesModelData);
+    } else {*/
+      Get.toNamed(Routes.MY_RIDES_DETAILS, arguments: myRidesModelData.Id);
+  /*  }*/
+  }
+
+  void riderPagePageOpen(MyRidesModelData myRidesModelData) {
+    if (myRidesModelData.confirmDriverDetails?.first?.driverPostsDetails?.first?.isStarted ?? false) {
+      Get.toNamed(Routes.RIDER_START_RIDE_MAP, arguments: myRidesModelData);
+    } else {
+      if (myRidesModelData.rideStatus == "Confirmed") {
+        Get.toNamed(Routes.RIDER_CONFIRMED_RIDE_DETAILS, arguments: myRidesModelData);
+      } else {
+        Get.toNamed(Routes.RIDER_MY_RIDE_REQUEST, arguments: myRidesModelData.Id);
+      }
+    }
   }
 }

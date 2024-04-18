@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:get/get.dart';
+import 'package:green_pool/app/components/gp_progress.dart';
 import 'package:green_pool/app/components/origin_to_destination.dart';
 import 'package:green_pool/app/modules/post_ride/views/amenities.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
@@ -27,14 +28,9 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
         title: Text('Ride Details'),
       ),
       body: Obx(
-        () => controller.myRidesModelData == null
-            ? Center(
-                child: CircularProgressIndicator(
-                color: Get.find<ProfileController>().isSwitched.value
-                    ? ColorUtil.kPrimary3PinkMode
-                    : ColorUtil.kPrimary01,
-              ))
-            : SingleChildScrollView(
+        () => controller.isLoad.value
+            ?GpProgress():
+            SizedBox() /*SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -371,7 +367,7 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                         }).paddingSymmetric(vertical: 40.kh)
                   ],
                 ).paddingSymmetric(horizontal: 16.kw),
-              ),
+              )*/,
       ),
     );
   }

@@ -162,7 +162,10 @@ class StartRideController extends GetxController {
       final response = await APIManager.startRide(
           body: {"driverRideId": myRidesModel.value.Id});
       var data = jsonDecode(response.toString());
-      isRideStarted.value = true;
+      if(data['status']){
+        isRideStarted.value = true;
+      }
+
       showMySnackbar(msg: "${response.statusMessage}");
     } catch (e) {
       debugPrint(e.toString());
