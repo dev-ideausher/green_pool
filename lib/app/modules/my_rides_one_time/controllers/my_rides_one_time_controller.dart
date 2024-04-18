@@ -78,7 +78,7 @@ class MyRidesOneTimeController extends GetxController {
   /*  if (myRidesModelData.confirmDriverDetails?.first?.driverPostsDetails?.first?.isStarted ?? false) {
       Get.toNamed(Routes.START_RIDE, arguments: myRidesModelData);
     } else {*/
-      Get.toNamed(Routes.MY_RIDES_DETAILS, arguments: myRidesModelData.Id);
+      Get.toNamed(Routes.MY_RIDES_DETAILS, arguments: myRidesModelData.postsInfo?.first?.Id);
   /*  }*/
   }
 

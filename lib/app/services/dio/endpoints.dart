@@ -34,7 +34,7 @@ class Endpoints {
   static const String sendMessage = "chat";
   static const String emergencyContacts = "user/emergencyContacts";
   static const String driverMyRides = "driver/myrides";
-  static const String driverMyRidesDetails = "driver/myrides?rideId=";
+  static const String driverMyRidesDetails = "user/bookingDetails/";
   static const String allRecurringRides = "driver/recurringRides";
   static const String recurringRideDetails = "driver/recurringRides/";
   static const String rideHistory = "rider/rideHistory";

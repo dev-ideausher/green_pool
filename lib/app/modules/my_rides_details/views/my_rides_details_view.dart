@@ -29,8 +29,8 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
       ),
       body: Obx(
         () => controller.isLoad.value
-            ?GpProgress():
-            SizedBox() /*SingleChildScrollView(
+            ? const GpProgress()
+            : SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -45,32 +45,25 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                               children: [
                                 SvgPicture.asset(
                                   ImageConstant.svgIconCalendarTime,
-                                  colorFilter: ColorFilter.mode(
-                                      Get.find<ProfileController>()
-                                              .isSwitched
-                                              .value
-                                          ? ColorUtil.kPrimary3PinkMode
-                                          : ColorUtil.kSecondary01,
-                                      BlendMode.srcIn),
+                                  colorFilter:
+                                      ColorFilter.mode(Get.find<ProfileController>().isSwitched.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01, BlendMode.srcIn),
                                 ).paddingOnly(right: 8.kw),
                                 Text(
                                   // "7 July 2023, 3:00pm",
-                                  "${controller.myRidesModelData.value.date.toString().split("T").first}  ${controller.myRidesModelData.value.time}",
-                                  style: TextStyleUtil.k16Bold(
-                                      color: ColorUtil.kBlack02),
+
+                                  "${controller.myRidesModelData.value.createdAt.toString().split("T").first} ",
+                                 // "${controller.myRidesModelData.value.date.toString().split("T").first}  ${controller.myRidesModelData.value.time}",
+                                  style: TextStyleUtil.k16Bold(color: ColorUtil.kBlack02),
                                 )
                               ],
                             ),
                             Text(
                               "Fare: ${controller.myRidesModelData.value.fair}",
-                              style: TextStyleUtil.k16Semibold(
-                                  fontSize: 16.kh,
-                                  color: ColorUtil.kSecondary01),
+                              style: TextStyleUtil.k16Semibold(fontSize: 16.kh, color: ColorUtil.kSecondary01),
                             ),
                           ],
                         ),
-                        const GreenPoolDivider()
-                            .paddingSymmetric(vertical: 16.kh),
+                        const GreenPoolDivider().paddingSymmetric(vertical: 16.kh),
                         Text(
                           "Origin to Destination",
                           style: TextStyleUtil.k16Bold(),
@@ -82,19 +75,15 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                                 Container(
                                   height: 10.kh,
                                   width: 10.kw,
-                                  decoration: const BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: ColorUtil.kGreenColor),
+                                  decoration: const BoxDecoration(shape: BoxShape.circle, color: ColorUtil.kGreenColor),
                                 ).paddingOnly(right: 8.kw),
                                 Text(
                                   'Pick up: ',
-                                  style: TextStyleUtil.k14Semibold(
-                                      color: ColorUtil.kBlack02),
+                                  style: TextStyleUtil.k14Semibold(color: ColorUtil.kBlack02),
                                 ).paddingOnly(right: 8.kw),
                                 Text(
                                   "${controller.myRidesModelData.value.origin?.name}",
-                                  style: TextStyleUtil.k14Regular(
-                                      color: ColorUtil.kBlack02),
+                                  style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack02),
                                 ),
                               ],
                             ).paddingOnly(bottom: 30.kh),
@@ -105,19 +94,15 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                                   Container(
                                     height: 10.kh,
                                     width: 10.kw,
-                                    decoration: const BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: ColorUtil.kError4),
+                                    decoration: const BoxDecoration(shape: BoxShape.circle, color: ColorUtil.kError4),
                                   ).paddingOnly(right: 8.kw),
                                   Text(
                                     'Drop off: ',
-                                    style: TextStyleUtil.k14Semibold(
-                                        color: ColorUtil.kBlack02),
+                                    style: TextStyleUtil.k14Semibold(color: ColorUtil.kBlack02),
                                   ).paddingOnly(right: 8.kw),
                                   Text(
                                     "${controller.myRidesModelData.value.destination?.name}",
-                                    style: TextStyleUtil.k14Regular(
-                                        color: ColorUtil.kBlack02),
+                                    style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack02),
                                   ),
                                 ],
                               ),
@@ -153,12 +138,9 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                             ),
                           )
                         : SizedBox(
-                            height: controller
-                                    .myRidesModelData.value.postsInfo!.length *
-                                122.kh,
+                            height: controller.myRidesModelData.value.postsInfo!.length * 122.kh,
                             child: ListView.builder(
-                                itemCount: controller
-                                    .myRidesModelData.value.postsInfo?.length,
+                                itemCount: controller.myRidesModelData.value.postsInfo?.length,
                                 physics: const NeverScrollableScrollPhysics(),
                                 itemBuilder: (context, index1) {
                                   return Container(
@@ -173,15 +155,9 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                                               child: ClipOval(
                                                 child: SizedBox.fromSize(
                                                   size: Size.fromRadius(20.kh),
-                                                  child: controller
-                                                              .myRidesModelData
-                                                              .value
-                                                              .postsInfo
-                                                              ?.length ==
-                                                          0
+                                                  child: controller.myRidesModelData.value.postsInfo?.length == 0
                                                       ? Image.asset(
-                                                          ImageConstant
-                                                              .pngEmptyPassenger,
+                                                          ImageConstant.pngEmptyPassenger,
                                                         )
                                                       : Image(
                                                           image: NetworkImage(
@@ -192,16 +168,13 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                                             ).paddingOnly(right: 8.kw),
                                             Text(
                                               "${controller.myRidesModelData.value.postsInfo?[index1]?.riderPostsDetails?[0]?.ridersDetails?[0]?.fullName}",
-                                              style:
-                                                  TextStyleUtil.k14Semibold(),
+                                              style: TextStyleUtil.k14Semibold(),
                                             )
                                           ],
                                         ).paddingOnly(bottom: 12.kh),
                                         OriginToDestination(
-                                                origin:
-                                                    '${controller.myRidesModelData.value.postsInfo?[index1]?.riderPostsDetails?[0]?.origin?.name}',
-                                                destination:
-                                                    '${controller.myRidesModelData.value.postsInfo?[index1]?.riderPostsDetails?[0]?.destination?.name}')
+                                                origin: '${controller.myRidesModelData.value.postsInfo?[index1]?.riderPostsDetails?[0]?.origin?.name}',
+                                                destination: '${controller.myRidesModelData.value.postsInfo?[index1]?.riderPostsDetails?[0]?.destination?.name}')
                                             .paddingOnly(bottom: 8.kh),
                                         //bottom line
                                         const GreenPoolDivider(),
@@ -224,15 +197,12 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                           child: SizedBox(
                             height: 64.kh,
                             width: 64.kw,
-                            child: controller.myRidesModelData.value
-                                        .vehicleDetails?[0]?.vehiclePic?.url ==
-                                    null
+                            child: controller.myRidesModelData.value.vehicleDetails?[0]?.vehiclePic?.url == null
                                 ? Center(
                                     child: CircularProgressIndicator(),
                                   )
                                 : Image(
-                                    image: NetworkImage(
-                                        "${controller.myRidesModelData.value.vehicleDetails?[0]?.vehiclePic?.url}"),
+                                    image: NetworkImage("${controller.myRidesModelData.value.vehicleDetails?[0]?.vehiclePic?.url}"),
                                   ).paddingOnly(right: 8.kw),
                           ),
                         ),
@@ -241,26 +211,22 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                           children: [
                             Text(
                               '${controller.myRidesModelData.value.vehicleDetails?[0]?.model}',
-                              style: TextStyleUtil.k16Bold(
-                                  color: ColorUtil.kBlack02),
+                              style: TextStyleUtil.k16Bold(color: ColorUtil.kBlack02),
                             ).paddingOnly(bottom: 4.kh),
                             Row(
                               children: [
                                 Text(
                                   '${controller.myRidesModelData.value.vehicleDetails?[0]?.type}',
-                                  style: TextStyleUtil.k14Semibold(
-                                      color: ColorUtil.kBlack03),
+                                  style: TextStyleUtil.k14Semibold(color: ColorUtil.kBlack03),
                                 ),
                                 Container(
                                   width: 1.kw,
                                   height: 16.kh,
                                   color: ColorUtil.kBlack03,
-                                ).paddingSymmetric(
-                                    vertical: 2.5.kh, horizontal: 8.kw),
+                                ).paddingSymmetric(vertical: 2.5.kh, horizontal: 8.kw),
                                 Text(
                                   '${controller.myRidesModelData.value.vehicleDetails?[0]?.licencePlate}',
-                                  style: TextStyleUtil.k14Semibold(
-                                      color: ColorUtil.kBlack03),
+                                  style: TextStyleUtil.k14Semibold(color: ColorUtil.kBlack03),
                                 ),
                               ],
                             ),
@@ -276,77 +242,29 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                       style: TextStyleUtil.k14Bold(),
                     ).paddingOnly(bottom: 16.kh),
 
-                    controller.myRidesModelData.value.preferences?.other
-                                ?.AppreciatesConversation ==
-                            true
-                        ? Amenities(
-                                toggleSwitch: false,
-                                text: "Appreciates Conversation",
-                                image: ImageConstant.svgAmenities1)
-                            .paddingOnly(bottom: 8.kh)
+                    controller.myRidesModelData.value.preferences?.other?.AppreciatesConversation == true
+                        ? Amenities(toggleSwitch: false, text: "Appreciates Conversation", image: ImageConstant.svgAmenities1).paddingOnly(bottom: 8.kh)
                         : const SizedBox(),
-                    controller.myRidesModelData.value.preferences?.other
-                                ?.EnjoysMusic ==
-                            true
-                        ? Amenities(
-                                toggleSwitch: false,
-                                text: "Enjoys Music",
-                                image: ImageConstant.svgAmenities2)
-                            .paddingOnly(bottom: 8.kh)
+                    controller.myRidesModelData.value.preferences?.other?.EnjoysMusic == true
+                        ? Amenities(toggleSwitch: false, text: "Enjoys Music", image: ImageConstant.svgAmenities2).paddingOnly(bottom: 8.kh)
                         : const SizedBox(),
-                    controller.myRidesModelData.value.preferences?.other
-                                ?.SmokeFree ==
-                            true
-                        ? Amenities(
-                                toggleSwitch: false,
-                                text: "Some-Free",
-                                image: ImageConstant.svgAmenities3)
-                            .paddingOnly(bottom: 8.kh)
+                    controller.myRidesModelData.value.preferences?.other?.SmokeFree == true
+                        ? Amenities(toggleSwitch: false, text: "Some-Free", image: ImageConstant.svgAmenities3).paddingOnly(bottom: 8.kh)
                         : const SizedBox(),
-                    controller.myRidesModelData.value.preferences?.other
-                                ?.PetFriendly ==
-                            true
-                        ? Amenities(
-                                toggleSwitch: false,
-                                text: "Pet-friendly",
-                                image: ImageConstant.svgAmenities4)
-                            .paddingOnly(bottom: 8.kh)
+                    controller.myRidesModelData.value.preferences?.other?.PetFriendly == true
+                        ? Amenities(toggleSwitch: false, text: "Pet-friendly", image: ImageConstant.svgAmenities4).paddingOnly(bottom: 8.kh)
                         : const SizedBox(),
-                    controller.myRidesModelData.value.preferences?.other
-                                ?.WinterTires ==
-                            true
-                        ? Amenities(
-                                toggleSwitch: false,
-                                text: "Winter Tires",
-                                image: ImageConstant.svgAmenities5)
-                            .paddingOnly(bottom: 8.kh)
+                    controller.myRidesModelData.value.preferences?.other?.WinterTires == true
+                        ? Amenities(toggleSwitch: false, text: "Winter Tires", image: ImageConstant.svgAmenities5).paddingOnly(bottom: 8.kh)
                         : const SizedBox(),
-                    controller.myRidesModelData.value.preferences?.other
-                                ?.CoolingOrHeating ==
-                            true
-                        ? Amenities(
-                                toggleSwitch: false,
-                                text: "Cooling or Heating",
-                                image: ImageConstant.svgAmenities6)
-                            .paddingOnly(bottom: 8.kh)
+                    controller.myRidesModelData.value.preferences?.other?.CoolingOrHeating == true
+                        ? Amenities(toggleSwitch: false, text: "Cooling or Heating", image: ImageConstant.svgAmenities6).paddingOnly(bottom: 8.kh)
                         : const SizedBox(),
-                    controller.myRidesModelData.value.preferences?.other
-                                ?.BabySeat ==
-                            true
-                        ? Amenities(
-                                toggleSwitch: false,
-                                text: "Baby Seats",
-                                image: ImageConstant.svgAmenities7)
-                            .paddingOnly(bottom: 8.kh)
+                    controller.myRidesModelData.value.preferences?.other?.BabySeat == true
+                        ? Amenities(toggleSwitch: false, text: "Baby Seats", image: ImageConstant.svgAmenities7).paddingOnly(bottom: 8.kh)
                         : const SizedBox(),
-                    controller.myRidesModelData.value.preferences?.other
-                                ?.HeatedSeats ==
-                            true
-                        ? Amenities(
-                                toggleSwitch: false,
-                                text: "Heated Seats",
-                                image: ImageConstant.svgAmenities8)
-                            .paddingOnly(bottom: 8.kh)
+                    controller.myRidesModelData.value.preferences?.other?.HeatedSeats == true
+                        ? Amenities(toggleSwitch: false, text: "Heated Seats", image: ImageConstant.svgAmenities8).paddingOnly(bottom: 8.kh)
                         : const SizedBox(),
 
                     const GreenPoolDivider().paddingSymmetric(vertical: 16.kh),
@@ -355,19 +273,16 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                       style: TextStyleUtil.k14Semibold(),
                     ).paddingOnly(bottom: 8.kh),
                     Wrap(
-                      children: [
-                        Text("${controller.myRidesModelData.value.description}")
-                      ],
+                      children: [Text("${controller.myRidesModelData.value.description}")],
                     ),
                     GreenPoolButton(
                         label: "View Matching Riders",
                         onPressed: () {
-                          Get.toNamed(Routes.MY_RIDES_REQUEST,
-                              arguments: controller.myRidesModelData.value.Id);
+                          Get.toNamed(Routes.MY_RIDES_REQUEST, arguments: controller.myRidesModelData.value.Id);
                         }).paddingSymmetric(vertical: 40.kh)
                   ],
                 ).paddingSymmetric(horizontal: 16.kw),
-              )*/,
+              ),
       ),
     );
   }
