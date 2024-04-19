@@ -80,7 +80,7 @@ class APIManager {
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).get(Endpoints.recurringRideDetails + rideId);
 
   static Future<Response> getMyRidesDetails({required String rideId}) async =>
-      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).get(Endpoints.driverMyRidesDetails + rideId);
+      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false).get(Endpoints.driverMyRidesDetails + rideId);
 
   static Future<Response> getAllDriverSendRequest({required String driverId}) async =>
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).get(Endpoints.allDriverSendRequests + driverId);

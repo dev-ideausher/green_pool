@@ -1,11 +1,8 @@
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-
 import '../../../data/booking_detail_model.dart';
-import '../../../data/my_rides_details_model.dart';
-import '../../../data/my_rides_model.dart';
+import '../../../routes/app_pages.dart';
 import '../../../services/dio/api_service.dart';
 
 class MyRidesDetailsController extends GetxController {
@@ -25,9 +22,12 @@ class MyRidesDetailsController extends GetxController {
       final response = await APIManager.getMyRidesDetails(rideId: rideId);
       var data = jsonDecode(response.toString());
       myRidesModelData.value = BookingDetailModel.fromJson(data).data!;
-      print(myRidesModelData.value);
     } catch (e) {
       debugPrint(e.toString());
     }
   }
+
+  void viewMatchingRiders() => Get.toNamed(Routes.MY_RIDES_REQUEST, arguments: myRidesModelData.value.Id);
+
+  viewOnMap() => Get.toNamed(Routes.START_RIDE,arguments: myRidesModelData.value);
 }

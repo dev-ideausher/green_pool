@@ -29,8 +29,7 @@ class ArrivingBottomSheet extends StatelessWidget {
                   child: ListTile(
                     visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
                     leading: const Icon(Icons.access_time_rounded, color: ColorUtil.kWhiteColor),
-                    title: Text(controller.getMsg(),
-                        style: TextStyleUtil.k14Regular(color: ColorUtil.kWhiteColor)),
+                    title: Text(controller.getMsg(), style: TextStyleUtil.k14Regular(color: ColorUtil.kWhiteColor)),
                   )),
               12.kheightBox,
               ListTile(
@@ -68,14 +67,14 @@ class ArrivingBottomSheet extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     InkWell(
-                      onTap: () =>controller.callToDriver(),
+                      onTap: () => controller.callToDriver(),
                       child: CommonImageView(
                         svgPath: Assets.iconsCall,
                       ),
                     ),
                     12.kwidthBox,
                     InkWell(
-                      onTap: () =>controller.chatWithDriver(),
+                      onTap: () => controller.chatWithDriver(),
                       child: CommonImageView(
                         svgPath: Assets.iconsChat,
                       ),
@@ -88,7 +87,6 @@ class ArrivingBottomSheet extends StatelessWidget {
                       origin: "${controller.myRidesModel.value.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.origin?.name}",
                       destination: "${controller.myRidesModel.value.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.destination?.name}")
                   .paddingSymmetric(horizontal: 12.kw),
-
               24.kheightBox,
             ],
           ),
