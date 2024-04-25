@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_workers/utils/debouncer.dart';
+import 'package:green_pool/app/data/post_ride_model.dart';
 import 'package:green_pool/app/modules/find_ride/controllers/find_ride_controller.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/modules/post_ride/controllers/post_ride_controller.dart';
@@ -30,6 +31,7 @@ class OriginController extends GetxController {
   RxBool isLoading = false.obs;
   RxBool isOrigin = false.obs;
   LocationValues locationValues = LocationValues.origin;
+  var postRideModel = PostRideModel().obs;
 
   @override
   void onInit() {
@@ -117,6 +119,9 @@ class OriginController extends GetxController {
         Get.find<PostRideController>().originLongitude.value = fetchLatLong[1];
         Get.find<PostRideController>().originTextController.text =
             fetchLatLong[2];
+        // postRideModel.value.ridesDetails?.origin?.latitude = fetchLatLong[0];
+        // postRideModel.value.ridesDetails?.origin?.longitude = fetchLatLong[1];
+        // postRideModel.value.ridesDetails?.origin?.name = fetchLatLong[2];
       } else if (locationValues.name == LocationValues.destination.name) {
         Get.find<PostRideController>().destLatitude.value = fetchLatLong[0];
         Get.find<PostRideController>().destLongitude.value = fetchLatLong[1];

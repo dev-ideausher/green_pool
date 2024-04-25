@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
+import '../../../components/gp_progress.dart';
 import '../../../components/greenpool_textfield.dart';
 import '../../../services/colors.dart';
 import '../../profile/controllers/profile_controller.dart';
@@ -62,13 +63,7 @@ class OriginView extends GetView<OriginController> {
             Expanded(
               child: Obx(
                 () => controller.isLoading.value
-                    ? Center(
-                        child: CircularProgressIndicator(
-                          color: Get.find<ProfileController>().isSwitched.value
-                              ? ColorUtil.kPrimary3PinkMode
-                              : ColorUtil.kPrimary01,
-                        ),
-                      )
+                    ? const GpProgress()
                     : ListView.builder(
                         itemCount: controller.addressSugestionList.length,
                         itemBuilder: (context, index) {
@@ -86,7 +81,8 @@ class OriginView extends GetView<OriginController> {
                                 await controller.setLocationData(controller
                                     .addressSugestionList[index]['place_id']);
 
-                                Get.back();
+                                Get.back(
+                                    result: controller.postRideModel.value);
                               },
                             ),
                           );

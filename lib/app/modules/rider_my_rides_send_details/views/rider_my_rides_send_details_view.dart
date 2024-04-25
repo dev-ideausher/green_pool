@@ -9,8 +9,10 @@ import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/snackbar.dart';
 
+import '../../../components/gp_progress.dart';
 import '../../../components/green_pool_divider.dart';
 import '../../../components/greenpool_appbar.dart';
+import '../../../components/origin_to_destination.dart';
 import '../../../constants/image_constant.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
@@ -59,9 +61,7 @@ class RiderMyRidesSendDetailsView
                                           ?.profilePic
                                           ?.url ==
                                       null
-                                  ? Center(
-                                      child: CircularProgressIndicator(),
-                                    )
+                                  ? const GpProgress()
                                   : Image(
                                       image: NetworkImage(
                                           "${controller.riderSendRequestModel.value.data?[controller.index]?.driverDetails?[0]?.profilePic?.url}")),
@@ -91,7 +91,7 @@ class RiderMyRidesSendDetailsView
                                     ),
                                     TextSpan(
                                       text:
-                                          '\$ ${controller.riderSendRequestModel.value.data?[controller.index]?.fair}',
+                                          '\$ ${controller.riderSendRequestModel.value.data?[controller.index]?.origin?.originDestinationFair}',
                                       style: TextStyleUtil.k16Semibold(
                                           fontSize: 16.kh,
                                           color: ColorUtil.kSecondary01),
@@ -159,66 +159,12 @@ class RiderMyRidesSendDetailsView
                 ).paddingOnly(top: 32.kh),
                 //middle divider
                 const GreenPoolDivider().paddingOnly(bottom: 16.kh),
-                Stack(
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          height: 10.kh,
-                          width: 10.kw,
-                          decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: ColorUtil.kGreenColor),
-                        ).paddingOnly(right: 8.kw),
-                        Text(
-                          'Pick up: ',
-                          style: TextStyleUtil.k14Semibold(
-                              color: ColorUtil.kBlack02),
-                        ).paddingOnly(right: 8.kw),
-                        Text(
-                          // '1100 McIntosh St, Regina',
-                          "${controller.riderSendRequestModel.value.data?[controller.index]?.origin?.name}",
-                          style: TextStyleUtil.k14Regular(
-                              color: ColorUtil.kBlack02),
-                        ),
-                      ],
-                    ).paddingOnly(bottom: 30.kh),
-                    Positioned(
-                      top: 27.kh,
-                      child: Row(
-                        children: [
-                          Container(
-                            height: 10.kh,
-                            width: 10.kw,
-                            decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: ColorUtil.kError4),
-                          ).paddingOnly(right: 8.kw),
-                          Text(
-                            'Drop off: ',
-                            style: TextStyleUtil.k14Semibold(
-                                color: ColorUtil.kBlack02),
-                          ).paddingOnly(right: 8.kw),
-                          Text(
-                            // '681 Chrislea Rd, Woodbridge',
-                            "${controller.riderSendRequestModel.value.data?[controller.index]?.destination?.name}",
-                            style: TextStyleUtil.k14Regular(
-                                color: ColorUtil.kBlack02),
-                          ),
-                        ],
-                      ),
-                    ),
-                    //line joining red and green dots
-                    Positioned(
-                      top: 10.kh,
-                      left: 4.5.kw,
-                      child: Container(
-                        height: 28.kh,
-                        width: 1.kw,
-                        color: ColorUtil.kBlack04,
-                      ),
-                    ),
-                  ],
+                OriginToDestination(
+                  origin:
+                      "${controller.riderSendRequestModel.value.data?[controller.index]?.origin?.name}",
+                  destination:
+                      "${controller.riderSendRequestModel.value.data?[controller.index]?.destination?.name}",
+                  needPickupText: true,
                 ).paddingOnly(bottom: 8.kh),
                 //bottom line
                 const GreenPoolDivider(),
@@ -253,7 +199,7 @@ class RiderMyRidesSendDetailsView
                           size: 12.kh,
                         ).paddingOnly(right: 4.kw),
                         Text(
-                          "${controller.riderSendRequestModel.value.data?[controller.index]?.driverDetails?[0]?.totalRating}",
+                          "${controller.riderSendRequestModel.value.data?[controller.index]?.driverDetails?[0]?.rating}",
                           style: TextStyleUtil.k14Regular(),
                         ),
                       ]),
@@ -268,7 +214,7 @@ class RiderMyRidesSendDetailsView
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Text(
-                      "${controller.riderSendRequestModel.value.data?[controller.index]?.driverDetails?[0]?.totalRiders} people",
+                      "${controller.riderSendRequestModel.value.data?[controller.index]?.driverDetails?[0]?.totalRides} people",
                       style:
                           TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                     ),
@@ -298,19 +244,52 @@ class RiderMyRidesSendDetailsView
               'Co-Passengers',
               style: TextStyleUtil.k14Bold(),
             ).paddingOnly(bottom: 16.kh),
-            const CoPassengerList(
-                    //TODO: name(index issue) count(if 0 then what) and image
-
-                    //   itemcount: controller.matchingRidesmodel
-                    //       .data?[controller.matchingRideIndex]?.ridersDetatils?.length,
-                    //   image: Image(
-                    //     image: NetworkImage(
-                    //         "${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.ridersDetatils?[0]?.profilePic?.url}"),
-                    //   ),
-                    //   name:
-                    //       "${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.ridersDetatils?[0]?.fullName.toString().split(" ")[0]}\n${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.ridersDetatils?[0]?.fullName.toString().split(" ")[1]}",
+            Obx(
+              () => controller.riderSendRequestModel.value
+                          .data?[controller.index]?.ridersDetatils?.length ==
+                      0
+                  ? Center(
+                      child: Text(
+                        "No co-passengers are available at the moment",
+                        style: TextStyleUtil.k14Semibold(),
+                      ),
                     )
-                .paddingOnly(bottom: 10.kh),
+                  : SizedBox(
+                      height: 96.kh,
+                      child: ListView.builder(
+                          itemCount: controller
+                                  .riderSendRequestModel
+                                  .value
+                                  .data?[controller.index]
+                                  ?.ridersDetatils
+                                  ?.length ??
+                              6,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            return Column(
+                              children: [
+                                Container(
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: ClipOval(
+                                    child: SizedBox.fromSize(
+                                        size: Size.fromRadius(20.kh),
+                                        child: Image(
+                                            image: NetworkImage(
+                                                "${controller.riderSendRequestModel.value.data?[controller.index]?.ridersDetatils?[index]?.profilePic?.url}"))),
+                                  ),
+                                ).paddingOnly(bottom: 4.kh),
+                                Text(
+                                  "${controller.riderSendRequestModel.value.data?[controller.index]?.ridersDetatils?[index]?.fullName.toString().split(" ").first}\n${controller.riderSendRequestModel.value.data?[controller.index]?.ridersDetatils?[index]?.fullName.toString().split(" ").last}",
+                                  style: TextStyleUtil.k12Semibold(),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ).paddingOnly(right: 32.kw);
+                          }),
+                    ).paddingOnly(bottom: 10.kh),
+            ),
             const GreenPoolDivider().paddingOnly(bottom: 16.kh),
 
             //Vehicle details
@@ -322,24 +301,12 @@ class RiderMyRidesSendDetailsView
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(8.kh),
-                  child: controller
-                              .riderSendRequestModel
-                              .value
-                              .data?[controller.index]
-                              ?.driverDetails?[0]
-                              ?.vehicleDetails?[0]
-                              ?.vehiclePic
-                              ?.url ==
-                          null
-                      ? Center(
-                          child: CircularProgressIndicator(),
-                        )
-                      : Image(
-                          height: 64.kh,
-                          width: 64.kw,
-                          image: NetworkImage(
-                              "${controller.riderSendRequestModel.value.data?[controller.index]?.driverDetails?[0]?.vehicleDetails?[0]?.vehiclePic?.url}"),
-                        ).paddingOnly(right: 8.kh),
+                  child: Image(
+                    height: 64.kh,
+                    width: 64.kw,
+                    image: NetworkImage(
+                        "${controller.riderSendRequestModel.value.data?[controller.index]?.driverDetails?[0]?.vehicleDetails?[0]?.vehiclePic?.url}"),
+                  ).paddingOnly(right: 8.kh),
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

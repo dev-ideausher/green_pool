@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:green_pool/app/res/strings.dart';
 import 'package:intl/intl.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/common_image_view.dart';
@@ -23,8 +24,12 @@ class ChatPageView extends GetView<ChatPageController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Get.find<ProfileController>().isSwitched.value ? ColorUtil.kPrimaryPinkMode : ColorUtil.kPrimary01,
-        surfaceTintColor: Get.find<ProfileController>().isSwitched.value ? ColorUtil.kPrimaryPinkMode : ColorUtil.kPrimary01,
+        backgroundColor: Get.find<ProfileController>().isSwitched.value
+            ? ColorUtil.kPrimaryPinkMode
+            : ColorUtil.kPrimary01,
+        surfaceTintColor: Get.find<ProfileController>().isSwitched.value
+            ? ColorUtil.kPrimaryPinkMode
+            : ColorUtil.kPrimary01,
         elevation: 1,
         toolbarHeight: 64.kh,
         title: Obx(
@@ -59,12 +64,13 @@ class ChatPageView extends GetView<ChatPageController> {
                     child: Column(
                       children: [
                         Text(
-                          'Today',
+                          Strings.today,
                           style: TextStyleUtil.k14Regular(),
                         ),
                         Text(
                           '6 Nov 2023',
-                          style: TextStyleUtil.k12Regular(color: ColorUtil.kBlack04),
+                          style: TextStyleUtil.k12Regular(
+                              color: ColorUtil.kBlack04),
                         )
                       ],
                     ).paddingOnly(top: 8.kh),
@@ -76,9 +82,14 @@ class ChatPageView extends GetView<ChatPageController> {
                     padding: const EdgeInsets.only(top: 10, bottom: 10),
                     itemBuilder: (context, index) {
                       final message = controller.messages[index];
-                      final isSender = message.senderId == Get.find<GetStorageService>().getUserAppId;
+                      final isSender = message.senderId ==
+                          Get.find<GetStorageService>().getUserAppId;
                       return Container(
-                        padding: EdgeInsets.only(left: 14.kw, right: 14.kw, top: 10.kh, bottom: 10.kh),
+                        padding: EdgeInsets.only(
+                            left: 14.kw,
+                            right: 14.kw,
+                            top: 10.kh,
+                            bottom: 10.kh),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -95,16 +106,21 @@ class ChatPageView extends GetView<ChatPageController> {
                               ),
                             Expanded(
                               child: Column(
-                                crossAxisAlignment: isSender ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+                                crossAxisAlignment: isSender
+                                    ? CrossAxisAlignment.end
+                                    : CrossAxisAlignment.start,
                                 children: [
                                   Container(
                                     decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.all(Radius.circular(15.0.kh)),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(15.0.kh)),
                                       color: Colors.white,
                                     ),
                                     padding: const EdgeInsets.all(16),
                                     child: Column(
-                                      crossAxisAlignment: isSender ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+                                      crossAxisAlignment: isSender
+                                          ? CrossAxisAlignment.end
+                                          : CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           message.message ?? "",
@@ -112,7 +128,8 @@ class ChatPageView extends GetView<ChatPageController> {
                                         ),
                                         4.kheightBox, // Add some space between message and time
                                         Text(
-                                          DateFormat.jm().format(message.timestamp), // Replace with actual time
+                                          DateFormat.jm().format(message
+                                              .timestamp), // Replace with actual time
                                           style: TextStyleUtil.k10Regular(),
                                         ),
                                       ],
@@ -127,7 +144,8 @@ class ChatPageView extends GetView<ChatPageController> {
                                 child: ClipRRect(
                                     borderRadius: BorderRadius.circular(100.kh),
                                     child: CommonImageView(
-                                      url: Get.find<GetStorageService>().profilePicUrl,
+                                      url: Get.find<GetStorageService>()
+                                          .profilePicUrl,
                                       height: 32.kh,
                                       width: 32.kh,
                                     )),
@@ -139,8 +157,10 @@ class ChatPageView extends GetView<ChatPageController> {
                   )),
                   GreenPoolTextField(
                     controller: controller.eMsg,
-                    hintText: 'Write a message',
-                    suffix: InkWell(onTap: () => controller.sendMsg(), child: SvgPicture.asset(ImageConstant.svgIconSend)),
+                    hintText: Strings.writeMsg,
+                    suffix: InkWell(
+                        onTap: () => controller.sendMsg(),
+                        child: SvgPicture.asset(ImageConstant.svgIconSend)),
                   ).paddingOnly(bottom: 40.kh)
                 ],
               ).paddingSymmetric(horizontal: 16.kw),

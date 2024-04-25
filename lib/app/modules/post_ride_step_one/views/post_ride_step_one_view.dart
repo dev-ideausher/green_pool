@@ -1,9 +1,4 @@
 import 'package:flutter/material.dart';
-
-import 'package:get/get.dart';
-
-import '../controllers/post_ride_step_one_controller.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:get/get.dart';
@@ -19,8 +14,10 @@ import 'package:green_pool/app/services/text_style_util.dart';
 
 import '../../../services/custom_button.dart';
 import '../../profile/controllers/profile_controller.dart';
+import '../controllers/post_ride_step_one_controller.dart';
+
 class PostRideStepOneView extends GetView<PostRideStepOneController> {
-  const PostRideStepOneView({Key? key}) : super(key: key);
+  const PostRideStepOneView({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,16 +30,14 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
         children: [
           const RichTextHeading(text: 'Origin').paddingOnly(top: 32.kh),
           GreenPoolTextField(
-            hintText: 'Enter origin address',
+            hintText:
+                '${controller.postRideModel.value.ridesDetails?.origin?.name}',
             keyboardType: TextInputType.streetAddress,
             onchanged: (v) {
               controller.setActiveStatePostRideView();
             },
             onTap: () {
-              Get.toNamed(Routes.ORIGIN, arguments: LocationValues.origin)
-                  ?.then((value) {
-                controller.setActiveStatePostRideView();
-              });
+              controller.moveToSetOrigin();
             },
             controller: controller.originTextController,
             readOnly: true,
@@ -111,36 +106,36 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
             ),
           ).paddingOnly(top: 8.kh, bottom: 16.kh),
           Obx(
-                () => controller.isStop1Added.value
+            () => controller.isStop1Added.value
                 ? GreenPoolTextField(
-              hintText: 'Add stops',
-              keyboardType: TextInputType.streetAddress,
-              fillColor: Colors.transparent,
-              border: OutlineInputBorder(
-                  borderSide: const BorderSide(color: ColorUtil.kBlack06),
-                  borderRadius: BorderRadius.circular(8.kh)),
-              onTap: () {
-                Get.toNamed(Routes.ORIGIN,
-                    arguments: LocationValues.addStop2);
-              },
-              controller: controller.stop2TextController,
-              readOnly: true,
-              prefix: Icon(
-                Icons.add_circle,
-                size: 20.kh,
-                color: Get.find<ProfileController>().isSwitched.value
-                    ? ColorUtil.kPrimary3PinkMode
-                    : ColorUtil.kSecondary01,
-              ),
-              suffix: SvgPicture.asset(
-                ImageConstant.svgIconReorder,
-                colorFilter: ColorFilter.mode(
-                    Get.find<ProfileController>().isSwitched.value
-                        ? ColorUtil.kPrimary3PinkMode
-                        : ColorUtil.kSecondary01,
-                    BlendMode.srcIn),
-              ),
-            ).paddingOnly(top: 8.kh, bottom: 16.kh)
+                    hintText: 'Add stops',
+                    keyboardType: TextInputType.streetAddress,
+                    fillColor: Colors.transparent,
+                    border: OutlineInputBorder(
+                        borderSide: const BorderSide(color: ColorUtil.kBlack06),
+                        borderRadius: BorderRadius.circular(8.kh)),
+                    onTap: () {
+                      Get.toNamed(Routes.ORIGIN,
+                          arguments: LocationValues.addStop2);
+                    },
+                    controller: controller.stop2TextController,
+                    readOnly: true,
+                    prefix: Icon(
+                      Icons.add_circle,
+                      size: 20.kh,
+                      color: Get.find<ProfileController>().isSwitched.value
+                          ? ColorUtil.kPrimary3PinkMode
+                          : ColorUtil.kSecondary01,
+                    ),
+                    suffix: SvgPicture.asset(
+                      ImageConstant.svgIconReorder,
+                      colorFilter: ColorFilter.mode(
+                          Get.find<ProfileController>().isSwitched.value
+                              ? ColorUtil.kPrimary3PinkMode
+                              : ColorUtil.kSecondary01,
+                          BlendMode.srcIn),
+                    ),
+                  ).paddingOnly(top: 8.kh, bottom: 16.kh)
                 : const SizedBox(),
           ),
           const Expanded(child: SizedBox()),
@@ -148,7 +143,7 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Obx(
-                    () => GreenPoolButton(
+                () => GreenPoolButton(
                   onPressed: () => controller.decideRouting(),
                   padding: const EdgeInsets.all(0),
                   isActive: controller.isActive.value,

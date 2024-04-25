@@ -33,8 +33,7 @@ class MyRidesRecurringDetailsController extends GetxController {
       final String driverRideId = "/$rideId";
       final response =
           await APIManager.getRecurringRideDetails(rideId: driverRideId);
-      var data = jsonDecode(response.toString());
-      recurringModel.value = RecurringRideDetailsModel.fromJson(data);
+      recurringModel.value = RecurringRideDetailsModel.fromJson(response.data);
       isLoading.value = false;
     } catch (e) {
       throw Exception(e);

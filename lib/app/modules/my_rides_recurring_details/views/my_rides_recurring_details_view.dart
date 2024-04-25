@@ -7,6 +7,7 @@ import 'package:green_pool/app/constants/image_constant.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
+import '../../../components/gp_progress.dart';
 import '../../../components/green_pool_divider.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
@@ -26,13 +27,7 @@ class MyRidesRecurringDetailsView
       ),
       body: Obx(
         () => controller.isLoading.value
-            ? Center(
-                child: CircularProgressIndicator(
-                  color: Get.find<ProfileController>().isSwitched.value
-                      ? ColorUtil.kPrimary3PinkMode
-                      : ColorUtil.kPrimary01,
-                ),
-              )
+            ? const GpProgress()
             : SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,6 +41,7 @@ class MyRidesRecurringDetailsView
                           style: TextStyleUtil.k16Bold(),
                         ).paddingOnly(bottom: 16.kh),
                         OriginToDestination(
+                          needPickupText: true,
                           origin:
                               "${controller.recurringModel.value.data?.driverRideDetails?[0]?.origin?.name}",
                           destination:
@@ -71,6 +67,7 @@ class MyRidesRecurringDetailsView
                               height: 64.kh,
                               width: 64.kw,
                               child: Image(
+                                  fit: BoxFit.cover,
                                   image: NetworkImage(
                                       "${controller.recurringModel.value.data?.driverRideDetails?[0]?.driverVehiclesDetails?[0]?.vehiclePic?.url}"))),
                         ).paddingOnly(right: 8.kw),
@@ -203,7 +200,9 @@ class MyRidesRecurringDetailsView
                     ),
                     const GreenPoolDivider().paddingSymmetric(vertical: 16.kh),
                     SizedBox(
-                      height: 7 * 112.kh,
+                      height: controller.recurringModel.value.data!
+                              .recurringRides!.length *
+                          112.kh,
                       child: ListView.builder(
                           itemCount: controller.recurringModel.value.data
                               ?.recurringRides?.length,
@@ -226,13 +225,14 @@ class MyRidesRecurringDetailsView
                                       height: 24.kh,
                                       width: 28.w,
                                       child: ListView.builder(
-                                        itemCount: controller
-                                                    .recurringModel
-                                                    .value
-                                                    .data
-                                                    ?.recurringRides?[index]
-                                                    ?.riders!
-                                                    .length ==
+                                        itemCount: (controller
+                                                        .recurringModel
+                                                        .value
+                                                        .data
+                                                        ?.recurringRides?[index]
+                                                        ?.riders!
+                                                        .length ??
+                                                    0) ==
                                                 0
                                             ? 4
                                             : controller
@@ -252,10 +252,24 @@ class MyRidesRecurringDetailsView
                                             child: ClipOval(
                                               child: SizedBox.fromSize(
                                                 size: Size.fromRadius(12.kh),
-                                                child: Image.asset(
-                                                  ImageConstant
-                                                      .pngEmptyPassenger,
-                                                ),
+                                                child: (controller
+                                                                .recurringModel
+                                                                .value
+                                                                .data
+                                                                ?.recurringRides?[
+                                                                    index]
+                                                                ?.riders!
+                                                                .length ??
+                                                            0) ==
+                                                        0
+                                                    ? Image.asset(
+                                                        ImageConstant
+                                                            .pngEmptyPassenger,
+                                                      )
+                                                    : Image.network(
+                                                        "${controller.recurringModel.value.data?.recurringRides?[index]?.riders?[index1]?.profilePic?.url}",
+                                                        fit: BoxFit.cover,
+                                                      ),
                                               ),
                                             ),
                                           ).paddingOnly(right: 4.kw);

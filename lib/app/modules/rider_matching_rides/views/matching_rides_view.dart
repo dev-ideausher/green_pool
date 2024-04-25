@@ -11,6 +11,7 @@ import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
+import '../../../components/gp_progress.dart';
 import '../../../components/green_pool_divider.dart';
 import '../../../services/colors.dart';
 import '../../../services/text_style_util.dart';
@@ -26,7 +27,7 @@ class MatchingRidesView extends GetView<MatchingRidesController> {
         actions: [
           GestureDetector(
             onTap: () {
-              controller.toFilter();
+              controller.moveToFilter();
             },
             child: SvgPicture.asset(ImageConstant.svgIconFilter)
                 .paddingOnly(right: 16.kw),
@@ -90,13 +91,7 @@ class MatchingRidesView extends GetView<MatchingRidesController> {
       ),
       body: Obx(
         () => controller.matchingRideResponse.value.data == null
-            ? Center(
-                child: CircularProgressIndicator(
-                  color: Get.find<ProfileController>().isSwitched.value
-                      ? ColorUtil.kPrimary3PinkMode
-                      : ColorUtil.kPrimary01,
-                ),
-              )
+            ? const GpProgress()
             : controller.matchingRideResponse.value.data?.length == 0
                 ? Center(
                     child: Text(

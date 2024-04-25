@@ -1,186 +1,13 @@
-
-// ignore_for_file: non_constant_identifier_names, avoid_function_literals_in_foreach_calls
-
-class DriverSendRequestModelDataRiderDetailsProfilePic {
-/*
-{
-  "key": "usersProfile/79d13f16-4cce-429d-b3fc-10831b4c97d6-images..jpg",
-  "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/79d13f16-4cce-429d-b3fc-10831b4c97d6-images..jpg"
-} 
-*/
-
-  String? key;
-  String? url;
-
-  DriverSendRequestModelDataRiderDetailsProfilePic({
-    this.key,
-    this.url,
-  });
-  DriverSendRequestModelDataRiderDetailsProfilePic.fromJson(
-      Map<String, dynamic> json) {
-    key = json['key']?.toString();
-    url = json['url']?.toString();
-  }
-  Map<String, dynamic> toJson() {
-    final data = <String, dynamic>{};
-    data['key'] = key;
-    data['url'] = url;
-    return data;
-  }
-}
-
-class DriverSendRequestModelDataRiderDetailsIdPic {
-/*
-{
-  "key": "idPic/f9dbca2a-84a1-4e4f-a022-e80f84dbf97a-images..jpg",
-  "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/idPic/f9dbca2a-84a1-4e4f-a022-e80f84dbf97a-images..jpg"
-} 
-*/
-
-  String? key;
-  String? url;
-
-  DriverSendRequestModelDataRiderDetailsIdPic({
-    this.key,
-    this.url,
-  });
-  DriverSendRequestModelDataRiderDetailsIdPic.fromJson(
-      Map<String, dynamic> json) {
-    key = json['key']?.toString();
-    url = json['url']?.toString();
-  }
-  Map<String, dynamic> toJson() {
-    final data = <String, dynamic>{};
-    data['key'] = key;
-    data['url'] = url;
-    return data;
-  }
-}
-
-class DriverSendRequestModelDataRiderDetails {
-/*
-{
-  "_id": "65c2400c32f497dc57fdf007",
-  "fullName": "Rekha Dutta",
-  "phone": "+11234567567",
-  "email": "rekha@test.com",
-  "dob": "1996-02-22",
-  "gender": "Female",
-  "isDriver": true,
-  "referralCode": "V0280Q1170",
-  "profileStatus": true,
-  "vehicleStatus": true,
-  "firebaseUid": "7ip7bk892LOYGNlleO2ebucHidB3",
-  "firebaseSignInProvider": "phone",
-  "createdAt": "2024-02-06T14:19:56.214Z",
-  "updatedAt": "2024-02-27T07:39:25.270Z",
-  "idPic": {
-    "key": "idPic/f9dbca2a-84a1-4e4f-a022-e80f84dbf97a-images..jpg",
-    "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/idPic/f9dbca2a-84a1-4e4f-a022-e80f84dbf97a-images..jpg"
-  },
-  "profilePic": {
-    "key": "usersProfile/79d13f16-4cce-429d-b3fc-10831b4c97d6-images..jpg",
-    "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/79d13f16-4cce-429d-b3fc-10831b4c97d6-images..jpg"
-  },
-  "status": "active"
-} 
-*/
-
-  String? Id;
-  String? fullName;
-  String? phone;
-  String? email;
-  String? dob;
-  String? gender;
-  bool? isDriver;
-  String? referralCode;
-  bool? profileStatus;
-  bool? vehicleStatus;
-  String? firebaseUid;
-  String? firebaseSignInProvider;
-  String? createdAt;
-  String? updatedAt;
-  DriverSendRequestModelDataRiderDetailsIdPic? idPic;
-  DriverSendRequestModelDataRiderDetailsProfilePic? profilePic;
-  String? status;
-
-  DriverSendRequestModelDataRiderDetails({
-    this.Id,
-    this.fullName,
-    this.phone,
-    this.email,
-    this.dob,
-    this.gender,
-    this.isDriver,
-    this.referralCode,
-    this.profileStatus,
-    this.vehicleStatus,
-    this.firebaseUid,
-    this.firebaseSignInProvider,
-    this.createdAt,
-    this.updatedAt,
-    this.idPic,
-    this.profilePic,
-    this.status,
-  });
-  DriverSendRequestModelDataRiderDetails.fromJson(Map<String, dynamic> json) {
-    Id = json['_id']?.toString();
-    fullName = json['fullName']?.toString();
-    phone = json['phone']?.toString();
-    email = json['email']?.toString();
-    dob = json['dob']?.toString();
-    gender = json['gender']?.toString();
-    isDriver = json['isDriver'];
-    referralCode = json['referralCode']?.toString();
-    profileStatus = json['profileStatus'];
-    vehicleStatus = json['vehicleStatus'];
-    firebaseUid = json['firebaseUid']?.toString();
-    firebaseSignInProvider = json['firebaseSignInProvider']?.toString();
-    createdAt = json['createdAt']?.toString();
-    updatedAt = json['updatedAt']?.toString();
-    idPic = (json['idPic'] != null)
-        ? DriverSendRequestModelDataRiderDetailsIdPic.fromJson(json['idPic'])
-        : null;
-    profilePic = (json['profilePic'] != null)
-        ? DriverSendRequestModelDataRiderDetailsProfilePic.fromJson(
-            json['profilePic'])
-        : null;
-    status = json['status']?.toString();
-  }
-  Map<String, dynamic> toJson() {
-    final data = <String, dynamic>{};
-    data['_id'] = Id;
-    data['fullName'] = fullName;
-    data['phone'] = phone;
-    data['email'] = email;
-    data['dob'] = dob;
-    data['gender'] = gender;
-    data['isDriver'] = isDriver;
-    data['referralCode'] = referralCode;
-    data['profileStatus'] = profileStatus;
-    data['vehicleStatus'] = vehicleStatus;
-    data['firebaseUid'] = firebaseUid;
-    data['firebaseSignInProvider'] = firebaseSignInProvider;
-    data['createdAt'] = createdAt;
-    data['updatedAt'] = updatedAt;
-    if (idPic != null) {
-      data['idPic'] = idPic!.toJson();
-    }
-    if (profilePic != null) {
-      data['profilePic'] = profilePic!.toJson();
-    }
-    data['status'] = status;
-    return data;
-  }
-}
-
+///
+/// Code generated by jsonToDartModel https://ashamp.github.io/jsonToDartModel/
+///
 class DriverSendRequestModelDataMatchedDestinationLocation {
 /*
 {
-  "name": "Borivali,Mumbai,Mumbai Suburban",
+  "name": "Noida Sector 18, Noida",
   "type": "Point",
   "coordinates": [
-    72.856673
+    77.32490430000001
   ]
 } 
 */
@@ -226,25 +53,25 @@ class DriverSendRequestModelDataMatchedDestinationLocation {
 class DriverSendRequestModelDataMatchedOriginLocation {
 /*
 {
-  "name": "Andheri,Mumbai Suburban,Konkan Division",
+  "name": "297, New Delhi",
   "type": "Point",
   "coordinates": [
-    72.8697339
+    77.30131209999999
   ],
-  "_id": "65ddb242e52406bcf4b8cf6e"
+  "originDestinationFair": null
 } 
 */
 
   String? name;
   String? type;
   List<double?>? coordinates;
-  String? Id;
+  String? originDestinationFair;
 
   DriverSendRequestModelDataMatchedOriginLocation({
     this.name,
     this.type,
     this.coordinates,
-    this.Id,
+    this.originDestinationFair,
   });
   DriverSendRequestModelDataMatchedOriginLocation.fromJson(
       Map<String, dynamic> json) {
@@ -258,7 +85,7 @@ class DriverSendRequestModelDataMatchedOriginLocation {
       });
       coordinates = arr0;
     }
-    Id = json['_id']?.toString();
+    originDestinationFair = json['originDestinationFair']?.toString();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -272,7 +99,464 @@ class DriverSendRequestModelDataMatchedOriginLocation {
       });
       data['coordinates'] = arr0;
     }
+    data['originDestinationFair'] = originDestinationFair;
+    return data;
+  }
+}
+
+class DriverSendRequestModelDataRiderDetailsProfilePic {
+/*
+{
+  "key": "usersProfile/f8536123-8f53-4c8f-8acd-a033c30af1d9-1000000036.jpg",
+  "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/f8536123-8f53-4c8f-8acd-a033c30af1d9-1000000036.jpg"
+} 
+*/
+
+  String? key;
+  String? url;
+
+  DriverSendRequestModelDataRiderDetailsProfilePic({
+    this.key,
+    this.url,
+  });
+  DriverSendRequestModelDataRiderDetailsProfilePic.fromJson(
+      Map<String, dynamic> json) {
+    key = json['key']?.toString();
+    url = json['url']?.toString();
+  }
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+    data['key'] = key;
+    data['url'] = url;
+    return data;
+  }
+}
+
+class DriverSendRequestModelDataRiderDetailsIdPic {
+/*
+{
+  "key": "idPic/bf9018c7-ad37-47f0-b648-075e54474b8f-1000000034.jpg",
+  "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/idPic/bf9018c7-ad37-47f0-b648-075e54474b8f-1000000034.jpg"
+} 
+*/
+
+  String? key;
+  String? url;
+
+  DriverSendRequestModelDataRiderDetailsIdPic({
+    this.key,
+    this.url,
+  });
+  DriverSendRequestModelDataRiderDetailsIdPic.fromJson(
+      Map<String, dynamic> json) {
+    key = json['key']?.toString();
+    url = json['url']?.toString();
+  }
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+    data['key'] = key;
+    data['url'] = url;
+    return data;
+  }
+}
+
+class DriverSendRequestModelDataRiderDetailsNotificationPreferences {
+/*
+{
+  "trip": true,
+  "alerts": true,
+  "payments": true,
+  "transactions": true,
+  "offers": true
+} 
+*/
+
+  bool? trip;
+  bool? alerts;
+  bool? payments;
+  bool? transactions;
+  bool? offers;
+
+  DriverSendRequestModelDataRiderDetailsNotificationPreferences({
+    this.trip,
+    this.alerts,
+    this.payments,
+    this.transactions,
+    this.offers,
+  });
+  DriverSendRequestModelDataRiderDetailsNotificationPreferences.fromJson(
+      Map<String, dynamic> json) {
+    trip = json['trip'];
+    alerts = json['alerts'];
+    payments = json['payments'];
+    transactions = json['transactions'];
+    offers = json['offers'];
+  }
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+    data['trip'] = trip;
+    data['alerts'] = alerts;
+    data['payments'] = payments;
+    data['transactions'] = transactions;
+    data['offers'] = offers;
+    return data;
+  }
+}
+
+class DriverSendRequestModelDataRiderDetails {
+/*
+{
+  "_id": "661d10c3cea4346b0ee267d3",
+  "pinkMode": false,
+  "fullName": "Ria",
+  "phone": "+11212121212",
+  "email": "ria@test.com",
+  "city": "Rajkot",
+  "dob": "2000-04-20",
+  "gender": "Female",
+  "isDriver": false,
+  "referralCode": "S0175P2893",
+  "profileStatus": true,
+  "vehicleStatus": false,
+  "status": "active",
+  "wallet": 0,
+  "notificationPreferences": {
+    "trip": true,
+    "alerts": true,
+    "payments": true,
+    "transactions": true,
+    "offers": true
+  },
+  "firebaseUid": "YfTcEdNqhHPbYWY5bZzQxy5EwHG2",
+  "firebaseSignInProvider": "phone",
+  "rating": 0,
+  "createdAt": "2024-04-15T11:34:27.422Z",
+  "updatedAt": "2024-04-17T13:22:02.189Z",
+  "idPic": {
+    "key": "idPic/bf9018c7-ad37-47f0-b648-075e54474b8f-1000000034.jpg",
+    "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/idPic/bf9018c7-ad37-47f0-b648-075e54474b8f-1000000034.jpg"
+  },
+  "profilePic": {
+    "key": "usersProfile/f8536123-8f53-4c8f-8acd-a033c30af1d9-1000000036.jpg",
+    "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/f8536123-8f53-4c8f-8acd-a033c30af1d9-1000000036.jpg"
+  },
+  "totalRides": 1
+} 
+*/
+
+  String? Id;
+  bool? pinkMode;
+  String? fullName;
+  String? phone;
+  String? email;
+  String? city;
+  String? dob;
+  String? gender;
+  bool? isDriver;
+  String? referralCode;
+  bool? profileStatus;
+  bool? vehicleStatus;
+  String? status;
+  int? wallet;
+  DriverSendRequestModelDataRiderDetailsNotificationPreferences?
+      notificationPreferences;
+  String? firebaseUid;
+  String? firebaseSignInProvider;
+  int? rating;
+  String? createdAt;
+  String? updatedAt;
+  DriverSendRequestModelDataRiderDetailsIdPic? idPic;
+  DriverSendRequestModelDataRiderDetailsProfilePic? profilePic;
+  int? totalRides;
+
+  DriverSendRequestModelDataRiderDetails({
+    this.Id,
+    this.pinkMode,
+    this.fullName,
+    this.phone,
+    this.email,
+    this.city,
+    this.dob,
+    this.gender,
+    this.isDriver,
+    this.referralCode,
+    this.profileStatus,
+    this.vehicleStatus,
+    this.status,
+    this.wallet,
+    this.notificationPreferences,
+    this.firebaseUid,
+    this.firebaseSignInProvider,
+    this.rating,
+    this.createdAt,
+    this.updatedAt,
+    this.idPic,
+    this.profilePic,
+    this.totalRides,
+  });
+  DriverSendRequestModelDataRiderDetails.fromJson(Map<String, dynamic> json) {
+    Id = json['_id']?.toString();
+    pinkMode = json['pinkMode'];
+    fullName = json['fullName']?.toString();
+    phone = json['phone']?.toString();
+    email = json['email']?.toString();
+    city = json['city']?.toString();
+    dob = json['dob']?.toString();
+    gender = json['gender']?.toString();
+    isDriver = json['isDriver'];
+    referralCode = json['referralCode']?.toString();
+    profileStatus = json['profileStatus'];
+    vehicleStatus = json['vehicleStatus'];
+    status = json['status']?.toString();
+    wallet = json['wallet']?.toInt();
+    notificationPreferences = (json['notificationPreferences'] != null)
+        ? DriverSendRequestModelDataRiderDetailsNotificationPreferences
+            .fromJson(json['notificationPreferences'])
+        : null;
+    firebaseUid = json['firebaseUid']?.toString();
+    firebaseSignInProvider = json['firebaseSignInProvider']?.toString();
+    rating = json['rating']?.toInt();
+    createdAt = json['createdAt']?.toString();
+    updatedAt = json['updatedAt']?.toString();
+    idPic = (json['idPic'] != null)
+        ? DriverSendRequestModelDataRiderDetailsIdPic.fromJson(json['idPic'])
+        : null;
+    profilePic = (json['profilePic'] != null)
+        ? DriverSendRequestModelDataRiderDetailsProfilePic.fromJson(
+            json['profilePic'])
+        : null;
+    totalRides = json['totalRides']?.toInt();
+  }
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
     data['_id'] = Id;
+    data['pinkMode'] = pinkMode;
+    data['fullName'] = fullName;
+    data['phone'] = phone;
+    data['email'] = email;
+    data['city'] = city;
+    data['dob'] = dob;
+    data['gender'] = gender;
+    data['isDriver'] = isDriver;
+    data['referralCode'] = referralCode;
+    data['profileStatus'] = profileStatus;
+    data['vehicleStatus'] = vehicleStatus;
+    data['status'] = status;
+    data['wallet'] = wallet;
+    if (notificationPreferences != null) {
+      data['notificationPreferences'] = notificationPreferences!.toJson();
+    }
+    data['firebaseUid'] = firebaseUid;
+    data['firebaseSignInProvider'] = firebaseSignInProvider;
+    data['rating'] = rating;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
+    if (idPic != null) {
+      data['idPic'] = idPic!.toJson();
+    }
+    if (profilePic != null) {
+      data['profilePic'] = profilePic!.toJson();
+    }
+    data['totalRides'] = totalRides;
+    return data;
+  }
+}
+
+class DriverSendRequestModelDataPreferencesOther {
+/*
+{
+  "AppreciatesConversation": false,
+  "EnjoysMusic": false,
+  "SmokeFree": false,
+  "PetFriendly": false,
+  "WinterTires": false,
+  "CoolingOrHeating": false,
+  "BabySeat": false,
+  "HeatedSeats": false
+} 
+*/
+
+  bool? AppreciatesConversation;
+  bool? EnjoysMusic;
+  bool? SmokeFree;
+  bool? PetFriendly;
+  bool? WinterTires;
+  bool? CoolingOrHeating;
+  bool? BabySeat;
+  bool? HeatedSeats;
+
+  DriverSendRequestModelDataPreferencesOther({
+    this.AppreciatesConversation,
+    this.EnjoysMusic,
+    this.SmokeFree,
+    this.PetFriendly,
+    this.WinterTires,
+    this.CoolingOrHeating,
+    this.BabySeat,
+    this.HeatedSeats,
+  });
+  DriverSendRequestModelDataPreferencesOther.fromJson(
+      Map<String, dynamic> json) {
+    AppreciatesConversation = json['AppreciatesConversation'];
+    EnjoysMusic = json['EnjoysMusic'];
+    SmokeFree = json['SmokeFree'];
+    PetFriendly = json['PetFriendly'];
+    WinterTires = json['WinterTires'];
+    CoolingOrHeating = json['CoolingOrHeating'];
+    BabySeat = json['BabySeat'];
+    HeatedSeats = json['HeatedSeats'];
+  }
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+    data['AppreciatesConversation'] = AppreciatesConversation;
+    data['EnjoysMusic'] = EnjoysMusic;
+    data['SmokeFree'] = SmokeFree;
+    data['PetFriendly'] = PetFriendly;
+    data['WinterTires'] = WinterTires;
+    data['CoolingOrHeating'] = CoolingOrHeating;
+    data['BabySeat'] = BabySeat;
+    data['HeatedSeats'] = HeatedSeats;
+    return data;
+  }
+}
+
+class DriverSendRequestModelDataPreferences {
+/*
+{
+  "other": {
+    "AppreciatesConversation": false,
+    "EnjoysMusic": false,
+    "SmokeFree": false,
+    "PetFriendly": false,
+    "WinterTires": false,
+    "CoolingOrHeating": false,
+    "BabySeat": false,
+    "HeatedSeats": false
+  },
+  "luggageType": null
+} 
+*/
+
+  DriverSendRequestModelDataPreferencesOther? other;
+  String? luggageType;
+
+  DriverSendRequestModelDataPreferences({
+    this.other,
+    this.luggageType,
+  });
+  DriverSendRequestModelDataPreferences.fromJson(Map<String, dynamic> json) {
+    other = (json['other'] != null)
+        ? DriverSendRequestModelDataPreferencesOther.fromJson(json['other'])
+        : null;
+    luggageType = json['luggageType']?.toString();
+  }
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+    if (other != null) {
+      data['other'] = other!.toJson();
+    }
+    data['luggageType'] = luggageType;
+    return data;
+  }
+}
+
+class DriverSendRequestModelDataReturnTrip {
+/*
+{
+  "returnTripId": null,
+  "isReturnTrip": false,
+  "returnDate": null,
+  "returnTime": null
+} 
+*/
+
+  String? returnTripId;
+  bool? isReturnTrip;
+  String? returnDate;
+  String? returnTime;
+
+  DriverSendRequestModelDataReturnTrip({
+    this.returnTripId,
+    this.isReturnTrip,
+    this.returnDate,
+    this.returnTime,
+  });
+  DriverSendRequestModelDataReturnTrip.fromJson(Map<String, dynamic> json) {
+    returnTripId = json['returnTripId']?.toString();
+    isReturnTrip = json['isReturnTrip'];
+    returnDate = json['returnDate']?.toString();
+    returnTime = json['returnTime']?.toString();
+  }
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+    data['returnTripId'] = returnTripId;
+    data['isReturnTrip'] = isReturnTrip;
+    data['returnDate'] = returnDate;
+    data['returnTime'] = returnTime;
+    return data;
+  }
+}
+
+class DriverSendRequestModelDataRecurringTrip {
+/*
+{
+  "recurringTripIds": [
+    "121212"
+  ],
+  "recurringTripDays": [
+    1
+  ],
+  "isRecurringTripEnabled": false
+} 
+*/
+
+  List<String?>? recurringTripIds;
+  List<int?>? recurringTripDays;
+  bool? isRecurringTripEnabled;
+
+  DriverSendRequestModelDataRecurringTrip({
+    this.recurringTripIds,
+    this.recurringTripDays,
+    this.isRecurringTripEnabled,
+  });
+  DriverSendRequestModelDataRecurringTrip.fromJson(Map<String, dynamic> json) {
+    if (json['recurringTripIds'] != null) {
+      final v = json['recurringTripIds'];
+      final arr0 = <String>[];
+      v.forEach((v) {
+        arr0.add(v.toString());
+      });
+      recurringTripIds = arr0;
+    }
+    if (json['recurringTripDays'] != null) {
+      final v = json['recurringTripDays'];
+      final arr0 = <int>[];
+      v.forEach((v) {
+        arr0.add(v.toInt());
+      });
+      recurringTripDays = arr0;
+    }
+    isRecurringTripEnabled = json['isRecurringTripEnabled'];
+  }
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+    if (recurringTripIds != null) {
+      final v = recurringTripIds;
+      final arr0 = [];
+      v!.forEach((v) {
+        arr0.add(v);
+      });
+      data['recurringTripIds'] = arr0;
+    }
+    if (recurringTripDays != null) {
+      final v = recurringTripDays;
+      final arr0 = [];
+      v!.forEach((v) {
+        arr0.add(v);
+      });
+      data['recurringTripDays'] = arr0;
+    }
+    data['isRecurringTripEnabled'] = isRecurringTripEnabled;
     return data;
   }
 }
@@ -280,10 +564,10 @@ class DriverSendRequestModelDataMatchedOriginLocation {
 class DriverSendRequestModelDataDestination {
 /*
 {
-  "name": "Borivali,Mumbai,Mumbai Suburban",
+  "name": "Noida Sector 18, Noida",
   "type": "Point",
   "coordinates": [
-    72.856673
+    77.32490430000001
   ]
 } 
 */
@@ -328,22 +612,25 @@ class DriverSendRequestModelDataDestination {
 class DriverSendRequestModelDataOrigin {
 /*
 {
-  "name": "Andheri,Mumbai Suburban,Konkan Division",
+  "name": "297, New Delhi",
   "type": "Point",
   "coordinates": [
-    72.8697339
-  ]
+    77.30131209999999
+  ],
+  "originDestinationFair": null
 } 
 */
 
   String? name;
   String? type;
   List<double?>? coordinates;
+  String? originDestinationFair;
 
   DriverSendRequestModelDataOrigin({
     this.name,
     this.type,
     this.coordinates,
+    this.originDestinationFair,
   });
   DriverSendRequestModelDataOrigin.fromJson(Map<String, dynamic> json) {
     name = json['name']?.toString();
@@ -356,6 +643,7 @@ class DriverSendRequestModelDataOrigin {
       });
       coordinates = arr0;
     }
+    originDestinationFair = json['originDestinationFair']?.toString();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -369,6 +657,7 @@ class DriverSendRequestModelDataOrigin {
       });
       data['coordinates'] = arr0;
     }
+    data['originDestinationFair'] = originDestinationFair;
     return data;
   }
 }
@@ -376,79 +665,127 @@ class DriverSendRequestModelDataOrigin {
 class DriverSendRequestModelData {
 /*
 {
-  "_id": "65ddbc3f2fa9b062d5748df8",
-  "riderId": "65c2400c32f497dc57fdf007",
+  "_id": "662a0cddd97bf339412b6ea1",
+  "riderId": "661d10c3cea4346b0ee267d3",
   "origin": {
-    "name": "Andheri,Mumbai Suburban,Konkan Division",
+    "name": "297, New Delhi",
     "type": "Point",
     "coordinates": [
-      72.8697339
-    ]
+      77.30131209999999
+    ],
+    "originDestinationFair": null
   },
   "destination": {
-    "name": "Borivali,Mumbai,Mumbai Suburban",
+    "name": "Noida Sector 18, Noida",
     "type": "Point",
     "coordinates": [
-      72.856673
+      77.32490430000001
     ]
   },
-  "date": "2024-02-29T00:00:00.000Z",
-  "time": "6:30 PM",
+  "tripType": null,
+  "recurringTrip": {
+    "recurringTripIds": [
+      "121212"
+    ],
+    "recurringTripDays": [
+      1
+    ],
+    "isRecurringTripEnabled": false
+  },
+  "date": "2024-04-30T00:00:00.000Z",
+  "time": "",
+  "returnTrip": {
+    "returnTripId": null,
+    "isReturnTrip": false,
+    "returnDate": null,
+    "returnTime": null
+  },
+  "arrivalDate": null,
+  "arrivalTime": null,
   "seatAvailable": 1,
-  "createdAt": "2024-02-27T10:41:03.152Z",
-  "updatedAt": "2024-02-27T10:41:03.152Z",
-  "distanceFromOrigin": 0.05799476896281752,
-  "stopsDistances": [
-    0
+  "preferences": {
+    "other": {
+      "AppreciatesConversation": false,
+      "EnjoysMusic": false,
+      "SmokeFree": false,
+      "PetFriendly": false,
+      "WinterTires": false,
+      "CoolingOrHeating": false,
+      "BabySeat": false,
+      "HeatedSeats": false
+    },
+    "luggageType": null
+  },
+  "isStarted": false,
+  "isCompleted": false,
+  "isCancelled": false,
+  "description": null,
+  "createdAt": "2024-04-25T07:57:17.458Z",
+  "updatedAt": "2024-04-25T07:57:17.458Z",
+  "riderDetails": [
+    {
+      "_id": "661d10c3cea4346b0ee267d3",
+      "pinkMode": false,
+      "fullName": "Ria",
+      "phone": "+11212121212",
+      "email": "ria@test.com",
+      "city": "Rajkot",
+      "dob": "2000-04-20",
+      "gender": "Female",
+      "isDriver": false,
+      "referralCode": "S0175P2893",
+      "profileStatus": true,
+      "vehicleStatus": false,
+      "status": "active",
+      "wallet": 0,
+      "notificationPreferences": {
+        "trip": true,
+        "alerts": true,
+        "payments": true,
+        "transactions": true,
+        "offers": true
+      },
+      "firebaseUid": "YfTcEdNqhHPbYWY5bZzQxy5EwHG2",
+      "firebaseSignInProvider": "phone",
+      "rating": 0,
+      "createdAt": "2024-04-15T11:34:27.422Z",
+      "updatedAt": "2024-04-17T13:22:02.189Z",
+      "idPic": {
+        "key": "idPic/bf9018c7-ad37-47f0-b648-075e54474b8f-1000000034.jpg",
+        "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/idPic/bf9018c7-ad37-47f0-b648-075e54474b8f-1000000034.jpg"
+      },
+      "profilePic": {
+        "key": "usersProfile/f8536123-8f53-4c8f-8acd-a033c30af1d9-1000000036.jpg",
+        "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/f8536123-8f53-4c8f-8acd-a033c30af1d9-1000000036.jpg"
+      },
+      "totalRides": 1
+    }
   ],
-  "minStopDistance": 0,
+  "distanceFromOrigin": 0,
+  "stopsDistances": [
+    82.41833502449377
+  ],
+  "minStopDistance": 82.41833502449377,
   "matchedOriginLocation": {
-    "name": "Andheri,Mumbai Suburban,Konkan Division",
+    "name": "297, New Delhi",
     "type": "Point",
     "coordinates": [
-      72.8697339
+      77.30131209999999
     ],
-    "_id": "65ddb242e52406bcf4b8cf6e"
+    "originDestinationFair": null
   },
   "distanceFromDestination": 0,
   "stopsDestinationDistances": [
-    0.1178141054170487
+    82.43516409682579
   ],
-  "minStopDestinationDistance": 0.1178141054170487,
+  "minStopDestinationDistance": 82.43516409682579,
   "matchedDestinationLocation": {
-    "name": "Borivali,Mumbai,Mumbai Suburban",
+    "name": "Noida Sector 18, Noida",
     "type": "Point",
     "coordinates": [
-      72.856673
+      77.32490430000001
     ]
-  },
-  "riderDetails": [
-    {
-      "_id": "65c2400c32f497dc57fdf007",
-      "fullName": "Rekha Dutta",
-      "phone": "+11234567567",
-      "email": "rekha@test.com",
-      "dob": "1996-02-22",
-      "gender": "Female",
-      "isDriver": true,
-      "referralCode": "V0280Q1170",
-      "profileStatus": true,
-      "vehicleStatus": true,
-      "firebaseUid": "7ip7bk892LOYGNlleO2ebucHidB3",
-      "firebaseSignInProvider": "phone",
-      "createdAt": "2024-02-06T14:19:56.214Z",
-      "updatedAt": "2024-02-27T07:39:25.270Z",
-      "idPic": {
-        "key": "idPic/f9dbca2a-84a1-4e4f-a022-e80f84dbf97a-images..jpg",
-        "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/idPic/f9dbca2a-84a1-4e4f-a022-e80f84dbf97a-images..jpg"
-      },
-      "profilePic": {
-        "key": "usersProfile/79d13f16-4cce-429d-b3fc-10831b4c97d6-images..jpg",
-        "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/79d13f16-4cce-429d-b3fc-10831b4c97d6-images..jpg"
-      },
-      "status": "active"
-    }
-  ]
+  }
 } 
 */
 
@@ -456,32 +793,53 @@ class DriverSendRequestModelData {
   String? riderId;
   DriverSendRequestModelDataOrigin? origin;
   DriverSendRequestModelDataDestination? destination;
+  String? tripType;
+  DriverSendRequestModelDataRecurringTrip? recurringTrip;
   String? date;
   String? time;
+  DriverSendRequestModelDataReturnTrip? returnTrip;
+  String? arrivalDate;
+  String? arrivalTime;
   int? seatAvailable;
+  DriverSendRequestModelDataPreferences? preferences;
+  bool? isStarted;
+  bool? isCompleted;
+  bool? isCancelled;
+  String? description;
   String? createdAt;
   String? updatedAt;
-  double? distanceFromOrigin;
-  List<int?>? stopsDistances;
-  int? minStopDistance;
+  List<DriverSendRequestModelDataRiderDetails?>? riderDetails;
+  int? distanceFromOrigin;
+  List<double?>? stopsDistances;
+  double? minStopDistance;
   DriverSendRequestModelDataMatchedOriginLocation? matchedOriginLocation;
   int? distanceFromDestination;
   List<double?>? stopsDestinationDistances;
   double? minStopDestinationDistance;
   DriverSendRequestModelDataMatchedDestinationLocation?
       matchedDestinationLocation;
-  List<DriverSendRequestModelDataRiderDetails?>? riderDetails;
 
   DriverSendRequestModelData({
     this.Id,
     this.riderId,
     this.origin,
     this.destination,
+    this.tripType,
+    this.recurringTrip,
     this.date,
     this.time,
+    this.returnTrip,
+    this.arrivalDate,
+    this.arrivalTime,
     this.seatAvailable,
+    this.preferences,
+    this.isStarted,
+    this.isCompleted,
+    this.isCancelled,
+    this.description,
     this.createdAt,
     this.updatedAt,
+    this.riderDetails,
     this.distanceFromOrigin,
     this.stopsDistances,
     this.minStopDistance,
@@ -490,7 +848,6 @@ class DriverSendRequestModelData {
     this.stopsDestinationDistances,
     this.minStopDestinationDistance,
     this.matchedDestinationLocation,
-    this.riderDetails,
   });
   DriverSendRequestModelData.fromJson(Map<String, dynamic> json) {
     Id = json['_id']?.toString();
@@ -501,21 +858,46 @@ class DriverSendRequestModelData {
     destination = (json['destination'] != null)
         ? DriverSendRequestModelDataDestination.fromJson(json['destination'])
         : null;
+    tripType = json['tripType']?.toString();
+    recurringTrip = (json['recurringTrip'] != null)
+        ? DriverSendRequestModelDataRecurringTrip.fromJson(
+            json['recurringTrip'])
+        : null;
     date = json['date']?.toString();
     time = json['time']?.toString();
+    returnTrip = (json['returnTrip'] != null)
+        ? DriverSendRequestModelDataReturnTrip.fromJson(json['returnTrip'])
+        : null;
+    arrivalDate = json['arrivalDate']?.toString();
+    arrivalTime = json['arrivalTime']?.toString();
     seatAvailable = json['seatAvailable']?.toInt();
+    preferences = (json['preferences'] != null)
+        ? DriverSendRequestModelDataPreferences.fromJson(json['preferences'])
+        : null;
+    isStarted = json['isStarted'];
+    isCompleted = json['isCompleted'];
+    isCancelled = json['isCancelled'];
+    description = json['description']?.toString();
     createdAt = json['createdAt']?.toString();
     updatedAt = json['updatedAt']?.toString();
-    distanceFromOrigin = json['distanceFromOrigin']?.toDouble();
+    if (json['riderDetails'] != null) {
+      final v = json['riderDetails'];
+      final arr0 = <DriverSendRequestModelDataRiderDetails>[];
+      v.forEach((v) {
+        arr0.add(DriverSendRequestModelDataRiderDetails.fromJson(v));
+      });
+      riderDetails = arr0;
+    }
+    distanceFromOrigin = json['distanceFromOrigin']?.toInt();
     if (json['stopsDistances'] != null) {
       final v = json['stopsDistances'];
-      final arr0 = <int>[];
+      final arr0 = <double>[];
       v.forEach((v) {
-        arr0.add(v.toInt());
+        arr0.add(v.toDouble());
       });
       stopsDistances = arr0;
     }
-    minStopDistance = json['minStopDistance']?.toInt();
+    minStopDistance = json['minStopDistance']?.toDouble();
     matchedOriginLocation = (json['matchedOriginLocation'] != null)
         ? DriverSendRequestModelDataMatchedOriginLocation.fromJson(
             json['matchedOriginLocation'])
@@ -534,14 +916,6 @@ class DriverSendRequestModelData {
         ? DriverSendRequestModelDataMatchedDestinationLocation.fromJson(
             json['matchedDestinationLocation'])
         : null;
-    if (json['riderDetails'] != null) {
-      final v = json['riderDetails'];
-      final arr0 = <DriverSendRequestModelDataRiderDetails>[];
-      v.forEach((v) {
-        arr0.add(DriverSendRequestModelDataRiderDetails.fromJson(v));
-      });
-      riderDetails = arr0;
-    }
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -553,11 +927,35 @@ class DriverSendRequestModelData {
     if (destination != null) {
       data['destination'] = destination!.toJson();
     }
+    data['tripType'] = tripType;
+    if (recurringTrip != null) {
+      data['recurringTrip'] = recurringTrip!.toJson();
+    }
     data['date'] = date;
     data['time'] = time;
+    if (returnTrip != null) {
+      data['returnTrip'] = returnTrip!.toJson();
+    }
+    data['arrivalDate'] = arrivalDate;
+    data['arrivalTime'] = arrivalTime;
     data['seatAvailable'] = seatAvailable;
+    if (preferences != null) {
+      data['preferences'] = preferences!.toJson();
+    }
+    data['isStarted'] = isStarted;
+    data['isCompleted'] = isCompleted;
+    data['isCancelled'] = isCancelled;
+    data['description'] = description;
     data['createdAt'] = createdAt;
     data['updatedAt'] = updatedAt;
+    if (riderDetails != null) {
+      final v = riderDetails;
+      final arr0 = [];
+      v!.forEach((v) {
+        arr0.add(v!.toJson());
+      });
+      data['riderDetails'] = arr0;
+    }
     data['distanceFromOrigin'] = distanceFromOrigin;
     if (stopsDistances != null) {
       final v = stopsDistances;
@@ -584,14 +982,6 @@ class DriverSendRequestModelData {
     if (matchedDestinationLocation != null) {
       data['matchedDestinationLocation'] = matchedDestinationLocation!.toJson();
     }
-    if (riderDetails != null) {
-      final v = riderDetails;
-      final arr0 = [];
-      v!.forEach((v) {
-        arr0.add(v!.toJson());
-      });
-      data['riderDetails'] = arr0;
-    }
     return data;
   }
 }
@@ -603,80 +993,127 @@ class DriverSendRequestModel {
   "message": "success",
   "data": [
     {
-      "_id": "65ddbc3f2fa9b062d5748df8",
-      "riderId": "65c2400c32f497dc57fdf007",
+      "_id": "662a0cddd97bf339412b6ea1",
+      "riderId": "661d10c3cea4346b0ee267d3",
       "origin": {
-        "name": "Andheri,Mumbai Suburban,Konkan Division",
+        "name": "297, New Delhi",
         "type": "Point",
         "coordinates": [
-          72.8697339
-        ]
+          77.30131209999999
+        ],
+        "originDestinationFair": null
       },
       "destination": {
-        "name": "Borivali,Mumbai,Mumbai Suburban",
+        "name": "Noida Sector 18, Noida",
         "type": "Point",
         "coordinates": [
-          72.856673
+          77.32490430000001
         ]
       },
-      "date": "2024-02-29T00:00:00.000Z",
-      "time": "6:30 PM",
+      "tripType": null,
+      "recurringTrip": {
+        "recurringTripIds": [
+          "121212"
+        ],
+        "recurringTripDays": [
+          1
+        ],
+        "isRecurringTripEnabled": false
+      },
+      "date": "2024-04-30T00:00:00.000Z",
+      "time": "",
+      "returnTrip": {
+        "returnTripId": null,
+        "isReturnTrip": false,
+        "returnDate": null,
+        "returnTime": null
+      },
+      "arrivalDate": null,
+      "arrivalTime": null,
       "seatAvailable": 1,
-      "createdAt": "2024-02-27T10:41:03.152Z",
-      "updatedAt": "2024-02-27T10:41:03.152Z",
-      "distanceFromOrigin": 0.05799476896281752,
-      "stopsDistances": [
-        0
+      "preferences": {
+        "other": {
+          "AppreciatesConversation": false,
+          "EnjoysMusic": false,
+          "SmokeFree": false,
+          "PetFriendly": false,
+          "WinterTires": false,
+          "CoolingOrHeating": false,
+          "BabySeat": false,
+          "HeatedSeats": false
+        },
+        "luggageType": null
+      },
+      "isStarted": false,
+      "isCompleted": false,
+      "isCancelled": false,
+      "description": null,
+      "createdAt": "2024-04-25T07:57:17.458Z",
+      "updatedAt": "2024-04-25T07:57:17.458Z",
+      "riderDetails": [
+        {
+          "_id": "661d10c3cea4346b0ee267d3",
+          "pinkMode": false,
+          "fullName": "Ria",
+          "phone": "+11212121212",
+          "email": "ria@test.com",
+          "city": "Rajkot",
+          "dob": "2000-04-20",
+          "gender": "Female",
+          "isDriver": false,
+          "referralCode": "S0175P2893",
+          "profileStatus": true,
+          "vehicleStatus": false,
+          "status": "active",
+          "wallet": 0,
+          "notificationPreferences": {
+            "trip": true,
+            "alerts": true,
+            "payments": true,
+            "transactions": true,
+            "offers": true
+          },
+          "firebaseUid": "YfTcEdNqhHPbYWY5bZzQxy5EwHG2",
+          "firebaseSignInProvider": "phone",
+          "rating": 0,
+          "createdAt": "2024-04-15T11:34:27.422Z",
+          "updatedAt": "2024-04-17T13:22:02.189Z",
+          "idPic": {
+            "key": "idPic/bf9018c7-ad37-47f0-b648-075e54474b8f-1000000034.jpg",
+            "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/idPic/bf9018c7-ad37-47f0-b648-075e54474b8f-1000000034.jpg"
+          },
+          "profilePic": {
+            "key": "usersProfile/f8536123-8f53-4c8f-8acd-a033c30af1d9-1000000036.jpg",
+            "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/f8536123-8f53-4c8f-8acd-a033c30af1d9-1000000036.jpg"
+          },
+          "totalRides": 1
+        }
       ],
-      !! km away (multiply by 100) in send req
-      "minStopDistance": 0,
+      "distanceFromOrigin": 0,
+      "stopsDistances": [
+        82.41833502449377
+      ],
+      "minStopDistance": 82.41833502449377,
       "matchedOriginLocation": {
-        "name": "Andheri,Mumbai Suburban,Konkan Division",
+        "name": "297, New Delhi",
         "type": "Point",
         "coordinates": [
-          72.8697339
+          77.30131209999999
         ],
-        "_id": "65ddb242e52406bcf4b8cf6e"
+        "originDestinationFair": null
       },
       "distanceFromDestination": 0,
       "stopsDestinationDistances": [
-        0.1178141054170487
+        82.43516409682579
       ],
-      "minStopDestinationDistance": 0.1178141054170487,
+      "minStopDestinationDistance": 82.43516409682579,
       "matchedDestinationLocation": {
-        "name": "Borivali,Mumbai,Mumbai Suburban",
+        "name": "Noida Sector 18, Noida",
         "type": "Point",
         "coordinates": [
-          72.856673
+          77.32490430000001
         ]
-      },
-      "riderDetails": [
-        {
-          "_id": "65c2400c32f497dc57fdf007",
-          "fullName": "Rekha Dutta",
-          "phone": "+11234567567",
-          "email": "rekha@test.com",
-          "dob": "1996-02-22",
-          "gender": "Female",
-          "isDriver": true,
-          "referralCode": "V0280Q1170",
-          "profileStatus": true,
-          "vehicleStatus": true,
-          "firebaseUid": "7ip7bk892LOYGNlleO2ebucHidB3",
-          "firebaseSignInProvider": "phone",
-          "createdAt": "2024-02-06T14:19:56.214Z",
-          "updatedAt": "2024-02-27T07:39:25.270Z",
-          "idPic": {
-            "key": "idPic/f9dbca2a-84a1-4e4f-a022-e80f84dbf97a-images..jpg",
-            "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/idPic/f9dbca2a-84a1-4e4f-a022-e80f84dbf97a-images..jpg"
-          },
-          "profilePic": {
-            "key": "usersProfile/79d13f16-4cce-429d-b3fc-10831b4c97d6-images..jpg",
-            "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/79d13f16-4cce-429d-b3fc-10831b4c97d6-images..jpg"
-          },
-          "status": "active"
-        }
-      ]
+      }
     }
   ]
 } 
@@ -700,7 +1137,7 @@ class DriverSendRequestModel {
       v.forEach((v) {
         arr0.add(DriverSendRequestModelData.fromJson(v));
       });
-      data = arr0;
+      this.data = arr0;
     }
   }
   Map<String, dynamic> toJson() {

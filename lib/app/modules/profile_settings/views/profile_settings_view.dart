@@ -30,6 +30,7 @@ class ProfileSettingsView extends GetView<ProfileSettingsController> {
                   child: Image(
                       height: 44.kh,
                       width: 44.kw,
+                      fit: BoxFit.cover,
                       image: NetworkImage(
                           "${Get.find<HomeController>().userInfo.value.data?.profilePic?.url}"))),
             ),

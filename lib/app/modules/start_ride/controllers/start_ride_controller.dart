@@ -28,7 +28,8 @@ class StartRideController extends GetxController {
   late GoogleMapController mapController;
   final Set<Marker> markers = <Marker>{}.obs;
   final RxList<LatLng> polylineCoordinates = <LatLng>[].obs;
-  BitmapDescriptor sourceIcon = BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen);
+  BitmapDescriptor sourceIcon =
+      BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen);
   BitmapDescriptor destinationIcon = BitmapDescriptor.defaultMarker;
   final Rx<BookingDetailModelData> myRidesModel = BookingDetailModelData().obs;
   RxBool isLoad = true.obs;
@@ -66,13 +67,17 @@ class StartRideController extends GetxController {
       CameraPosition(
           bearing: 270.0,
           target: LatLng(
-              myRidesModel.value.riderBookingDetails?.origin?.coordinates?.last ?? //source
+              myRidesModel.value.riderBookingDetails?.origin?.coordinates
+                      ?.last ?? //source
                   0.0,
-              myRidesModel.value.riderBookingDetails?.origin?.coordinates?.first ?? 0.0),
+              myRidesModel
+                      .value.riderBookingDetails?.origin?.coordinates?.first ??
+                  0.0),
           tilt: 30.0,
           zoom: 17.0),
     ));
-    mapController.animateCamera(CameraUpdate.newLatLngBounds(boundsFromLatLngList(polylineCoordinates), 70));
+    mapController.animateCamera(CameraUpdate.newLatLngBounds(
+        boundsFromLatLngList(polylineCoordinates), 70));
 
     polylineCoordinates.refresh();
     onChangeLocation();
@@ -80,18 +85,29 @@ class StartRideController extends GetxController {
 
   Future<void> getPolyPoints() async {
     try {
-      final List<double?> originCoordinates = myRidesModel.value.riderBookingDetails?.origin?.coordinates ?? [0.0, 0.0];
-      final List<double?> destinationCoordinates = myRidesModel.value.riderBookingDetails?.destination?.coordinates ?? [0.0, 0.0];
+      final List<double?> originCoordinates =
+          myRidesModel.value.riderBookingDetails?.origin?.coordinates ??
+              [0.0, 0.0];
+      final List<double?> destinationCoordinates =
+          myRidesModel.value.riderBookingDetails?.destination?.coordinates ??
+              [0.0, 0.0];
       PolylineResult result = await PolylinePoints().getRouteBetweenCoordinates(
-          Endpoints.googleApiKey, PointLatLng(originCoordinates.last!, originCoordinates.first!), PointLatLng(destinationCoordinates.last!, destinationCoordinates.first!));
+          Endpoints.googleApiKey,
+          PointLatLng(originCoordinates.last!, originCoordinates.first!),
+          PointLatLng(
+              destinationCoordinates.last!, destinationCoordinates.first!));
       if (result.points.isNotEmpty) {
-        polylineCoordinates.assignAll(result.points.map((point) => LatLng(point.latitude, point.longitude)).toList());
+        polylineCoordinates.assignAll(result.points
+            .map((point) => LatLng(point.latitude, point.longitude))
+            .toList());
       }
       polylineCoordinates.refresh();
       markers.clear();
       addMarkers(LatLng(originCoordinates.last!, originCoordinates.first!));
-      addMarkers(LatLng(destinationCoordinates.last!, destinationCoordinates.first!));
-      mapController.animateCamera(CameraUpdate.newLatLngBounds(GpUtil.boundsFromLatLngList(polylineCoordinates), 70));
+      addMarkers(
+          LatLng(destinationCoordinates.last!, destinationCoordinates.first!));
+      mapController.animateCamera(CameraUpdate.newLatLngBounds(
+          GpUtil.boundsFromLatLngList(polylineCoordinates), 70));
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -99,7 +115,9 @@ class StartRideController extends GetxController {
 
   addMarkers(LatLng carLocation) async {
     String imgurl = "https://www.fluttercampus.com/img/car.png";
-    Uint8List bytes = (await NetworkAssetBundle(Uri.parse(imgurl)).load(imgurl)).buffer.asUint8List();
+    Uint8List bytes = (await NetworkAssetBundle(Uri.parse(imgurl)).load(imgurl))
+        .buffer
+        .asUint8List();
     markers.add(Marker(
       markerId: MarkerId(carLocation.toString()),
       position: carLocation, //position of marker
@@ -122,7 +140,8 @@ class StartRideController extends GetxController {
       if (point.longitude < minLng) minLng = point.longitude;
       if (point.longitude > maxLng) maxLng = point.longitude;
     }
-    return LatLngBounds(southwest: LatLng(minLat, minLng), northeast: LatLng(maxLat, maxLng));
+    return LatLngBounds(
+        southwest: LatLng(minLat, minLng), northeast: LatLng(maxLat, maxLng));
   }
 
   StreamSubscription<Position>? positionStream;
@@ -133,11 +152,16 @@ class StartRideController extends GetxController {
       distanceFilter: 100,
     );
 
-    positionStream = Geolocator.getPositionStream(locationSettings: locationSettings).listen((Position? position) async {
+    positionStream =
+        Geolocator.getPositionStream(locationSettings: locationSettings)
+            .listen((Position? position) async {
       if (position != null) {
         final currentLat = position.latitude;
         final currentLong = position.longitude;
-        myRidesModel.value.riderBookingDetails?.origin?.coordinates = [currentLong, currentLat];
+        myRidesModel.value.riderBookingDetails?.origin?.coordinates = [
+          currentLong,
+          currentLat
+        ];
         mapController.animateCamera(
           CameraUpdate.newCameraPosition(
             CameraPosition(
@@ -154,7 +178,8 @@ class StartRideController extends GetxController {
 
   startRideAPI() async {
     try {
-      final response = await APIManager.startRide(body: {"driverRideId": myRidesModel.value.Id});
+      final response = await APIManager.startRide(
+          body: {"driverRideId": myRidesModel.value.Id});
       var data = jsonDecode(response.toString());
       if (data['status']) {
         isRideStarted.value = true;
@@ -168,7 +193,8 @@ class StartRideController extends GetxController {
 
   endRideAPI() async {
     try {
-      final response = await APIManager.endRide(body: {"driverRideId": myRidesModel.value.Id});
+      final response = await APIManager.endRide(
+          body: {"driverRideId": myRidesModel.value.Id});
       log("END RIDE EXECUTED--------> ${response.statusMessage}}");
       Get.offNamed(Routes.RATING_DRIVER_SIDE, arguments: myRidesModel.value);
     } catch (e) {
@@ -184,22 +210,28 @@ class StartRideController extends GetxController {
 
   showChatBottomSheet() async {
     try {
-      final res =
-          await APIManager.getChatRoomId(receiverId: myRidesModel.value.riderBookingDetails?.riderDetails?.Id ?? "", ridePostId: myRidesModel.value.riderBookingDetails?.Id ?? "");
+      final res = await APIManager.getChatRoomId(
+          receiverId:
+              myRidesModel.value.riderBookingDetails?.riderDetails?.Id ?? "",
+          ridePostId: myRidesModel.value.riderBookingDetails?.Id ?? "");
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
               chatRoomId: res.data["chatChannelId"] ?? "",
               rideId: myRidesModel.value.riderBookingDetails?.Id ?? "",
               id: myRidesModel.value.riderBookingDetails?.riderDetails?.Id,
-              name: myRidesModel.value.riderBookingDetails?.riderDetails?.fullName,
-              image: myRidesModel.value.riderBookingDetails?.riderDetails?.profilePic?.url));
+              name: myRidesModel
+                  .value.riderBookingDetails?.riderDetails?.fullName,
+              image: myRidesModel
+                  .value.riderBookingDetails?.riderDetails?.profilePic?.url));
     } catch (e) {
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
-              rideId:myRidesModel.value.riderBookingDetails?.Id ?? "",
+              rideId: myRidesModel.value.riderBookingDetails?.Id ?? "",
               id: myRidesModel.value.riderBookingDetails?.riderDetails?.Id,
-              name: myRidesModel.value.riderBookingDetails?.riderDetails?.fullName,
-              image: myRidesModel.value.riderBookingDetails?.riderDetails?.profilePic?.url));
+              name: myRidesModel
+                  .value.riderBookingDetails?.riderDetails?.fullName,
+              image: myRidesModel
+                  .value.riderBookingDetails?.riderDetails?.profilePic?.url));
       debugPrint(e.toString());
     }
   }

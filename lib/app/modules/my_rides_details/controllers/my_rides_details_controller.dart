@@ -6,7 +6,8 @@ import '../../../routes/app_pages.dart';
 import '../../../services/dio/api_service.dart';
 
 class MyRidesDetailsController extends GetxController {
-  final Rx<BookingDetailModelData> myRidesModelData = BookingDetailModelData().obs;
+  final Rx<BookingDetailModelData> myRidesModelData =
+      BookingDetailModelData().obs;
   final RxBool isLoad = true.obs;
 
   @override
@@ -27,7 +28,9 @@ class MyRidesDetailsController extends GetxController {
     }
   }
 
-  void viewMatchingRiders() => Get.toNamed(Routes.MY_RIDES_REQUEST, arguments: myRidesModelData.value.Id);
+  void viewMatchingRiders() => Get.toNamed(Routes.MY_RIDES_REQUEST,
+      arguments: myRidesModelData.value.driverRideId);
 
-  viewOnMap() => Get.toNamed(Routes.START_RIDE,arguments: myRidesModelData.value);
+  viewOnMap() =>
+      Get.toNamed(Routes.START_RIDE, arguments: myRidesModelData.value);
 }

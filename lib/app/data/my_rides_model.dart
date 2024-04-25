@@ -2702,19 +2702,28 @@ class MyRidesModelDataStops {
   "coordinates": [
     0
   ],
-  "_id": "65f1963df4372ec0771125bd"
+  "originToStopFair": "",
+  "stopToStopFair": "",
+  "stopTodestinationFair": null,
+  "_id": "661e1936d6fbf5d15c417389"
 } 
 */
 
   String? name;
   String? type;
   List<int?>? coordinates;
+  String? originToStopFair;
+  String? stopToStopFair;
+  String? stopTodestinationFair;
   String? Id;
 
   MyRidesModelDataStops({
     this.name,
     this.type,
     this.coordinates,
+    this.originToStopFair,
+    this.stopToStopFair,
+    this.stopTodestinationFair,
     this.Id,
   });
   MyRidesModelDataStops.fromJson(Map<String, dynamic> json) {
@@ -2728,6 +2737,9 @@ class MyRidesModelDataStops {
       });
       coordinates = arr0;
     }
+    originToStopFair = json['originToStopFair']?.toString();
+    stopToStopFair = json['stopToStopFair']?.toString();
+    stopTodestinationFair = json['stopTodestinationFair']?.toString();
     Id = json['_id']?.toString();
   }
   Map<String, dynamic> toJson() {
@@ -2742,6 +2754,9 @@ class MyRidesModelDataStops {
       });
       data['coordinates'] = arr0;
     }
+    data['originToStopFair'] = originToStopFair;
+    data['stopToStopFair'] = stopToStopFair;
+    data['stopTodestinationFair'] = stopTodestinationFair;
     data['_id'] = Id;
     return data;
   }
@@ -2750,10 +2765,10 @@ class MyRidesModelDataStops {
 class MyRidesModelDataDestination {
 /*
 {
-  "name": "459, Nashik",
+  "name": "3R7R+C5H, Mumbai",
   "type": "Point",
   "coordinates": [
-    73.78980229999999
+    72.84047029999999
   ]
 } 
 */
@@ -2798,22 +2813,25 @@ class MyRidesModelDataDestination {
 class MyRidesModelDataOrigin {
 /*
 {
-  "name": "Vishal Nagar (East), Latur",
+  "name": "3XFX+Q4V, Navi Mumbai",
   "type": "Point",
   "coordinates": [
-    76.5603828
-  ]
+    72.99778409999999
+  ],
+  "originDestinationFair": "12.34"
 } 
 */
 
   String? name;
   String? type;
   List<double?>? coordinates;
+  String? originDestinationFair;
 
   MyRidesModelDataOrigin({
     this.name,
     this.type,
     this.coordinates,
+    this.originDestinationFair,
   });
   MyRidesModelDataOrigin.fromJson(Map<String, dynamic> json) {
     name = json['name']?.toString();
@@ -2826,6 +2844,7 @@ class MyRidesModelDataOrigin {
       });
       coordinates = arr0;
     }
+    originDestinationFair = json['originDestinationFair']?.toString();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -2839,6 +2858,7 @@ class MyRidesModelDataOrigin {
       });
       data['coordinates'] = arr0;
     }
+    data['originDestinationFair'] = originDestinationFair;
     return data;
   }
 }
@@ -2849,19 +2869,19 @@ class MyRidesModelData {
   "_id": "65f1963df4372ec0771125bc",
   "driverId": "65c228fd32f497dc57fdeff8",
   "riderId": "65c228fd32f497dc57fdeff8",
-  "seatAvailable": 1,
   "origin": {
-    "name": "Vishal Nagar (East), Latur",
+    "name": "3XFX+Q4V, Navi Mumbai",
     "type": "Point",
     "coordinates": [
-      76.5603828
-    ]
+      72.99778409999999
+    ],
+    "originDestinationFair": "12.34"
   },
   "destination": {
-    "name": "459, Nashik",
+    "name": "3R7R+C5H, Mumbai",
     "type": "Point",
     "coordinates": [
-      73.78980229999999
+      72.84047029999999
     ]
   },
   "stops": [
@@ -2871,7 +2891,10 @@ class MyRidesModelData {
       "coordinates": [
         0
       ],
-      "_id": "65f1963df4372ec0771125bd"
+      "originToStopFair": "",
+      "stopToStopFair": "",
+      "stopTodestinationFair": null,
+      "_id": "661e1936d6fbf5d15c417389"
     }
   ],
   "tripType": "oneTime",
@@ -2892,6 +2915,7 @@ class MyRidesModelData {
   },
   "arrivalDate": null,
   "arrivalTime": null,
+  "seatAvailable": 1,
   "preferences": {
     "luggageType": "M",
     "other": {
@@ -2909,7 +2933,6 @@ class MyRidesModelData {
   "isStarted": true,
   "isCompleted": false,
   "isCancelled": false,
-  "fair": "11.66",
   "createdAt": "2024-03-13T12:04:13.746Z",
   "updatedAt": "2024-04-05T07:37:55.302Z",
   "vehicleDetails": [
@@ -2989,7 +3012,7 @@ class MyRidesModelData {
             ],
             "recurringTripIds": [
               "123456"
-            ]
+            ],
           },
           "date": "2024-04-05T00:00:00.000Z",
           "time": "",
@@ -3208,7 +3231,6 @@ class MyRidesModelData {
   String? Id;
   String? driverId;
   String? riderId;
-  int? seatAvailable;
   MyRidesModelDataOrigin? origin;
   MyRidesModelDataDestination? destination;
   List<MyRidesModelDataStops?>? stops;
@@ -3219,12 +3241,12 @@ class MyRidesModelData {
   MyRidesModelDataReturnTrip? returnTrip;
   String? arrivalDate;
   String? arrivalTime;
+  int? seatAvailable;
   MyRidesModelDataPreferences? preferences;
   String? description;
   bool? isStarted;
   bool? isCompleted;
   bool? isCancelled;
-  String? fair;
   String? createdAt;
   String? updatedAt;
   List<MyRidesModelDataVehicleDetails?>? vehicleDetails;
@@ -3236,7 +3258,6 @@ class MyRidesModelData {
     this.Id,
     this.driverId,
     this.riderId,
-    this.seatAvailable,
     this.origin,
     this.destination,
     this.stops,
@@ -3247,12 +3268,12 @@ class MyRidesModelData {
     this.returnTrip,
     this.arrivalDate,
     this.arrivalTime,
+    this.seatAvailable,
     this.preferences,
     this.description,
     this.isStarted,
     this.isCompleted,
     this.isCancelled,
-    this.fair,
     this.createdAt,
     this.updatedAt,
     this.vehicleDetails,
@@ -3264,7 +3285,6 @@ class MyRidesModelData {
     Id = json['_id']?.toString();
     driverId = json['driverId']?.toString();
     riderId = json['riderId']?.toString();
-    seatAvailable = json['seatAvailable']?.toInt();
     origin = (json['origin'] != null)
         ? MyRidesModelDataOrigin.fromJson(json['origin'])
         : null;
@@ -3290,6 +3310,7 @@ class MyRidesModelData {
         : null;
     arrivalDate = json['arrivalDate']?.toString();
     arrivalTime = json['arrivalTime']?.toString();
+    seatAvailable = json['seatAvailable']?.toInt();
     preferences = (json['preferences'] != null)
         ? MyRidesModelDataPreferences.fromJson(json['preferences'])
         : null;
@@ -3297,7 +3318,6 @@ class MyRidesModelData {
     isStarted = json['isStarted'];
     isCompleted = json['isCompleted'];
     isCancelled = json['isCancelled'];
-    fair = json['fair']?.toString();
     createdAt = json['createdAt']?.toString();
     updatedAt = json['updatedAt']?.toString();
     if (json['vehicleDetails'] != null) {
@@ -3331,7 +3351,6 @@ class MyRidesModelData {
     data['_id'] = Id;
     data['driverId'] = driverId;
     data['riderId'] = riderId;
-    data['seatAvailable'] = seatAvailable;
     if (origin != null) {
       data['origin'] = origin!.toJson();
     }
@@ -3357,6 +3376,7 @@ class MyRidesModelData {
     }
     data['arrivalDate'] = arrivalDate;
     data['arrivalTime'] = arrivalTime;
+    data['seatAvailable'] = seatAvailable;
     if (preferences != null) {
       data['preferences'] = preferences!.toJson();
     }
@@ -3364,7 +3384,6 @@ class MyRidesModelData {
     data['isStarted'] = isStarted;
     data['isCompleted'] = isCompleted;
     data['isCancelled'] = isCancelled;
-    data['fair'] = fair;
     data['createdAt'] = createdAt;
     data['updatedAt'] = updatedAt;
     if (vehicleDetails != null) {
@@ -3406,19 +3425,19 @@ class MyRidesModel {
       "_id": "65f1963df4372ec0771125bc",
       "driverId": "65c228fd32f497dc57fdeff8",
       "riderId": "65c228fd32f497dc57fdeff8",
-      "seatAvailable": 1,
       "origin": {
-        "name": "Vishal Nagar (East), Latur",
+        "name": "3XFX+Q4V, Navi Mumbai",
         "type": "Point",
         "coordinates": [
-          76.5603828
-        ]
+          72.99778409999999
+        ],
+        "originDestinationFair": "12.34"
       },
       "destination": {
-        "name": "459, Nashik",
+        "name": "3R7R+C5H, Mumbai",
         "type": "Point",
         "coordinates": [
-          73.78980229999999
+          72.84047029999999
         ]
       },
       "stops": [
@@ -3428,7 +3447,10 @@ class MyRidesModel {
           "coordinates": [
             0
           ],
-          "_id": "65f1963df4372ec0771125bd"
+          "originToStopFair": "",
+          "stopToStopFair": "",
+          "stopTodestinationFair": null,
+          "_id": "661e1936d6fbf5d15c417389"
         }
       ],
       "tripType": "oneTime",
@@ -3449,6 +3471,7 @@ class MyRidesModel {
       },
       "arrivalDate": null,
       "arrivalTime": null,
+      "seatAvailable": 1,
       "preferences": {
         "luggageType": "M",
         "other": {
@@ -3466,7 +3489,6 @@ class MyRidesModel {
       "isStarted": true,
       "isCompleted": false,
       "isCancelled": false,
-      "fair": "11.66",
       "createdAt": "2024-03-13T12:04:13.746Z",
       "updatedAt": "2024-04-05T07:37:55.302Z",
       "vehicleDetails": [

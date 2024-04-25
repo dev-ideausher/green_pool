@@ -61,15 +61,25 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                     },
                     indicatorSize: TabBarIndicatorSize.tab,
                     indicator: BoxDecoration(
-                        borderRadius: BorderRadius.circular(80.kh), color: Get.find<ProfileController>().isSwitched.value ? ColorUtil.kPrimaryPinkMode : ColorUtil.kSecondary01),
+                        borderRadius: BorderRadius.circular(80.kh),
+                        color: Get.find<ProfileController>().isSwitched.value
+                            ? ColorUtil.kPrimaryPinkMode
+                            : ColorUtil.kSecondary01),
                     unselectedLabelColor: ColorUtil.kSecondary01,
                     dividerColor: Colors.transparent,
                     indicatorColor: Colors.transparent,
-                    overlayColor: MaterialStatePropertyAll(ColorUtil.kSecondary01.withOpacity(0.05)),
-                    labelColor: Get.find<ProfileController>().isSwitched.value ? ColorUtil.kBlack01 : ColorUtil.kWhiteColor,
+                    overlayColor: MaterialStatePropertyAll(
+                        ColorUtil.kSecondary01.withOpacity(0.05)),
+                    labelColor: Get.find<ProfileController>().isSwitched.value
+                        ? ColorUtil.kBlack01
+                        : ColorUtil.kWhiteColor,
                     splashBorderRadius: BorderRadius.circular(80.kh),
-                    unselectedLabelStyle: TextStyleUtil.k14Semibold(color: ColorUtil.kSecondary01),
-                    labelStyle: TextStyleUtil.k14Semibold(color: Get.find<ProfileController>().isSwitched.value ? ColorUtil.kBlack01 : ColorUtil.kSecondary01),
+                    unselectedLabelStyle: TextStyleUtil.k14Semibold(
+                        color: ColorUtil.kSecondary01),
+                    labelStyle: TextStyleUtil.k14Semibold(
+                        color: Get.find<ProfileController>().isSwitched.value
+                            ? ColorUtil.kBlack01
+                            : ColorUtil.kSecondary01),
                     tabs: const [
                       Tab(
                         child: Text(
@@ -89,7 +99,8 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                       children: [
                         Text(
                           'Enter the specific date and time, specifying  am (morning) or pm (afternoon)',
-                          style: TextStyleUtil.k16Semibold(fontSize: 16.kh, color: ColorUtil.kBlack02),
+                          style: TextStyleUtil.k16Semibold(
+                              fontSize: 16.kh, color: ColorUtil.kBlack02),
                         ).paddingOnly(top: 24.kh, bottom: 16.kh),
 
                         const RichTextHeading(text: "Date"),
@@ -102,12 +113,18 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                                 ImageConstant.svgIconCalendar,
                                 height: 24.kh,
                                 width: 24.kw,
-                                colorFilter:
-                                    ColorFilter.mode(Get.find<ProfileController>().isSwitched.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01, BlendMode.srcIn),
+                                colorFilter: ColorFilter.mode(
+                                    Get.find<ProfileController>()
+                                            .isSwitched
+                                            .value
+                                        ? ColorUtil.kPrimary3PinkMode
+                                        : ColorUtil.kSecondary01,
+                                    BlendMode.srcIn),
                               ).paddingOnly(right: 16.kw),
                             ),
                             onTap: () {
-                              controller.setDate(context).then((value) => controller.setActiveStateCarpoolSchedule());
+                              controller.setDate(context).then((value) =>
+                                  controller.setActiveStateCarpoolSchedule());
                             }).paddingOnly(top: 8.kh, bottom: 16.kh),
                         Text(
                           'Time',
@@ -140,11 +157,25 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                                     controller.isReturn.value = value;
                                   },
                                   inactiveThumbColor: ColorUtil.kNeutral1,
-                                  inactiveTrackColor: Get.find<ProfileController>().isSwitched.value ? ColorUtil.kSecondaryPinkMode : ColorUtil.kPrimary05,
-                                  activeTrackColor: Get.find<ProfileController>().isSwitched.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01,
-                                  trackOutlineWidth: const MaterialStatePropertyAll(0),
-                                  thumbColor: const MaterialStatePropertyAll(ColorUtil.kWhiteColor),
-                                  trackOutlineColor: const MaterialStatePropertyAll(ColorUtil.kNeutral1),
+                                  inactiveTrackColor:
+                                      Get.find<ProfileController>()
+                                              .isSwitched
+                                              .value
+                                          ? ColorUtil.kSecondaryPinkMode
+                                          : ColorUtil.kPrimary05,
+                                  activeTrackColor:
+                                      Get.find<ProfileController>()
+                                              .isSwitched
+                                              .value
+                                          ? ColorUtil.kPrimary3PinkMode
+                                          : ColorUtil.kSecondary01,
+                                  trackOutlineWidth:
+                                      const MaterialStatePropertyAll(0),
+                                  thumbColor: const MaterialStatePropertyAll(
+                                      ColorUtil.kWhiteColor),
+                                  trackOutlineColor:
+                                      const MaterialStatePropertyAll(
+                                          ColorUtil.kNeutral1),
                                 ),
                               ),
                             ),
@@ -157,12 +188,14 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Row(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
                                         'Select Date and Time of Arrival',
-                                        style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
+                                        style: TextStyleUtil.k16Semibold(
+                                            fontSize: 16.kh),
                                       ),
                                       Expanded(
                                         child: Container(
@@ -186,7 +219,12 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                                         height: 24.kh,
                                         width: 24.kw,
                                         colorFilter: ColorFilter.mode(
-                                            Get.find<ProfileController>().isSwitched.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01, BlendMode.srcIn),
+                                            Get.find<ProfileController>()
+                                                    .isSwitched
+                                                    .value
+                                                ? ColorUtil.kPrimary3PinkMode
+                                                : ColorUtil.kSecondary01,
+                                            BlendMode.srcIn),
                                       ).paddingOnly(right: 16.kw),
                                     ),
                                   ).paddingOnly(top: 8.kh, bottom: 16.kh),
@@ -200,7 +238,8 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                                       controller.setReturnTime(context);
                                     },
                                     readOnly: true,
-                                    controller: controller.selectedTimeReturnTrip,
+                                    controller:
+                                        controller.selectedTimeReturnTrip,
                                   ).paddingOnly(top: 8.kh),
                                 ],
                               )
@@ -212,9 +251,11 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                       children: [
                         Text(
                           'Select the days and time, specifying  am (morning) or pm (afternoon)',
-                          style: TextStyleUtil.k16Semibold(fontSize: 16.kh, color: ColorUtil.kBlack02),
+                          style: TextStyleUtil.k16Semibold(
+                              fontSize: 16.kh, color: ColorUtil.kBlack02),
                         ).paddingOnly(top: 24.kh, bottom: 16.kh),
-                        const RichTextHeading(text: 'Day').paddingOnly(bottom: 8.kh),
+                        const RichTextHeading(text: 'Day')
+                            .paddingOnly(bottom: 8.kh),
                         Obx(
                           () => Row(
                             // recurring days selection
@@ -229,8 +270,11 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                                   labelText: 'Mon',
                                   selected: controller.isMonday.value,
                                   onPressed: () {
-                                    controller.isMonday.value = !controller.isMonday.value;
-                                    controller.isMonday.value ? controller.addDays(1) : controller.removeDays(1);
+                                    controller.isMonday.value =
+                                        !controller.isMonday.value;
+                                    controller.isMonday.value
+                                        ? controller.addDays(1)
+                                        : controller.removeDays(1);
                                     controller.setActiveStateCarpoolSchedule();
                                   }),
                               GreenPoolChip(
@@ -242,8 +286,11 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                                   labelText: 'Tue',
                                   selected: controller.isTuesday.value,
                                   onPressed: () {
-                                    controller.isTuesday.value = !controller.isTuesday.value;
-                                    controller.isTuesday.value ? controller.addDays(2) : controller.removeDays(2);
+                                    controller.isTuesday.value =
+                                        !controller.isTuesday.value;
+                                    controller.isTuesday.value
+                                        ? controller.addDays(2)
+                                        : controller.removeDays(2);
                                     controller.setActiveStateCarpoolSchedule();
                                   }),
                               GreenPoolChip(
@@ -255,8 +302,11 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                                   labelText: 'Wed',
                                   selected: controller.isWednesday.value,
                                   onPressed: () {
-                                    controller.isWednesday.value = !controller.isWednesday.value;
-                                    controller.isWednesday.value ? controller.addDays(3) : controller.removeDays(3);
+                                    controller.isWednesday.value =
+                                        !controller.isWednesday.value;
+                                    controller.isWednesday.value
+                                        ? controller.addDays(3)
+                                        : controller.removeDays(3);
                                     controller.setActiveStateCarpoolSchedule();
                                   }),
                               GreenPoolChip(
@@ -268,8 +318,11 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                                   labelText: 'Thu',
                                   selected: controller.isThursDay.value,
                                   onPressed: () {
-                                    controller.isThursDay.value = !controller.isThursDay.value;
-                                    controller.isThursDay.value ? controller.addDays(4) : controller.removeDays(4);
+                                    controller.isThursDay.value =
+                                        !controller.isThursDay.value;
+                                    controller.isThursDay.value
+                                        ? controller.addDays(4)
+                                        : controller.removeDays(4);
                                     controller.setActiveStateCarpoolSchedule();
                                   }),
                               GreenPoolChip(
@@ -281,8 +334,11 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                                   labelText: 'Fri ',
                                   selected: controller.isFriday.value,
                                   onPressed: () {
-                                    controller.isFriday.value = !controller.isFriday.value;
-                                    controller.isFriday.value ? controller.addDays(5) : controller.removeDays(5);
+                                    controller.isFriday.value =
+                                        !controller.isFriday.value;
+                                    controller.isFriday.value
+                                        ? controller.addDays(5)
+                                        : controller.removeDays(5);
                                     controller.setActiveStateCarpoolSchedule();
                                   }),
                               GreenPoolChip(
@@ -294,8 +350,11 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                                   labelText: 'Sat',
                                   selected: controller.isSaturday.value,
                                   onPressed: () {
-                                    controller.isSaturday.value = !controller.isSaturday.value;
-                                    controller.isSaturday.value ? controller.addDays(6) : controller.removeDays(6);
+                                    controller.isSaturday.value =
+                                        !controller.isSaturday.value;
+                                    controller.isSaturday.value
+                                        ? controller.addDays(6)
+                                        : controller.removeDays(6);
                                     controller.setActiveStateCarpoolSchedule();
                                   }),
                               GreenPoolChip(
@@ -307,8 +366,11 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                                   labelText: 'Sun',
                                   selected: controller.isSunday.value,
                                   onPressed: () {
-                                    controller.isSunday.value = !controller.isSunday.value;
-                                    controller.isSunday.value ? controller.addDays(7) : controller.removeDays(7);
+                                    controller.isSunday.value =
+                                        !controller.isSunday.value;
+                                    controller.isSunday.value
+                                        ? controller.addDays(7)
+                                        : controller.removeDays(7);
                                     controller.setActiveStateCarpoolSchedule();
                                   }),
                             ],
@@ -360,13 +422,18 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                       onTap: () => controller.decrement(),
                       child: SvgPicture.asset(
                         ImageConstant.svgIconMinus,
-                        colorFilter: ColorFilter.mode(Get.find<ProfileController>().isSwitched.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01, BlendMode.srcIn),
+                        colorFilter: ColorFilter.mode(
+                            Get.find<ProfileController>().isSwitched.value
+                                ? ColorUtil.kPrimary3PinkMode
+                                : ColorUtil.kSecondary01,
+                            BlendMode.srcIn),
                       )),
                   Expanded(
                     child: Container(
                       padding: EdgeInsets.symmetric(vertical: 12.kh),
                       decoration: BoxDecoration(
-                        border: Border.all(color: ColorUtil.kBlack06, width: 2.kh),
+                        border:
+                            Border.all(color: ColorUtil.kBlack06, width: 2.kh),
                         borderRadius: BorderRadius.circular(40.kh),
                       ),
                       child: Row(
@@ -374,12 +441,17 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                         children: [
                           SvgPicture.asset(
                             ImageConstant.svgNavProfileFilled,
-                            colorFilter: ColorFilter.mode(Get.find<ProfileController>().isSwitched.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01, BlendMode.srcIn),
+                            colorFilter: ColorFilter.mode(
+                                Get.find<ProfileController>().isSwitched.value
+                                    ? ColorUtil.kPrimary3PinkMode
+                                    : ColorUtil.kSecondary01,
+                                BlendMode.srcIn),
                           ).paddingOnly(right: 4.kw),
                           Obx(
                             () => Text(
                               controller.count.value.toString(),
-                              style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
+                              style: TextStyleUtil.k14Regular(
+                                  color: ColorUtil.kBlack03),
                             ),
                           ),
                         ],
@@ -390,7 +462,11 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                       onTap: () => controller.increment(),
                       child: SvgPicture.asset(
                         ImageConstant.svgIconPlus,
-                        colorFilter: ColorFilter.mode(Get.find<ProfileController>().isSwitched.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01, BlendMode.srcIn),
+                        colorFilter: ColorFilter.mode(
+                            Get.find<ProfileController>().isSwitched.value
+                                ? ColorUtil.kPrimary3PinkMode
+                                : ColorUtil.kSecondary01,
+                            BlendMode.srcIn),
                       )),
                 ],
               ).paddingOnly(bottom: 24.kh),
@@ -404,7 +480,8 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                   Obx(
                     () => Text(
                       'Luggage Weight : ${"${controller.selectedCHIP.value} ${controller.luggageWeight.value}"}',
-                      style: TextStyleUtil.k14Semibold(color: ColorUtil.kBlack04),
+                      style:
+                          TextStyleUtil.k14Semibold(color: ColorUtil.kBlack04),
                     ).paddingOnly(top: 4.kh, bottom: 16.kh),
                   ),
                 ],
@@ -417,7 +494,9 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                         controller: controller,
                         radius: 40.kh,
                         labelText: 'No',
-                        selected: controller.selectedCHIP.value == 'No' ? true : false,
+                        selected: controller.selectedCHIP.value == 'No'
+                            ? true
+                            : false,
                         onPressed: () {
                           controller.selectedCHIP.value = 'No';
 
@@ -427,7 +506,8 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                         controller: controller,
                         radius: 40.kh,
                         labelText: 'S',
-                        selected: controller.selectedCHIP.value == 'S' ? true : false,
+                        selected:
+                            controller.selectedCHIP.value == 'S' ? true : false,
                         onPressed: () {
                           controller.selectedCHIP.value = 'S';
                           controller.luggageWeight.value = '5 kg';
@@ -436,7 +516,8 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                         controller: controller,
                         radius: 40.kh,
                         labelText: 'M',
-                        selected: controller.selectedCHIP.value == 'M' ? true : false,
+                        selected:
+                            controller.selectedCHIP.value == 'M' ? true : false,
                         onPressed: () {
                           controller.selectedCHIP.value = 'M';
                           controller.luggageWeight.value = '10 kg';
@@ -445,7 +526,8 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                         controller: controller,
                         radius: 40.kh,
                         labelText: 'L',
-                        selected: controller.selectedCHIP.value == 'L' ? true : false,
+                        selected:
+                            controller.selectedCHIP.value == 'L' ? true : false,
                         onPressed: () {
                           controller.selectedCHIP.value = 'L';
                           controller.luggageWeight.value = '15 kg';
@@ -458,82 +540,72 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                 style: TextStyleUtil.k16Bold(color: ColorUtil.kNeutral5),
               ).paddingOnly(top: 24.kh, bottom: 16.kh),
               Obx(
-                () => Amenities(
-                    text: 'Appreciates Conversation',
-                    image: ImageConstant.svgAmenities1,
-                    value: controller.appreciatesConversation.value,
-                    onChanged: (val) {
-                      controller.appreciatesConversation.value = val;
-                    }),
-              ),
-              Obx(
-                () => Amenities(
-                  text: 'Enjoys Music',
-                  image: ImageConstant.svgAmenities2,
-                  value: controller.enjoysMusic.value,
-                  onChanged: (val) {
-                    controller.enjoysMusic.value = val;
-                  },
-                ),
-              ),
-              Obx(
-                () => Amenities(
-                  text: 'Smoke-free',
-                  image: ImageConstant.svgAmenities3,
-                  value: controller.smokeFree.value,
-                  onChanged: (val) {
-                    controller.smokeFree.value = val;
-                  },
-                ),
-              ),
-              Obx(
-                () => Amenities(
-                  text: 'Pet-friendly',
-                  image: ImageConstant.svgAmenities4,
-                  value: controller.petFriendly.value,
-                  onChanged: (val) {
-                    controller.petFriendly.value = val;
-                  },
-                ),
-              ),
-              Obx(
-                () => Amenities(
-                  text: 'Winter Tires',
-                  image: ImageConstant.svgAmenities5,
-                  value: controller.winterTires.value,
-                  onChanged: (val) {
-                    controller.winterTires.value = val;
-                  },
-                ),
-              ),
-              Obx(
-                () => Amenities(
-                  text: 'Cooling or Heating',
-                  image: ImageConstant.svgAmenities6,
-                  value: controller.coolingOrHeating.value,
-                  onChanged: (val) {
-                    controller.coolingOrHeating.value = val;
-                  },
-                ),
-              ),
-              Obx(
-                () => Amenities(
-                  text: 'Baby Seat',
-                  image: ImageConstant.svgAmenities7,
-                  value: controller.babySeat.value,
-                  onChanged: (val) {
-                    controller.babySeat.value = val;
-                  },
-                ),
-              ),
-              Obx(
-                () => Amenities(
-                  text: 'Heated Seats',
-                  image: ImageConstant.svgAmenities8,
-                  value: controller.heatedSeats.value,
-                  onChanged: (val) {
-                    controller.heatedSeats.value = val;
-                  },
+                () => Column(
+                  children: [
+                    Amenities(
+                        text: 'Appreciates Conversation',
+                        image: ImageConstant.svgAmenities1,
+                        value: controller.appreciatesConversation.value,
+                        onChanged: (val) {
+                          controller.appreciatesConversation.value = val;
+                        }),
+                    Amenities(
+                      text: 'Enjoys Music',
+                      image: ImageConstant.svgAmenities2,
+                      value: controller.enjoysMusic.value,
+                      onChanged: (val) {
+                        controller.enjoysMusic.value = val;
+                      },
+                    ),
+                    Amenities(
+                      text: 'Smoke-free',
+                      image: ImageConstant.svgAmenities3,
+                      value: controller.smokeFree.value,
+                      onChanged: (val) {
+                        controller.smokeFree.value = val;
+                      },
+                    ),
+                    Amenities(
+                      text: 'Pet-friendly',
+                      image: ImageConstant.svgAmenities4,
+                      value: controller.petFriendly.value,
+                      onChanged: (val) {
+                        controller.petFriendly.value = val;
+                      },
+                    ),
+                    Amenities(
+                      text: 'Winter Tires',
+                      image: ImageConstant.svgAmenities5,
+                      value: controller.winterTires.value,
+                      onChanged: (val) {
+                        controller.winterTires.value = val;
+                      },
+                    ),
+                    Amenities(
+                      text: 'Cooling or Heating',
+                      image: ImageConstant.svgAmenities6,
+                      value: controller.coolingOrHeating.value,
+                      onChanged: (val) {
+                        controller.coolingOrHeating.value = val;
+                      },
+                    ),
+                    Amenities(
+                      text: 'Baby Seat',
+                      image: ImageConstant.svgAmenities7,
+                      value: controller.babySeat.value,
+                      onChanged: (val) {
+                        controller.babySeat.value = val;
+                      },
+                    ),
+                    Amenities(
+                      text: 'Heated Seats',
+                      image: ImageConstant.svgAmenities8,
+                      value: controller.heatedSeats.value,
+                      onChanged: (val) {
+                        controller.heatedSeats.value = val;
+                      },
+                    ),
+                  ],
                 ),
               ),
               Row(

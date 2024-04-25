@@ -8,7 +8,6 @@ abstract class Routes {
   static const HOME = _Paths.HOME;
   static const SPLASH = _Paths.SPLASH;
   static const ONBOARDING = _Paths.ONBOARDING;
-  static const MY_RIDES = _Paths.MY_RIDES;
   static const MY_RIDES_REQUEST = _Paths.MY_RIDES_REQUEST;
   static const MESSAGES = _Paths.MESSAGES;
   static const PROFILE = _Paths.PROFILE;
@@ -68,6 +67,8 @@ abstract class Routes {
   static const RATING_DRIVER_SIDE = _Paths.RATING_DRIVER_SIDE;
   static const RATING_RIDER_SIDE = _Paths.RATING_RIDER_SIDE;
   static const RIDER_START_RIDE_MAP = _Paths.RIDER_START_RIDE_MAP;
+  static const SUBMIT_DISPUTE = _Paths.SUBMIT_DISPUTE;
+  static const POST_RIDE_STEP_TWO = _Paths.POST_RIDE_STEP_TWO;
 }
 
 abstract class _Paths {
@@ -76,7 +77,6 @@ abstract class _Paths {
   static const BOTTOM_NAVIGATION = '/bottom_navigation_view';
   static const SPLASH = '/splash';
   static const ONBOARDING = '/onboarding';
-  static const MY_RIDES = '/my-rides';
   static const MESSAGES = '/messages';
   static const PROFILE = '/profile';
   static const POST_RIDE = '/post-ride';
@@ -134,4 +134,6 @@ abstract class _Paths {
   static const RATING_DRIVER_SIDE = '/rating-driver-side';
   static const RATING_RIDER_SIDE = '/rating-rider-side';
   static const RIDER_START_RIDE_MAP = '/rider-start-ride-map';
+  static const SUBMIT_DISPUTE = '/submit-dispute';
+  static const POST_RIDE_STEP_TWO = '/post-ride-step-two';
 }

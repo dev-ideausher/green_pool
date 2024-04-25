@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/components/richtext_heading.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
+import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../components/greenpool_textfield.dart';
@@ -22,16 +23,16 @@ class FindRideView extends GetView<FindRideController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const GreenPoolAppBar(
-        title: Text('Find a Ride'),
+      appBar: GreenPoolAppBar(
+        title: Text(Strings.findRide),
       ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const RichTextHeading(text: 'Origin').paddingOnly(top: 32.kh),
+            RichTextHeading(text: Strings.origin).paddingOnly(top: 32.kh),
             GreenPoolTextField(
-              hintText: 'Enter origin address',
+              hintText: Strings.enterOrigin,
               keyboardType: TextInputType.streetAddress,
               onchanged: (v) {
                 controller.setActiveState();

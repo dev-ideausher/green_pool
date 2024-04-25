@@ -1,19 +1,27 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../data/ride_history_model.dart';
 import '../../../services/dio/api_service.dart';
 
+
 class FileDisputeController extends GetxController {
   RxBool isLoading = true.obs;
   var rideHistModel = RideHistoryModel().obs;
+  
+  TextEditingController bookingTextController = TextEditingController();
+  
+  
 
   @override
   Future<void> onInit() async {
     super.onInit();
     await rideHistoryAPI();
   }
+
+  
 
   rideHistoryAPI() async {
     try {
@@ -27,13 +35,5 @@ class FileDisputeController extends GetxController {
     }
   }
 
-  // @override
-  // void onReady() {
-  //   super.onReady();
-  // }
-
-  // @override
-  // void onClose() {
-  //   super.onClose();
-  // }
+  
 }

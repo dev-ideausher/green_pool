@@ -1,5 +1,7 @@
 //! ride details after ride history in profile
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
@@ -258,7 +260,42 @@ class RideDetailsView extends GetView<RideDetailsController> {
             'Co-Passengers',
             style: TextStyleUtil.k14Bold(),
           ).paddingOnly(bottom: 16.kh),
-          const CoPassengerList().paddingOnly(bottom: 16.kh),
+          SizedBox(
+            height: 96.kh,
+            child: controller.rideHistory.value.driverBookingDetails?[0]?.riders
+                        ?.length ==
+                    0
+                ? const Center(
+                    child: Text("No co-passengers are available at the moment"))
+                : ListView.builder(
+                    itemCount: controller.rideHistory.value
+                            .driverBookingDetails?[0]?.riders?.length ??
+                        6,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      return Column(
+                        children: [
+                          Container(
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                            ),
+                            child: ClipOval(
+                              child: SizedBox.fromSize(
+                                  size: Size.fromRadius(20.kh),
+                                  child: Image(
+                                      image: NetworkImage(
+                                          "${controller.rideHistory.value.driverBookingDetails?[0]?.riders?[index]?.profilePic?.url}"))),
+                            ),
+                          ).paddingOnly(bottom: 4.kh),
+                          Text(
+                            "${controller.rideHistory.value.driverBookingDetails?[0]?.riders?[index]?.fullName.toString().split(" ").first}\n${controller.rideHistory.value.driverBookingDetails?[0]?.riders?[index]?.fullName.toString().split(" ").last}",
+                            style: TextStyleUtil.k12Semibold(),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ).paddingOnly(right: 32.kw);
+                    }),
+          ).paddingOnly(bottom: 16.kh),
           const GreenPoolDivider().paddingOnly(bottom: 16.kh),
 
           //Vehicle details
@@ -268,23 +305,26 @@ class RideDetailsView extends GetView<RideDetailsController> {
           ).paddingOnly(bottom: 16.kh),
           Row(
             children: [
-              Image.asset(
-                ImageConstant.pngUserSquare,
-                height: 64.kh,
-                width: 64.kw,
-                fit: BoxFit.cover,
-              ).paddingOnly(right: 8.kh),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8.kh),
+                child: Image(
+                  height: 64.kh,
+                  width: 64.kw,
+                  image: NetworkImage(
+                      "${controller.rideHistory.value.driverBookingDetails?[0]?.driverDetails?[0]?.vechileDetails?[0]?.vehiclePic?.url}"),
+                ).paddingOnly(right: 8.kh),
+              ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Toyota Corolla',
+                    '${controller.rideHistory.value.driverBookingDetails?[0]?.driverDetails?[0]?.vechileDetails?[0]?.model}',
                     style: TextStyleUtil.k16Bold(color: ColorUtil.kBlack02),
                   ).paddingOnly(bottom: 4.kh),
                   Row(
                     children: [
                       Text(
-                        'Sedan',
+                        '${controller.rideHistory.value.driverBookingDetails?[0]?.driverDetails?[0]?.vechileDetails?[0]?.type}',
                         style: TextStyleUtil.k14Semibold(
                             color: ColorUtil.kBlack03),
                       ),
@@ -294,7 +334,7 @@ class RideDetailsView extends GetView<RideDetailsController> {
                         color: ColorUtil.kBlack03,
                       ).paddingSymmetric(vertical: 2.5.kh, horizontal: 8.kw),
                       Text(
-                        'ABC 123',
+                        '${controller.rideHistory.value.driverBookingDetails?[0]?.driverDetails?[0]?.vechileDetails?[0]?.licencePlate}',
                         style: TextStyleUtil.k14Semibold(
                             color: ColorUtil.kBlack03),
                       ),

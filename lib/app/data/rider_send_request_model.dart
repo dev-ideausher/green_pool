@@ -4,9 +4,9 @@
 class RiderSendRequestModelDataDriverDetailsVehicleDetailsVehiclePic {
 /*
 {
-  "key": "vehiclePic/0f9bfe4d-10f3-479f-8f56-caa8faad5737-1000000034.jpg",
-  "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/vehiclePic/0f9bfe4d-10f3-479f-8f56-caa8faad5737-1000000034.jpg",
-  "_id": "65c23bef32f497dc57fdf003"
+  "key": "vehiclePic/a39e0df8-7b64-4ce7-81a4-a49583571bab-1000000038.jpg",
+  "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/vehiclePic/a39e0df8-7b64-4ce7-81a4-a49583571bab-1000000038.jpg",
+  "_id": "661d2a95b394636b53de0ce7"
 } 
 */
 
@@ -37,20 +37,20 @@ class RiderSendRequestModelDataDriverDetailsVehicleDetailsVehiclePic {
 class RiderSendRequestModelDataDriverDetailsVehicleDetails {
 /*
 {
-  "_id": "65c23bef32f497dc57fdf002",
-  "driverId": "65c228fd32f497dc57fdeff8",
+  "_id": "661d2a95b394636b53de0ce6",
+  "driverId": "661d27690ae69f9b5509f84d",
   "vehiclePic": {
-    "key": "vehiclePic/0f9bfe4d-10f3-479f-8f56-caa8faad5737-1000000034.jpg",
-    "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/vehiclePic/0f9bfe4d-10f3-479f-8f56-caa8faad5737-1000000034.jpg",
-    "_id": "65c23bef32f497dc57fdf003"
+    "key": "vehiclePic/a39e0df8-7b64-4ce7-81a4-a49583571bab-1000000038.jpg",
+    "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/vehiclePic/a39e0df8-7b64-4ce7-81a4-a49583571bab-1000000038.jpg",
+    "_id": "661d2a95b394636b53de0ce7"
   },
-  "model": "ModelY",
+  "model": "ModelIU",
   "type": "Sedan",
-  "color": "Red",
-  "year": 2024,
-  "licencePlate": "LA2024",
-  "createdAt": "2024-02-06T14:02:23.061Z",
-  "updatedAt": "2024-02-06T14:02:23.061Z"
+  "color": "Silver",
+  "year": 1999,
+  "licencePlate": "IU2024",
+  "createdAt": "2024-04-15T13:24:37.094Z",
+  "updatedAt": "2024-04-15T13:24:37.094Z"
 } 
 */
 
@@ -114,8 +114,8 @@ class RiderSendRequestModelDataDriverDetailsVehicleDetails {
 class RiderSendRequestModelDataDriverDetailsProfilePic {
 /*
 {
-  "key": "usersProfile/a71bbbb2-acbf-4bd1-8504-c1c501341388-images..jpg",
-  "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/a71bbbb2-acbf-4bd1-8504-c1c501341388-images..jpg"
+  "key": "usersProfile/277d7f6a-5d3c-47dc-b1cb-d11d4cbe62ba-1000000036.jpg",
+  "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/277d7f6a-5d3c-47dc-b1cb-d11d4cbe62ba-1000000036.jpg"
 } 
 */
 
@@ -142,8 +142,8 @@ class RiderSendRequestModelDataDriverDetailsProfilePic {
 class RiderSendRequestModelDataDriverDetailsIdPic {
 /*
 {
-  "key": "idPic/692044ef-538e-4718-bd71-215ec7c12d23-images..jpg",
-  "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/idPic/692044ef-538e-4718-bd71-215ec7c12d23-images..jpg"
+  "key": "idPic/fdf1f112-b004-436f-b81f-e804cd9119ae-1000000034.jpg",
+  "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/idPic/fdf1f112-b004-436f-b81f-e804cd9119ae-1000000034.jpg"
 } 
 */
 
@@ -167,117 +167,182 @@ class RiderSendRequestModelDataDriverDetailsIdPic {
   }
 }
 
+class RiderSendRequestModelDataDriverDetailsNotificationPreferences {
+/*
+{
+  "trip": true,
+  "alerts": true,
+  "payments": true,
+  "transactions": true,
+  "offers": true
+} 
+*/
+
+  bool? trip;
+  bool? alerts;
+  bool? payments;
+  bool? transactions;
+  bool? offers;
+
+  RiderSendRequestModelDataDriverDetailsNotificationPreferences({
+    this.trip,
+    this.alerts,
+    this.payments,
+    this.transactions,
+    this.offers,
+  });
+  RiderSendRequestModelDataDriverDetailsNotificationPreferences.fromJson(
+      Map<String, dynamic> json) {
+    trip = json['trip'];
+    alerts = json['alerts'];
+    payments = json['payments'];
+    transactions = json['transactions'];
+    offers = json['offers'];
+  }
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+    data['trip'] = trip;
+    data['alerts'] = alerts;
+    data['payments'] = payments;
+    data['transactions'] = transactions;
+    data['offers'] = offers;
+    return data;
+  }
+}
+
 class RiderSendRequestModelDataDriverDetails {
 /*
 {
-  "_id": "65c228fd32f497dc57fdeff8",
-  "fullName": "Rohit Shah",
+  "_id": "661d27690ae69f9b5509f84d",
+  "pinkMode": false,
+  "fullName": "Zen",
+  "phone": "+11234512345",
+  "email": "user@test.com",
   "city": "Mumbai",
-  "phone": "1111122222",
-  "email": "rohit@test.com",
-  "dob": "2006-02-27",
+  "dob": "2006-04-20",
   "gender": "Male",
   "isDriver": true,
-  "referralCode": "C3072B8509",
+  "referralCode": "W2150A0637",
   "profileStatus": true,
   "vehicleStatus": true,
-  "totalRiders": 0,
-  "totalRating": 0,
-  "firebaseUid": "foYFX1qnSaPETdXnF1IFVT0xpkZ2",
+  "status": "active",
+  "wallet": 0,
+  "notificationPreferences": {
+    "trip": true,
+    "alerts": true,
+    "payments": true,
+    "transactions": true,
+    "offers": true
+  },
+  "firebaseUid": "n9XvgstaJCShxg2V5AmREneUYOE2",
   "firebaseSignInProvider": "phone",
-  "createdAt": "2024-02-06T12:41:33.824Z",
-  "updatedAt": "2024-02-23T14:46:53.625Z",
+  "rating": 0,
+  "createdAt": "2024-04-15T13:11:05.211Z",
+  "updatedAt": "2024-04-15T13:24:37.255Z",
   "idPic": {
-    "key": "idPic/692044ef-538e-4718-bd71-215ec7c12d23-images..jpg",
-    "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/idPic/692044ef-538e-4718-bd71-215ec7c12d23-images..jpg"
+    "key": "idPic/fdf1f112-b004-436f-b81f-e804cd9119ae-1000000034.jpg",
+    "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/idPic/fdf1f112-b004-436f-b81f-e804cd9119ae-1000000034.jpg"
   },
   "profilePic": {
-    "key": "usersProfile/a71bbbb2-acbf-4bd1-8504-c1c501341388-images..jpg",
-    "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/a71bbbb2-acbf-4bd1-8504-c1c501341388-images..jpg"
+    "key": "usersProfile/277d7f6a-5d3c-47dc-b1cb-d11d4cbe62ba-1000000036.jpg",
+    "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/277d7f6a-5d3c-47dc-b1cb-d11d4cbe62ba-1000000036.jpg"
   },
-  "status": "active",
+  "totalRides": 0,
   "vehicleDetails": [
     {
-      "_id": "65c23bef32f497dc57fdf002",
-      "driverId": "65c228fd32f497dc57fdeff8",
+      "_id": "661d2a95b394636b53de0ce6",
+      "driverId": "661d27690ae69f9b5509f84d",
       "vehiclePic": {
-        "key": "vehiclePic/0f9bfe4d-10f3-479f-8f56-caa8faad5737-1000000034.jpg",
-        "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/vehiclePic/0f9bfe4d-10f3-479f-8f56-caa8faad5737-1000000034.jpg",
-        "_id": "65c23bef32f497dc57fdf003"
+        "key": "vehiclePic/a39e0df8-7b64-4ce7-81a4-a49583571bab-1000000038.jpg",
+        "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/vehiclePic/a39e0df8-7b64-4ce7-81a4-a49583571bab-1000000038.jpg",
+        "_id": "661d2a95b394636b53de0ce7"
       },
-      "model": "ModelY",
+      "model": "ModelIU",
       "type": "Sedan",
-      "color": "Red",
-      "year": 2024,
-      "licencePlate": "LA2024",
-      "createdAt": "2024-02-06T14:02:23.061Z",
-      "updatedAt": "2024-02-06T14:02:23.061Z"
+      "color": "Silver",
+      "year": 1999,
+      "licencePlate": "IU2024",
+      "createdAt": "2024-04-15T13:24:37.094Z",
+      "updatedAt": "2024-04-15T13:24:37.094Z"
     }
   ]
 } 
 */
 
   String? Id;
+  bool? pinkMode;
   String? fullName;
-  String? city;
   String? phone;
   String? email;
+  String? city;
   String? dob;
   String? gender;
   bool? isDriver;
   String? referralCode;
   bool? profileStatus;
   bool? vehicleStatus;
-  int? totalRiders;
-  int? totalRating;
+  String? status;
+  int? wallet;
+  RiderSendRequestModelDataDriverDetailsNotificationPreferences?
+      notificationPreferences;
   String? firebaseUid;
   String? firebaseSignInProvider;
+  int? rating;
   String? createdAt;
   String? updatedAt;
   RiderSendRequestModelDataDriverDetailsIdPic? idPic;
   RiderSendRequestModelDataDriverDetailsProfilePic? profilePic;
-  String? status;
+  int? totalRides;
   List<RiderSendRequestModelDataDriverDetailsVehicleDetails?>? vehicleDetails;
 
   RiderSendRequestModelDataDriverDetails({
     this.Id,
+    this.pinkMode,
     this.fullName,
-    this.city,
     this.phone,
     this.email,
+    this.city,
     this.dob,
     this.gender,
     this.isDriver,
     this.referralCode,
     this.profileStatus,
     this.vehicleStatus,
-    this.totalRiders,
-    this.totalRating,
+    this.status,
+    this.wallet,
+    this.notificationPreferences,
     this.firebaseUid,
     this.firebaseSignInProvider,
+    this.rating,
     this.createdAt,
     this.updatedAt,
     this.idPic,
     this.profilePic,
-    this.status,
+    this.totalRides,
     this.vehicleDetails,
   });
   RiderSendRequestModelDataDriverDetails.fromJson(Map<String, dynamic> json) {
     Id = json['_id']?.toString();
+    pinkMode = json['pinkMode'];
     fullName = json['fullName']?.toString();
-    city = json['city']?.toString();
     phone = json['phone']?.toString();
     email = json['email']?.toString();
+    city = json['city']?.toString();
     dob = json['dob']?.toString();
     gender = json['gender']?.toString();
     isDriver = json['isDriver'];
     referralCode = json['referralCode']?.toString();
     profileStatus = json['profileStatus'];
     vehicleStatus = json['vehicleStatus'];
-    totalRiders = json['totalRiders']?.toInt();
-    totalRating = json['totalRating']?.toInt();
+    status = json['status']?.toString();
+    wallet = json['wallet']?.toInt();
+    notificationPreferences = (json['notificationPreferences'] != null)
+        ? RiderSendRequestModelDataDriverDetailsNotificationPreferences
+            .fromJson(json['notificationPreferences'])
+        : null;
     firebaseUid = json['firebaseUid']?.toString();
     firebaseSignInProvider = json['firebaseSignInProvider']?.toString();
+    rating = json['rating']?.toInt();
     createdAt = json['createdAt']?.toString();
     updatedAt = json['updatedAt']?.toString();
     idPic = (json['idPic'] != null)
@@ -287,7 +352,7 @@ class RiderSendRequestModelDataDriverDetails {
         ? RiderSendRequestModelDataDriverDetailsProfilePic.fromJson(
             json['profilePic'])
         : null;
-    status = json['status']?.toString();
+    totalRides = json['totalRides']?.toInt();
     if (json['vehicleDetails'] != null) {
       final v = json['vehicleDetails'];
       final arr0 = <RiderSendRequestModelDataDriverDetailsVehicleDetails>[];
@@ -301,20 +366,25 @@ class RiderSendRequestModelDataDriverDetails {
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['_id'] = Id;
+    data['pinkMode'] = pinkMode;
     data['fullName'] = fullName;
-    data['city'] = city;
     data['phone'] = phone;
     data['email'] = email;
+    data['city'] = city;
     data['dob'] = dob;
     data['gender'] = gender;
     data['isDriver'] = isDriver;
     data['referralCode'] = referralCode;
     data['profileStatus'] = profileStatus;
     data['vehicleStatus'] = vehicleStatus;
-    data['totalRiders'] = totalRiders;
-    data['totalRating'] = totalRating;
+    data['status'] = status;
+    data['wallet'] = wallet;
+    if (notificationPreferences != null) {
+      data['notificationPreferences'] = notificationPreferences!.toJson();
+    }
     data['firebaseUid'] = firebaseUid;
     data['firebaseSignInProvider'] = firebaseSignInProvider;
+    data['rating'] = rating;
     data['createdAt'] = createdAt;
     data['updatedAt'] = updatedAt;
     if (idPic != null) {
@@ -323,7 +393,7 @@ class RiderSendRequestModelDataDriverDetails {
     if (profilePic != null) {
       data['profilePic'] = profilePic!.toJson();
     }
-    data['status'] = status;
+    data['totalRides'] = totalRides;
     if (vehicleDetails != null) {
       final v = vehicleDetails;
       final arr0 = [];
@@ -396,6 +466,7 @@ class RiderSendRequestModelDataRidersDetatils {
 /*
 {
   "_id": "65c22d5672eca065a18fa015",
+  "pinkMode": false,
   "fullName": "rider2",
   "city": "Mumbai",
   "phone": null,
@@ -423,6 +494,7 @@ class RiderSendRequestModelDataRidersDetatils {
 */
 
   String? Id;
+  bool? pinkMode;
   String? fullName;
   String? city;
   String? phone;
@@ -443,6 +515,7 @@ class RiderSendRequestModelDataRidersDetatils {
 
   RiderSendRequestModelDataRidersDetatils({
     this.Id,
+    this.pinkMode,
     this.fullName,
     this.city,
     this.phone,
@@ -463,6 +536,7 @@ class RiderSendRequestModelDataRidersDetatils {
   });
   RiderSendRequestModelDataRidersDetatils.fromJson(Map<String, dynamic> json) {
     Id = json['_id']?.toString();
+    pinkMode = json['pinkMode'];
     fullName = json['fullName']?.toString();
     city = json['city']?.toString();
     phone = json['phone']?.toString();
@@ -489,6 +563,7 @@ class RiderSendRequestModelDataRidersDetatils {
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['_id'] = Id;
+    data['pinkMode'] = pinkMode;
     data['fullName'] = fullName;
     data['city'] = city;
     data['phone'] = phone;
@@ -517,25 +592,22 @@ class RiderSendRequestModelDataRidersDetatils {
 class RiderSendRequestModelDataMatchedDestinationLocation {
 /*
 {
-  "name": "Andheri,Mumbai Suburban,Konkan Division,Maharashtra",
+  "name": "3R7R+C5H, Mumbai",
   "type": "Point",
   "coordinates": [
-    72.8697339
-  ],
-  "_id": "65dc63199076ae011b9bdf70"
+    72.84047029999999
+  ]
 } 
 */
 
   String? name;
   String? type;
   List<double?>? coordinates;
-  String? Id;
 
   RiderSendRequestModelDataMatchedDestinationLocation({
     this.name,
     this.type,
     this.coordinates,
-    this.Id,
   });
   RiderSendRequestModelDataMatchedDestinationLocation.fromJson(
       Map<String, dynamic> json) {
@@ -549,7 +621,6 @@ class RiderSendRequestModelDataMatchedDestinationLocation {
       });
       coordinates = arr0;
     }
-    Id = json['_id']?.toString();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -563,7 +634,6 @@ class RiderSendRequestModelDataMatchedDestinationLocation {
       });
       data['coordinates'] = arr0;
     }
-    data['_id'] = Id;
     return data;
   }
 }
@@ -571,25 +641,25 @@ class RiderSendRequestModelDataMatchedDestinationLocation {
 class RiderSendRequestModelDataMatchedOriginLocation {
 /*
 {
-  "name": "Andheri,Mumbai Suburban,Konkan Division,Maharashtra",
+  "name": "3XFX+Q4V, Navi Mumbai",
   "type": "Point",
   "coordinates": [
-    72.8697339
+    72.99778409999999
   ],
-  "_id": "65dc63199076ae011b9bdf70"
+  "originDestinationFair": "12.34"
 } 
 */
 
   String? name;
   String? type;
   List<double?>? coordinates;
-  String? Id;
+  String? originDestinationFair;
 
   RiderSendRequestModelDataMatchedOriginLocation({
     this.name,
     this.type,
     this.coordinates,
-    this.Id,
+    this.originDestinationFair,
   });
   RiderSendRequestModelDataMatchedOriginLocation.fromJson(
       Map<String, dynamic> json) {
@@ -603,7 +673,7 @@ class RiderSendRequestModelDataMatchedOriginLocation {
       });
       coordinates = arr0;
     }
-    Id = json['_id']?.toString();
+    originDestinationFair = json['originDestinationFair']?.toString();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -617,7 +687,7 @@ class RiderSendRequestModelDataMatchedOriginLocation {
       });
       data['coordinates'] = arr0;
     }
-    data['_id'] = Id;
+    data['originDestinationFair'] = originDestinationFair;
     return data;
   }
 }
@@ -625,10 +695,10 @@ class RiderSendRequestModelDataMatchedOriginLocation {
 class RiderSendRequestModelDataPreferencesOther {
 /*
 {
-  "AppreciatesConversation": false,
-  "EnjoysMusic": false,
-  "SmokeFree": false,
-  "PetFriendly": false,
+  "AppreciatesConversation": true,
+  "EnjoysMusic": true,
+  "SmokeFree": true,
+  "PetFriendly": true,
   "WinterTires": false,
   "CoolingOrHeating": false,
   "BabySeat": false,
@@ -683,12 +753,12 @@ class RiderSendRequestModelDataPreferencesOther {
 class RiderSendRequestModelDataPreferences {
 /*
 {
-  "luggageType": "M",
+  "luggageType": "S",
   "other": {
-    "AppreciatesConversation": false,
-    "EnjoysMusic": false,
-    "SmokeFree": false,
-    "PetFriendly": false,
+    "AppreciatesConversation": true,
+    "EnjoysMusic": true,
+    "SmokeFree": true,
+    "PetFriendly": true,
     "WinterTires": false,
     "CoolingOrHeating": false,
     "BabySeat": false,
@@ -752,27 +822,95 @@ class RiderSendRequestModelDataReturnTrip {
   }
 }
 
+class RiderSendRequestModelDataRecurringTrip {
+/*
+{
+  "recurringTripDays": [
+    1
+  ],
+  "recurringTripIds": [
+    "661e1936d6fbf5d15c41738c"
+  ]
+} 
+*/
+
+  List<int?>? recurringTripDays;
+  List<String?>? recurringTripIds;
+
+  RiderSendRequestModelDataRecurringTrip({
+    this.recurringTripDays,
+    this.recurringTripIds,
+  });
+  RiderSendRequestModelDataRecurringTrip.fromJson(Map<String, dynamic> json) {
+    if (json['recurringTripDays'] != null) {
+      final v = json['recurringTripDays'];
+      final arr0 = <int>[];
+      v.forEach((v) {
+        arr0.add(v.toInt());
+      });
+      recurringTripDays = arr0;
+    }
+    if (json['recurringTripIds'] != null) {
+      final v = json['recurringTripIds'];
+      final arr0 = <String>[];
+      v.forEach((v) {
+        arr0.add(v.toString());
+      });
+      recurringTripIds = arr0;
+    }
+  }
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+    if (recurringTripDays != null) {
+      final v = recurringTripDays;
+      final arr0 = [];
+      v!.forEach((v) {
+        arr0.add(v);
+      });
+      data['recurringTripDays'] = arr0;
+    }
+    if (recurringTripIds != null) {
+      final v = recurringTripIds;
+      final arr0 = [];
+      v!.forEach((v) {
+        arr0.add(v);
+      });
+      data['recurringTripIds'] = arr0;
+    }
+    return data;
+  }
+}
+
 class RiderSendRequestModelDataStops {
 /*
 {
-  "name": "Andheri,Mumbai Suburban,Konkan Division,Maharashtra",
+  "name": "",
   "type": "Point",
   "coordinates": [
-    72.8697339
+    0
   ],
-  "_id": "65dc63199076ae011b9bdf70"
+  "originToStopFair": "",
+  "stopToStopFair": "",
+  "stopTodestinationFair": null,
+  "_id": "661e1936d6fbf5d15c417389"
 } 
 */
 
   String? name;
   String? type;
-  List<double?>? coordinates;
+  List<int?>? coordinates;
+  String? originToStopFair;
+  String? stopToStopFair;
+  String? stopTodestinationFair;
   String? Id;
 
   RiderSendRequestModelDataStops({
     this.name,
     this.type,
     this.coordinates,
+    this.originToStopFair,
+    this.stopToStopFair,
+    this.stopTodestinationFair,
     this.Id,
   });
   RiderSendRequestModelDataStops.fromJson(Map<String, dynamic> json) {
@@ -780,12 +918,15 @@ class RiderSendRequestModelDataStops {
     type = json['type']?.toString();
     if (json['coordinates'] != null) {
       final v = json['coordinates'];
-      final arr0 = <double>[];
+      final arr0 = <int>[];
       v.forEach((v) {
-        arr0.add(v.toDouble());
+        arr0.add(v.toInt());
       });
       coordinates = arr0;
     }
+    originToStopFair = json['originToStopFair']?.toString();
+    stopToStopFair = json['stopToStopFair']?.toString();
+    stopTodestinationFair = json['stopTodestinationFair']?.toString();
     Id = json['_id']?.toString();
   }
   Map<String, dynamic> toJson() {
@@ -800,6 +941,9 @@ class RiderSendRequestModelDataStops {
       });
       data['coordinates'] = arr0;
     }
+    data['originToStopFair'] = originToStopFair;
+    data['stopToStopFair'] = stopToStopFair;
+    data['stopTodestinationFair'] = stopTodestinationFair;
     data['_id'] = Id;
     return data;
   }
@@ -808,10 +952,10 @@ class RiderSendRequestModelDataStops {
 class RiderSendRequestModelDataDestination {
 /*
 {
-  "name": "Borivali,Mumbai,Mumbai Suburban,Konkan Division",
+  "name": "3R7R+C5H, Mumbai",
   "type": "Point",
   "coordinates": [
-    72.856673
+    72.84047029999999
   ]
 } 
 */
@@ -856,22 +1000,25 @@ class RiderSendRequestModelDataDestination {
 class RiderSendRequestModelDataOrigin {
 /*
 {
-  "name": "Bandra Terminus,Naupada,Bandra East,Mumbai",
+  "name": "3XFX+Q4V, Navi Mumbai",
   "type": "Point",
   "coordinates": [
-    72.84047029999999
-  ]
+    72.99778409999999
+  ],
+  "originDestinationFair": "12.34"
 } 
 */
 
   String? name;
   String? type;
   List<double?>? coordinates;
+  String? originDestinationFair;
 
   RiderSendRequestModelDataOrigin({
     this.name,
     this.type,
     this.coordinates,
+    this.originDestinationFair,
   });
   RiderSendRequestModelDataOrigin.fromJson(Map<String, dynamic> json) {
     name = json['name']?.toString();
@@ -884,6 +1031,7 @@ class RiderSendRequestModelDataOrigin {
       });
       coordinates = arr0;
     }
+    originDestinationFair = json['originDestinationFair']?.toString();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -897,6 +1045,7 @@ class RiderSendRequestModelDataOrigin {
       });
       data['coordinates'] = arr0;
     }
+    data['originDestinationFair'] = originDestinationFair;
     return data;
   }
 }
@@ -904,35 +1053,47 @@ class RiderSendRequestModelDataOrigin {
 class RiderSendRequestModelData {
 /*
 {
-  "_id": "65dc63199076ae011b9bdf6f",
-  "driverId": "65c228fd32f497dc57fdeff8",
+  "_id": "661e1936d6fbf5d15c417388",
+  "driverId": "661d27690ae69f9b5509f84d",
   "origin": {
-    "name": "Bandra Terminus,Naupada,Bandra East,Mumbai",
+    "name": "3XFX+Q4V, Navi Mumbai",
+    "type": "Point",
+    "coordinates": [
+      72.99778409999999
+    ],
+    "originDestinationFair": "12.34"
+  },
+  "destination": {
+    "name": "3R7R+C5H, Mumbai",
     "type": "Point",
     "coordinates": [
       72.84047029999999
     ]
   },
-  "destination": {
-    "name": "Borivali,Mumbai,Mumbai Suburban,Konkan Division",
-    "type": "Point",
-    "coordinates": [
-      72.856673
-    ]
-  },
   "stops": [
     {
-      "name": "Andheri,Mumbai Suburban,Konkan Division,Maharashtra",
+      "name": "",
       "type": "Point",
       "coordinates": [
-        72.8697339
+        0
       ],
-      "_id": "65dc63199076ae011b9bdf70"
+      "originToStopFair": "",
+      "stopToStopFair": "",
+      "stopTodestinationFair": null,
+      "_id": "661e1936d6fbf5d15c417389"
     }
   ],
-  "tripType": "oneTime",
-  "date": "2024-02-28T00:00:00.000Z",
-  "time": "2:00 PM",
+  "tripType": "recurring",
+  "recurringTrip": {
+    "recurringTripDays": [
+      1
+    ],
+    "recurringTripIds": [
+      "661e1936d6fbf5d15c41738c"
+    ]
+  },
+  "date": null,
+  "time": "",
   "returnTrip": {
     "isReturnTrip": false,
     "returnDate": null,
@@ -940,14 +1101,14 @@ class RiderSendRequestModelData {
   },
   "arrivalDate": null,
   "arrivalTime": null,
-  "seatAvailable": 4,
+  "seatAvailable": 6,
   "preferences": {
-    "luggageType": "M",
+    "luggageType": "S",
     "other": {
-      "AppreciatesConversation": false,
-      "EnjoysMusic": false,
-      "SmokeFree": false,
-      "PetFriendly": false,
+      "AppreciatesConversation": true,
+      "EnjoysMusic": true,
+      "SmokeFree": true,
+      "PetFriendly": true,
       "WinterTires": false,
       "CoolingOrHeating": false,
       "BabySeat": false,
@@ -957,41 +1118,46 @@ class RiderSendRequestModelData {
   "isStarted": false,
   "isCompleted": false,
   "isCancelled": false,
-  "fair": "28",
   "riders": [
-    "65c22d5672eca065a18fa015"
+    "12"
   ],
-  "createdAt": "2024-02-26T10:08:25.623Z",
-  "updatedAt": "2024-02-26T10:08:25.623Z",
-  "distanceFromOrigin": 0.05799476896281752,
+  "drivers": [
+    "12"
+  ],
+  "description": "",
+  "createdAt": "2024-04-16T06:22:46.109Z",
+  "updatedAt": "2024-04-16T06:22:46.448Z",
+  "distanceFromOrigin": 0,
   "stopsDistances": [
-    0
+    75.44874079949722
   ],
-  "minStopDistance": 0,
+  "minStopDistance": 75.44874079949722,
   "matchedOriginLocation": {
-    "name": "Andheri,Mumbai Suburban,Konkan Division,Maharashtra",
+    "name": "3XFX+Q4V, Navi Mumbai",
     "type": "Point",
     "coordinates": [
-      72.8697339
+      72.99778409999999
     ],
-    "_id": "65dc63199076ae011b9bdf70"
+    "originDestinationFair": "12.34"
   },
-  "distanceFromDestination": 0.06460674232036405,
+  "distanceFromDestination": 0,
   "destinationStopsDistances": [
-    0.055340705173046234
+    75.2937845633201
   ],
-  "minDestinationStopDistance": 0.055340705173046234,
+  "minDestinationStopDistance": 75.2937845633201,
   "matchedDestinationLocation": {
-    "name": "Andheri,Mumbai Suburban,Konkan Division,Maharashtra",
+    "name": "3R7R+C5H, Mumbai",
     "type": "Point",
     "coordinates": [
-      72.8697339
-    ],
-    "_id": "65dc63199076ae011b9bdf70"
+      72.84047029999999
+    ]
   },
+  "originDistance": 0,
+  "destinationDistance": 0,
   "ridersDetatils": [
     {
       "_id": "65c22d5672eca065a18fa015",
+      "pinkMode": false,
       "fullName": "rider2",
       "city": "Mumbai",
       "phone": null,
@@ -1019,48 +1185,57 @@ class RiderSendRequestModelData {
   ],
   "driverDetails": [
     {
-      "_id": "65c228fd32f497dc57fdeff8",
-      "fullName": "Rohit Shah",
+      "_id": "661d27690ae69f9b5509f84d",
+      "pinkMode": false,
+      "fullName": "Zen",
+      "phone": "+11234512345",
+      "email": "user@test.com",
       "city": "Mumbai",
-      "phone": "1111122222",
-      "email": "rohit@test.com",
-      "dob": "2006-02-27",
+      "dob": "2006-04-20",
       "gender": "Male",
       "isDriver": true,
-      "referralCode": "C3072B8509",
+      "referralCode": "W2150A0637",
       "profileStatus": true,
       "vehicleStatus": true,
-      "totalRiders": 0,
-      "totalRating": 0,
-      "firebaseUid": "foYFX1qnSaPETdXnF1IFVT0xpkZ2",
+      "status": "active",
+      "wallet": 0,
+      "notificationPreferences": {
+        "trip": true,
+        "alerts": true,
+        "payments": true,
+        "transactions": true,
+        "offers": true
+      },
+      "firebaseUid": "n9XvgstaJCShxg2V5AmREneUYOE2",
       "firebaseSignInProvider": "phone",
-      "createdAt": "2024-02-06T12:41:33.824Z",
-      "updatedAt": "2024-02-23T14:46:53.625Z",
+      "rating": 0,
+      "createdAt": "2024-04-15T13:11:05.211Z",
+      "updatedAt": "2024-04-15T13:24:37.255Z",
       "idPic": {
-        "key": "idPic/692044ef-538e-4718-bd71-215ec7c12d23-images..jpg",
-        "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/idPic/692044ef-538e-4718-bd71-215ec7c12d23-images..jpg"
+        "key": "idPic/fdf1f112-b004-436f-b81f-e804cd9119ae-1000000034.jpg",
+        "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/idPic/fdf1f112-b004-436f-b81f-e804cd9119ae-1000000034.jpg"
       },
       "profilePic": {
-        "key": "usersProfile/a71bbbb2-acbf-4bd1-8504-c1c501341388-images..jpg",
-        "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/a71bbbb2-acbf-4bd1-8504-c1c501341388-images..jpg"
+        "key": "usersProfile/277d7f6a-5d3c-47dc-b1cb-d11d4cbe62ba-1000000036.jpg",
+        "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/277d7f6a-5d3c-47dc-b1cb-d11d4cbe62ba-1000000036.jpg"
       },
-      "status": "active",
+      "totalRides": 0,
       "vehicleDetails": [
         {
-          "_id": "65c23bef32f497dc57fdf002",
-          "driverId": "65c228fd32f497dc57fdeff8",
+          "_id": "661d2a95b394636b53de0ce6",
+          "driverId": "661d27690ae69f9b5509f84d",
           "vehiclePic": {
-            "key": "vehiclePic/0f9bfe4d-10f3-479f-8f56-caa8faad5737-1000000034.jpg",
-            "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/vehiclePic/0f9bfe4d-10f3-479f-8f56-caa8faad5737-1000000034.jpg",
-            "_id": "65c23bef32f497dc57fdf003"
+            "key": "vehiclePic/a39e0df8-7b64-4ce7-81a4-a49583571bab-1000000038.jpg",
+            "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/vehiclePic/a39e0df8-7b64-4ce7-81a4-a49583571bab-1000000038.jpg",
+            "_id": "661d2a95b394636b53de0ce7"
           },
-          "model": "ModelY",
+          "model": "ModelIU",
           "type": "Sedan",
-          "color": "Red",
-          "year": 2024,
-          "licencePlate": "LA2024",
-          "createdAt": "2024-02-06T14:02:23.061Z",
-          "updatedAt": "2024-02-06T14:02:23.061Z"
+          "color": "Silver",
+          "year": 1999,
+          "licencePlate": "IU2024",
+          "createdAt": "2024-04-15T13:24:37.094Z",
+          "updatedAt": "2024-04-15T13:24:37.094Z"
         }
       ]
     }
@@ -1074,6 +1249,7 @@ class RiderSendRequestModelData {
   RiderSendRequestModelDataDestination? destination;
   List<RiderSendRequestModelDataStops?>? stops;
   String? tripType;
+  RiderSendRequestModelDataRecurringTrip? recurringTrip;
   String? date;
   String? time;
   RiderSendRequestModelDataReturnTrip? returnTrip;
@@ -1084,19 +1260,22 @@ class RiderSendRequestModelData {
   bool? isStarted;
   bool? isCompleted;
   bool? isCancelled;
-  String? fair;
   List<String?>? riders;
+  List<String?>? drivers;
+  String? description;
   String? createdAt;
   String? updatedAt;
-  double? distanceFromOrigin;
-  List<int?>? stopsDistances;
-  int? minStopDistance;
+  int? distanceFromOrigin;
+  List<double?>? stopsDistances;
+  double? minStopDistance;
   RiderSendRequestModelDataMatchedOriginLocation? matchedOriginLocation;
-  double? distanceFromDestination;
+  int? distanceFromDestination;
   List<double?>? destinationStopsDistances;
   double? minDestinationStopDistance;
   RiderSendRequestModelDataMatchedDestinationLocation?
       matchedDestinationLocation;
+  int? originDistance;
+  int? destinationDistance;
   List<RiderSendRequestModelDataRidersDetatils?>? ridersDetatils;
   List<RiderSendRequestModelDataDriverDetails?>? driverDetails;
 
@@ -1107,6 +1286,7 @@ class RiderSendRequestModelData {
     this.destination,
     this.stops,
     this.tripType,
+    this.recurringTrip,
     this.date,
     this.time,
     this.returnTrip,
@@ -1117,8 +1297,9 @@ class RiderSendRequestModelData {
     this.isStarted,
     this.isCompleted,
     this.isCancelled,
-    this.fair,
     this.riders,
+    this.drivers,
+    this.description,
     this.createdAt,
     this.updatedAt,
     this.distanceFromOrigin,
@@ -1129,6 +1310,8 @@ class RiderSendRequestModelData {
     this.destinationStopsDistances,
     this.minDestinationStopDistance,
     this.matchedDestinationLocation,
+    this.originDistance,
+    this.destinationDistance,
     this.ridersDetatils,
     this.driverDetails,
   });
@@ -1150,6 +1333,9 @@ class RiderSendRequestModelData {
       stops = arr0;
     }
     tripType = json['tripType']?.toString();
+    recurringTrip = (json['recurringTrip'] != null)
+        ? RiderSendRequestModelDataRecurringTrip.fromJson(json['recurringTrip'])
+        : null;
     date = json['date']?.toString();
     time = json['time']?.toString();
     returnTrip = (json['returnTrip'] != null)
@@ -1164,7 +1350,6 @@ class RiderSendRequestModelData {
     isStarted = json['isStarted'];
     isCompleted = json['isCompleted'];
     isCancelled = json['isCancelled'];
-    fair = json['fair']?.toString();
     if (json['riders'] != null) {
       final v = json['riders'];
       final arr0 = <String>[];
@@ -1173,23 +1358,32 @@ class RiderSendRequestModelData {
       });
       riders = arr0;
     }
+    if (json['drivers'] != null) {
+      final v = json['drivers'];
+      final arr0 = <String>[];
+      v.forEach((v) {
+        arr0.add(v.toString());
+      });
+      drivers = arr0;
+    }
+    description = json['description']?.toString();
     createdAt = json['createdAt']?.toString();
     updatedAt = json['updatedAt']?.toString();
-    distanceFromOrigin = json['distanceFromOrigin']?.toDouble();
+    distanceFromOrigin = json['distanceFromOrigin']?.toInt();
     if (json['stopsDistances'] != null) {
       final v = json['stopsDistances'];
-      final arr0 = <int>[];
+      final arr0 = <double>[];
       v.forEach((v) {
-        arr0.add(v.toInt());
+        arr0.add(v.toDouble());
       });
       stopsDistances = arr0;
     }
-    minStopDistance = json['minStopDistance']?.toInt();
+    minStopDistance = json['minStopDistance']?.toDouble();
     matchedOriginLocation = (json['matchedOriginLocation'] != null)
         ? RiderSendRequestModelDataMatchedOriginLocation.fromJson(
             json['matchedOriginLocation'])
         : null;
-    distanceFromDestination = json['distanceFromDestination']?.toDouble();
+    distanceFromDestination = json['distanceFromDestination']?.toInt();
     if (json['destinationStopsDistances'] != null) {
       final v = json['destinationStopsDistances'];
       final arr0 = <double>[];
@@ -1203,6 +1397,8 @@ class RiderSendRequestModelData {
         ? RiderSendRequestModelDataMatchedDestinationLocation.fromJson(
             json['matchedDestinationLocation'])
         : null;
+    originDistance = json['originDistance']?.toInt();
+    destinationDistance = json['destinationDistance']?.toInt();
     if (json['ridersDetatils'] != null) {
       final v = json['ridersDetatils'];
       final arr0 = <RiderSendRequestModelDataRidersDetatils>[];
@@ -1239,6 +1435,9 @@ class RiderSendRequestModelData {
       data['stops'] = arr0;
     }
     data['tripType'] = tripType;
+    if (recurringTrip != null) {
+      data['recurringTrip'] = recurringTrip!.toJson();
+    }
     data['date'] = date;
     data['time'] = time;
     if (returnTrip != null) {
@@ -1253,7 +1452,6 @@ class RiderSendRequestModelData {
     data['isStarted'] = isStarted;
     data['isCompleted'] = isCompleted;
     data['isCancelled'] = isCancelled;
-    data['fair'] = fair;
     if (riders != null) {
       final v = riders;
       final arr0 = [];
@@ -1262,6 +1460,15 @@ class RiderSendRequestModelData {
       });
       data['riders'] = arr0;
     }
+    if (drivers != null) {
+      final v = drivers;
+      final arr0 = [];
+      v!.forEach((v) {
+        arr0.add(v);
+      });
+      data['drivers'] = arr0;
+    }
+    data['description'] = description;
     data['createdAt'] = createdAt;
     data['updatedAt'] = updatedAt;
     data['distanceFromOrigin'] = distanceFromOrigin;
@@ -1290,6 +1497,8 @@ class RiderSendRequestModelData {
     if (matchedDestinationLocation != null) {
       data['matchedDestinationLocation'] = matchedDestinationLocation!.toJson();
     }
+    data['originDistance'] = originDistance;
+    data['destinationDistance'] = destinationDistance;
     if (ridersDetatils != null) {
       final v = ridersDetatils;
       final arr0 = [];
@@ -1316,35 +1525,47 @@ class RiderSendRequestModel {
   "status": true,
   "data": [
     {
-      "_id": "65dc63199076ae011b9bdf6f",
-      "driverId": "65c228fd32f497dc57fdeff8",
+      "_id": "661e1936d6fbf5d15c417388",
+      "driverId": "661d27690ae69f9b5509f84d",
       "origin": {
-        "name": "Bandra Terminus,Naupada,Bandra East,Mumbai",
+        "name": "3XFX+Q4V, Navi Mumbai",
+        "type": "Point",
+        "coordinates": [
+          72.99778409999999
+        ],
+        "originDestinationFair": "12.34"
+      },
+      "destination": {
+        "name": "3R7R+C5H, Mumbai",
         "type": "Point",
         "coordinates": [
           72.84047029999999
         ]
       },
-      "destination": {
-        "name": "Borivali,Mumbai,Mumbai Suburban,Konkan Division",
-        "type": "Point",
-        "coordinates": [
-          72.856673
-        ]
-      },
       "stops": [
         {
-          "name": "Andheri,Mumbai Suburban,Konkan Division,Maharashtra",
+          "name": "",
           "type": "Point",
           "coordinates": [
-            72.8697339
+            0
           ],
-          "_id": "65dc63199076ae011b9bdf70"
+          "originToStopFair": "",
+          "stopToStopFair": "",
+          "stopTodestinationFair": null,
+          "_id": "661e1936d6fbf5d15c417389"
         }
       ],
-      "tripType": "oneTime",
-      "date": "2024-02-28T00:00:00.000Z",
-      "time": "2:00 PM",
+      "tripType": "recurring",
+      "recurringTrip": {
+        "recurringTripDays": [
+          1
+        ],
+        "recurringTripIds": [
+          "661e1936d6fbf5d15c41738c"
+        ]
+      },
+      "date": null,
+      "time": "",
       "returnTrip": {
         "isReturnTrip": false,
         "returnDate": null,
@@ -1352,14 +1573,14 @@ class RiderSendRequestModel {
       },
       "arrivalDate": null,
       "arrivalTime": null,
-      "seatAvailable": 4,
+      "seatAvailable": 6,
       "preferences": {
-        "luggageType": "M",
+        "luggageType": "S",
         "other": {
-          "AppreciatesConversation": false,
-          "EnjoysMusic": false,
-          "SmokeFree": false,
-          "PetFriendly": false,
+          "AppreciatesConversation": true,
+          "EnjoysMusic": true,
+          "SmokeFree": true,
+          "PetFriendly": true,
           "WinterTires": false,
           "CoolingOrHeating": false,
           "BabySeat": false,
@@ -1369,41 +1590,46 @@ class RiderSendRequestModel {
       "isStarted": false,
       "isCompleted": false,
       "isCancelled": false,
-      "fair": "28",
       "riders": [
-        "65c22d5672eca065a18fa015"
+        "12"
       ],
-      "createdAt": "2024-02-26T10:08:25.623Z",
-      "updatedAt": "2024-02-26T10:08:25.623Z",
-      "distanceFromOrigin": 0.05799476896281752,
+      "drivers": [
+        "12"
+      ],
+      "description": "",
+      "createdAt": "2024-04-16T06:22:46.109Z",
+      "updatedAt": "2024-04-16T06:22:46.448Z",
+      "distanceFromOrigin": 0,
       "stopsDistances": [
-        0
+        75.44874079949722
       ],
-      "minStopDistance": 0,
+      "minStopDistance": 75.44874079949722,
       "matchedOriginLocation": {
-        "name": "Andheri,Mumbai Suburban,Konkan Division,Maharashtra",
+        "name": "3XFX+Q4V, Navi Mumbai",
         "type": "Point",
         "coordinates": [
-          72.8697339
+          72.99778409999999
         ],
-        "_id": "65dc63199076ae011b9bdf70"
+        "originDestinationFair": "12.34"
       },
-      "distanceFromDestination": 0.06460674232036405,
+      "distanceFromDestination": 0,
       "destinationStopsDistances": [
-        0.055340705173046234
+        75.2937845633201
       ],
-      "minDestinationStopDistance": 0.055340705173046234,
+      "minDestinationStopDistance": 75.2937845633201,
       "matchedDestinationLocation": {
-        "name": "Andheri,Mumbai Suburban,Konkan Division,Maharashtra",
+        "name": "3R7R+C5H, Mumbai",
         "type": "Point",
         "coordinates": [
-          72.8697339
-        ],
-        "_id": "65dc63199076ae011b9bdf70"
+          72.84047029999999
+        ]
       },
+      "originDistance": 0,
+      "destinationDistance": 0,
       "ridersDetatils": [
         {
           "_id": "65c22d5672eca065a18fa015",
+          "pinkMode": false,
           "fullName": "rider2",
           "city": "Mumbai",
           "phone": null,
@@ -1431,48 +1657,57 @@ class RiderSendRequestModel {
       ],
       "driverDetails": [
         {
-          "_id": "65c228fd32f497dc57fdeff8",
-          "fullName": "Rohit Shah",
+          "_id": "661d27690ae69f9b5509f84d",
+          "pinkMode": false,
+          "fullName": "Zen",
+          "phone": "+11234512345",
+          "email": "user@test.com",
           "city": "Mumbai",
-          "phone": "1111122222",
-          "email": "rohit@test.com",
-          "dob": "2006-02-27",
+          "dob": "2006-04-20",
           "gender": "Male",
           "isDriver": true,
-          "referralCode": "C3072B8509",
+          "referralCode": "W2150A0637",
           "profileStatus": true,
           "vehicleStatus": true,
-          "totalRiders": 0,
-          "totalRating": 0,
-          "firebaseUid": "foYFX1qnSaPETdXnF1IFVT0xpkZ2",
+          "status": "active",
+          "wallet": 0,
+          "notificationPreferences": {
+            "trip": true,
+            "alerts": true,
+            "payments": true,
+            "transactions": true,
+            "offers": true
+          },
+          "firebaseUid": "n9XvgstaJCShxg2V5AmREneUYOE2",
           "firebaseSignInProvider": "phone",
-          "createdAt": "2024-02-06T12:41:33.824Z",
-          "updatedAt": "2024-02-23T14:46:53.625Z",
+          "rating": 0,
+          "createdAt": "2024-04-15T13:11:05.211Z",
+          "updatedAt": "2024-04-15T13:24:37.255Z",
           "idPic": {
-            "key": "idPic/692044ef-538e-4718-bd71-215ec7c12d23-images..jpg",
-            "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/idPic/692044ef-538e-4718-bd71-215ec7c12d23-images..jpg"
+            "key": "idPic/fdf1f112-b004-436f-b81f-e804cd9119ae-1000000034.jpg",
+            "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/idPic/fdf1f112-b004-436f-b81f-e804cd9119ae-1000000034.jpg"
           },
           "profilePic": {
-            "key": "usersProfile/a71bbbb2-acbf-4bd1-8504-c1c501341388-images..jpg",
-            "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/a71bbbb2-acbf-4bd1-8504-c1c501341388-images..jpg"
+            "key": "usersProfile/277d7f6a-5d3c-47dc-b1cb-d11d4cbe62ba-1000000036.jpg",
+            "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/277d7f6a-5d3c-47dc-b1cb-d11d4cbe62ba-1000000036.jpg"
           },
-          "status": "active",
+          "totalRides": 0,
           "vehicleDetails": [
             {
-              "_id": "65c23bef32f497dc57fdf002",
-              "driverId": "65c228fd32f497dc57fdeff8",
+              "_id": "661d2a95b394636b53de0ce6",
+              "driverId": "661d27690ae69f9b5509f84d",
               "vehiclePic": {
-                "key": "vehiclePic/0f9bfe4d-10f3-479f-8f56-caa8faad5737-1000000034.jpg",
-                "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/vehiclePic/0f9bfe4d-10f3-479f-8f56-caa8faad5737-1000000034.jpg",
-                "_id": "65c23bef32f497dc57fdf003"
+                "key": "vehiclePic/a39e0df8-7b64-4ce7-81a4-a49583571bab-1000000038.jpg",
+                "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/vehiclePic/a39e0df8-7b64-4ce7-81a4-a49583571bab-1000000038.jpg",
+                "_id": "661d2a95b394636b53de0ce7"
               },
-              "model": "ModelY",
+              "model": "ModelIU",
               "type": "Sedan",
-              "color": "Red",
-              "year": 2024,
-              "licencePlate": "LA2024",
-              "createdAt": "2024-02-06T14:02:23.061Z",
-              "updatedAt": "2024-02-06T14:02:23.061Z"
+              "color": "Silver",
+              "year": 1999,
+              "licencePlate": "IU2024",
+              "createdAt": "2024-04-15T13:24:37.094Z",
+              "updatedAt": "2024-04-15T13:24:37.094Z"
             }
           ]
         }

@@ -104,7 +104,7 @@ class CreateAccountView extends GetView<CreateAccountController> {
                   Obx(
                     () => Checkbox(
                       value: controller.isChecked.value,
-                      activeColor: ColorUtil.kPrimary01,
+                      activeColor: ColorUtil.kSecondary01,
                       onChanged: (value) {
                         controller.toggleCheckbox();
                       },

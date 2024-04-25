@@ -84,6 +84,7 @@ class ArrivingBottomSheet extends StatelessWidget {
               ),
               12.kheightBox,
               OriginToDestination(
+                needPickupText: true,
                       origin: "${controller.myRidesModel.value.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.origin?.name}",
                       destination: "${controller.myRidesModel.value.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.destination?.name}")
                   .paddingSymmetric(horizontal: 12.kw),

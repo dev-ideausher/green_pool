@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:green_pool/app/components/gp_progress.dart';
 import 'package:green_pool/app/components/green_pool_divider.dart';
 import 'package:green_pool/app/components/origin_to_destination.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
@@ -17,17 +18,10 @@ class MyRidesRecurringView extends GetView<MyRidesRecurringController> {
   const MyRidesRecurringView({super.key});
   @override
   Widget build(BuildContext context) {
-    // Get.lazyPut(() => MyRidesRecurringController());
     return Scaffold(
       body: Obx(
         () => controller.isLoading.value
-            ? Center(
-                child: CircularProgressIndicator(
-                  color: Get.find<ProfileController>().isSwitched.value
-                      ? ColorUtil.kPrimary3PinkMode
-                      : ColorUtil.kPrimary01,
-                ),
-              )
+            ? const GpProgress()
             : controller.recurringResp.value.data!.isEmpty
                 ? Center(
                     child: Text(
@@ -43,11 +37,20 @@ class MyRidesRecurringView extends GetView<MyRidesRecurringController> {
                                 controller.recurringResp.value.data?.length,
                             itemBuilder: (context, index) {
                               return GestureDetector(
-                                onTap: () {
-                                  Get.toNamed(Routes.MY_RIDES_RECURRING_DETAILS,
-                                      arguments: controller.recurringResp.value
-                                          .data?[index]?.Id);
-                                },
+                                onTap: controller
+                                            .recurringResp
+                                            .value
+                                            .data?[index]
+                                            ?.recurringTrip
+                                            ?.isRecurringTripEnabled ??
+                                        false
+                                    ? () {
+                                        Get.toNamed(
+                                            Routes.MY_RIDES_RECURRING_DETAILS,
+                                            arguments: controller.recurringResp
+                                                .value.data?[index]?.Id);
+                                      }
+                                    : () {},
                                 child: Container(
                                   padding: EdgeInsets.all(16.kh),
                                   decoration: BoxDecoration(
@@ -64,7 +67,9 @@ class MyRidesRecurringView extends GetView<MyRidesRecurringController> {
                                         children: [
                                           //TODO: toggle switch
                                           Text(
-                                            "${controller.recurringResp.value.data?[index]?.recurringTrip}",
+                                            controller.recurringResp.value
+                                                    .data?[index]?.time ??
+                                                "00:00",
                                             style: TextStyleUtil.k16Semibold(
                                                 fontSize: 16.kh),
                                           ),
@@ -72,11 +77,24 @@ class MyRidesRecurringView extends GetView<MyRidesRecurringController> {
                                             () => Transform.scale(
                                               scale: 0.8.kh,
                                               child: Switch(
+                                                // value: controller
+                                                //     .isScheduled[index].value,
                                                 value: controller
-                                                    .isScheduled.value,
+                                                        .recurringResp
+                                                        .value
+                                                        .data?[index]
+                                                        ?.recurringTrip
+                                                        ?.isRecurringTripEnabled ??
+                                                    false,
                                                 onChanged: (value) {
-                                                  controller.isScheduled.value =
-                                                      value;
+                                                  controller.isScheduled[index]
+                                                      .value = value;
+                                                  controller.enableRecurringAPI(
+                                                      controller
+                                                          .recurringResp
+                                                          .value
+                                                          .data?[index]
+                                                          ?.Id);
                                                 },
                                                 inactiveThumbColor:
                                                     ColorUtil.kNeutral1,
@@ -111,6 +129,7 @@ class MyRidesRecurringView extends GetView<MyRidesRecurringController> {
                                       const GreenPoolDivider().paddingOnly(
                                           top: 8.kh, bottom: 16.kh),
                                       OriginToDestination(
+                                        needPickupText: false,
                                         origin:
                                             "${controller.recurringResp.value.data?[index]?.origin?.name}",
                                         destination:
@@ -123,19 +142,30 @@ class MyRidesRecurringView extends GetView<MyRidesRecurringController> {
                                         style: TextStyleUtil.k14Bold(),
                                       ).paddingOnly(bottom: 16.kh),
                                       SizedBox(
-                                        height: controller.itemCount * 36.kh,
+                                        height: controller
+                                                .recurringResp
+                                                .value
+                                                .data![index]!
+                                                .ridesDetails!
+                                                .length *
+                                            36.kh,
                                         child: ListView.builder(
-                                            itemCount: controller.itemCount,
+                                            itemCount: controller
+                                                .recurringResp
+                                                .value
+                                                .data?[index]
+                                                ?.ridesDetails
+                                                ?.length,
                                             physics:
                                                 const NeverScrollableScrollPhysics(),
-                                            itemBuilder: (context, index) {
+                                            itemBuilder: (context, index1) {
                                               return Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment
                                                         .spaceBetween,
                                                 children: [
                                                   Text(
-                                                    "Monday 4th March",
+                                                    "${controller.recurringResp.value.data?[index]?.ridesDetails?[index1]?.day}",
                                                     style: TextStyleUtil
                                                         .k14Semibold(
                                                             color: ColorUtil

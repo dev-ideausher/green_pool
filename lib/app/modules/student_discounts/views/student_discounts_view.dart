@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:green_pool/app/components/gp_progress.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/components/greenpool_textfield.dart';
 import 'package:green_pool/app/modules/profile/controllers/profile_controller.dart';
@@ -19,6 +21,7 @@ class StudentDiscountsView extends GetView<StudentDiscountsController> {
       appBar: const GreenPoolAppBar(
         title: Text('Student Discounts'),
       ),
+      resizeToAvoidBottomInset: false,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -49,6 +52,10 @@ class StudentDiscountsView extends GetView<StudentDiscountsController> {
           ).paddingOnly(bottom: 8.kh),
           GreenPoolTextField(
             hintText: 'Search for school',
+            controller: controller.searchTextController,
+            onchanged: (v) {
+              controller.searchMethod();
+            },
             prefix: Icon(
               Icons.search,
               color: Get.find<ProfileController>().isSwitched.value
@@ -60,14 +67,50 @@ class StudentDiscountsView extends GetView<StudentDiscountsController> {
               color: ColorUtil.kBlack01,
             ),
           ).paddingOnly(bottom: 16.kh),
+          Obx(
+            () => controller.isSelected.value
+                ? const SizedBox()
+                : SizedBox(
+                    height: 120.kh,
+                    child: controller.isLoading.value
+                        ? const GpProgress()
+                        : ListView.builder(
+                            itemCount: controller.schoolSugestionList.length,
+                            itemBuilder: (context, index) {
+                              return Container(
+                                decoration: BoxDecoration(
+                                    border: Border(
+                                        bottom: BorderSide(
+                                            width: 1.kh,
+                                            color: ColorUtil.kNeutral7)),
+                                    borderRadius: BorderRadius.circular(8.kh)),
+                                child: ListTile(
+                                  title: Text(controller
+                                      .schoolSugestionList[index].name!),
+                                  onTap: () {
+                                    controller.searchTextController.text =
+                                        controller
+                                            .schoolSugestionList[index].name!;
+                                    controller.isSelected.value = true;
+                                  },
+                                ),
+                              );
+                            }),
+                  ).paddingOnly(bottom: 16.kh),
+          ),
           Text(
             'Student Email ID',
             style: TextStyleUtil.k14Semibold(),
           ).paddingOnly(bottom: 8.kh),
-          const GreenPoolTextField(hintText: 'Enter student Email ID'),
+          GreenPoolTextField(
+            hintText: 'Enter student Email ID',
+            controller: controller.emailTextController,
+          ),
           const Expanded(child: SizedBox()),
           GreenPoolButton(
-            onPressed: () {},
+            onPressed: () {
+              controller.studentDiscountAPI();
+            },
             label: 'Verify your email',
           ).paddingSymmetric(vertical: 40.kh),
         ],

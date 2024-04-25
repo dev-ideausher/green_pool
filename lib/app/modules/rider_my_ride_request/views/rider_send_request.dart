@@ -4,6 +4,9 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/modules/rider_my_ride_request/controllers/rider_my_ride_request_controller.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
+import '../../../components/gp_progress.dart';
+import '../../../components/green_pool_divider.dart';
+import '../../../components/origin_to_destination.dart';
 import '../../../constants/image_constant.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/colors.dart';
@@ -18,13 +21,7 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
   Widget build(BuildContext context) {
     return Obx(
       () => controller.isLoading.value
-          ? Center(
-              child: CircularProgressIndicator(
-                color: Get.find<ProfileController>().isSwitched.value
-                    ? ColorUtil.kPrimary3PinkMode
-                    : ColorUtil.kPrimary01,
-              ),
-            )
+          ? const GpProgress()
           : controller.riderSendRequestModel.value.data!.isEmpty
               ? Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -113,7 +110,7 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                                       .value
                                                       .data?[index]
                                                       ?.driverDetails?[0]!
-                                                      .totalRating
+                                                      .rating
                                                       ?.toStringAsFixed(1) ??
                                                   '0.0',
                                               style: TextStyleUtil.k12Semibold(
@@ -156,7 +153,7 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                               TextSpan(
                                                 // text: '\$3.50',
                                                 text:
-                                                    "\$ ${controller.riderSendRequestModel.value.data![index]?.fair ?? "0"}",
+                                                    "\$ ${controller.riderSendRequestModel.value.data![index]?.origin?.originDestinationFair ?? "0"}",
                                                 style: TextStyleUtil.k16Bold(
                                                     color:
                                                         ColorUtil.kSecondary01),
@@ -201,7 +198,7 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                                 ? const SizedBox()
                                                 : Text(
                                                     // '07 July 2023, 3:00pm',
-                                                    "${controller.riderSendRequestModel.value.data![index]?.date?.split('T')[0] ?? ""}    ${controller.riderSendRequestModel.value.data![index]?.time ?? ""}",
+                                                    "${controller.riderSendRequestModel.value.data![index]?.date?.split('T')[0] ?? ""}  ${controller.riderSendRequestModel.value.data![index]?.time ?? ""}",
                                                     style: TextStyleUtil
                                                         .k12Regular(
                                                             color: ColorUtil
@@ -231,72 +228,35 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                           ],
                                         ),
                                       ],
-                                    ),
+                                    ).paddingOnly(top: 8.kh),
+                                    InkWell(
+                                      onTap: () {},
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(40.kh),
+                                            border: Border.all(
+                                                color: ColorUtil.kSecondary01)),
+                                        child: Text(
+                                          "Message",
+                                          style: TextStyleUtil.k12Semibold(),
+                                        ).paddingSymmetric(
+                                            vertical: 4.kh, horizontal: 16.kw),
+                                      ),
+                                    ).paddingSymmetric(vertical: 8.kh),
                                   ],
                                 ),
                               ],
                             ),
-                            Container(
-                              width: 100.w,
-                              height: 1.kh,
-                              color: ColorUtil.kBlack07,
-                            ).paddingOnly(bottom: 16.kh),
-                            Stack(
-                              children: [
-                                Row(
-                                  children: [
-                                    Container(
-                                      height: 10.kh,
-                                      width: 10.kw,
-                                      decoration: const BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: ColorUtil.kGreenColor),
-                                    ).paddingOnly(right: 8.kw),
-                                    Text(
-                                      // '1100 McIntosh St, Regina',
-                                      "${controller.riderSendRequestModel.value.data![index]?.origin?.name}",
-                                      style: TextStyleUtil.k14Regular(
-                                          color: ColorUtil.kBlack02),
-                                    ),
-                                  ],
-                                ).paddingOnly(bottom: 30.kh),
-                                Positioned(
-                                  top: 27.kh,
-                                  child: Row(
-                                    children: [
-                                      Container(
-                                        height: 10.kh,
-                                        width: 10.kw,
-                                        decoration: const BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: ColorUtil.kError4),
-                                      ).paddingOnly(right: 8.kw),
-                                      Text(
-                                        // '681 Chrislea Rd, Woodbridge',
-                                        "${controller.riderSendRequestModel.value.data![index]?.destination?.name}",
-                                        style: TextStyleUtil.k14Regular(
-                                            color: ColorUtil.kBlack02),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Positioned(
-                                  top: 10.kh,
-                                  left: 4.5.kw,
-                                  child: Container(
-                                    height: 28.kh,
-                                    width: 1.kw,
-                                    color: ColorUtil.kBlack04,
-                                  ),
-                                ),
-                              ],
-                            ).paddingOnly(bottom: 8.kh),
-                            Container(
-                              width: 100.w,
-                              height: 1.kh,
-                              color: ColorUtil.kBlack07,
-                            ).paddingOnly(bottom: 16.kh),
-
+                            const GreenPoolDivider().paddingOnly(bottom: 16.kh),
+                            OriginToDestination(
+                                    needPickupText: false,
+                                    origin:
+                                        "${controller.riderSendRequestModel.value.data![index]?.origin?.name}",
+                                    destination:
+                                        "${controller.riderSendRequestModel.value.data![index]?.destination?.name}")
+                                .paddingOnly(bottom: 8.kh),
+                            const GreenPoolDivider().paddingOnly(bottom: 16.kh),
                             //
 
                             //

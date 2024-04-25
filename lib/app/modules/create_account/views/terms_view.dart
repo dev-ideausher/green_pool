@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../constants/image_constant.dart';
@@ -28,11 +29,11 @@ class TermsView extends GetView<CreateAccountController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Terms and Condition",
+            Strings.termsAndConditions,
             style: TextStyleUtil.k32Heading700(),
           ).paddingOnly(bottom: 4.kh),
           Text(
-            "Before you proceed you must read and agree to\nGreen Pool's Terms and Conditions.",
+            Strings.agreeToTermsAndConditions,
             style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack04),
           ).paddingOnly(bottom: 32.kh),
           Text(

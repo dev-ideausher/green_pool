@@ -8,6 +8,7 @@ import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
+import '../../../components/richtext_heading.dart';
 import '../../../services/colors.dart';
 import '../../../services/text_style_util.dart';
 import '../controllers/post_ride_controller.dart';
@@ -28,8 +29,8 @@ class PricingView extends GetView<PostRideController> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  'Pricing',
+                RichTextHeading(
+                  text:'Pricing',
                   style: TextStyleUtil.k18Bold(),
                 ),
                 Expanded(

@@ -1409,6 +1409,117 @@ class RideHistoryModelDataRiderBookingDetails {
   }
 }
 
+class RideHistoryModelDataDriverBookingDetailsDriverDetailsVechileDetailsVehiclePic {
+/*
+{
+  "key": "vehiclePic/d738fbf3-a2a1-4781-93fe-763965b4769b-images.jpeg",
+  "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/vehiclePic/d738fbf3-a2a1-4781-93fe-763965b4769b-images.jpeg",
+  "_id": "660934d9c5ee2a8a9e8eada5"
+} 
+*/
+
+  String? key;
+  String? url;
+  String? Id;
+
+  RideHistoryModelDataDriverBookingDetailsDriverDetailsVechileDetailsVehiclePic({
+    this.key,
+    this.url,
+    this.Id,
+  });
+  RideHistoryModelDataDriverBookingDetailsDriverDetailsVechileDetailsVehiclePic.fromJson(
+      Map<String, dynamic> json) {
+    key = json['key']?.toString();
+    url = json['url']?.toString();
+    Id = json['_id']?.toString();
+  }
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+    data['key'] = key;
+    data['url'] = url;
+    data['_id'] = Id;
+    return data;
+  }
+}
+
+class RideHistoryModelDataDriverBookingDetailsDriverDetailsVechileDetails {
+/*
+{
+  "_id": "660934d9c5ee2a8a9e8eada4",
+  "driverId": "66093406c5ee2a8a9e8ead96",
+  "vehiclePic": {
+    "key": "vehiclePic/d738fbf3-a2a1-4781-93fe-763965b4769b-images.jpeg",
+    "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/vehiclePic/d738fbf3-a2a1-4781-93fe-763965b4769b-images.jpeg",
+    "_id": "660934d9c5ee2a8a9e8eada5"
+  },
+  "model": "M10",
+  "type": "M1233",
+  "color": "White",
+  "year": 1990,
+  "licencePlate": "50000",
+  "createdAt": "2024-03-31T10:03:05.809Z",
+  "updatedAt": "2024-03-31T10:03:05.809Z"
+} 
+*/
+
+  String? Id;
+  String? driverId;
+  RideHistoryModelDataDriverBookingDetailsDriverDetailsVechileDetailsVehiclePic?
+      vehiclePic;
+  String? model;
+  String? type;
+  String? color;
+  int? year;
+  String? licencePlate;
+  String? createdAt;
+  String? updatedAt;
+
+  RideHistoryModelDataDriverBookingDetailsDriverDetailsVechileDetails({
+    this.Id,
+    this.driverId,
+    this.vehiclePic,
+    this.model,
+    this.type,
+    this.color,
+    this.year,
+    this.licencePlate,
+    this.createdAt,
+    this.updatedAt,
+  });
+  RideHistoryModelDataDriverBookingDetailsDriverDetailsVechileDetails.fromJson(
+      Map<String, dynamic> json) {
+    Id = json['_id']?.toString();
+    driverId = json['driverId']?.toString();
+    vehiclePic = (json['vehiclePic'] != null)
+        ? RideHistoryModelDataDriverBookingDetailsDriverDetailsVechileDetailsVehiclePic
+            .fromJson(json['vehiclePic'])
+        : null;
+    model = json['model']?.toString();
+    type = json['type']?.toString();
+    color = json['color']?.toString();
+    year = json['year']?.toInt();
+    licencePlate = json['licencePlate']?.toString();
+    createdAt = json['createdAt']?.toString();
+    updatedAt = json['updatedAt']?.toString();
+  }
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+    data['_id'] = Id;
+    data['driverId'] = driverId;
+    if (vehiclePic != null) {
+      data['vehiclePic'] = vehiclePic!.toJson();
+    }
+    data['model'] = model;
+    data['type'] = type;
+    data['color'] = color;
+    data['year'] = year;
+    data['licencePlate'] = licencePlate;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
+    return data;
+  }
+}
+
 class RideHistoryModelDataDriverBookingDetailsDriverDetailsNotificationPreferences {
 /*
 {
@@ -1546,7 +1657,25 @@ class RideHistoryModelDataDriverBookingDetailsDriverDetails {
     "offers": false
   },
   "rating": 0.8333333333333334,
-  "totalRides": 0
+  "totalRides": 0,
+  "vechileDetails": [
+    {
+      "_id": "660934d9c5ee2a8a9e8eada4",
+      "driverId": "66093406c5ee2a8a9e8ead96",
+      "vehiclePic": {
+        "key": "vehiclePic/d738fbf3-a2a1-4781-93fe-763965b4769b-images.jpeg",
+        "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/vehiclePic/d738fbf3-a2a1-4781-93fe-763965b4769b-images.jpeg",
+        "_id": "660934d9c5ee2a8a9e8eada5"
+      },
+      "model": "M10",
+      "type": "M1233",
+      "color": "White",
+      "year": 1990,
+      "licencePlate": "50000",
+      "createdAt": "2024-03-31T10:03:05.809Z",
+      "updatedAt": "2024-03-31T10:03:05.809Z"
+    }
+  ]
 } 
 */
 
@@ -1575,6 +1704,8 @@ class RideHistoryModelDataDriverBookingDetailsDriverDetails {
       notificationPreferences;
   double? rating;
   int? totalRides;
+  List<RideHistoryModelDataDriverBookingDetailsDriverDetailsVechileDetails?>?
+      vechileDetails;
 
   RideHistoryModelDataDriverBookingDetailsDriverDetails({
     this.Id,
@@ -1601,6 +1732,7 @@ class RideHistoryModelDataDriverBookingDetailsDriverDetails {
     this.notificationPreferences,
     this.rating,
     this.totalRides,
+    this.vechileDetails,
   });
   RideHistoryModelDataDriverBookingDetailsDriverDetails.fromJson(
       Map<String, dynamic> json) {
@@ -1637,6 +1769,17 @@ class RideHistoryModelDataDriverBookingDetailsDriverDetails {
         : null;
     rating = json['rating']?.toDouble();
     totalRides = json['totalRides']?.toInt();
+    if (json['vechileDetails'] != null) {
+      final v = json['vechileDetails'];
+      final arr0 =
+          <RideHistoryModelDataDriverBookingDetailsDriverDetailsVechileDetails>[];
+      v.forEach((v) {
+        arr0.add(
+            RideHistoryModelDataDriverBookingDetailsDriverDetailsVechileDetails
+                .fromJson(v));
+      });
+      vechileDetails = arr0;
+    }
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -1670,6 +1813,14 @@ class RideHistoryModelDataDriverBookingDetailsDriverDetails {
     }
     data['rating'] = rating;
     data['totalRides'] = totalRides;
+    if (vechileDetails != null) {
+      final v = vechileDetails;
+      final arr0 = [];
+      v!.forEach((v) {
+        arr0.add(v!.toJson());
+      });
+      data['vechileDetails'] = arr0;
+    }
     return data;
   }
 }
@@ -2733,7 +2884,25 @@ class RideHistoryModelDataDriverBookingDetails {
         "offers": false
       },
       "rating": 0.8333333333333334,
-      "totalRides": 0
+      "totalRides": 0,
+      "vechileDetails": [
+        {
+          "_id": "660934d9c5ee2a8a9e8eada4",
+          "driverId": "66093406c5ee2a8a9e8ead96",
+          "vehiclePic": {
+            "key": "vehiclePic/d738fbf3-a2a1-4781-93fe-763965b4769b-images.jpeg",
+            "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/vehiclePic/d738fbf3-a2a1-4781-93fe-763965b4769b-images.jpeg",
+            "_id": "660934d9c5ee2a8a9e8eada5"
+          },
+          "model": "M10",
+          "type": "M1233",
+          "color": "White",
+          "year": 1990,
+          "licencePlate": "50000",
+          "createdAt": "2024-03-31T10:03:05.809Z",
+          "updatedAt": "2024-03-31T10:03:05.809Z"
+        }
+      ]
     }
   ]
 } 
@@ -3174,7 +3343,25 @@ class RideHistoryModelData {
             "offers": false
           },
           "rating": 0.8333333333333334,
-          "totalRides": 0
+          "totalRides": 0,
+          "vechileDetails": [
+            {
+              "_id": "660934d9c5ee2a8a9e8eada4",
+              "driverId": "66093406c5ee2a8a9e8ead96",
+              "vehiclePic": {
+                "key": "vehiclePic/d738fbf3-a2a1-4781-93fe-763965b4769b-images.jpeg",
+                "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/vehiclePic/d738fbf3-a2a1-4781-93fe-763965b4769b-images.jpeg",
+                "_id": "660934d9c5ee2a8a9e8eada5"
+              },
+              "model": "M10",
+              "type": "M1233",
+              "color": "White",
+              "year": 1990,
+              "licencePlate": "50000",
+              "createdAt": "2024-03-31T10:03:05.809Z",
+              "updatedAt": "2024-03-31T10:03:05.809Z"
+            }
+          ]
         }
       ]
     }
@@ -3684,7 +3871,25 @@ class RideHistoryModel {
                 "offers": false
               },
               "rating": 0.8333333333333334,
-              "totalRides": 0
+              "totalRides": 0,
+              "vechileDetails": [
+                {
+                  "_id": "660934d9c5ee2a8a9e8eada4",
+                  "driverId": "66093406c5ee2a8a9e8ead96",
+                  "vehiclePic": {
+                    "key": "vehiclePic/d738fbf3-a2a1-4781-93fe-763965b4769b-images.jpeg",
+                    "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/vehiclePic/d738fbf3-a2a1-4781-93fe-763965b4769b-images.jpeg",
+                    "_id": "660934d9c5ee2a8a9e8eada5"
+                  },
+                  "model": "M10",
+                  "type": "M1233",
+                  "color": "White",
+                  "year": 1990,
+                  "licencePlate": "50000",
+                  "createdAt": "2024-03-31T10:03:05.809Z",
+                  "updatedAt": "2024-03-31T10:03:05.809Z"
+                }
+              ]
             }
           ]
         }

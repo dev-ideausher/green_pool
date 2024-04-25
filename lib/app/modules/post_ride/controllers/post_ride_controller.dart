@@ -63,6 +63,7 @@ class PostRideController extends GetxController {
   RxBool mediumLuggage = false.obs;
   RxBool largeLuggage = false.obs;
   RxString selectedCHIP = 'No'.obs;
+  final RxString luggageWeight = ''.obs;
 
   //amenities
   RxBool appreciatesConversation = false.obs;
@@ -85,13 +86,11 @@ class PostRideController extends GetxController {
   RxBool isSunday = false.obs;
   List<int?>? daysOfWeek = <int>[].obs;
 
-  final RxString luggageWeight = ''.obs;
-
   @override
   void onInit() {
     super.onInit();
     Get.lazyPut(() => CreateAccountController());
-    isDriver = Get.arguments;
+    // isDriver = Get.arguments;
   }
 
   // @override
@@ -197,7 +196,7 @@ class PostRideController extends GetxController {
   String? fareValidator(String? value) {
     // Check if the value is empty
     if (value == null || value.isEmpty) {
-      return 'Enter a reasonable cost';
+      return 'Enter a pricing';
     }
 
     // Check if the value is greater than 9999
@@ -209,7 +208,7 @@ class PostRideController extends GetxController {
     final RegExp phoneExp = RegExp(r'^\d{1,4}\.?\d{0,2}$');
 
     if (!phoneExp.hasMatch(value)) {
-      return 'Please enter a reasonable cost';
+      return 'Enter a pricing';
     }
 
     return null; // Return null if the value is valid

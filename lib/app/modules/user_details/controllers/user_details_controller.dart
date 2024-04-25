@@ -25,6 +25,8 @@ class UserDetailsController extends GetxController {
       text: Get.find<HomeController>().userInfo.value.data?.phone);
   TextEditingController cityTextController = TextEditingController(
       text: Get.find<HomeController>().userInfo.value.data?.city);
+  TextEditingController genderTextController = TextEditingController(
+      text: Get.find<HomeController>().userInfo.value.data?.gender);
   TextEditingController dobTextController = TextEditingController(
       text: Get.find<HomeController>().userInfo.value.data?.dob);
   Rx<File?>? selectedProfileImagePath = Rx<File?>(null);

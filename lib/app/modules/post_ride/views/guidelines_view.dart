@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -10,6 +11,7 @@ import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
 import '../../profile/controllers/profile_controller.dart';
+import '../../terms_conditions/views/terms_conditions_view.dart';
 
 class GuidelinesView extends GetView<PostRideController> {
   const GuidelinesView({super.key});
@@ -61,7 +63,7 @@ class GuidelinesView extends GetView<PostRideController> {
                       activeColor:
                           Get.find<ProfileController>().isSwitched.value
                               ? ColorUtil.kPrimary2PinkMode
-                              : ColorUtil.kPrimary01,
+                              : ColorUtil.kSecondary01,
                       onChanged: (value) {
                         controller.toggleCheckbox();
                       },
@@ -83,6 +85,9 @@ class GuidelinesView extends GetView<PostRideController> {
                                         .value
                                     ? ColorUtil.kPrimary2PinkMode
                                     : ColorUtil.kSecondary03),
+                                    recognizer: TapGestureRecognizer()
+                              ..onTap =
+                                  () => Get.to(const TermsAndConditionsView()),
                           ),
                           TextSpan(
                             text: 'Terms of Service,',
@@ -92,6 +97,9 @@ class GuidelinesView extends GetView<PostRideController> {
                                         .value
                                     ? ColorUtil.kPrimary2PinkMode
                                     : ColorUtil.kSecondary03),
+                                    recognizer: TapGestureRecognizer()
+                              ..onTap =
+                                  () => Get.to(const TermsAndConditionsView()),
                           ),
                           TextSpan(
                             text: ' and ',
@@ -105,6 +113,9 @@ class GuidelinesView extends GetView<PostRideController> {
                                         .value
                                     ? ColorUtil.kPrimary2PinkMode
                                     : ColorUtil.kSecondary03),
+                                    recognizer: TapGestureRecognizer()
+                              ..onTap =
+                                  () => Get.to(const TermsAndConditionsView()),
                           ),
                           TextSpan(
                             text:

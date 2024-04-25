@@ -7,6 +7,7 @@ import 'package:green_pool/app/modules/find_ride/controllers/find_ride_controlle
 import 'package:green_pool/app/routes/app_pages.dart';
 
 import '../../../services/dio/api_service.dart';
+import '../../../services/snackbar.dart';
 
 class DriverDetailsController extends GetxController {
   var matchingRidesmodel =
@@ -45,10 +46,8 @@ class DriverDetailsController extends GetxController {
     try {
       final response = await APIManager.postConfirmRide(body: rideData);
       var data = jsonDecode(response.toString());
-      log(data.toString());
       requestRideModel.value = RequestRideByRiderModel.fromJson(data);
-      log("ride $rideDetails");
-      log("driver $driverRideId");
+      showMySnackbar(msg: "Ride request sent successfully!");
       Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
 
       // log("This is driver ride Id: ${matchingRideResponse.value.data?[0]?.Id}");

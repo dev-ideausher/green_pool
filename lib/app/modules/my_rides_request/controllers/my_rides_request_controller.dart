@@ -16,9 +16,10 @@ class MyRidesRequestController extends GetxController {
   String driverRideId = '';
   double latitude = Get.find<HomeController>().latitude.value;
   double longitude = Get.find<HomeController>().longitude.value;
+  RxBool isLoading = true.obs;
   var sendRequestModel = DriverSendRequestModel().obs;
 
-  var confirmRequestModel = DriverCofirmRequestModel().obs;
+  var confirmRequestModel = DriverConfirmRequestModel().obs;
   var sendRiderRequestModel = SendRiderRequestModel().obs;
 
   @override
@@ -36,11 +37,14 @@ class MyRidesRequestController extends GetxController {
     // this api will show all the confirmed rides (which the customer has confrimed that they will go with the particular driver)
     try {
       // need driver id which will come from confirm ride by rider
-      final confirmReqResponse = await APIManager.getAllDriverConfirmRequest(driverRideId: driverRideId);
+      final confirmReqResponse = await APIManager.getAllDriverConfirmRequest(
+          driverRideId: driverRideId);
       var data = jsonDecode(confirmReqResponse.toString());
-      confirmRequestModel.value = DriverCofirmRequestModel.fromJson(data);
+      confirmRequestModel.value = DriverConfirmRequestModel.fromJson(data);
+      isLoading = false.obs;
     } catch (e) {
-      debugPrint(e.toString());
+      // debugPrint(e.toString());
+      throw Exception(e);
     }
   }
 
@@ -51,7 +55,8 @@ class MyRidesRequestController extends GetxController {
     final Map<String, dynamic> rideData = {"ridePostId": ridePostId};
 
     try {
-      final acceptRiderResponse = await APIManager.postAcceptRiderRequest(body: rideData);
+      final acceptRiderResponse =
+          await APIManager.postAcceptRiderRequest(body: rideData);
       var data = jsonDecode(acceptRiderResponse.toString());
       showMySnackbar(msg: data['message'] ?? 'Request accepted successfully!');
     } catch (e) {
@@ -65,7 +70,8 @@ class MyRidesRequestController extends GetxController {
     final Map<String, dynamic> rideData = {"ridePostId": ridePostId};
 
     try {
-      final rejectRiderResponse = await APIManager.postRejectRiderRequest(body: rideData);
+      final rejectRiderResponse =
+          await APIManager.postRejectRiderRequest(body: rideData);
       var data = jsonDecode(rejectRiderResponse.toString());
       showMySnackbar(msg: 'Request rejected successfully!');
     } catch (e) {
@@ -75,9 +81,12 @@ class MyRidesRequestController extends GetxController {
 
   allSendRequestAPI() async {
     try {
-      final sendReqResponse = await APIManager.getAllDriverSendRequest(driverId: driverRideId);
+      isLoading = true.obs;
+      final sendReqResponse =
+          await APIManager.getAllDriverSendRequest(driverId: driverRideId);
       var data = jsonDecode(sendReqResponse.toString());
       sendRequestModel.value = DriverSendRequestModel.fromJson(data);
+      isLoading = false.obs;
     } catch (e) {
       throw Exception(e);
     }
@@ -85,12 +94,23 @@ class MyRidesRequestController extends GetxController {
 
   sendRiderRequestAPI(int index) async {
     final String riderRideId = "${sendRequestModel.value.data?[index]?.Id}";
+    final String riderName =
+        "${sendRequestModel.value.data?[index]?.riderDetails?[0]?.fullName}";
+    final dynamic riderNotificationPref = sendRequestModel
+        .value.data?[index]?.riderDetails?[0]?.notificationPreferences!
+        .toJson();
 
-    final Map<String, dynamic> rideData = {"riderRideId": riderRideId, "driverRideId": driverRideId};
+    final Map<String, dynamic> rideData = {
+      "riderRideId": riderRideId,
+      "driverRideId": driverRideId,
+      "riderName": riderName,
+      "riderNotificationPreferences": riderNotificationPref
+    };
 
     try {
       // driver will send request to the customer (from send request view)
-      final sendRiderRequestResponse = await APIManager.postSendRequestToRider(body: rideData);
+      final sendRiderRequestResponse =
+          await APIManager.postSendRequestToRider(body: rideData);
       var data = jsonDecode(sendRiderRequestResponse.toString());
       sendRiderRequestModel.value = SendRiderRequestModel.fromJson(data);
       showMySnackbar(msg: 'Request sent successfully');

@@ -21,7 +21,6 @@ class RiderMyRideRequestController extends GetxController {
   void onInit() {
     super.onInit();
     rideIdFromMyRides = Get.arguments;
-    // allRiderConfirmRequestAPI();
     method();
   }
 

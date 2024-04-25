@@ -8,6 +8,7 @@ import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/generated/assets.dart';
 
 import '../../../components/common_image_view.dart';
+import '../../../components/gp_progress.dart';
 import '../../../components/origin_to_destination.dart';
 import '../../../res/strings.dart';
 import '../../../services/colors.dart';
@@ -23,12 +24,11 @@ class RiderStartRideMapView extends GetView<RiderStartRideMapController> {
     return Scaffold(
       body: Obx(
         () => controller.isLoad.value
-            ? const Center(
-                child: CircularProgressIndicator(),
-              )
+            ? const GpProgress()
             : GoogleMap(
                 onMapCreated: controller.onMapCreated,
-                initialCameraPosition: CameraPosition(target: LatLng(0.0, 0.0), zoom: 14),
+                initialCameraPosition:
+                    CameraPosition(target: LatLng(0.0, 0.0), zoom: 14),
                 mapType: MapType.normal,
                 markers: Set<Marker>.of(controller.markers),
                 polylines: {
@@ -50,8 +50,11 @@ class RiderStartRideMapView extends GetView<RiderStartRideMapController> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.notifications_active_outlined, color: ColorUtil.kWhiteColor),
-            Text(Strings.sos, style: TextStyleUtil.k14Regular(color: ColorUtil.kWhiteColor, fontWeight: FontWeight.w700)),
+            const Icon(Icons.notifications_active_outlined,
+                color: ColorUtil.kWhiteColor),
+            Text(Strings.sos,
+                style: TextStyleUtil.k14Regular(
+                    color: ColorUtil.kWhiteColor, fontWeight: FontWeight.w700)),
           ],
         ),
       ),

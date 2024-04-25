@@ -5,7 +5,9 @@ import 'package:green_pool/app/modules/rider_my_ride_request/controllers/rider_m
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
+import '../../../components/gp_progress.dart';
 import '../../../components/green_pool_divider.dart';
+import '../../../components/origin_to_destination.dart';
 import '../../../constants/image_constant.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
@@ -19,13 +21,7 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
   Widget build(BuildContext context) {
     return Obx(
       () => controller.isLoading.value
-          ? Center(
-              child: CircularProgressIndicator(
-                color: Get.find<ProfileController>().isSwitched.value
-                    ? ColorUtil.kPrimary3PinkMode
-                    : ColorUtil.kPrimary01,
-              ),
-            )
+          ? const GpProgress()
           : controller.riderConfirmRequestModel.value.data!.isEmpty
               ? Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -116,10 +112,11 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                                       .riderConfirmRequestModel
                                                       .value
                                                       .data?[index]
-                                                      ?.confirmByDriver
-                                                      .toString()
-                                                      .split('u')
-                                                      .first ??
+                                                      ?.driverRideDetails?[
+                                                          index]
+                                                      ?.driverDetails?[0]
+                                                      ?.rating
+                                                      ?.toStringAsFixed(1) ??
                                                   '0.0',
                                               overflow: TextOverflow.fade,
                                               style: TextStyleUtil.k12Semibold(
@@ -155,7 +152,7 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                               TextSpan(
                                                 // text: '\$3.50',
                                                 text:
-                                                    "\$ ${controller.riderConfirmRequestModel.value.data![index]?.driverRideDetails?[0]?.fair}",
+                                                    "\$ ${controller.riderConfirmRequestModel.value.data![index]?.driverRideDetails?[0]?.origin?.originDestinationFair}",
                                                 style: TextStyleUtil.k16Bold(
                                                     color:
                                                         ColorUtil.kSecondary01),
@@ -205,68 +202,40 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                                       : ColorUtil.kSecondary01,
                                             ).paddingOnly(right: 5.kw),
                                             Text(
-                                              '${controller.riderConfirmRequestModel.value.data![index]?.driverRideDetails?[0]?.preferences?.seatAvailable} seats',
+                                              '${controller.riderConfirmRequestModel.value.data![index]?.driverRideDetails?[0]?.seatAvailable} seats',
                                               style: TextStyleUtil.k14Regular(
                                                   color: ColorUtil.kBlack03),
                                             ),
                                           ],
-                                        ),
+                                        ).paddingOnly(top: 8.kh),
                                       ],
                                     ),
+                                    InkWell(
+                                      onTap: () {},
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(40.kh),
+                                            border: Border.all(
+                                                color: ColorUtil.kSecondary01)),
+                                        child: Text(
+                                          "Message",
+                                          style: TextStyleUtil.k12Semibold(),
+                                        ).paddingSymmetric(
+                                            vertical: 4.kh, horizontal: 16.kw),
+                                      ),
+                                    ).paddingSymmetric(vertical: 8.kh),
                                   ],
                                 ),
                               ],
                             ),
                             const GreenPoolDivider().paddingOnly(bottom: 16.kh),
-                            Stack(
-                              children: [
-                                Row(
-                                  children: [
-                                    Container(
-                                      height: 10.kh,
-                                      width: 10.kw,
-                                      decoration: const BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: ColorUtil.kGreenColor),
-                                    ).paddingOnly(right: 8.kw),
-                                    Text(
-                                      // '1100 McIntosh St, Regina',
-                                      "${controller.riderConfirmRequestModel.value.data?[index]?.driverRideDetails?[0]?.origin?.name}",
-                                      style: TextStyleUtil.k14Regular(
-                                          color: ColorUtil.kBlack02),
-                                    ),
-                                  ],
-                                ).paddingOnly(bottom: 30.kh),
-                                Positioned(
-                                  top: 27.kh,
-                                  child: Row(
-                                    children: [
-                                      Container(
-                                        height: 10.kh,
-                                        width: 10.kw,
-                                        decoration: const BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: ColorUtil.kError4),
-                                      ).paddingOnly(right: 8.kw),
-                                      Text(
-                                        // '681 Chrislea Rd, Woodbridge',
-                                        "${controller.riderConfirmRequestModel.value.data?[index]?.driverRideDetails?[0]?.destination?.name}",
-                                        style: TextStyleUtil.k14Regular(
-                                            color: ColorUtil.kBlack02),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Positioned(
-                                  top: 10.kh,
-                                  left: 4.5.kw,
-                                  child: Container(
-                                    height: 28.kh,
-                                    width: 1.kw,
-                                    color: ColorUtil.kBlack04,
-                                  ),
-                                ),
-                              ],
+                            OriginToDestination(
+                              origin:
+                                  "${controller.riderConfirmRequestModel.value.data?[index]?.driverRideDetails?[0]?.origin?.name}",
+                              destination:
+                                  "${controller.riderConfirmRequestModel.value.data?[index]?.driverRideDetails?[0]?.destination?.name}",
+                              needPickupText: false,
                             ).paddingOnly(bottom: 8.kh),
                             const GreenPoolDivider().paddingOnly(bottom: 16.kh),
                             Row(
@@ -337,9 +306,7 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                     //   controller.riderConfirmRequestModel.value
                                     //               .status ==
                                     //           false
-                                    //       ? const Center(
-                                    //           child: CircularProgressIndicator(),
-                                    //         )
+                                    //       ? GpProgress()
                                     //       : Container(
                                     //           padding: EdgeInsets.all(24.kh),
                                     //           // height: 317.kh,

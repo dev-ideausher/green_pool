@@ -56,6 +56,12 @@ class ProfileView extends GetView<ProfileController> {
                                       child: Image(
                                           height: 44.kh,
                                           width: 44.kw,
+                                          fit: BoxFit.cover,
+                                          errorBuilder:
+                                              (context, error, stackTrace) {
+                                            return Image.asset(ImageConstant
+                                                .pngEmptyPassenger);
+                                          },
                                           image: NetworkImage(
                                               "${controller.userInfo.value.data?.profilePic?.url}"))),
                                 ),

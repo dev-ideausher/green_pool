@@ -7,8 +7,13 @@ import '../services/text_style_util.dart';
 
 class OriginToDestination extends StatelessWidget {
   final String origin, destination;
+  final bool needPickupText;
+
   const OriginToDestination(
-      {super.key, required this.origin, required this.destination});
+      {super.key,
+      required this.origin,
+      required this.destination,
+      required this.needPickupText});
 
   @override
   Widget build(BuildContext context) {
@@ -22,13 +27,17 @@ class OriginToDestination extends StatelessWidget {
               decoration: const BoxDecoration(
                   shape: BoxShape.circle, color: ColorUtil.kGreenColor),
             ).paddingOnly(right: 8.kw),
-            Expanded(
-              child: Text(
-                // '1100 McIntosh St, Regina',
-                origin,
-                style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack02),
-                overflow: TextOverflow.ellipsis,
-              ),
+            needPickupText
+                ? Text(
+                    'Pick up: ',
+                    style: TextStyleUtil.k14Semibold(color: ColorUtil.kBlack02),
+                  ).paddingOnly(right: 8.kw)
+                : const SizedBox(),
+            Text(
+              // '1100 McIntosh St, Regina',
+              origin,
+              style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack02),
+              overflow: TextOverflow.ellipsis,
             ),
           ],
         ).paddingOnly(bottom: 30.kh),
@@ -42,6 +51,13 @@ class OriginToDestination extends StatelessWidget {
                 decoration: const BoxDecoration(
                     shape: BoxShape.circle, color: ColorUtil.kError4),
               ).paddingOnly(right: 8.kw),
+              needPickupText
+                  ? Text(
+                      'Drop off: ',
+                      style:
+                          TextStyleUtil.k14Semibold(color: ColorUtil.kBlack02),
+                    ).paddingOnly(right: 8.kw)
+                  : const SizedBox(),
               Text(
                 // '681 Chrislea Rd, Woodbridge',
                 destination,

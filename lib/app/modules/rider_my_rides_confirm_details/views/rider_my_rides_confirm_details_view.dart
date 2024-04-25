@@ -7,6 +7,7 @@ import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../components/green_pool_divider.dart';
 import '../../../components/greenpool_appbar.dart';
+import '../../../components/origin_to_destination.dart';
 import '../../../constants/image_constant.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/colors.dart';
@@ -22,8 +23,6 @@ import '../controllers/rider_my_rides_confirm_details_controller.dart';
 class RiderMyRidesConfirmDetailsView
     extends GetView<RiderMyRidesConfirmDetailsController> {
   const RiderMyRidesConfirmDetailsView({super.key});
-  //TODO: missing
-  //! seats, ride with, total rating, riders list? , vehicle details
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,8 +78,8 @@ class RiderMyRidesConfirmDetailsView
                                           color: ColorUtil.kSecondary01),
                                     ),
                                     TextSpan(
-                                      text: "22.22.22",
-                                      // '\$ ${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.fair}',
+                                      text:
+                                          '\$ ${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?[0]?.origin?.originDestinationFair}',
                                       style: TextStyleUtil.k16Semibold(
                                           fontSize: 16.kh,
                                           color: ColorUtil.kSecondary01),
@@ -105,7 +104,6 @@ class RiderMyRidesConfirmDetailsView
                                             : ColorUtil.kSecondary01,
                                         BlendMode.srcIn),
                                   ).paddingOnly(right: 4.kw),
-                                  //might give problems with big names, have to cut short month names
                                   Text(
                                     // '07 Nov 2023, 3:00pm',
                                     "${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?[0]?.date.toString().split("T")[0]}  ${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?[0]?.time}",
@@ -126,8 +124,7 @@ class RiderMyRidesConfirmDetailsView
                                         : ColorUtil.kSecondary01,
                                   ).paddingOnly(right: 8.kw),
                                   Text(
-                                    "2 seats", //!
-                                    // "${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?[0]?.isCancelled} seats",
+                                    "${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?[0]?.seatAvailable} seats",
                                     style: TextStyleUtil.k14Regular(
                                         color: ColorUtil.kBlack03),
                                   ),
@@ -142,67 +139,13 @@ class RiderMyRidesConfirmDetailsView
                 ).paddingOnly(top: 32.kh),
                 //middle divider
                 const GreenPoolDivider().paddingOnly(bottom: 16.kh),
-                Stack(
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          height: 10.kh,
-                          width: 10.kw,
-                          decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: ColorUtil.kGreenColor),
-                        ).paddingOnly(right: 8.kw),
-                        Text(
-                          'Pick up: ',
-                          style: TextStyleUtil.k14Semibold(
-                              color: ColorUtil.kBlack02),
-                        ).paddingOnly(right: 8.kw),
-                        Text(
-                          // '1100 McIntosh St, Regina',
-                          "${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?[0]?.origin?.name}",
-                          style: TextStyleUtil.k14Regular(
-                              color: ColorUtil.kBlack02),
-                        ),
-                      ],
-                    ).paddingOnly(bottom: 30.kh),
-                    Positioned(
-                      top: 27.kh,
-                      child: Row(
-                        children: [
-                          Container(
-                            height: 10.kh,
-                            width: 10.kw,
-                            decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: ColorUtil.kError4),
-                          ).paddingOnly(right: 8.kw),
-                          Text(
-                            'Drop off: ',
-                            style: TextStyleUtil.k14Semibold(
-                                color: ColorUtil.kBlack02),
-                          ).paddingOnly(right: 8.kw),
-                          Text(
-                            // '681 Chrislea Rd, Woodbridge',
+                OriginToDestination(
+                        origin:
+                            "${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?[0]?.origin?.name}",
+                        destination:
                             "${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?[0]?.destination?.name}",
-                            style: TextStyleUtil.k14Regular(
-                                color: ColorUtil.kBlack02),
-                          ),
-                        ],
-                      ),
-                    ),
-                    //line joining red and green dots
-                    Positioned(
-                      top: 10.kh,
-                      left: 4.5.kw,
-                      child: Container(
-                        height: 28.kh,
-                        width: 1.kw,
-                        color: ColorUtil.kBlack04,
-                      ),
-                    ),
-                  ],
-                ).paddingOnly(bottom: 8.kh),
+                        needPickupText: true)
+                    .paddingOnly(bottom: 8.kh),
                 //bottom line
                 const GreenPoolDivider(),
               ],
@@ -236,8 +179,7 @@ class RiderMyRidesConfirmDetailsView
                           size: 12.kh,
                         ).paddingOnly(right: 4.kw),
                         Text(
-                          "0", //!
-                          // "${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?[0]?.driverDetails?[0]?.fullName}",
+                          "${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?[0]?.driverDetails?[0]?.rating}",
                           style: TextStyleUtil.k14Regular(),
                         ),
                       ]),
@@ -252,8 +194,7 @@ class RiderMyRidesConfirmDetailsView
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Text(
-                      "0", //!
-                      // "${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?[0]?.driverDetails?[0]?.fullName} people",
+                      "${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?[0]?.driverDetails?[0]?.totalRides} people",
                       style:
                           TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                     ),
@@ -283,19 +224,58 @@ class RiderMyRidesConfirmDetailsView
               'Co-Passsengers',
               style: TextStyleUtil.k14Bold(),
             ).paddingOnly(bottom: 16.kh),
-            const CoPassengerList(
-                    //TODO: co-passengers
-
-                    //   itemcount: controller.matchingRidesmodel
-                    //       .data?[controller.matchingRideIndex]?.ridersDetatils?.length,
-                    //   image: Image(
-                    //     image: NetworkImage(
-                    //         "${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.ridersDetatils?[0]?.profilePic?.url}"),
-                    //   ),
-                    //   name:
-                    //       "${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.ridersDetatils?[0]?.fullName.toString().split(" ")[0]}\n${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.ridersDetatils?[0]?.fullName.toString().split(" ")[1]}",
+            Obx(
+              () => controller
+                          .riderConfirmRequestModel
+                          .value
+                          .data?[controller.index]
+                          ?.driverRideDetails?[0]
+                          ?.riders
+                          ?.length ==
+                      0
+                  ? Center(
+                      child: Text(
+                        "No co-passengers are available at the moment",
+                        style: TextStyleUtil.k14Semibold(),
+                      ),
                     )
-                .paddingOnly(bottom: 10.kh),
+                  : SizedBox(
+                      height: 96.kh,
+                      child: ListView.builder(
+                          itemCount: controller
+                                  .riderConfirmRequestModel
+                                  .value
+                                  .data?[controller.index]
+                                  ?.driverRideDetails?[0]
+                                  ?.riders
+                                  ?.length ??
+                              6,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index1) {
+                            return Column(
+                              children: [
+                                Container(
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: ClipOval(
+                                    child: SizedBox.fromSize(
+                                        size: Size.fromRadius(20.kh),
+                                        child: Image(
+                                            image: NetworkImage(
+                                                "${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?[0]?.riders?[index1]?.profilePic?.url}"))),
+                                  ),
+                                ).paddingOnly(bottom: 4.kh),
+                                Text(
+                                  "${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?[0]?.riders?[index1]?.fullName}",
+                                  style: TextStyleUtil.k12Semibold(),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ).paddingOnly(right: 32.kw);
+                          }),
+                    ).paddingOnly(bottom: 10.kh),
+            ),
             const GreenPoolDivider().paddingOnly(bottom: 16.kh),
 
             //Vehicle details
@@ -318,15 +298,13 @@ class RiderMyRidesConfirmDetailsView
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Toyota Corolla',
-                      // "${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?[0]?.driverDetails?[0]?.fullName}",
+                      "${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?[0]?.driverDetails?[0]?.vehicleDetails?[0]?.model}",
                       style: TextStyleUtil.k16Bold(color: ColorUtil.kBlack02),
                     ).paddingOnly(bottom: 4.kh),
                     Row(
                       children: [
                         Text(
-                          'Sedan',
-                          // "${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?[0]?.driverDetails?[0]?.fullName}",
+                          "${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?[0]?.driverDetails?[0]?.vehicleDetails?[0]?.type}",
                           style: TextStyleUtil.k14Semibold(
                               color: ColorUtil.kBlack03),
                         ),
@@ -336,8 +314,7 @@ class RiderMyRidesConfirmDetailsView
                           color: ColorUtil.kBlack03,
                         ).paddingSymmetric(vertical: 2.5.kh, horizontal: 8.kw),
                         Text(
-                          "LA2024",
-                          // "${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?[0]?.driverDetails?[0]?.fullName}",
+                          "${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?[0]?.driverDetails?[0]?.vehicleDetails?[0]?.licencePlate}",
                           style: TextStyleUtil.k14Semibold(
                               color: ColorUtil.kBlack03),
                         ),
@@ -397,7 +374,7 @@ class RiderMyRidesConfirmDetailsView
                     true
                 ? Amenities(
                         toggleSwitch: false,
-                        text: "Some-Free",
+                        text: "Smoke-Free",
                         image: ImageConstant.svgAmenities3)
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),

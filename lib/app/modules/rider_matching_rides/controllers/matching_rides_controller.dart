@@ -25,17 +25,7 @@ class MatchingRidesController extends GetxController {
   //   super.onClose();
   // }
 
-  matchingRidesAPI() async {
-    // try {
-    //   final response = await APIManager.getMatchingRides();
-    //   var data = jsonDecode(response.toString());
-    //   matchingRideResponse.value = MatchingRidesModel.fromJson(data);
-    // } catch (e) {
-    //   throw Exception(e);
-    // }
-  }
-
-  toFilter() {
+  moveToFilter() {
     Get.toNamed(Routes.RIDER_FILTER, arguments: rideDetails)?.then((value) {
       matchingRideResponse.value = value;
       matchingRideResponse.refresh();

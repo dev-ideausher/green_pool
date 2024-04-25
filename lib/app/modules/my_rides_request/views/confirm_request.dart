@@ -4,7 +4,9 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
+import '../../../components/gp_progress.dart';
 import '../../../components/green_pool_divider.dart';
+import '../../../components/origin_to_destination.dart';
 import '../../../constants/image_constant.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/colors.dart';
@@ -20,13 +22,7 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
   Widget build(BuildContext context) {
     return Obx(
       () => controller.confirmRequestModel.value.data == null
-          ? Center(
-              child: CircularProgressIndicator(
-                color: Get.find<ProfileController>().isSwitched.value
-                    ? ColorUtil.kPrimary3PinkMode
-                    : ColorUtil.kPrimary01,
-              ),
-            )
+          ? const GpProgress()
           : controller.confirmRequestModel.value.data!.isEmpty
               ? Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -84,6 +80,7 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
                             child: Column(
                               children: [
                                 Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Container(
                                       decoration: const BoxDecoration(
@@ -92,8 +89,9 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
                                         child: SizedBox.fromSize(
                                             size: Size.fromRadius(20.kh),
                                             child: Image(
+                                              fit: BoxFit.cover,
                                               image: NetworkImage(
-                                                  "${controller.confirmRequestModel.value.data?[index]?.rideDetails?[0]?.riderDetails?.profilePic?.url}"),
+                                                  "${controller.confirmRequestModel.value.data?[index]?.rideDetails?[0]?.riderDetails?[0]?.profilePic?.url}"),
                                             )),
                                       ),
                                     ).paddingOnly(right: 8.kw),
@@ -102,7 +100,7 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          "${controller.confirmRequestModel.value.data?[index]?.rideDetails?[0]?.riderDetails?.fullName}",
+                                          "${controller.confirmRequestModel.value.data?[index]?.rideDetails?[0]?.riderDetails?[0]?.fullName}",
                                           style: TextStyleUtil.k16Semibold(
                                               fontSize: 16.kh),
                                         ).paddingOnly(bottom: 8.kh),
@@ -127,7 +125,7 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
                                                 ).paddingOnly(right: 4.kw),
                                                 Text(
                                                   // '07 July 2023, 3:00pm',
-                                                  "${controller.confirmRequestModel.value.data?[index]?.rideDetails?[0]?.date.toString().split("T")[0]}  ${controller.confirmRequestModel.value.data?[index]?.rideDetails?[0]?.time}",
+                                                  "${controller.confirmRequestModel.value.data?[index]?.rideDetails?[0]?.date.toString().split("T")[0] ?? ""}  ${controller.confirmRequestModel.value.data?[index]?.rideDetails?[0]?.time ?? ""}",
                                                   style:
                                                       TextStyleUtil.k12Regular(
                                                           color: ColorUtil
@@ -159,62 +157,38 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
                                             ),
                                           ],
                                         ),
+                                        InkWell(
+                                          onTap: () {},
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        40.kh),
+                                                border: Border.all(
+                                                    color: ColorUtil
+                                                        .kSecondary01)),
+                                            child: Text(
+                                              "Message",
+                                              style:
+                                                  TextStyleUtil.k12Semibold(),
+                                            ).paddingSymmetric(
+                                                vertical: 4.kh,
+                                                horizontal: 16.kw),
+                                          ),
+                                        ).paddingSymmetric(vertical: 8.kh),
                                       ],
                                     ),
                                   ],
                                 ),
                                 const GreenPoolDivider()
                                     .paddingOnly(bottom: 16.kh),
-                                Stack(
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Container(
-                                          height: 10.kh,
-                                          width: 10.kw,
-                                          decoration: const BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: ColorUtil.kGreenColor),
-                                        ).paddingOnly(right: 8.kw),
-                                        Text(
-                                          // '1100 McIntosh St, Regina',
-                                          "${controller.confirmRequestModel.value.data?[index]?.rideDetails?[0]?.origin?.name}",
-                                          style: TextStyleUtil.k14Regular(
-                                              color: ColorUtil.kBlack02),
-                                        ),
-                                      ],
-                                    ).paddingOnly(bottom: 30.kh),
-                                    Positioned(
-                                      top: 27.kh,
-                                      child: Row(
-                                        children: [
-                                          Container(
-                                            height: 10.kh,
-                                            width: 10.kw,
-                                            decoration: const BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                color: ColorUtil.kError4),
-                                          ).paddingOnly(right: 8.kw),
-                                          Text(
-                                            // '681 Chrislea Rd, Woodbridge',
-                                            "${controller.confirmRequestModel.value.data?[index]?.rideDetails?[0]?.destination?.name}",
-                                            style: TextStyleUtil.k14Regular(
-                                                color: ColorUtil.kBlack02),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Positioned(
-                                      top: 10.kh,
-                                      left: 4.5.kw,
-                                      child: Container(
-                                        height: 28.kh,
-                                        width: 1.kw,
-                                        color: ColorUtil.kBlack04,
-                                      ),
-                                    ),
-                                  ],
-                                ).paddingOnly(bottom: 8.kh),
+                                OriginToDestination(
+                                        needPickupText: false,
+                                        origin:
+                                            "${controller.confirmRequestModel.value.data?[index]?.rideDetails?[0]?.origin?.name}",
+                                        destination:
+                                            "${controller.confirmRequestModel.value.data?[index]?.rideDetails?[0]?.destination?.name}")
+                                    .paddingOnly(bottom: 8.kh),
                                 const GreenPoolDivider()
                                     .paddingOnly(bottom: 16.kh),
                                 Row(
@@ -308,8 +282,10 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
                                                                               .kh),
                                                                       child:
                                                                           Image(
+                                                                        fit: BoxFit
+                                                                            .cover,
                                                                         image: NetworkImage(
-                                                                            "${controller.confirmRequestModel.value.data?[index]?.rideDetails?[0]?.riderDetails?.profilePic?.url}"),
+                                                                            "${controller.confirmRequestModel.value.data?[index]?.rideDetails?[0]?.riderDetails?[0]?.profilePic?.url}"),
                                                                       )),
                                                             ),
                                                           ).paddingOnly(
@@ -320,7 +296,7 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
                                                                     .start,
                                                             children: [
                                                               Text(
-                                                                "${controller.confirmRequestModel.value.data?[index]?.rideDetails?[0]?.riderDetails?.fullName}",
+                                                                "${controller.confirmRequestModel.value.data?[index]?.rideDetails?[0]?.riderDetails?[0]?.fullName}",
                                                                 style: TextStyleUtil
                                                                     .k16Semibold(
                                                                         fontSize:
@@ -476,7 +452,7 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
                                                 )),
                                           );
                                         } catch (e) {
-                                           debugPrint(e.toString());
+                                          debugPrint(e.toString());
                                         }
                                       },
                                     ),
@@ -524,10 +500,7 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
                                         //   controller.acceptRiderRequestModel.value
                                         //               .status ==
                                         //           false
-                                        //       ? const Center(
-                                        //           child:
-                                        //               CircularProgressIndicator(),
-                                        //         )
+                                        //       ? GpProgress()
                                         //       : Container(
                                         //           padding: EdgeInsets.all(24.kh),
                                         //           // height: 317.kh,

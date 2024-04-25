@@ -24,7 +24,9 @@ class WelcomeTile extends StatelessWidget {
             children: [
               Obx(
                 () => Text(
-                  Get.find<GetStorageService>().getLoggedIn ? "Welcome ${controller.userInfo.value.data?.fullName ?? "..."}" : controller.welcomeText.value,
+                  Get.find<GetStorageService>().getLoggedIn
+                      ? "Welcome ${controller.userInfo.value.data?.fullName ?? "..."}"
+                      : controller.welcomeText.value,
                   style: TextStyleUtil.k24Heading700(),
                 ).paddingOnly(bottom: 4.kh),
               ),
@@ -38,7 +40,18 @@ class WelcomeTile extends StatelessWidget {
               onTap: () {
                 Get.toNamed(Routes.NOTIFICATIONS);
               },
-              child: SvgPicture.asset(ImageConstant.svgIconNoti)),
+              child: Stack(
+                alignment: Alignment.topRight,
+                children: [
+                  Container(
+                    height: 10.kh,
+                    width: 10.kw,
+                    decoration: const BoxDecoration(
+                        shape: BoxShape.circle, color: ColorUtil.kError2),
+                  ),
+                  SvgPicture.asset(ImageConstant.svgIconNoti),
+                ],
+              )),
         ],
       ).paddingSymmetric(vertical: 40.kh);
     });

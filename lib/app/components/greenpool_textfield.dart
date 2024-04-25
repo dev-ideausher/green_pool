@@ -9,7 +9,7 @@ class GreenPoolTextField extends StatelessWidget {
   final TextEditingController? controller;
   final String hintText;
   // final EdgeInsetsGeometry? suffixPadding;
-  final Color? fillColor;
+  final Color? fillColor, hintColor;
   final bool? isSuffixNeeded;
   final InputBorder? border;
   // final String? initialValue;
@@ -44,7 +44,8 @@ class GreenPoolTextField extends StatelessWidget {
       this.keyboardType,
       this.fillColor,
       this.border,
-      this.isSuffixNeeded});
+      this.isSuffixNeeded,
+      this.hintColor});
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +88,7 @@ class GreenPoolTextField extends StatelessWidget {
         fillColor: fillColor ?? ColorUtil.kGreyColor,
         filled: true,
         hintStyle: TextStyleUtil.k14Regular(
-          color: ColorUtil.kBlack03,
+          color: hintColor ?? ColorUtil.kBlack03,
         ),
         enabledBorder: border ??
             UnderlineInputBorder(

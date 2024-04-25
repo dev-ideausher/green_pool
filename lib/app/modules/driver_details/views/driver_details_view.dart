@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/origin_to_destination.dart';
 import 'package:green_pool/app/modules/profile/controllers/profile_controller.dart';
+import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
@@ -22,8 +23,8 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const GreenPoolAppBar(
-        title: Text('Driver Details'),
+      appBar: GreenPoolAppBar(
+        title: Text(Strings.driverDetails),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -47,6 +48,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(8.kh),
                               child: Image(
+                                  fit: BoxFit.cover,
                                   image: NetworkImage(
                                       "${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.driverDetails?[0]?.profilePic?.url}")),
                             )).paddingOnly(bottom: 8.kh),
@@ -69,7 +71,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                                 TextSpan(
                                   children: [
                                     TextSpan(
-                                      text: 'Fare: ',
+                                      text: Strings.fare,
                                       style: TextStyleUtil.k14Semibold(
                                           color: ColorUtil.kSecondary01),
                                     ),
@@ -103,7 +105,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                                   //might give problems with big names, have to cut short month names
                                   Text(
                                     // '07 Nov 2023, 3:00pm',
-                                    "${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.date.toString().split("T")[0]}  ${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.time}",
+                                    "${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.date.toString().split("T")[0] ?? ""}  ${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.time ?? ""}",
                                     style: TextStyleUtil.k12Regular(
                                         color: ColorUtil.kBlack03),
                                   ),
@@ -137,6 +139,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                 //middle divider
                 const GreenPoolDivider().paddingOnly(bottom: 16.kh),
                 OriginToDestination(
+                        needPickupText: true,
                         origin:
                             "${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.origin?.name}",
                         destination:
@@ -154,7 +157,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                   //rating column
                   children: [
                     Text(
-                      'Rating',
+                      Strings.rating,
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Container(
@@ -186,11 +189,11 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                   //ride with column
                   children: [
                     Text(
-                      'Ride With',
+                      Strings.rideWith,
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Text(
-                      "${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.driverDetails?[0]?.totalRiders} people",
+                      "${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.driverDetails?[0]?.totalRiders ?? "0"} people",
                       style:
                           TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                     ),
@@ -200,7 +203,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                   //joined in column
                   children: [
                     Text(
-                      'Joined',
+                      Strings.joined,
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Text(
@@ -217,13 +220,18 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
 
             //co passengers
             Text(
-              'Co-Passengers',
+              Strings.coPassengers,
               style: TextStyleUtil.k14Bold(),
             ).paddingOnly(bottom: 16.kh),
             controller.matchingRidesmodel.data?[controller.matchingRideIndex]
                         ?.ridersDetatils?.length ==
                     0
-                ? const SizedBox()
+                ? Center(
+                    child: Text(
+                      Strings.noPassengersAvailable,
+                      style: TextStyleUtil.k14Semibold(),
+                    ),
+                  )
                 : CoPassengerList(
                     itemcount: controller
                         .matchingRidesmodel
@@ -231,17 +239,18 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                         ?.ridersDetatils
                         ?.length,
                     image: Image(
+                      fit: BoxFit.cover,
                       image: NetworkImage(
                           "${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.ridersDetatils?[0]?.profilePic?.url}"),
                     ),
                     name:
-                        "${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.ridersDetatils?[0]?.fullName.toString().split(" ")[0]}\n${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.ridersDetatils?[0]?.fullName.toString().split(" ")[1]}",
+                        "${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.ridersDetatils?[0]?.fullName.toString().split(" ").first}\n${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.ridersDetatils?[0]?.fullName.toString().split(" ").last}",
                   ).paddingOnly(bottom: 10.kh),
             const GreenPoolDivider().paddingOnly(bottom: 16.kh),
 
             //Vehicle details
             Text(
-              'Vehicle Details',
+              Strings.vehicleDetails,
               style: TextStyleUtil.k14Bold(),
             ).paddingOnly(bottom: 16.kh),
             Row(
@@ -251,6 +260,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                   child: Image(
                     height: 64.kh,
                     width: 64.kw,
+                    fit: BoxFit.cover,
                     image: NetworkImage(
                         "${controller.matchingRidesmodel.data?[controller.matchingRideIndex]?.driverDetails?[0]?.vehicleDetails?[0]?.vehiclePic?.url}"),
                   ).paddingOnly(right: 8.kh),
@@ -292,7 +302,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
             //Features available
 
             Text(
-              'Features available',
+              Strings.featuresAvailable,
               style: TextStyleUtil.k14Bold(),
             ).paddingOnly(bottom: 16.kh),
 
@@ -301,7 +311,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                     true
                 ? Amenities(
                         toggleSwitch: false,
-                        text: "Appreciates Conversation",
+                        text: Strings.appreciatesConversation,
                         image: ImageConstant.svgAmenities1)
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
@@ -310,7 +320,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                     true
                 ? Amenities(
                         toggleSwitch: false,
-                        text: "Enjoys Music",
+                        text: Strings.enjoysMusic,
                         image: ImageConstant.svgAmenities2)
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
@@ -319,7 +329,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                     true
                 ? Amenities(
                         toggleSwitch: false,
-                        text: "Some-Free",
+                        text: Strings.smokeFree,
                         image: ImageConstant.svgAmenities3)
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
@@ -328,7 +338,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                     true
                 ? Amenities(
                         toggleSwitch: false,
-                        text: "Pet-friendly",
+                        text: Strings.petFriendly,
                         image: ImageConstant.svgAmenities4)
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
@@ -337,7 +347,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                     true
                 ? Amenities(
                         toggleSwitch: false,
-                        text: "Winter Tires",
+                        text: Strings.winterTires,
                         image: ImageConstant.svgAmenities5)
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
@@ -346,7 +356,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                     true
                 ? Amenities(
                         toggleSwitch: false,
-                        text: "Cooling or Heating",
+                        text: Strings.coolingOrHeating,
                         image: ImageConstant.svgAmenities6)
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
@@ -355,7 +365,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                     true
                 ? Amenities(
                         toggleSwitch: false,
-                        text: "Baby Seats",
+                        text: Strings.babySeat,
                         image: ImageConstant.svgAmenities7)
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
@@ -364,7 +374,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                     true
                 ? Amenities(
                         toggleSwitch: false,
-                        text: "Heated Seats",
+                        text: Strings.heatedSeats,
                         image: ImageConstant.svgAmenities8)
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),

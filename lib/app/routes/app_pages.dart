@@ -56,6 +56,8 @@ import '../modules/post_ride/views/post_ride_view.dart';
 import '../modules/post_ride/views/pricing_view.dart';
 import '../modules/post_ride_step_one/bindings/post_ride_step_one_binding.dart';
 import '../modules/post_ride_step_one/views/post_ride_step_one_view.dart';
+import '../modules/post_ride_step_two/bindings/post_ride_step_two_binding.dart';
+import '../modules/post_ride_step_two/views/post_ride_step_two_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
 import '../modules/profile_settings/bindings/profile_settings_binding.dart';
@@ -102,6 +104,8 @@ import '../modules/start_ride/bindings/start_ride_binding.dart';
 import '../modules/start_ride/views/start_ride_view.dart';
 import '../modules/student_discounts/bindings/student_discounts_binding.dart';
 import '../modules/student_discounts/views/student_discounts_view.dart';
+import '../modules/submit_dispute/bindings/submit_dispute_binding.dart';
+import '../modules/submit_dispute/views/submit_dispute_view.dart';
 import '../modules/terms_conditions/bindings/terms_conditions_binding.dart';
 import '../modules/terms_conditions/views/terms_conditions_view.dart';
 import '../modules/user_details/bindings/user_details_binding.dart';
@@ -142,7 +146,7 @@ class AppPages {
       binding: OnboardingBinding(),
     ),
     GetPage(
-      name: _Paths.MY_RIDES,
+      name: _Paths.MY_RIDES_ONE_TIME,
       page: () => const MyRidesOneTimeView(),
       binding: MyRidesOneTimeBinding(),
     ),
@@ -405,6 +409,16 @@ class AppPages {
       name: _Paths.RIDER_START_RIDE_MAP,
       page: () => const RiderStartRideMapView(),
       binding: RiderStartRideMapBinding(),
+    ),
+    GetPage(
+      name: _Paths.SUBMIT_DISPUTE,
+      page: () => const SubmitDisputeView(),
+      binding: SubmitDisputeBinding(),
+    ),
+    GetPage(
+      name: _Paths.POST_RIDE_STEP_TWO,
+      page: () => const PostRideStepTwoView(),
+      binding: PostRideStepTwoBinding(),
     ),
   ];
 }
