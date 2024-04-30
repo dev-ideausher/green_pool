@@ -14,6 +14,7 @@ import '../../../res/strings.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
 import '../../../services/text_style_util.dart';
+import '../../home/controllers/home_controller.dart';
 import '../../post_ride/views/amenities.dart';
 import '../../profile/controllers/profile_controller.dart';
 import '../../ride_details/views/copassenger_list.dart';
@@ -84,7 +85,7 @@ class RiderConfirmedRideDetailsView
                           SvgPicture.asset(
                             ImageConstant.svgIconCalendarTime,
                             colorFilter: ColorFilter.mode(
-                                Get.find<ProfileController>().isSwitched.value
+                                Get.find<HomeController>().isSwitched.value
                                     ? ColorUtil.kPrimary3PinkMode
                                     : ColorUtil.kSecondary01,
                                 BlendMode.srcIn),
@@ -125,7 +126,7 @@ class RiderConfirmedRideDetailsView
                                 Icon(
                                   Icons.time_to_leave,
                                   size: 18.kh,
-                                  color: Get.find<ProfileController>()
+                                  color: Get.find<HomeController>()
                                           .isSwitched
                                           .value
                                       ? ColorUtil.kPrimary3PinkMode
@@ -173,7 +174,7 @@ class RiderConfirmedRideDetailsView
                       padding: EdgeInsets.symmetric(
                           horizontal: 12.kw, vertical: 2.kh),
                       decoration: BoxDecoration(
-                        color: Get.find<ProfileController>().isSwitched.value
+                        color: Get.find<HomeController>().isSwitched.value
                             ? ColorUtil.kPrimary3PinkMode
                             : ColorUtil.kPrimary01,
                         borderRadius: BorderRadius.circular(16.kh),
@@ -181,7 +182,7 @@ class RiderConfirmedRideDetailsView
                       child: Row(children: [
                         Icon(
                           Icons.star,
-                          color: Get.find<ProfileController>().isSwitched.value
+                          color: Get.find<HomeController>().isSwitched.value
                               ? ColorUtil.kWhiteColor
                               : ColorUtil.kYellowColor,
                           size: 12.kh,
@@ -234,8 +235,9 @@ class RiderConfirmedRideDetailsView
               'Co-Passengers',
               style: TextStyleUtil.k14Bold(),
             ).paddingOnly(bottom: 16.kh),
-            controller.myRidesModel.value.confirmDriverDetails?[0]
-                        ?.driverPostsDetails?[0]?.ridersDetails!.length ==
+            (controller.myRidesModel.value.confirmDriverDetails?[0]
+                            ?.driverPostsDetails?[0]?.ridersDetails!.length ??
+                        0) ==
                     0
                 ? Center(
                     child: Text(

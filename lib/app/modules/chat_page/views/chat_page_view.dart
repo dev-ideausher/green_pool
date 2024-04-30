@@ -8,13 +8,13 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/components/common_image_view.dart';
 import 'package:green_pool/app/components/greenpool_textfield.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
-import 'package:green_pool/app/modules/profile/controllers/profile_controller.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/storage.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
 import '../../../components/gp_progress.dart';
+import '../../home/controllers/home_controller.dart';
 import '../controllers/chat_page_controller.dart';
 
 class ChatPageView extends GetView<ChatPageController> {
@@ -24,10 +24,10 @@ class ChatPageView extends GetView<ChatPageController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Get.find<ProfileController>().isSwitched.value
+        backgroundColor: Get.find<HomeController>().isSwitched.value
             ? ColorUtil.kPrimaryPinkMode
             : ColorUtil.kPrimary01,
-        surfaceTintColor: Get.find<ProfileController>().isSwitched.value
+        surfaceTintColor: Get.find<HomeController>().isSwitched.value
             ? ColorUtil.kPrimaryPinkMode
             : ColorUtil.kPrimary01,
         elevation: 1,

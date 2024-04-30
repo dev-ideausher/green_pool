@@ -248,7 +248,7 @@ class PostRideStepTwoView extends GetView<PostRideStepTwoController> {
                 children: [
                   Obx(
                     () => GreenPoolButton(
-                      onPressed: () => Get.toNamed(Routes.PRICING_VIEW),
+                      onPressed: () => Get.toNamed(Routes.POST_RIDE_STEP_THREE),
                       padding: const EdgeInsets.all(0),
                       isActive: controller.isActiveCarpoolButton.value,
                       label: 'Next',

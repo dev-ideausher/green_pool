@@ -522,7 +522,7 @@ class DriverConfirmRequestModelDataRideDetailsOrigin {
 
   String? name;
   String? type;
-  List<double?>? coordinates;
+  List<double>? coordinates;
   String? originDestinationFair;
 
   DriverConfirmRequestModelDataRideDetailsOrigin({

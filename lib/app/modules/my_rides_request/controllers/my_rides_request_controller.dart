@@ -1,9 +1,5 @@
 import 'dart:convert';
-import 'dart:developer';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../../data/accept_rider_request_model.dart';
 import '../../../data/driver_cofirm_request_model.dart';
 import '../../../data/driver_send_request_model.dart';
 import '../../../data/send_rider_request_model.dart';
@@ -18,7 +14,6 @@ class MyRidesRequestController extends GetxController {
   double longitude = Get.find<HomeController>().longitude.value;
   RxBool isLoading = true.obs;
   var sendRequestModel = DriverSendRequestModel().obs;
-
   var confirmRequestModel = DriverConfirmRequestModel().obs;
   var sendRiderRequestModel = SendRiderRequestModel().obs;
 
@@ -31,6 +26,9 @@ class MyRidesRequestController extends GetxController {
 
   void changeViewType() {
     mapViewType.value = !mapViewType.value;
+    if (mapViewType.value) {
+      // Get.find<MapDriverConfirmRequestController>().on
+    } else {}
   }
 
   allConfirmRequestAPI() async {

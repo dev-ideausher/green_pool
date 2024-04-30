@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../services/colors.dart';
-import '../../profile/controllers/profile_controller.dart';
+import '../../home/controllers/home_controller.dart';
 
 class PostRideStepTwoController extends GetxController {
-  RxBool isPinkMode = Get.find<ProfileController>().isSwitched;
+  RxBool isPinkMode = Get.find<HomeController>().isSwitched;
   RxInt tabIndex = 0.obs;
   TextEditingController selectedDateOneTime = TextEditingController();
   TextEditingController formattedOneTimeDate = TextEditingController();
@@ -70,20 +70,20 @@ class PostRideStepTwoController extends GetxController {
           // Define the custom theme for the date picker
           data: ThemeData(
             // Define the primary color
-            primaryColor: Get.find<ProfileController>().isSwitched.value
+            primaryColor: Get.find<HomeController>().isSwitched.value
                 ? ColorUtil.kPrimaryPinkMode
                 : ColorUtil.kPrimary01,
             // Define the color scheme for the date picker
             colorScheme: ColorScheme.light(
               // Define the primary color for the date picker
-              primary: Get.find<ProfileController>().isSwitched.value
+              primary: Get.find<HomeController>().isSwitched.value
                   ? ColorUtil.kPrimaryPinkMode
                   : ColorUtil.kPrimary01,
               // Define the background color for the date picker
               surface: Colors.white,
               // Define the on-primary color for the date picker
               onPrimary: Colors.white,
-              secondary: Get.find<ProfileController>().isSwitched.value
+              secondary: Get.find<HomeController>().isSwitched.value
                   ? ColorUtil.kPrimaryPinkMode
                   : ColorUtil.kPrimary01,
             ),
@@ -113,20 +113,20 @@ class PostRideStepTwoController extends GetxController {
           // Define the custom theme for the date picker
           data: ThemeData(
             // Define the primary color
-            primaryColor: Get.find<ProfileController>().isSwitched.value
+            primaryColor: Get.find<HomeController>().isSwitched.value
                 ? ColorUtil.kPrimaryPinkMode
                 : ColorUtil.kPrimary01,
             // Define the color scheme for the date picker
             colorScheme: ColorScheme.light(
               // Define the primary color for the date picker
-              primary: Get.find<ProfileController>().isSwitched.value
+              primary: Get.find<HomeController>().isSwitched.value
                   ? ColorUtil.kPrimaryPinkMode
                   : ColorUtil.kPrimary01,
               // Define the background color for the date picker
               surface: Colors.white,
               // Define the on-primary color for the date picker
               onPrimary: Colors.white,
-              secondary: Get.find<ProfileController>().isSwitched.value
+              secondary: Get.find<HomeController>().isSwitched.value
                   ? ColorUtil.kPrimaryPinkMode
                   : ColorUtil.kPrimary01,
             ),
@@ -153,20 +153,20 @@ class PostRideStepTwoController extends GetxController {
             // Define the custom theme for the date picker
             data: ThemeData(
               // Define the primary color
-              primaryColor: Get.find<ProfileController>().isSwitched.value
+              primaryColor: Get.find<HomeController>().isSwitched.value
                   ? ColorUtil.kPrimaryPinkMode
                   : ColorUtil.kPrimary01,
               // Define the color scheme for the date picker
               colorScheme: ColorScheme.light(
                 // Define the primary color for the date picker
-                primary: Get.find<ProfileController>().isSwitched.value
+                primary: Get.find<HomeController>().isSwitched.value
                     ? ColorUtil.kPrimaryPinkMode
                     : ColorUtil.kPrimary01,
                 // Define the background color for the date picker
                 surface: Colors.white,
                 // Define the on-primary color for the date picker
                 onPrimary: Colors.white,
-                secondary: Get.find<ProfileController>().isSwitched.value
+                secondary: Get.find<HomeController>().isSwitched.value
                     ? ColorUtil.kPrimaryPinkMode
                     : ColorUtil.kPrimary01,
               ),
@@ -195,20 +195,20 @@ class PostRideStepTwoController extends GetxController {
           // Define the custom theme for the date picker
           data: ThemeData(
             // Define the primary color
-            primaryColor: Get.find<ProfileController>().isSwitched.value
+            primaryColor: Get.find<HomeController>().isSwitched.value
                 ? ColorUtil.kPrimaryPinkMode
                 : ColorUtil.kPrimary01,
             // Define the color scheme for the date picker
             colorScheme: ColorScheme.light(
               // Define the primary color for the date picker
-              primary: Get.find<ProfileController>().isSwitched.value
+              primary: Get.find<HomeController>().isSwitched.value
                   ? ColorUtil.kPrimaryPinkMode
                   : ColorUtil.kPrimary01,
               // Define the background color for the date picker
               surface: Colors.white,
               // Define the on-primary color for the date picker
               onPrimary: Colors.white,
-              secondary: Get.find<ProfileController>().isSwitched.value
+              secondary: Get.find<HomeController>().isSwitched.value
                   ? ColorUtil.kPrimaryPinkMode
                   : ColorUtil.kPrimary01,
             ),
@@ -235,20 +235,20 @@ class PostRideStepTwoController extends GetxController {
           // Define the custom theme for the date picker
           data: ThemeData(
             // Define the primary color
-            primaryColor: Get.find<ProfileController>().isSwitched.value
+            primaryColor: Get.find<HomeController>().isSwitched.value
                 ? ColorUtil.kPrimaryPinkMode
                 : ColorUtil.kPrimary01,
             // Define the color scheme for the date picker
             colorScheme: ColorScheme.light(
               // Define the primary color for the date picker
-              primary: Get.find<ProfileController>().isSwitched.value
+              primary: Get.find<HomeController>().isSwitched.value
                   ? ColorUtil.kPrimaryPinkMode
                   : ColorUtil.kPrimary01,
               // Define the background color for the date picker
               surface: Colors.white,
               // Define the on-primary color for the date picker
               onPrimary: Colors.white,
-              secondary: Get.find<ProfileController>().isSwitched.value
+              secondary: Get.find<HomeController>().isSwitched.value
                   ? ColorUtil.kPrimaryPinkMode
                   : ColorUtil.kPrimary01,
             ),

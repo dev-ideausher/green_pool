@@ -6,7 +6,6 @@ import 'app/modules/home/bindings/home_binding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'app/modules/profile/controllers/profile_controller.dart';
 import 'app/routes/app_pages.dart';
 import 'app/services/auth.dart';
 import 'app/services/colors.dart';
@@ -56,5 +55,4 @@ Future<void> initGetServices() async {
   await Get.putAsync<GetStorageService>(() => GetStorageService().initState());
   await Get.putAsync<AuthService>(() async => AuthService());
   Get.put(HomeController());
-  Get.put(ProfileController());
 }

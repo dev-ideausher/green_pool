@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/gp_progress.dart';
 import 'package:green_pool/app/components/origin_to_destination.dart';
+import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/modules/post_ride/views/amenities.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/custom_button.dart';
@@ -47,7 +48,7 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                                 SvgPicture.asset(
                                   ImageConstant.svgIconCalendarTime,
                                   colorFilter: ColorFilter.mode(
-                                      Get.find<ProfileController>()
+                                      Get.find<HomeController>()
                                               .isSwitched
                                               .value
                                           ? ColorUtil.kPrimary3PinkMode

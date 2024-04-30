@@ -14,6 +14,7 @@ import '../../../routes/app_pages.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
 import '../../../services/text_style_util.dart';
+import '../../home/controllers/home_controller.dart';
 import '../../origin/controllers/origin_controller.dart';
 import '../../profile/controllers/profile_controller.dart';
 import '../controllers/find_ride_controller.dart';
@@ -46,7 +47,7 @@ class FindRideView extends GetView<FindRideController> {
               prefix: Icon(
                 Icons.location_on,
                 size: 24.kh,
-                color: Get.find<ProfileController>().isSwitched.value
+                color: Get.find<HomeController>().isSwitched.value
                     ? ColorUtil.kPrimary3PinkMode
                     : ColorUtil.kSecondary01,
               ),
@@ -66,7 +67,7 @@ class FindRideView extends GetView<FindRideController> {
               prefix: Icon(
                 Icons.location_on,
                 size: 24.kh,
-                color: Get.find<ProfileController>().isSwitched.value
+                color: Get.find<HomeController>().isSwitched.value
                     ? ColorUtil.kPrimary3PinkMode
                     : ColorUtil.kSecondary01,
               ),
@@ -100,7 +101,7 @@ class FindRideView extends GetView<FindRideController> {
                     prefix: SvgPicture.asset(
                       ImageConstant.svgIconCalendarClear,
                       colorFilter: ColorFilter.mode(
-                          Get.find<ProfileController>().isSwitched.value
+                          Get.find<HomeController>().isSwitched.value
                               ? ColorUtil.kPrimary3PinkMode
                               : ColorUtil.kSecondary01,
                           BlendMode.srcIn),
@@ -119,7 +120,7 @@ class FindRideView extends GetView<FindRideController> {
                     prefix: SvgPicture.asset(
                       ImageConstant.svgIconTime,
                       colorFilter: ColorFilter.mode(
-                          Get.find<ProfileController>().isSwitched.value
+                          Get.find<HomeController>().isSwitched.value
                               ? ColorUtil.kPrimary3PinkMode
                               : ColorUtil.kSecondary01,
                           BlendMode.srcIn),
@@ -139,7 +140,7 @@ class FindRideView extends GetView<FindRideController> {
               },
               prefix: Icon(
                 Icons.time_to_leave,
-                color: Get.find<ProfileController>().isSwitched.value
+                color: Get.find<HomeController>().isSwitched.value
                     ? ColorUtil.kPrimary3PinkMode
                     : ColorUtil.kSecondary01,
               ),

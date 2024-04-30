@@ -27,6 +27,10 @@ import '../modules/home/views/bottom_navigation_view.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
+import '../modules/map_driver_confirm_request/bindings/map_driver_confirm_request_binding.dart';
+import '../modules/map_driver_confirm_request/views/map_driver_confirm_request_view.dart';
+import '../modules/map_driver_send_request/bindings/map_driver_send_request_binding.dart';
+import '../modules/map_driver_send_request/views/map_driver_send_request_view.dart';
 import '../modules/messages/bindings/messages_binding.dart';
 import '../modules/messages/views/messages_view.dart';
 import '../modules/my_rides_details/bindings/my_rides_details_binding.dart';
@@ -56,6 +60,8 @@ import '../modules/post_ride/views/post_ride_view.dart';
 import '../modules/post_ride/views/pricing_view.dart';
 import '../modules/post_ride_step_one/bindings/post_ride_step_one_binding.dart';
 import '../modules/post_ride_step_one/views/post_ride_step_one_view.dart';
+import '../modules/post_ride_step_three/bindings/post_ride_step_three_binding.dart';
+import '../modules/post_ride_step_three/views/post_ride_step_three_view.dart';
 import '../modules/post_ride_step_two/bindings/post_ride_step_two_binding.dart';
 import '../modules/post_ride_step_two/views/post_ride_step_two_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
@@ -112,6 +118,8 @@ import '../modules/user_details/bindings/user_details_binding.dart';
 import '../modules/user_details/views/user_details_view.dart';
 import '../modules/vehicle_details/bindings/vehicle_details_binding.dart';
 import '../modules/vehicle_details/views/vehicle_details_view.dart';
+import '../modules/verification_done/bindings/verification_done_binding.dart';
+import '../modules/verification_done/views/verification_done_view.dart';
 import '../modules/verify/bindings/verify_binding.dart';
 import '../modules/verify/views/verify_view.dart';
 
@@ -419,6 +427,26 @@ class AppPages {
       name: _Paths.POST_RIDE_STEP_TWO,
       page: () => const PostRideStepTwoView(),
       binding: PostRideStepTwoBinding(),
+    ),
+    GetPage(
+      name: _Paths.POST_RIDE_STEP_THREE,
+      page: () => const PostRideStepThreeView(),
+      binding: PostRideStepThreeBinding(),
+    ),
+    GetPage(
+      name: _Paths.MAP_DRIVER_CONFIRM_REQUEST,
+      page: () => const MapDriverConfirmRequestView(),
+      binding: MapDriverConfirmRequestBinding(),
+    ),
+    GetPage(
+      name: _Paths.MAP_DRIVER_SEND_REQUEST,
+      page: () => const MapDriverSendRequestView(),
+      binding: MapDriverSendRequestBinding(),
+    ),
+    GetPage(
+      name: _Paths.VERIFICATION_DONE,
+      page: () => const VerificationDoneView(),
+      binding: VerificationDoneBinding(),
     ),
   ];
 }

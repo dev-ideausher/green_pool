@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
 import 'package:green_pool/app/modules/home/views/welcome_tile.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
@@ -51,11 +52,11 @@ class HomeView extends GetView<HomeController> {
                     children: [
                       Positioned(
                           right: 0,
-                          left: Get.find<ProfileController>().isSwitched.value
+                          left: Get.find<HomeController>().isSwitched.value
                               ? 0
                               : null,
                           bottom: 0,
-                          child: Get.find<ProfileController>().isSwitched.value
+                          child: Get.find<HomeController>().isSwitched.value
                               ? SvgPicture.asset(
                                   ImageConstant.svgPinkPostRide,
                                   fit: BoxFit.fill,
@@ -112,11 +113,11 @@ class HomeView extends GetView<HomeController> {
                     Obx(
                       () => Positioned(
                           right: 0.kw,
-                          left: Get.find<ProfileController>().isSwitched.value
+                          left: Get.find<HomeController>().isSwitched.value
                               ? 0
                               : null,
                           bottom: 0.kh,
-                          child: Get.find<ProfileController>().isSwitched.value
+                          child: Get.find<HomeController>().isSwitched.value
                               ? SvgPicture.asset(
                                   ImageConstant.svgPinkFindRide,
                                   fit: BoxFit.fill,

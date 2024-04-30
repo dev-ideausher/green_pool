@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../modules/profile/controllers/profile_controller.dart';
+import '../modules/home/controllers/home_controller.dart';
 import 'colors.dart';
 import 'responsive_size.dart';
 
@@ -27,7 +27,7 @@ class DialogHelper {
                     padding: EdgeInsets.all(12.kh),
                     child: Center(
                       child: CircularProgressIndicator(
-                        color: Get.find<ProfileController>().isSwitched.value
+                        color: Get.find<HomeController>().isSwitched.value
                             ? ColorUtil.kPrimary3PinkMode
                             : ColorUtil.kPrimary01,
                       ),

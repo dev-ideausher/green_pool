@@ -8,6 +8,7 @@ import 'package:green_pool/app/services/responsive_size.dart';
 import '../../../components/gp_progress.dart';
 import '../../../components/greenpool_textfield.dart';
 import '../../../services/colors.dart';
+import '../../home/controllers/home_controller.dart';
 import '../../profile/controllers/profile_controller.dart';
 import '../controllers/origin_controller.dart';
 
@@ -54,7 +55,7 @@ class OriginView extends GetView<OriginController> {
                 prefix: Icon(
                   Icons.location_on,
                   size: 24.kh,
-                  color: Get.find<ProfileController>().isSwitched.value
+                  color: Get.find<HomeController>().isSwitched.value
                       ? ColorUtil.kPrimary3PinkMode
                       : ColorUtil.kSecondary01,
                 ),
@@ -81,8 +82,9 @@ class OriginView extends GetView<OriginController> {
                                 await controller.setLocationData(controller
                                     .addressSugestionList[index]['place_id']);
 
-                                Get.back(
-                                    result: controller.postRideModel.value);
+                                // Get.back(
+                                //     result: controller.postRideModel.value);
+                                Get.back();
                               },
                             ),
                           );

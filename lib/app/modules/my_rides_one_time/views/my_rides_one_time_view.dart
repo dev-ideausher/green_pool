@@ -16,6 +16,8 @@ import '../../../components/green_pool_divider.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
 import '../../../services/text_style_util.dart';
+import '../../home/controllers/home_controller.dart';
+import '../../my_rides_page/controllers/my_rides_page_controller.dart';
 import '../../profile/controllers/profile_controller.dart';
 import '../controllers/my_rides_one_time_controller.dart';
 
@@ -24,9 +26,8 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
 
   @override
   Widget build(BuildContext context) {
-    print(Get.find<GetStorageService>().getUserAppId);
-
     Get.lazyPut(() => MyRidesOneTimeController());
+
     return Scaffold(
       body: SafeArea(
         child: Get.find<GetStorageService>().getLoggedIn
@@ -94,7 +95,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                                 ImageConstant
                                                                     .svgIconCalendarTime,
                                                                 colorFilter: ColorFilter.mode(
-                                                                    Get.find<ProfileController>()
+                                                                    Get.find<HomeController>()
                                                                             .isSwitched
                                                                             .value
                                                                         ? ColorUtil
@@ -132,11 +133,12 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                       height: 24.kh,
                                                       width: 170.kw,
                                                       child: ListView.builder(
-                                                        itemCount: controller
-                                                                    .myRidesModelData[
-                                                                        index]
-                                                                    ?.postsInfo
-                                                                    ?.length ==
+                                                        itemCount: (controller
+                                                                        .myRidesModelData[
+                                                                            index]
+                                                                        ?.postsInfo
+                                                                        ?.length ??
+                                                                    0) ==
                                                                 0
                                                             ? 4
                                                             : controller
@@ -202,7 +204,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                             ImageConstant
                                                                 .svgIconCalendarTime,
                                                             colorFilter: ColorFilter.mode(
-                                                                Get.find<ProfileController>()
+                                                                Get.find<HomeController>()
                                                                         .isSwitched
                                                                         .value
                                                                     ? ColorUtil
@@ -299,7 +301,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                                   fontSize:
                                                                       14.kh,
                                                                   borderColor: Get.find<
-                                                                              ProfileController>()
+                                                                              HomeController>()
                                                                           .isSwitched
                                                                           .value
                                                                       ? ColorUtil
@@ -307,7 +309,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                                       : ColorUtil
                                                                           .kSecondary01,
                                                                   labelColor: Get.find<
-                                                                              ProfileController>()
+                                                                              HomeController>()
                                                                           .isSwitched
                                                                           .value
                                                                       ? ColorUtil
@@ -335,7 +337,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                                   isBorder:
                                                                       true,
                                                                   borderColor: Get.find<
-                                                                              ProfileController>()
+                                                                              HomeController>()
                                                                           .isSwitched
                                                                           .value
                                                                       ? ColorUtil
@@ -343,7 +345,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                                       : ColorUtil
                                                                           .kSecondary01,
                                                                   labelColor: Get.find<
-                                                                              ProfileController>()
+                                                                              HomeController>()
                                                                           .isSwitched
                                                                           .value
                                                                       ? ColorUtil
@@ -368,7 +370,9 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                                     GreenPoolButton(
                                                                         onPressed:
                                                                             () {
-                                                                          controller.startRide(controller.myRidesModelData.value[index]);
+                                                                          controller.startRide(controller
+                                                                              .myRidesModelData
+                                                                              .value[index]);
                                                                         },
                                                                         width: 144
                                                                             .kw,
@@ -398,14 +402,14 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                                           14.kh,
                                                                       isBorder:
                                                                           true,
-                                                                      borderColor: Get.find<ProfileController>()
+                                                                      borderColor: Get.find<HomeController>()
                                                                               .isSwitched
                                                                               .value
                                                                           ? ColorUtil
                                                                               .kPrimary3PinkMode
                                                                           : ColorUtil
                                                                               .kSecondary01,
-                                                                      labelColor: Get.find<ProfileController>()
+                                                                      labelColor: Get.find<HomeController>()
                                                                               .isSwitched
                                                                               .value
                                                                           ? ColorUtil
@@ -437,14 +441,14 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                                               .kh),
                                                                       fontSize:
                                                                           14.kh,
-                                                                      borderColor: Get.find<ProfileController>()
+                                                                      borderColor: Get.find<HomeController>()
                                                                               .isSwitched
                                                                               .value
                                                                           ? ColorUtil
                                                                               .kPrimary3PinkMode
                                                                           : ColorUtil
                                                                               .kSecondary01,
-                                                                      labelColor: Get.find<ProfileController>()
+                                                                      labelColor: Get.find<HomeController>()
                                                                               .isSwitched
                                                                               .value
                                                                           ? ColorUtil
@@ -471,14 +475,14 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                                           14.kh,
                                                                       isBorder:
                                                                           true,
-                                                                      borderColor: Get.find<ProfileController>()
+                                                                      borderColor: Get.find<HomeController>()
                                                                               .isSwitched
                                                                               .value
                                                                           ? ColorUtil
                                                                               .kPrimary3PinkMode
                                                                           : ColorUtil
                                                                               .kSecondary01,
-                                                                      labelColor: Get.find<ProfileController>()
+                                                                      labelColor: Get.find<HomeController>()
                                                                               .isSwitched
                                                                               .value
                                                                           ? ColorUtil
@@ -559,7 +563,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                                           horizontal:
                                                                               8.kw),
                                                                   decoration: BoxDecoration(
-                                                                      color: Get.find<ProfileController>()
+                                                                      color: Get.find<HomeController>()
                                                                               .isSwitched
                                                                               .value
                                                                           ? ColorUtil
@@ -574,7 +578,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                                       Icon(
                                                                         Icons
                                                                             .star,
-                                                                        color: Get.find<ProfileController>().isSwitched.value
+                                                                        color: Get.find<HomeController>().isSwitched.value
                                                                             ? ColorUtil.kWhiteColor
                                                                             : ColorUtil.kYellowColor,
                                                                         size: 12
@@ -586,7 +590,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                                         // '4.5',
                                                                         "${controller.myRidesModelData.value?[index]?.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.driverDetails?[0]?.rating}",
                                                                         style: TextStyleUtil.k12Semibold(
-                                                                            color: Get.find<ProfileController>().isSwitched.value
+                                                                            color: Get.find<HomeController>().isSwitched.value
                                                                                 ? ColorUtil.kBlack02
                                                                                 : ColorUtil.kWhiteColor),
                                                                       ),
@@ -650,7 +654,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                                           ImageConstant
                                                                               .svgIconCalendarTime,
                                                                           colorFilter: ColorFilter.mode(
-                                                                              Get.find<ProfileController>().isSwitched.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01,
+                                                                              Get.find<HomeController>().isSwitched.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01,
                                                                               BlendMode.srcIn),
                                                                         ).paddingOnly(
                                                                             right:
@@ -670,7 +674,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                                               .time_to_leave,
                                                                           size:
                                                                               18.kh,
-                                                                          color: Get.find<ProfileController>().isSwitched.value
+                                                                          color: Get.find<HomeController>().isSwitched.value
                                                                               ? ColorUtil.kPrimary3PinkMode
                                                                               : ColorUtil.kSecondary01,
                                                                         ).paddingOnly(
@@ -712,7 +716,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                                   ImageConstant
                                                                       .svgIconCalendarTime,
                                                                   colorFilter: ColorFilter.mode(
-                                                                      Get.find<ProfileController>()
+                                                                      Get.find<HomeController>()
                                                                               .isSwitched
                                                                               .value
                                                                           ? ColorUtil
@@ -785,7 +789,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                                 'View Details',
                                                             fontSize: 14.kh,
                                                             borderColor: Get.find<
-                                                                        ProfileController>()
+                                                                        HomeController>()
                                                                     .isSwitched
                                                                     .value
                                                                 ? ColorUtil
@@ -793,7 +797,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                                 : ColorUtil
                                                                     .kSecondary01,
                                                             labelColor: Get.find<
-                                                                        ProfileController>()
+                                                                        HomeController>()
                                                                     .isSwitched
                                                                     .value
                                                                 ? ColorUtil
@@ -818,7 +822,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                                 'Cancel Ride',
                                                             fontSize: 14.kh,
                                                             borderColor: Get.find<
-                                                                        ProfileController>()
+                                                                        HomeController>()
                                                                     .isSwitched
                                                                     .value
                                                                 ? ColorUtil
@@ -826,7 +830,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                                 : ColorUtil
                                                                     .kSecondary01,
                                                             labelColor: Get.find<
-                                                                        ProfileController>()
+                                                                        HomeController>()
                                                                     .isSwitched
                                                                     .value
                                                                 ? ColorUtil

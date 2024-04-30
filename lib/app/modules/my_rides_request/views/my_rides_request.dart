@@ -1,4 +1,4 @@
-//! contains tab bar for Confirm Request view and Send Request view (my_rides_view -> my_ride_details (view matching rides)) 
+//! contains tab bar for Confirm Request view and Send Request view (my_rides_view -> my_ride_details (view matching rides))
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -9,6 +9,7 @@ import 'package:green_pool/app/services/responsive_size.dart';
 import '../../../constants/image_constant.dart';
 import '../../../services/colors.dart';
 import '../../../services/text_style_util.dart';
+import '../../home/controllers/home_controller.dart';
 import '../../profile/controllers/profile_controller.dart';
 import 'confirm_request.dart';
 import 'send_request.dart';
@@ -51,7 +52,7 @@ class MyRideRequestsView extends GetView<MyRidesRequestController> {
                   unselectedLabelStyle:
                       TextStyleUtil.k14Semibold(color: ColorUtil.kSecondary01),
                   labelStyle: TextStyleUtil.k14Semibold(
-                    color: Get.find<ProfileController>().isSwitched.value
+                    color: Get.find<HomeController>().isSwitched.value
                         ? ColorUtil.kPrimary3PinkMode
                         : ColorUtil.kSecondary01,
                   ),
@@ -59,12 +60,12 @@ class MyRideRequestsView extends GetView<MyRidesRequestController> {
                       ColorUtil.kSecondary01.withOpacity(0.05)),
                   indicator: UnderlineTabIndicator(
                     borderSide: BorderSide(
-                        color: Get.find<ProfileController>().isSwitched.value
+                        color: Get.find<HomeController>().isSwitched.value
                             ? ColorUtil.kPrimary3PinkMode
                             : ColorUtil.kSecondary01,
                         width: 2.kh),
                   ),
-                  labelColor: Get.find<ProfileController>().isSwitched.value
+                  labelColor: Get.find<HomeController>().isSwitched.value
                       ? ColorUtil.kPrimary3PinkMode
                       : ColorUtil.kSecondary01,
                   tabs: const [

@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 
 class MessagesController extends GetxController {
+  RxBool refreshPage = true.obs;
+
   // @override
   // void onInit() {
   //   super.onInit();

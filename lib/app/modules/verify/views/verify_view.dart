@@ -103,8 +103,6 @@ class VerifyView extends GetView<VerifyController> {
           ),
           const Expanded(child: SizedBox()),
           GreenPoolButton(
-            // onPressed: () => Get.toNamed(Routes.PROFILE_SETUP),
-
             onPressed: () async {
               await controller.verifyOTP();
             },

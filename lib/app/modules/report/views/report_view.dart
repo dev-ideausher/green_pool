@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
+import 'package:green_pool/app/components/richtext_heading.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -29,8 +30,8 @@ class ReportView extends GetView<ReportController> {
             'Make it easy to tell us about problems so we\ncan fix them quickly and make things better\nfor you!',
             style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
           ).paddingOnly(bottom: 24.kh, top: 32.kh),
-          Text(
-            'Bug/Feedback',
+          RichTextHeading(
+            text: 'Bug/Feedback',
             style: TextStyleUtil.k14Semibold(),
           ).paddingOnly(bottom: 8.kh),
           GreenPoolTextField(
@@ -48,18 +49,13 @@ class ReportView extends GetView<ReportController> {
             onTap: () => controller.getBugImage(ImageSource.gallery),
             child: Obx(
               () => controller.picUploaded.value
-                  ? Container(
-                      height: 80.kh,
-                      width: 80.kw,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.rectangle,
-                          color: ColorUtil.kGreyColor,
-                          borderRadius: BorderRadius.circular(8.kh)),
-                      child: SizedBox.fromSize(
-                        size: Size.fromRadius(8.kh),
-                        child: Image.file(
-                          controller.uploadedPic.value!,
-                        ),
+                  ? ClipRRect(
+                      borderRadius: BorderRadius.circular(8.kh),
+                      child: Image.file(
+                        controller.uploadedPic.value!,
+                        fit: BoxFit.cover,
+                        height: 80.kh,
+                        width: 80.kw,
                       ),
                     )
                   : Container(

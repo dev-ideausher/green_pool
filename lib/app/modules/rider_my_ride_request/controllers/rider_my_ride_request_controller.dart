@@ -76,12 +76,18 @@ class RiderMyRideRequestController extends GetxController {
         "${riderSendRequestModel.value.data?[index]?.Id}";
     final String driverId =
         "${riderSendRequestModel.value.data?[index]?.driverId}";
+    final String driverName =
+        "${riderSendRequestModel.value.data?[index]?.driverDetails?[0]?.fullName}";
+    final dynamic driverNotificationPref = riderSendRequestModel
+        .value.data?[index]?.driverDetails?[0]?.notificationPreferences!
+        .toJson();
 
     final Map<String, dynamic> rideData = {
-      "riderRideId":
-          rideIdFromMyRides, //! rideId is  riders ride Id in this case
+      "riderRideId": rideIdFromMyRides,
       "driverRideId": driverRideId,
-      "driverId": driverId
+      "driverId": driverId,
+      "driverName": driverName,
+      "driverNotificationPreferences": driverNotificationPref
     };
     try {
       final response = await APIManager.postSendRequestToDriver(body: rideData);
@@ -106,8 +112,7 @@ class RiderMyRideRequestController extends GetxController {
     };
     try {
       final response = await APIManager.acceptDriversRequest(body: rideData);
-      var data = jsonDecode(response.toString());
-      log(data.toString());
+      // var data = jsonDecode(response.toString());
       // confirmRideByRiderModel.value = ConfirmRideByRiderModel.fromJson(data);
       // log("This is driver ride Id: ${matchingRideResponse.value.data?[0]?.Id}");
     } catch (e) {
@@ -130,8 +135,7 @@ class RiderMyRideRequestController extends GetxController {
       final response = await APIManager.rejectDriversRequest(body: rideData);
       showMySnackbar(msg: "Ride rejected successfully");
       Get.back();
-      var data = jsonDecode(response.toString());
-      log(data.toString());
+      // var data = jsonDecode(response.toString());
       // confirmRideByRiderModel.value = ConfirmRideByRiderModel.fromJson(data);
       // log("This is driver ride Id: ${matchingRideResponse.value.data?[0]?.Id}");
     } catch (e) {

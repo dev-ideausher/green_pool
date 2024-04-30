@@ -23,14 +23,18 @@ import '../../profile/controllers/profile_controller.dart';
 
 class RiderProfileSetupController extends GetxController {
   RxBool isPicked = false.obs;
+  bool fromNavBar = false;
   String name = '';
   Rx<File?> selectedProfileImagePath = Rx<File?>(null);
   Rx<File?> selectedIDImagePath = Rx<File?>(null);
   RxBool isProfileImagePicked = false.obs;
   RxBool isIDPicked = false.obs;
-  TextEditingController fullName = TextEditingController(text: Get.find<AuthService>().auth.currentUser?.displayName);
-  TextEditingController email = TextEditingController(text: Get.find<AuthService>().auth.currentUser?.email);
-  TextEditingController phoneNumber = TextEditingController(text: Get.find<AuthService>().auth.currentUser?.phoneNumber);
+  TextEditingController fullName = TextEditingController(
+      text: Get.find<AuthService>().auth.currentUser?.displayName);
+  TextEditingController email = TextEditingController(
+      text: Get.find<AuthService>().auth.currentUser?.email);
+  TextEditingController phoneNumber = TextEditingController(
+      text: Get.find<AuthService>().auth.currentUser?.phoneNumber);
   TextEditingController gender = TextEditingController();
   TextEditingController city = TextEditingController();
   TextEditingController dateOfBirth = TextEditingController();
@@ -38,10 +42,11 @@ class RiderProfileSetupController extends GetxController {
 
   GlobalKey<FormState> userFormKey = GlobalKey<FormState>();
 
-  // @override
-  // void onInit() {
-  //   super.onInit();
-  // }
+  @override
+  void onInit() {
+    super.onInit();
+    fromNavBar = Get.arguments;
+  }
 
   // @override
   // void onReady() {
@@ -53,9 +58,11 @@ class RiderProfileSetupController extends GetxController {
   //   super.onClose();
   // }
   Future<void> setDate(BuildContext context) async {
-    DateTime lastDate = DateTime.now().subtract(const Duration(days: 18 * 365)); // Subtracting 18 years
+    DateTime lastDate = DateTime.now()
+        .subtract(const Duration(days: 18 * 365)); // Subtracting 18 years
 
-    DateTime initialDate = DateTime.now().isAfter(lastDate) ? lastDate : DateTime.now();
+    DateTime initialDate =
+        DateTime.now().isAfter(lastDate) ? lastDate : DateTime.now();
 
     DateTime? pickedDate = await showDatePicker(
       context: context,
@@ -67,16 +74,22 @@ class RiderProfileSetupController extends GetxController {
           // Define the custom theme for the date picker
           data: ThemeData(
             // Define the primary color
-            primaryColor: Get.find<ProfileController>().isSwitched.value ? ColorUtil.kPrimaryPinkMode : ColorUtil.kPrimary01,
+            primaryColor: Get.find<HomeController>().isSwitched.value
+                ? ColorUtil.kPrimaryPinkMode
+                : ColorUtil.kPrimary01,
             // Define the color scheme for the date picker
             colorScheme: ColorScheme.light(
               // Define the primary color for the date picker
-              primary: Get.find<ProfileController>().isSwitched.value ? ColorUtil.kPrimaryPinkMode : ColorUtil.kPrimary01,
+              primary: Get.find<HomeController>().isSwitched.value
+                  ? ColorUtil.kPrimaryPinkMode
+                  : ColorUtil.kPrimary01,
               // Define the background color for the date picker
               surface: ColorUtil.kWhiteColor,
               // Define the on-primary color for the date picker
               onPrimary: ColorUtil.kBlack01,
-              secondary: Get.find<ProfileController>().isSwitched.value ? ColorUtil.kPrimaryPinkMode : ColorUtil.kPrimary01,
+              secondary: Get.find<HomeController>().isSwitched.value
+                  ? ColorUtil.kPrimaryPinkMode
+                  : ColorUtil.kPrimary01,
             ),
           ),
           // Apply the custom theme to the child widget
@@ -88,7 +101,8 @@ class RiderProfileSetupController extends GetxController {
     if (pickedDate != null) {
       String formattedDate = pickedDate.toString().split(" ")[0];
       dateOfBirth.text = formattedDate;
-      formattedDateOfBirth.text = "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
+      formattedDateOfBirth.text =
+          "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
     }
   }
 
@@ -161,7 +175,11 @@ class RiderProfileSetupController extends GetxController {
       // showMySnackbar(msg: responses.data['message']);
       Get.find<HomeController>().userInfoAPI();
       // Get.offNamed(Routes.FIND_RIDE, arguments: isDriver);
-      Get.until((route) => Get.currentRoute == Routes.FIND_RIDE);
+      if (fromNavBar) {
+        Get.until((route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
+      } else {
+        Get.until((route) => Get.currentRoute == Routes.FIND_RIDE);
+      }
     } catch (e) {
       throw Exception(e);
     }
@@ -230,14 +248,15 @@ class RiderProfileSetupController extends GetxController {
   checkUserValidations() async {
     final isValid = userFormKey.currentState!.validate();
 
-    if (!isValid
-        // && selectedIDImagePath.value!.path.isEmpty &&
-        // selectedProfileImagePath.value!.path.isEmpty
-        ) {
+    if (!isValid) {
       return showMySnackbar(msg: 'Please fill in all the details');
     } else {
-      userFormKey.currentState!.save();
-      await userDetailsAPI();
+      if (isProfileImagePicked.value != true || isIDPicked.value != true) {
+        return showMySnackbar(msg: 'Please upload the required images');
+      } else {
+        userFormKey.currentState!.save();
+        await userDetailsAPI();
+      }
     }
   }
 }

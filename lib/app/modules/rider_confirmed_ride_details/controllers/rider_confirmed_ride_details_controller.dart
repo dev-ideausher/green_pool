@@ -10,13 +10,12 @@ class RiderConfirmedRideDetailsController extends GetxController {
   void onInit() {
     super.onInit();
     myRidesModel.value = Get.arguments;
-   print( "ride status "+(myRidesModel.value.isStarted ?? false).toString());
+    print("ride status " + (myRidesModel.value.isStarted ?? false).toString());
   }
 
-  viewOnMap () {
+  viewOnMap() {
     Get.toNamed(Routes.RIDER_START_RIDE_MAP, arguments: myRidesModel.value);
   }
-  
 
   // @override
   // void onReady() {

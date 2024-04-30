@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/services/dio/api_service.dart';
+import '../../../routes/app_pages.dart';
 import '../../../services/storage.dart';
 
 class ProfileController extends GetxController {
-  RxBool isSwitched = false.obs;
+  RxBool isPinkMode = Get.find<HomeController>().isSwitched;
   var userInfo = Get.find<HomeController>().userInfo;
-  // RxBool isSwitched = Get.find<GetStorageService>().isPinkMode;
 
   // @override
   // void onInit() {
@@ -27,10 +27,10 @@ class ProfileController extends GetxController {
   //   super.onClose();
   // }
 
-  bool toggleSwitch() {
-    isSwitched.value = !isSwitched.value;
-    Get.find<GetStorageService>().isPinkMode = isSwitched.value;
-    return isSwitched.value;
+  void toggleSwitch() {
+    isPinkMode.value = !isPinkMode.value;
+    Get.find<GetStorageService>().isPinkMode = isPinkMode.value;
+    pinkModeAPI();
   }
 
   pinkModeAPI() async {
@@ -41,5 +41,11 @@ class ProfileController extends GetxController {
     } catch (e) {
       debugPrint(e.toString());
     }
+  }
+
+  toLogin() {
+    Get.toNamed(Routes.LOGIN,
+            arguments: {'isDriver': false, 'fromNavBar': true})
+        ?.then((value) => userInfo.refresh());
   }
 }

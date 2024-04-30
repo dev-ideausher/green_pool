@@ -3,13 +3,13 @@ import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
-import 'package:green_pool/app/modules/profile/controllers/profile_controller.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../constants/image_constant.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/colors.dart';
 import '../../../services/text_style_util.dart';
+import '../../home/controllers/home_controller.dart';
 import '../controllers/rider_post_ride_controller.dart';
 
 class RiderPostRideView extends GetView<RiderPostRideController> {
@@ -50,7 +50,7 @@ class RiderPostRideView extends GetView<RiderPostRideController> {
                         right: 0,
                         bottom: 0,
                         child: SvgPicture.asset(
-                          Get.find<ProfileController>().isSwitched.value
+                          Get.find<HomeController>().isSwitched.value
                               ? ImageConstant.svgPinkRiderDriving
                               : ImageConstant.svgRiderDriving,
                         )),
@@ -100,7 +100,7 @@ class RiderPostRideView extends GetView<RiderPostRideController> {
                         right: 0,
                         bottom: 0,
                         child: SvgPicture.asset(
-                          Get.find<ProfileController>().isSwitched.value
+                          Get.find<HomeController>().isSwitched.value
                               ? ImageConstant.svgPinkRiderNeedRide
                               : ImageConstant.svgRiderNeedRide,
                         )),

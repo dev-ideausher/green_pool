@@ -8,7 +8,7 @@ import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
 import '../../../services/colors.dart';
-import '../../profile/controllers/profile_controller.dart';
+import '../../home/controllers/home_controller.dart';
 import '../controllers/change_password_controller.dart';
 
 class ChangePasswordView extends GetView<ChangePasswordController> {
@@ -36,14 +36,14 @@ class ChangePasswordView extends GetView<ChangePasswordController> {
                   ? Icon(
                       Icons.visibility_off,
                       size: 20.kh,
-                      color: Get.find<ProfileController>().isSwitched.value
+                      color: Get.find<HomeController>().isSwitched.value
                           ? ColorUtil.kPrimary3PinkMode
                           : ColorUtil.kSecondary01,
                     )
                   : Icon(
                       Icons.visibility,
                       size: 20.kh,
-                      color: Get.find<ProfileController>().isSwitched.value
+                      color: Get.find<HomeController>().isSwitched.value
                           ? ColorUtil.kPrimary3PinkMode
                           : ColorUtil.kSecondary01,
                     ),
@@ -62,14 +62,14 @@ class ChangePasswordView extends GetView<ChangePasswordController> {
                     ? Icon(
                         Icons.visibility_off,
                         size: 20.kh,
-                        color: Get.find<ProfileController>().isSwitched.value
+                        color: Get.find<HomeController>().isSwitched.value
                             ? ColorUtil.kPrimary3PinkMode
                             : ColorUtil.kSecondary01,
                       )
                     : Icon(
                         Icons.visibility,
                         size: 20.kh,
-                        color: Get.find<ProfileController>().isSwitched.value
+                        color: Get.find<HomeController>().isSwitched.value
                             ? ColorUtil.kPrimary3PinkMode
                             : ColorUtil.kSecondary01,
                       )),
@@ -87,14 +87,14 @@ class ChangePasswordView extends GetView<ChangePasswordController> {
                   ? Icon(
                       Icons.visibility_off,
                       size: 20.kh,
-                      color: Get.find<ProfileController>().isSwitched.value
+                      color: Get.find<HomeController>().isSwitched.value
                           ? ColorUtil.kPrimary3PinkMode
                           : ColorUtil.kSecondary01,
                     )
                   : Icon(
                       Icons.visibility,
                       size: 20.kh,
-                      color: Get.find<ProfileController>().isSwitched.value
+                      color: Get.find<HomeController>().isSwitched.value
                           ? ColorUtil.kPrimary3PinkMode
                           : ColorUtil.kSecondary01,
                     ),

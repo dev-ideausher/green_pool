@@ -12,6 +12,7 @@ import '../../../components/gp_progress.dart';
 import '../../../components/origin_to_destination.dart';
 import '../../../res/strings.dart';
 import '../../../services/colors.dart';
+import '../../../services/gp_util.dart';
 import '../../../services/text_style_util.dart';
 import '../controllers/rider_start_ride_map_controller.dart';
 import 'arriving_bottom_sheet.dart';
@@ -31,6 +32,9 @@ class RiderStartRideMapView extends GetView<RiderStartRideMapController> {
                     CameraPosition(target: LatLng(0.0, 0.0), zoom: 14),
                 mapType: MapType.normal,
                 markers: Set<Marker>.of(controller.markers),
+                onCameraMove: (position) {
+                  GpUtil.moveCamera(controller.mapController, position.target);
+                },
                 polylines: {
                   Polyline(
                     visible: true,

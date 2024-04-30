@@ -1,13 +1,18 @@
+import 'dart:convert';
+import 'dart:ffi';
+
 import 'package:get/get.dart';
+import 'package:green_pool/app/services/dio/api_service.dart';
 
 class TermsConditionsController extends GetxController {
+  RxBool isLoading = false.obs;
+  String termsText = '';
 
-
-  // final count = 0.obs;
-  // @override
-  // void onInit() {
-  //   super.onInit();
-  // }
+  @override
+  void onInit() {
+    super.onInit();
+    companyDetailsAPI();
+  }
 
   // @override
   // void onReady() {
@@ -19,5 +24,10 @@ class TermsConditionsController extends GetxController {
   //   super.onClose();
   // }
 
-  // void increment() => count.value++;
+  companyDetailsAPI() async {
+    isLoading.value = true;
+    final response = await APIManager.getCompanyDetails();
+    termsText = response.data['data'][0]['termsAndContions'].toString();
+    isLoading.value = false;
+  }
 }

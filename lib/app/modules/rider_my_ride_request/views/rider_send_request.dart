@@ -12,6 +12,7 @@ import '../../../routes/app_pages.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
 import '../../../services/text_style_util.dart';
+import '../../home/controllers/home_controller.dart';
 import '../../profile/controllers/profile_controller.dart';
 
 class RiderSendRequest extends GetView<RiderMyRideRequestController> {
@@ -84,7 +85,7 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                         padding: EdgeInsets.symmetric(
                                             horizontal: 8.kw),
                                         decoration: BoxDecoration(
-                                            color: Get.find<ProfileController>()
+                                            color: Get.find<HomeController>()
                                                     .isSwitched
                                                     .value
                                                 ? ColorUtil.kPrimary3PinkMode
@@ -96,7 +97,7 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                             Icon(
                                               Icons.star,
                                               color:
-                                                  Get.find<ProfileController>()
+                                                  Get.find<HomeController>()
                                                           .isSwitched
                                                           .value
                                                       ? ColorUtil.kWhiteColor
@@ -115,7 +116,7 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                                   '0.0',
                                               style: TextStyleUtil.k12Semibold(
                                                   color: Get.find<
-                                                              ProfileController>()
+                                                              HomeController>()
                                                           .isSwitched
                                                           .value
                                                       ? ColorUtil.kBlack02
@@ -180,7 +181,7 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                                     ImageConstant
                                                         .svgIconCalendarTime,
                                                     colorFilter: ColorFilter.mode(
-                                                        Get.find<ProfileController>()
+                                                        Get.find<HomeController>()
                                                                 .isSwitched
                                                                 .value
                                                             ? ColorUtil
@@ -213,7 +214,7 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                               Icons.time_to_leave,
                                               size: 18.kh,
                                               color:
-                                                  Get.find<ProfileController>()
+                                                  Get.find<HomeController>()
                                                           .isSwitched
                                                           .value
                                                       ? ColorUtil
@@ -375,7 +376,7 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                     //                               ImageConstant
                                     //                                   .svgIconCalendarTime,
                                     //                               colorFilter: ColorFilter.mode(
-                                    //                                   Get.find<ProfileController>()
+                                    //                                   Get.find<HomeController>()
                                     //                                           .isSwitched
                                     //                                           .value
                                     //                                       ? ColorUtil
@@ -400,7 +401,7 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                     //                               Icons.location_on,
                                     //                               size: 16.kh,
                                     //                               color: Get.find<
-                                    //                                           ProfileController>()
+                                    //                                           HomeController>()
                                     //                                       .isSwitched
                                     //                                       .value
                                     //                                   ? ColorUtil
@@ -506,7 +507,7 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                     //                           vertical: 2.kh),
                                     //                       decoration: BoxDecoration(
                                     //                         color: Get.find<
-                                    //                                     ProfileController>()
+                                    //                                     HomeController>()
                                     //                                 .isSwitched
                                     //                                 .value
                                     //                             ? ColorUtil

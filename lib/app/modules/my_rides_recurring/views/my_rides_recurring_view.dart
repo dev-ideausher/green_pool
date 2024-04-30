@@ -11,6 +11,7 @@ import 'package:green_pool/app/services/responsive_size.dart';
 import '../../../constants/image_constant.dart';
 import '../../../services/colors.dart';
 import '../../../services/text_style_util.dart';
+import '../../home/controllers/home_controller.dart';
 import '../../profile/controllers/profile_controller.dart';
 import '../controllers/my_rides_recurring_controller.dart';
 
@@ -99,14 +100,14 @@ class MyRidesRecurringView extends GetView<MyRidesRecurringController> {
                                                 inactiveThumbColor:
                                                     ColorUtil.kNeutral1,
                                                 inactiveTrackColor: Get.find<
-                                                            ProfileController>()
+                                                            HomeController>()
                                                         .isSwitched
                                                         .value
                                                     ? ColorUtil
                                                         .kSecondaryPinkMode
                                                     : ColorUtil.kPrimary05,
                                                 activeTrackColor: Get.find<
-                                                            ProfileController>()
+                                                            HomeController>()
                                                         .isSwitched
                                                         .value
                                                     ? ColorUtil

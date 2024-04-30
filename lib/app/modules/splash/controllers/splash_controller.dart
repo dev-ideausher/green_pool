@@ -22,13 +22,9 @@ class SplashController extends GetxController {
         Get.offNamed(Routes.BOTTOM_NAVIGATION);
       } else {
         if (Get.find<HomeController>().findingRide.value) {
-          Get.offNamed(Routes.RIDER_PROFILE_SETUP, arguments: {
-            'isDriver': false,
-          });
+          Get.offNamed(Routes.RIDER_PROFILE_SETUP, arguments: true);
         } else {
-          Get.offNamed(Routes.PROFILE_SETUP, arguments: {
-            'isDriver': true,
-          });
+          Get.offNamed(Routes.PROFILE_SETUP, arguments: true);
         }
       }
     } else {

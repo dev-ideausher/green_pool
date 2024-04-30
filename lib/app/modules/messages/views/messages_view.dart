@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -63,10 +64,43 @@ class MessagesView extends GetView<MessagesController> {
             ).paddingOnly(left: 16.kw, right: 16.kw, top: 32.kh)
           : Center(
               child: Text(
-                'Please Login or SignUp',
-                style: TextStyleUtil.k24Heading600(),
+              "Tap on profile to continue",
+              style: TextStyleUtil.k20Heading600(),
+            )
+              // Text.rich(
+              //   TextSpan(
+              //     children: [
+              //       TextSpan(
+              //         text: 'Please  ',
+              //         style: TextStyleUtil.k16Regular(),
+              //       ),
+              //       TextSpan(
+              //           text: 'Login  ',
+              //           style: TextStyleUtil.k20Heading700(
+              //               color: ColorUtil.kPrimary01),
+              //           recognizer: TapGestureRecognizer()
+              //             ..onTap = () => Get.toNamed(Routes.LOGIN, arguments: {
+              //                   'isDriver': false,
+              //                   'fromNavBar': true
+              //                 })),
+              //       TextSpan(
+              //         text: 'or  ',
+              //         style: TextStyleUtil.k16Regular(),
+              //       ),
+              //       TextSpan(
+              //           text: 'SignUp',
+              //           style: TextStyleUtil.k20Heading700(
+              //               color: ColorUtil.kPrimary01),
+              //           recognizer: TapGestureRecognizer()
+              //             ..onTap = () => Get.toNamed(Routes.CREATE_ACCOUNT,
+              //                     arguments: {
+              //                       'isDriver': false,
+              //                       'fromNavBar': true
+              //                     })),
+              //     ],
+              //   ),
+              // ),
               ),
-            ),
     );
   }
 }

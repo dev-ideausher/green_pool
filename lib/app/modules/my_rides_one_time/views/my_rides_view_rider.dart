@@ -190,7 +190,7 @@ class RiderMyRidesView extends GetView<MyRidesOneTimeController> {
     //                       : SvgPicture.asset(
     //                           ImageConstant.svgIconCalendarTime,
     //                           colorFilter: ColorFilter.mode(
-    //                               Get.find<ProfileController>().isSwitched.value
+    //                               Get.find<HomeController>().isSwitched.value
     //                                   ? ColorUtil.kPrimary3PinkMode
     //                                   : ColorUtil.kSecondary01,
     //                               BlendMode.srcIn),
@@ -233,11 +233,11 @@ class RiderMyRidesView extends GetView<MyRidesOneTimeController> {
     //                     label: 'View Details',
     //                     fontSize: 14.kh,
     //                     borderColor:
-    //                         Get.find<ProfileController>().isSwitched.value
+    //                         Get.find<HomeController>().isSwitched.value
     //                             ? ColorUtil.kPrimary3PinkMode
     //                             : ColorUtil.kSecondary01,
     //                     labelColor:
-    //                         Get.find<ProfileController>().isSwitched.value
+    //                         Get.find<HomeController>().isSwitched.value
     //                             ? ColorUtil.kPrimary3PinkMode
     //                             : ColorUtil.kSecondary01,
     //                   ),
@@ -255,11 +255,11 @@ class RiderMyRidesView extends GetView<MyRidesOneTimeController> {
     //                     label: 'Cancel Ride',
     //                     fontSize: 14.kh,
     //                     borderColor:
-    //                         Get.find<ProfileController>().isSwitched.value
+    //                         Get.find<HomeController>().isSwitched.value
     //                             ? ColorUtil.kPrimary3PinkMode
     //                             : ColorUtil.kSecondary01,
     //                     labelColor:
-    //                         Get.find<ProfileController>().isSwitched.value
+    //                         Get.find<HomeController>().isSwitched.value
     //                             ? ColorUtil.kPrimary3PinkMode
     //                             : ColorUtil.kSecondary01,
     //                   ),

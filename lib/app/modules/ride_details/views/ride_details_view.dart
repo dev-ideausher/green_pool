@@ -12,7 +12,7 @@ import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
 import '../../../constants/image_constant.dart';
-import '../../profile/controllers/profile_controller.dart';
+import '../../home/controllers/home_controller.dart';
 import '../controllers/ride_details_controller.dart';
 import 'copassenger_list.dart';
 
@@ -31,7 +31,7 @@ class RideDetailsView extends GetView<RideDetailsController> {
           Container(
             padding: EdgeInsets.all(16.kh),
             decoration: BoxDecoration(
-                color: Get.find<ProfileController>().isSwitched.value
+                color: Get.find<HomeController>().isSwitched.value
                     ? ColorUtil.kSecondaryPinkMode
                     : ColorUtil.kSecondary07,
                 borderRadius: BorderRadius.circular(8.kh)),
@@ -78,16 +78,15 @@ class RideDetailsView extends GetView<RideDetailsController> {
                           height: 20.kh,
                           padding: EdgeInsets.symmetric(horizontal: 8.kw),
                           decoration: BoxDecoration(
-                              color:
-                                  Get.find<ProfileController>().isSwitched.value
-                                      ? ColorUtil.kPrimary3PinkMode
-                                      : ColorUtil.kSecondary01,
+                              color: Get.find<HomeController>().isSwitched.value
+                                  ? ColorUtil.kPrimary3PinkMode
+                                  : ColorUtil.kSecondary01,
                               borderRadius: BorderRadius.circular(16.kh)),
                           child: Row(
                             children: [
                               Icon(
                                 Icons.star,
-                                color: Get.find<ProfileController>()
+                                color: Get.find<HomeController>()
                                         .isSwitched
                                         .value
                                     ? ColorUtil.kWhiteColor
@@ -97,7 +96,7 @@ class RideDetailsView extends GetView<RideDetailsController> {
                               Text(
                                 '${controller.rideHistory.value.driverBookingDetails?[0]?.driverDetails?[0]?.rating!.toStringAsFixed(1)}',
                                 style: TextStyleUtil.k12Semibold(
-                                    color: Get.find<ProfileController>()
+                                    color: Get.find<HomeController>()
                                             .isSwitched
                                             .value
                                         ? ColorUtil.kBlack02
@@ -149,7 +148,7 @@ class RideDetailsView extends GetView<RideDetailsController> {
                                 SvgPicture.asset(
                                   ImageConstant.svgIconCalendarTime,
                                   colorFilter: ColorFilter.mode(
-                                      Get.find<ProfileController>()
+                                      Get.find<HomeController>()
                                               .isSwitched
                                               .value
                                           ? ColorUtil.kPrimary3PinkMode
@@ -170,7 +169,7 @@ class RideDetailsView extends GetView<RideDetailsController> {
                                 Icon(
                                   Icons.time_to_leave,
                                   size: 18.kh,
-                                  color: Get.find<ProfileController>()
+                                  color: Get.find<HomeController>()
                                           .isSwitched
                                           .value
                                       ? ColorUtil.kPrimary3PinkMode

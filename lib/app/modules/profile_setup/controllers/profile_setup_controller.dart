@@ -16,10 +16,12 @@ import 'package:path/path.dart' as path;
 import '../../../services/auth.dart';
 import '../../../services/colors.dart';
 import '../../../services/dio/api_service.dart';
+import '../../../services/gp_util.dart';
 import '../../profile/controllers/profile_controller.dart';
 
 class ProfileSetupController extends GetxController
     with GetSingleTickerProviderStateMixin {
+  bool fromNavBar = false;
   final pageIndex = 0.obs;
   String name = '';
   Rx<File?> selectedProfileImagePath = Rx<File?>(null);
@@ -28,20 +30,15 @@ class ProfileSetupController extends GetxController
   RxBool isProfileImagePicked = false.obs;
   RxBool isIDPicked = false.obs;
   RxBool isVehicleImagePicked = false.obs;
-  TextEditingController fullName = TextEditingController(
-      text: Get.find<HomeController>().userInfo.value.data?.fullName);
-  TextEditingController email = TextEditingController(
-      text: Get.find<HomeController>().userInfo.value.data?.email);
+  TextEditingController fullName = TextEditingController();
+  TextEditingController email = TextEditingController();
   TextEditingController phoneNumber = TextEditingController(
-      text: Get.find<HomeController>().userInfo.value.data?.phone ??
-          Get.find<AuthService>().auth.currentUser?.phoneNumber);
+      text: Get.find<AuthService>().auth.currentUser?.phoneNumber);
   // TextEditingController gender = TextEditingController();
   RxString gender = 'Prefer not to say'.obs;
-  TextEditingController city = TextEditingController(
-      text: Get.find<HomeController>().userInfo.value.data?.city);
+  TextEditingController city = TextEditingController();
   TextEditingController dateOfBirth = TextEditingController();
-  TextEditingController formattedDateOfBirth = TextEditingController(
-      text: Get.find<HomeController>().userInfo.value.data?.dob);
+  TextEditingController formattedDateOfBirth = TextEditingController();
   late TabController tabBarController;
 
   //for vehicle
@@ -59,6 +56,7 @@ class ProfileSetupController extends GetxController
   @override
   void onInit() {
     super.onInit();
+    fromNavBar = Get.arguments;
     Get.lazyPut(() => PostRideController());
     tabBarController = TabController(length: 2, vsync: this);
   }
@@ -74,8 +72,7 @@ class ProfileSetupController extends GetxController
   // }
 
   Future<void> setDate(BuildContext context) async {
-    DateTime lastDate = DateTime.now()
-        .subtract(const Duration(days: 18 * 365));
+    DateTime lastDate = DateTime.now().subtract(const Duration(days: 18 * 365));
 
     DateTime initialDate =
         DateTime.now().isAfter(lastDate) ? lastDate : DateTime.now();
@@ -90,20 +87,20 @@ class ProfileSetupController extends GetxController
           // Define the custom theme for the date picker
           data: ThemeData(
             // Define the primary color
-            primaryColor: Get.find<ProfileController>().isSwitched.value
+            primaryColor: Get.find<HomeController>().isSwitched.value
                 ? ColorUtil.kPrimaryPinkMode
                 : ColorUtil.kPrimary01,
             // Define the color scheme for the date picker
             colorScheme: ColorScheme.light(
               // Define the primary color for the date picker
-              primary: Get.find<ProfileController>().isSwitched.value
+              primary: Get.find<HomeController>().isSwitched.value
                   ? ColorUtil.kPrimaryPinkMode
                   : ColorUtil.kPrimary01,
               // Define the background color for the date picker
               surface: ColorUtil.kWhiteColor,
               // Define the on-primary color for the date picker
               onPrimary: ColorUtil.kBlack01,
-              secondary: Get.find<ProfileController>().isSwitched.value
+              secondary: Get.find<HomeController>().isSwitched.value
                   ? ColorUtil.kPrimaryPinkMode
                   : ColorUtil.kPrimary01,
             ),
@@ -123,7 +120,7 @@ class ProfileSetupController extends GetxController
   }
 
   getProfileImage(ImageSource imageSource) async {
-    final pickedFile = await ImagePicker().pickImage(source: imageSource);
+    XFile? pickedFile = await GpUtil.compressImage(imageSource);
     if (pickedFile != null) {
       selectedProfileImagePath.value = File(pickedFile.path);
       update();
@@ -136,7 +133,7 @@ class ProfileSetupController extends GetxController
   }
 
   getIDImage(ImageSource imageSource) async {
-    final pickedIDFile = await ImagePicker().pickImage(source: imageSource);
+    XFile? pickedIDFile = await GpUtil.compressImage(imageSource);
     if (pickedIDFile != null) {
       selectedIDImagePath.value = File(pickedIDFile.path);
       isIDPicked.value = true;
@@ -148,8 +145,7 @@ class ProfileSetupController extends GetxController
   }
 
   getVehicleImage(ImageSource imageSource) async {
-    final pickedVehicleFile =
-        await ImagePicker().pickImage(source: imageSource);
+    XFile? pickedVehicleFile = await GpUtil.compressImage(imageSource);
     if (pickedVehicleFile != null) {
       selectedVehicleImagePath.value = File(pickedVehicleFile.path);
       isVehicleImagePicked.value = true;
@@ -247,7 +243,11 @@ class ProfileSetupController extends GetxController
         showMySnackbar(msg: "Data filled successfully");
         Get.find<HomeController>().userInfoAPI();
         // Get.offNamed(Routes.CARPOOL_SCHEDULE, arguments: isDriver);
-        Get.until((route) => Get.currentRoute == Routes.POST_RIDE);
+        if (fromNavBar) {
+          Get.until((route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
+        } else {
+          Get.until((route) => Get.currentRoute == Routes.POST_RIDE);
+        }
       } catch (e) {
         throw Exception(e);
       }

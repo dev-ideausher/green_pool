@@ -9,6 +9,7 @@ import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../services/dio/api_service.dart';
+import '../../../services/gp_util.dart';
 import '../../../services/snackbar.dart';
 // import '../../profile/controllers/profile_controller.dart';
 import 'package:dio/dio.dart' as dio;
@@ -51,7 +52,7 @@ class UserDetailsController extends GetxController {
   // }
 
   getProfileImage(ImageSource imageSource) async {
-    final pickedFile = await ImagePicker().pickImage(source: imageSource);
+    XFile? pickedFile = await GpUtil.compressImage(imageSource);
     if (pickedFile != null) {
       selectedProfileImagePath!.value = File(pickedFile.path);
       showMySnackbar(msg: 'Image selected');
@@ -63,7 +64,7 @@ class UserDetailsController extends GetxController {
   }
 
   getIDImage(ImageSource imageSource) async {
-    final pickedIDFile = await ImagePicker().pickImage(source: imageSource);
+    XFile? pickedIDFile = await GpUtil.compressImage(imageSource);
     if (pickedIDFile != null) {
       selectedIDImagePath!.value = File(pickedIDFile.path);
       showMySnackbar(msg: 'Image selected');

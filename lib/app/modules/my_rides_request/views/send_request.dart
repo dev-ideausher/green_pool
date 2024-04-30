@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:green_pool/app/modules/map_driver_send_request/controllers/map_driver_send_request_controller.dart';
+import 'package:green_pool/app/modules/map_driver_send_request/views/map_driver_send_request_view.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import '../../../components/gp_progress.dart';
 import '../../../components/green_pool_divider.dart';
@@ -11,6 +13,7 @@ import '../../../routes/app_pages.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
 import '../../../services/text_style_util.dart';
+import '../../home/controllers/home_controller.dart';
 import '../../profile/controllers/profile_controller.dart';
 import '../controllers/my_rides_request_controller.dart';
 
@@ -19,6 +22,9 @@ class SendRequest extends GetView<MyRidesRequestController> {
 
   @override
   Widget build(BuildContext context) {
+    Get.lazyPut(
+      () => MapDriverSendRequestController(),
+    );
     return Obx(
       () => controller.sendRequestModel.value.data == null
           ? const GpProgress()
@@ -41,13 +47,7 @@ class SendRequest extends GetView<MyRidesRequestController> {
                   ],
                 )
               : controller.mapViewType.value
-                  ? GoogleMap(
-                      initialCameraPosition: CameraPosition(
-                        target:
-                            LatLng(controller.latitude, controller.longitude),
-                        zoom: 14,
-                      ),
-                    )
+                  ? const MapDriverSendRequestView()
                   : ListView.builder(
                       itemCount:
                           controller.sendRequestModel.value.data?.length ?? 0,
@@ -103,7 +103,7 @@ class SendRequest extends GetView<MyRidesRequestController> {
                                                 ImageConstant
                                                     .svgIconCalendarTime,
                                                 colorFilter: ColorFilter.mode(
-                                                    Get.find<ProfileController>()
+                                                    Get.find<HomeController>()
                                                             .isSwitched
                                                             .value
                                                         ? ColorUtil
@@ -127,7 +127,7 @@ class SendRequest extends GetView<MyRidesRequestController> {
                                                 Icons.location_on,
                                                 size: 16.kh,
                                                 color: Get.find<
-                                                            ProfileController>()
+                                                            HomeController>()
                                                         .isSwitched
                                                         .value
                                                     ? ColorUtil
@@ -316,7 +316,7 @@ class SendRequest extends GetView<MyRidesRequestController> {
                                       //                               ImageConstant
                                       //                                   .svgIconCalendarTime,
                                       //                               colorFilter: ColorFilter.mode(
-                                      //                                   Get.find<ProfileController>()
+                                      //                                   Get.find<HomeController>()
                                       //                                           .isSwitched
                                       //                                           .value
                                       //                                       ? ColorUtil
@@ -343,7 +343,7 @@ class SendRequest extends GetView<MyRidesRequestController> {
                                       //                                   .location_on,
                                       //                               size: 16.kh,
                                       //                               color: Get.find<
-                                      //                                           ProfileController>()
+                                      //                                           HomeController>()
                                       //                                       .isSwitched
                                       //                                       .value
                                       //                                   ? ColorUtil
@@ -456,7 +456,7 @@ class SendRequest extends GetView<MyRidesRequestController> {
                                       //                       decoration:
                                       //                           BoxDecoration(
                                       //                         color: Get.find<
-                                      //                                     ProfileController>()
+                                      //                                     HomeController>()
                                       //                                 .isSwitched
                                       //                                 .value
                                       //                             ? ColorUtil

@@ -59,7 +59,7 @@ class PostRideStepOneController extends GetxController {
       if (Get.find<HomeController>().userInfo.value.data?.vehicleStatus ==
           false) {
         showMySnackbar(msg: 'Please fill in vehicle details');
-        Get.toNamed(Routes.PROFILE_SETUP);
+        Get.toNamed(Routes.PROFILE_SETUP, arguments: false);
       } else {
         Get.toNamed(Routes.POST_RIDE_STEP_TWO, arguments: {
           "origin": originTextController.value.text,

@@ -160,7 +160,10 @@ class CreateAccountView extends GetView<CreateAccountController> {
                               color: ColorUtil.kSecondary01),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () => Get.offNamed(Routes.LOGIN,
-                                arguments: controller.isDriver)),
+                                    arguments: {
+                                      'isDriver': controller.isDriver,
+                                      'fromNavBar': false
+                                    })),
                     ],
                   ),
                 ).paddingOnly(bottom: 32.kh),

@@ -14,9 +14,9 @@ import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
 import '../../../services/snackbar.dart';
 import '../../../services/text_style_util.dart';
+import '../../home/controllers/home_controller.dart';
 import '../../post_ride/views/amenities.dart';
 import '../../profile/controllers/profile_controller.dart';
-import '../../ride_details/views/copassenger_list.dart';
 import '../../rider_my_ride_request/controllers/rider_my_ride_request_controller.dart';
 import '../controllers/rider_my_rides_confirm_details_controller.dart';
 
@@ -97,7 +97,7 @@ class RiderMyRidesConfirmDetailsView
                                   SvgPicture.asset(
                                     ImageConstant.svgIconCalendarTime,
                                     colorFilter: ColorFilter.mode(
-                                        Get.find<ProfileController>()
+                                        Get.find<HomeController>()
                                                 .isSwitched
                                                 .value
                                             ? ColorUtil.kPrimary3PinkMode
@@ -117,7 +117,7 @@ class RiderMyRidesConfirmDetailsView
                                   Icon(
                                     Icons.time_to_leave,
                                     size: 18.kh,
-                                    color: Get.find<ProfileController>()
+                                    color: Get.find<HomeController>()
                                             .isSwitched
                                             .value
                                         ? ColorUtil.kPrimary3PinkMode
@@ -165,7 +165,7 @@ class RiderMyRidesConfirmDetailsView
                       padding: EdgeInsets.symmetric(
                           horizontal: 12.kw, vertical: 2.kh),
                       decoration: BoxDecoration(
-                        color: Get.find<ProfileController>().isSwitched.value
+                        color: Get.find<HomeController>().isSwitched.value
                             ? ColorUtil.kPrimary3PinkMode
                             : ColorUtil.kPrimary01,
                         borderRadius: BorderRadius.circular(16.kh),
@@ -173,7 +173,7 @@ class RiderMyRidesConfirmDetailsView
                       child: Row(children: [
                         Icon(
                           Icons.star,
-                          color: Get.find<ProfileController>().isSwitched.value
+                          color: Get.find<HomeController>().isSwitched.value
                               ? ColorUtil.kWhiteColor
                               : ColorUtil.kYellowColor,
                           size: 12.kh,
@@ -449,6 +449,11 @@ class RiderMyRidesConfirmDetailsView
                 : const SizedBox(),
 
             const GreenPoolDivider().paddingOnly(top: 8.kh),
+            GreenPoolButton(
+              onPressed: () {},
+              label: 'Message',
+              isBorder: true,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

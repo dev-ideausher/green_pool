@@ -13,6 +13,7 @@ import '../../../components/gp_progress.dart';
 import '../../../components/green_pool_divider.dart';
 import '../../../components/origin_to_destination.dart';
 import '../../../services/colors.dart';
+import '../../home/controllers/home_controller.dart';
 import '../../profile/controllers/profile_controller.dart';
 import '../controllers/ride_history_controller.dart';
 
@@ -149,7 +150,7 @@ class RideHistoryView extends GetView<RideHistoryController> {
                                                   ImageConstant
                                                       .svgIconCalendarTime,
                                                   colorFilter: ColorFilter.mode(
-                                                      Get.find<ProfileController>()
+                                                      Get.find<HomeController>()
                                                               .isSwitched
                                                               .value
                                                           ? ColorUtil
@@ -233,7 +234,7 @@ class RideHistoryView extends GetView<RideHistoryController> {
                                                                     8.kw),
                                                         decoration: BoxDecoration(
                                                             color: Get.find<
-                                                                        ProfileController>()
+                                                                        HomeController>()
                                                                     .isSwitched
                                                                     .value
                                                                 ? ColorUtil
@@ -249,7 +250,7 @@ class RideHistoryView extends GetView<RideHistoryController> {
                                                             Icon(
                                                               Icons.star,
                                                               color: Get.find<
-                                                                          ProfileController>()
+                                                                          HomeController>()
                                                                       .isSwitched
                                                                       .value
                                                                   ? ColorUtil
@@ -264,7 +265,7 @@ class RideHistoryView extends GetView<RideHistoryController> {
                                                               "${controller.rideHistModel.value.data?[index]?.driverBookingDetails?[0]?.driverDetails?[0]?.rating?.toStringAsFixed(1)}",
                                                               style: TextStyleUtil.k12Semibold(
                                                                   color: Get.find<
-                                                                              ProfileController>()
+                                                                              HomeController>()
                                                                           .isSwitched
                                                                           .value
                                                                       ? ColorUtil
@@ -305,7 +306,7 @@ class RideHistoryView extends GetView<RideHistoryController> {
                                                                 ImageConstant
                                                                     .svgIconCalendarTime,
                                                                 colorFilter: ColorFilter.mode(
-                                                                    Get.find<ProfileController>()
+                                                                    Get.find<HomeController>()
                                                                             .isSwitched
                                                                             .value
                                                                         ? ColorUtil
@@ -333,7 +334,7 @@ class RideHistoryView extends GetView<RideHistoryController> {
                                                                     .time_to_leave,
                                                                 size: 18.kh,
                                                                 color: Get.find<
-                                                                            ProfileController>()
+                                                                            HomeController>()
                                                                         .isSwitched
                                                                         .value
                                                                     ? ColorUtil

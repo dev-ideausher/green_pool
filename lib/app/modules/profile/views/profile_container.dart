@@ -42,7 +42,7 @@ class ProfileContainer extends GetView<ProfileController> {
               () => SvgPicture.asset(
                 image,
                 colorFilter: ColorFilter.mode(
-                    controller.isSwitched.value
+                    controller.isPinkMode.value
                         ? ColorUtil.kPrimary3PinkMode
                         : ColorUtil.kPrimary01,
                     BlendMode.srcIn),

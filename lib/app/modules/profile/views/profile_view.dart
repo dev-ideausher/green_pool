@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
@@ -22,7 +23,7 @@ class ProfileView extends GetView<ProfileController> {
   const ProfileView({super.key});
   @override
   Widget build(BuildContext context) {
-    Get.lazyPut(() => ProfileController());
+    controller.userInfo.refresh();
     return Scaffold(
       appBar: const GreenPoolAppBar(
         title: Text('Profile'),
@@ -38,12 +39,83 @@ class ProfileView extends GetView<ProfileController> {
                       ),
                     )
                   : controller.userInfo.value.data?.profileStatus == false
-                      ? Center(
-                          child: Text(
-                            'You have not filled profile details',
-                            style: TextStyleUtil.k18Heading600(),
-                          ),
-                        )
+                      ? Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'You have not filled profile details',
+                              style: TextStyleUtil.k18Heading600(),
+                            ),
+                            ProfileContainer(
+                              onTap: () => Get.dialog(
+                                useSafeArea: true,
+                                Center(
+                                  child: Container(
+                                    padding: EdgeInsets.all(16.kh),
+                                    height: 192.kh,
+                                    width: 80.w,
+                                    decoration: BoxDecoration(
+                                      color: ColorUtil.kWhiteColor,
+                                      borderRadius: BorderRadius.circular(8.kh),
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        GestureDetector(
+                                          onTap: () => Get.back(),
+                                          child: Container(
+                                            alignment: Alignment.centerRight,
+                                            child: const Icon(Icons.close),
+                                          ),
+                                        ),
+                                        Text(
+                                          'Confirm Logout',
+                                          style: TextStyleUtil.k18Semibold(),
+                                          textAlign: TextAlign.center,
+                                        ).paddingSymmetric(vertical: 4.kh),
+                                        Text(
+                                          'Are you sure you want to logout?',
+                                          style: TextStyleUtil.k14Regular(
+                                            color: ColorUtil.kBlack04,
+                                          ),
+                                          textAlign: TextAlign.center,
+                                        ).paddingOnly(bottom: 40.kh),
+                                        Container(
+                                          alignment: Alignment.centerRight,
+                                          child: GreenPoolButton(
+                                            onPressed: () {
+                                              Get.find<AuthService>()
+                                                  .logOutUser();
+                                              Get.find<ProfileController>()
+                                                  .isPinkMode
+                                                  .value = false;
+                                              Get.find<HomeController>()
+                                                  .selectedIndex
+                                                  .value = 0;
+                                              Get.offAllNamed(
+                                                  Routes.ONBOARDING);
+                                              PushNotificationService.unsubFcm(
+                                                  "${controller.userInfo.value.data?.Id}");
+                                            },
+                                            height: 40.kh,
+                                            width: 144.kw,
+                                            label: 'Logout',
+                                            fontSize: 14.kh,
+                                            padding: const EdgeInsets.all(8),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              image: ImageConstant.svgProfileLogout,
+                              text: "Logout",
+                              border: Border.all(color: ColorUtil.kWhiteColor),
+                            ).paddingOnly(bottom: 40.kh),
+                          ],
+                        ).paddingSymmetric(horizontal: 16.kw)
                       : SingleChildScrollView(
                           child: Column(
                             children: [
@@ -106,10 +178,9 @@ class ProfileView extends GetView<ProfileController> {
                                         () => Switch(
                                           materialTapTargetSize:
                                               MaterialTapTargetSize.shrinkWrap,
-                                          value: controller.isSwitched.value,
+                                          value: controller.isPinkMode.value,
                                           onChanged: (value) {
                                             controller.toggleSwitch();
-                                            controller.pinkModeAPI();
                                           },
                                           inactiveThumbColor:
                                               ColorUtil.kNeutral1,
@@ -287,11 +358,7 @@ class ProfileView extends GetView<ProfileController> {
                                   .paddingOnly(bottom: 8.kh),
                               ProfileContainer(
                                 onTap: () => Get.dialog(
-                                  // title: ''
-                                  // titlePadding: const EdgeInsets.all(0),
-                                  // contentPadding: const EdgeInsets.all(0),
                                   useSafeArea: true,
-
                                   Center(
                                     child: Container(
                                       padding: EdgeInsets.all(16.kh),
@@ -332,7 +399,7 @@ class ProfileView extends GetView<ProfileController> {
                                                 Get.find<AuthService>()
                                                     .logOutUser();
                                                 Get.find<ProfileController>()
-                                                    .isSwitched
+                                                    .isPinkMode
                                                     .value = false;
                                                 Get.find<HomeController>()
                                                     .selectedIndex
@@ -364,11 +431,37 @@ class ProfileView extends GetView<ProfileController> {
                         ),
             )
           : Center(
-              child: Text(
-                'Please Login or SignUp',
-                style: TextStyleUtil.k24Heading600(),
+              child: Text.rich(
+              TextSpan(
+                children: [
+                  TextSpan(
+                    text: 'Please  ',
+                    style: TextStyleUtil.k16Regular(),
+                  ),
+                  TextSpan(
+                    text: 'Login  ',
+                    style: TextStyleUtil.k20Heading700(
+                        color: ColorUtil.kPrimary01),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () => controller.toLogin(),
+                  ),
+                  TextSpan(
+                    text: 'or  ',
+                    style: TextStyleUtil.k16Regular(),
+                  ),
+                  TextSpan(
+                      text: 'SignUp',
+                      style: TextStyleUtil.k20Heading700(
+                          color: ColorUtil.kPrimary01),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () => Get.toNamed(Routes.CREATE_ACCOUNT,
+                                arguments: {
+                                  'isDriver': false,
+                                  'fromNavBar': true
+                                })),
+                ],
               ),
-            ),
+            )),
     );
   }
 }

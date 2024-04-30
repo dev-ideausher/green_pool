@@ -5,6 +5,7 @@ import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../services/colors.dart';
 import '../../../services/text_style_util.dart';
+import '../../home/controllers/home_controller.dart';
 import '../../profile/controllers/profile_controller.dart';
 import '../controllers/post_ride_controller.dart';
 
@@ -29,7 +30,7 @@ class Amenities extends GetView<PostRideController> {
         SvgPicture.asset(
           image,
           colorFilter: ColorFilter.mode(
-              Get.find<ProfileController>().isSwitched.value
+              Get.find<HomeController>().isSwitched.value
                   ? ColorUtil.kPrimary3PinkMode
                   : ColorUtil.kSecondary01,
               BlendMode.srcIn),
@@ -52,13 +53,12 @@ class Amenities extends GetView<PostRideController> {
                   // },
                   inactiveThumbColor: ColorUtil.kNeutral1,
                   inactiveTrackColor:
-                      Get.find<ProfileController>().isSwitched.value
+                      Get.find<HomeController>().isSwitched.value
                           ? ColorUtil.kSecondaryPinkMode
                           : ColorUtil.kPrimary05,
-                  activeTrackColor:
-                      Get.find<ProfileController>().isSwitched.value
-                          ? ColorUtil.kPrimary3PinkMode
-                          : ColorUtil.kSecondary01,
+                  activeTrackColor: Get.find<HomeController>().isSwitched.value
+                      ? ColorUtil.kPrimary3PinkMode
+                      : ColorUtil.kSecondary01,
                   trackOutlineWidth: const MaterialStatePropertyAll(0),
                   thumbColor:
                       const MaterialStatePropertyAll(ColorUtil.kWhiteColor),

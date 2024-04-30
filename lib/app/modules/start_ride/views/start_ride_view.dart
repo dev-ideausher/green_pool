@@ -6,6 +6,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:green_pool/app/components/green_pool_divider.dart';
 import 'package:green_pool/app/components/origin_to_destination.dart';
 import 'package:green_pool/app/services/custom_button.dart';
+import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -41,6 +42,9 @@ class StartRideView extends GetView<StartRideController> {
                 zoomGesturesEnabled: true,
                 myLocationButtonEnabled: true,
                 onMapCreated: controller.onMapCreated,
+                onCameraMove: (position) {
+                  GpUtil.moveCamera(controller.mapController, position.target);
+                },
                 mapType: MapType.terrain,
                 markers: Set<Marker>.of(controller.markers),
                 polylines: {

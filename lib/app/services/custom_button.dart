@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
-import '../modules/profile/controllers/profile_controller.dart';
+import '../modules/home/controllers/home_controller.dart';
 import 'colors.dart';
 import 'text_style_util.dart';
 
@@ -52,7 +52,7 @@ class GreenPoolButton extends StatelessWidget {
           backgroundColor: color ??
               (isBorder
                   ? Colors.transparent
-                  : Get.find<ProfileController>().isSwitched.value
+                  : Get.find<HomeController>().isSwitched.value
                       ? (isActive
                           ? ColorUtil.kPrimaryPinkMode
                           : ColorUtil.kSecondaryPinkMode)

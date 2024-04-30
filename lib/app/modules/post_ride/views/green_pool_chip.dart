@@ -6,6 +6,7 @@ import 'package:green_pool/app/services/responsive_size.dart';
 import '../../../constants/image_constant.dart';
 import '../../../services/colors.dart';
 import '../../../services/text_style_util.dart';
+import '../../home/controllers/home_controller.dart';
 import '../../profile/controllers/profile_controller.dart';
 
 class GreenPoolChip extends StatelessWidget {
@@ -44,7 +45,7 @@ class GreenPoolChip extends StatelessWidget {
                   SvgPicture.asset(
                     ImageConstant.svgIconLuggageFilled,
                     colorFilter: ColorFilter.mode(
-                        Get.find<ProfileController>().isSwitched.value
+                        Get.find<HomeController>().isSwitched.value
                             ? ColorUtil.kSecondary01
                             : ColorUtil.kWhiteColor,
                         BlendMode.srcIn),
@@ -61,11 +62,11 @@ class GreenPoolChip extends StatelessWidget {
           : const BorderSide(color: ColorUtil.kBlack06),
       labelStyle: selected
           ? TextStyleUtil.k14Regular(
-              color: Get.find<ProfileController>().isSwitched.value
+              color: Get.find<HomeController>().isSwitched.value
                   ? ColorUtil.kSecondary01
                   : ColorUtil.kWhiteColor)
           : TextStyleUtil.k14Regular(color: ColorUtil.kSecondary01),
-      selectedColor: Get.find<ProfileController>().isSwitched.value
+      selectedColor: Get.find<HomeController>().isSwitched.value
           ? ColorUtil.kPrimary3PinkMode
           : ColorUtil.kSecondary01,
       shape: RoundedRectangleBorder(

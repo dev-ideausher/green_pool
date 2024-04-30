@@ -13,7 +13,7 @@ import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
 import '../../../services/custom_button.dart';
-import '../../profile/controllers/profile_controller.dart';
+import '../../home/controllers/home_controller.dart';
 import '../controllers/post_ride_step_one_controller.dart';
 
 class PostRideStepOneView extends GetView<PostRideStepOneController> {
@@ -44,7 +44,7 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
             prefix: Icon(
               Icons.location_on,
               size: 24.kh,
-              color: Get.find<ProfileController>().isSwitched.value
+              color: Get.find<HomeController>().isSwitched.value
                   ? ColorUtil.kPrimary3PinkMode
                   : ColorUtil.kSecondary01,
             ),
@@ -67,7 +67,7 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
             prefix: Icon(
               Icons.location_on,
               size: 24.kh,
-              color: Get.find<ProfileController>().isSwitched.value
+              color: Get.find<HomeController>().isSwitched.value
                   ? ColorUtil.kPrimary3PinkMode
                   : ColorUtil.kSecondary01,
             ),
@@ -92,14 +92,14 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
             prefix: Icon(
               Icons.add_circle,
               size: 20.kh,
-              color: Get.find<ProfileController>().isSwitched.value
+              color: Get.find<HomeController>().isSwitched.value
                   ? ColorUtil.kPrimary3PinkMode
                   : ColorUtil.kSecondary01,
             ),
             suffix: SvgPicture.asset(
               ImageConstant.svgIconReorder,
               colorFilter: ColorFilter.mode(
-                  Get.find<ProfileController>().isSwitched.value
+                  Get.find<HomeController>().isSwitched.value
                       ? ColorUtil.kPrimary3PinkMode
                       : ColorUtil.kSecondary01,
                   BlendMode.srcIn),
@@ -123,14 +123,14 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
                     prefix: Icon(
                       Icons.add_circle,
                       size: 20.kh,
-                      color: Get.find<ProfileController>().isSwitched.value
+                      color: Get.find<HomeController>().isSwitched.value
                           ? ColorUtil.kPrimary3PinkMode
                           : ColorUtil.kSecondary01,
                     ),
                     suffix: SvgPicture.asset(
                       ImageConstant.svgIconReorder,
                       colorFilter: ColorFilter.mode(
-                          Get.find<ProfileController>().isSwitched.value
+                          Get.find<HomeController>().isSwitched.value
                               ? ColorUtil.kPrimary3PinkMode
                               : ColorUtil.kSecondary01,
                           BlendMode.srcIn),

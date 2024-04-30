@@ -5,7 +5,7 @@ import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../services/colors.dart';
 import '../../../services/text_style_util.dart';
-import '../../profile/controllers/profile_controller.dart';
+import '../../home/controllers/home_controller.dart';
 import '../controllers/rider_filter_controller.dart';
 
 class FilterList extends GetView<RiderFilterController> {
@@ -27,7 +27,7 @@ class FilterList extends GetView<RiderFilterController> {
         SvgPicture.asset(
           image,
           colorFilter: ColorFilter.mode(
-              Get.find<ProfileController>().isSwitched.value
+              Get.find<HomeController>().isSwitched.value
                   ? ColorUtil.kPrimary3PinkMode
                   : ColorUtil.kSecondary01,
               BlendMode.srcIn),
@@ -42,7 +42,7 @@ class FilterList extends GetView<RiderFilterController> {
           width: 18.kw,
           child: Checkbox(
             value: value,
-            activeColor: Get.find<ProfileController>().isSwitched.value
+            activeColor: Get.find<HomeController>().isSwitched.value
                 ? ColorUtil.kPrimary3PinkMode
                 : ColorUtil.kSecondary01,
             onChanged: onChanged,

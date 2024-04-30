@@ -8,12 +8,12 @@ import 'package:green_pool/app/constants/image_constant.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../../components/dropdown_textfield.dart';
 import '../../../components/greenpool_textfield.dart';
 import '../../../components/richtext_heading.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
 import '../../../services/text_style_util.dart';
+import '../../home/controllers/home_controller.dart';
 import '../../profile/controllers/profile_controller.dart';
 import '../controllers/user_details_controller.dart';
 
@@ -77,8 +77,7 @@ class UserDetailsView extends GetView<UserDetailsController> {
                           ),
                         ),
                         SvgPicture.asset(
-                          Get.find<ProfileController>().isSwitched?.value ??
-                                  false
+                          Get.find<HomeController>().isSwitched?.value ?? false
                               ? ImageConstant.svgPinkSetupAdd
                               : ImageConstant.svgSetupAdd,
                         ),
@@ -99,7 +98,7 @@ class UserDetailsView extends GetView<UserDetailsController> {
               suffix: SvgPicture.asset(
                 ImageConstant.svgProfileEditPen,
                 colorFilter: ColorFilter.mode(
-                  Get.find<ProfileController>().isSwitched.value
+                  Get.find<HomeController>().isSwitched.value
                       ? ColorUtil.kPrimary3PinkMode
                       : ColorUtil.kSecondary01,
                   BlendMode.srcIn,
@@ -152,7 +151,7 @@ class UserDetailsView extends GetView<UserDetailsController> {
               suffix: SvgPicture.asset(
                 ImageConstant.svgIconCalendar,
                 colorFilter: ColorFilter.mode(
-                  Get.find<ProfileController>().isSwitched?.value ?? false
+                  Get.find<HomeController>().isSwitched?.value ?? false
                       ? ColorUtil.kPrimary3PinkMode
                       : ColorUtil.kSecondary01,
                   BlendMode.srcIn,

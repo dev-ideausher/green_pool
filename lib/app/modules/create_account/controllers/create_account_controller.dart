@@ -17,6 +17,7 @@ class CreateAccountController extends GetxController {
   RxBool isVisible = false.obs;
   RxBool isChecked = false.obs;
   bool isDriver = false;
+  bool fromNavBar = false;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   TextEditingController fullNameController = TextEditingController();
@@ -29,7 +30,8 @@ class CreateAccountController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    isDriver = Get.arguments;
+    isDriver = Get.arguments['isDriver'];
+    fromNavBar = Get.arguments['fromNavBar'];
   }
 
   // @override
@@ -135,7 +137,8 @@ class CreateAccountController extends GetxController {
         await Get.offNamed(Routes.VERIFY, arguments: {
           'isDriver': isDriver,
           'fullName': fullNameController.value.text,
-          'phoneNumber': phoneNumberController.value.text
+          'phoneNumber': "$countryCode ${phoneNumberController.value.text}",
+          'fromNavBar': fromNavBar
         });
       } else {
         showMySnackbar(msg: 'Terms and Conditions not accepted');
@@ -159,9 +162,18 @@ class CreateAccountController extends GetxController {
       final response = await APIManager.getLogin();
       final userInfo = UserInfoModel.fromJson(response.data);
       Get.find<GetStorageService>().setUserAppId = userInfo.data?.Id;
-      Get.find<GetStorageService>().profilePicUrl = userInfo.data?.profilePic?.url??"";
+      Get.find<GetStorageService>().profilePicUrl =
+          userInfo.data?.profilePic?.url ?? "";
+      Get.find<GetStorageService>().isPinkMode =
+          userInfo.data?.pinkMode ?? false;
       //? here if the profileStatus is not true which means it is a new user or the user did not fill the entire user data, so the user will be automatically redirected to the Profile Setup
-      if (userInfo.status!) {
+      if (fromNavBar) {
+        Get.find<GetStorageService>().setLoggedIn = true;
+        Get.find<GetStorageService>().setProfileStatus = true;
+        Get.find<GetStorageService>().setDriver = isDriver;
+        Get.find<HomeController>().userInfoAPI();
+        Get.back();
+      } else if (userInfo.status!) {
         if (Get.find<HomeController>().findingRide.value) {
           if (userInfo.data!.profileStatus!) {
             // Get.offNamed(Routes.FIND_RIDE, arguments: isDriver);
@@ -193,12 +205,3 @@ class CreateAccountController extends GetxController {
     }
   }
 }
-
-
-// onboardingAPI() async {
-//   try {
-//     await APIManager.getLogin();
-//   } on Exception catch (e) {
-//     log(e.toString());
-//   }
-// }

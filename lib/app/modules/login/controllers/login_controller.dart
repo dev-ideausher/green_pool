@@ -12,6 +12,7 @@ class LoginController extends GetxController {
   RxBool isVisible = false.obs;
   String countryCode = "+1";
   bool isDriver = false;
+  bool fromNavBar = false;
   RxBool isActive = false.obs;
   TextEditingController passwordTextController = TextEditingController();
   GlobalKey<FormState> loginKey = GlobalKey<FormState>();
@@ -19,7 +20,8 @@ class LoginController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    isDriver = Get.arguments;
+    isDriver = Get.arguments['isDriver'];
+    fromNavBar = Get.arguments['fromNavBar'];
   }
 
   setVisible() {
@@ -82,7 +84,8 @@ class LoginController extends GetxController {
         Routes.VERIFY,
         arguments: {
           'isDriver': isDriver,
-          'phoneNumber': phoneNumberController.value.text
+          'phoneNumber': phoneNumberController.value.text,
+          'fromNavBar': fromNavBar
         },
       );
     } catch (e) {

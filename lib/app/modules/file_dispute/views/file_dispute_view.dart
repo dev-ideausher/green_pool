@@ -13,6 +13,7 @@ import 'package:green_pool/app/services/text_style_util.dart';
 
 import '../../../components/origin_to_destination.dart';
 import '../../../res/strings.dart';
+import '../../home/controllers/home_controller.dart';
 import '../../profile/controllers/profile_controller.dart';
 import '../controllers/file_dispute_controller.dart';
 
@@ -121,7 +122,7 @@ class FileDisputeView extends GetView<FileDisputeController> {
                                       SvgPicture.asset(
                                         ImageConstant.svgIconCalendarTime,
                                         colorFilter: ColorFilter.mode(
-                                            Get.find<ProfileController>()
+                                            Get.find<HomeController>()
                                                     .isSwitched
                                                     .value
                                                 ? ColorUtil.kPrimary3PinkMode
@@ -161,12 +162,12 @@ class FileDisputeView extends GetView<FileDisputeController> {
                                     height: 40.kh,
                                     padding: EdgeInsets.all(8.kh),
                                     fontSize: 14.kh,
-                                    borderColor: Get.find<ProfileController>()
+                                    borderColor: Get.find<HomeController>()
                                             .isSwitched
                                             .value
                                         ? ColorUtil.kPrimary3PinkMode
                                         : ColorUtil.kSecondary01,
-                                    labelColor: Get.find<ProfileController>()
+                                    labelColor: Get.find<HomeController>()
                                             .isSwitched
                                             .value
                                         ? ColorUtil.kPrimary3PinkMode

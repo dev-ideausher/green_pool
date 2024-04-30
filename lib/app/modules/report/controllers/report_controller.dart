@@ -9,6 +9,7 @@ import 'package:dio/dio.dart' as dio;
 import 'package:path/path.dart' as path;
 
 import '../../../services/dio/api_service.dart';
+import '../../../services/gp_util.dart';
 import '../../../services/snackbar.dart';
 
 class ReportController extends GetxController {
@@ -33,7 +34,7 @@ class ReportController extends GetxController {
   // }
 
   getBugImage(ImageSource imageSource) async {
-    final pickedFile = await ImagePicker().pickImage(source: imageSource);
+    XFile? pickedFile = await GpUtil.compressImage(imageSource);
     if (pickedFile != null) {
       uploadedPic.value = File(pickedFile.path);
       picUploaded.value = true;
@@ -57,7 +58,7 @@ class ReportController extends GetxController {
     }
 
     final bugReportData = dio.FormData.fromMap({
-      'bugDescription': bugController.text,
+      'bugDescription': bugController.value.text,
       'bugPic': await dio.MultipartFile.fromFile(
         pickedBugImage.path,
         contentType: MediaType.parse(mediaType),
@@ -67,7 +68,11 @@ class ReportController extends GetxController {
 
     try {
       final responses = await APIManager.postBugReport(body: bugReportData);
-      showMySnackbar(msg: responses.data['message']);
+      // showMySnackbar(msg: responses.data['message']);
+      Get.back();
+      showMySnackbar(
+          msg:
+              "Thankyou for giving a feedback, our team will get back to you soon!");
     } catch (error) {
       log("bugReportAPI error: $error");
     }

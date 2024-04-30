@@ -6,6 +6,7 @@ import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../services/colors.dart';
 import '../../../services/text_style_util.dart';
+import '../../home/controllers/home_controller.dart';
 import '../../profile/controllers/profile_controller.dart';
 import '../controllers/notifications_controller.dart';
 
@@ -32,7 +33,7 @@ class NotificationsView extends GetView<NotificationsController> {
                   width: 8.kw,
                   height: 8.kh,
                   decoration: BoxDecoration(
-                      color: Get.find<ProfileController>().isSwitched.value
+                      color: Get.find<HomeController>().isSwitched.value
                           ? ColorUtil.kPrimaryPinkMode
                           : ColorUtil.kPrimary01,
                       shape: BoxShape.circle),

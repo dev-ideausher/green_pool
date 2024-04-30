@@ -14,6 +14,7 @@ import '../../../components/greenpool_appbar.dart';
 import '../../../constants/image_constant.dart';
 import '../../../services/colors.dart';
 import '../../../services/text_style_util.dart';
+import '../../home/controllers/home_controller.dart';
 import '../../post_ride/views/amenities.dart';
 import '../../ride_details/views/copassenger_list.dart';
 import '../controllers/driver_details_controller.dart';
@@ -95,7 +96,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                                   SvgPicture.asset(
                                     ImageConstant.svgIconCalendarTime,
                                     colorFilter: ColorFilter.mode(
-                                        Get.find<ProfileController>()
+                                        Get.find<HomeController>()
                                                 .isSwitched
                                                 .value
                                             ? ColorUtil.kPrimary3PinkMode
@@ -116,7 +117,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                                   Icon(
                                     Icons.time_to_leave,
                                     size: 18.kh,
-                                    color: Get.find<ProfileController>()
+                                    color: Get.find<HomeController>()
                                             .isSwitched
                                             .value
                                         ? ColorUtil.kPrimary3PinkMode
@@ -164,7 +165,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                       padding: EdgeInsets.symmetric(
                           horizontal: 12.kw, vertical: 2.kh),
                       decoration: BoxDecoration(
-                        color: Get.find<ProfileController>().isSwitched.value
+                        color: Get.find<HomeController>().isSwitched.value
                             ? ColorUtil.kPrimary3PinkMode
                             : ColorUtil.kPrimary01,
                         borderRadius: BorderRadius.circular(16.kh),
@@ -172,7 +173,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                       child: Row(children: [
                         Icon(
                           Icons.star,
-                          color: Get.find<ProfileController>().isSwitched.value
+                          color: Get.find<HomeController>().isSwitched.value
                               ? ColorUtil.kWhiteColor
                               : ColorUtil.kYellowColor,
                           size: 12.kh,
@@ -380,11 +381,11 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                 : const SizedBox(),
 
             const GreenPoolDivider().paddingOnly(top: 8.kh),
+            GreenPoolButton(onPressed: () {}, label: 'Message', isBorder: true),
             GreenPoolButton(
-              // onPressed: () => Get.offAll(() => const BottomNavigationView()),
-              onPressed: () => controller.confirmRideAPI(),
-              label: 'Request Ride',
-            ).paddingSymmetric(vertical: 40.kh),
+                    onPressed: () => controller.confirmRideAPI(),
+                    label: 'Request Ride')
+                .paddingSymmetric(vertical: 40.kh),
           ],
         ).paddingSymmetric(horizontal: 16.kw),
       ),

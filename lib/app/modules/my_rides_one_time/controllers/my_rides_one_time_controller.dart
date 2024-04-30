@@ -5,6 +5,7 @@ import 'package:green_pool/app/data/driver_cofirm_request_model.dart';
 
 import 'package:green_pool/app/data/my_rides_model.dart';
 import 'package:green_pool/app/services/dio/api_service.dart';
+import 'package:green_pool/app/services/snackbar.dart';
 
 import '../../../routes/app_pages.dart';
 
@@ -88,11 +89,7 @@ class MyRidesOneTimeController extends GetxController {
   }
 
   void riderPagePageOpen(MyRidesModelData myRidesModelData) {
-    if (myRidesModelData.confirmDriverDetails?.first?.driverPostsDetails?.first
-            ?.isStarted ??
-        false) {
-      Get.toNamed(Routes.RIDER_START_RIDE_MAP, arguments: myRidesModelData);
-    } else {
+    if (myRidesModelData.confirmDriverDetails!.isEmpty) {
       if (myRidesModelData.rideStatus == "Confirmed") {
         Get.toNamed(Routes.RIDER_CONFIRMED_RIDE_DETAILS,
             arguments: myRidesModelData);
@@ -100,10 +97,28 @@ class MyRidesOneTimeController extends GetxController {
         Get.toNamed(Routes.RIDER_MY_RIDE_REQUEST,
             arguments: myRidesModelData.Id);
       }
+    } else {
+      if (myRidesModelData.confirmDriverDetails?.first?.driverPostsDetails
+              ?.first?.isStarted ??
+          false) {
+        Get.toNamed(Routes.RIDER_START_RIDE_MAP, arguments: myRidesModelData);
+      } else {
+        if (myRidesModelData.rideStatus == "Confirmed") {
+          Get.toNamed(Routes.RIDER_CONFIRMED_RIDE_DETAILS,
+              arguments: myRidesModelData);
+        } else {
+          Get.toNamed(Routes.RIDER_MY_RIDE_REQUEST,
+              arguments: myRidesModelData.Id);
+        }
+      }
     }
   }
 
   void startRide(MyRidesModelData value) {
-    Get.toNamed(Routes.START_RIDE, arguments: value.postsInfo?[0]?.Id);
+    if (value.postsInfo!.isNotEmpty) {
+      Get.toNamed(Routes.START_RIDE, arguments: value.postsInfo?[0]?.Id);
+    } else {
+      showMySnackbar(msg: "You have no riders at the moment");
+    }
   }
 }

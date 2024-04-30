@@ -14,6 +14,7 @@ import 'package:green_pool/app/services/responsive_size.dart';
 import '../../../components/greenpool_textfield.dart';
 import '../../../constants/image_constant.dart';
 import '../../../services/text_style_util.dart';
+import '../../home/controllers/home_controller.dart';
 import '../../profile/controllers/profile_controller.dart';
 import 'amenities.dart';
 
@@ -62,7 +63,7 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                     indicatorSize: TabBarIndicatorSize.tab,
                     indicator: BoxDecoration(
                         borderRadius: BorderRadius.circular(80.kh),
-                        color: Get.find<ProfileController>().isSwitched.value
+                        color: Get.find<HomeController>().isSwitched.value
                             ? ColorUtil.kPrimaryPinkMode
                             : ColorUtil.kSecondary01),
                     unselectedLabelColor: ColorUtil.kSecondary01,
@@ -70,14 +71,14 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                     indicatorColor: Colors.transparent,
                     overlayColor: MaterialStatePropertyAll(
                         ColorUtil.kSecondary01.withOpacity(0.05)),
-                    labelColor: Get.find<ProfileController>().isSwitched.value
+                    labelColor: Get.find<HomeController>().isSwitched.value
                         ? ColorUtil.kBlack01
                         : ColorUtil.kWhiteColor,
                     splashBorderRadius: BorderRadius.circular(80.kh),
                     unselectedLabelStyle: TextStyleUtil.k14Semibold(
                         color: ColorUtil.kSecondary01),
                     labelStyle: TextStyleUtil.k14Semibold(
-                        color: Get.find<ProfileController>().isSwitched.value
+                        color: Get.find<HomeController>().isSwitched.value
                             ? ColorUtil.kBlack01
                             : ColorUtil.kSecondary01),
                     tabs: const [
@@ -114,7 +115,7 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                                 height: 24.kh,
                                 width: 24.kw,
                                 colorFilter: ColorFilter.mode(
-                                    Get.find<ProfileController>()
+                                    Get.find<HomeController>()
                                             .isSwitched
                                             .value
                                         ? ColorUtil.kPrimary3PinkMode
@@ -158,13 +159,13 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                                   },
                                   inactiveThumbColor: ColorUtil.kNeutral1,
                                   inactiveTrackColor:
-                                      Get.find<ProfileController>()
+                                      Get.find<HomeController>()
                                               .isSwitched
                                               .value
                                           ? ColorUtil.kSecondaryPinkMode
                                           : ColorUtil.kPrimary05,
                                   activeTrackColor:
-                                      Get.find<ProfileController>()
+                                      Get.find<HomeController>()
                                               .isSwitched
                                               .value
                                           ? ColorUtil.kPrimary3PinkMode
@@ -219,7 +220,7 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                                         height: 24.kh,
                                         width: 24.kw,
                                         colorFilter: ColorFilter.mode(
-                                            Get.find<ProfileController>()
+                                            Get.find<HomeController>()
                                                     .isSwitched
                                                     .value
                                                 ? ColorUtil.kPrimary3PinkMode
@@ -423,7 +424,7 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                       child: SvgPicture.asset(
                         ImageConstant.svgIconMinus,
                         colorFilter: ColorFilter.mode(
-                            Get.find<ProfileController>().isSwitched.value
+                            Get.find<HomeController>().isSwitched.value
                                 ? ColorUtil.kPrimary3PinkMode
                                 : ColorUtil.kSecondary01,
                             BlendMode.srcIn),
@@ -442,7 +443,7 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                           SvgPicture.asset(
                             ImageConstant.svgNavProfileFilled,
                             colorFilter: ColorFilter.mode(
-                                Get.find<ProfileController>().isSwitched.value
+                                Get.find<HomeController>().isSwitched.value
                                     ? ColorUtil.kPrimary3PinkMode
                                     : ColorUtil.kSecondary01,
                                 BlendMode.srcIn),
@@ -463,7 +464,7 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                       child: SvgPicture.asset(
                         ImageConstant.svgIconPlus,
                         colorFilter: ColorFilter.mode(
-                            Get.find<ProfileController>().isSwitched.value
+                            Get.find<HomeController>().isSwitched.value
                                 ? ColorUtil.kPrimary3PinkMode
                                 : ColorUtil.kSecondary01,
                             BlendMode.srcIn),
@@ -613,7 +614,10 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                 children: [
                   Obx(
                     () => GreenPoolButton(
-                      onPressed: () => Get.toNamed(Routes.PRICING_VIEW),
+                      onPressed: () {
+                        controller.getRideFareAPI();
+                        Get.toNamed(Routes.PRICING_VIEW);
+                      },
                       padding: const EdgeInsets.all(0),
                       isActive: controller.isActiveCarpoolButton.value,
                       label: 'Next',

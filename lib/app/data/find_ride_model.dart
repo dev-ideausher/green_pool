@@ -81,7 +81,8 @@ class FindRideModelRidesDetails {
   "date": "2024-01-02T07:00:17.320+00:00",
   "time": "11:00 AM",
   "seatAvailable": 2,
-  "description": ""
+  "description": "",
+  "pinkMode": true
 } 
 */
 
@@ -91,6 +92,7 @@ class FindRideModelRidesDetails {
   String? time;
   int? seatAvailable;
   String? description;
+  bool? pinkMode;
 
   FindRideModelRidesDetails({
     this.origin,
@@ -99,6 +101,7 @@ class FindRideModelRidesDetails {
     this.time,
     this.seatAvailable,
     this.description,
+    this.pinkMode,
   });
   FindRideModelRidesDetails.fromJson(Map<String, dynamic> json) {
     origin = (json['origin'] != null)
@@ -111,6 +114,7 @@ class FindRideModelRidesDetails {
     time = json['time']?.toString();
     seatAvailable = json['seatAvailable']?.toInt();
     description = json['description']?.toString();
+    pinkMode = json['pinkMode'];
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -124,6 +128,7 @@ class FindRideModelRidesDetails {
     data['time'] = time;
     data['seatAvailable'] = seatAvailable;
     data['description'] = description;
+    data['pinkMode'] = pinkMode;
     return data;
   }
 }
@@ -145,7 +150,8 @@ class FindRideModel {
     "date": "2024-01-02T07:00:17.320+00:00",
     "time": "11:00 AM",
     "seatAvailable": 2,
-    "description": ""
+    "description": "",
+    "pinkMode": true
   }
 } 
 */

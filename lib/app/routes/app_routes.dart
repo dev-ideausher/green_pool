@@ -69,6 +69,10 @@ abstract class Routes {
   static const RIDER_START_RIDE_MAP = _Paths.RIDER_START_RIDE_MAP;
   static const SUBMIT_DISPUTE = _Paths.SUBMIT_DISPUTE;
   static const POST_RIDE_STEP_TWO = _Paths.POST_RIDE_STEP_TWO;
+  static const POST_RIDE_STEP_THREE = _Paths.POST_RIDE_STEP_THREE;
+  static const MAP_DRIVER_CONFIRM_REQUEST = _Paths.MAP_DRIVER_CONFIRM_REQUEST;
+  static const MAP_DRIVER_SEND_REQUEST = _Paths.MAP_DRIVER_SEND_REQUEST;
+  static const VERIFICATION_DONE = _Paths.VERIFICATION_DONE;
 }
 
 abstract class _Paths {
@@ -136,4 +140,8 @@ abstract class _Paths {
   static const RIDER_START_RIDE_MAP = '/rider-start-ride-map';
   static const SUBMIT_DISPUTE = '/submit-dispute';
   static const POST_RIDE_STEP_TWO = '/post-ride-step-two';
+  static const POST_RIDE_STEP_THREE = '/post-ride-step-three';
+  static const MAP_DRIVER_CONFIRM_REQUEST = '/map-driver-confirm-request';
+  static const MAP_DRIVER_SEND_REQUEST = '/map-driver-send-request';
+  static const VERIFICATION_DONE = '/verification-done';
 }

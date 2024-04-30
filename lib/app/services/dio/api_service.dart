@@ -113,6 +113,10 @@ class APIManager {
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false)
           .get(Endpoints.driverMyRides);
 
+  static Future<Response> getCompanyDetails() async =>
+      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false)
+          .get(Endpoints.companyDetails);
+
   static Future<Response> getRideHistory() async =>
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false)
           .get(Endpoints.rideHistory);
@@ -129,6 +133,10 @@ class APIManager {
   static Future<Response> getMyRidesDetails({required String rideId}) async =>
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false)
           .get(Endpoints.driverMyRidesDetails + rideId);
+
+  static Future<Response> getRideFare({required String distance}) async =>
+      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false)
+          .get(Endpoints.rideFare + distance);
 
   static Future<Response> getAllDriverSendRequest(
           {required String driverId}) async =>

@@ -15,7 +15,7 @@ import '../../../constants/image_constant.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
 import '../../../services/text_style_util.dart';
-import '../../profile/controllers/profile_controller.dart';
+import '../../home/controllers/home_controller.dart';
 import '../controllers/vehicle_details_controller.dart';
 
 class VehicleDetailsView extends GetView<VehicleDetailsController> {
@@ -58,7 +58,7 @@ class VehicleDetailsView extends GetView<VehicleDetailsController> {
               controller: controller.modelTextController,
               suffix: SvgPicture.asset(ImageConstant.svgProfileEditPen,
                   colorFilter: ColorFilter.mode(
-                      Get.find<ProfileController>().isSwitched.value
+                      Get.find<HomeController>().isSwitched.value
                           ? ColorUtil.kPrimary3PinkMode
                           : ColorUtil.kSecondary01,
                       BlendMode.srcIn)),
@@ -191,7 +191,7 @@ class VehicleDetailsView extends GetView<VehicleDetailsController> {
               controller: controller.yearTextController,
               suffix: SvgPicture.asset(ImageConstant.svgProfileEditPen,
                   colorFilter: ColorFilter.mode(
-                      Get.find<ProfileController>().isSwitched.value
+                      Get.find<HomeController>().isSwitched.value
                           ? ColorUtil.kPrimary3PinkMode
                           : ColorUtil.kSecondary01,
                       BlendMode.srcIn)),
@@ -203,7 +203,7 @@ class VehicleDetailsView extends GetView<VehicleDetailsController> {
               controller: controller.licenseTextController,
               suffix: SvgPicture.asset(ImageConstant.svgProfileEditPen,
                   colorFilter: ColorFilter.mode(
-                      Get.find<ProfileController>().isSwitched.value
+                      Get.find<HomeController>().isSwitched.value
                           ? ColorUtil.kPrimary3PinkMode
                           : ColorUtil.kSecondary01,
                       BlendMode.srcIn)),

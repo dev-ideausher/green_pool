@@ -56,6 +56,8 @@ class Endpoints {
       "driver/cancelRide"; // to reject the riders request from Confirm Request View
   static const String viewDriversRequest =
       "rider/requestSendByDriver/"; // to view the drivers request from Confirm Request View
+  static const String companyDetails = "company/companyDetails";
+  static const String rideFare = "admin/fare/";
 
   //patch url
   static const String userDetails = "user/updateProfileDetails";

@@ -15,6 +15,7 @@ import '../../../components/gp_progress.dart';
 import '../../../components/green_pool_divider.dart';
 import '../../../services/colors.dart';
 import '../../../services/text_style_util.dart';
+import '../../home/controllers/home_controller.dart';
 import '../controllers/matching_rides_controller.dart';
 
 class MatchingRidesView extends GetView<MatchingRidesController> {
@@ -69,7 +70,7 @@ class MatchingRidesView extends GetView<MatchingRidesController> {
                           style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
                         ).paddingOnly(bottom: 4.kh),
                         Text(
-                          "Will send you the matching ride alert.",
+                          "The matching ride alert will be sent to you shortly.",
                           textAlign: TextAlign.center,
                           style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
                         ).paddingOnly(bottom: 40.kh),
@@ -92,7 +93,7 @@ class MatchingRidesView extends GetView<MatchingRidesController> {
       body: Obx(
         () => controller.matchingRideResponse.value.data == null
             ? const GpProgress()
-            : controller.matchingRideResponse.value.data?.length == 0
+            : (controller.matchingRideResponse.value.data?.length ?? 0) == 0
                 ? Center(
                     child: Text(
                       'No rides available',
@@ -157,7 +158,7 @@ class MatchingRidesView extends GetView<MatchingRidesController> {
                                                       horizontal: 8.kw),
                                                   decoration: BoxDecoration(
                                                       color: Get.find<
-                                                                  ProfileController>()
+                                                                  HomeController>()
                                                               .isSwitched
                                                               .value
                                                           ? ColorUtil
@@ -172,7 +173,7 @@ class MatchingRidesView extends GetView<MatchingRidesController> {
                                                       Icon(
                                                         Icons.star,
                                                         color: Get.find<
-                                                                    ProfileController>()
+                                                                    HomeController>()
                                                                 .isSwitched
                                                                 .value
                                                             ? ColorUtil
@@ -195,7 +196,7 @@ class MatchingRidesView extends GetView<MatchingRidesController> {
                                                             '0.0',
                                                         style: TextStyleUtil.k12Semibold(
                                                             color: Get.find<
-                                                                        ProfileController>()
+                                                                        HomeController>()
                                                                     .isSwitched
                                                                     .value
                                                                 ? ColorUtil
@@ -255,7 +256,7 @@ class MatchingRidesView extends GetView<MatchingRidesController> {
                                                           ImageConstant
                                                               .svgIconCalendarTime,
                                                           colorFilter: ColorFilter.mode(
-                                                              Get.find<ProfileController>()
+                                                              Get.find<HomeController>()
                                                                       .isSwitched
                                                                       .value
                                                                   ? ColorUtil
@@ -281,7 +282,7 @@ class MatchingRidesView extends GetView<MatchingRidesController> {
                                                           Icons.time_to_leave,
                                                           size: 18.kh,
                                                           color: Get.find<
-                                                                      ProfileController>()
+                                                                      HomeController>()
                                                                   .isSwitched
                                                                   .value
                                                               ? ColorUtil

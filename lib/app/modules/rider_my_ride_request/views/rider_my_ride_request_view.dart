@@ -6,7 +6,7 @@ import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../services/colors.dart';
 import '../../../services/text_style_util.dart';
-import '../../profile/controllers/profile_controller.dart';
+import '../../home/controllers/home_controller.dart';
 import '../controllers/rider_my_ride_request_controller.dart';
 import 'rider_confirm_request.dart';
 import 'rider_send_request.dart';
@@ -17,7 +17,7 @@ class RiderMyRideRequestView extends GetView<RiderMyRideRequestController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const GreenPoolAppBar(
-        title:  Text('My Rides'),
+        title: Text('My Rides'),
       ),
       body: SafeArea(
         child: DefaultTabController(
@@ -37,7 +37,7 @@ class RiderMyRideRequestView extends GetView<RiderMyRideRequestController> {
                   unselectedLabelStyle:
                       TextStyleUtil.k14Semibold(color: ColorUtil.kSecondary01),
                   labelStyle: TextStyleUtil.k14Semibold(
-                    color: Get.find<ProfileController>().isSwitched.value
+                    color: Get.find<HomeController>().isSwitched.value
                         ? ColorUtil.kPrimary3PinkMode
                         : ColorUtil.kSecondary01,
                   ),
@@ -45,12 +45,12 @@ class RiderMyRideRequestView extends GetView<RiderMyRideRequestController> {
                       ColorUtil.kSecondary01.withOpacity(0.05)),
                   indicator: UnderlineTabIndicator(
                     borderSide: BorderSide(
-                        color: Get.find<ProfileController>().isSwitched.value
+                        color: Get.find<HomeController>().isSwitched.value
                             ? ColorUtil.kPrimary3PinkMode
                             : ColorUtil.kSecondary01,
                         width: 2.kh),
                   ),
-                  labelColor: Get.find<ProfileController>().isSwitched.value
+                  labelColor: Get.find<HomeController>().isSwitched.value
                       ? ColorUtil.kPrimary3PinkMode
                       : ColorUtil.kSecondary01,
                   tabs: const [

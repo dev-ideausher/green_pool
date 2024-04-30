@@ -7,7 +7,7 @@ import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
-import '../../profile/controllers/profile_controller.dart';
+import '../../home/controllers/home_controller.dart';
 import '../controllers/push_notifications_controller.dart';
 
 class PushNotificationsView extends GetView<PushNotificationsController> {
@@ -38,16 +38,15 @@ class PushNotificationsView extends GetView<PushNotificationsController> {
                   child: Obx(
                     () => Checkbox(
                       side: BorderSide(
-                        color: Get.find<ProfileController>().isSwitched.value
+                        color: Get.find<HomeController>().isSwitched.value
                             ? ColorUtil.kPrimary3PinkMode
                             : ColorUtil.kSecondary01,
                       ),
                       splashRadius: 4.kh,
                       value: controller.trips.value,
-                      activeColor:
-                          Get.find<ProfileController>().isSwitched.value
-                              ? ColorUtil.kPrimary3PinkMode
-                              : ColorUtil.kPrimary01,
+                      activeColor: Get.find<HomeController>().isSwitched.value
+                          ? ColorUtil.kPrimary3PinkMode
+                          : ColorUtil.kPrimary01,
                       onChanged: (value) {
                         controller.trips.value = value!;
                       },
@@ -69,16 +68,15 @@ class PushNotificationsView extends GetView<PushNotificationsController> {
                   child: Obx(
                     () => Checkbox(
                       side: BorderSide(
-                        color: Get.find<ProfileController>().isSwitched.value
+                        color: Get.find<HomeController>().isSwitched.value
                             ? ColorUtil.kPrimary3PinkMode
                             : ColorUtil.kSecondary01,
                       ),
                       splashRadius: 4.kh,
                       value: controller.alerts.value,
-                      activeColor:
-                          Get.find<ProfileController>().isSwitched.value
-                              ? ColorUtil.kPrimary3PinkMode
-                              : ColorUtil.kPrimary01,
+                      activeColor: Get.find<HomeController>().isSwitched.value
+                          ? ColorUtil.kPrimary3PinkMode
+                          : ColorUtil.kPrimary01,
                       onChanged: (value) {
                         controller.alerts.value = value!;
                       },
@@ -100,16 +98,15 @@ class PushNotificationsView extends GetView<PushNotificationsController> {
                   child: Obx(
                     () => Checkbox(
                       side: BorderSide(
-                        color: Get.find<ProfileController>().isSwitched.value
+                        color: Get.find<HomeController>().isSwitched.value
                             ? ColorUtil.kPrimary3PinkMode
                             : ColorUtil.kSecondary01,
                       ),
                       splashRadius: 4.kh,
                       value: controller.payments.value,
-                      activeColor:
-                          Get.find<ProfileController>().isSwitched.value
-                              ? ColorUtil.kPrimary3PinkMode
-                              : ColorUtil.kPrimary01,
+                      activeColor: Get.find<HomeController>().isSwitched.value
+                          ? ColorUtil.kPrimary3PinkMode
+                          : ColorUtil.kPrimary01,
                       onChanged: (value) {
                         controller.payments.value = value!;
                       },
@@ -131,16 +128,15 @@ class PushNotificationsView extends GetView<PushNotificationsController> {
                   child: Obx(
                     () => Checkbox(
                       side: BorderSide(
-                        color: Get.find<ProfileController>().isSwitched.value
+                        color: Get.find<HomeController>().isSwitched.value
                             ? ColorUtil.kPrimary3PinkMode
                             : ColorUtil.kSecondary01,
                       ),
                       splashRadius: 4.kh,
                       value: controller.transactions.value,
-                      activeColor:
-                          Get.find<ProfileController>().isSwitched.value
-                              ? ColorUtil.kPrimary3PinkMode
-                              : ColorUtil.kPrimary01,
+                      activeColor: Get.find<HomeController>().isSwitched.value
+                          ? ColorUtil.kPrimary3PinkMode
+                          : ColorUtil.kPrimary01,
                       onChanged: (value) {
                         controller.transactions.value = value!;
                       },
@@ -162,16 +158,15 @@ class PushNotificationsView extends GetView<PushNotificationsController> {
                   child: Obx(
                     () => Checkbox(
                       side: BorderSide(
-                        color: Get.find<ProfileController>().isSwitched.value
+                        color: Get.find<HomeController>().isSwitched.value
                             ? ColorUtil.kPrimary3PinkMode
                             : ColorUtil.kSecondary01,
                       ),
                       splashRadius: 4.kh,
                       value: controller.offers.value,
-                      activeColor:
-                          Get.find<ProfileController>().isSwitched.value
-                              ? ColorUtil.kPrimary3PinkMode
-                              : ColorUtil.kPrimary01,
+                      activeColor: Get.find<HomeController>().isSwitched.value
+                          ? ColorUtil.kPrimary3PinkMode
+                          : ColorUtil.kPrimary01,
                       onChanged: (value) {
                         controller.offers.value = value!;
                       },
