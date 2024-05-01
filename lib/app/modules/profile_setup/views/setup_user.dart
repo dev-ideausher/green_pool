@@ -131,10 +131,13 @@ class SetupUser extends GetView<ProfileSetupController> {
             ).paddingOnly(bottom: 16.kh),
             const RichTextHeading(text: 'City Province')
                 .paddingOnly(bottom: 8.kh),
-            GreenPoolTextField(
-              //TODO: Drop down city
-              hintText: 'Select your city',
-              controller: controller.city,
+            GreenPoolDropDown(
+              hintText: 'Select your City',
+              value: controller.selectedCity.value,
+              items: controller.citiesDropdownItems,
+              onChanged: (value) {
+                controller.city.text = value.toString();
+              },
               validator: (value) => controller.validateCity(value),
               autovalidateMode: AutovalidateMode.onUserInteraction,
             ).paddingOnly(bottom: 16.kh),

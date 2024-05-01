@@ -20,11 +20,6 @@ class ProfileSetupView extends GetView<ProfileSetupController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // GestureDetector(
-              //         onTap: () => Get.back(),
-              //         child: SvgPicture.asset(ImageConstant.svgIconBack30),
-              //         )
-              //     .paddingOnly(top: 16.kh, bottom: 8.kh),
               Text(
                 'Profile Setup',
                 style: TextStyleUtil.k32Heading700(),

@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -27,7 +30,10 @@ class VerificationDoneView extends GetView<VerificationDoneController> {
                   height: 500.kh,
                   width: 100.w,
                 ),
-                // SvgPicture.asset(ImageConstant.svgConfetti),
+                ConfettiWidget(
+                  confettiController: controller.confettiController,
+                  blastDirection: -pi / 2,
+                ),
                 SvgPicture.asset(
                   ImageConstant.svgCompleteTick,
                   height: 110.kh,

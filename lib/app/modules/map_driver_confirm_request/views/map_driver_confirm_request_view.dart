@@ -1,13 +1,8 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:green_pool/app/components/gp_progress.dart';
-
-import '../../../services/colors.dart';
-import '../../../services/gp_util.dart';
 import '../controllers/map_driver_confirm_request_controller.dart';
 
 class MapDriverConfirmRequestView

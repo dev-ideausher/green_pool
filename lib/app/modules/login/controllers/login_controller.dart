@@ -84,7 +84,7 @@ class LoginController extends GetxController {
         Routes.VERIFY,
         arguments: {
           'isDriver': isDriver,
-          'phoneNumber': phoneNumberController.value.text,
+          'phoneNumber': countryCode + " " + phoneNumberController.value.text,
           'fromNavBar': fromNavBar
         },
       );

@@ -7,6 +7,7 @@ import 'package:green_pool/app/data/my_rides_model.dart';
 import 'package:green_pool/app/services/dio/api_service.dart';
 import 'package:green_pool/app/services/snackbar.dart';
 
+import '../../../data/booking_detail_model.dart';
 import '../../../routes/app_pages.dart';
 
 class MyRidesOneTimeController extends GetxController {
@@ -83,9 +84,64 @@ class MyRidesOneTimeController extends GetxController {
     /*  if (myRidesModelData.confirmDriverDetails?.first?.driverPostsDetails?.first?.isStarted ?? false) {
       Get.toNamed(Routes.START_RIDE, arguments: myRidesModelData);
     } else {*/
-    Get.toNamed(Routes.MY_RIDES_DETAILS,
-        arguments: myRidesModelData.postsInfo?.first?.Id);
+
     /*  }*/
+    if (myRidesModelData.postsInfo!.isNotEmpty) {
+      Get.toNamed(Routes.MY_RIDES_DETAILS,
+          arguments: myRidesModelData.postsInfo?.first?.Id);
+    } else {
+      Get.toNamed(Routes.MY_RIDES_DETAILS,
+          arguments: BookingDetailModelData(
+              driverRideId: myRidesModelData.Id,
+              driverBookingDetails: BookingDetailModelDataDriverBookingDetails(
+                origin: BookingDetailModelDataDriverBookingDetailsOrigin(
+                    coordinates: myRidesModelData.origin!.coordinates,
+                    name: myRidesModelData.origin!.name,
+                    originDestinationFair:
+                        myRidesModelData.origin?.originDestinationFair,
+                    type: myRidesModelData.origin!.type),
+                destination:
+                    BookingDetailModelDataDriverBookingDetailsDestination(
+                        coordinates: myRidesModelData.destination!.coordinates,
+                        name: myRidesModelData.destination!.name,
+                        type: myRidesModelData.destination!.type),
+                date: myRidesModelData.date,
+                time: myRidesModelData.time,
+                description: myRidesModelData.description,
+                preferences: BookingDetailModelDataDriverBookingDetailsPreferences(
+                    other:
+                        BookingDetailModelDataDriverBookingDetailsPreferencesOther(
+                            AppreciatesConversation: myRidesModelData
+                                .preferences?.other?.AppreciatesConversation,
+                            BabySeat:
+                                myRidesModelData.preferences?.other?.BabySeat,
+                            CoolingOrHeating: myRidesModelData
+                                .preferences?.other?.CoolingOrHeating,
+                            EnjoysMusic: myRidesModelData
+                                .preferences?.other?.EnjoysMusic,
+                            HeatedSeats: myRidesModelData
+                                .preferences?.other?.HeatedSeats,
+                            PetFriendly: myRidesModelData
+                                .preferences?.other?.PetFriendly,
+                            SmokeFree:
+                                myRidesModelData.preferences?.other?.SmokeFree,
+                            WinterTires: myRidesModelData
+                                .preferences?.other?.WinterTires)),
+                driverDetails:
+                    BookingDetailModelDataDriverBookingDetailsDriverDetails(
+                        vechileDetails:
+                            BookingDetailModelDataDriverBookingDetailsDriverDetailsVechileDetails(
+                  model: myRidesModelData.vehicleDetails?[0]?.model,
+                  licencePlate:
+                      myRidesModelData.vehicleDetails?[0]?.licencePlate,
+                  vehiclePic:
+                      BookingDetailModelDataDriverBookingDetailsDriverDetailsVechileDetailsVehiclePic(
+                    url: myRidesModelData.vehicleDetails?[0]?.vehiclePic?.url,
+                  ),
+                  type: myRidesModelData.vehicleDetails?[0]?.type,
+                )),
+              )));
+    }
   }
 
   void riderPagePageOpen(MyRidesModelData myRidesModelData) {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:green_pool/app/components/green_pool_divider.dart';
 import 'package:green_pool/app/components/origin_to_destination.dart';
@@ -101,7 +102,7 @@ class StartRideView extends GetView<StartRideController> {
                               child: ClipOval(
                                 child: SizedBox.fromSize(
                                   size: Size.fromRadius(12.kh),
-                                  child: !controller.myRidesModel.value
+                                  child: controller.myRidesModel.value
                                           .driverBookingDetails!.riders!.isEmpty
                                       ? Image.asset(
                                           ImageConstant.pngEmptyPassenger,
@@ -141,8 +142,8 @@ class StartRideView extends GetView<StartRideController> {
                             "",
                         style: TextStyleUtil.k16Medium()),
                     /* subtitle: Text(
-                  "${controller.myRidesModel.value.confirmDriverDetails?.first?.driverPostsDetails?.first?.driverDetails?.first?.vehicleDetails?.first?.color ?? ""} ${controller.myRidesModel.value.confirmDriverDetails?.first?.driverPostsDetails?.first?.driverDetails?.first?.vehicleDetails?.first?.model ?? ""}",
-                  style: TextStyleUtil.k16Medium()),*/
+                    "${controller.myRidesModel.value.confirmDriverDetails?.first?.driverPostsDetails?.first?.driverDetails?.first?.vehicleDetails?.first?.color ?? ""} ${controller.myRidesModel.value.confirmDriverDetails?.first?.driverPostsDetails?.first?.driverDetails?.first?.vehicleDetails?.first?.model ?? ""}",
+                    style: TextStyleUtil.k16Medium()),*/
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [

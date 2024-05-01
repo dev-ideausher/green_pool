@@ -163,7 +163,10 @@ class LoginView extends GetView<LoginController> {
                               color: ColorUtil.kSecondary01),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () => Get.offNamed(Routes.CREATE_ACCOUNT,
-                                arguments: controller.isDriver),
+                                    arguments: {
+                                      'isDriver': controller.isDriver,
+                                      'fromNavBar': controller.fromNavBar
+                                    }),
                         ),
                       ],
                     ),

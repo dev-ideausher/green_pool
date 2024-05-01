@@ -65,7 +65,7 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                               ],
                             ),
                             Text(
-                              "Fare: ${controller.myRidesModelData.value.driverBookingDetails?.origin?.originDestinationFair ?? ""}",
+                              "Fare: \$ ${controller.myRidesModelData.value.driverBookingDetails?.origin?.originDestinationFair ?? ""}",
                               style: TextStyleUtil.k16Semibold(
                                   fontSize: 16.kh,
                                   color: ColorUtil.kSecondary01),
@@ -95,7 +95,9 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                                       color: ColorUtil.kBlack02),
                                 ).paddingOnly(right: 8.kw),
                                 Text(
-                                  "${controller.myRidesModelData.value.riderBookingDetails?.origin?.name ?? ""}",
+                                  controller.myRidesModelData.value
+                                          .driverBookingDetails?.origin?.name ??
+                                      "",
                                   style: TextStyleUtil.k14Regular(
                                       color: ColorUtil.kBlack02),
                                 ),
@@ -118,7 +120,7 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                                         color: ColorUtil.kBlack02),
                                   ).paddingOnly(right: 8.kw),
                                   Text(
-                                    "${controller.myRidesModelData.value.riderBookingDetails?.destination?.name}",
+                                    "${controller.myRidesModelData.value.driverBookingDetails?.destination?.name}",
                                     style: TextStyleUtil.k14Regular(
                                         color: ColorUtil.kBlack02),
                                   ),
@@ -148,8 +150,9 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                       style: TextStyleUtil.k14Bold(),
                     ).paddingOnly(bottom: 16.kh),
 
-                    controller.myRidesModelData.value.driverBookingDetails
-                                ?.riders?.length ==
+                    (controller.myRidesModelData.value.driverBookingDetails
+                                    ?.riders?.length ??
+                                0) ==
                             0
                         ? Center(
                             child: Text(

@@ -137,7 +137,7 @@ class CreateAccountController extends GetxController {
         await Get.offNamed(Routes.VERIFY, arguments: {
           'isDriver': isDriver,
           'fullName': fullNameController.value.text,
-          'phoneNumber': "$countryCode ${phoneNumberController.value.text}",
+          'phoneNumber': countryCode + " " + phoneNumberController.value.text,
           'fromNavBar': fromNavBar
         });
       } else {

@@ -13,8 +13,11 @@ class MyRidesDetailsController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
-
-    await myRidesDetailsAPI(Get.arguments);
+    try {
+      myRidesModelData.value = Get.arguments;
+    } catch (e) {
+      await myRidesDetailsAPI(Get.arguments);
+    }
     isLoad.value = false;
   }
 

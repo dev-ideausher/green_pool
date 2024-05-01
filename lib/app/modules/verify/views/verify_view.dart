@@ -16,7 +16,9 @@ class VerifyView extends GetView<VerifyController> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar:  GreenPoolAppBar(appBarSize: 60.kh,),
+      appBar: GreenPoolAppBar(
+        appBarSize: 60.kh,
+      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -24,10 +26,7 @@ class VerifyView extends GetView<VerifyController> {
             "Enter OTP",
             style: TextStyleUtil.k32Heading700(),
           ).paddingOnly(bottom: 4.kh),
-          Text(
-            'Enter otp',
-            style: TextStyleUtil.k16Regular(color: ColorUtil.kBlack04),
-          ).paddingOnly(bottom: 80.kh),
+          80.kheightBox,
           Center(
             child: Column(
               children: [

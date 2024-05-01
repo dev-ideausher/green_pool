@@ -148,15 +148,6 @@ class UserDetailsView extends GetView<UserDetailsController> {
               hintText: 'D.O.B',
               controller: controller.dobTextController,
               readOnly: true,
-              suffix: SvgPicture.asset(
-                ImageConstant.svgIconCalendar,
-                colorFilter: ColorFilter.mode(
-                  Get.find<HomeController>().isSwitched?.value ?? false
-                      ? ColorUtil.kPrimary3PinkMode
-                      : ColorUtil.kSecondary01,
-                  BlendMode.srcIn,
-                ),
-              ),
             ).paddingOnly(bottom: 16.kh),
             const RichTextHeading(text: 'ID Verification')
                 .paddingOnly(bottom: 8.kh),

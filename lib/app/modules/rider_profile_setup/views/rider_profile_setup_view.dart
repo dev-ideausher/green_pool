@@ -140,10 +140,13 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
                 ).paddingOnly(bottom: 16.kh),
                 const RichTextHeading(text: 'City Province')
                     .paddingOnly(bottom: 8.kh),
-                GreenPoolTextField(
-                  //TODO: drop down city
-                  hintText: 'City',
-                  controller: controller.city,
+                GreenPoolDropDown(
+                  hintText: 'Select your City',
+                  value: controller.selectedCity.value,
+                  items: controller.citiesDropdownItems,
+                  onChanged: (value) {
+                    controller.city.text = value.toString();
+                  },
                   validator: (value) => controller.validateCity(value),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                 ).paddingOnly(bottom: 16.kh),
@@ -209,7 +212,6 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
                   ),
                 ),
                 GreenPoolButton(
-                  // onPressed: () => Get.offNamed(Routes.MATCHING_RIDES),
                   onPressed: () => controller.checkUserValidations(),
                   color: ColorUtil.kPrimary01,
                   label: 'Proceed',

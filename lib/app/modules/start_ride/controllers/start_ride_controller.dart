@@ -179,7 +179,7 @@ class StartRideController extends GetxController {
   startRideAPI() async {
     try {
       final response = await APIManager.startRide(
-          body: {"driverRideId": myRidesModel.value.Id});
+          body: {"driverRideId": myRidesModel.value.driverRideId});
       var data = jsonDecode(response.toString());
       if (data['status']) {
         isRideStarted.value = true;
@@ -194,7 +194,7 @@ class StartRideController extends GetxController {
   endRideAPI() async {
     try {
       final response = await APIManager.endRide(
-          body: {"driverRideId": myRidesModel.value.Id});
+          body: {"driverRideId": myRidesModel.value.driverRideId});
       log("END RIDE EXECUTED--------> ${response.statusMessage}}");
       Get.offNamed(Routes.RATING_DRIVER_SIDE, arguments: myRidesModel.value);
     } catch (e) {
