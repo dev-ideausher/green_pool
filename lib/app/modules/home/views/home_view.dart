@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
 import 'package:green_pool/app/modules/home/views/welcome_tile.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
@@ -10,7 +9,6 @@ import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
-import '../../../services/storage.dart';
 import '../../profile/controllers/profile_controller.dart';
 import '../controllers/home_controller.dart';
 
@@ -52,11 +50,11 @@ class HomeView extends GetView<HomeController> {
                     children: [
                       Positioned(
                           right: 0,
-                          left: Get.find<HomeController>().isSwitched.value
+                          left: Get.find<HomeController>().isPinkModeOn.value
                               ? 0
                               : null,
                           bottom: 0,
-                          child: Get.find<HomeController>().isSwitched.value
+                          child: Get.find<HomeController>().isPinkModeOn.value
                               ? SvgPicture.asset(
                                   ImageConstant.svgPinkPostRide,
                                   fit: BoxFit.fill,
@@ -113,11 +111,11 @@ class HomeView extends GetView<HomeController> {
                     Obx(
                       () => Positioned(
                           right: 0.kw,
-                          left: Get.find<HomeController>().isSwitched.value
+                          left: Get.find<HomeController>().isPinkModeOn.value
                               ? 0
                               : null,
                           bottom: 0.kh,
-                          child: Get.find<HomeController>().isSwitched.value
+                          child: Get.find<HomeController>().isPinkModeOn.value
                               ? SvgPicture.asset(
                                   ImageConstant.svgPinkFindRide,
                                   fit: BoxFit.fill,

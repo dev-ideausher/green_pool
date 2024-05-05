@@ -30,7 +30,7 @@ class Amenities extends GetView<PostRideController> {
         SvgPicture.asset(
           image,
           colorFilter: ColorFilter.mode(
-              Get.find<HomeController>().isSwitched.value
+              Get.find<HomeController>().isPinkModeOn.value
                   ? ColorUtil.kPrimary3PinkMode
                   : ColorUtil.kSecondary01,
               BlendMode.srcIn),
@@ -53,12 +53,13 @@ class Amenities extends GetView<PostRideController> {
                   // },
                   inactiveThumbColor: ColorUtil.kNeutral1,
                   inactiveTrackColor:
-                      Get.find<HomeController>().isSwitched.value
+                      Get.find<HomeController>().isPinkModeOn.value
                           ? ColorUtil.kSecondaryPinkMode
                           : ColorUtil.kPrimary05,
-                  activeTrackColor: Get.find<HomeController>().isSwitched.value
-                      ? ColorUtil.kPrimary3PinkMode
-                      : ColorUtil.kSecondary01,
+                  activeTrackColor:
+                      Get.find<HomeController>().isPinkModeOn.value
+                          ? ColorUtil.kPrimary3PinkMode
+                          : ColorUtil.kSecondary01,
                   trackOutlineWidth: const MaterialStatePropertyAll(0),
                   thumbColor:
                       const MaterialStatePropertyAll(ColorUtil.kWhiteColor),

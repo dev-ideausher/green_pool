@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
+import 'package:green_pool/app/components/common_image_view.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:image_picker/image_picker.dart';
@@ -36,21 +37,18 @@ class VehicleDetailsView extends GetView<VehicleDetailsController> {
               onTap: () {
                 controller.getProfileImage(ImageSource.gallery);
               },
-              child: Obx(
-                () => Container(
-                    padding: EdgeInsets.symmetric(
-                        vertical: 68.kh, horizontal: 76.kw),
-                    decoration: BoxDecoration(
-                        color: ColorUtil.kGreyColor,
-                        borderRadius: BorderRadius.circular(8.kh)),
-                    child: controller.isVehiclePicUpdated?.value == true
-                        ? Image.file(
-                            controller.selectedVehicleImagePath?.value ??
-                                File(''))
-                        : Image(
-                            image: NetworkImage(
-                                "${controller.vehicleInfoModel!.vehiclePic!.url}"))),
-              ),
+              child: Obx(() => Container(
+                  padding:
+                      EdgeInsets.symmetric(vertical: 68.kh, horizontal: 76.kw),
+                  decoration: BoxDecoration(
+                      color: ColorUtil.kGreyColor,
+                      borderRadius: BorderRadius.circular(8.kh)),
+                  child: controller.isVehiclePicUpdated?.value == true
+                      ? Image.file(controller.selectedVehicleImagePath?.value ??
+                          File(''))
+                      : CommonImageView(
+                          url:
+                              "${controller.vehicleInfoModel!.vehiclePic!.url}"))),
             ).paddingOnly(bottom: 16.kh),
             const RichTextHeading(text: 'Model').paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
@@ -58,7 +56,7 @@ class VehicleDetailsView extends GetView<VehicleDetailsController> {
               controller: controller.modelTextController,
               suffix: SvgPicture.asset(ImageConstant.svgProfileEditPen,
                   colorFilter: ColorFilter.mode(
-                      Get.find<HomeController>().isSwitched.value
+                      Get.find<HomeController>().isPinkModeOn.value
                           ? ColorUtil.kPrimary3PinkMode
                           : ColorUtil.kSecondary01,
                       BlendMode.srcIn)),
@@ -191,7 +189,7 @@ class VehicleDetailsView extends GetView<VehicleDetailsController> {
               controller: controller.yearTextController,
               suffix: SvgPicture.asset(ImageConstant.svgProfileEditPen,
                   colorFilter: ColorFilter.mode(
-                      Get.find<HomeController>().isSwitched.value
+                      Get.find<HomeController>().isPinkModeOn.value
                           ? ColorUtil.kPrimary3PinkMode
                           : ColorUtil.kSecondary01,
                       BlendMode.srcIn)),
@@ -203,7 +201,7 @@ class VehicleDetailsView extends GetView<VehicleDetailsController> {
               controller: controller.licenseTextController,
               suffix: SvgPicture.asset(ImageConstant.svgProfileEditPen,
                   colorFilter: ColorFilter.mode(
-                      Get.find<HomeController>().isSwitched.value
+                      Get.find<HomeController>().isPinkModeOn.value
                           ? ColorUtil.kPrimary3PinkMode
                           : ColorUtil.kSecondary01,
                       BlendMode.srcIn)),

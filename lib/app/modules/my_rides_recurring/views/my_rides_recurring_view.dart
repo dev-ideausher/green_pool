@@ -12,7 +12,6 @@ import '../../../constants/image_constant.dart';
 import '../../../services/colors.dart';
 import '../../../services/text_style_util.dart';
 import '../../home/controllers/home_controller.dart';
-import '../../profile/controllers/profile_controller.dart';
 import '../controllers/my_rides_recurring_controller.dart';
 
 class MyRidesRecurringView extends GetView<MyRidesRecurringController> {
@@ -99,20 +98,21 @@ class MyRidesRecurringView extends GetView<MyRidesRecurringController> {
                                                 },
                                                 inactiveThumbColor:
                                                     ColorUtil.kNeutral1,
-                                                inactiveTrackColor: Get.find<
-                                                            HomeController>()
-                                                        .isSwitched
-                                                        .value
-                                                    ? ColorUtil
-                                                        .kSecondaryPinkMode
-                                                    : ColorUtil.kPrimary05,
-                                                activeTrackColor: Get.find<
-                                                            HomeController>()
-                                                        .isSwitched
-                                                        .value
-                                                    ? ColorUtil
-                                                        .kPrimary3PinkMode
-                                                    : ColorUtil.kSecondary01,
+                                                inactiveTrackColor:
+                                                    Get.find<HomeController>()
+                                                            .isPinkModeOn
+                                                            .value
+                                                        ? ColorUtil
+                                                            .kSecondaryPinkMode
+                                                        : ColorUtil.kPrimary05,
+                                                activeTrackColor:
+                                                    Get.find<HomeController>()
+                                                            .isPinkModeOn
+                                                            .value
+                                                        ? ColorUtil
+                                                            .kPrimary3PinkMode
+                                                        : ColorUtil
+                                                            .kSecondary01,
                                                 trackOutlineWidth:
                                                     const MaterialStatePropertyAll(
                                                         0),
@@ -174,9 +174,26 @@ class MyRidesRecurringView extends GetView<MyRidesRecurringController> {
                                                   ),
                                                   SizedBox(
                                                     height: 24.kh,
-                                                    width: 28.w,
+                                                    width: 170.kw,
                                                     child: ListView.builder(
-                                                      itemCount: 4,
+                                                      itemCount: controller
+                                                                  .recurringResp
+                                                                  .value
+                                                                  .data?[index]
+                                                                  ?.ridesDetails?[
+                                                                      index1]
+                                                                  ?.ridersDetails
+                                                                  ?.length ==
+                                                              0
+                                                          ? 4
+                                                          : (controller
+                                                              .recurringResp
+                                                              .value
+                                                              .data?[index]
+                                                              ?.ridesDetails?[
+                                                                  index1]
+                                                              ?.ridersDetails
+                                                              ?.length),
                                                       reverse: true,
                                                       scrollDirection:
                                                           Axis.horizontal,

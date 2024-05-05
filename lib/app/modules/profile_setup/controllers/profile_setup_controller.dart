@@ -92,20 +92,20 @@ class ProfileSetupController extends GetxController
           // Define the custom theme for the date picker
           data: ThemeData(
             // Define the primary color
-            primaryColor: Get.find<HomeController>().isSwitched.value
+            primaryColor: Get.find<HomeController>().isPinkModeOn.value
                 ? ColorUtil.kPrimaryPinkMode
                 : ColorUtil.kPrimary01,
             // Define the color scheme for the date picker
             colorScheme: ColorScheme.light(
               // Define the primary color for the date picker
-              primary: Get.find<HomeController>().isSwitched.value
+              primary: Get.find<HomeController>().isPinkModeOn.value
                   ? ColorUtil.kPrimaryPinkMode
                   : ColorUtil.kPrimary01,
               // Define the background color for the date picker
               surface: ColorUtil.kWhiteColor,
               // Define the on-primary color for the date picker
               onPrimary: ColorUtil.kBlack01,
-              secondary: Get.find<HomeController>().isSwitched.value
+              secondary: Get.find<HomeController>().isPinkModeOn.value
                   ? ColorUtil.kPrimaryPinkMode
                   : ColorUtil.kPrimary01,
             ),

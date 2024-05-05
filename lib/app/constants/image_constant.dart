@@ -40,6 +40,13 @@ class ImageConstant {
   static String svgOnboard3 = 'assets/images/onboarding/onboard3.svg';
   static String svgGetStarted = 'assets/images/onboarding/getstarted.svg';
 
+//wallet
+  static String svgAddMoney = 'assets/images/wallet/add_money.svg';
+  static String svgAddCard = 'assets/images/wallet/add_card.svg';
+  static String svgSendMoney = 'assets/images/wallet/send_money_1.svg';
+  static String svgTransactionHistory =
+      'assets/images/wallet/transaction_history.svg';
+
 //setup profile
   static String svgAddPicture = 'assets/images/setupprofile/add_picture.svg';
   static String svgAddID = 'assets/images/setupprofile/upload_id.svg';
@@ -101,6 +108,7 @@ class ImageConstant {
   static String svgAmenities9 = 'assets/images/home/amenities9.svg';
   static String svgAmenities10 = 'assets/images/home/amenities10.svg';
   static String svgNoRides = 'assets/images/home/no_rides.svg';
+  static String svgNoRidesPink = 'assets/images/home/no_rides_pink.svg';
 
 //profile
   static String svgProfileAbout = 'assets/images/profile/about.svg';

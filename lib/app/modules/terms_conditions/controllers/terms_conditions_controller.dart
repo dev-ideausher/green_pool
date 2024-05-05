@@ -11,7 +11,7 @@ class TermsConditionsController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    companyDetailsAPI();
+    termsConditionsAPI();
   }
 
   // @override
@@ -24,7 +24,7 @@ class TermsConditionsController extends GetxController {
   //   super.onClose();
   // }
 
-  companyDetailsAPI() async {
+  termsConditionsAPI() async {
     isLoading.value = true;
     final response = await APIManager.getCompanyDetails();
     termsText = response.data['data'][0]['termsAndContions'].toString();

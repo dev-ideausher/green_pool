@@ -20,7 +20,7 @@ class BottomNavigationView extends GetView<HomeController> {
     return Scaffold(
       bottomNavigationBar: Obx(
         () => BottomNavigationBar(
-            selectedLabelStyle: Get.find<HomeController>().isSwitched.value
+            selectedLabelStyle: Get.find<HomeController>().isPinkModeOn.value
                 ? TextStyleUtil.k12Semibold(color: ColorUtil.kPrimary3PinkMode)
                 : TextStyleUtil.k12Semibold(color: ColorUtil.kSecondary01),
             unselectedLabelStyle:
@@ -30,7 +30,7 @@ class BottomNavigationView extends GetView<HomeController> {
             currentIndex: controller.selectedIndex.value,
             enableFeedback: true,
             unselectedItemColor: ColorUtil.kBlack05,
-            selectedItemColor: Get.find<HomeController>().isSwitched.value
+            selectedItemColor: Get.find<HomeController>().isPinkModeOn.value
                 ? ColorUtil.kPrimary3PinkMode
                 : ColorUtil.kSecondary01,
             onTap: (index) {
@@ -46,7 +46,7 @@ class BottomNavigationView extends GetView<HomeController> {
                 activeIcon: SvgPicture.asset(
                   ImageConstant.svgNavHomeFilled,
                   colorFilter: ColorFilter.mode(
-                      Get.find<HomeController>().isSwitched.value
+                      Get.find<HomeController>().isPinkModeOn.value
                           ? ColorUtil.kPrimary3PinkMode
                           : ColorUtil.kSecondary01,
                       BlendMode.srcIn),
@@ -58,7 +58,7 @@ class BottomNavigationView extends GetView<HomeController> {
                 activeIcon: SvgPicture.asset(
                   ImageConstant.svgNavCarFilled,
                   colorFilter: ColorFilter.mode(
-                      Get.find<HomeController>().isSwitched.value
+                      Get.find<HomeController>().isPinkModeOn.value
                           ? ColorUtil.kPrimary3PinkMode
                           : ColorUtil.kSecondary01,
                       BlendMode.srcIn),
@@ -70,7 +70,7 @@ class BottomNavigationView extends GetView<HomeController> {
                 activeIcon: SvgPicture.asset(
                   ImageConstant.svgNavMessagesFilled,
                   colorFilter: ColorFilter.mode(
-                      Get.find<HomeController>().isSwitched.value
+                      Get.find<HomeController>().isPinkModeOn.value
                           ? ColorUtil.kPrimary3PinkMode
                           : ColorUtil.kSecondary01,
                       BlendMode.srcIn),
@@ -82,7 +82,7 @@ class BottomNavigationView extends GetView<HomeController> {
                 activeIcon: SvgPicture.asset(
                   ImageConstant.svgNavProfileFilled,
                   colorFilter: ColorFilter.mode(
-                      Get.find<HomeController>().isSwitched.value
+                      Get.find<HomeController>().isPinkModeOn.value
                           ? ColorUtil.kPrimary3PinkMode
                           : ColorUtil.kSecondary01,
                       BlendMode.srcIn),

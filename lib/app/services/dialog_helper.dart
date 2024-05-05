@@ -27,7 +27,7 @@ class DialogHelper {
                     padding: EdgeInsets.all(12.kh),
                     child: Center(
                       child: CircularProgressIndicator(
-                        color: Get.find<HomeController>().isSwitched.value
+                        color: Get.find<HomeController>().isPinkModeOn.value
                             ? ColorUtil.kPrimary3PinkMode
                             : ColorUtil.kPrimary01,
                       ),

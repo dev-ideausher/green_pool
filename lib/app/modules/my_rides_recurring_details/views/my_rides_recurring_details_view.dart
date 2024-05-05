@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:green_pool/app/components/common_image_view.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/components/origin_to_destination.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
@@ -62,15 +63,14 @@ class MyRidesRecurringDetailsView
                     Row(
                       children: [
                         ClipRRect(
-                          borderRadius: BorderRadius.circular(8.kh),
-                          child: SizedBox(
-                              height: 64.kh,
-                              width: 64.kw,
-                              child: Image(
-                                  fit: BoxFit.cover,
-                                  image: NetworkImage(
-                                      "${controller.recurringModel.value.data?.driverRideDetails?[0]?.driverVehiclesDetails?[0]?.vehiclePic?.url}"))),
-                        ).paddingOnly(right: 8.kw),
+                                borderRadius: BorderRadius.circular(8.kh),
+                                child: SizedBox(
+                                    height: 64.kh,
+                                    width: 64.kw,
+                                    child: CommonImageView(
+                                        url:
+                                            "${controller.recurringModel.value.data?.driverRideDetails?[0]?.driverVehiclesDetails?[0]?.vehiclePic?.url}")))
+                            .paddingOnly(right: 8.kw),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [

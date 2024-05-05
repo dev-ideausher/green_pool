@@ -46,7 +46,7 @@ class PostRideView extends GetView<PostRideController> {
             prefix: Icon(
               Icons.location_on,
               size: 24.kh,
-              color: Get.find<HomeController>().isSwitched.value
+              color: Get.find<HomeController>().isPinkModeOn.value
                   ? ColorUtil.kPrimary3PinkMode
                   : ColorUtil.kSecondary01,
             ),
@@ -69,7 +69,7 @@ class PostRideView extends GetView<PostRideController> {
             prefix: Icon(
               Icons.location_on,
               size: 24.kh,
-              color: Get.find<HomeController>().isSwitched.value
+              color: Get.find<HomeController>().isPinkModeOn.value
                   ? ColorUtil.kPrimary3PinkMode
                   : ColorUtil.kSecondary01,
             ),
@@ -94,14 +94,14 @@ class PostRideView extends GetView<PostRideController> {
             prefix: Icon(
               Icons.add_circle,
               size: 20.kh,
-              color: Get.find<HomeController>().isSwitched.value
+              color: Get.find<HomeController>().isPinkModeOn.value
                   ? ColorUtil.kPrimary3PinkMode
                   : ColorUtil.kSecondary01,
             ),
             suffix: SvgPicture.asset(
               ImageConstant.svgIconReorder,
               colorFilter: ColorFilter.mode(
-                  Get.find<HomeController>().isSwitched.value
+                  Get.find<HomeController>().isPinkModeOn.value
                       ? ColorUtil.kPrimary3PinkMode
                       : ColorUtil.kSecondary01,
                   BlendMode.srcIn),
@@ -125,14 +125,14 @@ class PostRideView extends GetView<PostRideController> {
                     prefix: Icon(
                       Icons.add_circle,
                       size: 20.kh,
-                      color: Get.find<HomeController>().isSwitched.value
+                      color: Get.find<HomeController>().isPinkModeOn.value
                           ? ColorUtil.kPrimary3PinkMode
                           : ColorUtil.kSecondary01,
                     ),
                     suffix: SvgPicture.asset(
                       ImageConstant.svgIconReorder,
                       colorFilter: ColorFilter.mode(
-                          Get.find<HomeController>().isSwitched.value
+                          Get.find<HomeController>().isPinkModeOn.value
                               ? ColorUtil.kPrimary3PinkMode
                               : ColorUtil.kSecondary01,
                           BlendMode.srcIn),

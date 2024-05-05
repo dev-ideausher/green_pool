@@ -4,6 +4,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
+import 'package:green_pool/app/components/common_image_view.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
@@ -13,6 +14,7 @@ import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/push_notification_service.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../../services/storage.dart';
 import '../../../services/text_style_util.dart';
@@ -45,71 +47,18 @@ class ProfileView extends GetView<ProfileController> {
                             Text(
                               'You have not filled profile details',
                               style: TextStyleUtil.k18Heading600(),
-                            ),
+                            ).paddingOnly(bottom: 20.kh),
                             ProfileContainer(
-                              onTap: () => Get.dialog(
-                                useSafeArea: true,
-                                Center(
-                                  child: Container(
-                                    padding: EdgeInsets.all(16.kh),
-                                    height: 192.kh,
-                                    width: 80.w,
-                                    decoration: BoxDecoration(
-                                      color: ColorUtil.kWhiteColor,
-                                      borderRadius: BorderRadius.circular(8.kh),
-                                    ),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        GestureDetector(
-                                          onTap: () => Get.back(),
-                                          child: Container(
-                                            alignment: Alignment.centerRight,
-                                            child: const Icon(Icons.close),
-                                          ),
-                                        ),
-                                        Text(
-                                          'Confirm Logout',
-                                          style: TextStyleUtil.k18Semibold(),
-                                          textAlign: TextAlign.center,
-                                        ).paddingSymmetric(vertical: 4.kh),
-                                        Text(
-                                          'Are you sure you want to logout?',
-                                          style: TextStyleUtil.k14Regular(
-                                            color: ColorUtil.kBlack04,
-                                          ),
-                                          textAlign: TextAlign.center,
-                                        ).paddingOnly(bottom: 40.kh),
-                                        Container(
-                                          alignment: Alignment.centerRight,
-                                          child: GreenPoolButton(
-                                            onPressed: () {
-                                              Get.find<AuthService>()
-                                                  .logOutUser();
-                                              Get.find<ProfileController>()
-                                                  .isPinkMode
-                                                  .value = false;
-                                              Get.find<HomeController>()
-                                                  .selectedIndex
-                                                  .value = 0;
-                                              Get.offAllNamed(
-                                                  Routes.ONBOARDING);
-                                              PushNotificationService.unsubFcm(
-                                                  "${controller.userInfo.value.data?.Id}");
-                                            },
-                                            height: 40.kh,
-                                            width: 144.kw,
-                                            label: 'Logout',
-                                            fontSize: 14.kh,
-                                            padding: const EdgeInsets.all(8),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
+                              onTap: () {
+                                Get.find<AuthService>().logOutUser();
+                                Get.find<ProfileController>().isPinkMode.value =
+                                    false;
+                                Get.find<HomeController>().selectedIndex.value =
+                                    0;
+                                Get.offAllNamed(Routes.ONBOARDING);
+                                PushNotificationService.unsubFcm(
+                                    "${controller.userInfo.value.data?.Id}");
+                              },
                               image: ImageConstant.svgProfileLogout,
                               text: "Logout",
                               border: Border.all(color: ColorUtil.kWhiteColor),
@@ -123,20 +72,13 @@ class ProfileView extends GetView<ProfileController> {
                                 decoration:
                                     const BoxDecoration(shape: BoxShape.circle),
                                 child: ClipOval(
-                                  child: SizedBox.fromSize(
-                                      size: Size.fromRadius(44.kh),
-                                      child: Image(
-                                          height: 44.kh,
-                                          width: 44.kw,
-                                          fit: BoxFit.cover,
-                                          errorBuilder:
-                                              (context, error, stackTrace) {
-                                            return Image.asset(ImageConstant
-                                                .pngEmptyPassenger);
-                                          },
-                                          image: NetworkImage(
-                                              "${controller.userInfo.value.data?.profilePic?.url}"))),
-                                ),
+                                    child: SizedBox.fromSize(
+                                        size: Size.fromRadius(44.kh),
+                                        child: CommonImageView(
+                                            height: 44.kh,
+                                            width: 44.kw,
+                                            url:
+                                                "${controller.userInfo.value.data?.profilePic?.url}"))),
                               ).paddingOnly(bottom: 8.kh, top: 16.kh),
                               Text(
                                 controller.userInfo.value.data!.fullName ??
@@ -218,6 +160,7 @@ class ProfileView extends GetView<ProfileController> {
                                       text: "Ride history")
                                   .paddingOnly(bottom: 8.kh),
                               ProfileContainer(
+                                onTap: () => Get.toNamed(Routes.WALLET),
                                   image: ImageConstant.svgProfileWallet,
                                   text: "Wallet"),
                               ProfileContainer(
@@ -226,35 +169,38 @@ class ProfileView extends GetView<ProfileController> {
                                   image: ImageConstant.svgProfileDiscount,
                                   text: "Student Discount"),
                               ProfileContainer(
-                                  onTap: () => Get.bottomSheet(
-                                        Container(
-                                            padding: EdgeInsets.all(24.kh),
-                                            height: 317.kh,
-                                            width: 100.w,
-                                            decoration: BoxDecoration(
-                                                color: ColorUtil.kWhiteColor,
-                                                borderRadius: BorderRadius.only(
-                                                    topLeft:
-                                                        Radius.circular(40.kh),
-                                                    topRight: Radius.circular(
-                                                        40.kh))),
-                                            child: Column(
-                                              children: [
-                                                Text(
-                                                  'Refer a friend',
-                                                  style: TextStyleUtil
-                                                      .k18Semibold(),
-                                                ).paddingOnly(bottom: 8.kh),
-                                                Text(
-                                                  'Share your referral URL through:',
-                                                  style:
-                                                      TextStyleUtil.k14Semibold(
-                                                          color: ColorUtil
-                                                              .kBlack04),
-                                                ),
-                                              ],
-                                            )),
-                                      ),
+                                  // onTap: () => Get.bottomSheet(
+                                  //       Container(
+                                  //           padding: EdgeInsets.all(24.kh),
+                                  //           height: 317.kh,
+                                  //           width: 100.w,
+                                  //           decoration: BoxDecoration(
+                                  //               color: ColorUtil.kWhiteColor,
+                                  //               borderRadius: BorderRadius.only(
+                                  //                   topLeft:
+                                  //                       Radius.circular(40.kh),
+                                  //                   topRight: Radius.circular(
+                                  //                       40.kh))),
+                                  //           child: Column(
+                                  //             children: [
+                                  //               Text(
+                                  //                 'Refer a friend',
+                                  //                 style: TextStyleUtil
+                                  //                     .k18Semibold(),
+                                  //               ).paddingOnly(bottom: 8.kh),
+                                  //               Text(
+                                  //                 'Share your referral URL through:',
+                                  //                 style:
+                                  //                     TextStyleUtil.k14Semibold(
+                                  //                         color: ColorUtil
+                                  //                             .kBlack04),
+                                  //               ),
+                                  //             ],
+                                  //           )),
+                                  //     ),
+                                  onTap: () async {
+                                    await Share.share("Check this cool app!");
+                                  },
                                   image: ImageConstant.svgProfileRefer,
                                   text: "Refer a friend"),
                               ProfileContainer(

@@ -11,7 +11,7 @@ class GpProgress extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
         child: CircularProgressIndicator(
-      color: Get.find<HomeController>().isSwitched.value
+      color: Get.find<HomeController>().isPinkModeOn.value
           ? ColorUtil.kPrimary3PinkMode
           : ColorUtil.kPrimary01,
     ));

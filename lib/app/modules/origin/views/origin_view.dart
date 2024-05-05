@@ -55,7 +55,7 @@ class OriginView extends GetView<OriginController> {
                 prefix: Icon(
                   Icons.location_on,
                   size: 24.kh,
-                  color: Get.find<HomeController>().isSwitched.value
+                  color: Get.find<HomeController>().isPinkModeOn.value
                       ? ColorUtil.kPrimary3PinkMode
                       : ColorUtil.kSecondary01,
                 ),
@@ -81,7 +81,6 @@ class OriginView extends GetView<OriginController> {
                               onTap: () async {
                                 await controller.setLocationData(controller
                                     .addressSugestionList[index]['place_id']);
-
                                 // Get.back(
                                 //     result: controller.postRideModel.value);
                                 Get.back();

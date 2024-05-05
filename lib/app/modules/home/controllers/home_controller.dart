@@ -20,9 +20,9 @@ class HomeController extends GetxController {
   RxDouble longitude = 0.0.obs;
   var userInfo = UserInfoModel().obs;
   RxString welcomeText = "Welcome".obs;
-  RxBool isSwitched = false.obs;
+  RxBool isPinkModeOn = false.obs;
 
-  // RxBool isPink = Get.find<HomeController>().isSwitched.value.obs;
+  // RxBool isPink = Get.find<HomeController>().isPinkModeOn.value.obs;
 
   void changeTabIndex(int index) {
     selectedIndex.value = index;
@@ -31,7 +31,7 @@ class HomeController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
-    isSwitched.value = Get.find<GetStorageService>().isPinkMode;
+    isPinkModeOn.value = Get.find<GetStorageService>().isPinkMode;
     await _determinePosition().then((value) => {
           latitude.value = value.latitude,
           longitude.value = value.longitude,

@@ -5,6 +5,7 @@ import 'package:green_pool/app/modules/rider_my_ride_request/controllers/rider_m
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
+import '../../../components/common_image_view.dart';
 import '../../../components/gp_progress.dart';
 import '../../../components/green_pool_divider.dart';
 import '../../../components/origin_to_destination.dart';
@@ -27,7 +28,13 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
               ? Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Center(child: SvgPicture.asset(ImageConstant.svgNoRides)),
+                    Center(
+                      child: Get.find<HomeController>().isPinkModeOn.value
+                          ? CommonImageView(
+                              svgPath: ImageConstant.svgNoRidesPink,
+                            )
+                          : SvgPicture.asset(ImageConstant.svgNoRides),
+                    ),
                     Text(
                       "There are no rides between these two cities",
                       style: TextStyleUtil.k24Heading600(),
@@ -69,14 +76,13 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                   children: [
                                     Center(
                                       child: ClipRRect(
-                                        borderRadius:
-                                            BorderRadius.circular(8.kh),
-                                        child: Image(
-                                            height: 64.kh,
-                                            width: 64.kw,
-                                            image: NetworkImage(
-                                                "${controller.riderConfirmRequestModel.value.data![index]?.driverRideDetails![0]?.driverDetails?[0]?.profilePic?.url}")),
-                                      ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.kh),
+                                          child: CommonImageView(
+                                              height: 64.kh,
+                                              width: 64.kw,
+                                              url:
+                                                  "${controller.riderConfirmRequestModel.value.data![index]?.driverRideDetails![0]?.driverDetails?[0]?.profilePic?.url}")),
                                     ).paddingOnly(bottom: 8.kh),
                                     Positioned(
                                       top: 52.kh,
@@ -88,7 +94,7 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                             horizontal: 8.kw),
                                         decoration: BoxDecoration(
                                             color: Get.find<HomeController>()
-                                                    .isSwitched
+                                                    .isPinkModeOn
                                                     .value
                                                 ? ColorUtil.kPrimary3PinkMode
                                                 : ColorUtil.kSecondary01,
@@ -98,12 +104,11 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                           children: [
                                             Icon(
                                               Icons.star,
-                                              color:
-                                                  Get.find<HomeController>()
-                                                          .isSwitched
-                                                          .value
-                                                      ? ColorUtil.kWhiteColor
-                                                      : ColorUtil.kYellowColor,
+                                              color: Get.find<HomeController>()
+                                                      .isPinkModeOn
+                                                      .value
+                                                  ? ColorUtil.kWhiteColor
+                                                  : ColorUtil.kYellowColor,
                                               size: 12.kh,
                                             ).paddingOnly(right: 2.kw),
                                             Text(
@@ -121,12 +126,13 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                                   '0.0',
                                               overflow: TextOverflow.fade,
                                               style: TextStyleUtil.k12Semibold(
-                                                  color: Get.find<
-                                                              HomeController>()
-                                                          .isSwitched
-                                                          .value
-                                                      ? ColorUtil.kBlack02
-                                                      : ColorUtil.kWhiteColor),
+                                                  color:
+                                                      Get.find<HomeController>()
+                                                              .isPinkModeOn
+                                                              .value
+                                                          ? ColorUtil.kBlack02
+                                                          : ColorUtil
+                                                              .kWhiteColor),
                                             ),
                                           ],
                                         ),
@@ -174,7 +180,7 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                               ImageConstant.svgIconCalendarTime,
                                               colorFilter: ColorFilter.mode(
                                                   Get.find<HomeController>()
-                                                          .isSwitched
+                                                          .isPinkModeOn
                                                           .value
                                                       ? ColorUtil
                                                           .kPrimary3PinkMode
@@ -194,13 +200,11 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                             Icon(
                                               Icons.time_to_leave,
                                               size: 18.kh,
-                                              color:
-                                                  Get.find<HomeController>()
-                                                          .isSwitched
-                                                          .value
-                                                      ? ColorUtil
-                                                          .kPrimary3PinkMode
-                                                      : ColorUtil.kSecondary01,
+                                              color: Get.find<HomeController>()
+                                                      .isPinkModeOn
+                                                      .value
+                                                  ? ColorUtil.kPrimary3PinkMode
+                                                  : ColorUtil.kSecondary01,
                                             ).paddingOnly(right: 5.kw),
                                             Text(
                                               '${controller.riderConfirmRequestModel.value.data![index]?.driverRideDetails?[0]?.seatAvailable} seats',
@@ -398,7 +402,7 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                     //                                         ImageConstant
                                     //                                             .svgIconCalendarTime,
                                     //                                         colorFilter: ColorFilter.mode(
-                                    //                                             Get.find<HomeController>().isSwitched.value
+                                    //                                             Get.find<HomeController>().isPinkModeOn.value
                                     //                                                 ? ColorUtil.kPrimary3PinkMode
                                     //                                                 : ColorUtil.kSecondary01,
                                     //                                             BlendMode.srcIn),
@@ -421,7 +425,7 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                     //                                         size:
                                     //                                             16.kh,
                                     //                                         color: Get.find<HomeController>()
-                                    //                                                 .isSwitched
+                                    //                                                 .isPinkModeOn
                                     //                                                 .value
                                     //                                             ? ColorUtil
                                     //                                                 .kPrimary3PinkMode
@@ -533,7 +537,7 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                     //                                     BoxDecoration(
                                     //                                   color: Get.find<
                                     //                                               HomeController>()
-                                    //                                           .isSwitched
+                                    //                                           .isPinkModeOn
                                     //                                           .value
                                     //                                       ? ColorUtil
                                     //                                           .kPrimary3PinkMode
@@ -631,7 +635,7 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                     //                             width: 144.kw,
                                     //                             borderColor: Get.find<
                                     //                                         HomeController>()
-                                    //                                     .isSwitched
+                                    //                                     .isPinkModeOn
                                     //                                     .value
                                     //                                 ? ColorUtil
                                     //                                     .kPrimary3PinkMode
@@ -639,7 +643,7 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                     //                                     .kSecondary01,
                                     //                             labelColor: Get.find<
                                     //                                         HomeController>()
-                                    //                                     .isSwitched
+                                    //                                     .isPinkModeOn
                                     //                                     .value
                                     //                                 ? ColorUtil
                                     //                                     .kPrimary3PinkMode
@@ -668,12 +672,12 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                   fontSize: 14.kh,
                                   isBorder: true,
                                   borderColor: Get.find<HomeController>()
-                                          .isSwitched
+                                          .isPinkModeOn
                                           .value
                                       ? ColorUtil.kPrimary3PinkMode
                                       : ColorUtil.kSecondary01,
                                   labelColor: Get.find<HomeController>()
-                                          .isSwitched
+                                          .isPinkModeOn
                                           .value
                                       ? ColorUtil.kPrimary3PinkMode
                                       : ColorUtil.kSecondary01,

@@ -48,6 +48,7 @@ dependencies:
   flutter_local_notifications: ^17.0.0
   firebase_database: ^10.5.1
   confetti: ^0.7.0
+  share_plus: ^9.0.0
 
 dev_dependencies:
   flutter_lints: ^3.0.2
@@ -69,3 +70,4 @@ flutter:
     - assets/images/bottomnavbar/
     - assets/images/myrides/
     - assets/images/navigation/
+    - assets/images/wallet/

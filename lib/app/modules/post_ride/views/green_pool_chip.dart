@@ -45,7 +45,7 @@ class GreenPoolChip extends StatelessWidget {
                   SvgPicture.asset(
                     ImageConstant.svgIconLuggageFilled,
                     colorFilter: ColorFilter.mode(
-                        Get.find<HomeController>().isSwitched.value
+                        Get.find<HomeController>().isPinkModeOn.value
                             ? ColorUtil.kSecondary01
                             : ColorUtil.kWhiteColor,
                         BlendMode.srcIn),
@@ -62,11 +62,11 @@ class GreenPoolChip extends StatelessWidget {
           : const BorderSide(color: ColorUtil.kBlack06),
       labelStyle: selected
           ? TextStyleUtil.k14Regular(
-              color: Get.find<HomeController>().isSwitched.value
+              color: Get.find<HomeController>().isPinkModeOn.value
                   ? ColorUtil.kSecondary01
                   : ColorUtil.kWhiteColor)
           : TextStyleUtil.k14Regular(color: ColorUtil.kSecondary01),
-      selectedColor: Get.find<HomeController>().isSwitched.value
+      selectedColor: Get.find<HomeController>().isPinkModeOn.value
           ? ColorUtil.kPrimary3PinkMode
           : ColorUtil.kSecondary01,
       shape: RoundedRectangleBorder(

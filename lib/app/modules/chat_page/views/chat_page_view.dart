@@ -24,10 +24,10 @@ class ChatPageView extends GetView<ChatPageController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Get.find<HomeController>().isSwitched.value
+        backgroundColor: Get.find<HomeController>().isPinkModeOn.value
             ? ColorUtil.kPrimaryPinkMode
             : ColorUtil.kPrimary01,
-        surfaceTintColor: Get.find<HomeController>().isSwitched.value
+        surfaceTintColor: Get.find<HomeController>().isPinkModeOn.value
             ? ColorUtil.kPrimaryPinkMode
             : ColorUtil.kPrimary01,
         elevation: 1,

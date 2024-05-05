@@ -12,7 +12,6 @@ class GreenPoolTextField extends StatelessWidget {
   final Color? fillColor, hintColor;
   final bool? isSuffixNeeded;
   final InputBorder? border;
-  // final String? initialValue;
   final TextInputType? keyboardType;
   final bool? obscureText, readOnly;
   final Function(String?)? onchanged, onSaved;
@@ -36,7 +35,6 @@ class GreenPoolTextField extends StatelessWidget {
       this.onTap,
       this.autofocus,
       this.onPressedSuffix,
-      // this.initialValue,
       this.readOnly,
       this.autovalidateMode,
       this.onSaved,
@@ -54,6 +52,7 @@ class GreenPoolTextField extends StatelessWidget {
       style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack01),
       maxLines: maxLines ?? 1,
       onTap: onTap,
+      cursorColor: ColorUtil.kBlack01,
       onChanged: onchanged,
       validator: validator,
       autovalidateMode: autovalidateMode,
@@ -63,7 +62,6 @@ class GreenPoolTextField extends StatelessWidget {
       autofocus: autofocus ?? false,
       readOnly: readOnly ?? false,
       keyboardType: keyboardType ?? TextInputType.name,
-      // initialValue: initialValue,
       decoration: InputDecoration(
         suffixIcon: isSuffixNeeded ?? true
             ? Padding(
@@ -77,7 +75,7 @@ class GreenPoolTextField extends StatelessWidget {
               )
             : const SizedBox(),
         prefixIcon: Padding(
-          padding: EdgeInsets.only(left: 16.kw, right: 8.kw),
+          padding: EdgeInsets.only(left: 16.kw, right: 8.kw, top: 1.kh),
           child: prefix,
         ),
         suffixIconConstraints: BoxConstraints(minHeight: 24.kh),

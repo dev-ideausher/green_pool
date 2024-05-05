@@ -2,14 +2,45 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:get/get.dart';
+import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/services/dio/api_service.dart';
 
 class PushNotificationsController extends GetxController {
-  RxBool trips = true.obs;
-  RxBool alerts = true.obs;
-  RxBool payments = true.obs;
-  RxBool transactions = true.obs;
-  RxBool offers = true.obs;
+  RxBool trips = Get.find<HomeController>()
+      .userInfo
+      .value
+      .data!
+      .notificationPreferences!
+      .trip!
+      .obs;
+  RxBool alerts = Get.find<HomeController>()
+      .userInfo
+      .value
+      .data!
+      .notificationPreferences!
+      .alerts!
+      .obs;
+  RxBool payments = Get.find<HomeController>()
+      .userInfo
+      .value
+      .data!
+      .notificationPreferences!
+      .payments!
+      .obs;
+  RxBool transactions = Get.find<HomeController>()
+      .userInfo
+      .value
+      .data!
+      .notificationPreferences!
+      .transactions!
+      .obs;
+  RxBool offers = Get.find<HomeController>()
+      .userInfo
+      .value
+      .data!
+      .notificationPreferences!
+      .offers!
+      .obs;
 
   // @override
   // void onInit() {
@@ -41,6 +72,7 @@ class PushNotificationsController extends GetxController {
       final response =
           await APIManager.notificationPreferences(body: notiPrefData);
       var data = jsonDecode(response.toString());
+      print(data.toString());
       log(data.toString());
     } catch (e) {
       throw Exception(e);

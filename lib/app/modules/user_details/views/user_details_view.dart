@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:green_pool/app/components/common_image_view.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
@@ -58,26 +59,24 @@ class UserDetailsView extends GetView<UserDetailsController> {
                                     : ClipOval(
                                         child: SizedBox.fromSize(
                                           size: Size.fromRadius(50.kh),
-                                          child: Image(
+                                          child: CommonImageView(
                                             height: 50.kh,
                                             width: 50.kw,
-                                            fit: BoxFit.cover,
-                                            image: NetworkImage(
-                                              Get.find<ProfileController>()
-                                                      .userInfo
-                                                      .value
-                                                      .data
-                                                      ?.profilePic
-                                                      ?.url ??
-                                                  '',
-                                            ),
+                                            url: Get.find<ProfileController>()
+                                                    .userInfo
+                                                    .value
+                                                    .data
+                                                    ?.profilePic
+                                                    ?.url ??
+                                                '',
                                           ),
                                         ),
                                       ),
                           ),
                         ),
                         SvgPicture.asset(
-                          Get.find<HomeController>().isSwitched?.value ?? false
+                          Get.find<HomeController>().isPinkModeOn?.value ??
+                                  false
                               ? ImageConstant.svgPinkSetupAdd
                               : ImageConstant.svgSetupAdd,
                         ),
@@ -98,7 +97,7 @@ class UserDetailsView extends GetView<UserDetailsController> {
               suffix: SvgPicture.asset(
                 ImageConstant.svgProfileEditPen,
                 colorFilter: ColorFilter.mode(
-                  Get.find<HomeController>().isSwitched.value
+                  Get.find<HomeController>().isPinkModeOn.value
                       ? ColorUtil.kPrimary3PinkMode
                       : ColorUtil.kSecondary01,
                   BlendMode.srcIn,
@@ -166,16 +165,14 @@ class UserDetailsView extends GetView<UserDetailsController> {
                   child: controller.isIDPicUpdated?.value == true
                       ? Image.file(
                           controller.selectedIDImagePath?.value ?? File(''))
-                      : Image(
-                          image: NetworkImage(
-                            Get.find<ProfileController>()
-                                    .userInfo
-                                    .value
-                                    .data
-                                    ?.idPic
-                                    ?.url ??
-                                '',
-                          ),
+                      : CommonImageView(
+                          url: Get.find<ProfileController>()
+                                  .userInfo
+                                  .value
+                                  .data
+                                  ?.idPic
+                                  ?.url ??
+                              '',
                         ),
                 ),
               ),

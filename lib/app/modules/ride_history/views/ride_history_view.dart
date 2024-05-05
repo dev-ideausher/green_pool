@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
+import 'package:green_pool/app/components/common_image_view.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
@@ -131,10 +132,9 @@ class RideHistoryView extends GetView<RideHistoryController> {
                                                                     ImageConstant
                                                                         .pngEmptyPassenger,
                                                                   )
-                                                                : Image(
-                                                                    image: NetworkImage(
+                                                                : CommonImageView(
+                                                                    url:
                                                                         "${controller.rideHistModel.value.data?[index]?.driverBookingDetails?[0]?.riders?[index1]?.profilePic?.url}"),
-                                                                  ),
                                                           ),
                                                         ),
                                                       ).paddingOnly(
@@ -151,7 +151,7 @@ class RideHistoryView extends GetView<RideHistoryController> {
                                                       .svgIconCalendarTime,
                                                   colorFilter: ColorFilter.mode(
                                                       Get.find<HomeController>()
-                                                              .isSwitched
+                                                              .isPinkModeOn
                                                               .value
                                                           ? ColorUtil
                                                               .kPrimary3PinkMode
@@ -217,10 +217,9 @@ class RideHistoryView extends GetView<RideHistoryController> {
                                                           const BoxDecoration(
                                                         shape: BoxShape.circle,
                                                       ),
-                                                      child: Image(
-                                                        image: NetworkImage(
-                                                            "${controller.rideHistModel.value.data?[index]?.driverBookingDetails?[0]?.driverDetails?[0]?.profilePic?.url}"),
-                                                      ),
+                                                      child: CommonImageView(
+                                                          url:
+                                                              "${controller.rideHistModel.value.data?[index]?.driverBookingDetails?[0]?.driverDetails?[0]?.profilePic?.url}"),
                                                     ).paddingOnly(bottom: 8.kh),
                                                     Positioned(
                                                       top: 52.kh,
@@ -235,7 +234,7 @@ class RideHistoryView extends GetView<RideHistoryController> {
                                                         decoration: BoxDecoration(
                                                             color: Get.find<
                                                                         HomeController>()
-                                                                    .isSwitched
+                                                                    .isPinkModeOn
                                                                     .value
                                                                 ? ColorUtil
                                                                     .kPrimary3PinkMode
@@ -251,7 +250,7 @@ class RideHistoryView extends GetView<RideHistoryController> {
                                                               Icons.star,
                                                               color: Get.find<
                                                                           HomeController>()
-                                                                      .isSwitched
+                                                                      .isPinkModeOn
                                                                       .value
                                                                   ? ColorUtil
                                                                       .kWhiteColor
@@ -266,7 +265,7 @@ class RideHistoryView extends GetView<RideHistoryController> {
                                                               style: TextStyleUtil.k12Semibold(
                                                                   color: Get.find<
                                                                               HomeController>()
-                                                                          .isSwitched
+                                                                          .isPinkModeOn
                                                                           .value
                                                                       ? ColorUtil
                                                                           .kBlack02
@@ -307,7 +306,7 @@ class RideHistoryView extends GetView<RideHistoryController> {
                                                                     .svgIconCalendarTime,
                                                                 colorFilter: ColorFilter.mode(
                                                                     Get.find<HomeController>()
-                                                                            .isSwitched
+                                                                            .isPinkModeOn
                                                                             .value
                                                                         ? ColorUtil
                                                                             .kPrimary3PinkMode
@@ -335,7 +334,7 @@ class RideHistoryView extends GetView<RideHistoryController> {
                                                                 size: 18.kh,
                                                                 color: Get.find<
                                                                             HomeController>()
-                                                                        .isSwitched
+                                                                        .isPinkModeOn
                                                                         .value
                                                                     ? ColorUtil
                                                                         .kPrimary3PinkMode

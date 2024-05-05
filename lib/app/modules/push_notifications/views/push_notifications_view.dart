@@ -38,13 +38,13 @@ class PushNotificationsView extends GetView<PushNotificationsController> {
                   child: Obx(
                     () => Checkbox(
                       side: BorderSide(
-                        color: Get.find<HomeController>().isSwitched.value
+                        color: Get.find<HomeController>().isPinkModeOn.value
                             ? ColorUtil.kPrimary3PinkMode
                             : ColorUtil.kSecondary01,
                       ),
                       splashRadius: 4.kh,
                       value: controller.trips.value,
-                      activeColor: Get.find<HomeController>().isSwitched.value
+                      activeColor: Get.find<HomeController>().isPinkModeOn.value
                           ? ColorUtil.kPrimary3PinkMode
                           : ColorUtil.kPrimary01,
                       onChanged: (value) {
@@ -68,13 +68,13 @@ class PushNotificationsView extends GetView<PushNotificationsController> {
                   child: Obx(
                     () => Checkbox(
                       side: BorderSide(
-                        color: Get.find<HomeController>().isSwitched.value
+                        color: Get.find<HomeController>().isPinkModeOn.value
                             ? ColorUtil.kPrimary3PinkMode
                             : ColorUtil.kSecondary01,
                       ),
                       splashRadius: 4.kh,
                       value: controller.alerts.value,
-                      activeColor: Get.find<HomeController>().isSwitched.value
+                      activeColor: Get.find<HomeController>().isPinkModeOn.value
                           ? ColorUtil.kPrimary3PinkMode
                           : ColorUtil.kPrimary01,
                       onChanged: (value) {
@@ -98,13 +98,13 @@ class PushNotificationsView extends GetView<PushNotificationsController> {
                   child: Obx(
                     () => Checkbox(
                       side: BorderSide(
-                        color: Get.find<HomeController>().isSwitched.value
+                        color: Get.find<HomeController>().isPinkModeOn.value
                             ? ColorUtil.kPrimary3PinkMode
                             : ColorUtil.kSecondary01,
                       ),
                       splashRadius: 4.kh,
                       value: controller.payments.value,
-                      activeColor: Get.find<HomeController>().isSwitched.value
+                      activeColor: Get.find<HomeController>().isPinkModeOn.value
                           ? ColorUtil.kPrimary3PinkMode
                           : ColorUtil.kPrimary01,
                       onChanged: (value) {
@@ -128,13 +128,13 @@ class PushNotificationsView extends GetView<PushNotificationsController> {
                   child: Obx(
                     () => Checkbox(
                       side: BorderSide(
-                        color: Get.find<HomeController>().isSwitched.value
+                        color: Get.find<HomeController>().isPinkModeOn.value
                             ? ColorUtil.kPrimary3PinkMode
                             : ColorUtil.kSecondary01,
                       ),
                       splashRadius: 4.kh,
                       value: controller.transactions.value,
-                      activeColor: Get.find<HomeController>().isSwitched.value
+                      activeColor: Get.find<HomeController>().isPinkModeOn.value
                           ? ColorUtil.kPrimary3PinkMode
                           : ColorUtil.kPrimary01,
                       onChanged: (value) {
@@ -158,13 +158,13 @@ class PushNotificationsView extends GetView<PushNotificationsController> {
                   child: Obx(
                     () => Checkbox(
                       side: BorderSide(
-                        color: Get.find<HomeController>().isSwitched.value
+                        color: Get.find<HomeController>().isPinkModeOn.value
                             ? ColorUtil.kPrimary3PinkMode
                             : ColorUtil.kSecondary01,
                       ),
                       splashRadius: 4.kh,
                       value: controller.offers.value,
-                      activeColor: Get.find<HomeController>().isSwitched.value
+                      activeColor: Get.find<HomeController>().isPinkModeOn.value
                           ? ColorUtil.kPrimary3PinkMode
                           : ColorUtil.kPrimary01,
                       onChanged: (value) {

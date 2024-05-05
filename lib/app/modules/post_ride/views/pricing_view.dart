@@ -86,7 +86,7 @@ class PricingView extends GetView<PostRideController> {
                               controller: controller.priceTextController,
                               prefix: Text(
                                 '\$',
-                                style: TextStyleUtil.k14Regular(
+                                style: TextStyleUtil.k16Regular(
                                   color: ColorUtil.kBlack03,
                                 ),
                               ),

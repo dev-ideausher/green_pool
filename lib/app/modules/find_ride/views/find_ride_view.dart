@@ -47,7 +47,7 @@ class FindRideView extends GetView<FindRideController> {
               prefix: Icon(
                 Icons.location_on,
                 size: 24.kh,
-                color: Get.find<HomeController>().isSwitched.value
+                color: Get.find<HomeController>().isPinkModeOn.value
                     ? ColorUtil.kPrimary3PinkMode
                     : ColorUtil.kSecondary01,
               ),
@@ -67,7 +67,7 @@ class FindRideView extends GetView<FindRideController> {
               prefix: Icon(
                 Icons.location_on,
                 size: 24.kh,
-                color: Get.find<HomeController>().isSwitched.value
+                color: Get.find<HomeController>().isPinkModeOn.value
                     ? ColorUtil.kPrimary3PinkMode
                     : ColorUtil.kSecondary01,
               ),
@@ -94,6 +94,7 @@ class FindRideView extends GetView<FindRideController> {
                   child: GreenPoolTextField(
                     hintText: 'Enter Date',
                     controller: controller.departureDate,
+                    isSuffixNeeded: false,
                     readOnly: true,
                     onTap: () {
                       controller.setDate(context);
@@ -101,7 +102,7 @@ class FindRideView extends GetView<FindRideController> {
                     prefix: SvgPicture.asset(
                       ImageConstant.svgIconCalendarClear,
                       colorFilter: ColorFilter.mode(
-                          Get.find<HomeController>().isSwitched.value
+                          Get.find<HomeController>().isPinkModeOn.value
                               ? ColorUtil.kPrimary3PinkMode
                               : ColorUtil.kSecondary01,
                           BlendMode.srcIn),
@@ -120,12 +121,12 @@ class FindRideView extends GetView<FindRideController> {
                     prefix: SvgPicture.asset(
                       ImageConstant.svgIconTime,
                       colorFilter: ColorFilter.mode(
-                          Get.find<HomeController>().isSwitched.value
+                          Get.find<HomeController>().isPinkModeOn.value
                               ? ColorUtil.kPrimary3PinkMode
                               : ColorUtil.kSecondary01,
                           BlendMode.srcIn),
                     ),
-                  ),
+                  ).paddingOnly(top: 8.kh, bottom: 16.kh),
                 ),
               ],
             ).paddingOnly(bottom: 16.kh),
@@ -140,7 +141,7 @@ class FindRideView extends GetView<FindRideController> {
               },
               prefix: Icon(
                 Icons.time_to_leave,
-                color: Get.find<HomeController>().isSwitched.value
+                color: Get.find<HomeController>().isPinkModeOn.value
                     ? ColorUtil.kPrimary3PinkMode
                     : ColorUtil.kSecondary01,
               ),

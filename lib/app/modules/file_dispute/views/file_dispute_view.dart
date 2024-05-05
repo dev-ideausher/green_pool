@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
+import 'package:green_pool/app/components/common_image_view.dart';
 import 'package:green_pool/app/components/gp_progress.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
@@ -91,24 +92,23 @@ class FileDisputeView extends GetView<FileDisputeController> {
                                               child: ClipOval(
                                                 child: SizedBox.fromSize(
                                                   size: Size.fromRadius(12.kh),
-                                                  child: controller
-                                                              .rideHistModel
-                                                              .value
-                                                              .data?[index]
-                                                              ?.driverBookingDetails?[
-                                                                  0]
-                                                              ?.riders
-                                                              ?.length ==
+                                                  child: (controller
+                                                                  .rideHistModel
+                                                                  .value
+                                                                  .data?[index]
+                                                                  ?.driverBookingDetails?[
+                                                                      0]
+                                                                  ?.riders
+                                                                  ?.length ??
+                                                              0) ==
                                                           0
                                                       ? Image.asset(
                                                           ImageConstant
                                                               .pngEmptyPassenger,
                                                         )
-                                                      : Image(
-                                                          fit: BoxFit.cover,
-                                                          image: NetworkImage(
+                                                      : CommonImageView(
+                                                          url:
                                                               "${controller.rideHistModel.value.data?[index]?.driverBookingDetails?[0]?.riders?[index1]?.profilePic?.url}"),
-                                                        ),
                                                 ),
                                               ),
                                             ).paddingOnly(right: 4.kw);
@@ -123,7 +123,7 @@ class FileDisputeView extends GetView<FileDisputeController> {
                                         ImageConstant.svgIconCalendarTime,
                                         colorFilter: ColorFilter.mode(
                                             Get.find<HomeController>()
-                                                    .isSwitched
+                                                    .isPinkModeOn
                                                     .value
                                                 ? ColorUtil.kPrimary3PinkMode
                                                 : ColorUtil.kSecondary01,
@@ -163,12 +163,12 @@ class FileDisputeView extends GetView<FileDisputeController> {
                                     padding: EdgeInsets.all(8.kh),
                                     fontSize: 14.kh,
                                     borderColor: Get.find<HomeController>()
-                                            .isSwitched
+                                            .isPinkModeOn
                                             .value
                                         ? ColorUtil.kPrimary3PinkMode
                                         : ColorUtil.kSecondary01,
                                     labelColor: Get.find<HomeController>()
-                                            .isSwitched
+                                            .isPinkModeOn
                                             .value
                                         ? ColorUtil.kPrimary3PinkMode
                                         : ColorUtil.kSecondary01,

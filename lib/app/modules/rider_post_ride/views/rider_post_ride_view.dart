@@ -50,7 +50,7 @@ class RiderPostRideView extends GetView<RiderPostRideController> {
                         right: 0,
                         bottom: 0,
                         child: SvgPicture.asset(
-                          Get.find<HomeController>().isSwitched.value
+                          Get.find<HomeController>().isPinkModeOn.value
                               ? ImageConstant.svgPinkRiderDriving
                               : ImageConstant.svgRiderDriving,
                         )),
@@ -100,7 +100,7 @@ class RiderPostRideView extends GetView<RiderPostRideController> {
                         right: 0,
                         bottom: 0,
                         child: SvgPicture.asset(
-                          Get.find<HomeController>().isSwitched.value
+                          Get.find<HomeController>().isPinkModeOn.value
                               ? ImageConstant.svgPinkRiderNeedRide
                               : ImageConstant.svgRiderNeedRide,
                         )),

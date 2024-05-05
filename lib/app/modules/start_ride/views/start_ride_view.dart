@@ -107,10 +107,8 @@ class StartRideView extends GetView<StartRideController> {
                                       ? Image.asset(
                                           ImageConstant.pngEmptyPassenger,
                                         )
-                                      : Image(
-                                          image: NetworkImage(
-                                              "${rider?.profilePic?.url}"),
-                                        ),
+                                      : CommonImageView(
+                                          url: "${rider?.profilePic?.url}"),
                                 ),
                               ),
                             ).paddingOnly(right: 4.kw);

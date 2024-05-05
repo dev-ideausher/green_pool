@@ -9,7 +9,7 @@ import '../../../routes/app_pages.dart';
 import '../../../services/storage.dart';
 
 class ProfileController extends GetxController {
-  RxBool isPinkMode = Get.find<HomeController>().isSwitched;
+  RxBool isPinkMode = Get.find<HomeController>().isPinkModeOn;
   var userInfo = Get.find<HomeController>().userInfo;
 
   // @override

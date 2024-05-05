@@ -1,12 +1,6 @@
-// ignore_for_file: avoid_print
-
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
-import 'package:green_pool/app/modules/messages/controllers/messages_controller.dart';
-import 'package:green_pool/app/modules/my_rides_page/controllers/my_rides_page_controller.dart';
 import 'package:green_pool/app/modules/profile/controllers/profile_controller.dart';
 import 'package:green_pool/app/services/snackbar.dart';
 import 'package:stacked_firebase_auth/stacked_firebase_auth.dart';
@@ -55,7 +49,7 @@ class VerifyController extends GetxController {
         showMySnackbar(msg: "Error saving user data");
       }
     } catch (e) {
-      print('otp error: $e');
+      debugPrint('otp error: $e');
     }
   }
 
@@ -67,6 +61,8 @@ class VerifyController extends GetxController {
       Get.find<GetStorageService>().profilePicUrl =
           userInfo.data?.profilePic?.url ?? "";
       Get.find<GetStorageService>().isPinkMode =
+          userInfo.data?.pinkMode ?? false;
+      Get.find<HomeController>().isPinkModeOn.value =
           userInfo.data?.pinkMode ?? false;
       //? here if the profileStatus is not true which means it is a new user or the user did not fill the entire user data, so the user will be automatically redirected to the Profile Setup
       if (fromNavBar) {
@@ -115,7 +111,7 @@ class VerifyController extends GetxController {
         }
       }
     } catch (e) {
-      log("error: $e");
+      debugPrint("login error: $e");
     }
   }
 }

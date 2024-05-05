@@ -128,10 +128,11 @@ class CreateAccountView extends GetView<CreateAccountController> {
                           style: TextStyleUtil.k12Regular(),
                         ),
                         TextSpan(
-                          text: 'Privacy policy',
-                          style: TextStyleUtil.k12Semibold(
-                              color: ColorUtil.kSecondary03),
-                        ),
+                            text: 'Privacy policy',
+                            style: TextStyleUtil.k12Semibold(
+                                color: ColorUtil.kSecondary03),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () => Get.to(const TermsView())),
                       ],
                     ),
                   ),

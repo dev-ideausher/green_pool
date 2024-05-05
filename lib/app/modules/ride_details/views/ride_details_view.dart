@@ -5,6 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
+import 'package:green_pool/app/components/common_image_view.dart';
 import 'package:green_pool/app/components/green_pool_divider.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/services/colors.dart';
@@ -31,7 +32,7 @@ class RideDetailsView extends GetView<RideDetailsController> {
           Container(
             padding: EdgeInsets.all(16.kh),
             decoration: BoxDecoration(
-                color: Get.find<HomeController>().isSwitched.value
+                color: Get.find<HomeController>().isPinkModeOn.value
                     ? ColorUtil.kSecondaryPinkMode
                     : ColorUtil.kSecondary07,
                 borderRadius: BorderRadius.circular(8.kh)),
@@ -66,9 +67,9 @@ class RideDetailsView extends GetView<RideDetailsController> {
                               decoration: const BoxDecoration(
                                 shape: BoxShape.circle,
                               ),
-                              child: Image(
-                                  image: NetworkImage(
-                                      "${controller.rideHistory.value.driverBookingDetails?[0]?.driverDetails?[0]?.profilePic?.url}")))
+                              child: CommonImageView(
+                                  url:
+                                      "${controller.rideHistory.value.driverBookingDetails?[0]?.driverDetails?[0]?.profilePic?.url}"))
                           .paddingOnly(bottom: 8.kh),
                       Positioned(
                         top: 52.kh,
@@ -78,16 +79,17 @@ class RideDetailsView extends GetView<RideDetailsController> {
                           height: 20.kh,
                           padding: EdgeInsets.symmetric(horizontal: 8.kw),
                           decoration: BoxDecoration(
-                              color: Get.find<HomeController>().isSwitched.value
-                                  ? ColorUtil.kPrimary3PinkMode
-                                  : ColorUtil.kSecondary01,
+                              color:
+                                  Get.find<HomeController>().isPinkModeOn.value
+                                      ? ColorUtil.kPrimary3PinkMode
+                                      : ColorUtil.kSecondary01,
                               borderRadius: BorderRadius.circular(16.kh)),
                           child: Row(
                             children: [
                               Icon(
                                 Icons.star,
                                 color: Get.find<HomeController>()
-                                        .isSwitched
+                                        .isPinkModeOn
                                         .value
                                     ? ColorUtil.kWhiteColor
                                     : ColorUtil.kYellowColor,
@@ -97,7 +99,7 @@ class RideDetailsView extends GetView<RideDetailsController> {
                                 '${controller.rideHistory.value.driverBookingDetails?[0]?.driverDetails?[0]?.rating!.toStringAsFixed(1)}',
                                 style: TextStyleUtil.k12Semibold(
                                     color: Get.find<HomeController>()
-                                            .isSwitched
+                                            .isPinkModeOn
                                             .value
                                         ? ColorUtil.kBlack02
                                         : ColorUtil.kWhiteColor),
@@ -149,7 +151,7 @@ class RideDetailsView extends GetView<RideDetailsController> {
                                   ImageConstant.svgIconCalendarTime,
                                   colorFilter: ColorFilter.mode(
                                       Get.find<HomeController>()
-                                              .isSwitched
+                                              .isPinkModeOn
                                               .value
                                           ? ColorUtil.kPrimary3PinkMode
                                           : ColorUtil.kSecondary01,
@@ -170,7 +172,7 @@ class RideDetailsView extends GetView<RideDetailsController> {
                                   Icons.time_to_leave,
                                   size: 18.kh,
                                   color: Get.find<HomeController>()
-                                          .isSwitched
+                                          .isPinkModeOn
                                           .value
                                       ? ColorUtil.kPrimary3PinkMode
                                       : ColorUtil.kSecondary01,
@@ -279,12 +281,11 @@ class RideDetailsView extends GetView<RideDetailsController> {
                               shape: BoxShape.circle,
                             ),
                             child: ClipOval(
-                              child: SizedBox.fromSize(
-                                  size: Size.fromRadius(20.kh),
-                                  child: Image(
-                                      image: NetworkImage(
-                                          "${controller.rideHistory.value.driverBookingDetails?[0]?.riders?[index]?.profilePic?.url}"))),
-                            ),
+                                child: SizedBox.fromSize(
+                                    size: Size.fromRadius(20.kh),
+                                    child: CommonImageView(
+                                        url:
+                                            "${controller.rideHistory.value.driverBookingDetails?[0]?.riders?[index]?.profilePic?.url}"))),
                           ).paddingOnly(bottom: 4.kh),
                           Text(
                             "${controller.rideHistory.value.driverBookingDetails?[0]?.riders?[index]?.fullName.toString().split(" ").first}\n${controller.rideHistory.value.driverBookingDetails?[0]?.riders?[index]?.fullName.toString().split(" ").last}",
@@ -306,12 +307,12 @@ class RideDetailsView extends GetView<RideDetailsController> {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(8.kh),
-                child: Image(
-                  height: 64.kh,
-                  width: 64.kw,
-                  image: NetworkImage(
-                      "${controller.rideHistory.value.driverBookingDetails?[0]?.driverDetails?[0]?.vechileDetails?[0]?.vehiclePic?.url}"),
-                ).paddingOnly(right: 8.kh),
+                child: CommonImageView(
+                        height: 64.kh,
+                        width: 64.kw,
+                        url:
+                            "${controller.rideHistory.value.driverBookingDetails?[0]?.driverDetails?[0]?.vechileDetails?[0]?.vehiclePic?.url}")
+                    .paddingOnly(right: 8.kh),
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

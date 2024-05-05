@@ -52,10 +52,10 @@ class RiderMyRidesView extends GetView<MyRidesOneTimeController> {
     //                         decoration: const BoxDecoration(
     //                           shape: BoxShape.circle,
     //                         ),
-    //                         child: Image(
-    //                           image: NetworkImage(
+    //                         child: CommonImageView(
+    //                           url:
     //                               "${controller.myRidesModelData[index].confirmDriverDetails?[0]?.driverPostsDetails?[0]?.driverDetails?[0]?.profilePic?.url}"),
-    //                         ),
+    //
     //                       ).paddingOnly(bottom: 8.kh),
     //                       Positioned(
     //                         top: 52.kh,
@@ -66,7 +66,7 @@ class RiderMyRidesView extends GetView<MyRidesOneTimeController> {
     //                           padding: EdgeInsets.symmetric(horizontal: 8.kw),
     //                           decoration: BoxDecoration(
     //                               color: Get.find<ProfileController>()
-    //                                       .isSwitched
+    //                                       .isPinkModeOn
     //                                       .value
     //                                   ? ColorUtil.kPrimary3PinkMode
     //                                   : ColorUtil.kSecondary01,
@@ -76,7 +76,7 @@ class RiderMyRidesView extends GetView<MyRidesOneTimeController> {
     //                               Icon(
     //                                 Icons.star,
     //                                 color: Get.find<ProfileController>()
-    //                                         .isSwitched
+    //                                         .isPinkModeOn
     //                                         .value
     //                                     ? ColorUtil.kWhiteColor
     //                                     : ColorUtil.kYellowColor,
@@ -86,7 +86,7 @@ class RiderMyRidesView extends GetView<MyRidesOneTimeController> {
     //                                 '4.5',
     //                                 style: TextStyleUtil.k12Semibold(
     //                                     color: Get.find<ProfileController>()
-    //                                             .isSwitched
+    //                                             .isPinkModeOn
     //                                             .value
     //                                         ? ColorUtil.kBlack02
     //                                         : ColorUtil.kWhiteColor),
@@ -139,7 +139,7 @@ class RiderMyRidesView extends GetView<MyRidesOneTimeController> {
     //                                   ImageConstant.svgIconCalendarTime,
     //                                   colorFilter: ColorFilter.mode(
     //                                       Get.find<ProfileController>()
-    //                                               .isSwitched
+    //                                               .isPinkModeOn
     //                                               .value
     //                                           ? ColorUtil.kPrimary3PinkMode
     //                                           : ColorUtil.kSecondary01,
@@ -159,7 +159,7 @@ class RiderMyRidesView extends GetView<MyRidesOneTimeController> {
     //                                   Icons.time_to_leave,
     //                                   size: 18.kh,
     //                                   color: Get.find<ProfileController>()
-    //                                           .isSwitched
+    //                                           .isPinkModeOn
     //                                           .value
     //                                       ? ColorUtil.kPrimary3PinkMode
     //                                       : ColorUtil.kSecondary01,
@@ -190,7 +190,7 @@ class RiderMyRidesView extends GetView<MyRidesOneTimeController> {
     //                       : SvgPicture.asset(
     //                           ImageConstant.svgIconCalendarTime,
     //                           colorFilter: ColorFilter.mode(
-    //                               Get.find<HomeController>().isSwitched.value
+    //                               Get.find<HomeController>().isPinkModeOn.value
     //                                   ? ColorUtil.kPrimary3PinkMode
     //                                   : ColorUtil.kSecondary01,
     //                               BlendMode.srcIn),
@@ -233,11 +233,11 @@ class RiderMyRidesView extends GetView<MyRidesOneTimeController> {
     //                     label: 'View Details',
     //                     fontSize: 14.kh,
     //                     borderColor:
-    //                         Get.find<HomeController>().isSwitched.value
+    //                         Get.find<HomeController>().isPinkModeOn.value
     //                             ? ColorUtil.kPrimary3PinkMode
     //                             : ColorUtil.kSecondary01,
     //                     labelColor:
-    //                         Get.find<HomeController>().isSwitched.value
+    //                         Get.find<HomeController>().isPinkModeOn.value
     //                             ? ColorUtil.kPrimary3PinkMode
     //                             : ColorUtil.kSecondary01,
     //                   ),
@@ -255,11 +255,11 @@ class RiderMyRidesView extends GetView<MyRidesOneTimeController> {
     //                     label: 'Cancel Ride',
     //                     fontSize: 14.kh,
     //                     borderColor:
-    //                         Get.find<HomeController>().isSwitched.value
+    //                         Get.find<HomeController>().isPinkModeOn.value
     //                             ? ColorUtil.kPrimary3PinkMode
     //                             : ColorUtil.kSecondary01,
     //                     labelColor:
-    //                         Get.find<HomeController>().isSwitched.value
+    //                         Get.find<HomeController>().isPinkModeOn.value
     //                             ? ColorUtil.kPrimary3PinkMode
     //                             : ColorUtil.kSecondary01,
     //                   ),

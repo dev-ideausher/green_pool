@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 class TextStyleUtil {
@@ -53,7 +54,7 @@ class TextStyleUtil {
 
   //Manrope
   static k18Regular({
-    Color color = Colors.black,
+    Color color = ColorUtil.kBlack01,
     FontWeight fontWeight = FontWeight.w400,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
@@ -68,7 +69,7 @@ class TextStyleUtil {
   }
 
   static k18Semibold({
-    Color color = Colors.black,
+    Color color = ColorUtil.kBlack01,
     FontWeight fontWeight = FontWeight.w500,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
@@ -83,7 +84,7 @@ class TextStyleUtil {
   }
 
   static k18Bold({
-    Color color = Colors.black,
+    Color color = ColorUtil.kBlack01,
     FontWeight fontWeight = FontWeight.w600,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
@@ -98,7 +99,7 @@ class TextStyleUtil {
   }
 
   static k18Medium({
-    Color color = Colors.black,
+    Color color = ColorUtil.kBlack01,
     FontWeight fontWeight = FontWeight.w600,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
@@ -113,7 +114,7 @@ class TextStyleUtil {
   }
 
   static k16Regular({
-    Color color = Colors.black,
+    Color color = ColorUtil.kBlack01,
     FontWeight fontWeight = FontWeight.w400,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
@@ -128,7 +129,7 @@ class TextStyleUtil {
   }
 
   static k16Medium({
-    Color color = Colors.black,
+    Color color = ColorUtil.kBlack01,
     FontWeight fontWeight = FontWeight.w600,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
@@ -143,7 +144,7 @@ class TextStyleUtil {
   }
 
   static k16Semibold({
-    Color color = Colors.black,
+    Color color = ColorUtil.kBlack01,
     FontWeight fontWeight = FontWeight.w500,
     required double fontSize,
     TextDecoration textDecoration = TextDecoration.none,
@@ -159,7 +160,7 @@ class TextStyleUtil {
   }
 
   static k16Bold({
-    Color color = Colors.black,
+    Color color = ColorUtil.kBlack01,
     FontWeight fontWeight = FontWeight.w600,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
@@ -174,7 +175,7 @@ class TextStyleUtil {
   }
 
   static k14Regular({
-    Color color = Colors.black,
+    Color color = ColorUtil.kBlack01,
     FontWeight fontWeight = FontWeight.w400,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
@@ -189,7 +190,7 @@ class TextStyleUtil {
   }
 
   static k14Medium({
-    Color color = Colors.black,
+    Color color = ColorUtil.kBlack01,
     FontWeight fontWeight = FontWeight.w600,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
@@ -204,7 +205,7 @@ class TextStyleUtil {
   }
 
   static k14Semibold({
-    Color color = Colors.black,
+    Color color = ColorUtil.kBlack01,
     FontWeight fontWeight = FontWeight.w500,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
@@ -219,7 +220,7 @@ class TextStyleUtil {
   }
 
   static k14Bold({
-    Color color = Colors.black,
+    Color color = ColorUtil.kBlack01,
     FontWeight fontWeight = FontWeight.w600,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
@@ -234,7 +235,7 @@ class TextStyleUtil {
   }
 
   static k12Regular({
-    Color color = Colors.black,
+    Color color = ColorUtil.kBlack01,
     FontWeight fontWeight = FontWeight.w400,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
@@ -249,7 +250,7 @@ class TextStyleUtil {
   }
 
   static k12Medium({
-    Color color = Colors.black,
+    Color color = ColorUtil.kBlack01,
     FontWeight fontWeight = FontWeight.w600,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
@@ -264,7 +265,7 @@ class TextStyleUtil {
   }
 
   static k12Semibold({
-    Color color = Colors.black,
+    Color color = ColorUtil.kBlack01,
     FontWeight fontWeight = FontWeight.w500,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
@@ -279,7 +280,7 @@ class TextStyleUtil {
   }
 
   static k12Bold({
-    Color color = Colors.black,
+    Color color = ColorUtil.kBlack01,
     FontWeight fontWeight = FontWeight.w600,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
@@ -294,7 +295,7 @@ class TextStyleUtil {
   }
 
   static k10Regular({
-    Color color = Colors.black,
+    Color color = ColorUtil.kBlack01,
     FontWeight fontWeight = FontWeight.w400,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
@@ -309,7 +310,7 @@ class TextStyleUtil {
   }
 
   static k10Medium({
-    Color color = Colors.black,
+    Color color = ColorUtil.kBlack01,
     FontWeight fontWeight = FontWeight.w600,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
@@ -324,7 +325,7 @@ class TextStyleUtil {
   }
 
   static k10Semibold({
-    Color color = Colors.black,
+    Color color = ColorUtil.kBlack01,
     FontWeight fontWeight = FontWeight.w500,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
@@ -339,7 +340,7 @@ class TextStyleUtil {
   }
 
   static k10Bold({
-    Color color = Colors.black,
+    Color color = ColorUtil.kBlack01,
     FontWeight fontWeight = FontWeight.w600,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
@@ -354,7 +355,7 @@ class TextStyleUtil {
   }
 
   static k18Heading700({
-    Color color = Colors.black,
+    Color color = ColorUtil.kBlack01,
     FontWeight fontWeight = FontWeight.w700,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
@@ -369,7 +370,7 @@ class TextStyleUtil {
   }
 
   static k20Heading700({
-    Color color = Colors.black,
+    Color color = ColorUtil.kBlack01,
     FontWeight fontWeight = FontWeight.w700,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
@@ -384,7 +385,7 @@ class TextStyleUtil {
   }
 
   static k24Heading700({
-    Color color = Colors.black,
+    Color color = ColorUtil.kBlack01,
     FontWeight fontWeight = FontWeight.w700,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
@@ -399,7 +400,7 @@ class TextStyleUtil {
   }
 
   static k32Heading700({
-    Color color = Colors.black,
+    Color color = ColorUtil.kBlack01,
     FontWeight fontWeight = FontWeight.w700,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
@@ -414,7 +415,7 @@ class TextStyleUtil {
   }
 
   static k40Heading700({
-    Color color = Colors.black,
+    Color color = ColorUtil.kBlack01,
     FontWeight fontWeight = FontWeight.w700,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
@@ -429,7 +430,7 @@ class TextStyleUtil {
   }
 
   static k48Heading700({
-    Color color = Colors.black,
+    Color color = ColorUtil.kBlack01,
     FontWeight fontWeight = FontWeight.w700,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
@@ -444,7 +445,7 @@ class TextStyleUtil {
   }
 
   static k18Heading600({
-    Color color = Colors.black,
+    Color color = ColorUtil.kBlack01,
     FontWeight fontWeight = FontWeight.w600,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
@@ -459,7 +460,7 @@ class TextStyleUtil {
   }
 
   static k20Heading600({
-    Color color = Colors.black,
+    Color color = ColorUtil.kBlack01,
     FontWeight fontWeight = FontWeight.w600,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
@@ -474,7 +475,7 @@ class TextStyleUtil {
   }
 
   static k24Heading600({
-    Color color = Colors.black,
+    Color color = ColorUtil.kBlack01,
     FontWeight fontWeight = FontWeight.w600,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
@@ -489,7 +490,7 @@ class TextStyleUtil {
   }
 
   static k32Heading600({
-    Color color = Colors.black,
+    Color color = ColorUtil.kBlack01,
     FontWeight fontWeight = FontWeight.w600,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
@@ -504,7 +505,7 @@ class TextStyleUtil {
   }
 
   static k40Heading600({
-    Color color = Colors.black,
+    Color color = ColorUtil.kBlack01,
     FontWeight fontWeight = FontWeight.w600,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
@@ -519,7 +520,7 @@ class TextStyleUtil {
   }
 
   static k48Heading600({
-    Color color = Colors.black,
+    Color color = ColorUtil.kBlack01,
     FontWeight fontWeight = FontWeight.w600,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
@@ -532,14 +533,13 @@ class TextStyleUtil {
       letterSpacing: -0.5,
     );
   }
-
 }
 
 extension AppText on String {
   String get string => this;
 
   Widget text300(double fontSize,
-          {Color color = Colors.black, TextAlign? textAlign}) =>
+          {Color color = ColorUtil.kBlack01, TextAlign? textAlign}) =>
       Text(
         string,
         textAlign: textAlign,
@@ -552,7 +552,7 @@ extension AppText on String {
       );
 
   Widget text400(double fontSize,
-          {Color color = Colors.black, TextAlign? textAlign}) =>
+          {Color color = ColorUtil.kBlack01, TextAlign? textAlign}) =>
       Text(
         string,
         textAlign: textAlign,
@@ -565,7 +565,7 @@ extension AppText on String {
       );
 
   Widget text500(double fontSize,
-          {Color color = Colors.black, TextAlign? textAlign}) =>
+          {Color color = ColorUtil.kBlack01, TextAlign? textAlign}) =>
       Text(
         string,
         textAlign: textAlign,
@@ -578,7 +578,7 @@ extension AppText on String {
       );
 
   Widget text600(double fontSize,
-          {Color color = Colors.black,
+          {Color color = ColorUtil.kBlack01,
           TextAlign? textAlign,
           TextStyle? style}) =>
       Text(

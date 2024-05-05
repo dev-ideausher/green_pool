@@ -58,6 +58,8 @@ class Endpoints {
       "rider/requestSendByDriver/"; // to view the drivers request from Confirm Request View
   static const String companyDetails = "company/companyDetails";
   static const String rideFare = "admin/fare/";
+  static const String privacyPolicy = "admin/app/privacyPolicy";
+  static const String cancelAndRefundPolicy = "admin/cancelAndRefundPolicy";
 
   //patch url
   static const String userDetails = "user/updateProfileDetails";

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:get/get.dart';
+import 'package:green_pool/app/components/common_image_view.dart';
 import 'package:green_pool/app/components/gp_progress.dart';
 import 'package:green_pool/app/components/origin_to_destination.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
@@ -49,7 +50,7 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                                   ImageConstant.svgIconCalendarTime,
                                   colorFilter: ColorFilter.mode(
                                       Get.find<HomeController>()
-                                              .isSwitched
+                                              .isPinkModeOn
                                               .value
                                           ? ColorUtil.kPrimary3PinkMode
                                           : ColorUtil.kSecondary01,
@@ -186,10 +187,9 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                                               child: ClipOval(
                                                 child: SizedBox.fromSize(
                                                   size: Size.fromRadius(20.kh),
-                                                  child: Image(
-                                                      fit: BoxFit.cover,
-                                                      image: NetworkImage(
-                                                          "${rider?.profilePic?.url}")),
+                                                  child: CommonImageView(
+                                                      url:
+                                                          "${rider?.profilePic?.url}"),
                                                 ),
                                               ),
                                             ).paddingOnly(right: 8.kw),
@@ -228,11 +228,10 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                           child: SizedBox(
                             height: 64.kh,
                             width: 64.kw,
-                            child: Image(
-                              fit: BoxFit.cover,
-                              image: NetworkImage(
-                                  "${controller.myRidesModelData.value.driverBookingDetails?.driverDetails?.vechileDetails?.vehiclePic?.url}"),
-                            ).paddingOnly(right: 8.kw),
+                            child: CommonImageView(
+                                    url:
+                                        "${controller.myRidesModelData.value.driverBookingDetails?.driverDetails?.vechileDetails?.vehiclePic?.url}")
+                                .paddingOnly(right: 8.kw),
                           ),
                         ),
                         Column(

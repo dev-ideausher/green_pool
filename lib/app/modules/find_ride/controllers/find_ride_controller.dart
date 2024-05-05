@@ -94,7 +94,10 @@ class FindRideController extends GetxController {
           await APIManager.postMatchngRides(body: findRideDataJson);
       var data = jsonDecode(response.toString());
       matchingRideResponse.value = MatchingRidesModel.fromJson(data);
-      Get.toNamed(Routes.MATCHING_RIDES, arguments: findRideDataJson);
+      Get.toNamed(Routes.MATCHING_RIDES, arguments: {
+        'findRideData': findRideDataJson,
+        'matchingRidesModel': matchingRideResponse
+      });
     } catch (error) {
       throw Exception(error);
     }
@@ -147,20 +150,20 @@ class FindRideController extends GetxController {
             // Define the custom theme for the date picker
             data: ThemeData(
               // Define the primary color
-              primaryColor: Get.find<HomeController>().isSwitched.value
+              primaryColor: Get.find<HomeController>().isPinkModeOn.value
                   ? ColorUtil.kPrimaryPinkMode
                   : ColorUtil.kPrimary01,
               // Define the color scheme for the date picker
               colorScheme: ColorScheme.light(
                 // Define the primary color for the date picker
-                primary: Get.find<HomeController>().isSwitched.value
+                primary: Get.find<HomeController>().isPinkModeOn.value
                     ? ColorUtil.kPrimaryPinkMode
                     : ColorUtil.kPrimary01,
                 // Define the background color for the date picker
                 surface: Colors.white,
                 // Define the on-primary color for the date picker
                 onPrimary: Colors.white,
-                secondary: Get.find<HomeController>().isSwitched.value
+                secondary: Get.find<HomeController>().isPinkModeOn.value
                     ? ColorUtil.kPrimaryPinkMode
                     : ColorUtil.kPrimary01,
               ),
@@ -216,20 +219,20 @@ class FindRideController extends GetxController {
           // Define the custom theme for the date picker
           data: ThemeData(
             // Define the primary color
-            primaryColor: Get.find<HomeController>().isSwitched.value
+            primaryColor: Get.find<HomeController>().isPinkModeOn.value
                 ? ColorUtil.kPrimaryPinkMode
                 : ColorUtil.kPrimary01,
             // Define the color scheme for the date picker
             colorScheme: ColorScheme.light(
               // Define the primary color for the date picker
-              primary: Get.find<HomeController>().isSwitched.value
+              primary: Get.find<HomeController>().isPinkModeOn.value
                   ? ColorUtil.kPrimaryPinkMode
                   : ColorUtil.kPrimary01,
               // Define the background color for the date picker
               surface: Colors.white,
               // Define the on-primary color for the date picker
               onPrimary: Colors.white,
-              secondary: Get.find<HomeController>().isSwitched.value
+              secondary: Get.find<HomeController>().isPinkModeOn.value
                   ? ColorUtil.kPrimaryPinkMode
                   : ColorUtil.kPrimary01,
             ),

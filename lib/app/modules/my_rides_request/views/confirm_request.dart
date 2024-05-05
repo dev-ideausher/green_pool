@@ -6,6 +6,7 @@ import 'package:green_pool/app/modules/map_driver_confirm_request/controllers/ma
 import 'package:green_pool/app/modules/map_driver_confirm_request/views/map_driver_confirm_request_view.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
+import '../../../components/common_image_view.dart';
 import '../../../components/gp_progress.dart';
 import '../../../components/green_pool_divider.dart';
 import '../../../components/origin_to_destination.dart';
@@ -33,7 +34,13 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
               ? Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Center(child: SvgPicture.asset(ImageConstant.svgNoRides)),
+                    Center(
+                      child: Get.find<HomeController>().isPinkModeOn.value
+                          ? CommonImageView(
+                              svgPath: ImageConstant.svgNoRidesPink,
+                            )
+                          : SvgPicture.asset(ImageConstant.svgNoRides),
+                    ),
                     Text(
                       "There are no rides between these two cities",
                       style: TextStyleUtil.k24Heading600(),
@@ -75,12 +82,11 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
                                           shape: BoxShape.circle),
                                       child: ClipOval(
                                         child: SizedBox.fromSize(
-                                            size: Size.fromRadius(20.kh),
-                                            child: Image(
-                                              fit: BoxFit.cover,
-                                              image: NetworkImage(
+                                          size: Size.fromRadius(20.kh),
+                                          child: CommonImageView(
+                                              url:
                                                   "${controller.confirmRequestModel.value.data?[index]?.rideDetails?[0]?.riderDetails?[0]?.profilePic?.url}"),
-                                            )),
+                                        ),
                                       ),
                                     ).paddingOnly(right: 8.kw),
                                     Column(
@@ -103,7 +109,7 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
                                                       .svgIconCalendarTime,
                                                   colorFilter: ColorFilter.mode(
                                                       Get.find<HomeController>()
-                                                              .isSwitched
+                                                              .isPinkModeOn
                                                               .value
                                                           ? ColorUtil
                                                               .kPrimary3PinkMode
@@ -126,13 +132,14 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
                                                 Icon(
                                                   Icons.location_on,
                                                   size: 16.kh,
-                                                  color: Get.find<
-                                                              HomeController>()
-                                                          .isSwitched
-                                                          .value
-                                                      ? ColorUtil
-                                                          .kPrimary3PinkMode
-                                                      : ColorUtil.kSecondary01,
+                                                  color:
+                                                      Get.find<HomeController>()
+                                                              .isPinkModeOn
+                                                              .value
+                                                          ? ColorUtil
+                                                              .kPrimary3PinkMode
+                                                          : ColorUtil
+                                                              .kSecondary01,
                                                 ),
                                                 Text(
                                                   "${controller.confirmRequestModel.value.data?[index]?.distance} km away",
@@ -265,16 +272,13 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
                                                             child: ClipOval(
                                                               child: SizedBox
                                                                   .fromSize(
-                                                                      size: Size
-                                                                          .fromRadius(20
-                                                                              .kh),
-                                                                      child:
-                                                                          Image(
-                                                                        fit: BoxFit
-                                                                            .cover,
-                                                                        image: NetworkImage(
-                                                                            "${controller.confirmRequestModel.value.data?[index]?.rideDetails?[0]?.riderDetails?[0]?.profilePic?.url}"),
-                                                                      )),
+                                                                size: Size
+                                                                    .fromRadius(
+                                                                        20.kh),
+                                                                child: CommonImageView(
+                                                                    url:
+                                                                        "${controller.confirmRequestModel.value.data?[index]?.rideDetails?[0]?.riderDetails?[0]?.profilePic?.url}"),
+                                                              ),
                                                             ),
                                                           ).paddingOnly(
                                                               right: 8.kw),
@@ -303,7 +307,7 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
                                                                         ImageConstant
                                                                             .svgIconCalendarTime,
                                                                         colorFilter: ColorFilter.mode(
-                                                                            Get.find<HomeController>().isSwitched.value
+                                                                            Get.find<HomeController>().isPinkModeOn.value
                                                                                 ? ColorUtil.kPrimary3PinkMode
                                                                                 : ColorUtil.kSecondary01,
                                                                             BlendMode.srcIn),
@@ -326,7 +330,7 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
                                                                             .location_on,
                                                                         size: 16
                                                                             .kh,
-                                                                        color: Get.find<HomeController>().isSwitched.value
+                                                                        color: Get.find<HomeController>().isPinkModeOn.value
                                                                             ? ColorUtil.kPrimary3PinkMode
                                                                             : ColorUtil.kSecondary01,
                                                                       ),
@@ -459,12 +463,12 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
                                       fontSize: 14.kh,
                                       isBorder: true,
                                       borderColor: Get.find<HomeController>()
-                                              .isSwitched
+                                              .isPinkModeOn
                                               .value
                                           ? ColorUtil.kPrimary3PinkMode
                                           : ColorUtil.kSecondary01,
                                       labelColor: Get.find<HomeController>()
-                                              .isSwitched
+                                              .isPinkModeOn
                                               .value
                                           ? ColorUtil.kPrimary3PinkMode
                                           : ColorUtil.kSecondary01,
@@ -585,7 +589,7 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
                                         //                                           .asset(
                                         //                                         ImageConstant.svgIconCalendarTime,
                                         //                                         colorFilter:
-                                        //                                             ColorFilter.mode(Get.find<HomeController>().isSwitched.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01, BlendMode.srcIn),
+                                        //                                             ColorFilter.mode(Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01, BlendMode.srcIn),
                                         //                                       ).paddingOnly(
                                         //                                           right: 4.kw),
                                         //                                       Text(
@@ -601,7 +605,7 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
                                         //                                         Icons.location_on,
                                         //                                         size:
                                         //                                             16.kh,
-                                        //                                         color: Get.find<HomeController>().isSwitched.value
+                                        //                                         color: Get.find<HomeController>().isPinkModeOn.value
                                         //                                             ? ColorUtil.kPrimary3PinkMode
                                         //                                             : ColorUtil.kSecondary01,
                                         //                                       ),
@@ -718,7 +722,7 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
                                         //                                 decoration:
                                         //                                     BoxDecoration(
                                         //                                   color: Get.find<HomeController>()
-                                        //                                           .isSwitched
+                                        //                                           .isPinkModeOn
                                         //                                           .value
                                         //                                       ? ColorUtil
                                         //                                           .kPrimary3PinkMode
@@ -818,7 +822,7 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
                                         //                             width: 144.kw,
                                         //                             borderColor: Get.find<
                                         //                                         HomeController>()
-                                        //                                     .isSwitched
+                                        //                                     .isPinkModeOn
                                         //                                     .value
                                         //                                 ? ColorUtil
                                         //                                     .kPrimary3PinkMode
@@ -826,7 +830,7 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
                                         //                                     .kSecondary01,
                                         //                             labelColor: Get.find<
                                         //                                         HomeController>()
-                                        //                                     .isSwitched
+                                        //                                     .isPinkModeOn
                                         //                                     .value
                                         //                                 ? ColorUtil
                                         //                                     .kPrimary3PinkMode

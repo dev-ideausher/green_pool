@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
+import 'package:green_pool/app/components/common_image_view.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
 import 'package:green_pool/app/modules/find_ride/controllers/find_ride_controller.dart';
-import 'package:green_pool/app/modules/profile/controllers/profile_controller.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
@@ -109,17 +109,7 @@ class MatchingRidesView extends GetView<MatchingRidesController> {
                             itemBuilder: (context, index) {
                               return GestureDetector(
                                 onTap: () {
-                                  controller.driverRideId =
-                                      "${controller.matchingRideResponse.value.data?[index]?.Id}";
-                                  controller.minStopDistance =
-                                      "${controller.matchingRideResponse.value.data?[index]?.minStopDistance}";
-                                  Get.toNamed(Routes.DRIVER_DETAILS,
-                                      arguments: {
-                                        'index': index,
-                                        'rideDetails': controller.rideDetails,
-                                        'driverRideId': controller.driverRideId,
-                                        'distance': controller.minStopDistance,
-                                      });
+                                  controller.moveToDriverDetails(index);
                                 },
                                 child: Container(
                                   padding: EdgeInsets.all(16.kh),
@@ -138,15 +128,14 @@ class MatchingRidesView extends GetView<MatchingRidesController> {
                                             children: [
                                               Center(
                                                 child: ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.kh),
-                                                  child: Image(
-                                                      height: 64.kh,
-                                                      width: 64.kw,
-                                                      image: NetworkImage(
-                                                          "${controller.matchingRideResponse.value.data![index]?.driverDetails![0]?.profilePic?.url}")),
-                                                ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8.kh),
+                                                    child: CommonImageView(
+                                                        height: 64.kh,
+                                                        width: 64.kw,
+                                                        url:
+                                                            "${controller.matchingRideResponse.value.data![index]?.driverDetails![0]?.profilePic?.url}")),
                                               ).paddingOnly(bottom: 8.kh),
                                               Positioned(
                                                 top: 52.kh,
@@ -159,7 +148,7 @@ class MatchingRidesView extends GetView<MatchingRidesController> {
                                                   decoration: BoxDecoration(
                                                       color: Get.find<
                                                                   HomeController>()
-                                                              .isSwitched
+                                                              .isPinkModeOn
                                                               .value
                                                           ? ColorUtil
                                                               .kPrimary3PinkMode
@@ -174,7 +163,7 @@ class MatchingRidesView extends GetView<MatchingRidesController> {
                                                         Icons.star,
                                                         color: Get.find<
                                                                     HomeController>()
-                                                                .isSwitched
+                                                                .isPinkModeOn
                                                                 .value
                                                             ? ColorUtil
                                                                 .kWhiteColor
@@ -197,7 +186,7 @@ class MatchingRidesView extends GetView<MatchingRidesController> {
                                                         style: TextStyleUtil.k12Semibold(
                                                             color: Get.find<
                                                                         HomeController>()
-                                                                    .isSwitched
+                                                                    .isPinkModeOn
                                                                     .value
                                                                 ? ColorUtil
                                                                     .kBlack02
@@ -257,7 +246,7 @@ class MatchingRidesView extends GetView<MatchingRidesController> {
                                                               .svgIconCalendarTime,
                                                           colorFilter: ColorFilter.mode(
                                                               Get.find<HomeController>()
-                                                                      .isSwitched
+                                                                      .isPinkModeOn
                                                                       .value
                                                                   ? ColorUtil
                                                                       .kPrimary3PinkMode
@@ -283,7 +272,7 @@ class MatchingRidesView extends GetView<MatchingRidesController> {
                                                           size: 18.kh,
                                                           color: Get.find<
                                                                       HomeController>()
-                                                                  .isSwitched
+                                                                  .isPinkModeOn
                                                                   .value
                                                               ? ColorUtil
                                                                   .kPrimary3PinkMode
@@ -376,7 +365,7 @@ class MatchingRidesView extends GetView<MatchingRidesController> {
                             }).paddingOnly(top: 32.kh),
                       ),
                     ],
-                  ).paddingSymmetric(horizontal: 16.kw),
+                  ).paddingOnly(left: 16.kw, right: 16.kw, bottom: 80.kh),
       ),
     );
   }

@@ -1,18 +1,15 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:get/get.dart';
+import 'package:green_pool/app/data/matching_rides_model.dart';
 import 'package:green_pool/app/data/request_ride_by_rider_model.dart';
-import 'package:green_pool/app/modules/find_ride/controllers/find_ride_controller.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 
 import '../../../services/dio/api_service.dart';
 import '../../../services/snackbar.dart';
 
 class DriverDetailsController extends GetxController {
-  var matchingRidesmodel =
-      Get.find<FindRideController>().matchingRideResponse.value;
-  int matchingRideIndex = 0;
+var matchingRidesModelData = MatchingRidesModelData().obs;
   Map<String, dynamic>? rideDetails;
   String driverRideId = '';
   String minStopDistance = '';
@@ -21,9 +18,9 @@ class DriverDetailsController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    matchingRideIndex = Get.arguments['index'];
     rideDetails = Get.arguments['rideDetails'];
     driverRideId = Get.arguments['driverRideId'];
+    matchingRidesModelData.value = Get.arguments['matchingRidesmodel'];
     minStopDistance = Get.arguments['distance'];
   }
 

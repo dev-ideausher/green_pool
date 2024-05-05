@@ -1,18 +1,18 @@
 import 'package:get/get.dart';
+import '../../../data/matching_rides_model.dart';
 import '../../../routes/app_pages.dart';
-import '../../find_ride/controllers/find_ride_controller.dart';
 
 class MatchingRidesController extends GetxController {
   Map<String, dynamic>? rideDetails;
   String driverRideId = '';
   String minStopDistance = '';
-  var matchingRideResponse =
-      Get.find<FindRideController>().matchingRideResponse;
+  var matchingRideResponse = MatchingRidesModel().obs;
 
   @override
   void onInit() {
     super.onInit();
-    rideDetails = Get.arguments;
+    matchingRideResponse = Get.arguments['matchingRidesModel'];
+    rideDetails = Get.arguments['findRideData'];
   }
 
   // @override
@@ -26,9 +26,24 @@ class MatchingRidesController extends GetxController {
   // }
 
   moveToFilter() {
-    Get.toNamed(Routes.RIDER_FILTER, arguments: rideDetails)?.then((value) {
+    Get.toNamed(Routes.RIDER_FILTER, arguments: {
+      'rideDetails': rideDetails,
+      'matchingRidesModel': matchingRideResponse.value
+    })?.then((value) {
       matchingRideResponse.value = value;
       matchingRideResponse.refresh();
+    });
+  }
+
+  void moveToDriverDetails(index) {
+    driverRideId = "${matchingRideResponse.value.data?[index]?.Id}";
+    minStopDistance =
+        "${matchingRideResponse.value.data?[index]?.minStopDistance}";
+    Get.toNamed(Routes.DRIVER_DETAILS, arguments: {
+      'rideDetails': rideDetails,
+      'driverRideId': driverRideId,
+      'distance': minStopDistance,
+      'matchingRidesmodel': matchingRideResponse.value.data?[index]
     });
   }
 }

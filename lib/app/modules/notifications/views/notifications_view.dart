@@ -33,7 +33,7 @@ class NotificationsView extends GetView<NotificationsController> {
                   width: 8.kw,
                   height: 8.kh,
                   decoration: BoxDecoration(
-                      color: Get.find<HomeController>().isSwitched.value
+                      color: Get.find<HomeController>().isPinkModeOn.value
                           ? ColorUtil.kPrimaryPinkMode
                           : ColorUtil.kPrimary01,
                       shape: BoxShape.circle),

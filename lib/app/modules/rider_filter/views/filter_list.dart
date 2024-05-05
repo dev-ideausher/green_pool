@@ -27,7 +27,7 @@ class FilterList extends GetView<RiderFilterController> {
         SvgPicture.asset(
           image,
           colorFilter: ColorFilter.mode(
-              Get.find<HomeController>().isSwitched.value
+              Get.find<HomeController>().isPinkModeOn.value
                   ? ColorUtil.kPrimary3PinkMode
                   : ColorUtil.kSecondary01,
               BlendMode.srcIn),
@@ -42,7 +42,7 @@ class FilterList extends GetView<RiderFilterController> {
           width: 18.kw,
           child: Checkbox(
             value: value,
-            activeColor: Get.find<HomeController>().isSwitched.value
+            activeColor: Get.find<HomeController>().isPinkModeOn.value
                 ? ColorUtil.kPrimary3PinkMode
                 : ColorUtil.kSecondary01,
             onChanged: onChanged,

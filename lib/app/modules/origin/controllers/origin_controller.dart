@@ -36,7 +36,6 @@ class OriginController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    // isOrigin.value = Get.arguments;
     locationValues = Get.arguments;
   }
 

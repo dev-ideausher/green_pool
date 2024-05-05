@@ -44,7 +44,7 @@ class RiderMyRidesView extends GetView<RiderMyRidesController> {
 //                       height: 20.kh,
 //                       padding: EdgeInsets.symmetric(horizontal: 8.kw),
 //                       decoration: BoxDecoration(
-//                           color: Get.find<HomeController>().isSwitched.value
+//                           color: Get.find<HomeController>().isPinkModeOn.value
 //                               ? ColorUtil.kPrimary3PinkMode
 //                               : ColorUtil.kSecondary01,
 //                           borderRadius: BorderRadius.circular(16.kh)),
@@ -53,7 +53,7 @@ class RiderMyRidesView extends GetView<RiderMyRidesController> {
 //                           Icon(
 //                             Icons.star,
 //                             color:
-//                                 Get.find<HomeController>().isSwitched.value
+//                                 Get.find<HomeController>().isPinkModeOn.value
 //                                     ? ColorUtil.kWhiteColor
 //                                     : ColorUtil.kYellowColor,
 //                             size: 12.kh,
@@ -62,7 +62,7 @@ class RiderMyRidesView extends GetView<RiderMyRidesController> {
 //                             '4.5',
 //                             style: TextStyleUtil.k12Semibold(
 //                                 color: Get.find<ProfileController>()
-//                                         .isSwitched
+//                                         .isPinkModeOn
 //                                         .value
 //                                     ? ColorUtil.kBlack02
 //                                     : ColorUtil.kWhiteColor),
@@ -112,7 +112,7 @@ class RiderMyRidesView extends GetView<RiderMyRidesController> {
 //                             SvgPicture.asset(
 //                               ImageConstant.svgIconCalendarTime,
 //                               colorFilter: ColorFilter.mode(
-//                                   Get.find<HomeController>().isSwitched.value
+//                                   Get.find<HomeController>().isPinkModeOn.value
 //                                       ? ColorUtil.kPrimary3PinkMode
 //                                       : ColorUtil.kSecondary01,
 //                                   BlendMode.srcIn),
@@ -131,7 +131,7 @@ class RiderMyRidesView extends GetView<RiderMyRidesController> {
 //                               Icons.time_to_leave,
 //                               size: 18.kh,
 //                               color:
-//                                   Get.find<HomeController>().isSwitched.value
+//                                   Get.find<HomeController>().isPinkModeOn.value
 //                                       ? ColorUtil.kPrimary3PinkMode
 //                                       : ColorUtil.kSecondary01,
 //                             ).paddingOnly(right: 8.kw),
@@ -203,10 +203,10 @@ class RiderMyRidesView extends GetView<RiderMyRidesController> {
 //             onPressed: () {},
 //             isBorder: true,
 //             label: 'Cancel Ride',
-//             borderColor: Get.find<HomeController>().isSwitched.value
+//             borderColor: Get.find<HomeController>().isPinkModeOn.value
 //                 ? ColorUtil.kPrimary3PinkMode
 //                 : ColorUtil.kSecondary01,
-//             labelColor: Get.find<HomeController>().isSwitched.value
+//             labelColor: Get.find<HomeController>().isPinkModeOn.value
 //                 ? ColorUtil.kPrimary3PinkMode
 //                 : ColorUtil.kSecondary01,
 //           ),

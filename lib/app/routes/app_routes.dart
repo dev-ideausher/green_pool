@@ -73,6 +73,17 @@ abstract class Routes {
   static const MAP_DRIVER_CONFIRM_REQUEST = _Paths.MAP_DRIVER_CONFIRM_REQUEST;
   static const MAP_DRIVER_SEND_REQUEST = _Paths.MAP_DRIVER_SEND_REQUEST;
   static const VERIFICATION_DONE = _Paths.VERIFICATION_DONE;
+  static const POLICY_CANCELLATION = _Paths.POLICY_CANCELLATION;
+  static const POLICY_PRIVACY = _Paths.POLICY_PRIVACY;
+  static const WALLET = _Paths.WALLET;
+  static const WALLET_ADD_MONEY = _Paths.WALLET_ADD_MONEY;
+  static const WALLET_TO_BANK_ACC = _Paths.WALLET_TO_BANK_ACC;
+  static const TRANSACTION_HISTORY = _Paths.TRANSACTION_HISTORY;
+  static const PAYMENT_METHOD = _Paths.PAYMENT_METHOD;
+  static const ADD_CARD = _Paths.ADD_CARD;
+  static const ADD_BANK_DETAILS = _Paths.ADD_BANK_DETAILS;
+  static const SEARCH_ADDRESS = _Paths.SEARCH_ADDRESS;
+  static const POST_RIDE_STEP_FOUR = _Paths.POST_RIDE_STEP_FOUR;
 }
 
 abstract class _Paths {
@@ -144,4 +155,15 @@ abstract class _Paths {
   static const MAP_DRIVER_CONFIRM_REQUEST = '/map-driver-confirm-request';
   static const MAP_DRIVER_SEND_REQUEST = '/map-driver-send-request';
   static const VERIFICATION_DONE = '/verification-done';
+  static const POLICY_CANCELLATION = '/policy-cancellation';
+  static const POLICY_PRIVACY = '/policy-privacy';
+  static const WALLET = '/wallet';
+  static const WALLET_ADD_MONEY = '/wallet-add-money';
+  static const WALLET_TO_BANK_ACC = '/wallet-to-bank-acc';
+  static const TRANSACTION_HISTORY = '/transaction-history';
+  static const PAYMENT_METHOD = '/payment-method';
+  static const ADD_CARD = '/add-card';
+  static const ADD_BANK_DETAILS = '/add-bank-details';
+  static const SEARCH_ADDRESS = '/search-address';
+  static const POST_RIDE_STEP_FOUR = '/post-ride-step-four';
 }

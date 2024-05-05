@@ -36,7 +36,7 @@ class StudentDiscountsView extends GetView<StudentDiscountsController> {
                 TextSpan(
                   text: '“\$5”',
                   style: TextStyleUtil.k18Bold(
-                      color: Get.find<HomeController>().isSwitched.value
+                      color: Get.find<HomeController>().isPinkModeOn.value
                           ? ColorUtil.kPrimary3PinkMode
                           : ColorUtil.kPrimary01),
                 ),
@@ -59,7 +59,7 @@ class StudentDiscountsView extends GetView<StudentDiscountsController> {
             },
             prefix: Icon(
               Icons.search,
-              color: Get.find<HomeController>().isSwitched.value
+              color: Get.find<HomeController>().isPinkModeOn.value
                   ? ColorUtil.kPrimary3PinkMode
                   : ColorUtil.kBlack02,
             ),

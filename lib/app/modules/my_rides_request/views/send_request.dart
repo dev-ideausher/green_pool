@@ -5,6 +5,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:green_pool/app/modules/map_driver_send_request/controllers/map_driver_send_request_controller.dart';
 import 'package:green_pool/app/modules/map_driver_send_request/views/map_driver_send_request_view.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
+import '../../../components/common_image_view.dart';
 import '../../../components/gp_progress.dart';
 import '../../../components/green_pool_divider.dart';
 import '../../../components/origin_to_destination.dart';
@@ -32,7 +33,13 @@ class SendRequest extends GetView<MyRidesRequestController> {
               ? Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Center(child: SvgPicture.asset(ImageConstant.svgNoRides)),
+                    Center(
+                      child: Get.find<HomeController>().isPinkModeOn.value
+                          ? CommonImageView(
+                              svgPath: ImageConstant.svgNoRidesPink,
+                            )
+                          : SvgPicture.asset(ImageConstant.svgNoRides),
+                    ),
                     Text(
                       "There are no rides between these two cities",
                       style: TextStyleUtil.k24Heading600(),
@@ -70,12 +77,11 @@ class SendRequest extends GetView<MyRidesRequestController> {
                                     decoration: const BoxDecoration(
                                         shape: BoxShape.circle),
                                     child: ClipOval(
-                                      child: SizedBox.fromSize(
-                                          size: Size.fromRadius(20.kh),
-                                          child: Image(
-                                              image: NetworkImage(
-                                                  "${controller.sendRequestModel.value.data![index]!.riderDetails?[0]?.profilePic?.url}"))),
-                                    ),
+                                        child: SizedBox.fromSize(
+                                            size: Size.fromRadius(20.kh),
+                                            child: CommonImageView(
+                                                url:
+                                                    "${controller.sendRequestModel.value.data![index]!.riderDetails?[0]?.profilePic?.url}"))),
                                   ).paddingOnly(right: 8.kw),
                                   Column(
                                     crossAxisAlignment:
@@ -104,7 +110,7 @@ class SendRequest extends GetView<MyRidesRequestController> {
                                                     .svgIconCalendarTime,
                                                 colorFilter: ColorFilter.mode(
                                                     Get.find<HomeController>()
-                                                            .isSwitched
+                                                            .isPinkModeOn
                                                             .value
                                                         ? ColorUtil
                                                             .kPrimary3PinkMode
@@ -126,13 +132,14 @@ class SendRequest extends GetView<MyRidesRequestController> {
                                               Icon(
                                                 Icons.location_on,
                                                 size: 16.kh,
-                                                color: Get.find<
-                                                            HomeController>()
-                                                        .isSwitched
-                                                        .value
-                                                    ? ColorUtil
-                                                        .kPrimary3PinkMode
-                                                    : ColorUtil.kSecondary01,
+                                                color:
+                                                    Get.find<HomeController>()
+                                                            .isPinkModeOn
+                                                            .value
+                                                        ? ColorUtil
+                                                            .kPrimary3PinkMode
+                                                        : ColorUtil
+                                                            .kSecondary01,
                                               ),
                                               Text(
                                                 // '2.1 km away',
@@ -317,7 +324,7 @@ class SendRequest extends GetView<MyRidesRequestController> {
                                       //                                   .svgIconCalendarTime,
                                       //                               colorFilter: ColorFilter.mode(
                                       //                                   Get.find<HomeController>()
-                                      //                                           .isSwitched
+                                      //                                           .isPinkModeOn
                                       //                                           .value
                                       //                                       ? ColorUtil
                                       //                                           .kPrimary3PinkMode
@@ -344,7 +351,7 @@ class SendRequest extends GetView<MyRidesRequestController> {
                                       //                               size: 16.kh,
                                       //                               color: Get.find<
                                       //                                           HomeController>()
-                                      //                                       .isSwitched
+                                      //                                       .isPinkModeOn
                                       //                                       .value
                                       //                                   ? ColorUtil
                                       //                                       .kPrimary3PinkMode
@@ -457,7 +464,7 @@ class SendRequest extends GetView<MyRidesRequestController> {
                                       //                           BoxDecoration(
                                       //                         color: Get.find<
                                       //                                     HomeController>()
-                                      //                                 .isSwitched
+                                      //                                 .isPinkModeOn
                                       //                                 .value
                                       //                             ? ColorUtil
                                       //                                 .kPrimary3PinkMode

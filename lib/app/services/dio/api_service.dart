@@ -109,6 +109,15 @@ class APIManager {
         showSnakbar: true,
       ).get(Endpoints.userByID);
 
+  static Future<Response> getPrivacyPolicy() async => await DioClient(
+        Dio(),
+        showSnakbar: true,
+      ).get(Endpoints.privacyPolicy);
+  static Future<Response> getCancelRefundPolicy() async => await DioClient(
+        Dio(),
+        showSnakbar: true,
+      ).get(Endpoints.cancelAndRefundPolicy);
+
   static Future<Response> getAllMyRides() async =>
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false)
           .get(Endpoints.driverMyRides);

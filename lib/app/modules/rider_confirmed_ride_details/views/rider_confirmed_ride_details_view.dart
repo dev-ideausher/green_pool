@@ -1,9 +1,9 @@
 //! this page comes after tapping on confirmed rider tile in my_rides_view
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:get/get.dart';
+import 'package:green_pool/app/components/common_image_view.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../components/green_pool_divider.dart';
@@ -16,8 +16,6 @@ import '../../../services/custom_button.dart';
 import '../../../services/text_style_util.dart';
 import '../../home/controllers/home_controller.dart';
 import '../../post_ride/views/amenities.dart';
-import '../../profile/controllers/profile_controller.dart';
-import '../../ride_details/views/copassenger_list.dart';
 import '../controllers/rider_confirmed_ride_details_controller.dart';
 
 class RiderConfirmedRideDetailsView
@@ -46,7 +44,7 @@ class RiderConfirmedRideDetailsView
                       color: ColorUtil.kSecondary01,
                       child: ListTile(
                         onTap: () => controller.viewOnMap(),
-                        leading: Icon(Icons.access_time_rounded,
+                        leading: const Icon(Icons.access_time_rounded,
                             color: ColorUtil.kWhiteColor),
                         title: Text("Your ride is arriving in ${10} mins.",
                             style: TextStyleUtil.k14Regular(
@@ -56,7 +54,7 @@ class RiderConfirmedRideDetailsView
                             decoration: BoxDecoration(
                                 color: ColorUtil.kPrimary01,
                                 borderRadius: BorderRadius.circular(100.kh)),
-                            child: Icon(Icons.pin_drop,
+                            child: const Icon(Icons.pin_drop,
                                 color: ColorUtil.kWhiteColor)),
                       )),
                 ),
@@ -85,7 +83,7 @@ class RiderConfirmedRideDetailsView
                           SvgPicture.asset(
                             ImageConstant.svgIconCalendarTime,
                             colorFilter: ColorFilter.mode(
-                                Get.find<HomeController>().isSwitched.value
+                                Get.find<HomeController>().isPinkModeOn.value
                                     ? ColorUtil.kPrimary3PinkMode
                                     : ColorUtil.kSecondary01,
                                 BlendMode.srcIn),
@@ -99,7 +97,7 @@ class RiderConfirmedRideDetailsView
                         ],
                       ),
                       trailing: SizedBox(
-                        width: 100.kw,
+                        width: 80.kw,
                         child: Column(
                           children: [
                             Text.rich(
@@ -127,7 +125,7 @@ class RiderConfirmedRideDetailsView
                                   Icons.time_to_leave,
                                   size: 18.kh,
                                   color: Get.find<HomeController>()
-                                          .isSwitched
+                                          .isPinkModeOn
                                           .value
                                       ? ColorUtil.kPrimary3PinkMode
                                       : ColorUtil.kSecondary01,
@@ -174,7 +172,7 @@ class RiderConfirmedRideDetailsView
                       padding: EdgeInsets.symmetric(
                           horizontal: 12.kw, vertical: 2.kh),
                       decoration: BoxDecoration(
-                        color: Get.find<HomeController>().isSwitched.value
+                        color: Get.find<HomeController>().isPinkModeOn.value
                             ? ColorUtil.kPrimary3PinkMode
                             : ColorUtil.kPrimary01,
                         borderRadius: BorderRadius.circular(16.kh),
@@ -182,7 +180,7 @@ class RiderConfirmedRideDetailsView
                       child: Row(children: [
                         Icon(
                           Icons.star,
-                          color: Get.find<HomeController>().isSwitched.value
+                          color: Get.find<HomeController>().isPinkModeOn.value
                               ? ColorUtil.kWhiteColor
                               : ColorUtil.kYellowColor,
                           size: 12.kh,
@@ -264,12 +262,11 @@ class RiderConfirmedRideDetailsView
                                   shape: BoxShape.circle,
                                 ),
                                 child: ClipOval(
-                                  child: SizedBox.fromSize(
-                                      size: Size.fromRadius(20.kh),
-                                      child: Image(
-                                          image: NetworkImage(
-                                              "${controller.myRidesModel.value.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.ridersDetails?[index]?.profilePic?.url}"))),
-                                ),
+                                    child: SizedBox.fromSize(
+                                        size: Size.fromRadius(20.kh),
+                                        child: CommonImageView(
+                                            url:
+                                                "${controller.myRidesModel.value.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.ridersDetails?[index]?.profilePic?.url}"))),
                               ).paddingOnly(bottom: 4.kh),
                               Text(
                                 "${controller.myRidesModel.value.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.ridersDetails?[index]?.fullName.toString().split(" ").first}\n${controller.myRidesModel.value.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.ridersDetails?[index]?.fullName.toString().split(" ").last}",
@@ -290,13 +287,12 @@ class RiderConfirmedRideDetailsView
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(8.kh),
-                  child: Image(
-                    height: 64.kh,
-                    width: 64.kw,
-                    fit: BoxFit.cover,
-                    image: NetworkImage(
-                        "${controller.myRidesModel.value.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.driverDetails?[0]?.vehicleDetails?[0]?.vehiclePic?.url}"),
-                  ).paddingOnly(right: 8.kh),
+                  child: CommonImageView(
+                          height: 64.kh,
+                          width: 64.kw,
+                          url:
+                              "${controller.myRidesModel.value.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.driverDetails?[0]?.vehicleDetails?[0]?.vehiclePic?.url}")
+                      .paddingOnly(right: 8.kh),
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

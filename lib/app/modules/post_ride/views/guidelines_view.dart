@@ -10,9 +10,8 @@ import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
+import '../../../routes/app_pages.dart';
 import '../../home/controllers/home_controller.dart';
-import '../../profile/controllers/profile_controller.dart';
-import '../../terms_conditions/views/terms_conditions_view.dart';
 
 class GuidelinesView extends GetView<PostRideController> {
   const GuidelinesView({super.key});
@@ -33,7 +32,7 @@ class GuidelinesView extends GetView<PostRideController> {
                 style: TextStyleUtil.k32Heading700(),
               ).paddingOnly(bottom: 56.kh),
               GuidelinesCard(
-                image: Get.find<HomeController>().isSwitched.value
+                image: Get.find<HomeController>().isPinkModeOn.value
                     ? ImageConstant.svgPinkGuideline1
                     : ImageConstant.svgGuideline1,
                 title: 'No Cash',
@@ -41,7 +40,7 @@ class GuidelinesView extends GetView<PostRideController> {
                     'All fares are settled electronically,\nand payouts occur every Friday.',
               ),
               GuidelinesCard(
-                image: Get.find<HomeController>().isSwitched.value
+                image: Get.find<HomeController>().isPinkModeOn.value
                     ? ImageConstant.svgPinkGuideline2
                     : ImageConstant.svgGuideline2,
                 title: 'Be Trustworthy',
@@ -49,7 +48,7 @@ class GuidelinesView extends GetView<PostRideController> {
                     'Only create a trip listing if you are\ncertain you will drive and can arrive\non time.',
               ),
               GuidelinesCard(
-                image: Get.find<HomeController>().isSwitched.value
+                image: Get.find<HomeController>().isPinkModeOn.value
                     ? ImageConstant.svgPinkGuideline3
                     : ImageConstant.svgGuideline3,
                 title: 'Practice safe driving',
@@ -61,7 +60,7 @@ class GuidelinesView extends GetView<PostRideController> {
                   Obx(
                     () => Checkbox(
                       value: controller.isChecked.value,
-                      activeColor: Get.find<HomeController>().isSwitched.value
+                      activeColor: Get.find<HomeController>().isPinkModeOn.value
                           ? ColorUtil.kPrimary2PinkMode
                           : ColorUtil.kSecondary01,
                       onChanged: (value) {
@@ -81,25 +80,25 @@ class GuidelinesView extends GetView<PostRideController> {
                             text: 'Driver Cancellation Policy, ',
                             style: TextStyleUtil.k12Semibold(
                                 color: Get.find<HomeController>()
-                                        .isSwitched
+                                        .isPinkModeOn
                                         .value
                                     ? ColorUtil.kPrimary2PinkMode
                                     : ColorUtil.kSecondary03),
                             recognizer: TapGestureRecognizer()
                               ..onTap =
-                                  () => Get.to(const TermsAndConditionsView()),
+                                  () => Get.toNamed(Routes.POLICY_CANCELLATION),
                           ),
                           TextSpan(
                             text: 'Terms of Service,',
                             style: TextStyleUtil.k12Semibold(
                                 color: Get.find<HomeController>()
-                                        .isSwitched
+                                        .isPinkModeOn
                                         .value
                                     ? ColorUtil.kPrimary2PinkMode
                                     : ColorUtil.kSecondary03),
                             recognizer: TapGestureRecognizer()
                               ..onTap =
-                                  () => Get.to(const TermsAndConditionsView()),
+                                  () => Get.toNamed(Routes.TERMS_CONDITIONS),
                           ),
                           TextSpan(
                             text: ' and ',
@@ -109,13 +108,13 @@ class GuidelinesView extends GetView<PostRideController> {
                             text: 'Privacy policy. ',
                             style: TextStyleUtil.k12Semibold(
                                 color: Get.find<HomeController>()
-                                        .isSwitched
+                                        .isPinkModeOn
                                         .value
                                     ? ColorUtil.kPrimary2PinkMode
                                     : ColorUtil.kSecondary03),
                             recognizer: TapGestureRecognizer()
                               ..onTap =
-                                  () => Get.to(const TermsAndConditionsView()),
+                                  () => Get.toNamed(Routes.POLICY_PRIVACY),
                           ),
                           TextSpan(
                             text:

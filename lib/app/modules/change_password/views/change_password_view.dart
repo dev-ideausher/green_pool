@@ -36,14 +36,14 @@ class ChangePasswordView extends GetView<ChangePasswordController> {
                   ? Icon(
                       Icons.visibility_off,
                       size: 20.kh,
-                      color: Get.find<HomeController>().isSwitched.value
+                      color: Get.find<HomeController>().isPinkModeOn.value
                           ? ColorUtil.kPrimary3PinkMode
                           : ColorUtil.kSecondary01,
                     )
                   : Icon(
                       Icons.visibility,
                       size: 20.kh,
-                      color: Get.find<HomeController>().isSwitched.value
+                      color: Get.find<HomeController>().isPinkModeOn.value
                           ? ColorUtil.kPrimary3PinkMode
                           : ColorUtil.kSecondary01,
                     ),
@@ -62,14 +62,14 @@ class ChangePasswordView extends GetView<ChangePasswordController> {
                     ? Icon(
                         Icons.visibility_off,
                         size: 20.kh,
-                        color: Get.find<HomeController>().isSwitched.value
+                        color: Get.find<HomeController>().isPinkModeOn.value
                             ? ColorUtil.kPrimary3PinkMode
                             : ColorUtil.kSecondary01,
                       )
                     : Icon(
                         Icons.visibility,
                         size: 20.kh,
-                        color: Get.find<HomeController>().isSwitched.value
+                        color: Get.find<HomeController>().isPinkModeOn.value
                             ? ColorUtil.kPrimary3PinkMode
                             : ColorUtil.kSecondary01,
                       )),
@@ -87,14 +87,14 @@ class ChangePasswordView extends GetView<ChangePasswordController> {
                   ? Icon(
                       Icons.visibility_off,
                       size: 20.kh,
-                      color: Get.find<HomeController>().isSwitched.value
+                      color: Get.find<HomeController>().isPinkModeOn.value
                           ? ColorUtil.kPrimary3PinkMode
                           : ColorUtil.kSecondary01,
                     )
                   : Icon(
                       Icons.visibility,
                       size: 20.kh,
-                      color: Get.find<HomeController>().isSwitched.value
+                      color: Get.find<HomeController>().isPinkModeOn.value
                           ? ColorUtil.kPrimary3PinkMode
                           : ColorUtil.kSecondary01,
                     ),

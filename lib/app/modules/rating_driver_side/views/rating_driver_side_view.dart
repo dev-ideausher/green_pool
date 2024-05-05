@@ -3,6 +3,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:get/get.dart';
+import 'package:green_pool/app/components/common_image_view.dart';
 import 'package:green_pool/app/components/green_pool_divider.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
 import 'package:green_pool/app/services/colors.dart';
@@ -54,10 +55,9 @@ class RatingDriverSideView extends GetView<RatingDriverSideController> {
                                   ),
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(8.kh),
-                                    child: Image(
-                                      image: NetworkImage(
-                                          "${controller.myRidesModel.value.postsInfo?[index]?.riderPostsDetails?[0]?.ridersDetails?[0]?.profilePic?.url}"),
-                                    ),
+                                    child: CommonImageView(
+                                        url:
+                                            "${controller.myRidesModel.value.postsInfo?[index]?.riderPostsDetails?[0]?.ridersDetails?[0]?.profilePic?.url}"),
                                   )),
                             ],
                           ),

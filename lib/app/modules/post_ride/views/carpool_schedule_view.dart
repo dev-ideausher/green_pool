@@ -63,7 +63,7 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                     indicatorSize: TabBarIndicatorSize.tab,
                     indicator: BoxDecoration(
                         borderRadius: BorderRadius.circular(80.kh),
-                        color: Get.find<HomeController>().isSwitched.value
+                        color: Get.find<HomeController>().isPinkModeOn.value
                             ? ColorUtil.kPrimaryPinkMode
                             : ColorUtil.kSecondary01),
                     unselectedLabelColor: ColorUtil.kSecondary01,
@@ -71,14 +71,14 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                     indicatorColor: Colors.transparent,
                     overlayColor: MaterialStatePropertyAll(
                         ColorUtil.kSecondary01.withOpacity(0.05)),
-                    labelColor: Get.find<HomeController>().isSwitched.value
+                    labelColor: Get.find<HomeController>().isPinkModeOn.value
                         ? ColorUtil.kBlack01
                         : ColorUtil.kWhiteColor,
                     splashBorderRadius: BorderRadius.circular(80.kh),
                     unselectedLabelStyle: TextStyleUtil.k14Semibold(
                         color: ColorUtil.kSecondary01),
                     labelStyle: TextStyleUtil.k14Semibold(
-                        color: Get.find<HomeController>().isSwitched.value
+                        color: Get.find<HomeController>().isPinkModeOn.value
                             ? ColorUtil.kBlack01
                             : ColorUtil.kSecondary01),
                     tabs: const [
@@ -116,7 +116,7 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                                 width: 24.kw,
                                 colorFilter: ColorFilter.mode(
                                     Get.find<HomeController>()
-                                            .isSwitched
+                                            .isPinkModeOn
                                             .value
                                         ? ColorUtil.kPrimary3PinkMode
                                         : ColorUtil.kSecondary01,
@@ -158,18 +158,16 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                                     controller.isReturn.value = value;
                                   },
                                   inactiveThumbColor: ColorUtil.kNeutral1,
-                                  inactiveTrackColor:
-                                      Get.find<HomeController>()
-                                              .isSwitched
-                                              .value
-                                          ? ColorUtil.kSecondaryPinkMode
-                                          : ColorUtil.kPrimary05,
-                                  activeTrackColor:
-                                      Get.find<HomeController>()
-                                              .isSwitched
-                                              .value
-                                          ? ColorUtil.kPrimary3PinkMode
-                                          : ColorUtil.kSecondary01,
+                                  inactiveTrackColor: Get.find<HomeController>()
+                                          .isPinkModeOn
+                                          .value
+                                      ? ColorUtil.kSecondaryPinkMode
+                                      : ColorUtil.kPrimary05,
+                                  activeTrackColor: Get.find<HomeController>()
+                                          .isPinkModeOn
+                                          .value
+                                      ? ColorUtil.kPrimary3PinkMode
+                                      : ColorUtil.kSecondary01,
                                   trackOutlineWidth:
                                       const MaterialStatePropertyAll(0),
                                   thumbColor: const MaterialStatePropertyAll(
@@ -221,7 +219,7 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                                         width: 24.kw,
                                         colorFilter: ColorFilter.mode(
                                             Get.find<HomeController>()
-                                                    .isSwitched
+                                                    .isPinkModeOn
                                                     .value
                                                 ? ColorUtil.kPrimary3PinkMode
                                                 : ColorUtil.kSecondary01,
@@ -424,7 +422,7 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                       child: SvgPicture.asset(
                         ImageConstant.svgIconMinus,
                         colorFilter: ColorFilter.mode(
-                            Get.find<HomeController>().isSwitched.value
+                            Get.find<HomeController>().isPinkModeOn.value
                                 ? ColorUtil.kPrimary3PinkMode
                                 : ColorUtil.kSecondary01,
                             BlendMode.srcIn),
@@ -443,7 +441,7 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                           SvgPicture.asset(
                             ImageConstant.svgNavProfileFilled,
                             colorFilter: ColorFilter.mode(
-                                Get.find<HomeController>().isSwitched.value
+                                Get.find<HomeController>().isPinkModeOn.value
                                     ? ColorUtil.kPrimary3PinkMode
                                     : ColorUtil.kSecondary01,
                                 BlendMode.srcIn),
@@ -464,7 +462,7 @@ class CarpoolScheduleView extends GetView<PostRideController> {
                       child: SvgPicture.asset(
                         ImageConstant.svgIconPlus,
                         colorFilter: ColorFilter.mode(
-                            Get.find<HomeController>().isSwitched.value
+                            Get.find<HomeController>().isPinkModeOn.value
                                 ? ColorUtil.kPrimary3PinkMode
                                 : ColorUtil.kSecondary01,
                             BlendMode.srcIn),

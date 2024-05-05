@@ -52,7 +52,7 @@ class MyRideRequestsView extends GetView<MyRidesRequestController> {
                   unselectedLabelStyle:
                       TextStyleUtil.k14Semibold(color: ColorUtil.kSecondary01),
                   labelStyle: TextStyleUtil.k14Semibold(
-                    color: Get.find<HomeController>().isSwitched.value
+                    color: Get.find<HomeController>().isPinkModeOn.value
                         ? ColorUtil.kPrimary3PinkMode
                         : ColorUtil.kSecondary01,
                   ),
@@ -60,12 +60,12 @@ class MyRideRequestsView extends GetView<MyRidesRequestController> {
                       ColorUtil.kSecondary01.withOpacity(0.05)),
                   indicator: UnderlineTabIndicator(
                     borderSide: BorderSide(
-                        color: Get.find<HomeController>().isSwitched.value
+                        color: Get.find<HomeController>().isPinkModeOn.value
                             ? ColorUtil.kPrimary3PinkMode
                             : ColorUtil.kSecondary01,
                         width: 2.kh),
                   ),
-                  labelColor: Get.find<HomeController>().isSwitched.value
+                  labelColor: Get.find<HomeController>().isPinkModeOn.value
                       ? ColorUtil.kPrimary3PinkMode
                       : ColorUtil.kSecondary01,
                   tabs: const [

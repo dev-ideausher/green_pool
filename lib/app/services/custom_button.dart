@@ -52,7 +52,7 @@ class GreenPoolButton extends StatelessWidget {
           backgroundColor: color ??
               (isBorder
                   ? Colors.transparent
-                  : Get.find<HomeController>().isSwitched.value
+                  : Get.find<HomeController>().isPinkModeOn.value
                       ? (isActive
                           ? ColorUtil.kPrimaryPinkMode
                           : ColorUtil.kSecondaryPinkMode)

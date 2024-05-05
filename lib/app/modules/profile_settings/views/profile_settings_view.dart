@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:green_pool/app/components/common_image_view.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/modules/profile/controllers/profile_controller.dart';
@@ -25,15 +26,13 @@ class ProfileSettingsView extends GetView<ProfileSettingsController> {
           Container(
             decoration: const BoxDecoration(shape: BoxShape.circle),
             child: ClipOval(
-              child: SizedBox.fromSize(
-                  size: Size.fromRadius(44.kh),
-                  child: Image(
-                      height: 44.kh,
-                      width: 44.kw,
-                      fit: BoxFit.cover,
-                      image: NetworkImage(
-                          "${Get.find<HomeController>().userInfo.value.data?.profilePic?.url}"))),
-            ),
+                child: SizedBox.fromSize(
+                    size: Size.fromRadius(44.kh),
+                    child: CommonImageView(
+                        height: 44.kh,
+                        width: 44.kw,
+                        url:
+                            "${Get.find<HomeController>().userInfo.value.data?.profilePic?.url}"))),
           ).paddingOnly(bottom: 8.kh, top: 16.kh),
           Text(
             Get.find<HomeController>().userInfo.value.data?.fullName ?? "User",

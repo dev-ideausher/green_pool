@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:get/get.dart';
+import 'package:green_pool/app/components/common_image_view.dart';
 import 'package:green_pool/app/modules/rider_my_ride_request/controllers/rider_my_ride_request_controller.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
@@ -47,12 +48,12 @@ class RiderMyRidesSendDetailsView
                     Stack(
                       children: [
                         Container(
-                            height: 74.kh,
-                            width: 74.kw,
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                            ),
-                            child: ClipRRect(
+                          height: 74.kh,
+                          width: 74.kw,
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                          ),
+                          child: ClipRRect(
                               borderRadius: BorderRadius.circular(8.kh),
                               child: controller
                                           .riderSendRequestModel
@@ -63,10 +64,10 @@ class RiderMyRidesSendDetailsView
                                           ?.url ==
                                       null
                                   ? const GpProgress()
-                                  : Image(
-                                      image: NetworkImage(
+                                  : CommonImageView(
+                                      url:
                                           "${controller.riderSendRequestModel.value.data?[controller.index]?.driverDetails?[0]?.profilePic?.url}")),
-                            )).paddingOnly(bottom: 8.kh),
+                        ).paddingOnly(bottom: 8.kh),
                       ],
                     ).paddingOnly(right: 16.kw, bottom: 16.kh),
                     //for name and date
@@ -115,7 +116,7 @@ class RiderMyRidesSendDetailsView
                                           ImageConstant.svgIconCalendarTime,
                                           colorFilter: ColorFilter.mode(
                                               Get.find<HomeController>()
-                                                      .isSwitched
+                                                      .isPinkModeOn
                                                       .value
                                                   ? ColorUtil.kPrimary3PinkMode
                                                   : ColorUtil.kSecondary01,
@@ -139,7 +140,7 @@ class RiderMyRidesSendDetailsView
                                     Icons.time_to_leave,
                                     size: 18.kh,
                                     color: Get.find<HomeController>()
-                                            .isSwitched
+                                            .isPinkModeOn
                                             .value
                                         ? ColorUtil.kPrimary3PinkMode
                                         : ColorUtil.kSecondary01,
@@ -186,7 +187,7 @@ class RiderMyRidesSendDetailsView
                       padding: EdgeInsets.symmetric(
                           horizontal: 12.kw, vertical: 2.kh),
                       decoration: BoxDecoration(
-                        color: Get.find<HomeController>().isSwitched.value
+                        color: Get.find<HomeController>().isPinkModeOn.value
                             ? ColorUtil.kPrimary3PinkMode
                             : ColorUtil.kPrimary01,
                         borderRadius: BorderRadius.circular(16.kh),
@@ -194,7 +195,7 @@ class RiderMyRidesSendDetailsView
                       child: Row(children: [
                         Icon(
                           Icons.star,
-                          color: Get.find<HomeController>().isSwitched.value
+                          color: Get.find<HomeController>().isPinkModeOn.value
                               ? ColorUtil.kWhiteColor
                               : ColorUtil.kYellowColor,
                           size: 12.kh,
@@ -274,12 +275,11 @@ class RiderMyRidesSendDetailsView
                                     shape: BoxShape.circle,
                                   ),
                                   child: ClipOval(
-                                    child: SizedBox.fromSize(
-                                        size: Size.fromRadius(20.kh),
-                                        child: Image(
-                                            image: NetworkImage(
-                                                "${controller.riderSendRequestModel.value.data?[controller.index]?.ridersDetatils?[index]?.profilePic?.url}"))),
-                                  ),
+                                      child: SizedBox.fromSize(
+                                          size: Size.fromRadius(20.kh),
+                                          child: CommonImageView(
+                                              url:
+                                                  "${controller.riderSendRequestModel.value.data?[controller.index]?.ridersDetatils?[index]?.profilePic?.url}"))),
                                 ).paddingOnly(bottom: 4.kh),
                                 Text(
                                   "${controller.riderSendRequestModel.value.data?[controller.index]?.ridersDetatils?[index]?.fullName.toString().split(" ").first}\n${controller.riderSendRequestModel.value.data?[controller.index]?.ridersDetatils?[index]?.fullName.toString().split(" ").last}",
@@ -302,12 +302,12 @@ class RiderMyRidesSendDetailsView
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(8.kh),
-                  child: Image(
-                    height: 64.kh,
-                    width: 64.kw,
-                    image: NetworkImage(
-                        "${controller.riderSendRequestModel.value.data?[controller.index]?.driverDetails?[0]?.vehicleDetails?[0]?.vehiclePic?.url}"),
-                  ).paddingOnly(right: 8.kh),
+                  child: CommonImageView(
+                          height: 64.kh,
+                          width: 64.kw,
+                          url:
+                              "${controller.riderSendRequestModel.value.data?[controller.index]?.driverDetails?[0]?.vehicleDetails?[0]?.vehiclePic?.url}")
+                      .paddingOnly(right: 8.kh),
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

@@ -2,6 +2,10 @@ import 'package:get/get.dart';
 
 import '../modules/about/bindings/about_binding.dart';
 import '../modules/about/views/about_view.dart';
+import '../modules/add_bank_details/bindings/add_bank_details_binding.dart';
+import '../modules/add_bank_details/views/add_bank_details_view.dart';
+import '../modules/add_card/bindings/add_card_binding.dart';
+import '../modules/add_card/views/add_card_view.dart';
 import '../modules/change_password/bindings/change_password_binding.dart';
 import '../modules/change_password/views/change_password_view.dart';
 import '../modules/chat_page/bindings/chat_page_binding.dart';
@@ -53,6 +57,12 @@ import '../modules/origin/bindings/origin_binding.dart';
 import '../modules/origin/views/origin_view.dart';
 import '../modules/password_changed/bindings/password_changed_binding.dart';
 import '../modules/password_changed/views/password_changed_view.dart';
+import '../modules/payment_method/bindings/payment_method_binding.dart';
+import '../modules/payment_method/views/payment_method_view.dart';
+import '../modules/policy_cancellation/bindings/policy_cancellation_binding.dart';
+import '../modules/policy_cancellation/views/policy_cancellation_view.dart';
+import '../modules/policy_privacy/bindings/policy_privacy_binding.dart';
+import '../modules/policy_privacy/views/policy_privacy_view.dart';
 import '../modules/post_ride/bindings/post_ride_binding.dart';
 import '../modules/post_ride/views/carpool_schedule_view.dart';
 import '../modules/post_ride/views/guidelines_view.dart';
@@ -114,6 +124,8 @@ import '../modules/submit_dispute/bindings/submit_dispute_binding.dart';
 import '../modules/submit_dispute/views/submit_dispute_view.dart';
 import '../modules/terms_conditions/bindings/terms_conditions_binding.dart';
 import '../modules/terms_conditions/views/terms_conditions_view.dart';
+import '../modules/transaction_history/bindings/transaction_history_binding.dart';
+import '../modules/transaction_history/views/transaction_history_view.dart';
 import '../modules/user_details/bindings/user_details_binding.dart';
 import '../modules/user_details/views/user_details_view.dart';
 import '../modules/vehicle_details/bindings/vehicle_details_binding.dart';
@@ -122,6 +134,12 @@ import '../modules/verification_done/bindings/verification_done_binding.dart';
 import '../modules/verification_done/views/verification_done_view.dart';
 import '../modules/verify/bindings/verify_binding.dart';
 import '../modules/verify/views/verify_view.dart';
+import '../modules/wallet/bindings/wallet_binding.dart';
+import '../modules/wallet/views/wallet_view.dart';
+import '../modules/wallet_add_money/bindings/wallet_add_money_binding.dart';
+import '../modules/wallet_add_money/views/wallet_add_money_view.dart';
+import '../modules/wallet_to_bank_acc/bindings/wallet_to_bank_acc_binding.dart';
+import '../modules/wallet_to_bank_acc/views/wallet_to_bank_acc_view.dart';
 
 // ignore_for_file: constant_identifier_names
 
@@ -447,6 +465,51 @@ class AppPages {
       name: _Paths.VERIFICATION_DONE,
       page: () => const VerificationDoneView(),
       binding: VerificationDoneBinding(),
+    ),
+    GetPage(
+      name: _Paths.POLICY_CANCELLATION,
+      page: () => const PolicyCancellationView(),
+      binding: PolicyCancellationBinding(),
+    ),
+    GetPage(
+      name: _Paths.POLICY_PRIVACY,
+      page: () => const PolicyPrivacyView(),
+      binding: PolicyPrivacyBinding(),
+    ),
+    GetPage(
+      name: _Paths.WALLET,
+      page: () => const WalletView(),
+      binding: WalletBinding(),
+    ),
+    GetPage(
+      name: _Paths.WALLET_ADD_MONEY,
+      page: () => const WalletAddMoneyView(),
+      binding: WalletAddMoneyBinding(),
+    ),
+    GetPage(
+      name: _Paths.WALLET_TO_BANK_ACC,
+      page: () => const WalletToBankAccView(),
+      binding: WalletToBankAccBinding(),
+    ),
+    GetPage(
+      name: _Paths.TRANSACTION_HISTORY,
+      page: () => const TransactionHistoryView(),
+      binding: TransactionHistoryBinding(),
+    ),
+    GetPage(
+      name: _Paths.PAYMENT_METHOD,
+      page: () => const PaymentMethodView(),
+      binding: PaymentMethodBinding(),
+    ),
+    GetPage(
+      name: _Paths.ADD_CARD,
+      page: () => const AddCardView(),
+      binding: AddCardBinding(),
+    ),
+    GetPage(
+      name: _Paths.ADD_BANK_DETAILS,
+      page: () => const AddBankDetailsView(),
+      binding: AddBankDetailsBinding(),
     ),
   ];
 }
