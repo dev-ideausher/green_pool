@@ -141,68 +141,53 @@ class PostRideStepThreeView extends GetView<PostRideStepThreeController> {
                               //From origin to stop 1
                               controller.postRideModel.value.ridesDetails!
                                       .stops![0]!.name!.isNotEmpty
-                                  ? Column(
+                                  ? Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            SizedBox(
-                                                width: 40.w,
-                                                height: 10.h,
-                                                child: GreenPoolTextField(
-                                                  hintText: '',
-                                                  isSuffixNeeded: false,
-                                                  keyboardType:
-                                                      const TextInputType
-                                                          .numberWithOptions(),
-                                                  onchanged: (val) {
-                                                    controller
-                                                        .setActiveStatePricing();
-                                                    controller
-                                                            .postRideModel
-                                                            .value
-                                                            .ridesDetails
-                                                            ?.stops?[0]
-                                                            ?.originToStopFair =
-                                                        val;
-                                                  },
-                                                  validator: (v) => controller
-                                                      .fareValidator(v),
-                                                  autovalidateMode:
-                                                      AutovalidateMode
-                                                          .onUserInteraction,
-                                                  controller: controller
-                                                      .originToStop1Price,
-                                                  prefix: Text(
-                                                    '\$',
-                                                    style: TextStyleUtil
-                                                        .k14Regular(
-                                                      color: ColorUtil.kBlack03,
-                                                    ),
-                                                  ),
-                                                )).paddingOnly(right: 8.kw),
-                                            Flexible(
-                                              child: SizedBox(
-                                                height: 10.h,
-                                                child: Text(
-                                                  "${controller.postRideModel.value.ridesDetails?.origin?.name.toString().split(",").first} to ${controller.postRideModel.value.ridesDetails?.stops?[0]?.name.toString().split(",").first}",
-                                                  style: TextStyleUtil
-                                                      .k14Semibold(),
+                                        SizedBox(
+                                            width: 40.w,
+                                            height: 10.h,
+                                            child: GreenPoolTextField(
+                                              hintText: '',
+                                              isSuffixNeeded: false,
+                                              keyboardType: const TextInputType
+                                                  .numberWithOptions(),
+                                              onchanged: (val) {
+                                                controller
+                                                    .setActiveStatePricing();
+                                                controller
+                                                    .postRideModel
+                                                    .value
+                                                    .ridesDetails
+                                                    ?.stops?[0]
+                                                    ?.originToStopFair = val;
+                                              },
+                                              validator: (v) =>
+                                                  controller.fareValidator(v),
+                                              autovalidateMode: AutovalidateMode
+                                                  .onUserInteraction,
+                                              controller:
+                                                  controller.originToStop1Price,
+                                              prefix: Text(
+                                                '\$',
+                                                style: TextStyleUtil.k14Regular(
+                                                  color: ColorUtil.kBlack03,
                                                 ),
                                               ),
+                                            )).paddingOnly(right: 8.kw),
+                                        Flexible(
+                                          child: SizedBox(
+                                            height: 10.h,
+                                            child: Text(
+                                              "${controller.postRideModel.value.ridesDetails?.origin?.name.toString().split(",").first} to ${controller.postRideModel.value.ridesDetails?.stops?[0]?.name.toString().split(",").first}",
+                                              style:
+                                                  TextStyleUtil.k14Semibold(),
                                             ),
-                                          ],
-                                        ).paddingOnly(bottom: 4.kh),
-                                        Text(
-                                          "(${GpUtil.calculateDistance(startLat: controller.postRideModel.value.ridesDetails?.origin?.latitude ?? 0.0, startLong: controller.postRideModel.value.ridesDetails?.origin?.longitude ?? 0.0, endLat: controller.postRideModel.value.ridesDetails?.stops?[0]?.latitude ?? 0.0, endLong: controller.postRideModel.value.ridesDetails?.stops?[0]?.longitude ?? 0.0).toStringAsFixed(2)})",
-                                          style: TextStyleUtil.k14Semibold(
-                                              color: ColorUtil.kError2),
-                                        )
+                                          ),
+                                        ),
                                       ],
                                     )
                                   : const SizedBox(),
