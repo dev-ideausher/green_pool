@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:get/get.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
+import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
@@ -19,12 +20,12 @@ class Onboard1View extends GetView {
           width: 348.kw,
         ).paddingOnly(bottom: 3.kh),
         Text(
-          'Find carpool effortlessly\nwith Greenpool',
+          Strings.onboard1text1,
           style: TextStyleUtil.k24Heading700(),
           textAlign: TextAlign.center,
         ).paddingOnly(bottom: 16.kh),
         Text(
-          "Discover the convenience of sharing rides\nwith Greenpool. Whether you're a driver\nlooking to share your journey or a rider in\nneed of a ride, we've got you covered.",
+          Strings.onboard1text2,
           style: TextStyleUtil.k16Regular(color: ColorUtil.kBlack04),
           textAlign: TextAlign.center,
         )

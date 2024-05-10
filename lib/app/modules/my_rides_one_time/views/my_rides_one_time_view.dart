@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/components/common_image_view.dart';
 import 'package:green_pool/app/components/origin_to_destination.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
-import 'package:green_pool/app/routes/app_pages.dart';
+import 'package:green_pool/app/res/strings.dart';
 
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/storage.dart';
@@ -18,8 +18,6 @@ import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
 import '../../../services/text_style_util.dart';
 import '../../home/controllers/home_controller.dart';
-import '../../my_rides_page/controllers/my_rides_page_controller.dart';
-import '../../profile/controllers/profile_controller.dart';
 import '../controllers/my_rides_one_time_controller.dart';
 
 class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
@@ -49,7 +47,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                       : SvgPicture.asset(
                                           ImageConstant.svgNoRides)),
                               Text(
-                                "You have posted no rides",
+                                Strings.youHavePostedNoRides,
                                 style: TextStyleUtil.k24Heading600(),
                                 textAlign: TextAlign.center,
                               )
@@ -245,13 +243,13 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                               index]
                                                           ?.origin
                                                           ?.name ??
-                                                      'Origin',
+                                                      Strings.origin,
                                                   destination: controller
                                                           .myRidesModelData[
                                                               index]
                                                           ?.destination
                                                           ?.name ??
-                                                      'Destination',
+                                                      Strings.destination,
                                                 ).paddingOnly(bottom: 8.kh),
                                                 Container(
                                                   width: 100.w,
@@ -265,7 +263,8 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                               ?.isCancelled ==
                                                           true
                                                       ? Text(
-                                                          "Ride is cancelled",
+                                                          Strings
+                                                              .rideIsCancelled,
                                                           style: TextStyleUtil
                                                               .k16Bold(
                                                                   color: ColorUtil
@@ -317,8 +316,8 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                                           .kPrimary3PinkMode
                                                                       : ColorUtil
                                                                           .kSecondary01,
-                                                                  label:
-                                                                      "View details",
+                                                                  label: Strings
+                                                                      .viewDetails,
                                                                 ),
                                                                 GreenPoolButton(
                                                                   onPressed:
@@ -353,8 +352,8 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                                           .kPrimary3PinkMode
                                                                       : ColorUtil
                                                                           .kSecondary01,
-                                                                  label:
-                                                                      'Cancel Ride',
+                                                                  label: Strings
+                                                                      .cancelRide,
                                                                 ),
                                                               ],
                                                             )
@@ -369,12 +368,15 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                                           .spaceBetween,
                                                                   children: [
                                                                     GreenPoolButton(
-                                                                        onPressed:
-                                                                            () {
-                                                                          controller.startRide(controller
-                                                                              .myRidesModelData
-                                                                              .value[index]);
-                                                                        },
+                                                                        onPressed: controller
+                                                                                .myRidesModelData
+                                                                                .value[
+                                                                                    index]!
+                                                                                .isCompleted!
+                                                                            ? () {}
+                                                                            : () {
+                                                                                controller.startRide(controller.myRidesModelData.value[index]);
+                                                                              },
                                                                         width: 144
                                                                             .kw,
                                                                         height: 40
@@ -384,8 +386,9 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                                                 .kh),
                                                                         fontSize: 14
                                                                             .kh,
-                                                                        label:
-                                                                            'Start Ride'),
+                                                                        label: controller.myRidesModelData.value[index]!.isCompleted!
+                                                                            ? Strings.rideCompleted
+                                                                            : Strings.startRide),
                                                                     GreenPoolButton(
                                                                       onPressed:
                                                                           () {
@@ -417,8 +420,8 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                                               .kPrimary3PinkMode
                                                                           : ColorUtil
                                                                               .kSecondary01,
-                                                                      label:
-                                                                          'Cancel Ride',
+                                                                      label: Strings
+                                                                          .cancelRide,
                                                                     ),
                                                                   ],
                                                                 )
@@ -456,8 +459,8 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                                               .kPrimary3PinkMode
                                                                           : ColorUtil
                                                                               .kSecondary01,
-                                                                      label:
-                                                                          "View details",
+                                                                      label: Strings
+                                                                          .viewDetails,
                                                                     ),
                                                                     GreenPoolButton(
                                                                       onPressed:
@@ -490,8 +493,8 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                                               .kPrimary3PinkMode
                                                                           : ColorUtil
                                                                               .kSecondary01,
-                                                                      label:
-                                                                          'Cancel Ride',
+                                                                      label: Strings
+                                                                          .cancelRide,
                                                                     ),
                                                                   ],
                                                                 ),
@@ -543,9 +546,20 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                                       BorderRadius
                                                                           .circular(
                                                                               8.kh),
-                                                                  child: CommonImageView(
-                                                                      url:
-                                                                          "${controller.myRidesModelData[index].confirmDriverDetails?[0]?.driverPostsDetails?[0]?.driverDetails?[0]?.profilePic?.url}"),
+                                                                  child: controller
+                                                                              .myRidesModelData[
+                                                                                  index]
+                                                                              .confirmDriverDetails?[
+                                                                                  0]
+                                                                              ?.driverPostsDetails ==
+                                                                          0
+                                                                      ? CommonImageView(
+                                                                          imagePath:
+                                                                              ImageConstant.pngEmptyPassenger,
+                                                                        )
+                                                                      : CommonImageView(
+                                                                          url:
+                                                                              "${controller.myRidesModelData[index].confirmDriverDetails?[0]?.driverPostsDetails?[0]?.driverDetails?[0]?.profilePic?.url}"),
                                                                 ),
                                                               ).paddingOnly(
                                                                   bottom: 8.kh),
@@ -623,7 +637,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                                         children: [
                                                                           TextSpan(
                                                                             text:
-                                                                                'Fare: ',
+                                                                                Strings.fare,
                                                                             style:
                                                                                 TextStyleUtil.k14Semibold(color: ColorUtil.kSecondary01),
                                                                           ),
@@ -783,8 +797,8 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                                           .myRidesModelData[
                                                                       index]!);
                                                             },
-                                                            label:
-                                                                'View Details',
+                                                            label: Strings
+                                                                .viewDetails,
                                                             fontSize: 14.kh,
                                                             borderColor: Get.find<
                                                                         HomeController>()
@@ -816,8 +830,8 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                                       index]!);
                                                             },
                                                             isBorder: true,
-                                                            label:
-                                                                'Cancel Ride',
+                                                            label: Strings
+                                                                .cancelRide,
                                                             fontSize: 14.kh,
                                                             borderColor: Get.find<
                                                                         HomeController>()

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
+import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../constants/image_constant.dart';
@@ -23,13 +24,13 @@ class GetStartedView extends GetView {
           ),
         ).paddingOnly(bottom: 3.kh),
         Text(
-          "Save money ,\nShare rides &\nSocialize",
+          Strings.getStarted1,
           style: TextStyleUtil.k32Heading700(),
         ).paddingOnly(bottom: 14.kh),
         Text(
-          "Let's make environment greener and\ncommuting smarter together!",
+          Strings.getStarted2,
           style: TextStyleUtil.k16Regular(color: ColorUtil.kBlack04),
-        )
+        ),
       ],
     ).paddingSymmetric(horizontal: 20.kw);
   }

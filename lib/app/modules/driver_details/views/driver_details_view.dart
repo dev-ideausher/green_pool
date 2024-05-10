@@ -194,7 +194,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Text(
-                      "${controller.matchingRidesModelData.value.driverDetails?[0]?.totalRiders ?? "0"} people",
+                      "${controller.matchingRidesModelData.value.driverDetails?[0]?.totalRides ?? "0"} people",
                       style:
                           TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                     ),
@@ -374,12 +374,17 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
 
-            const GreenPoolDivider().paddingOnly(top: 8.kh),
-            GreenPoolButton(onPressed: () {}, label: 'Message', isBorder: true),
+            const GreenPoolDivider().paddingSymmetric(vertical: 8.kh),
+            GreenPoolButton(
+                onPressed: () {
+                  controller.chatWithDriver();
+                },
+                label: 'Message',
+                isBorder: true),
             GreenPoolButton(
                     onPressed: () => controller.confirmRideAPI(),
                     label: 'Request Ride')
-                .paddingSymmetric(vertical: 40.kh),
+                .paddingOnly(bottom: 40.kh, top: 16.kh),
           ],
         ).paddingSymmetric(horizontal: 16.kw),
       ),

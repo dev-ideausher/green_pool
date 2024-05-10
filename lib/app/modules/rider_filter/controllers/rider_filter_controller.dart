@@ -21,13 +21,13 @@ class RiderFilterController extends GetxController {
   RxBool babySeat = false.obs;
   RxBool heatedSeats = false.obs;
   bool preferenceAdded = false;
-  var matchingRideResponse = MatchingRidesModel().obs;
+  var matchingRidesModel = MatchingRidesModel().obs;
 
   @override
   void onInit() {
     super.onInit();
     rideDetails = Get.arguments['rideDetails'];
-    matchingRideResponse.value = Get.arguments['matchingRidesModel'];
+    matchingRidesModel.value = Get.arguments['matchingRidesModel'];
   }
 
   clearAll() {
@@ -121,8 +121,8 @@ class RiderFilterController extends GetxController {
       final response = await APIManager.postMatchngRides(
           body: rideDetails, queryParam: preferences);
       var data = jsonDecode(response.toString());
-      matchingRideResponse.value = MatchingRidesModel.fromJson(data);
-      Get.back(result: matchingRideResponse.value);
+      matchingRidesModel.value = MatchingRidesModel.fromJson(data);
+      Get.back(result: matchingRidesModel.value);
       log("filter resp data: ${data.toString()}");
     } catch (e) {
       throw Exception(e);

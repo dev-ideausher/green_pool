@@ -1,9 +1,11 @@
 import 'dart:io';
 import 'dart:math';
 
+import 'package:flutter/services.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
+import 'dart:ui' as ui;
 
 class GpUtil {
   static Future<XFile?> compressImage(ImageSource imageSource) async {
@@ -92,5 +94,15 @@ class GpUtil {
         position.latitude <= 83.110626 &&
         position.longitude >= -141.001873 &&
         position.longitude <= -52.619403;
+  }
+
+  static Future<Uint8List> getMarker(String path, int width) async {
+    ByteData data = await rootBundle.load(path);
+    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
+        targetWidth: width);
+    ui.FrameInfo fi = await codec.getNextFrame();
+    return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!
+        .buffer
+        .asUint8List();
   }
 }

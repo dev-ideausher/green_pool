@@ -5,6 +5,9 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/auth.dart';
 
+import '../../../data/find_ride_model.dart';
+import '../../../data/post_ride_model.dart';
+import '../../home/controllers/home_controller.dart';
 import '../../verify/controllers/verify_controller.dart';
 
 class LoginController extends GetxController {
@@ -14,14 +17,28 @@ class LoginController extends GetxController {
   bool isDriver = false;
   bool fromNavBar = false;
   RxBool isActive = false.obs;
+  final Rx<PostRideModel> postRideModel = PostRideModel().obs;
+  final Rx<FindRideModel> findRideModel = FindRideModel().obs;
   TextEditingController passwordTextController = TextEditingController();
   GlobalKey<FormState> loginKey = GlobalKey<FormState>();
 
   @override
   void onInit() {
     super.onInit();
-    isDriver = Get.arguments['isDriver'];
-    fromNavBar = Get.arguments['fromNavBar'];
+    try {
+      if (Get.find<HomeController>().findingRide.value) {
+        isDriver = Get.arguments['isDriver'];
+        fromNavBar = Get.arguments['fromNavBar'];
+        findRideModel.value = Get.arguments['findRideModel'];
+      } else {
+        isDriver = Get.arguments['isDriver'];
+        fromNavBar = Get.arguments['fromNavBar'];
+        postRideModel.value = Get.arguments['postRideModel'];
+      }
+    } catch (e) {
+      isDriver = Get.arguments['isDriver'];
+      fromNavBar = Get.arguments['fromNavBar'];
+    }
   }
 
   setVisible() {
@@ -80,14 +97,27 @@ class LoginController extends GetxController {
       await Get.find<AuthService>()
           .mobileOtp(phoneno: countryCode + phoneNumberController.text);
 
-      await Get.offNamed(
-        Routes.VERIFY,
-        arguments: {
-          'isDriver': isDriver,
-          'phoneNumber': countryCode + " " + phoneNumberController.value.text,
-          'fromNavBar': fromNavBar
-        },
-      );
+      if (Get.find<HomeController>().findingRide.value) {
+        await Get.offNamed(
+          Routes.VERIFY,
+          arguments: {
+            'isDriver': isDriver,
+            'phoneNumber': countryCode + " " + phoneNumberController.value.text,
+            'fromNavBar': fromNavBar,
+            'findRideModel': findRideModel.value
+          },
+        );
+      } else {
+        await Get.offNamed(
+          Routes.VERIFY,
+          arguments: {
+            'isDriver': isDriver,
+            'phoneNumber': countryCode + " " + phoneNumberController.value.text,
+            'fromNavBar': fromNavBar,
+            'postRideModel': postRideModel.value
+          },
+        );
+      }
     } catch (e) {
       throw Exception(e);
     }
@@ -116,6 +146,22 @@ class LoginController extends GetxController {
       await Get.find<VerifyController>().loginAPI();
     } catch (error) {
       log("$error");
+    }
+  }
+
+  moveToCreateAcc() {
+    if (Get.find<HomeController>().findingRide.value) {
+      Get.offNamed(Routes.CREATE_ACCOUNT, arguments: {
+        'isDriver': isDriver,
+        'fromNavBar': fromNavBar,
+        'findRideModel': findRideModel.value
+      });
+    } else {
+      Get.offNamed(Routes.CREATE_ACCOUNT, arguments: {
+        'isDriver': isDriver,
+        'fromNavBar': false,
+        'postRideModel': postRideModel.value
+      });
     }
   }
 }

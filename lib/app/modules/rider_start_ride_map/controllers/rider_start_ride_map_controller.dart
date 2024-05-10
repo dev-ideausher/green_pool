@@ -66,7 +66,8 @@ class RiderStartRideMapController extends GetxController {
     mapController.animateCamera(CameraUpdate.newCameraPosition(
       CameraPosition(
         bearing: 270.0,
-        target: LatLng(destinationLat.value, destinationLong.value),
+        // target: LatLng(destinationLat.value, destinationLong.value),
+        target: LatLng(latitude, longitude),
         tilt: 30.0,
         zoom: 17.0,
       ),
@@ -260,31 +261,30 @@ class RiderStartRideMapController extends GetxController {
     }
   }
 
-  List<String> emergencyContacts = ['contact1@example.com', 'contact2@example.com']; // Add your emergency contacts here
+  List<String> emergencyContacts = [
+    'contact1@example.com',
+    'contact2@example.com'
+  ]; // Add your emergency contacts here
   bool isSOSActive = false;
-  
+
   void startSOS() {
     isSOSActive = true;
     print('SOS activated!');
-    
+
     Timer(Duration(seconds: 10), () {
       if (isSOSActive) {
         sendSOSMessage();
       }
     });
   }
-  
+
   void cancelSOS() {
     isSOSActive = false;
     print('SOS canceled.');
   }
-  
+
   void sendSOSMessage() {
     print('Sending SOS message to emergency contacts: $emergencyContacts');
     // Code to send SOS message to emergency contacts
   }
 }
-
-
-
-

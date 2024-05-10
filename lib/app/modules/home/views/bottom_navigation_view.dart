@@ -8,10 +8,12 @@ import 'package:green_pool/app/modules/home/views/home_view.dart';
 import 'package:green_pool/app/modules/messages/views/messages_view.dart';
 import 'package:green_pool/app/modules/my_rides_page/views/my_rides_page_view.dart';
 import 'package:green_pool/app/modules/profile/views/profile_view.dart';
+import 'package:green_pool/app/res/strings.dart';
+import 'package:green_pool/app/routes/app_pages.dart';
+import 'package:green_pool/app/services/storage.dart';
 
 import '../../../services/colors.dart';
 import '../../../services/text_style_util.dart';
-import '../../profile/controllers/profile_controller.dart';
 
 class BottomNavigationView extends GetView<HomeController> {
   const BottomNavigationView({super.key});
@@ -33,14 +35,21 @@ class BottomNavigationView extends GetView<HomeController> {
             selectedItemColor: Get.find<HomeController>().isPinkModeOn.value
                 ? ColorUtil.kPrimary3PinkMode
                 : ColorUtil.kSecondary01,
-            onTap: (index) {
-              controller.changeTabIndex(index);
-              controller.pageController?.animateToPage(
-                index,
-                duration: const Duration(milliseconds: 1),
-                curve: Curves.easeIn,
-              );
-            },
+            onTap: Get.find<GetStorageService>().getLoggedIn
+                ? (index) {
+                    controller.changeTabIndex(index);
+                    controller.pageController?.animateToPage(
+                      index,
+                      duration: const Duration(milliseconds: 1),
+                      curve: Curves.easeIn,
+                    );
+                  }
+                : (index) {
+                    if (index != 0) {
+                      Get.toNamed(Routes.CREATE_ACCOUNT,
+                          arguments: {'isDriver': false, 'fromNavBar': true});
+                    }
+                  },
             items: [
               BottomNavigationBarItem(
                 activeIcon: SvgPicture.asset(
@@ -52,7 +61,7 @@ class BottomNavigationView extends GetView<HomeController> {
                       BlendMode.srcIn),
                 ),
                 icon: SvgPicture.asset(ImageConstant.svgNavHome),
-                label: 'Home',
+                label: Strings.home,
               ),
               BottomNavigationBarItem(
                 activeIcon: SvgPicture.asset(
@@ -64,7 +73,7 @@ class BottomNavigationView extends GetView<HomeController> {
                       BlendMode.srcIn),
                 ),
                 icon: SvgPicture.asset(ImageConstant.svgNavCar),
-                label: 'My Rides',
+                label: Strings.myRides,
               ),
               BottomNavigationBarItem(
                 activeIcon: SvgPicture.asset(
@@ -76,7 +85,7 @@ class BottomNavigationView extends GetView<HomeController> {
                       BlendMode.srcIn),
                 ),
                 icon: SvgPicture.asset(ImageConstant.svgNavMessages),
-                label: 'Messages',
+                label: Strings.messages,
               ),
               BottomNavigationBarItem(
                 activeIcon: SvgPicture.asset(
@@ -88,7 +97,7 @@ class BottomNavigationView extends GetView<HomeController> {
                       BlendMode.srcIn),
                 ),
                 icon: SvgPicture.asset(ImageConstant.svgNavProfile),
-                label: 'Profile',
+                label: Strings.profile,
               ),
             ]),
       ),

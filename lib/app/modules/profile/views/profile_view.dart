@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -25,7 +26,7 @@ class ProfileView extends GetView<ProfileController> {
   const ProfileView({super.key});
   @override
   Widget build(BuildContext context) {
-    controller.userInfo.refresh();
+    // controller.userInfo.refresh();
     return Scaffold(
       appBar: const GreenPoolAppBar(
         title: Text('Profile'),
@@ -51,8 +52,7 @@ class ProfileView extends GetView<ProfileController> {
                             ProfileContainer(
                               onTap: () {
                                 Get.find<AuthService>().logOutUser();
-                                Get.find<ProfileController>().isPinkMode.value =
-                                    false;
+                                controller.pinkMode.value = false;
                                 Get.find<HomeController>().selectedIndex.value =
                                     0;
                                 Get.offAllNamed(Routes.ONBOARDING);
@@ -68,18 +68,23 @@ class ProfileView extends GetView<ProfileController> {
                       : SingleChildScrollView(
                           child: Column(
                             children: [
-                              Container(
-                                decoration:
-                                    const BoxDecoration(shape: BoxShape.circle),
-                                child: ClipOval(
-                                    child: SizedBox.fromSize(
-                                        size: Size.fromRadius(44.kh),
-                                        child: CommonImageView(
-                                            height: 44.kh,
-                                            width: 44.kw,
-                                            url:
-                                                "${controller.userInfo.value.data?.profilePic?.url}"))),
-                              ).paddingOnly(bottom: 8.kh, top: 16.kh),
+                              GestureDetector(
+                                onTap: () {
+                                  Get.toNamed(Routes.USER_DETAILS);
+                                },
+                                child: Container(
+                                  decoration: const BoxDecoration(
+                                      shape: BoxShape.circle),
+                                  child: ClipOval(
+                                      child: SizedBox.fromSize(
+                                          size: Size.fromRadius(44.kh),
+                                          child: CommonImageView(
+                                              height: 44.kh,
+                                              width: 44.kw,
+                                              url:
+                                                  "${controller.userInfo.value.data?.profilePic?.url}"))),
+                                ).paddingOnly(bottom: 8.kh, top: 16.kh),
+                              ),
                               Text(
                                 controller.userInfo.value.data!.fullName ??
                                     'User',
@@ -120,7 +125,7 @@ class ProfileView extends GetView<ProfileController> {
                                         () => Switch(
                                           materialTapTargetSize:
                                               MaterialTapTargetSize.shrinkWrap,
-                                          value: controller.isPinkMode.value,
+                                          value: controller.pinkMode.value,
                                           onChanged: (value) {
                                             controller.toggleSwitch();
                                           },
@@ -160,7 +165,7 @@ class ProfileView extends GetView<ProfileController> {
                                       text: "Ride history")
                                   .paddingOnly(bottom: 8.kh),
                               ProfileContainer(
-                                onTap: () => Get.toNamed(Routes.WALLET),
+                                  onTap: () => Get.toNamed(Routes.WALLET),
                                   image: ImageConstant.svgProfileWallet,
                                   text: "Wallet"),
                               ProfileContainer(
@@ -344,9 +349,8 @@ class ProfileView extends GetView<ProfileController> {
                                               onPressed: () {
                                                 Get.find<AuthService>()
                                                     .logOutUser();
-                                                Get.find<ProfileController>()
-                                                    .isPinkMode
-                                                    .value = false;
+                                                controller.pinkMode.value =
+                                                    false;
                                                 Get.find<HomeController>()
                                                     .selectedIndex
                                                     .value = 0;

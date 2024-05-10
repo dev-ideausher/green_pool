@@ -3,11 +3,13 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/snackbar.dart';
 
+import '../../../data/booking_detail_model.dart';
 import '../../../data/my_rides_model.dart';
 import '../../../services/dio/api_service.dart';
 
 class RatingDriverSideController extends GetxController {
-  final Rx<MyRidesModelData> myRidesModel = MyRidesModelData().obs;
+  // final Rx<MyRidesModelData> myRidesModel = MyRidesModelData().obs;
+  final Rx<BookingDetailModelData> myRidesModel = BookingDetailModelData().obs;
   double? rating;
 
   @override

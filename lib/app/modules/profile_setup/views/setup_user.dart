@@ -59,8 +59,15 @@ class SetupUser extends GetView<ProfileSetupController> {
                                     ),
                                   ),
                                 )
-                              : SvgPicture.asset(
-                                  ImageConstant.svgSetupProfilePic),
+                              : Container(
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      border: controller.imageNotUploaded.value
+                                          ? Border.all(color: ColorUtil.kError2)
+                                          : null),
+                                  child: SvgPicture.asset(
+                                      ImageConstant.svgSetupProfilePic),
+                                ),
                         ),
                         SvgPicture.asset(ImageConstant.svgSetupAdd),
                       ],
@@ -136,7 +143,7 @@ class SetupUser extends GetView<ProfileSetupController> {
               value: controller.selectedCity.value,
               items: controller.citiesDropdownItems,
               onChanged: (value) {
-                controller.city.text = value.toString();
+                controller.selectedCity.value = value.toString();
               },
               validator: (value) => controller.validateCity(value),
               autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -181,14 +188,17 @@ class SetupUser extends GetView<ProfileSetupController> {
                       controller.getIDImage(ImageSource.camera);
                     },
                   )),
-              child: Container(
-                padding:
-                    EdgeInsets.symmetric(vertical: 68.kh, horizontal: 76.kw),
-                decoration: BoxDecoration(
-                    color: ColorUtil.kGreyColor,
-                    borderRadius: BorderRadius.circular(8.kh)),
-                child: Obx(
-                  () => controller.isIDPicked.value
+              child: Obx(
+                () => Container(
+                  padding:
+                      EdgeInsets.symmetric(vertical: 68.kh, horizontal: 76.kw),
+                  decoration: BoxDecoration(
+                      border: controller.imageNotUploaded.value
+                          ? Border.all(color: ColorUtil.kError2)
+                          : null,
+                      color: ColorUtil.kGreyColor,
+                      borderRadius: BorderRadius.circular(8.kh)),
+                  child: controller.isIDPicked.value
                       ? Image.file(
                           controller.selectedIDImagePath.value!,
                         )

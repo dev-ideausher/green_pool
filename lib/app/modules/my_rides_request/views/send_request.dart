@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:green_pool/app/modules/map_driver_send_request/controllers/map_driver_send_request_controller.dart';
 import 'package:green_pool/app/modules/map_driver_send_request/views/map_driver_send_request_view.dart';
+import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import '../../../components/common_image_view.dart';
 import '../../../components/gp_progress.dart';
@@ -13,9 +14,9 @@ import '../../../constants/image_constant.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
+import '../../../services/gp_util.dart';
 import '../../../services/text_style_util.dart';
 import '../../home/controllers/home_controller.dart';
-import '../../profile/controllers/profile_controller.dart';
 import '../controllers/my_rides_request_controller.dart';
 
 class SendRequest extends GetView<MyRidesRequestController> {
@@ -41,12 +42,12 @@ class SendRequest extends GetView<MyRidesRequestController> {
                           : SvgPicture.asset(ImageConstant.svgNoRides),
                     ),
                     Text(
-                      "There are no rides between these two cities",
+                      Strings.noRidesBetweenCities,
                       style: TextStyleUtil.k24Heading600(),
                       textAlign: TextAlign.center,
                     ).paddingOnly(bottom: 16.kh),
                     Text(
-                      "Please try again after few days.",
+                      Strings.pleaseTryAgain,
                       style:
                           TextStyleUtil.k18Regular(color: ColorUtil.kBlack04),
                       textAlign: TextAlign.center,
@@ -143,7 +144,7 @@ class SendRequest extends GetView<MyRidesRequestController> {
                                               ),
                                               Text(
                                                 // '2.1 km away',
-                                                '${controller.sendRequestModel.value.data![index]?.minStopDestinationDistance?.toStringAsFixed(2)} km away',
+                                                "${GpUtil.calculateDistance(startLat: controller.latitude, startLong: controller.longitude, endLat: controller.sendRequestModel.value.data?[index]?.origin?.coordinates?.last ?? controller.latitude, endLong: controller.sendRequestModel.value.data?[index]?.origin?.coordinates?.first ?? controller.longitude).toStringAsFixed(2)} ${Strings.kmAway}",
                                                 style: TextStyleUtil.k12Regular(
                                                     color: ColorUtil.kBlack02),
                                               ),
@@ -161,7 +162,7 @@ class SendRequest extends GetView<MyRidesRequestController> {
                                                   color:
                                                       ColorUtil.kSecondary01)),
                                           child: Text(
-                                            "Message",
+                                            Strings.message,
                                             style: TextStyleUtil.k12Semibold(),
                                           ).paddingSymmetric(
                                               vertical: 4.kh,
@@ -194,7 +195,7 @@ class SendRequest extends GetView<MyRidesRequestController> {
                                     height: 40.kh,
                                     padding: EdgeInsets.all(8.kh),
                                     fontSize: 14.kh,
-                                    label: 'Request',
+                                    label: Strings.request,
                                     onPressed: () async {
                                       await controller
                                           .sendRiderRequestAPI(index);
@@ -213,7 +214,7 @@ class SendRequest extends GetView<MyRidesRequestController> {
                                             child: Column(
                                               children: [
                                                 Text(
-                                                  'Request Sent',
+                                                  Strings.requestSent,
                                                   style: TextStyleUtil
                                                       .k18Heading600(),
                                                 ).paddingOnly(bottom: 24.kh),
@@ -223,14 +224,14 @@ class SendRequest extends GetView<MyRidesRequestController> {
                                                   width: 64.kw,
                                                 ).paddingOnly(bottom: 16.kh),
                                                 Text(
-                                                  "Payment Successful!\nRide request has been sent to the driver.\nYour booking is awaiting the driver'sapproval.",
+                                                  Strings.paymentDoneRequestSentToDriver,
                                                   textAlign: TextAlign.center,
                                                   style:
                                                       TextStyleUtil.k16Semibold(
                                                           fontSize: 16.kh),
                                                 ).paddingOnly(bottom: 40.kh),
                                                 GreenPoolButton(
-                                                    label: 'Continue',
+                                                    label: Strings.continueText,
                                                     onPressed: () {
                                                       Get.until((route) =>
                                                           Get.currentRoute ==
@@ -238,7 +239,7 @@ class SendRequest extends GetView<MyRidesRequestController> {
                                                               .BOTTOM_NAVIGATION);
                                                     }),
                                                 GreenPoolButton(
-                                                    label: 'Cancel Request',
+                                                    label: Strings.cancelRequest,
                                                     isBorder: true,
                                                     onPressed: () {
                                                       Get.until((route) =>

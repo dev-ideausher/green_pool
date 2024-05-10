@@ -16,6 +16,7 @@ class RiderMyRideRequestController extends GetxController {
   var confirmRideByRiderModel = ConfirmRideByRiderModel().obs;
   String rideIdFromMyRides = '';
   RxBool isLoading = false.obs;
+  RxBool mapViewType = false.obs;
 
   @override
   void onInit() {
@@ -37,6 +38,13 @@ class RiderMyRideRequestController extends GetxController {
   method() async {
     await allRiderConfirmRequestAPI();
     // await allRiderSendRequestAPI();
+  }
+
+  void changeViewType() {
+    mapViewType.value = !mapViewType.value;
+    if (mapViewType.value) {
+      // Get.find<MapDriverConfirmRequestController>().on
+    } else {}
   }
 
   allRiderConfirmRequestAPI() async {

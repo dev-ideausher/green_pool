@@ -6,8 +6,6 @@ import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/components/greenpool_textfield.dart';
 import 'package:green_pool/app/components/richtext_heading.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
-import 'package:green_pool/app/modules/origin/controllers/origin_controller.dart';
-import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
@@ -30,8 +28,7 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
         children: [
           const RichTextHeading(text: 'Origin').paddingOnly(top: 32.kh),
           GreenPoolTextField(
-            hintText:
-                '${controller.postRideModel.value.ridesDetails?.origin?.name}',
+            hintText: 'Enter origin address',
             keyboardType: TextInputType.streetAddress,
             onchanged: (v) {
               controller.setActiveStatePostRideView();
@@ -44,7 +41,7 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
             prefix: Icon(
               Icons.location_on,
               size: 24.kh,
-              color: Get.find<HomeController>().isSwitched.value
+              color: Get.find<HomeController>().isPinkModeOn.value
                   ? ColorUtil.kPrimary3PinkMode
                   : ColorUtil.kSecondary01,
             ),
@@ -57,17 +54,14 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
               controller.setActiveStatePostRideView();
             },
             onTap: () {
-              Get.toNamed(Routes.ORIGIN, arguments: LocationValues.destination)
-                  ?.then((value) {
-                controller.setActiveStatePostRideView();
-              });
+              controller.moveToSetDestination();
             },
             controller: controller.destinationTextController,
             readOnly: true,
             prefix: Icon(
               Icons.location_on,
               size: 24.kh,
-              color: Get.find<HomeController>().isSwitched.value
+              color: Get.find<HomeController>().isPinkModeOn.value
                   ? ColorUtil.kPrimary3PinkMode
                   : ColorUtil.kSecondary01,
             ),
@@ -84,22 +78,23 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
                 borderSide: const BorderSide(color: ColorUtil.kBlack06),
                 borderRadius: BorderRadius.circular(8.kh)),
             onTap: () {
-              Get.toNamed(Routes.ORIGIN, arguments: LocationValues.addStop1)
-                  ?.then((value) => controller.isStop1Added.value = true);
+              // Get.toNamed(Routes.ORIGIN, arguments: LocationValues.addStop1)
+              //     ?.then((value) => controller.isStop1Added.value = true);
+              controller.moveToSetStop1();
             },
             controller: controller.stop1TextController,
             readOnly: true,
             prefix: Icon(
               Icons.add_circle,
               size: 20.kh,
-              color: Get.find<HomeController>().isSwitched.value
+              color: Get.find<HomeController>().isPinkModeOn.value
                   ? ColorUtil.kPrimary3PinkMode
                   : ColorUtil.kSecondary01,
             ),
             suffix: SvgPicture.asset(
               ImageConstant.svgIconReorder,
               colorFilter: ColorFilter.mode(
-                  Get.find<HomeController>().isSwitched.value
+                  Get.find<HomeController>().isPinkModeOn.value
                       ? ColorUtil.kPrimary3PinkMode
                       : ColorUtil.kSecondary01,
                   BlendMode.srcIn),
@@ -115,22 +110,21 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
                         borderSide: const BorderSide(color: ColorUtil.kBlack06),
                         borderRadius: BorderRadius.circular(8.kh)),
                     onTap: () {
-                      Get.toNamed(Routes.ORIGIN,
-                          arguments: LocationValues.addStop2);
+                      controller.moveToSetStop2();
                     },
                     controller: controller.stop2TextController,
                     readOnly: true,
                     prefix: Icon(
                       Icons.add_circle,
                       size: 20.kh,
-                      color: Get.find<HomeController>().isSwitched.value
+                      color: Get.find<HomeController>().isPinkModeOn.value
                           ? ColorUtil.kPrimary3PinkMode
                           : ColorUtil.kSecondary01,
                     ),
                     suffix: SvgPicture.asset(
                       ImageConstant.svgIconReorder,
                       colorFilter: ColorFilter.mode(
-                          Get.find<HomeController>().isSwitched.value
+                          Get.find<HomeController>().isPinkModeOn.value
                               ? ColorUtil.kPrimary3PinkMode
                               : ColorUtil.kSecondary01,
                           BlendMode.srcIn),

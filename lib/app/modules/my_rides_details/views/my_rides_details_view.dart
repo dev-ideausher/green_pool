@@ -8,7 +8,6 @@ import 'package:green_pool/app/components/gp_progress.dart';
 import 'package:green_pool/app/components/origin_to_destination.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/modules/post_ride/views/amenities.dart';
-import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
@@ -18,7 +17,6 @@ import '../../../constants/image_constant.dart';
 import '../../../res/strings.dart';
 import '../../../services/colors.dart';
 import '../../../services/text_style_util.dart';
-import '../../profile/controllers/profile_controller.dart';
 import '../controllers/my_rides_details_controller.dart';
 
 class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
@@ -27,8 +25,8 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const GreenPoolAppBar(
-        title: Text('Ride Details'),
+      appBar: GreenPoolAppBar(
+        title: Text(Strings.rideDetails),
       ),
       body: Obx(
         () => controller.isLoad.value
@@ -66,7 +64,7 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                               ],
                             ),
                             Text(
-                              "Fare: \$ ${controller.myRidesModelData.value.driverBookingDetails?.origin?.originDestinationFair ?? ""}",
+                              "${Strings.fare}\$ ${controller.myRidesModelData.value.driverBookingDetails?.origin?.originDestinationFair ?? ""}",
                               style: TextStyleUtil.k16Semibold(
                                   fontSize: 16.kh,
                                   color: ColorUtil.kSecondary01),
@@ -76,70 +74,22 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                         const GreenPoolDivider()
                             .paddingSymmetric(vertical: 16.kh),
                         Text(
-                          "Origin to Destination",
+                          Strings.originToDestination,
                           style: TextStyleUtil.k16Bold(),
                         ).paddingOnly(bottom: 16.kh),
-                        Stack(
-                          children: [
-                            Row(
-                              children: [
-                                Container(
-                                  height: 10.kh,
-                                  width: 10.kw,
-                                  decoration: const BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: ColorUtil.kGreenColor),
-                                ).paddingOnly(right: 8.kw),
-                                Text(
-                                  'Pick up: ',
-                                  style: TextStyleUtil.k14Semibold(
-                                      color: ColorUtil.kBlack02),
-                                ).paddingOnly(right: 8.kw),
-                                Text(
-                                  controller.myRidesModelData.value
-                                          .driverBookingDetails?.origin?.name ??
-                                      "",
-                                  style: TextStyleUtil.k14Regular(
-                                      color: ColorUtil.kBlack02),
-                                ),
-                              ],
-                            ).paddingOnly(bottom: 30.kh),
-                            Positioned(
-                              top: 27.kh,
-                              child: Row(
-                                children: [
-                                  Container(
-                                    height: 10.kh,
-                                    width: 10.kw,
-                                    decoration: const BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: ColorUtil.kError4),
-                                  ).paddingOnly(right: 8.kw),
-                                  Text(
-                                    'Drop off: ',
-                                    style: TextStyleUtil.k14Semibold(
-                                        color: ColorUtil.kBlack02),
-                                  ).paddingOnly(right: 8.kw),
-                                  Text(
-                                    "${controller.myRidesModelData.value.driverBookingDetails?.destination?.name}",
-                                    style: TextStyleUtil.k14Regular(
-                                        color: ColorUtil.kBlack02),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            //line joining red and green dots
-                            Positioned(
-                              top: 10.kh,
-                              left: 4.5.kw,
-                              child: Container(
-                                height: 28.kh,
-                                width: 1.kw,
-                                color: ColorUtil.kBlack04,
-                              ),
-                            ),
-                          ],
-                        ).paddingOnly(bottom: 8.kh),
+                        OriginToDestination(
+                                origin: controller.myRidesModelData.value
+                                        .driverBookingDetails?.origin?.name ??
+                                    "",
+                                destination: controller
+                                        .myRidesModelData
+                                        .value
+                                        .driverBookingDetails
+                                        ?.destination
+                                        ?.name ??
+                                    "",
+                                needPickupText: true)
+                            .paddingOnly(bottom: 8.kh),
                         //bottom line
                         const GreenPoolDivider(),
                       ],
@@ -147,7 +97,7 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
 
                     //co passengers
                     Text(
-                      'Co-Passengers',
+                      Strings.coPassengers,
                       style: TextStyleUtil.k14Bold(),
                     ).paddingOnly(bottom: 16.kh),
 
@@ -157,7 +107,7 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                             0
                         ? Center(
                             child: Text(
-                              "No co-passengers are available at the moment",
+                              Strings.noPassengersAvailable,
                               style: TextStyleUtil.k16Regular(),
                             ),
                           )
@@ -218,7 +168,7 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
 
                     //Vehicle details
                     Text(
-                      'Vehicle Details',
+                      Strings.vehicleDetails,
                       style: TextStyleUtil.k14Bold(),
                     ).paddingOnly(bottom: 16.kh),
                     Row(
@@ -270,7 +220,7 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
 
                     //Features available
                     Text(
-                      'Features available',
+                      Strings.featuresAvailable,
                       style: TextStyleUtil.k14Bold(),
                     ).paddingOnly(bottom: 16.kh),
 
@@ -279,7 +229,7 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                             true
                         ? Amenities(
                                 toggleSwitch: false,
-                                text: "Appreciates Conversation",
+                                text: Strings.appreciatesConversation,
                                 image: ImageConstant.svgAmenities1)
                             .paddingOnly(bottom: 8.kh)
                         : const SizedBox(),
@@ -288,7 +238,7 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                             true
                         ? Amenities(
                                 toggleSwitch: false,
-                                text: "Enjoys Music",
+                                text: Strings.enjoysMusic,
                                 image: ImageConstant.svgAmenities2)
                             .paddingOnly(bottom: 8.kh)
                         : const SizedBox(),
@@ -297,7 +247,7 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                             true
                         ? Amenities(
                                 toggleSwitch: false,
-                                text: "Smoke-Free",
+                                text: Strings.smokeFree,
                                 image: ImageConstant.svgAmenities3)
                             .paddingOnly(bottom: 8.kh)
                         : const SizedBox(),
@@ -306,7 +256,7 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                             true
                         ? Amenities(
                                 toggleSwitch: false,
-                                text: "Pet-friendly",
+                                text: Strings.petFriendly,
                                 image: ImageConstant.svgAmenities4)
                             .paddingOnly(bottom: 8.kh)
                         : const SizedBox(),
@@ -315,7 +265,7 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                             true
                         ? Amenities(
                                 toggleSwitch: false,
-                                text: "Winter Tires",
+                                text: Strings.winterTires,
                                 image: ImageConstant.svgAmenities5)
                             .paddingOnly(bottom: 8.kh)
                         : const SizedBox(),
@@ -324,7 +274,7 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                             true
                         ? Amenities(
                                 toggleSwitch: false,
-                                text: "Cooling or Heating",
+                                text: Strings.coolingOrHeating,
                                 image: ImageConstant.svgAmenities6)
                             .paddingOnly(bottom: 8.kh)
                         : const SizedBox(),
@@ -333,7 +283,7 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                             true
                         ? Amenities(
                                 toggleSwitch: false,
-                                text: "Baby Seats",
+                                text: Strings.babySeat,
                                 image: ImageConstant.svgAmenities7)
                             .paddingOnly(bottom: 8.kh)
                         : const SizedBox(),
@@ -342,14 +292,14 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                             true
                         ? Amenities(
                                 toggleSwitch: false,
-                                text: "Heated Seats",
+                                text: Strings.heatedSeats,
                                 image: ImageConstant.svgAmenities8)
                             .paddingOnly(bottom: 8.kh)
                         : const SizedBox(),
 
                     const GreenPoolDivider().paddingSymmetric(vertical: 16.kh),
                     Text(
-                      "Description",
+                      Strings.description,
                       style: TextStyleUtil.k14Semibold(),
                     ).paddingOnly(bottom: 8.kh),
                     Wrap(

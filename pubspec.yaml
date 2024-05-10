@@ -49,6 +49,7 @@ dependencies:
   firebase_database: ^10.5.1
   confetti: ^0.7.0
   share_plus: ^9.0.0
+  http_parser: ^4.0.2
 
 dev_dependencies:
   flutter_lints: ^3.0.2

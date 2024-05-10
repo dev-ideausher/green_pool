@@ -6,6 +6,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/push_notification_service.dart';
 import 'package:green_pool/app/services/storage.dart';
 
@@ -19,7 +20,7 @@ class HomeController extends GetxController {
   RxDouble latitude = 0.0.obs;
   RxDouble longitude = 0.0.obs;
   var userInfo = UserInfoModel().obs;
-  RxString welcomeText = "Welcome".obs;
+  RxString welcomeText = Strings.welcome.obs;
   RxBool isPinkModeOn = false.obs;
 
   // RxBool isPink = Get.find<HomeController>().isPinkModeOn.value.obs;

@@ -35,6 +35,10 @@ import '../modules/map_driver_confirm_request/bindings/map_driver_confirm_reques
 import '../modules/map_driver_confirm_request/views/map_driver_confirm_request_view.dart';
 import '../modules/map_driver_send_request/bindings/map_driver_send_request_binding.dart';
 import '../modules/map_driver_send_request/views/map_driver_send_request_view.dart';
+import '../modules/map_rider_confirm_request/bindings/map_rider_confirm_request_binding.dart';
+import '../modules/map_rider_confirm_request/views/map_rider_confirm_request_view.dart';
+import '../modules/map_rider_send_request/bindings/map_rider_send_request_binding.dart';
+import '../modules/map_rider_send_request/views/map_rider_send_request_view.dart';
 import '../modules/messages/bindings/messages_binding.dart';
 import '../modules/messages/views/messages_view.dart';
 import '../modules/my_rides_details/bindings/my_rides_details_binding.dart';
@@ -68,6 +72,8 @@ import '../modules/post_ride/views/carpool_schedule_view.dart';
 import '../modules/post_ride/views/guidelines_view.dart';
 import '../modules/post_ride/views/post_ride_view.dart';
 import '../modules/post_ride/views/pricing_view.dart';
+import '../modules/post_ride_step_four/bindings/post_ride_step_four_binding.dart';
+import '../modules/post_ride_step_four/views/post_ride_step_four_view.dart';
 import '../modules/post_ride_step_one/bindings/post_ride_step_one_binding.dart';
 import '../modules/post_ride_step_one/views/post_ride_step_one_view.dart';
 import '../modules/post_ride_step_three/bindings/post_ride_step_three_binding.dart';
@@ -114,6 +120,8 @@ import '../modules/rider_profile_setup/bindings/rider_profile_setup_binding.dart
 import '../modules/rider_profile_setup/views/rider_profile_setup_view.dart';
 import '../modules/rider_start_ride_map/bindings/rider_start_ride_map_binding.dart';
 import '../modules/rider_start_ride_map/views/rider_start_ride_map_view.dart';
+import '../modules/search_address/bindings/search_address_binding.dart';
+import '../modules/search_address/views/search_address_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
 import '../modules/start_ride/bindings/start_ride_binding.dart';
@@ -130,6 +138,8 @@ import '../modules/user_details/bindings/user_details_binding.dart';
 import '../modules/user_details/views/user_details_view.dart';
 import '../modules/vehicle_details/bindings/vehicle_details_binding.dart';
 import '../modules/vehicle_details/views/vehicle_details_view.dart';
+import '../modules/vehicle_setup/bindings/vehicle_setup_binding.dart';
+import '../modules/vehicle_setup/views/vehicle_setup_view.dart';
 import '../modules/verification_done/bindings/verification_done_binding.dart';
 import '../modules/verification_done/views/verification_done_view.dart';
 import '../modules/verify/bindings/verify_binding.dart';
@@ -510,6 +520,31 @@ class AppPages {
       name: _Paths.ADD_BANK_DETAILS,
       page: () => const AddBankDetailsView(),
       binding: AddBankDetailsBinding(),
+    ),
+    GetPage(
+      name: _Paths.SEARCH_ADDRESS,
+      page: () => const SearchAddressView(),
+      binding: SearchAddressBinding(),
+    ),
+    GetPage(
+      name: _Paths.POST_RIDE_STEP_FOUR,
+      page: () => const PostRideStepFourView(),
+      binding: PostRideStepFourBinding(),
+    ),
+    GetPage(
+      name: _Paths.MAP_RIDER_CONFIRM_REQUEST,
+      page: () => const MapRiderConfirmRequestView(),
+      binding: MapRiderConfirmRequestBinding(),
+    ),
+    GetPage(
+      name: _Paths.MAP_RIDER_SEND_REQUEST,
+      page: () => const MapRiderSendRequestView(),
+      binding: MapRiderSendRequestBinding(),
+    ),
+    GetPage(
+      name: _Paths.VEHICLE_SETUP,
+      page: () => const VehicleSetupView(),
+      binding: VehicleSetupBinding(),
     ),
   ];
 }

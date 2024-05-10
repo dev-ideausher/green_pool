@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
+import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
@@ -17,18 +18,18 @@ class PaymentMethodView extends GetView<PaymentMethodController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const GreenPoolAppBar(
-          title: Text("Payment Method"),
+        appBar: GreenPoolAppBar(
+          title: Text(Strings.paymentMethod),
         ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Saved Cards",
+              Strings.savedCard,
               style: TextStyleUtil.k16Bold(),
             ).paddingOnly(top: 32.kh, bottom: 16.kh),
             SavedCardsTile(
-                title: "Add Credit/Debit Card",
+                title: Strings.addCreditDebit,
                 path: ImageConstant.svgAddCard,
                 onTap: () {
                   Get.toNamed(Routes.ADD_CARD);
@@ -36,7 +37,7 @@ class PaymentMethodView extends GetView<PaymentMethodController> {
             const Expanded(child: SizedBox()),
             GreenPoolButton(
               onPressed: () {},
-              label: "Proceed",
+              label: Strings.proceed,
             ).paddingSymmetric(vertical: 40.kh),
           ],
         ).paddingSymmetric(horizontal: 16.kw));

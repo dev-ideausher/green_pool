@@ -71,9 +71,9 @@ class APIManager {
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
           .post(Endpoints.sendMessage, data: jsonEncode(body));
 
-  static Future<Response> postStudentDiscount({required dynamic body}) async =>
+  static Future<Response> postStudentDiscount({required String email}) async =>
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
-          .post(Endpoints.studentDiscount, data: jsonEncode(body));
+          .post(Endpoints.studentDiscount + email);
 
   static Future<Response> postVehicleDetails({required dynamic body}) async =>
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
@@ -108,6 +108,11 @@ class APIManager {
         Dio(),
         showSnakbar: true,
       ).get(Endpoints.userByID);
+
+  static Future<Response> getChatList() async => await DioClient(
+        Dio(),
+        showSnakbar: true,
+      ).get(Endpoints.getChatList);
 
   static Future<Response> getPrivacyPolicy() async => await DioClient(
         Dio(),
@@ -225,6 +230,18 @@ class APIManager {
   static Future<Response> endRide({required dynamic body}) async =>
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).patch(
         Endpoints.endRide,
+        data: body,
+      );
+
+  static Future<Response> pickUpRider({required dynamic body}) async =>
+      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).patch(
+        Endpoints.pickUpRider,
+        data: body,
+      );
+
+  static Future<Response> dropOffRider({required dynamic body}) async =>
+      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).patch(
+        Endpoints.dropOffRider,
         data: body,
       );
 

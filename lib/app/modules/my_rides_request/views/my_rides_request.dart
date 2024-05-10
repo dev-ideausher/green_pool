@@ -4,13 +4,13 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/modules/my_rides_request/controllers/my_rides_request_controller.dart';
+import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../constants/image_constant.dart';
 import '../../../services/colors.dart';
 import '../../../services/text_style_util.dart';
 import '../../home/controllers/home_controller.dart';
-import '../../profile/controllers/profile_controller.dart';
 import 'confirm_request.dart';
 import 'send_request.dart';
 
@@ -22,7 +22,7 @@ class MyRideRequestsView extends GetView<MyRidesRequestController> {
     Get.lazyPut(() => MyRidesRequestController());
     return Scaffold(
       appBar: GreenPoolAppBar(
-        title: const Text('My Rides'),
+        title:  Text(Strings.myRides),
         actions: [
           Obx(
             () => GestureDetector(
@@ -68,15 +68,15 @@ class MyRideRequestsView extends GetView<MyRidesRequestController> {
                   labelColor: Get.find<HomeController>().isPinkModeOn.value
                       ? ColorUtil.kPrimary3PinkMode
                       : ColorUtil.kSecondary01,
-                  tabs: const [
+                  tabs:  [
                     Tab(
                       child: Text(
-                        'Confirm Requests',
+                        Strings.confirmRequests,
                       ),
                     ),
                     Tab(
                       child: Text(
-                        'Send Requests',
+                        Strings.sendRequests,
                       ),
                     ),
                   ]).paddingSymmetric(horizontal: 16.kw),

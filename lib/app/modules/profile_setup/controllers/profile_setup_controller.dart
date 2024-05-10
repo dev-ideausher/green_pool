@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:green_pool/app/data/post_ride_model.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/modules/post_ride/controllers/post_ride_controller.dart';
 import 'package:green_pool/app/modules/profile_setup/views/review_picture.dart';
@@ -26,10 +27,9 @@ class ProfileSetupController extends GetxController
   String name = '';
   Rx<File?> selectedProfileImagePath = Rx<File?>(null);
   Rx<File?> selectedIDImagePath = Rx<File?>(null);
-  Rx<File?> selectedVehicleImagePath = Rx<File?>(null);
   RxBool isProfileImagePicked = false.obs;
   RxBool isIDPicked = false.obs;
-  RxBool isVehicleImagePicked = false.obs;
+  RxBool imageNotUploaded = false.obs;
   TextEditingController fullName = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController phoneNumber = TextEditingController(
@@ -43,9 +43,12 @@ class ProfileSetupController extends GetxController
   late TabController tabBarController;
 
   //for vehicle
+  Rx<File?> selectedVehicleImagePath = Rx<File?>(null);
   TextEditingController model = TextEditingController();
   // TextEditingController color = TextEditingController();
   // TextEditingController type = TextEditingController();
+  RxBool isVehicleImagePicked = false.obs;
+  RxBool vehicleImageNotUploaded = false.obs;
   RxString color = "Silver".obs;
   RxString type = "Sedan".obs;
   TextEditingController year = TextEditingController();
@@ -54,10 +57,18 @@ class ProfileSetupController extends GetxController
   GlobalKey<FormState> userFormKey = GlobalKey<FormState>();
   GlobalKey<FormState> vehicleFormKey = GlobalKey<FormState>();
 
+  final Rx<PostRideModel> postRideModel = PostRideModel().obs;
+
   @override
   void onInit() {
     super.onInit();
-    fromNavBar = Get.arguments;
+    try {
+      fromNavBar = Get.arguments['fromNavBar'];
+      postRideModel.value = Get.arguments['postRideModel'];
+    } catch (e) {
+      fromNavBar = Get.arguments;
+    }
+
     Get.lazyPut(() => PostRideController());
     tabBarController = TabController(length: 2, vsync: this);
   }
@@ -189,7 +200,7 @@ class ProfileSetupController extends GetxController
       'email': email.text,
       'phone': phoneNumber.text,
       'gender': gender.value,
-      'city': city.text,
+      'city': selectedCity.value,
       'dob': dateOfBirth.text,
       'profilePic': await dio.MultipartFile.fromFile(
         pickedImageFile.path,
@@ -251,7 +262,9 @@ class ProfileSetupController extends GetxController
         if (fromNavBar) {
           Get.until((route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
         } else {
-          Get.until((route) => Get.currentRoute == Routes.POST_RIDE);
+          // Get.until((route) => Get.currentRoute == Routes.POST_RIDE);
+          Get.offNamed(Routes.POST_RIDE_STEP_TWO,
+              arguments: postRideModel.value);
         }
       } catch (e) {
         throw Exception(e);
@@ -392,11 +405,14 @@ class ProfileSetupController extends GetxController
     final isValid = userFormKey.currentState!.validate();
 
     if (!isValid) {
+      imageNotUploaded.value = true;
       return showMySnackbar(msg: 'Please fill in all the details');
     } else {
       if (isProfileImagePicked.value != true || isIDPicked.value != true) {
+        imageNotUploaded.value = true;
         return showMySnackbar(msg: 'Please upload the required images');
       } else {
+        imageNotUploaded.value = false;
         userFormKey.currentState!.save();
         await userDetailsAPI();
       }
@@ -407,11 +423,14 @@ class ProfileSetupController extends GetxController
     final isValid = vehicleFormKey.currentState!.validate();
 
     if (!isValid) {
+      vehicleImageNotUploaded.value = true;
       return showMySnackbar(msg: 'Please fill in all the details');
     } else {
-      if (selectedVehicleImagePath.value!.path.isEmpty) {
+      if (isVehicleImagePicked.value != true) {
+        vehicleImageNotUploaded.value = true;
         return showMySnackbar(msg: 'Please upload the required images');
       } else {
+        vehicleImageNotUploaded.value = false;
         vehicleFormKey.currentState!.save();
         await vehicleDetailsAPI();
       }

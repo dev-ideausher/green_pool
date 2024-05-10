@@ -9,7 +9,7 @@ import '../../../routes/app_pages.dart';
 import '../../../services/storage.dart';
 
 class ProfileController extends GetxController {
-  RxBool isPinkMode = Get.find<HomeController>().isPinkModeOn;
+  RxBool pinkMode = Get.find<HomeController>().isPinkModeOn;
   var userInfo = Get.find<HomeController>().userInfo;
 
   // @override
@@ -28,8 +28,8 @@ class ProfileController extends GetxController {
   // }
 
   void toggleSwitch() {
-    isPinkMode.value = !isPinkMode.value;
-    Get.find<GetStorageService>().isPinkMode = isPinkMode.value;
+    pinkMode.value = !pinkMode.value;
+    Get.find<GetStorageService>().isPinkMode = pinkMode.value;
     pinkModeAPI();
   }
 

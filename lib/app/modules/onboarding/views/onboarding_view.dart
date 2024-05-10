@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/custom_button.dart';
@@ -38,8 +39,10 @@ class OnboardingView extends GetView<OnboardingController> {
                         controller.pageIndex.value = 3;
                       },
                       padding: const EdgeInsets.all(0),
-                      label: 'Skip',
-                      color: controller.pageIndex.value == 1 ? ColorUtil.kSecondaryPinkMode : ColorUtil.kPrimary05,
+                      label: Strings.skip,
+                      color: controller.pageIndex.value == 1
+                          ? ColorUtil.kSecondaryPinkMode
+                          : ColorUtil.kPrimary05,
                       fontSize: 14.kh,
                       width: 77.kw,
                       height: 37.kh,
@@ -64,7 +67,8 @@ class OnboardingView extends GetView<OnboardingController> {
         ),
       ),
       bottomSheet: Container(
-        color: Colors.grey.shade50,
+        color: ColorUtil.kBackgroundColor,
+        height: 120.kh,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -75,8 +79,8 @@ class OnboardingView extends GetView<OnboardingController> {
                         onPressed: () {
                           Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
                         },
-                        label: 'Let’s Get Started !',
-                      ).paddingOnly(bottom: 26.kh, top: 72.kh),
+                        label: Strings.letsGetStarted,
+                      ).paddingOnly(bottom: 26.kh, top: 32.kh),
                     )
                   : Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -86,16 +90,17 @@ class OnboardingView extends GetView<OnboardingController> {
                           count: 3,
                           effect: CustomizableEffect(
                             spacing: 16.kw,
-                            // activeDotColor: ColorUtil.kSecondary01,
-                            // dotColor: ColorUtil.kSecondary05,
-
                             dotDecoration: DotDecoration(
-                                color: controller.pageIndex.value == 1 ? ColorUtil.kSecondaryPinkMode : ColorUtil.kSecondary05,
+                                color: controller.pageIndex.value == 1
+                                    ? ColorUtil.kSecondaryPinkMode
+                                    : ColorUtil.kSecondary05,
                                 borderRadius: BorderRadius.circular(100.kh),
                                 height: 10.kh,
                                 width: 10.kw),
                             activeDotDecoration: DotDecoration(
-                              color: controller.pageIndex.value == 1 ? ColorUtil.kPrimary2PinkMode : ColorUtil.kSecondary01,
+                              color: controller.pageIndex.value == 1
+                                  ? ColorUtil.kPrimary2PinkMode
+                                  : ColorUtil.kSecondary01,
                               height: 14.kh,
                               width: 14.kw,
                               borderRadius: BorderRadius.circular(100.kh),
@@ -112,14 +117,17 @@ class OnboardingView extends GetView<OnboardingController> {
                             );
                           },
                           padding: const EdgeInsets.all(0),
-                          color: controller.pageIndex.value == 1 ? ColorUtil.kPrimary2PinkMode : ColorUtil.kPrimary01,
-                          label: 'Next',
+                          color: controller.pageIndex.value == 1
+                              ? ColorUtil.kPrimary2PinkMode
+                              : ColorUtil.kPrimary01,
+                          label: Strings.next,
                           fontSize: 14.kh,
                           width: 120.kw,
                           height: 40.kh,
                         ),
                       ],
-                    ).paddingOnly(top: 72.kh, bottom: 36.kh, left: 20.kw, right: 20.kw),
+                    ).paddingOnly(
+                      top: 42.kh, bottom: 36.kh, left: 20.kw, right: 20.kw),
             ),
           ],
         ),

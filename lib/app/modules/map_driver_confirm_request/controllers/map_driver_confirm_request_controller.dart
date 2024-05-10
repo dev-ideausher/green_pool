@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:green_pool/app/modules/map_driver_confirm_request/views/map_driver_confirm_bottomsheet.dart';
 import 'package:green_pool/app/modules/my_rides_request/controllers/my_rides_request_controller.dart';
 
 import '../../../data/driver_cofirm_request_model.dart';
@@ -13,7 +14,8 @@ import '../../home/controllers/home_controller.dart';
 class MapDriverConfirmRequestController extends GetxController {
   double latitude = Get.find<HomeController>().latitude.value;
   double longitude = Get.find<HomeController>().longitude.value;
-  var confirmRequestModel = DriverConfirmRequestModel().obs;
+  var confirmRequestModel =
+      Get.find<MyRidesRequestController>().confirmRequestModel;
 
   late GoogleMapController mapController;
   final RxList<LatLng> polylineCoordinates = <LatLng>[].obs;
@@ -73,7 +75,9 @@ class MapDriverConfirmRequestController extends GetxController {
     markers.add(Marker(
       markerId: MarkerId(carLocation.toString()),
       position: carLocation, //position of marker
-      onTap: () {},
+      onTap: () {
+        Get.bottomSheet(const MapDriverConfirmBottomsheet());
+      },
       infoWindow: const InfoWindow(
         title: 'Rider',
         snippet: 'Rider',
@@ -84,11 +88,7 @@ class MapDriverConfirmRequestController extends GetxController {
 
   void createMarker() {
     isLoading.value = true;
-    Get.find<MyRidesRequestController>()
-        .confirmRequestModel
-        .value
-        .data
-        ?.forEach((value) {
+    confirmRequestModel.value.data?.forEach((value) {
       value?.rideDetails?.forEach((element) async {
         await addMarkers(
             LatLng(element?.origin?.coordinates?.last ?? 0.0,

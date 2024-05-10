@@ -43,6 +43,7 @@ class CreateAccountView extends GetView<CreateAccountController> {
               GreenPoolTextField(
                 hintText: 'Enter name',
                 controller: controller.fullNameController,
+                keyboardType: TextInputType.name,
                 validator: (value) => controller.nameValidator(value),
                 autovalidateMode: AutovalidateMode.onUserInteraction,
               ).paddingOnly(bottom: 12.kh),
@@ -160,11 +161,7 @@ class CreateAccountView extends GetView<CreateAccountController> {
                           style: TextStyleUtil.k14Semibold(
                               color: ColorUtil.kSecondary01),
                           recognizer: TapGestureRecognizer()
-                            ..onTap = () => Get.offNamed(Routes.LOGIN,
-                                    arguments: {
-                                      'isDriver': controller.isDriver,
-                                      'fromNavBar': false
-                                    })),
+                            ..onTap = () => controller.moveToLogin()),
                     ],
                   ),
                 ).paddingOnly(bottom: 32.kh),

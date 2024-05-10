@@ -36,7 +36,9 @@ class FileDisputeView extends GetView<FileDisputeController> {
                       style: TextStyleUtil.k18Heading600(),
                     ),
                   )
-                : Column(
+                : SizedBox(),
+
+        /*Column(
                     children: [
                       Expanded(
                         child: ListView.builder(
@@ -181,7 +183,7 @@ class FileDisputeView extends GetView<FileDisputeController> {
                         ).paddingOnly(top: 32.kh),
                       ),
                     ],
-                  ).paddingSymmetric(horizontal: 16.kw),
+                  ).paddingSymmetric(horizontal: 16.kw),*/
       ),
     );
   }

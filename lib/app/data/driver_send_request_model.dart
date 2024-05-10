@@ -4,10 +4,10 @@
 class DriverSendRequestModelDataMatchedDestinationLocation {
 /*
 {
-  "name": "Noida Sector 18, Noida",
+  "name": "Toronto Pearson International Airport (YYZ), Mississauga",
   "type": "Point",
   "coordinates": [
-    77.32490430000001
+    -79.6333674
   ]
 } 
 */
@@ -21,17 +21,16 @@ class DriverSendRequestModelDataMatchedDestinationLocation {
     this.type,
     this.coordinates,
   });
-  DriverSendRequestModelDataMatchedDestinationLocation.fromJson(
-      Map<String, dynamic> json) {
+  DriverSendRequestModelDataMatchedDestinationLocation.fromJson(Map<String, dynamic> json) {
     name = json['name']?.toString();
     type = json['type']?.toString();
-    if (json['coordinates'] != null) {
-      final v = json['coordinates'];
-      final arr0 = <double>[];
-      v.forEach((v) {
-        arr0.add(v.toDouble());
-      });
-      coordinates = arr0;
+  if (json['coordinates'] != null) {
+  final v = json['coordinates'];
+  final arr0 = <double>[];
+  v.forEach((v) {
+  arr0.add(v.toDouble());
+  });
+    coordinates = arr0;
     }
   }
   Map<String, dynamic> toJson() {
@@ -41,9 +40,9 @@ class DriverSendRequestModelDataMatchedDestinationLocation {
     if (coordinates != null) {
       final v = coordinates;
       final arr0 = [];
-      v!.forEach((v) {
-        arr0.add(v);
-      });
+  v!.forEach((v) {
+  arr0.add(v);
+  });
       data['coordinates'] = arr0;
     }
     return data;
@@ -53,10 +52,10 @@ class DriverSendRequestModelDataMatchedDestinationLocation {
 class DriverSendRequestModelDataMatchedOriginLocation {
 /*
 {
-  "name": "297, New Delhi",
+  "name": "349 Queen St W, Toronto",
   "type": "Point",
   "coordinates": [
-    77.30131209999999
+    -79.3924196
   ],
   "originDestinationFair": null
 } 
@@ -73,17 +72,16 @@ class DriverSendRequestModelDataMatchedOriginLocation {
     this.coordinates,
     this.originDestinationFair,
   });
-  DriverSendRequestModelDataMatchedOriginLocation.fromJson(
-      Map<String, dynamic> json) {
+  DriverSendRequestModelDataMatchedOriginLocation.fromJson(Map<String, dynamic> json) {
     name = json['name']?.toString();
     type = json['type']?.toString();
-    if (json['coordinates'] != null) {
-      final v = json['coordinates'];
-      final arr0 = <double>[];
-      v.forEach((v) {
-        arr0.add(v.toDouble());
-      });
-      coordinates = arr0;
+  if (json['coordinates'] != null) {
+  final v = json['coordinates'];
+  final arr0 = <double>[];
+  v.forEach((v) {
+  arr0.add(v.toDouble());
+  });
+    coordinates = arr0;
     }
     originDestinationFair = json['originDestinationFair']?.toString();
   }
@@ -94,9 +92,9 @@ class DriverSendRequestModelDataMatchedOriginLocation {
     if (coordinates != null) {
       final v = coordinates;
       final arr0 = [];
-      v!.forEach((v) {
-        arr0.add(v);
-      });
+  v!.forEach((v) {
+  arr0.add(v);
+  });
       data['coordinates'] = arr0;
     }
     data['originDestinationFair'] = originDestinationFair;
@@ -107,8 +105,8 @@ class DriverSendRequestModelDataMatchedOriginLocation {
 class DriverSendRequestModelDataRiderDetailsProfilePic {
 /*
 {
-  "key": "usersProfile/f8536123-8f53-4c8f-8acd-a033c30af1d9-1000000036.jpg",
-  "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/f8536123-8f53-4c8f-8acd-a033c30af1d9-1000000036.jpg"
+  "key": "usersProfile/455bece9-6a35-47bc-9650-0ea542382038-compressed_1000000034.jpg",
+  "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/455bece9-6a35-47bc-9650-0ea542382038-compressed_1000000034.jpg"
 } 
 */
 
@@ -119,8 +117,7 @@ class DriverSendRequestModelDataRiderDetailsProfilePic {
     this.key,
     this.url,
   });
-  DriverSendRequestModelDataRiderDetailsProfilePic.fromJson(
-      Map<String, dynamic> json) {
+  DriverSendRequestModelDataRiderDetailsProfilePic.fromJson(Map<String, dynamic> json) {
     key = json['key']?.toString();
     url = json['url']?.toString();
   }
@@ -147,8 +144,7 @@ class DriverSendRequestModelDataRiderDetailsIdPic {
     this.key,
     this.url,
   });
-  DriverSendRequestModelDataRiderDetailsIdPic.fromJson(
-      Map<String, dynamic> json) {
+  DriverSendRequestModelDataRiderDetailsIdPic.fromJson(Map<String, dynamic> json) {
     key = json['key']?.toString();
     url = json['url']?.toString();
   }
@@ -184,8 +180,7 @@ class DriverSendRequestModelDataRiderDetailsNotificationPreferences {
     this.transactions,
     this.offers,
   });
-  DriverSendRequestModelDataRiderDetailsNotificationPreferences.fromJson(
-      Map<String, dynamic> json) {
+  DriverSendRequestModelDataRiderDetailsNotificationPreferences.fromJson(Map<String, dynamic> json) {
     trip = json['trip'];
     alerts = json['alerts'];
     payments = json['payments'];
@@ -229,18 +224,20 @@ class DriverSendRequestModelDataRiderDetails {
   },
   "firebaseUid": "YfTcEdNqhHPbYWY5bZzQxy5EwHG2",
   "firebaseSignInProvider": "phone",
-  "rating": 0,
+  "rating": 4,
   "createdAt": "2024-04-15T11:34:27.422Z",
-  "updatedAt": "2024-04-17T13:22:02.189Z",
+  "updatedAt": "2024-05-09T07:52:05.819Z",
   "idPic": {
     "key": "idPic/bf9018c7-ad37-47f0-b648-075e54474b8f-1000000034.jpg",
     "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/idPic/bf9018c7-ad37-47f0-b648-075e54474b8f-1000000034.jpg"
   },
   "profilePic": {
-    "key": "usersProfile/f8536123-8f53-4c8f-8acd-a033c30af1d9-1000000036.jpg",
-    "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/f8536123-8f53-4c8f-8acd-a033c30af1d9-1000000036.jpg"
+    "key": "usersProfile/455bece9-6a35-47bc-9650-0ea542382038-compressed_1000000034.jpg",
+    "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/455bece9-6a35-47bc-9650-0ea542382038-compressed_1000000034.jpg"
   },
-  "totalRides": 1
+  "totalRides": 1,
+  "isRegister": true,
+  "role": "user"
 } 
 */
 
@@ -258,8 +255,7 @@ class DriverSendRequestModelDataRiderDetails {
   bool? vehicleStatus;
   String? status;
   int? wallet;
-  DriverSendRequestModelDataRiderDetailsNotificationPreferences?
-      notificationPreferences;
+  DriverSendRequestModelDataRiderDetailsNotificationPreferences? notificationPreferences;
   String? firebaseUid;
   String? firebaseSignInProvider;
   int? rating;
@@ -268,6 +264,8 @@ class DriverSendRequestModelDataRiderDetails {
   DriverSendRequestModelDataRiderDetailsIdPic? idPic;
   DriverSendRequestModelDataRiderDetailsProfilePic? profilePic;
   int? totalRides;
+  bool? isRegister;
+  String? role;
 
   DriverSendRequestModelDataRiderDetails({
     this.Id,
@@ -293,6 +291,8 @@ class DriverSendRequestModelDataRiderDetails {
     this.idPic,
     this.profilePic,
     this.totalRides,
+    this.isRegister,
+    this.role,
   });
   DriverSendRequestModelDataRiderDetails.fromJson(Map<String, dynamic> json) {
     Id = json['_id']?.toString();
@@ -309,23 +309,17 @@ class DriverSendRequestModelDataRiderDetails {
     vehicleStatus = json['vehicleStatus'];
     status = json['status']?.toString();
     wallet = json['wallet']?.toInt();
-    notificationPreferences = (json['notificationPreferences'] != null)
-        ? DriverSendRequestModelDataRiderDetailsNotificationPreferences
-            .fromJson(json['notificationPreferences'])
-        : null;
+    notificationPreferences = (json['notificationPreferences'] != null) ? DriverSendRequestModelDataRiderDetailsNotificationPreferences.fromJson(json['notificationPreferences']) : null;
     firebaseUid = json['firebaseUid']?.toString();
     firebaseSignInProvider = json['firebaseSignInProvider']?.toString();
     rating = json['rating']?.toInt();
     createdAt = json['createdAt']?.toString();
     updatedAt = json['updatedAt']?.toString();
-    idPic = (json['idPic'] != null)
-        ? DriverSendRequestModelDataRiderDetailsIdPic.fromJson(json['idPic'])
-        : null;
-    profilePic = (json['profilePic'] != null)
-        ? DriverSendRequestModelDataRiderDetailsProfilePic.fromJson(
-            json['profilePic'])
-        : null;
+    idPic = (json['idPic'] != null) ? DriverSendRequestModelDataRiderDetailsIdPic.fromJson(json['idPic']) : null;
+    profilePic = (json['profilePic'] != null) ? DriverSendRequestModelDataRiderDetailsProfilePic.fromJson(json['profilePic']) : null;
     totalRides = json['totalRides']?.toInt();
+    isRegister = json['isRegister'];
+    role = json['role']?.toString();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -358,6 +352,8 @@ class DriverSendRequestModelDataRiderDetails {
       data['profilePic'] = profilePic!.toJson();
     }
     data['totalRides'] = totalRides;
+    data['isRegister'] = isRegister;
+    data['role'] = role;
     return data;
   }
 }
@@ -395,8 +391,7 @@ class DriverSendRequestModelDataPreferencesOther {
     this.BabySeat,
     this.HeatedSeats,
   });
-  DriverSendRequestModelDataPreferencesOther.fromJson(
-      Map<String, dynamic> json) {
+  DriverSendRequestModelDataPreferencesOther.fromJson(Map<String, dynamic> json) {
     AppreciatesConversation = json['AppreciatesConversation'];
     EnjoysMusic = json['EnjoysMusic'];
     SmokeFree = json['SmokeFree'];
@@ -445,9 +440,7 @@ class DriverSendRequestModelDataPreferences {
     this.luggageType,
   });
   DriverSendRequestModelDataPreferences.fromJson(Map<String, dynamic> json) {
-    other = (json['other'] != null)
-        ? DriverSendRequestModelDataPreferencesOther.fromJson(json['other'])
-        : null;
+    other = (json['other'] != null) ? DriverSendRequestModelDataPreferencesOther.fromJson(json['other']) : null;
     luggageType = json['luggageType']?.toString();
   }
   Map<String, dynamic> toJson() {
@@ -501,7 +494,7 @@ class DriverSendRequestModelDataRecurringTrip {
 /*
 {
   "recurringTripIds": [
-    "121212"
+    ""
   ],
   "recurringTripDays": [
     1
@@ -520,21 +513,21 @@ class DriverSendRequestModelDataRecurringTrip {
     this.isRecurringTripEnabled,
   });
   DriverSendRequestModelDataRecurringTrip.fromJson(Map<String, dynamic> json) {
-    if (json['recurringTripIds'] != null) {
-      final v = json['recurringTripIds'];
-      final arr0 = <String>[];
-      v.forEach((v) {
-        arr0.add(v.toString());
-      });
-      recurringTripIds = arr0;
+  if (json['recurringTripIds'] != null) {
+  final v = json['recurringTripIds'];
+  final arr0 = <String>[];
+  v.forEach((v) {
+  arr0.add(v.toString());
+  });
+    recurringTripIds = arr0;
     }
-    if (json['recurringTripDays'] != null) {
-      final v = json['recurringTripDays'];
-      final arr0 = <int>[];
-      v.forEach((v) {
-        arr0.add(v.toInt());
-      });
-      recurringTripDays = arr0;
+  if (json['recurringTripDays'] != null) {
+  final v = json['recurringTripDays'];
+  final arr0 = <int>[];
+  v.forEach((v) {
+  arr0.add(v.toInt());
+  });
+    recurringTripDays = arr0;
     }
     isRecurringTripEnabled = json['isRecurringTripEnabled'];
   }
@@ -543,17 +536,17 @@ class DriverSendRequestModelDataRecurringTrip {
     if (recurringTripIds != null) {
       final v = recurringTripIds;
       final arr0 = [];
-      v!.forEach((v) {
-        arr0.add(v);
-      });
+  v!.forEach((v) {
+  arr0.add(v);
+  });
       data['recurringTripIds'] = arr0;
     }
     if (recurringTripDays != null) {
       final v = recurringTripDays;
       final arr0 = [];
-      v!.forEach((v) {
-        arr0.add(v);
-      });
+  v!.forEach((v) {
+  arr0.add(v);
+  });
       data['recurringTripDays'] = arr0;
     }
     data['isRecurringTripEnabled'] = isRecurringTripEnabled;
@@ -564,10 +557,10 @@ class DriverSendRequestModelDataRecurringTrip {
 class DriverSendRequestModelDataDestination {
 /*
 {
-  "name": "Noida Sector 18, Noida",
+  "name": "Toronto Pearson International Airport (YYZ), Mississauga",
   "type": "Point",
   "coordinates": [
-    77.32490430000001
+    -79.6333674
   ]
 } 
 */
@@ -584,13 +577,13 @@ class DriverSendRequestModelDataDestination {
   DriverSendRequestModelDataDestination.fromJson(Map<String, dynamic> json) {
     name = json['name']?.toString();
     type = json['type']?.toString();
-    if (json['coordinates'] != null) {
-      final v = json['coordinates'];
-      final arr0 = <double>[];
-      v.forEach((v) {
-        arr0.add(v.toDouble());
-      });
-      coordinates = arr0;
+  if (json['coordinates'] != null) {
+  final v = json['coordinates'];
+  final arr0 = <double>[];
+  v.forEach((v) {
+  arr0.add(v.toDouble());
+  });
+    coordinates = arr0;
     }
   }
   Map<String, dynamic> toJson() {
@@ -600,9 +593,9 @@ class DriverSendRequestModelDataDestination {
     if (coordinates != null) {
       final v = coordinates;
       final arr0 = [];
-      v!.forEach((v) {
-        arr0.add(v);
-      });
+  v!.forEach((v) {
+  arr0.add(v);
+  });
       data['coordinates'] = arr0;
     }
     return data;
@@ -612,10 +605,10 @@ class DriverSendRequestModelDataDestination {
 class DriverSendRequestModelDataOrigin {
 /*
 {
-  "name": "297, New Delhi",
+  "name": "349 Queen St W, Toronto",
   "type": "Point",
   "coordinates": [
-    77.30131209999999
+    -79.3924196
   ],
   "originDestinationFair": null
 } 
@@ -635,13 +628,13 @@ class DriverSendRequestModelDataOrigin {
   DriverSendRequestModelDataOrigin.fromJson(Map<String, dynamic> json) {
     name = json['name']?.toString();
     type = json['type']?.toString();
-    if (json['coordinates'] != null) {
-      final v = json['coordinates'];
-      final arr0 = <double>[];
-      v.forEach((v) {
-        arr0.add(v.toDouble());
-      });
-      coordinates = arr0;
+  if (json['coordinates'] != null) {
+  final v = json['coordinates'];
+  final arr0 = <double>[];
+  v.forEach((v) {
+  arr0.add(v.toDouble());
+  });
+    coordinates = arr0;
     }
     originDestinationFair = json['originDestinationFair']?.toString();
   }
@@ -652,9 +645,9 @@ class DriverSendRequestModelDataOrigin {
     if (coordinates != null) {
       final v = coordinates;
       final arr0 = [];
-      v!.forEach((v) {
-        arr0.add(v);
-      });
+  v!.forEach((v) {
+  arr0.add(v);
+  });
       data['coordinates'] = arr0;
     }
     data['originDestinationFair'] = originDestinationFair;
@@ -665,34 +658,34 @@ class DriverSendRequestModelDataOrigin {
 class DriverSendRequestModelData {
 /*
 {
-  "_id": "662a0cddd97bf339412b6ea1",
+  "_id": "663c7fa7c526bb5718e59c09",
   "riderId": "661d10c3cea4346b0ee267d3",
   "origin": {
-    "name": "297, New Delhi",
+    "name": "349 Queen St W, Toronto",
     "type": "Point",
     "coordinates": [
-      77.30131209999999
+      -79.3924196
     ],
     "originDestinationFair": null
   },
   "destination": {
-    "name": "Noida Sector 18, Noida",
+    "name": "Toronto Pearson International Airport (YYZ), Mississauga",
     "type": "Point",
     "coordinates": [
-      77.32490430000001
+      -79.6333674
     ]
   },
   "tripType": null,
   "recurringTrip": {
     "recurringTripIds": [
-      "121212"
+      ""
     ],
     "recurringTripDays": [
       1
     ],
     "isRecurringTripEnabled": false
   },
-  "date": "2024-04-30T00:00:00.000Z",
+  "date": null,
   "time": "",
   "returnTrip": {
     "returnTripId": null,
@@ -719,9 +712,9 @@ class DriverSendRequestModelData {
   "isStarted": false,
   "isCompleted": false,
   "isCancelled": false,
-  "description": null,
-  "createdAt": "2024-04-25T07:57:17.458Z",
-  "updatedAt": "2024-04-25T07:57:17.458Z",
+  "description": "",
+  "createdAt": "2024-05-09T07:47:51.608Z",
+  "updatedAt": "2024-05-09T07:47:51.608Z",
   "riderDetails": [
     {
       "_id": "661d10c3cea4346b0ee267d3",
@@ -747,43 +740,45 @@ class DriverSendRequestModelData {
       },
       "firebaseUid": "YfTcEdNqhHPbYWY5bZzQxy5EwHG2",
       "firebaseSignInProvider": "phone",
-      "rating": 0,
+      "rating": 4,
       "createdAt": "2024-04-15T11:34:27.422Z",
-      "updatedAt": "2024-04-17T13:22:02.189Z",
+      "updatedAt": "2024-05-09T07:52:05.819Z",
       "idPic": {
         "key": "idPic/bf9018c7-ad37-47f0-b648-075e54474b8f-1000000034.jpg",
         "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/idPic/bf9018c7-ad37-47f0-b648-075e54474b8f-1000000034.jpg"
       },
       "profilePic": {
-        "key": "usersProfile/f8536123-8f53-4c8f-8acd-a033c30af1d9-1000000036.jpg",
-        "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/f8536123-8f53-4c8f-8acd-a033c30af1d9-1000000036.jpg"
+        "key": "usersProfile/455bece9-6a35-47bc-9650-0ea542382038-compressed_1000000034.jpg",
+        "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/455bece9-6a35-47bc-9650-0ea542382038-compressed_1000000034.jpg"
       },
-      "totalRides": 1
+      "totalRides": 1,
+      "isRegister": true,
+      "role": "user"
     }
   ],
   "distanceFromOrigin": 0,
   "stopsDistances": [
-    82.41833502449377
+    90.60039536063941
   ],
-  "minStopDistance": 82.41833502449377,
+  "minStopDistance": 90.60039536063941,
   "matchedOriginLocation": {
-    "name": "297, New Delhi",
+    "name": "349 Queen St W, Toronto",
     "type": "Point",
     "coordinates": [
-      77.30131209999999
+      -79.3924196
     ],
     "originDestinationFair": null
   },
   "distanceFromDestination": 0,
   "stopsDestinationDistances": [
-    82.43516409682579
+    90.82491880317619
   ],
-  "minStopDestinationDistance": 82.43516409682579,
+  "minStopDestinationDistance": 90.82491880317619,
   "matchedDestinationLocation": {
-    "name": "Noida Sector 18, Noida",
+    "name": "Toronto Pearson International Airport (YYZ), Mississauga",
     "type": "Point",
     "coordinates": [
-      77.32490430000001
+      -79.6333674
     ]
   }
 } 
@@ -816,8 +811,7 @@ class DriverSendRequestModelData {
   int? distanceFromDestination;
   List<double?>? stopsDestinationDistances;
   double? minStopDestinationDistance;
-  DriverSendRequestModelDataMatchedDestinationLocation?
-      matchedDestinationLocation;
+  DriverSendRequestModelDataMatchedDestinationLocation? matchedDestinationLocation;
 
   DriverSendRequestModelData({
     this.Id,
@@ -852,70 +846,53 @@ class DriverSendRequestModelData {
   DriverSendRequestModelData.fromJson(Map<String, dynamic> json) {
     Id = json['_id']?.toString();
     riderId = json['riderId']?.toString();
-    origin = (json['origin'] != null)
-        ? DriverSendRequestModelDataOrigin.fromJson(json['origin'])
-        : null;
-    destination = (json['destination'] != null)
-        ? DriverSendRequestModelDataDestination.fromJson(json['destination'])
-        : null;
+    origin = (json['origin'] != null) ? DriverSendRequestModelDataOrigin.fromJson(json['origin']) : null;
+    destination = (json['destination'] != null) ? DriverSendRequestModelDataDestination.fromJson(json['destination']) : null;
     tripType = json['tripType']?.toString();
-    recurringTrip = (json['recurringTrip'] != null)
-        ? DriverSendRequestModelDataRecurringTrip.fromJson(
-            json['recurringTrip'])
-        : null;
+    recurringTrip = (json['recurringTrip'] != null) ? DriverSendRequestModelDataRecurringTrip.fromJson(json['recurringTrip']) : null;
     date = json['date']?.toString();
     time = json['time']?.toString();
-    returnTrip = (json['returnTrip'] != null)
-        ? DriverSendRequestModelDataReturnTrip.fromJson(json['returnTrip'])
-        : null;
+    returnTrip = (json['returnTrip'] != null) ? DriverSendRequestModelDataReturnTrip.fromJson(json['returnTrip']) : null;
     arrivalDate = json['arrivalDate']?.toString();
     arrivalTime = json['arrivalTime']?.toString();
     seatAvailable = json['seatAvailable']?.toInt();
-    preferences = (json['preferences'] != null)
-        ? DriverSendRequestModelDataPreferences.fromJson(json['preferences'])
-        : null;
+    preferences = (json['preferences'] != null) ? DriverSendRequestModelDataPreferences.fromJson(json['preferences']) : null;
     isStarted = json['isStarted'];
     isCompleted = json['isCompleted'];
     isCancelled = json['isCancelled'];
     description = json['description']?.toString();
     createdAt = json['createdAt']?.toString();
     updatedAt = json['updatedAt']?.toString();
-    if (json['riderDetails'] != null) {
-      final v = json['riderDetails'];
-      final arr0 = <DriverSendRequestModelDataRiderDetails>[];
-      v.forEach((v) {
-        arr0.add(DriverSendRequestModelDataRiderDetails.fromJson(v));
-      });
-      riderDetails = arr0;
+  if (json['riderDetails'] != null) {
+  final v = json['riderDetails'];
+  final arr0 = <DriverSendRequestModelDataRiderDetails>[];
+  v.forEach((v) {
+  arr0.add(DriverSendRequestModelDataRiderDetails.fromJson(v));
+  });
+    riderDetails = arr0;
     }
     distanceFromOrigin = json['distanceFromOrigin']?.toInt();
-    if (json['stopsDistances'] != null) {
-      final v = json['stopsDistances'];
-      final arr0 = <double>[];
-      v.forEach((v) {
-        arr0.add(v.toDouble());
-      });
-      stopsDistances = arr0;
+  if (json['stopsDistances'] != null) {
+  final v = json['stopsDistances'];
+  final arr0 = <double>[];
+  v.forEach((v) {
+  arr0.add(v.toDouble());
+  });
+    stopsDistances = arr0;
     }
     minStopDistance = json['minStopDistance']?.toDouble();
-    matchedOriginLocation = (json['matchedOriginLocation'] != null)
-        ? DriverSendRequestModelDataMatchedOriginLocation.fromJson(
-            json['matchedOriginLocation'])
-        : null;
+    matchedOriginLocation = (json['matchedOriginLocation'] != null) ? DriverSendRequestModelDataMatchedOriginLocation.fromJson(json['matchedOriginLocation']) : null;
     distanceFromDestination = json['distanceFromDestination']?.toInt();
-    if (json['stopsDestinationDistances'] != null) {
-      final v = json['stopsDestinationDistances'];
-      final arr0 = <double>[];
-      v.forEach((v) {
-        arr0.add(v.toDouble());
-      });
-      stopsDestinationDistances = arr0;
+  if (json['stopsDestinationDistances'] != null) {
+  final v = json['stopsDestinationDistances'];
+  final arr0 = <double>[];
+  v.forEach((v) {
+  arr0.add(v.toDouble());
+  });
+    stopsDestinationDistances = arr0;
     }
     minStopDestinationDistance = json['minStopDestinationDistance']?.toDouble();
-    matchedDestinationLocation = (json['matchedDestinationLocation'] != null)
-        ? DriverSendRequestModelDataMatchedDestinationLocation.fromJson(
-            json['matchedDestinationLocation'])
-        : null;
+    matchedDestinationLocation = (json['matchedDestinationLocation'] != null) ? DriverSendRequestModelDataMatchedDestinationLocation.fromJson(json['matchedDestinationLocation']) : null;
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -951,18 +928,18 @@ class DriverSendRequestModelData {
     if (riderDetails != null) {
       final v = riderDetails;
       final arr0 = [];
-      v!.forEach((v) {
-        arr0.add(v!.toJson());
-      });
+  v!.forEach((v) {
+  arr0.add(v!.toJson());
+  });
       data['riderDetails'] = arr0;
     }
     data['distanceFromOrigin'] = distanceFromOrigin;
     if (stopsDistances != null) {
       final v = stopsDistances;
       final arr0 = [];
-      v!.forEach((v) {
-        arr0.add(v);
-      });
+  v!.forEach((v) {
+  arr0.add(v);
+  });
       data['stopsDistances'] = arr0;
     }
     data['minStopDistance'] = minStopDistance;
@@ -973,9 +950,9 @@ class DriverSendRequestModelData {
     if (stopsDestinationDistances != null) {
       final v = stopsDestinationDistances;
       final arr0 = [];
-      v!.forEach((v) {
-        arr0.add(v);
-      });
+  v!.forEach((v) {
+  arr0.add(v);
+  });
       data['stopsDestinationDistances'] = arr0;
     }
     data['minStopDestinationDistance'] = minStopDestinationDistance;
@@ -993,34 +970,34 @@ class DriverSendRequestModel {
   "message": "success",
   "data": [
     {
-      "_id": "662a0cddd97bf339412b6ea1",
+      "_id": "663c7fa7c526bb5718e59c09",
       "riderId": "661d10c3cea4346b0ee267d3",
       "origin": {
-        "name": "297, New Delhi",
+        "name": "349 Queen St W, Toronto",
         "type": "Point",
         "coordinates": [
-          77.30131209999999
+          -79.3924196
         ],
         "originDestinationFair": null
       },
       "destination": {
-        "name": "Noida Sector 18, Noida",
+        "name": "Toronto Pearson International Airport (YYZ), Mississauga",
         "type": "Point",
         "coordinates": [
-          77.32490430000001
+          -79.6333674
         ]
       },
       "tripType": null,
       "recurringTrip": {
         "recurringTripIds": [
-          "121212"
+          ""
         ],
         "recurringTripDays": [
           1
         ],
         "isRecurringTripEnabled": false
       },
-      "date": "2024-04-30T00:00:00.000Z",
+      "date": null,
       "time": "",
       "returnTrip": {
         "returnTripId": null,
@@ -1047,9 +1024,9 @@ class DriverSendRequestModel {
       "isStarted": false,
       "isCompleted": false,
       "isCancelled": false,
-      "description": null,
-      "createdAt": "2024-04-25T07:57:17.458Z",
-      "updatedAt": "2024-04-25T07:57:17.458Z",
+      "description": "",
+      "createdAt": "2024-05-09T07:47:51.608Z",
+      "updatedAt": "2024-05-09T07:47:51.608Z",
       "riderDetails": [
         {
           "_id": "661d10c3cea4346b0ee267d3",
@@ -1075,43 +1052,45 @@ class DriverSendRequestModel {
           },
           "firebaseUid": "YfTcEdNqhHPbYWY5bZzQxy5EwHG2",
           "firebaseSignInProvider": "phone",
-          "rating": 0,
+          "rating": 4,
           "createdAt": "2024-04-15T11:34:27.422Z",
-          "updatedAt": "2024-04-17T13:22:02.189Z",
+          "updatedAt": "2024-05-09T07:52:05.819Z",
           "idPic": {
             "key": "idPic/bf9018c7-ad37-47f0-b648-075e54474b8f-1000000034.jpg",
             "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/idPic/bf9018c7-ad37-47f0-b648-075e54474b8f-1000000034.jpg"
           },
           "profilePic": {
-            "key": "usersProfile/f8536123-8f53-4c8f-8acd-a033c30af1d9-1000000036.jpg",
-            "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/f8536123-8f53-4c8f-8acd-a033c30af1d9-1000000036.jpg"
+            "key": "usersProfile/455bece9-6a35-47bc-9650-0ea542382038-compressed_1000000034.jpg",
+            "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/455bece9-6a35-47bc-9650-0ea542382038-compressed_1000000034.jpg"
           },
-          "totalRides": 1
+          "totalRides": 1,
+          "isRegister": true,
+          "role": "user"
         }
       ],
       "distanceFromOrigin": 0,
       "stopsDistances": [
-        82.41833502449377
+        90.60039536063941
       ],
-      "minStopDistance": 82.41833502449377,
+      "minStopDistance": 90.60039536063941,
       "matchedOriginLocation": {
-        "name": "297, New Delhi",
+        "name": "349 Queen St W, Toronto",
         "type": "Point",
         "coordinates": [
-          77.30131209999999
+          -79.3924196
         ],
         "originDestinationFair": null
       },
       "distanceFromDestination": 0,
       "stopsDestinationDistances": [
-        82.43516409682579
+        90.82491880317619
       ],
-      "minStopDestinationDistance": 82.43516409682579,
+      "minStopDestinationDistance": 90.82491880317619,
       "matchedDestinationLocation": {
-        "name": "Noida Sector 18, Noida",
+        "name": "Toronto Pearson International Airport (YYZ), Mississauga",
         "type": "Point",
         "coordinates": [
-          77.32490430000001
+          -79.6333674
         ]
       }
     }
@@ -1131,13 +1110,13 @@ class DriverSendRequestModel {
   DriverSendRequestModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message']?.toString();
-    if (json['data'] != null) {
-      final v = json['data'];
-      final arr0 = <DriverSendRequestModelData>[];
-      v.forEach((v) {
-        arr0.add(DriverSendRequestModelData.fromJson(v));
-      });
-      this.data = arr0;
+  if (json['data'] != null) {
+  final v = json['data'];
+  final arr0 = <DriverSendRequestModelData>[];
+  v.forEach((v) {
+  arr0.add(DriverSendRequestModelData.fromJson(v));
+  });
+    this.data = arr0;
     }
   }
   Map<String, dynamic> toJson() {
@@ -1147,9 +1126,9 @@ class DriverSendRequestModel {
     if (this.data != null) {
       final v = this.data;
       final arr0 = [];
-      v!.forEach((v) {
-        arr0.add(v!.toJson());
-      });
+  v!.forEach((v) {
+  arr0.add(v!.toJson());
+  });
       data['data'] = arr0;
     }
     return data;

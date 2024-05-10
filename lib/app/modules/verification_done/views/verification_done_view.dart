@@ -32,7 +32,9 @@ class VerificationDoneView extends GetView<VerificationDoneController> {
                 ),
                 ConfettiWidget(
                   confettiController: controller.confettiController,
+                  shouldLoop: false,
                   blastDirection: -pi / 2,
+                  emissionFrequency: 0.01,
                 ),
                 SvgPicture.asset(
                   ImageConstant.svgCompleteTick,
@@ -62,9 +64,14 @@ class VerificationDoneView extends GetView<VerificationDoneController> {
             onPressed: controller.fromNavBar == false
                 ? () {
                     controller.isDriver
-                        ? Get.offNamed(Routes.PROFILE_SETUP, arguments: false)
-                        : Get.offNamed(Routes.RIDER_PROFILE_SETUP,
-                            arguments: false);
+                        ? Get.offNamed(Routes.PROFILE_SETUP, arguments: {
+                            'fromNavBar': false,
+                            'postRideModel': controller.postRideModel.value
+                          })
+                        : Get.offNamed(Routes.RIDER_PROFILE_SETUP, arguments: {
+                            'fromNavBar': false,
+                            'findRideModel': controller.findRideModel.value
+                          });
                   }
                 : () {
                     Get.dialog(

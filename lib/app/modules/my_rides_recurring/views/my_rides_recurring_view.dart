@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/components/gp_progress.dart';
 import 'package:green_pool/app/components/green_pool_divider.dart';
 import 'package:green_pool/app/components/origin_to_destination.dart';
+import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
@@ -25,7 +26,7 @@ class MyRidesRecurringView extends GetView<MyRidesRecurringController> {
             : controller.recurringResp.value.data!.isEmpty
                 ? Center(
                     child: Text(
-                      "You have not posted any recurring rides",
+                      Strings.notPostedRecurringRides,
                       style: TextStyleUtil.k18Heading600(),
                     ),
                   )
@@ -139,7 +140,7 @@ class MyRidesRecurringView extends GetView<MyRidesRecurringController> {
                                       const GreenPoolDivider().paddingOnly(
                                           top: 8.kh, bottom: 16.kh),
                                       Text(
-                                        "Rider Details",
+                                        Strings.riderDetails,
                                         style: TextStyleUtil.k14Bold(),
                                       ).paddingOnly(bottom: 16.kh),
                                       SizedBox(

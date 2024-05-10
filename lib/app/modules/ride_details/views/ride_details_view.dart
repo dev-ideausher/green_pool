@@ -25,7 +25,8 @@ class RideDetailsView extends GetView<RideDetailsController> {
       appBar: const GreenPoolAppBar(
         title: Text('Ride Details'),
       ),
-      body: Column(
+      body: SizedBox(),
+      /*Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           //ride completed
@@ -353,7 +354,7 @@ class RideDetailsView extends GetView<RideDetailsController> {
           ).paddingOnly(bottom: 16.kh),
           //TODO: bill details
         ],
-      ).paddingSymmetric(horizontal: 16.kw),
+      ).paddingSymmetric(horizontal: 16.kw),*/
     );
   }
 }

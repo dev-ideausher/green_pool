@@ -32,20 +32,34 @@ class StartRideView extends GetView<StartRideController> {
             : GoogleMap(
                 initialCameraPosition: CameraPosition(
                   target: LatLng(
-                      controller.myRidesModel.value.riderBookingDetails?.origin
-                              ?.coordinates?.last ??
+                      controller
+                              .myRidesModel
+                              .value
+                              .driverBookingDetails
+                              ?.riders?[0]
+                              ?.riderBookingDetails?[0]
+                              ?.origin
+                              ?.coordinates
+                              ?.last ??
                           0.0,
-                      controller.myRidesModel.value.riderBookingDetails?.origin
-                              ?.coordinates?.first ??
+                      controller
+                              .myRidesModel
+                              .value
+                              .driverBookingDetails
+                              ?.riders?[0]
+                              ?.riderBookingDetails?[0]
+                              ?.origin
+                              ?.coordinates
+                              ?.first ??
                           0.0),
                   zoom: 14,
                 ),
                 zoomGesturesEnabled: true,
                 myLocationButtonEnabled: true,
                 onMapCreated: controller.onMapCreated,
-                onCameraMove: (position) {
-                  GpUtil.moveCamera(controller.mapController, position.target);
-                },
+                // onCameraMove: (position) {
+                //   GpUtil.moveCamera(controller.mapController, position.target);
+                // },
                 mapType: MapType.terrain,
                 markers: Set<Marker>.of(controller.markers),
                 polylines: {
@@ -64,21 +78,23 @@ class StartRideView extends GetView<StartRideController> {
             : Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Card(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(8.kh),
-                              topRight: Radius.circular(8.kh))),
-                      margin: EdgeInsets.zero,
-                      color: ColorUtil.kSecondary01,
-                      child: ListTile(
-                          visualDensity:
-                              const VisualDensity(horizontal: -4, vertical: -4),
-                          leading: const Icon(Icons.email_outlined,
-                              color: ColorUtil.kWhiteColor),
-                          title: Text(Strings.riderNotified,
-                              style: TextStyleUtil.k14Regular(
-                                  color: ColorUtil.kWhiteColor)))),
+                  controller.isRideStarted.value
+                      ? Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(8.kh),
+                                  topRight: Radius.circular(8.kh))),
+                          margin: EdgeInsets.zero,
+                          color: ColorUtil.kSecondary01,
+                          child: ListTile(
+                              visualDensity: const VisualDensity(
+                                  horizontal: -4, vertical: -4),
+                              leading: const Icon(Icons.email_outlined,
+                                  color: ColorUtil.kWhiteColor),
+                              title: Text(Strings.riderNotified,
+                                  style: TextStyleUtil.k14Regular(
+                                      color: ColorUtil.kWhiteColor))))
+                      : const SizedBox(),
                   8.kheightBox,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -128,15 +144,15 @@ class StartRideView extends GetView<StartRideController> {
                                 url: controller
                                     .myRidesModel
                                     .value
-                                    .riderBookingDetails
-                                    ?.riderDetails
+                                    .driverBookingDetails
+                                    ?.riders?[0]
                                     ?.profilePic
                                     ?.url,
                                 height: 40,
                                 width: 40))),
                     title: Text(
-                        controller.myRidesModel.value.riderBookingDetails
-                                ?.riderDetails?.fullName ??
+                        controller.myRidesModel.value.driverBookingDetails
+                                ?.riders?[0]?.fullName ??
                             "",
                         style: TextStyleUtil.k16Medium()),
                     /* subtitle: Text(
@@ -148,7 +164,7 @@ class StartRideView extends GetView<StartRideController> {
                         InkWell(
                           onTap: () async {
                             await launchUrl(Uri.parse(
-                                "tel:${controller.myRidesModel.value.riderBookingDetails?.riderDetails?.phone}"));
+                                "tel:${controller.myRidesModel.value.driverBookingDetails?.riders?[0]?.phone}"));
                           },
                           child: CommonImageView(
                             svgPath: Assets.iconsCall,
@@ -171,26 +187,30 @@ class StartRideView extends GetView<StartRideController> {
                     child: OriginToDestination(
                         needPickupText: true,
                         origin:
-                            "${controller.myRidesModel.value.riderBookingDetails?.origin?.name}",
+                            "${controller.myRidesModel.value.driverBookingDetails?.riders?[0]?.riderBookingDetails?[0]?.origin?.name}",
                         destination:
-                            "${controller.myRidesModel.value.riderBookingDetails?.destination?.name}"),
+                            "${controller.myRidesModel.value.driverBookingDetails?.riders?[0]?.riderBookingDetails?[0]?.destination?.name}"),
                   ),
                   Obx(
                     () => GreenPoolButton(
                       onPressed: controller.isRideStarted.value
-                          ? () async {
-                              //end ride and go to rating page
-                              await controller.endRideAPI();
-                              //in between rider picked up and dropped
-                            }
-                          : () async {
-                              await controller.startRideAPI();
+                          ? controller.myRidesModel.value.driverBookingDetails!
+                                  .isCompleted!
+                              ? () {
+                                  controller.endRideAPI();
+                                }
+                              : () {
+                                  controller.pickUpAPI();
+                                  // controller.dropOffAPI();
+                                }
+                          : () {
+                              controller.startRideAPI();
                             },
                       label: controller.isRideStarted.value
                           ? controller.myRidesModel.value.driverBookingDetails!
-                                  .isStarted!
-                              ? Strings.riderPickedUpSuccessfully
-                              : Strings.endRide
+                                  .isCompleted!
+                              ? Strings.endRide
+                              : Strings.riderPickedUpSuccessfully
                           : Strings.startRide,
                     ).paddingSymmetric(vertical: 16.kh),
                   ),

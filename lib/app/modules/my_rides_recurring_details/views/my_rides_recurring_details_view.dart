@@ -5,6 +5,7 @@ import 'package:green_pool/app/components/common_image_view.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/components/origin_to_destination.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
+import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
@@ -14,7 +15,6 @@ import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
 import '../../../services/text_style_util.dart';
 import '../../post_ride/views/amenities.dart';
-import '../../profile/controllers/profile_controller.dart';
 import '../controllers/my_rides_recurring_details_controller.dart';
 
 class MyRidesRecurringDetailsView
@@ -23,8 +23,8 @@ class MyRidesRecurringDetailsView
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const GreenPoolAppBar(
-        title: Text('Ride Details'),
+      appBar: GreenPoolAppBar(
+        title: Text(Strings.rideDetails),
       ),
       body: Obx(
         () => controller.isLoading.value
@@ -38,7 +38,7 @@ class MyRidesRecurringDetailsView
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Origin to Destination",
+                          Strings.originToDestination,
                           style: TextStyleUtil.k16Bold(),
                         ).paddingOnly(bottom: 16.kh),
                         OriginToDestination(
@@ -57,7 +57,7 @@ class MyRidesRecurringDetailsView
 
                     //Vehicle details
                     Text(
-                      'Vehicle Details',
+                      Strings.vehicleDetails,
                       style: TextStyleUtil.k14Bold(),
                     ).paddingOnly(bottom: 16.kh),
                     Row(
@@ -107,7 +107,7 @@ class MyRidesRecurringDetailsView
 
                     //Features available
                     Text(
-                      'Features available',
+                      Strings.featuresAvailable,
                       style: TextStyleUtil.k14Bold(),
                     ).paddingOnly(bottom: 16.kh),
 
@@ -116,7 +116,7 @@ class MyRidesRecurringDetailsView
                             true
                         ? Amenities(
                                 toggleSwitch: false,
-                                text: "Appreciates Conversation",
+                                text: Strings.appreciatesConversation,
                                 image: ImageConstant.svgAmenities1)
                             .paddingOnly(bottom: 8.kh)
                         : const SizedBox(),
@@ -125,7 +125,7 @@ class MyRidesRecurringDetailsView
                             true
                         ? Amenities(
                                 toggleSwitch: false,
-                                text: "Enjoys Music",
+                                text: Strings.enjoysMusic,
                                 image: ImageConstant.svgAmenities2)
                             .paddingOnly(bottom: 8.kh)
                         : const SizedBox(),
@@ -134,7 +134,7 @@ class MyRidesRecurringDetailsView
                             true
                         ? Amenities(
                                 toggleSwitch: false,
-                                text: "Some-Free",
+                                text: Strings.smokeFree,
                                 image: ImageConstant.svgAmenities3)
                             .paddingOnly(bottom: 8.kh)
                         : const SizedBox(),
@@ -143,7 +143,7 @@ class MyRidesRecurringDetailsView
                             true
                         ? Amenities(
                                 toggleSwitch: false,
-                                text: "Pet-friendly",
+                                text: Strings.petFriendly,
                                 image: ImageConstant.svgAmenities4)
                             .paddingOnly(bottom: 8.kh)
                         : const SizedBox(),
@@ -152,7 +152,7 @@ class MyRidesRecurringDetailsView
                             true
                         ? Amenities(
                                 toggleSwitch: false,
-                                text: "Winter Tires",
+                                text: Strings.winterTires,
                                 image: ImageConstant.svgAmenities5)
                             .paddingOnly(bottom: 8.kh)
                         : const SizedBox(),
@@ -161,7 +161,7 @@ class MyRidesRecurringDetailsView
                             true
                         ? Amenities(
                                 toggleSwitch: false,
-                                text: "Cooling or Heating",
+                                text: Strings.coolingOrHeating,
                                 image: ImageConstant.svgAmenities6)
                             .paddingOnly(bottom: 8.kh)
                         : const SizedBox(),
@@ -170,7 +170,7 @@ class MyRidesRecurringDetailsView
                             true
                         ? Amenities(
                                 toggleSwitch: false,
-                                text: "Baby Seats",
+                                text: Strings.babySeat,
                                 image: ImageConstant.svgAmenities7)
                             .paddingOnly(bottom: 8.kh)
                         : const SizedBox(),
@@ -179,25 +179,33 @@ class MyRidesRecurringDetailsView
                             true
                         ? Amenities(
                                 toggleSwitch: false,
-                                text: "Heated Seats",
+                                text: Strings.heatedSeats,
                                 image: ImageConstant.svgAmenities8)
                             .paddingOnly(bottom: 8.kh)
                         : const SizedBox(),
 
                     const GreenPoolDivider().paddingSymmetric(vertical: 16.kh),
-                    Text(
-                      "Description",
-                      style: TextStyleUtil.k14Semibold(),
-                    ).paddingOnly(bottom: 8.kh),
-                    Wrap(
-                      children: [
-                        Text(
-                          "${controller.recurringModel.value.data?.driverRideDetails?[0]?.description}",
-                          style: TextStyleUtil.k14Regular(
-                              color: ColorUtil.kBlack02),
-                        )
-                      ],
-                    ),
+                    controller.recurringModel.value.data?.driverRideDetails?[0]
+                                ?.description ==
+                            null
+                        ? const SizedBox()
+                        : Text(
+                            Strings.description,
+                            style: TextStyleUtil.k14Semibold(),
+                          ).paddingOnly(bottom: 8.kh),
+                    controller.recurringModel.value.data?.driverRideDetails?[0]
+                                ?.description ==
+                            null
+                        ? const SizedBox()
+                        : Wrap(
+                            children: [
+                              Text(
+                                "${controller.recurringModel.value.data?.driverRideDetails?[0]?.description}",
+                                style: TextStyleUtil.k14Regular(
+                                    color: ColorUtil.kBlack02),
+                              )
+                            ],
+                          ),
                     const GreenPoolDivider().paddingSymmetric(vertical: 16.kh),
                     SizedBox(
                       height: controller.recurringModel.value.data!
@@ -223,7 +231,7 @@ class MyRidesRecurringDetailsView
                                     ),
                                     SizedBox(
                                       height: 24.kh,
-                                      width: 28.w,
+                                      width: 30.w,
                                       child: ListView.builder(
                                         itemCount: (controller
                                                         .recurringModel
@@ -281,7 +289,7 @@ class MyRidesRecurringDetailsView
                                 Align(
                                   alignment: Alignment.bottomRight,
                                   child: GreenPoolButton(
-                                      label: "View Matching Riders",
+                                      label: Strings.viewMatchingRiders,
                                       height: 40.kh,
                                       width: 192.kw,
                                       padding: const EdgeInsets.all(0),

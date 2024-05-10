@@ -5,6 +5,7 @@ import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../components/gp_progress.dart';
 import '../../../components/greenpool_appbar.dart';
+import '../../../res/strings.dart';
 import '../../../services/colors.dart';
 import '../../../services/text_style_util.dart';
 import '../controllers/policy_cancellation_controller.dart';
@@ -14,8 +15,8 @@ class PolicyCancellationView extends GetView<PolicyCancellationController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const GreenPoolAppBar(
-        title: Text('Driver Cancellation Policy'),
+      appBar: GreenPoolAppBar(
+        title: Text(Strings.driverCancellationPolicy),
       ),
       body: Obx(
         () => controller.isLoading.value

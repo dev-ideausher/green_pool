@@ -34,9 +34,9 @@ class RatingDriverSideView extends GetView<RatingDriverSideController> {
                 ).paddingOnly(top: 40.kh),
               ),
               SizedBox(
-                height: controller.myRidesModel.value.postsInfo!.length * 92.kh,
-                child: ListView.builder(
-                    itemCount: controller.myRidesModel.value.postsInfo?.length,
+                height: controller.myRidesModel.value.driverBookingDetails!.riders!.length * 92.kh,
+                child: ListView.builder(                  
+                    itemCount: controller.myRidesModel.value.driverBookingDetails!.riders!.length,
                     itemBuilder: (context, index) {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,7 +46,7 @@ class RatingDriverSideView extends GetView<RatingDriverSideController> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                  "${controller.myRidesModel.value.postsInfo?[index]?.riderPostsDetails?[0]?.ridersDetails?[0]?.fullName}"),
+                                  "${controller.myRidesModel.value.driverBookingDetails!.riders?[index]?.fullName}"),
                               Container(
                                   height: 40.kh,
                                   width: 40.kw,
@@ -57,7 +57,7 @@ class RatingDriverSideView extends GetView<RatingDriverSideController> {
                                     borderRadius: BorderRadius.circular(8.kh),
                                     child: CommonImageView(
                                         url:
-                                            "${controller.myRidesModel.value.postsInfo?[index]?.riderPostsDetails?[0]?.ridersDetails?[0]?.profilePic?.url}"),
+                                            "${controller.myRidesModel.value.driverBookingDetails!.riders?[index]?.profilePic?.url}"),
                                   )),
                             ],
                           ),
@@ -91,9 +91,9 @@ class RatingDriverSideView extends GetView<RatingDriverSideController> {
               ),
               GreenPoolButton(
                 onPressed: () {
-                  //index in postsInfo
+                  //?index in riders
                   controller.rateUserAPI(
-                      "${controller.myRidesModel.value.postsInfo?[0]?.riderPostsDetails?[0]?.ridersDetails?[0]?.Id}");
+                      "${controller.myRidesModel.value.driverBookingDetails!.riders?[0]?.Id}");
                 },
                 label: "Continue",
               ).paddingOnly(top: 40.kh, bottom: 10.kh),

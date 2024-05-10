@@ -52,9 +52,9 @@ class FindRideView extends GetView<FindRideController> {
                     : ColorUtil.kSecondary01,
               ),
             ).paddingOnly(top: 8.kh, bottom: 16.kh),
-            const RichTextHeading(text: 'Destination'),
+            RichTextHeading(text: Strings.destination),
             GreenPoolTextField(
-              hintText: 'Enter a destination',
+              hintText: Strings.enterDestination,
               keyboardType: TextInputType.streetAddress,
               onchanged: (v) {
                 controller.setActiveState();
@@ -77,11 +77,11 @@ class FindRideView extends GetView<FindRideController> {
               TextSpan(
                 children: [
                   TextSpan(
-                    text: 'Departure Date & Time ',
+                    text: Strings.departureDateAndTime,
                     style: TextStyleUtil.k14Semibold(),
                   ),
                   TextSpan(
-                    text: '(optional)',
+                    text: Strings.optional,
                     style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack04),
                   ),
                 ],
@@ -92,7 +92,7 @@ class FindRideView extends GetView<FindRideController> {
                 SizedBox(
                   width: 55.w,
                   child: GreenPoolTextField(
-                    hintText: 'Enter Date',
+                    hintText: Strings.enterDate,
                     controller: controller.departureDate,
                     isSuffixNeeded: false,
                     readOnly: true,
@@ -111,7 +111,7 @@ class FindRideView extends GetView<FindRideController> {
                 ),
                 Flexible(
                   child: GreenPoolTextField(
-                    hintText: 'Time',
+                    hintText: Strings.time,
                     controller: controller.selectedTime,
                     isSuffixNeeded: false,
                     readOnly: true,
@@ -130,10 +130,10 @@ class FindRideView extends GetView<FindRideController> {
                 ),
               ],
             ).paddingOnly(bottom: 16.kh),
-            const RichTextHeading(text: 'Seats available')
+             RichTextHeading(text: Strings.seatsAvailable)
                 .paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
-              hintText: 'Enter number of seats',
+              hintText: Strings.enterNumberOfSeats,
               controller: controller.seatAvailable,
               keyboardType: TextInputType.number,
               onchanged: (v) {
@@ -147,11 +147,11 @@ class FindRideView extends GetView<FindRideController> {
               ),
             ).paddingOnly(bottom: 16.kh),
             Text(
-              "Description",
+              Strings.description,
               style: TextStyleUtil.k14Semibold(),
             ).paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
-              hintText: 'Enter text here',
+              hintText: Strings.enterTextHere,
               controller: controller.descriptionTextController,
               maxLines: 6,
             ),
@@ -161,7 +161,7 @@ class FindRideView extends GetView<FindRideController> {
                 padding: const EdgeInsets.all(0),
                 onPressed: () => controller.decideRouting(),
                 isActive: controller.isActive.value,
-                label: 'Find matching rides',
+                label: Strings.findMatchingRides,
               ).paddingSymmetric(vertical: 40.kh),
             ),
           ],

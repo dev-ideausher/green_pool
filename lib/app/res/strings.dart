@@ -25,6 +25,8 @@ class Strings {
 
   static var startRide = "Start Ride";
 
+  static var rideCompleted = "Ride Completed";
+
   static var riderPickedUpSuccessfully = "Rider Picked Up Successfully ";
 
   static String currentRiders = "Current Riders";
@@ -98,4 +100,160 @@ class Strings {
   static String origin = 'Origin';
 
   static String enterOrigin = 'Enter origin address';
+
+  static String destination = 'Destination';
+
+  static String enterDestination = 'Enter a destination';
+
+  static String departureDateAndTime = 'Departure Date & Time ';
+
+  static String optional = '(optional)';
+
+  static String enterDate = 'Enter Date';
+
+  static String time = 'Time';
+
+  static String seatsAvailable = 'Seats available';
+
+  static String enterNumberOfSeats = 'Enter number of seats';
+
+  static String description = "Description";
+
+  static String enterTextHere = 'Enter text here';
+
+  static String findMatchingRides = 'Find matching rides';
+
+  static String helpAndSupport = 'Help & Support';
+
+  static String getYourAnsHere = 'Get your answers here!';
+
+  static String howCanWeHelpYou = 'How can we help you?';
+
+  static String trips = 'Trips';
+
+  static String payments = 'Payments';
+
+  static String home = 'Home';
+
+  static String myRides = 'My Rides';
+
+  static String messages = 'Messages';
+
+  static String message = 'Message';
+
+  static String profile = 'Profile';
+
+  static String postRide = 'Post a Ride';
+
+  static String offerRideNearby = 'Offer a ride nearby';
+
+  static String takeRidesNearby = 'Take a ride nearby';
+
+  static String whatWouldYouLikeToDoToday = 'What would you like to do today?';
+
+  static String welcome = "Welcome";
+
+  static String login = 'Login';
+
+  static String enterLoginDetails = 'Enter your login details';
+
+  static String enterHere = 'Enter here';
+
+  static String orLoginWith = 'Or  login with';
+
+  static String dontHaveAccount = 'Don\'t have an account? \n';
+
+  static String createAccount = 'Create an account';
+
+  static String rideDetails = 'Ride Details';
+
+  static String originToDestination = "Origin to Destination";
+
+  static String youHavePostedNoRides = "You have posted no rides";
+
+  static String rideIsCancelled = "Ride is cancelled";
+
+  static String cancelRide = 'Cancel Ride';
+
+  static String oneTimeTrips = 'One-time Trips';
+
+  static String recurringTrips = 'Recurring Trips';
+
+  static String notPostedRecurringRides =
+      "You have not posted any recurring rides";
+
+  static String riderDetails = "Rider Details";
+
+  static String noRidesBetweenCities =
+      "There are no rides between these two cities";
+
+  static String pleaseTryAgain = "Please try again after few days.";
+
+  static String kmAway = "km away";
+
+  static String accept = 'Accept';
+
+  static String bookingConfirmed = 'Booking Confirmed';
+
+  static String bookingId = "Booking Id:";
+
+  static String continueText = 'Continue';
+
+  static String cancelRequest = 'Cancel Request';
+
+  static String reject = 'Reject';
+
+  static String confirmRequests = 'Confirm Requests';
+
+  static String sendRequests = 'Send Requests';
+
+  static String request = 'Request';
+
+  static String requestSent = 'Request Sent';
+
+  static String paymentDoneRequestSentToDriver =
+      "Payment Successful!\nRide request has been sent to the driver.\nYour booking is awaiting the driver'sapproval.";
+
+  static String notifications = 'Notifications';
+
+  static String ridePublished = 'Your ride has been published successfully !';
+
+  static String getStarted1 = "Save money ,\nShare rides &\nSocialize";
+
+  static String getStarted2 =
+      "Let's make environment greener and\ncommuting smarter together!";
+
+  static String onboard1text1 = 'Find carpool effortlessly\nwith Greenpool';
+
+  static String onboard1text2 =
+      "Discover the convenience of sharing rides\nwith Greenpool. Whether you're a driver\nlooking to share your journey or a rider in\nneed of a ride, we've got you covered.";
+
+  static String onboard2text1 =
+      'Introducing Pinkpool exclusively for female users.';
+
+  static String onboard2text2 =
+      'Greenpool ensures safety for female\ncommuters with female drivers and SOS\nfeature, empowering journeys with\nconfidence and security.';
+
+  static String onboard3text1 = 'Seamless ride sharing platform.';
+
+  static String onboard3text2 =
+      'Discover seamless Carpooling trip searches\nand rides with our unique features.\nExplore now.';
+
+  static String skip = 'Skip';
+
+  static String letsGetStarted = 'Let’s Get Started !';
+
+  static String next = 'Next';
+
+  static String paymentMethod = "Payment Method";
+
+  static String savedCard = "Saved Cards";
+
+  static String addCreditDebit = "Add Credit/Debit Card";
+
+  static String proceed = "Proceed";
+
+  static String driverCancellationPolicy = 'Driver Cancellation Policy';
+
+  static String privacyPolicy = 'Privacy Policy';
 }

@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
 import 'package:green_pool/app/modules/home/views/welcome_tile.dart';
+import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
@@ -26,7 +27,7 @@ class HomeView extends GetView<HomeController> {
             Obx(
               () => GestureDetector(
                 onTap: () {
-                  Get.toNamed(Routes.POST_RIDE, arguments: true);
+                  Get.toNamed(Routes.POST_RIDE_STEP_ONE, arguments: true);
                   controller.findingRide.value = false;
                 },
                 child: Container(
@@ -69,11 +70,11 @@ class HomeView extends GetView<HomeController> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Post a Ride',
+                              Strings.postRide,
                               style: TextStyleUtil.k20Heading700(),
                             ).paddingOnly(bottom: 4.kh),
                             Text(
-                              'Offer a ride nearby',
+                              Strings.offerRideNearby,
                               style: TextStyleUtil.k14Regular(),
                             ),
                           ],
@@ -131,11 +132,11 @@ class HomeView extends GetView<HomeController> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Find a Ride',
+                            Strings.findRide,
                             style: TextStyleUtil.k20Heading700(),
                           ).paddingOnly(bottom: 4.kh),
                           Text(
-                            'Take a ride nearby',
+                            Strings.takeRidesNearby,
                             style: TextStyleUtil.k14Regular(),
                           ),
                         ],

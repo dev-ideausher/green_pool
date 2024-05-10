@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:green_pool/app/data/find_ride_model.dart';
+import 'package:green_pool/app/data/post_ride_model.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/modules/profile/controllers/profile_controller.dart';
 import 'package:green_pool/app/services/snackbar.dart';
@@ -20,13 +22,29 @@ class VerifyController extends GetxController {
   bool fromNavBar = false;
   String fullName = '';
   String phoneNumber = '';
+  final Rx<PostRideModel> postRideModel = PostRideModel().obs;
+  final Rx<FindRideModel> findRideModel = FindRideModel().obs;
 
   @override
   void onInit() {
     super.onInit();
-    isDriver = Get.arguments['isDriver'];
-    phoneNumber = Get.arguments['phoneNumber'];
-    fromNavBar = Get.arguments['fromNavBar'];
+    try {
+      if (Get.find<HomeController>().findingRide.value) {
+        isDriver = Get.arguments['isDriver'];
+        phoneNumber = Get.arguments['phoneNumber'];
+        fromNavBar = Get.arguments['fromNavBar'];
+        findRideModel.value = Get.arguments['findRideModel'];
+      } else {
+        isDriver = Get.arguments['isDriver'];
+        phoneNumber = Get.arguments['phoneNumber'];
+        fromNavBar = Get.arguments['fromNavBar'];
+        postRideModel.value = Get.arguments['postRideModel'];
+      }
+    } catch (e) {
+      isDriver = Get.arguments['isDriver'];
+      phoneNumber = Get.arguments['phoneNumber'];
+      fromNavBar = Get.arguments['fromNavBar'];
+    }
   }
 
   // @override
@@ -71,9 +89,10 @@ class VerifyController extends GetxController {
         Get.find<GetStorageService>().setDriver = isDriver;
         Get.find<HomeController>().userInfoAPI();
         if (userInfo.data!.profileStatus!) {
-          Get.find<ProfileController>().userInfo.refresh();
-          Get.back();
-          Get.find<ProfileController>().userInfo.refresh();
+          // Get.find<ProfileController>().userInfo.refresh();
+          // Get.back();
+          // Get.find<ProfileController>().userInfo.refresh();
+          Get.until((route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
           showMySnackbar(msg: 'Login Successful');
         } else {
           Get.offNamed(Routes.VERIFICATION_DONE,
@@ -84,18 +103,29 @@ class VerifyController extends GetxController {
           if (userInfo.data!.profileStatus!) {
             // Get.offNamed(Routes.FIND_RIDE, arguments: isDriver);
             Get.back();
+            showMySnackbar(msg: "Successfully logged in");
           } else {
-            Get.offNamed(Routes.VERIFICATION_DONE,
-                arguments: {'isDriver': isDriver, 'fromNavBar': false});
+            Get.offNamed(Routes.VERIFICATION_DONE, arguments: {
+              'isDriver': isDriver,
+              'fromNavBar': false,
+              'findRideModel': findRideModel.value
+            });
             // Get.offNamed(Routes.RIDER_PROFILE_SETUP, arguments: false);
           }
         } else {
           if (userInfo.data!.profileStatus! && userInfo.data!.vehicleStatus!) {
             // Get.offNamed(Routes.CARPOOL_SCHEDULE, arguments: isDriver);
-            Get.until((route) => Get.currentRoute == Routes.POST_RIDE);
+            // Get.until((route) => Get.currentRoute == Routes.POST_RIDE);
+            showMySnackbar(msg: "Successfully logged in");
+            Get.offNamed(Routes.POST_RIDE_STEP_TWO,
+                arguments: postRideModel.value);
           } else {
-            Get.offNamed(Routes.VERIFICATION_DONE,
-                arguments: {'isDriver': isDriver, 'fromNavBar': false});
+            //TODO: what to show when it is a new user but tries to LOGIN directly
+            Get.offNamed(Routes.VERIFICATION_DONE, arguments: {
+              'isDriver': isDriver,
+              'fromNavBar': false,
+              'postRideModel': postRideModel.value
+            });
             // Get.offNamed(Routes.PROFILE_SETUP, arguments: false);
           }
         }
@@ -105,9 +135,15 @@ class VerifyController extends GetxController {
         Get.find<HomeController>().userInfoAPI();
       } else {
         if (isDriver) {
-          Get.offNamed(Routes.PROFILE_SETUP, arguments: false);
+          Get.offNamed(Routes.PROFILE_SETUP, arguments: {
+            'fromNavBar': false,
+            'postRideModel': postRideModel.value
+          });
         } else {
-          Get.offNamed(Routes.RIDER_PROFILE_SETUP, arguments: false);
+          Get.offNamed(Routes.RIDER_PROFILE_SETUP, arguments: {
+            'fromNavBar': false,
+            'findRideModel': findRideModel.value
+          });
         }
       }
     } catch (e) {

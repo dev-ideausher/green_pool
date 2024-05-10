@@ -5,6 +5,7 @@ import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../constants/image_constant.dart';
+import '../../../res/strings.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/colors.dart';
 import '../../../services/storage.dart';
@@ -25,13 +26,14 @@ class WelcomeTile extends StatelessWidget {
               Obx(
                 () => Text(
                   Get.find<GetStorageService>().getLoggedIn
-                      ? "Welcome ${controller.userInfo.value.data?.fullName ?? "..."}"
+                      ? "${controller.welcomeText.value} ${controller.userInfo.value.data?.fullName ?? "..."}"
                       : controller.welcomeText.value,
                   style: TextStyleUtil.k24Heading700(),
                 ).paddingOnly(bottom: 4.kh),
               ),
               Text(
-                'What would you like to do today?',
+                
+                Strings.whatWouldYouLikeToDoToday,
                 style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack04),
               )
             ],

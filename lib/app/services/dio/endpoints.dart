@@ -29,12 +29,13 @@ class Endpoints {
       "driver/sendRequestToRider"; // to send request to riders from Send Requests view
   static const String sendRequestToDriver = "rider/sendReuestToDriver";
   static const String rateAnyUser = "user/ratingByUser";
-  static const String studentDiscount = "email/sendEmail";
+  static const String studentDiscount = "email/send?email=";
 
   //get url
   static const String userLogin = "auth/login";
   static const String userByID = "user";
   static const String getChatRoomId = "chat/getChatRoomId?receiverId=";
+  static const String getChatList = "chat/chatRoomIds";
   static const String sendMessage = "chat";
   static const String searchSchools = "schools/searchByName/";
   static const String emergencyContacts = "user/emergencyContacts";
@@ -67,6 +68,8 @@ class Endpoints {
   static const String rejectDriversRequest = "rider/rejectConfirmRide";
   static const String startRide = "driver/startRideByDriver";
   static const String endRide = "driver/endRideByDriver";
+  static const String pickUpRider = "rider/pickUpRider";
+  static const String dropOffRider = "rider/dropOffRider";
   static const String pinkMode = "user/updatePinkMode";
   static const String notificationPreferences =
       "user/updateNotificationPreferences";

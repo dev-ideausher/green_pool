@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
+import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../constants/image_constant.dart';
@@ -20,12 +21,12 @@ class Onboard3View extends GetView {
           width: 348.kw,
         ).paddingOnly(bottom: 3.kh),
         Text(
-          'Seamless ride sharing platform.',
+          Strings.onboard3text1,
           style: TextStyleUtil.k24Heading700(),
           textAlign: TextAlign.center,
         ).paddingOnly(bottom: 16.kh),
         Text(
-          'Discover seamless Carpooling trip searches\nand rides with our unique features.\nExplore now.',
+          Strings.onboard3text2,
           style: TextStyleUtil.k16Regular(color: ColorUtil.kBlack04),
           textAlign: TextAlign.center,
         ),

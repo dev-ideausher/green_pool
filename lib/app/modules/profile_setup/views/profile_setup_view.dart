@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/modules/profile_setup/views/setup_user.dart';
 import 'package:green_pool/app/modules/profile_setup/views/setup_vehicle.dart';
+import 'package:green_pool/app/modules/rider_profile_setup/views/rider_profile_setup_view.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
@@ -29,8 +30,7 @@ class ProfileSetupView extends GetView<ProfileSetupController> {
                 style: TextStyleUtil.k16Regular(color: ColorUtil.kNeutral4),
               ).paddingOnly(bottom: 24.kh),
               TabBar(
-                  onTap:
-                      (index) {},
+                  onTap: (index) {},
                   indicatorSize: TabBarIndicatorSize.tab,
                   controller: controller.tabBarController,
                   splashBorderRadius: BorderRadius.circular(4.kh),

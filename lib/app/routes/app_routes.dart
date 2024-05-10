@@ -84,6 +84,9 @@ abstract class Routes {
   static const ADD_BANK_DETAILS = _Paths.ADD_BANK_DETAILS;
   static const SEARCH_ADDRESS = _Paths.SEARCH_ADDRESS;
   static const POST_RIDE_STEP_FOUR = _Paths.POST_RIDE_STEP_FOUR;
+  static const MAP_RIDER_CONFIRM_REQUEST = _Paths.MAP_RIDER_CONFIRM_REQUEST;
+  static const MAP_RIDER_SEND_REQUEST = _Paths.MAP_RIDER_SEND_REQUEST;
+  static const VEHICLE_SETUP = _Paths.VEHICLE_SETUP;
 }
 
 abstract class _Paths {
@@ -166,4 +169,7 @@ abstract class _Paths {
   static const ADD_BANK_DETAILS = '/add-bank-details';
   static const SEARCH_ADDRESS = '/search-address';
   static const POST_RIDE_STEP_FOUR = '/post-ride-step-four';
+  static const MAP_RIDER_CONFIRM_REQUEST = '/map-rider-confirm-request';
+  static const MAP_RIDER_SEND_REQUEST = '/map-rider-send-request';
+  static const VEHICLE_SETUP = '/vehicle-setup';
 }

@@ -12,6 +12,7 @@ import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../components/greenpool_appbar.dart';
+import '../../../res/strings.dart';
 import '../../../services/colors.dart';
 import '../../../services/storage.dart';
 import '../../../services/text_style_util.dart';
@@ -70,15 +71,15 @@ class MyRidesPageView extends GetView<MyRidesPageController> {
                             Get.find<HomeController>().isPinkModeOn.value
                                 ? ColorUtil.kPrimary3PinkMode
                                 : ColorUtil.kSecondary01,
-                        tabs: const [
+                        tabs:  [
                           Tab(
                             child: Text(
-                              'One-time Trips',
+                              Strings.oneTimeTrips,
                             ),
                           ),
                           Tab(
                             child: Text(
-                              'Recurring Trips',
+                              Strings.recurringTrips,
                             ),
                           ),
                         ]).paddingSymmetric(horizontal: 16.kw),

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
@@ -33,11 +34,12 @@ class OriginToDestination extends StatelessWidget {
                     style: TextStyleUtil.k14Semibold(color: ColorUtil.kBlack02),
                   ).paddingOnly(right: 8.kw)
                 : const SizedBox(),
-            Text(
-              // '1100 McIntosh St, Regina',
-              origin,
-              style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack02),
-              overflow: TextOverflow.ellipsis,
+            Expanded(
+              child: Text(
+                origin,
+                style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack02),
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
           ],
         ).paddingOnly(bottom: 30.kh),

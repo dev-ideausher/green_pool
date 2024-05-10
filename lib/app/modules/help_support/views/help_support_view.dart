@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/components/greenpool_textfield.dart';
+import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
@@ -14,24 +15,24 @@ class HelpSupportView extends GetView<HelpSupportController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const GreenPoolAppBar(
-        title: Text('Help & Support'),
+      appBar:  GreenPoolAppBar(
+        title: Text(Strings.helpAndSupport),
         
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Get your answers here!',
+            Strings.getYourAnsHere,
             style: TextStyleUtil.k16Bold(),
           ).paddingOnly(bottom: 8.kh),
-          const GreenPoolTextField(
-            hintText: 'How can we help you?',
-            suffix: Icon(
+           GreenPoolTextField(
+            hintText: Strings.howCanWeHelpYou,
+            suffix: const Icon(
               Icons.chevron_right,
               color: ColorUtil.kBlack01,
             ),
-            prefix: Icon(
+            prefix: const Icon(
               Icons.search,
               color: ColorUtil.kBlack02,
             ),
@@ -41,7 +42,7 @@ class HelpSupportView extends GetView<HelpSupportController> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Trips',
+                Strings.trips,
                 style: TextStyleUtil.k18Bold(),
               ),
               Expanded(
@@ -57,7 +58,7 @@ class HelpSupportView extends GetView<HelpSupportController> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Payments',
+                Strings.payments,
                 style: TextStyleUtil.k18Bold(),
               ),
               Expanded(

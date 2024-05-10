@@ -34,7 +34,7 @@ class RiderStartRideMapView extends GetView<RiderStartRideMapController> {
                 initialCameraPosition: CameraPosition(
                     target: LatLng(controller.latitude, controller.longitude),
                     zoom: 14),
-                mapType: MapType.normal,
+                mapType: MapType.terrain,
                 markers: Set<Marker>.of(controller.markers),
                 // onCameraMove: (position) {
                 //   GpUtil.moveCamera(controller.mapController, position.target);

@@ -37,14 +37,17 @@ class SetupVehicle extends GetView<ProfileSetupController> {
                       controller.getVehicleImage(ImageSource.camera);
                     },
                   )),
-              child: Container(
-                padding:
-                    EdgeInsets.symmetric(vertical: 68.kh, horizontal: 76.kw),
-                decoration: BoxDecoration(
-                    color: ColorUtil.kGreyColor,
-                    borderRadius: BorderRadius.circular(8.kh)),
-                child: Obx(
-                  () => controller.isVehicleImagePicked.value
+              child: Obx(
+                () => Container(
+                  padding:
+                      EdgeInsets.symmetric(vertical: 68.kh, horizontal: 76.kw),
+                  decoration: BoxDecoration(
+                      border: controller.vehicleImageNotUploaded.value
+                          ? Border.all(color: ColorUtil.kError2)
+                          : null,
+                      color: ColorUtil.kGreyColor,
+                      borderRadius: BorderRadius.circular(8.kh)),
+                  child: controller.isVehicleImagePicked.value
                       ? Image.file(
                           controller.selectedVehicleImagePath.value!,
                         )
@@ -201,6 +204,7 @@ class SetupVehicle extends GetView<ProfileSetupController> {
               hintText: 'Enter year',
               controller: controller.year,
               validator: (p0) => controller.validateYear(p0),
+              keyboardType: const TextInputType.numberWithOptions(),
               autovalidateMode: AutovalidateMode.onUserInteraction,
             ).paddingOnly(bottom: 16.kh),
             const RichTextHeading(text: 'License Plate')

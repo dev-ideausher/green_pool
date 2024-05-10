@@ -13,6 +13,7 @@ import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../components/gp_progress.dart';
 import '../../../components/green_pool_divider.dart';
+import '../../../components/origin_to_destination.dart';
 import '../../../services/colors.dart';
 import '../../../services/text_style_util.dart';
 import '../../home/controllers/home_controller.dart';
@@ -91,9 +92,9 @@ class MatchingRidesView extends GetView<MatchingRidesController> {
         ).paddingOnly(bottom: 24.kh),
       ),
       body: Obx(
-        () => controller.matchingRideResponse.value.data == null
+        () => controller.matchingRidesModel.value.data == null
             ? const GpProgress()
-            : (controller.matchingRideResponse.value.data?.length ?? 0) == 0
+            : (controller.matchingRidesModel.value.data?.length ?? 0) == 0
                 ? Center(
                     child: Text(
                       'No rides available',
@@ -105,7 +106,7 @@ class MatchingRidesView extends GetView<MatchingRidesController> {
                       Expanded(
                         child: ListView.builder(
                             itemCount: controller
-                                .matchingRideResponse.value.data?.length,
+                                .matchingRidesModel.value.data?.length,
                             itemBuilder: (context, index) {
                               return GestureDetector(
                                 onTap: () {
@@ -135,7 +136,7 @@ class MatchingRidesView extends GetView<MatchingRidesController> {
                                                         height: 64.kh,
                                                         width: 64.kw,
                                                         url:
-                                                            "${controller.matchingRideResponse.value.data![index]?.driverDetails![0]?.profilePic?.url}")),
+                                                            "${controller.matchingRidesModel.value.data![index]?.driverDetails![0]?.profilePic?.url}")),
                                               ).paddingOnly(bottom: 8.kh),
                                               Positioned(
                                                 top: 52.kh,
@@ -175,7 +176,7 @@ class MatchingRidesView extends GetView<MatchingRidesController> {
                                                       Text(
                                                         // '0.0',
                                                         controller
-                                                                .matchingRideResponse
+                                                                .matchingRidesModel
                                                                 .value
                                                                 .data?[index]
                                                                 ?.driverDetails?[
@@ -213,7 +214,7 @@ class MatchingRidesView extends GetView<MatchingRidesController> {
                                                   children: [
                                                     Text(
                                                       // 'Sam Alexander',
-                                                      "${controller.matchingRideResponse.value.data![index]?.driverDetails![0]?.fullName}",
+                                                      "${controller.matchingRidesModel.value.data![index]?.driverDetails![0]?.fullName}",
                                                       style: TextStyleUtil
                                                           .k16Bold(),
                                                     ),
@@ -223,7 +224,7 @@ class MatchingRidesView extends GetView<MatchingRidesController> {
                                                           TextSpan(
                                                             // text: '\$3.50',
                                                             text:
-                                                                "\$ ${controller.matchingRideResponse.value.data![index]?.origin?.originDestinationFair}",
+                                                                "\$ ${controller.matchingRidesModel.value.data![index]?.origin?.originDestinationFair}",
                                                             style: TextStyleUtil
                                                                 .k16Bold(
                                                                     color: ColorUtil
@@ -257,7 +258,7 @@ class MatchingRidesView extends GetView<MatchingRidesController> {
                                                             right: 4.kw),
                                                         Text(
                                                           // '07 Nov 2023, 3:00pm',
-                                                          "${controller.matchingRideResponse.value.data![index]?.date?.split("T")[0]} ${controller.matchingRideResponse.value.data![index]?.time}",
+                                                          "${controller.matchingRidesModel.value.data![index]?.date?.split("T")[0]} ${controller.matchingRidesModel.value.data![index]?.time}",
                                                           style: TextStyleUtil
                                                               .k12Regular(
                                                                   color: ColorUtil
@@ -281,7 +282,7 @@ class MatchingRidesView extends GetView<MatchingRidesController> {
                                                         ).paddingOnly(
                                                             right: 8.kw),
                                                         Text(
-                                                          '${controller.matchingRideResponse.value.data![index]?.seatAvailable ?? "0"} seats',
+                                                          '${controller.matchingRidesModel.value.data![index]?.seatAvailable ?? "0"} seats',
                                                           style: TextStyleUtil
                                                               .k14Regular(
                                                                   color: ColorUtil
@@ -299,62 +300,12 @@ class MatchingRidesView extends GetView<MatchingRidesController> {
                                       //middle divider
                                       const GreenPoolDivider()
                                           .paddingOnly(bottom: 16.kh),
-                                      Stack(
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Container(
-                                                height: 10.kh,
-                                                width: 10.kw,
-                                                decoration: const BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                    color:
-                                                        ColorUtil.kGreenColor),
-                                              ).paddingOnly(right: 8.kw),
-                                              Text(
-                                                // '1100 McIntosh St, Regina',
-                                                "${controller.matchingRideResponse.value.data![index]?.origin?.name}",
-                                                style: TextStyleUtil.k14Regular(
-                                                    color: ColorUtil.kBlack02),
-                                              ),
-                                            ],
-                                          ).paddingOnly(bottom: 30.kh),
-                                          Positioned(
-                                            top: 27.kh,
-                                            child: Row(
-                                              children: [
-                                                Container(
-                                                  height: 10.kh,
-                                                  width: 10.kw,
-                                                  decoration:
-                                                      const BoxDecoration(
-                                                          shape:
-                                                              BoxShape.circle,
-                                                          color: ColorUtil
-                                                              .kError4),
-                                                ).paddingOnly(right: 8.kw),
-                                                Text(
-                                                  // '681 Chrislea Rd, Woodbridge',
-                                                  "${controller.matchingRideResponse.value.data![index]?.destination?.name}",
-                                                  style:
-                                                      TextStyleUtil.k14Regular(
-                                                          color: ColorUtil
-                                                              .kBlack02),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          //line joining red and green dots
-                                          Positioned(
-                                            top: 10.kh,
-                                            left: 4.5.kw,
-                                            child: Container(
-                                              height: 28.kh,
-                                              width: 1.kw,
-                                              color: ColorUtil.kBlack04,
-                                            ),
-                                          ),
-                                        ],
+                                      OriginToDestination(
+                                        origin:
+                                            "${controller.matchingRidesModel.value.data![index]?.origin?.name}",
+                                        destination:
+                                            "${controller.matchingRidesModel.value.data![index]?.destination?.name}",
+                                        needPickupText: false,
                                       ).paddingOnly(bottom: 8.kh),
                                       //bottom line
                                       const GreenPoolDivider(),

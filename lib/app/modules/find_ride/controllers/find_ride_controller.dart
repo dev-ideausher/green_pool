@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -33,7 +34,7 @@ class FindRideController extends GetxController {
   TextEditingController riderDestinationTextController =
       TextEditingController();
   // GlobalKey<FormState> validationKey = GlobalKey<FormState>();
-  var matchingRideResponse = MatchingRidesModel().obs;
+  final Rx<MatchingRidesModel> matchingRidesModel = MatchingRidesModel().obs;
 
   @override
   void onInit() {
@@ -60,8 +61,29 @@ class FindRideController extends GetxController {
         Get.toNamed(Routes.RIDER_PROFILE_SETUP, arguments: false);
       }
     } else {
-      Get.toNamed(Routes.CREATE_ACCOUNT,
-          arguments: {'isDriver': isDriver, 'fromNavBar': false});
+      Get.toNamed(Routes.CREATE_ACCOUNT, arguments: {
+        'isDriver': isDriver,
+        'fromNavBar': false,
+        'findRideModel': FindRideModel(
+          ridesDetails: FindRideModelRidesDetails(
+            date: date.value.text,
+            seatAvailable: int.parse(seatAvailable.value.text),
+            time: selectedTime.value.text,
+            description: descriptionTextController.value.text,
+            pinkMode: Get.find<GetStorageService>().isPinkMode,
+            origin: FindRideModelRidesDetailsOrigin(
+              latitude: riderOriginLat,
+              longitude: riderOriginLong,
+              name: riderOriginTextController.value.text,
+            ),
+            destination: FindRideModelRidesDetailsDestination(
+              latitude: riderDestinationLat,
+              longitude: riderDestinationLong,
+              name: riderDestinationTextController.value.text,
+            ),
+          ),
+        ),
+      });
     }
   }
 
@@ -93,10 +115,10 @@ class FindRideController extends GetxController {
       final response =
           await APIManager.postMatchngRides(body: findRideDataJson);
       var data = jsonDecode(response.toString());
-      matchingRideResponse.value = MatchingRidesModel.fromJson(data);
+      matchingRidesModel.value = MatchingRidesModel.fromJson(data);
       Get.toNamed(Routes.MATCHING_RIDES, arguments: {
         'findRideData': findRideDataJson,
-        'matchingRidesModel': matchingRideResponse
+        'matchingRidesModel': matchingRidesModel.value
       });
     } catch (error) {
       throw Exception(error);
@@ -109,6 +131,8 @@ class FindRideController extends GetxController {
         date: date.value.text,
         seatAvailable: int.parse(seatAvailable.value.text),
         time: selectedTime.value.text,
+        description: descriptionTextController.value.text,
+        pinkMode: Get.find<GetStorageService>().isPinkMode,
         origin: FindRideModelRidesDetailsOrigin(
           latitude: riderOriginLat,
           longitude: riderOriginLong,

@@ -4,6 +4,7 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:green_pool/app/data/driver_send_request_model.dart';
+import 'package:green_pool/app/modules/map_driver_send_request/views/map_driver_send_bottomsheet.dart';
 
 import '../../../services/dio/endpoints.dart';
 import '../../../services/gp_util.dart';
@@ -13,7 +14,7 @@ import '../../my_rides_request/controllers/my_rides_request_controller.dart';
 class MapDriverSendRequestController extends GetxController {
   double latitude = Get.find<HomeController>().latitude.value;
   double longitude = Get.find<HomeController>().longitude.value;
-  var confirmRequestModel = DriverSendRequestModel().obs;
+  var sendRequestModel = DriverSendRequestModel().obs;
 
   late GoogleMapController mapController;
   final RxList<LatLng> polylineCoordinates = <LatLng>[].obs;
@@ -66,14 +67,16 @@ class MapDriverSendRequestController extends GetxController {
     }
   }
 
-  addMarkers(LatLng carLocation, imgurl) async {
+  addMarkers(LatLng riderLocation, imgurl) async {
     Uint8List bytes = (await NetworkAssetBundle(Uri.parse(imgurl)).load(imgurl))
         .buffer
         .asUint8List();
     markers.add(Marker(
-      markerId: MarkerId(carLocation.toString()),
-      position: carLocation, //position of marker
-      onTap: () {},
+      markerId: MarkerId(riderLocation.toString()),
+      position: riderLocation, //position of marker
+      onTap: () {
+        Get.bottomSheet(const MapDriverSendBottomsheet());
+      },
       infoWindow: const InfoWindow(
         title: 'Rider',
         snippet: 'Rider',
@@ -95,11 +98,9 @@ class MapDriverSendRequestController extends GetxController {
           element?.riderDetails?[0]?.profilePic?.url);
     });
     destinationLat.value =
-        confirmRequestModel.value.data?[0]?.destination?.coordinates?.last ??
-            0.0;
+        sendRequestModel.value.data?[0]?.destination?.coordinates?.last ?? 0.0;
     destinationLong.value =
-        confirmRequestModel.value.data?[0]?.destination?.coordinates?.first ??
-            0.0;
+        sendRequestModel.value.data?[0]?.destination?.coordinates?.first ?? 0.0;
     drawPolyline();
     isLoading.value = false;
   }

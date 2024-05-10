@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/custom_button.dart';
@@ -29,20 +30,20 @@ class LoginView extends GetView<LoginController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Login',
+                  Strings.login,
                   style: TextStyleUtil.k32Heading700(),
                 ).paddingOnly(top: 48.kh, bottom: 4.kh),
                 Text(
-                  'Enter your login details',
+                  Strings.enterLoginDetails,
                   style: TextStyleUtil.k16Regular(color: ColorUtil.kBlack04),
                 ).paddingOnly(bottom: 40.kh),
                 //
                 Text(
-                  'Phone Number',
+                  Strings.phoneNumber,
                   style: TextStyleUtil.k14Semibold(),
                 ).paddingOnly(bottom: 8.kh),
                 GreenPoolTextField(
-                  hintText: 'Enter here',
+                  hintText: Strings.enterHere,
                   controller: controller.phoneNumberController,
                   keyboardType: TextInputType.phone,
                   validator: (value) => controller.phoneNumberValidator(value),
@@ -115,7 +116,7 @@ class LoginView extends GetView<LoginController> {
                     // await controller.otpAuth();
                     await controller.checkLogin();
                   },
-                  label: 'Login',
+                  label: Strings.login,
                   // isActive: controller.isActive.value,
                 ).paddingSymmetric(vertical: 40.kh),
 
@@ -130,7 +131,7 @@ class LoginView extends GetView<LoginController> {
                       ).paddingOnly(right: 8.kw),
                     ),
                     Text(
-                      'Or  login with',
+                      Strings.orLoginWith,
                       style:
                           TextStyleUtil.k12Semibold(color: ColorUtil.kNeutral3),
                     ),
@@ -154,20 +155,15 @@ class LoginView extends GetView<LoginController> {
                     TextSpan(
                       children: [
                         TextSpan(
-                            text: 'Don\'t have an account? \n',
+                            text: Strings.dontHaveAccount,
                             style: TextStyleUtil.k14Regular(
                                 color: ColorUtil.kBlack04)),
                         TextSpan(
-                          text: 'Create an account',
-                          style: TextStyleUtil.k14Regular(
-                              color: ColorUtil.kSecondary01),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () => Get.offNamed(Routes.CREATE_ACCOUNT,
-                                    arguments: {
-                                      'isDriver': controller.isDriver,
-                                      'fromNavBar': controller.fromNavBar
-                                    }),
-                        ),
+                            text: Strings.createAccount,
+                            style: TextStyleUtil.k14Regular(
+                                color: ColorUtil.kSecondary01),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () => controller.moveToCreateAcc()),
                       ],
                     ),
                     textAlign: TextAlign.center,

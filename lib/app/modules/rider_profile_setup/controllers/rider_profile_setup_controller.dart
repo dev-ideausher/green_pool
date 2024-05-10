@@ -4,12 +4,14 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
+import 'package:green_pool/app/data/find_ride_model.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/modules/rider_profile_setup/views/rider_review_pic.dart';
 import 'package:green_pool/app/services/gp_util.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../data/matching_rides_model.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/auth.dart';
 import '../../../services/colors.dart';
@@ -44,10 +46,19 @@ class RiderProfileSetupController extends GetxController {
 
   GlobalKey<FormState> userFormKey = GlobalKey<FormState>();
 
+  final Rx<FindRideModel> findRideModel = FindRideModel().obs;
+  // final Rx<MatchingRidesModel> matchingRidesModel = MatchingRidesModel().obs;
+
   @override
   void onInit() {
     super.onInit();
-    fromNavBar = Get.arguments;
+    try {
+      fromNavBar = Get.arguments['fromNavBar'];
+      findRideModel.value = Get.arguments['findRideModel'];
+      // matchingRidesModel.value = Get.arguments['matchingRidesModel'];
+    } catch (e) {
+      fromNavBar = Get.arguments;
+    }
   }
 
   // @override

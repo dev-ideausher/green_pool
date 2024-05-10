@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../components/gp_progress.dart';
@@ -14,8 +15,8 @@ class PolicyPrivacyView extends GetView<PolicyPrivacyController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const GreenPoolAppBar(
-        title: Text('Privacy Policy'),
+      appBar: GreenPoolAppBar(
+        title: Text(Strings.privacyPolicy),
       ),
       body: Obx(
         () => controller.isLoading.value

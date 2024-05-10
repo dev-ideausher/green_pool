@@ -36,6 +36,7 @@ class ImageConstant {
 
 //onboarding
   static String svgOnboard1 = 'assets/images/onboarding/onboard1.svg';
+  static String svgOnboard2 = 'assets/images/onboarding/onboard2.svg';
   static String pngOnboard2 = 'assets/images/onboarding/onboard2.png';
   static String svgOnboard3 = 'assets/images/onboarding/onboard3.svg';
   static String svgGetStarted = 'assets/images/onboarding/getstarted.svg';

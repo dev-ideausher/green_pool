@@ -36,7 +36,9 @@ class RideHistoryView extends GetView<RideHistoryController> {
                       style: TextStyleUtil.k18Heading600(),
                     ),
                   )
-                : Column(
+                : SizedBox(),
+
+        /*Column(
                     children: [
                       Expanded(
                         child: ListView.builder(
@@ -83,14 +85,16 @@ class RideHistoryView extends GetView<RideHistoryController> {
                                                   height: 24.kh,
                                                   width: 170.kw,
                                                   child: ListView.builder(
-                                                    itemCount: controller
-                                                                .rideHistModel
-                                                                .value
-                                                                .data?[index]
-                                                                ?.driverBookingDetails?[
-                                                                    0]
-                                                                ?.riders
-                                                                ?.length ==
+                                                    itemCount: (controller
+                                                                    .rideHistModel
+                                                                    .value
+                                                                    .data?[
+                                                                        index]
+                                                                    ?.driverBookingDetails?[
+                                                                        0]
+                                                                    ?.riders
+                                                                    ?.length ??
+                                                                0) ==
                                                             0
                                                         ? 4
                                                         : controller
@@ -118,15 +122,16 @@ class RideHistoryView extends GetView<RideHistoryController> {
                                                             size:
                                                                 Size.fromRadius(
                                                                     12.kh),
-                                                            child: controller
-                                                                        .rideHistModel
-                                                                        .value
-                                                                        .data?[
-                                                                            index]
-                                                                        ?.driverBookingDetails?[
-                                                                            0]
-                                                                        ?.riders
-                                                                        ?.length ==
+                                                            child: (controller
+                                                                            .rideHistModel
+                                                                            .value
+                                                                            .data?[
+                                                                                index]
+                                                                            ?.driverBookingDetails?[
+                                                                                0]
+                                                                            ?.riders
+                                                                            ?.length ??
+                                                                        0) ==
                                                                     0
                                                                 ? Image.asset(
                                                                     ImageConstant
@@ -225,7 +230,7 @@ class RideHistoryView extends GetView<RideHistoryController> {
                                                       top: 52.kh,
                                                       left: 8.kw,
                                                       child: Container(
-                                                        width: 48.kw,
+                                                        width: 50.kw,
                                                         height: 20.kh,
                                                         padding: EdgeInsets
                                                             .symmetric(
@@ -370,13 +375,13 @@ class RideHistoryView extends GetView<RideHistoryController> {
                                                         "${controller.rideHistModel.value.data?[index]?.driverBookingDetails?[0]?.destination?.name}")
                                                 .paddingOnly(bottom: 8.kh),
                                           ],
-                                        ).paddingOnly(bottom: 16.kh),
+                                        ).paddingOnly(bottom: 16.kh),*
                                       ).paddingOnly(bottom: 16.kh),
                                     );
                             }).paddingOnly(top: 32.kh),
                       ),
                     ],
-                  ).paddingSymmetric(horizontal: 16.kw),
+                  ).paddingSymmetric(horizontal: 16.kw),*/
       ),
     );
   }

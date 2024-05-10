@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
+import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../services/colors.dart';
 import '../../../services/text_style_util.dart';
 import '../../home/controllers/home_controller.dart';
-import '../../profile/controllers/profile_controller.dart';
 import '../controllers/notifications_controller.dart';
 
 class NotificationsView extends GetView<NotificationsController> {
@@ -15,8 +15,8 @@ class NotificationsView extends GetView<NotificationsController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const GreenPoolAppBar(
-        title: Text('Notifications'),
+      appBar: GreenPoolAppBar(
+        title: Text(Strings.notifications),
       ),
       body: ListView.builder(
         itemCount: 6,
@@ -40,7 +40,7 @@ class NotificationsView extends GetView<NotificationsController> {
                 ).paddingOnly(right: 8.kw),
                 Expanded(
                     child: Text(
-                  'Your ride has been published successfully !',
+                  Strings.ridePublished,
                   style: TextStyleUtil.k14Regular(),
                 )),
                 const Expanded(child: SizedBox()),
