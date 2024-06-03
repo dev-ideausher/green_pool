@@ -11,69 +11,69 @@ import 'package:green_pool/app/data/chat_arg.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/dio/api_service.dart';
 import 'package:green_pool/app/services/gp_util.dart';
+import 'package:green_pool/app/services/storage.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../data/booking_detail_model.dart';
 import '../../../data/live_location_model.dart';
 import '../../../data/my_rides_model.dart';
 import '../../../res/strings.dart';
 import '../../../services/dio/endpoints.dart';
 import '../../home/controllers/home_controller.dart';
+import '../views/sos_dialog.dart';
 
 class RiderStartRideMapController extends GetxController {
-  final double latitude = Get.find<HomeController>().latitude.value;
-  final double longitude = Get.find<HomeController>().longitude.value;
   late GoogleMapController mapController;
   final Set<Marker> markers = <Marker>{}.obs;
   final RxList<LatLng> polylineCoordinates = <LatLng>[].obs;
-  final Rx<MyRidesModelData> myRidesModel = MyRidesModelData().obs;
-  final RxDouble currentLat = 0.0.obs;
-  final RxDouble currentLong = 0.0.obs;
+  final Rx<BookingDetailModelData> bookingDetail = BookingDetailModelData().obs;
 
-  final RxDouble destinationLat = 0.0.obs;
-  final RxDouble destinationLong = 0.0.obs;
+  final RxDouble currentLat = Endpoints.canadaLat.obs;
+  final RxDouble currentLong = Endpoints.canadaLong.obs;
+
+  final RxDouble destinationLat = Endpoints.canadaLat.obs;
+  final RxDouble destinationLong = Endpoints.canadaLong.obs;
   final RxBool isLoad = true.obs;
-  final RxBool isArrival = false.obs;
   final RxString arrivalTime = "N/A".obs;
-  final RxBool isPickUp = false.obs;
+  Rx<BookingDetailModelDataDriverBookingDetailsRiderBookingDetails> riderBookingDetail = BookingDetailModelDataDriverBookingDetailsRiderBookingDetails().obs;
 
   @override
-  void onInit() {
+  Future<void> onInit() async {
     super.onInit();
-    myRidesModel.value = Get.arguments;
-    isArrival.value = myRidesModel.value.confirmDriverDetails?.first
-            ?.driverPostsDetails?.first?.isStarted ??
-        false;
-    if (myRidesModel
-            .value.confirmDriverDetails?.first?.pickUpStatus?.isPickUp ??
-        false) {
-      isArrival.value = false;
-      isPickUp.value = true;
-      destinationLat.value =
-          myRidesModel.value.destination?.coordinates?.last ?? 0.0;
-      destinationLong.value =
-          myRidesModel.value.destination?.coordinates?.first ?? 0.0;
-    } else {
-      destinationLat.value =
-          myRidesModel.value.origin?.coordinates?.last ?? 0.0;
-      destinationLong.value =
-          myRidesModel.value.origin?.coordinates?.first ?? 0.0;
-    }
+    final MyRidesModelData myRidesModel = Get.arguments;
+    await myRidesDetailsAPI(myRidesModel.confirmDriverDetails!.firstOrNull?.driverRideId ?? "");
+
     isLoad.value = false;
+  }
+
+  myRidesDetailsAPI(String rideId) async {
+    try {
+      final response = await APIManager.getMyRidesDetails(rideId: rideId);
+      bookingDetail.value = BookingDetailModel.fromJson(response.data).data!;
+      final String? firebaseUid = Get.find<GetStorageService>().getFirebaseUid;
+      final driverBookingDetails = bookingDetail.value.driverBookingDetails;
+      if (driverBookingDetails != null && firebaseUid != null) {
+        riderBookingDetail.value = driverBookingDetails.riderBookingDetails!.firstWhere((element) => (element.Id ?? "").contains(firebaseUid));
+        if (riderBookingDetail.value.isStarted ?? false) {
+          getArrivalTime(
+              bookingDetail.value.driverBookingDetails?.origin?.coordinates?.last ?? 0.0,
+              bookingDetail.value.driverBookingDetails?.origin?.coordinates?.first ?? 0.0,
+              bookingDetail.value.driverBookingDetails?.destination?.coordinates?.last ?? 0.0,
+              bookingDetail.value.driverBookingDetails?.destination?.coordinates?.first ?? 0.0);
+        } else {
+          getArrivalTime(currentLat.value, currentLong.value, bookingDetail.value.driverBookingDetails?.destination?.coordinates?.last ?? 0.0,
+              bookingDetail.value.driverBookingDetails?.destination?.coordinates?.first ?? 0.0);
+        }
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 
   Future<void> onMapCreated(GoogleMapController controller) async {
     mapController = controller;
-    mapController.animateCamera(CameraUpdate.newCameraPosition(
-      CameraPosition(
-        bearing: 270.0,
-        // target: LatLng(destinationLat.value, destinationLong.value),
-        target: LatLng(latitude, longitude),
-        tilt: 30.0,
-        zoom: 17.0,
-      ),
-    ));
-    polylineCoordinates.refresh();
     onChangeLocation();
+    polylineCoordinates.refresh();
   }
 
   LatLngBounds boundsFromLatLngList(List<LatLng> list) {
@@ -87,39 +87,37 @@ class RiderStartRideMapController extends GetxController {
       if (point.longitude < minLng) minLng = point.longitude;
       if (point.longitude > maxLng) maxLng = point.longitude;
     }
-    return LatLngBounds(
-        southwest: LatLng(minLat, minLng), northeast: LatLng(maxLat, maxLng));
+    return LatLngBounds(southwest: LatLng(minLat, minLng), northeast: LatLng(maxLat, maxLng));
   }
 
   StreamSubscription<Position>? driversPositionStream;
 
   void onChangeLocation() {
-    FirebaseDatabase.instance
-        .ref()
-        .child('locations')
-        .child(myRidesModel.value.confirmDriverDetails?.first
-                ?.driverPostsDetails?.first?.driverId ??
-            "")
-        .onValue
-        .listen((event) async {
+    FirebaseDatabase.instance.ref().child('locations').child(bookingDetail.value.driverId ?? "").onValue.listen((event) async {
       var data = event.snapshot.value;
       if (data is Map) {
-        final liveLocation =
-            LiveLocationModel.fromMap(Map<String, dynamic>.from(data));
+        final liveLocation = LiveLocationModel.fromMap(Map<String, dynamic>.from(data));
+        // rotation: liveLocation.heading ?? 0.0,
+        mapController.animateCamera(
+            CameraUpdate.newCameraPosition(CameraPosition(bearing: 270.0, target: LatLng(currentLat.value, currentLong.value), tilt: 30.0, zoom: 17.0)));
         currentLat.value = liveLocation.latitude ?? 0.0;
         currentLong.value = liveLocation.longitude ?? 0.0;
-        mapController.animateCamera(CameraUpdate.newCameraPosition(
-            CameraPosition(
-                bearing: 270.0,
-                target: LatLng(currentLat.value, currentLong.value),
-                tilt: 30.0,
-                zoom: 17.0)));
-        if (isArrival.value) {
-          getArrivalTime(currentLat.value, currentLong.value,
-              destinationLat.value, destinationLong.value);
+        mapController.animateCamera(
+            CameraUpdate.newCameraPosition(CameraPosition(bearing: 270.0, target: LatLng(currentLat.value, currentLong.value), tilt: 30.0, zoom: 17.0)));
+        if (riderBookingDetail.value.isStarted ?? false) {
+          destinationLat.value = bookingDetail.value.driverBookingDetails?.destination?.coordinates?.last ?? 0.0;
+          destinationLong.value = bookingDetail.value.driverBookingDetails?.destination?.coordinates?.first ?? 0.0;
+
+          getArrivalTime(currentLat.value, currentLong.value, bookingDetail.value.driverBookingDetails?.destination?.coordinates?.last ?? 0.0,
+              bookingDetail.value.driverBookingDetails?.destination?.coordinates?.first ?? 0.0);
+        } else {
+          destinationLat.value = bookingDetail.value.driverBookingDetails?.origin?.coordinates?.last ?? 0.0;
+          destinationLong.value = bookingDetail.value.driverBookingDetails?.origin?.coordinates?.first ?? 0.0;
+          getArrivalTime(currentLat.value, currentLong.value, bookingDetail.value.driverBookingDetails?.origin?.coordinates?.last ?? 0.0,
+              bookingDetail.value.driverBookingDetails?.origin?.coordinates?.first ?? 0.0);
         }
+        drawPolyline();
       }
-      drawPolyline();
     }, onError: (Object error) {
       debugPrint("Error: $error");
     });
@@ -130,38 +128,35 @@ class RiderStartRideMapController extends GetxController {
       markers.clear();
 
       PolylineResult result = await PolylinePoints().getRouteBetweenCoordinates(
-          Endpoints.googleApiKey,
-          PointLatLng(currentLat.value, currentLong.value),
-          PointLatLng(destinationLat.value, destinationLong.value),
+          Endpoints.googleApiKey, PointLatLng(currentLat.value, currentLong.value), PointLatLng(destinationLat.value, destinationLong.value),
           travelMode: TravelMode.driving);
       if (result.points.isNotEmpty) {
-        polylineCoordinates.assignAll(result.points
-            .map((PointLatLng point) => LatLng(point.latitude, point.longitude))
-            .toList());
-        addMarker(polylineCoordinates.first, /*sourceMark!,*/ 0.0);
-        addMarker(polylineCoordinates.last, /*destinationMark!,*/ 0.0);
-        mapController.animateCamera(CameraUpdate.newLatLngBounds(
-            GpUtil.boundsFromLatLngList(polylineCoordinates), 70));
+        polylineCoordinates.assignAll(result.points.map((PointLatLng point) => LatLng(point.latitude, point.longitude)).toList());
+        addMarker(polylineCoordinates.first, bookingDetail.value.driverDetails?.vehicleDetails?.vehiclePic?.url ?? "");
+
+        bookingDetail.value.driverBookingDetails?.riderBookingDetails?.forEach(
+          (element) {
+            addMarker(LatLng(element.origin?.coordinates?.lastOrNull ?? 0.0, element.origin?.coordinates?.firstOrNull ?? 0.0),
+                element.riderDetails?.profilePic?.url ?? "");
+            addMarker(LatLng(element.destination?.coordinates?.lastOrNull ?? 0.0, element.destination?.coordinates?.firstOrNull ?? 0.0),
+                element.riderDetails?.profilePic?.url ?? "");
+          },
+        );
+        mapController.animateCamera(CameraUpdate.newLatLngBounds(GpUtil.boundsFromLatLngList(polylineCoordinates), 70));
       }
     } catch (e) {
       debugPrint('Error in drawPolyline: $e');
     }
   }
 
-  void addMarker(LatLng position, double d) {
-    markers.add(Marker(
-        markerId: MarkerId(position.toString()),
-        position: position,
-        icon: BitmapDescriptor.defaultMarker,
-        rotation: 0));
+  Future<void> addMarker(LatLng position, String url) async {
+    final bytes = await GpUtil.getMarkerIconFromUrl(bookingDetail.value.driverDetails?.vehicleDetails?.vehiclePic?.url ?? "");
+    markers.add(Marker(markerId: MarkerId(position.toString()), position: position, icon: url.isEmpty ? BitmapDescriptor.defaultMarker : bytes, rotation: 0));
   }
 
-  void getArrivalTime(double latitude, double longitude, double destinationLat,
-      double destinationLong) async {
+  void getArrivalTime(double latitude, double longitude, double destinationLat, double destinationLong) async {
     try {
-      final response = await APIManager.getArrivalTime(
-          origin: ("$latitude,$longitude"),
-          destination: ("$latitude,$longitude"));
+      final response = await APIManager.getArrivalTime(origin: ("$latitude,$longitude"), destination: ("$latitude,$longitude"));
       final data = response.data;
       final routes = data['routes'] as List<dynamic>;
       if (routes.isNotEmpty) {
@@ -180,10 +175,8 @@ class RiderStartRideMapController extends GetxController {
   }
 
   String getMsg() {
-    if (isArrival.value) {
-      return arrivalTime.value.contains("1 min")
-          ? Strings.yourRideIsArrived
-          : "${Strings.yourRideIsArrivingIn} ${arrivalTime.value}.";
+    if ((riderBookingDetail.value.isStarted ?? false) == false) {
+      return arrivalTime.value.contains("1 min") ? Strings.yourRideIsArrived : "${Strings.yourRideIsArrivingIn} ${arrivalTime.value}.";
     } else {
       if (isLessThanFiveMinutes(arrivalTime.value)) {
         return Strings.youAreAboutToReachYourDestination;
@@ -205,8 +198,7 @@ class RiderStartRideMapController extends GetxController {
   }
 
   callToDriver() async {
-    final url = Uri.parse(
-        'tel:${myRidesModel.value.confirmDriverDetails?.first?.driverPostsDetails?.first?.driverDetails?.first?.phone}');
+    final url = Uri.parse('tel:${bookingDetail.value.driverDetails?.phone}');
     if (await canLaunchUrl(url)) {
       await launchUrl(url);
     } else {
@@ -216,55 +208,22 @@ class RiderStartRideMapController extends GetxController {
 
   chatWithDriver() async {
     try {
-      final res = await APIManager.getChatRoomId(
-          receiverId: myRidesModel.value.confirmDriverDetails?.first
-                  ?.driverPostsDetails?.first?.driverId ??
-              "",
-          ridePostId: myRidesModel.value.Id ?? "");
+      final res = await APIManager.getChatRoomId(receiverId: bookingDetail.value.driverId ?? "");
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
               chatRoomId: res.data["chatChannelId"] ?? "",
-              rideId: myRidesModel.value.Id ?? "",
-              id: myRidesModel.value.confirmDriverDetails?.first
-                  ?.driverPostsDetails?.first?.driverId,
-              name: myRidesModel.value.confirmDriverDetails?.first
-                  ?.driverPostsDetails?.first?.driverDetails?.first?.fullName,
-              image: myRidesModel
-                  .value
-                  .confirmDriverDetails
-                  ?.first
-                  ?.driverPostsDetails
-                  ?.first
-                  ?.driverDetails
-                  ?.first
-                  ?.profilePic
-                  ?.url));
+              id: bookingDetail.value.driverId,
+              name: bookingDetail.value.driverDetails?.fullName,
+              image: bookingDetail.value.driverDetails?.profilePic?.url));
     } catch (e) {
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
-              rideId: myRidesModel.value.Id ?? "",
-              id: myRidesModel.value.confirmDriverDetails?.first
-                  ?.driverPostsDetails?.first?.driverId,
-              name: myRidesModel.value.confirmDriverDetails?.first
-                  ?.driverPostsDetails?.first?.driverDetails?.first?.fullName,
-              image: myRidesModel
-                  .value
-                  .confirmDriverDetails
-                  ?.first
-                  ?.driverPostsDetails
-                  ?.first
-                  ?.driverDetails
-                  ?.first
-                  ?.profilePic
-                  ?.url));
+              id: bookingDetail.value.driverId, name: bookingDetail.value.driverDetails?.fullName, image: bookingDetail.value.driverDetails?.profilePic?.url));
       debugPrint(e.toString());
     }
   }
 
-  List<String> emergencyContacts = [
-    'contact1@example.com',
-    'contact2@example.com'
-  ]; // Add your emergency contacts here
+  List<String> emergencyContacts = ['contact1@example.com', 'contact2@example.com']; // Add your emergency contacts here
   bool isSOSActive = false;
 
   void startSOS() {
@@ -286,5 +245,9 @@ class RiderStartRideMapController extends GetxController {
   void sendSOSMessage() {
     print('Sending SOS message to emergency contacts: $emergencyContacts');
     // Code to send SOS message to emergency contacts
+  }
+
+  sos() {
+    Get.dialog(useSafeArea: true, const SosDialog());
   }
 }

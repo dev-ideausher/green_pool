@@ -8,6 +8,7 @@ import '../controllers/map_rider_send_request_controller.dart';
 
 class MapRiderSendRequestView extends GetView<MapRiderSendRequestController> {
   const MapRiderSendRequestView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,9 +17,8 @@ class MapRiderSendRequestView extends GetView<MapRiderSendRequestController> {
             ? const GpProgress()
             : GoogleMap(
                 onMapCreated: controller.onMapCreated,
-                initialCameraPosition: CameraPosition(
-                    target: LatLng(controller.latitude, controller.longitude),
-                    zoom: 14),
+                myLocationEnabled: true,
+                initialCameraPosition: CameraPosition(target: LatLng(controller.latitude, controller.longitude), zoom: 14),
                 mapType: MapType.terrain,
                 markers: Set<Marker>.of(controller.markers),
                 // onCameraMove: (position) {

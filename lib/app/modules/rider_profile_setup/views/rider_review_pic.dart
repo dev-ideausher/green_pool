@@ -56,6 +56,8 @@ class RiderReviewPictureView extends GetView<RiderProfileSetupController> {
                 Get.until(
                     (route) => Get.currentRoute == Routes.RIDER_PROFILE_SETUP);
                 controller.isProfileImagePicked.value = true;
+                controller.isProfileImagePickedCheck.value = false;
+
               },
               label: 'Done',
             ),

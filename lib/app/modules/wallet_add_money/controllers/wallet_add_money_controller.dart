@@ -1,53 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:green_pool/app/modules/wallet/controllers/wallet_controller.dart';
+import 'package:green_pool/app/routes/app_pages.dart';
+import 'package:green_pool/app/services/dio/api_service.dart';
+import 'package:green_pool/app/services/snackbar.dart';
+
+import '../../../data/add_amount_model.dart';
 
 class WalletAddMoneyController extends GetxController {
   TextEditingController amountTextController = TextEditingController();
   RxBool buttonState = false.obs;
+
   @override
   void onInit() {
     super.onInit();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  String? fareValidator(String input) {
-    // Check if input is empty
-    if (input.isEmpty) {
-      return "Fare cannot be empty";
-    }
-
-    // Check if input can be parsed to an integer
-    try {
-      int fare = int.parse(input);
-
-      // Check if fare is between 5 and 500
-      if (fare >= 5 && fare <= 500) {
-        return null;
-      } else {
-        return "Fare must be between 5 and 500";
-      }
-    } catch (e) {
-      return "Invalid input. Please enter a valid integer fare";
-    }
-  }
 
   setButtonState(String value) {
-    if (value.isEmpty ||
-        value == "" ||
-        int.parse(value) < 5 ||
-        int.parse(value) > 500) {
+    if (value.isEmpty || value == "" || int.parse(value) < 100 ) {
       buttonState.value = false;
     } else {
       buttonState.value = true;
+    }
+  }
+
+  addMoney() async {
+    // Get.toNamed(Routes.PAYMENT_METHOD);
+    try {
+      final response = await APIManager.addAmount(body: {"amount": amountTextController.text.trim()});
+      final addAmountModel = AddAmountModel.fromJson(response.data);
+      if (addAmountModel.status ?? false) {
+        amountTextController.clear();
+        Get.toNamed(Routes.WEB_ADD_PAY, arguments: addAmountModel.data)?.then((value) => Get.find<WalletController>().getWallet());
+      }
+    } catch (e) {
+      debugPrint(e.toString());
     }
   }
 }

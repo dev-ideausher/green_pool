@@ -61,7 +61,7 @@ class PricingView extends GetView<PostRideController> {
                           TextStyleUtil.k14Semibold(color: ColorUtil.kBlack04),
                     ),
                     Text(
-                      '(Enter cost between ${controller.minFarePrice!.toStringAsFixed(2)} and ${controller.maxFarePrice!.toStringAsFixed(2)})',
+                      '(Enter cost between ${controller.minFarePrice!.toStringAsFixed(0)} and ${controller.maxFarePrice!.toStringAsFixed(0)})',
                       style:
                           TextStyleUtil.k14Semibold(color: ColorUtil.kBlack04),
                     ).paddingOnly(bottom: 8.kh),

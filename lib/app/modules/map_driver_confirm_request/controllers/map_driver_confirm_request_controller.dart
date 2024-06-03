@@ -14,8 +14,7 @@ import '../../home/controllers/home_controller.dart';
 class MapDriverConfirmRequestController extends GetxController {
   double latitude = Get.find<HomeController>().latitude.value;
   double longitude = Get.find<HomeController>().longitude.value;
-  var confirmRequestModel =
-      Get.find<MyRidesRequestController>().confirmRequestModel;
+  var confirmRequestModel = Get.find<MyRidesRequestController>().confirmRequestModel;
 
   late GoogleMapController mapController;
   final RxList<LatLng> polylineCoordinates = <LatLng>[].obs;
@@ -52,37 +51,31 @@ class MapDriverConfirmRequestController extends GetxController {
     try {
       markers.clear();
       PolylineResult result = await PolylinePoints().getRouteBetweenCoordinates(
-          Endpoints.googleApiKey,
-          PointLatLng(latitude, longitude),
-          PointLatLng(destinationLat.value, destinationLong.value),
+          Endpoints.googleApiKey, PointLatLng(latitude, longitude), PointLatLng(destinationLat.value, destinationLong.value),
           travelMode: TravelMode.driving);
       if (result.points.isNotEmpty) {
-        polylineCoordinates.assignAll(result.points
-            .map((PointLatLng point) => LatLng(point.latitude, point.longitude))
-            .toList());
-        mapController.animateCamera(CameraUpdate.newLatLngBounds(
-            GpUtil.boundsFromLatLngList(polylineCoordinates), 70));
+        polylineCoordinates.assignAll(result.points.map((PointLatLng point) => LatLng(point.latitude, point.longitude)).toList());
+        mapController.animateCamera(CameraUpdate.newLatLngBounds(GpUtil.boundsFromLatLngList(polylineCoordinates), 70));
       }
     } catch (e) {
       debugPrint('Error in drawPolyline: $e');
     }
   }
 
-  addMarkers(LatLng carLocation, imgurl) async {
-    Uint8List bytes = (await NetworkAssetBundle(Uri.parse(imgurl)).load(imgurl))
-        .buffer
-        .asUint8List();
+  addMarkers(DriverConfirmRequestModelDataRideDetails rider,LatLng carLocation, imgurl) async {
+    final bytes = await GpUtil.getMarkerIconFromUrl(imgurl);
     markers.add(Marker(
       markerId: MarkerId(carLocation.toString()),
-      position: carLocation, //position of marker
+      position: carLocation,
+      //position of marker
       onTap: () {
-        Get.bottomSheet(const MapDriverConfirmBottomsheet());
+        Get.bottomSheet( MapDriverConfirmBottomsheet(rider: rider));
       },
       infoWindow: const InfoWindow(
         title: 'Rider',
         snippet: 'Rider',
       ),
-      icon: BitmapDescriptor.fromBytes(bytes), //Icon for Marker
+      icon: bytes, //Icon for Marker
     ));
   }
 
@@ -90,18 +83,12 @@ class MapDriverConfirmRequestController extends GetxController {
     isLoading.value = true;
     confirmRequestModel.value.data?.forEach((value) {
       value?.rideDetails?.forEach((element) async {
-        await addMarkers(
-            LatLng(element?.origin?.coordinates?.last ?? 0.0,
-                element?.origin?.coordinates?.first ?? 0.0),
-            element?.riderDetails?[0]?.profilePic?.url);
+        await addMarkers(element!,
+            LatLng(element?.origin?.coordinates?.last ?? 0.0, element?.origin?.coordinates?.first ?? 0.0), element?.riderDetails?[0]?.profilePic?.url);
       });
     });
-    destinationLat.value = confirmRequestModel
-            .value.data?[0]?.rideDetails?[0]?.destination?.coordinates?.last ??
-        0.0;
-    destinationLong.value = confirmRequestModel
-            .value.data?[0]?.rideDetails?[0]?.destination?.coordinates?.first ??
-        0.0;
+    destinationLat.value = confirmRequestModel.value.data?[0]?.rideDetails?[0]?.destination?.coordinates?.last ?? 0.0;
+    destinationLong.value = confirmRequestModel.value.data?[0]?.rideDetails?[0]?.destination?.coordinates?.first ?? 0.0;
     drawPolyline();
     isLoading.value = false;
   }

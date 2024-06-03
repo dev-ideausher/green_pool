@@ -91,18 +91,18 @@ class MapRiderConfirmRequestController extends GetxController {
     riderConfirmRequestModel.value.data?.forEach((element) async {
       await addMarkers(
           LatLng(
-              element?.driverRideDetails?.first?.origin?.coordinates?.last ??
+              element?.driverRideDetails?.origin?.coordinates?.last ??
                   0.0,
-              element?.driverRideDetails?.first?.origin?.coordinates?.first ??
+              element?.driverRideDetails?.origin?.coordinates?.first ??
                   0.0),
           element
-              ?.driverRideDetails?.first?.driverDetails?[0]?.profilePic?.url);
+              ?.driverRideDetails?.driverDetails?[0]?.profilePic?.url);
     });
     destinationLat.value = riderConfirmRequestModel.value.data?[0]
-            ?.driverRideDetails?.first?.destination?.coordinates?.last ??
+            ?.driverRideDetails?.destination?.coordinates?.last ??
         0.0;
     destinationLong.value = riderConfirmRequestModel.value.data?[0]
-            ?.driverRideDetails?.first?.destination?.coordinates?.first ??
+            ?.driverRideDetails?.destination?.coordinates?.first ??
         0.0;
     drawPolyline();
     isLoading.value = false;

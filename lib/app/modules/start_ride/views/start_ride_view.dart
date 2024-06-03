@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
@@ -26,32 +27,15 @@ class StartRideView extends GetView<StartRideController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(onPressed: () => Get.back(), icon: SvgPicture.asset(ImageConstant.svgIconBack)),
+      ),
       body: Obx(
         () => controller.isLoad.value
             ? const GpProgress()
             : GoogleMap(
                 initialCameraPosition: CameraPosition(
-                  target: LatLng(
-                      controller
-                              .myRidesModel
-                              .value
-                              .driverBookingDetails
-                              ?.riders?[0]
-                              ?.riderBookingDetails?[0]
-                              ?.origin
-                              ?.coordinates
-                              ?.last ??
-                          0.0,
-                      controller
-                              .myRidesModel
-                              .value
-                              .driverBookingDetails
-                              ?.riders?[0]
-                              ?.riderBookingDetails?[0]
-                              ?.origin
-                              ?.coordinates
-                              ?.first ??
-                          0.0),
+                  target: LatLng(controller.getLat(), controller.getLong()),
                   zoom: 14,
                 ),
                 zoomGesturesEnabled: true,
@@ -64,11 +48,7 @@ class StartRideView extends GetView<StartRideController> {
                 markers: Set<Marker>.of(controller.markers),
                 polylines: {
                   Polyline(
-                      polylineId: const PolylineId('route'),
-                      visible: true,
-                      width: 4,
-                      color: ColorUtil.kSecondary01,
-                      points: controller.polylineCoordinates)
+                      polylineId: const PolylineId('route'), visible: true, width: 4, color: ColorUtil.kSecondary01, points: controller.polylineCoordinates)
                 },
               ),
       ),
@@ -78,22 +58,15 @@ class StartRideView extends GetView<StartRideController> {
             : Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  controller.isRideStarted.value
+                  (controller.myRidesModel.value.driverBookingDetails?.isStarted ?? false)
                       ? Card(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(8.kh),
-                                  topRight: Radius.circular(8.kh))),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(8.kh), topRight: Radius.circular(8.kh))),
                           margin: EdgeInsets.zero,
                           color: ColorUtil.kSecondary01,
                           child: ListTile(
-                              visualDensity: const VisualDensity(
-                                  horizontal: -4, vertical: -4),
-                              leading: const Icon(Icons.email_outlined,
-                                  color: ColorUtil.kWhiteColor),
-                              title: Text(Strings.riderNotified,
-                                  style: TextStyleUtil.k14Regular(
-                                      color: ColorUtil.kWhiteColor))))
+                              visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
+                              leading: const Icon(Icons.email_outlined, color: ColorUtil.kWhiteColor),
+                              title: Text(Strings.riderNotified, style: TextStyleUtil.k14Regular(color: ColorUtil.kWhiteColor))))
                       : const SizedBox(),
                   8.kheightBox,
                   Row(
@@ -101,33 +74,35 @@ class StartRideView extends GetView<StartRideController> {
                     children: [
                       Text(Strings.currentRiders),
                       SizedBox(
-                        height: 24.kh,
+                        height: 30.kh,
                         width: 28.w,
                         child: ListView.builder(
-                          itemCount: controller.myRidesModel.value
-                              .driverBookingDetails?.riders?.length,
+                          itemCount: controller.myRidesModel.value.driverBookingDetails?.riderBookingDetails?.length,
                           reverse: true,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index1) {
-                            final rider = controller.myRidesModel.value
-                                .driverBookingDetails!.riders![index1];
-                            return Container(
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                              ),
-                              child: ClipOval(
-                                child: SizedBox.fromSize(
-                                  size: Size.fromRadius(12.kh),
-                                  child: controller.myRidesModel.value
-                                          .driverBookingDetails!.riders!.isEmpty
-                                      ? Image.asset(
-                                          ImageConstant.pngEmptyPassenger,
-                                        )
-                                      : CommonImageView(
-                                          url: "${rider?.profilePic?.url}"),
+                            final rider = controller.myRidesModel.value.driverBookingDetails!.riderBookingDetails![index1];
+                            return InkWell(
+                              onTap: () => controller.updateIndex(index1),
+                              child: Container(
+                                padding: const EdgeInsets.all(1),
+                                decoration: BoxDecoration(
+                                  border:
+                                      Border.all(color: controller.selectedRider.value == index1 ? ColorUtil.kPrimary3PinkMode : Colors.transparent, width: 2),
+                                  borderRadius: BorderRadius.circular(16.kh),
                                 ),
-                              ),
-                            ).paddingOnly(right: 4.kw);
+                                child: ClipOval(
+                                  child: SizedBox.fromSize(
+                                    size: Size.fromRadius(12.kh),
+                                    child: controller.myRidesModel.value.driverBookingDetails!.riders!.isEmpty
+                                        ? Image.asset(
+                                            ImageConstant.pngEmptyPassenger,
+                                          )
+                                        : CommonImageView(url: "${rider?.riderDetails?.profilePic?.url}"),
+                                  ),
+                                ),
+                              ).paddingOnly(right: 4.kw),
+                            );
                           },
                         ),
                       ),
@@ -138,23 +113,8 @@ class StartRideView extends GetView<StartRideController> {
                     leading: SizedBox(
                         height: 50.kh,
                         width: 50.kh,
-                        child: ClipRRect(
-                            borderRadius: BorderRadius.circular(100),
-                            child: CommonImageView(
-                                url: controller
-                                    .myRidesModel
-                                    .value
-                                    .driverBookingDetails
-                                    ?.riders?[0]
-                                    ?.profilePic
-                                    ?.url,
-                                height: 40,
-                                width: 40))),
-                    title: Text(
-                        controller.myRidesModel.value.driverBookingDetails
-                                ?.riders?[0]?.fullName ??
-                            "",
-                        style: TextStyleUtil.k16Medium()),
+                        child: ClipRRect(borderRadius: BorderRadius.circular(100), child: CommonImageView(url: controller.getImage(), height: 40, width: 40))),
+                    title: Text(controller.getName(), style: TextStyleUtil.k16Medium()),
                     /* subtitle: Text(
                     "${controller.myRidesModel.value.confirmDriverDetails?.first?.driverPostsDetails?.first?.driverDetails?.first?.vehicleDetails?.first?.color ?? ""} ${controller.myRidesModel.value.confirmDriverDetails?.first?.driverPostsDetails?.first?.driverDetails?.first?.vehicleDetails?.first?.model ?? ""}",
                     style: TextStyleUtil.k16Medium()),*/
@@ -163,8 +123,7 @@ class StartRideView extends GetView<StartRideController> {
                       children: [
                         InkWell(
                           onTap: () async {
-                            await launchUrl(Uri.parse(
-                                "tel:${controller.myRidesModel.value.driverBookingDetails?.riders?[0]?.phone}"));
+                            await launchUrl(Uri.parse("tel:${controller.getPhone()}"));
                           },
                           child: CommonImageView(
                             svgPath: Assets.iconsCall,
@@ -180,42 +139,33 @@ class StartRideView extends GetView<StartRideController> {
                       ],
                     ),
                   ),
-                  const GreenPoolDivider()
-                      .paddingOnly(top: 8.kh, bottom: 16.kh),
+                  const GreenPoolDivider().paddingOnly(top: 8.kh, bottom: 16.kh),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 12.kw),
                     child: OriginToDestination(
-                        needPickupText: true,
-                        origin:
-                            "${controller.myRidesModel.value.driverBookingDetails?.riders?[0]?.riderBookingDetails?[0]?.origin?.name}",
-                        destination:
-                            "${controller.myRidesModel.value.driverBookingDetails?.riders?[0]?.riderBookingDetails?[0]?.destination?.name}"),
+                      needPickupText: true,
+                      origin: controller.getOrigin(),
+                      destination: controller.getDestination(),
+                    ),
                   ),
                   Obx(
-                    () => GreenPoolButton(
-                      onPressed: controller.isRideStarted.value
-                          ? controller.myRidesModel.value.driverBookingDetails!
-                                  .isCompleted!
-                              ? () {
-                                  controller.endRideAPI();
-                                }
-                              : () {
-                                  controller.pickUpAPI();
-                                  // controller.dropOffAPI();
-                                }
-                          : () {
-                              controller.startRideAPI();
-                            },
-                      label: controller.isRideStarted.value
-                          ? controller.myRidesModel.value.driverBookingDetails!
-                                  .isCompleted!
-                              ? Strings.endRide
-                              : Strings.riderPickedUpSuccessfully
-                          : Strings.startRide,
+                    () => Visibility(
+                      visible: !(controller.myRidesModel.value.driverBookingDetails?.riderBookingDetails?[controller.selectedRider.value].isCompleted ?? false),
+                      child: GreenPoolButton(
+                        onPressed: () => controller.actionTap(),
+                        label: controller.btnText.value,
+                      ).paddingSymmetric(vertical: 16.kh),
+                    ),
+                  ),
+                  Visibility(
+                    visible: controller.isEndRide.value,
+                    child: GreenPoolButton(
+                      onPressed: () => controller.actionTap(),
+                      label: controller.btnText.value,
                     ).paddingSymmetric(vertical: 16.kh),
                   ),
                 ],
-              ).paddingOnly(top: 24.kh),
+              ).paddingOnly(bottom: 34.kh),
       ),
     );
   }

@@ -38,22 +38,28 @@ class WelcomeTile extends StatelessWidget {
               )
             ],
           ),
-          GestureDetector(
-              onTap: () {
-                Get.toNamed(Routes.NOTIFICATIONS);
-              },
-              child: Stack(
-                alignment: Alignment.topRight,
-                children: [
-                  Container(
-                    height: 10.kh,
-                    width: 10.kw,
-                    decoration: const BoxDecoration(
-                        shape: BoxShape.circle, color: ColorUtil.kError2),
-                  ),
-                  SvgPicture.asset(ImageConstant.svgIconNoti),
-                ],
-              )),
+          Visibility(
+            visible: Get.find<GetStorageService>().getLoggedIn,
+            child: GestureDetector(
+                onTap: () {
+                  Get.toNamed(Routes.NOTIFICATIONS);
+                },
+                child: Stack(
+                  alignment: Alignment.topRight,
+                  children: [
+                    Visibility(
+                      visible:false,// controller.unReadCount.value > 0,
+                      child: Container(
+                        height: 10.kh,
+                        width: 10.kw,
+                        decoration: const BoxDecoration(
+                            shape: BoxShape.circle, color: ColorUtil.kError2),
+                      ),
+                    ),
+                    SvgPicture.asset(ImageConstant.svgIconNoti),
+                  ],
+                )),
+          ),
         ],
       ).paddingSymmetric(vertical: 40.kh);
     });

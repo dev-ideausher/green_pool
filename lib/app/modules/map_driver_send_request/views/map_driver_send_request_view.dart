@@ -9,6 +9,7 @@ import '../controllers/map_driver_send_request_controller.dart';
 
 class MapDriverSendRequestView extends GetView<MapDriverSendRequestController> {
   const MapDriverSendRequestView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,10 +17,9 @@ class MapDriverSendRequestView extends GetView<MapDriverSendRequestController> {
         () => controller.isLoading.value
             ? const GpProgress()
             : GoogleMap(
+          myLocationEnabled: true,
                 onMapCreated: controller.onMapCreated,
-                initialCameraPosition: CameraPosition(
-                    target: LatLng(controller.latitude, controller.longitude),
-                    zoom: 14),
+                initialCameraPosition: CameraPosition(target: LatLng(controller.latitude, controller.longitude), zoom: 14),
                 mapType: MapType.terrain,
                 markers: Set<Marker>.of(controller.markers),
                 // onCameraMove: (position) {

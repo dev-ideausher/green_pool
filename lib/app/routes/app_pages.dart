@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:green_pool/app/modules/add_gift/bindings/add_gift_binding.dart';
+import 'package:green_pool/app/modules/add_gift/views/add_gift_view.dart';
 
 import '../modules/about/bindings/about_binding.dart';
 import '../modules/about/views/about_view.dart';
@@ -150,6 +152,8 @@ import '../modules/wallet_add_money/bindings/wallet_add_money_binding.dart';
 import '../modules/wallet_add_money/views/wallet_add_money_view.dart';
 import '../modules/wallet_to_bank_acc/bindings/wallet_to_bank_acc_binding.dart';
 import '../modules/wallet_to_bank_acc/views/wallet_to_bank_acc_view.dart';
+import '../modules/web_add_pay/bindings/web_add_pay_binding.dart';
+import '../modules/web_add_pay/views/web_add_pay_view.dart';
 
 // ignore_for_file: constant_identifier_names
 
@@ -183,7 +187,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.MY_RIDES_ONE_TIME,
-      page: () => const MyRidesOneTimeView(),
+      page: () =>  MyRidesOneTimeView(),
       binding: MyRidesOneTimeBinding(),
     ),
     GetPage(
@@ -545,6 +549,16 @@ class AppPages {
       name: _Paths.VEHICLE_SETUP,
       page: () => const VehicleSetupView(),
       binding: VehicleSetupBinding(),
+    ),
+    GetPage(
+      name: _Paths.WEB_ADD_PAY,
+      page: () => const WebAddPayView(),
+      binding: WebAddPayBinding(),
+    ),
+    GetPage(
+      name: _Paths.ADD_GIFT,
+      page: () => const AddGiftView(),
+      binding: AddGiftBinding(),
     ),
   ];
 }

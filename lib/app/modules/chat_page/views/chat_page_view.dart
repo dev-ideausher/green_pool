@@ -14,6 +14,7 @@ import 'package:green_pool/app/services/storage.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
 import '../../../components/gp_progress.dart';
+import '../../../services/gp_util.dart';
 import '../../home/controllers/home_controller.dart';
 import '../controllers/chat_page_controller.dart';
 
@@ -24,12 +25,8 @@ class ChatPageView extends GetView<ChatPageController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Get.find<HomeController>().isPinkModeOn.value
-            ? ColorUtil.kPrimaryPinkMode
-            : ColorUtil.kPrimary01,
-        surfaceTintColor: Get.find<HomeController>().isPinkModeOn.value
-            ? ColorUtil.kPrimaryPinkMode
-            : ColorUtil.kPrimary01,
+        backgroundColor: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimaryPinkMode : ColorUtil.kPrimary01,
+        surfaceTintColor: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimaryPinkMode : ColorUtil.kPrimary01,
         elevation: 1,
         toolbarHeight: 64.kh,
         title: Obx(
@@ -38,8 +35,8 @@ class ChatPageView extends GetView<ChatPageController> {
                 borderRadius: BorderRadius.circular(16.kh),
                 child: CommonImageView(
                   url: controller.chatArg.value.image,
-                  height: 32.kh,
-                  width: 32.kh,
+                  height: 40.kh,
+                  width: 40.kh,
                 )),
             12.kwidthBox,
             Text(
@@ -54,113 +51,152 @@ class ChatPageView extends GetView<ChatPageController> {
             ImageConstant.svgIconBack,
           ).paddingAll(14.kh),
         ),
+        actions: [
+          PopupMenuButton(
+            itemBuilder: (context) {
+              return [
+                PopupMenuItem(
+                  onTap: () => controller.call(),
+                  value: 1,
+                  child: Text(Strings.call),
+                ),
+                PopupMenuItem(
+                  onTap: () => controller.deleteChat(),
+                  value: 1,
+                  child: Text(Strings.deleteChat),
+                ),
+              ];
+            },
+            child: Icon(Icons.more_vert),
+          ).paddingOnly(right: 14.kw),
+        ],
       ),
       body: Obx(
         () => controller.isLoad.value
             ? const GpProgress()
             : Column(
                 children: [
-                  Center(
-                    child: Column(
-                      children: [
-                        Text(
-                          Strings.today,
-                          style: TextStyleUtil.k14Regular(),
-                        ),
-                        Text(
-                          '6 Nov 2023',
-                          style: TextStyleUtil.k12Regular(
-                              color: ColorUtil.kBlack04),
-                        )
-                      ],
-                    ).paddingOnly(top: 8.kh),
-                  ),
                   Expanded(
-                      child: ListView.builder(
-                    controller: controller.scrollController,
-                    itemCount: controller.messages.length,
-                    padding: const EdgeInsets.only(top: 10, bottom: 10),
-                    itemBuilder: (context, index) {
-                      final message = controller.messages[index];
-                      final isSender = message.senderId ==
-                          Get.find<GetStorageService>().getUserAppId;
-                      return Container(
-                        padding: EdgeInsets.only(
-                            left: 14.kw,
-                            right: 14.kw,
-                            top: 10.kh,
-                            bottom: 10.kh),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            if (!isSender) // Receiver's image
-                              Padding(
-                                padding: const EdgeInsets.only(right: 8.0),
-                                child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(100.kh),
-                                    child: CommonImageView(
-                                      url: controller.chatArg.value.image,
-                                      height: 32.kh,
-                                      width: 32.kh,
-                                    )),
-                              ),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: isSender
-                                    ? CrossAxisAlignment.end
-                                    : CrossAxisAlignment.start,
+                    child: ListView.separated(
+                      itemCount: controller.messages.length,
+                      padding: const EdgeInsets.only(top: 10, bottom: 10),
+                      controller: controller.scrollController,
+                      itemBuilder: (context, index) {
+                        final message = controller.messages[index];
+                        final isSender = message.senderId == Get.find<GetStorageService>().getUserAppId;
+
+                        return Container(
+                          padding: EdgeInsets.only(left: 14.kw, right: 14.kw, top: 10.kh, bottom: 10.kh),
+                          child: Column(
+                            children: [
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(15.0.kh)),
-                                      color: Colors.white,
-                                    ),
-                                    padding: const EdgeInsets.all(16),
-                                    child: Column(
-                                      crossAxisAlignment: isSender
-                                          ? CrossAxisAlignment.end
-                                          : CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          message.message ?? "",
-                                          style: TextStyleUtil.k14Regular(),
+                                  if (!isSender)
+                                    Padding(
+                                      padding: const EdgeInsets.only(right: 8.0),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(100.kh),
+                                        child: CommonImageView(
+                                          url: controller.chatArg.value.image,
+                                          height: 32.kh,
+                                          width: 32.kh,
                                         ),
-                                        4.kheightBox, // Add some space between message and time
-                                        Text(
-                                          DateFormat.jm().format(message
-                                              .timestamp), // Replace with actual time
-                                          style: TextStyleUtil.k10Regular(),
+                                      ),
+                                    ),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment: isSender ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.all(Radius.circular(15.0.kh)),
+                                            color: Colors.white,
+                                          ),
+                                          padding: const EdgeInsets.all(16),
+                                          child: Column(
+                                            crossAxisAlignment: isSender ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                message.message ?? "",
+                                                style: TextStyleUtil.k14Regular(),
+                                              ),
+                                              4.kheightBox, // Add some space between message and time
+                                              Text(
+                                                GpUtil.formatTime(message.timestamp), // Replace with actual time
+                                                style: TextStyleUtil.k10Regular(),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ],
                                     ),
                                   ),
+                                  if (isSender)
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 8.0),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(100.kh),
+                                        child: CommonImageView(
+                                          url: Get.find<GetStorageService>().profilePicUrl,
+                                          height: 32.kh,
+                                          width: 32.kh,
+                                        ),
+                                      ),
+                                    ),
                                 ],
                               ),
-                            ),
-                            if (isSender) // Sender's image
-                              Padding(
-                                padding: const EdgeInsets.only(left: 8.0),
-                                child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(100.kh),
-                                    child: CommonImageView(
-                                      url: Get.find<GetStorageService>()
-                                          .profilePicUrl,
-                                      height: 32.kh,
-                                      width: 32.kh,
-                                    )),
+                            ],
+                          ),
+                        );
+                      },
+                      separatorBuilder: (BuildContext context, int index) {
+                        final message = controller.messages[index];
+                        final messageDate = DateTime(
+                          message.timestamp.year,
+                          message.timestamp.month,
+                          message.timestamp.day,
+                        );
+                        bool showDate = true;
+                        if (index > 0) {
+                          final previousMessage = controller.messages[index - 1];
+                          final previousMessageDate = DateTime(
+                            previousMessage.timestamp.year,
+                            previousMessage.timestamp.month,
+                            previousMessage.timestamp.day,
+                          );
+                          if (messageDate.isAtSameMomentAs(previousMessageDate)) {
+                            showDate = false;
+                          }
+                        }
+                        return Column(
+                          children: [
+                            if (showDate)
+                              Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      GpUtil.isToday(message.timestamp) ? Strings.today : DateFormat.E().format(message.timestamp),
+                                      style: TextStyleUtil.k14Regular(),
+                                    ),
+                                    Text(
+                                      GpUtil.formatDate(message.timestamp),
+                                      style: TextStyleUtil.k12Regular(color: ColorUtil.kBlack04),
+                                    ),
+                                  ],
+                                ).paddingOnly(top: 8.kh),
                               ),
                           ],
-                        ),
-                      );
-                    },
-                  )),
+                        );
+                      },
+                    ),
+                  ),
                   GreenPoolTextField(
                     controller: controller.eMsg,
                     hintText: Strings.writeMsg,
-                    suffix: InkWell(
-                        onTap: () => controller.sendMsg(),
-                        child: SvgPicture.asset(ImageConstant.svgIconSend)),
+                    suffix: InkWell(onTap: () => controller.sendMsg(), child: SvgPicture.asset(ImageConstant.svgIconSend)),
                   ).paddingOnly(bottom: 40.kh)
                 ],
               ).paddingSymmetric(horizontal: 16.kw),

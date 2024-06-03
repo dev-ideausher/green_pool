@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "523344243189",
+    "firebase_url": "https://greenpool-ccb5d-default-rtdb.firebaseio.com",
     "project_id": "greenpool-ccb5d",
     "storage_bucket": "greenpool-ccb5d.appspot.com"
   },
@@ -13,6 +14,30 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "523344243189-8164suqbkbnq4si7auoqqvntu2i2t515.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.iu.green_pool",
+            "certificate_hash": "10a2ac34d801d80917cf6ef1258952b6955fd2da"
+          }
+        },
+        {
+          "client_id": "523344243189-a7tdik9jh5g2jd5fsrlp26qa7eohmn16.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.iu.green_pool",
+            "certificate_hash": "7b31c2a942d8ce94d077643b6f968bc810129a4c"
+          }
+        },
+        {
+          "client_id": "523344243189-i3r41tg3qp0renrs8pcrl9gmuuugtf1u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.iu.green_pool",
+            "certificate_hash": "18ef537e0a656acf099ffd6f8560ae1a9afd4723"
+          }
+        },
         {
           "client_id": "523344243189-plsqkvuc25upe32ds6eafvgcghmdtp4e.apps.googleusercontent.com",
           "client_type": 1,
@@ -39,7 +64,7 @@
               "client_type": 3
             },
             {
-              "client_id": "523344243189-hjgeqda20964cnts8ecgukouli961vb9.apps.googleusercontent.com",
+              "client_id": "523344243189-6fp5otgbsfl1erueb8qvp93sj833d217.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
                 "bundle_id": "com.iu.greenPool"

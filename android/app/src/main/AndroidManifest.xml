@@ -6,7 +6,7 @@
 
 
     <application
-        android:label="green_pool"
+        android:label="Greenpool"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

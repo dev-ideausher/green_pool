@@ -11,19 +11,25 @@ class EmergencyModelEmergencyContacts {
 
   String? fullName;
   String? phone;
+  String? id;
 
   EmergencyModelEmergencyContacts({
     this.fullName,
     this.phone,
+    this.id,
   });
   EmergencyModelEmergencyContacts.fromJson(Map<String, dynamic> json) {
     fullName = json['fullName']?.toString();
     phone = json['phone']?.toString();
+    id = json['_id']?.toString();
+
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['fullName'] = fullName;
     data['phone'] = phone;
+    data['_id'] = id;
+
     return data;
   }
 }

@@ -183,7 +183,7 @@ class PostRideModelRidesDetailsStops {
   double? latitude;
   String? originToStopFair;
   String? stopToStopFair;
-  int? stopTodestinationFair;
+  String? stopTodestinationFair;
 
   PostRideModelRidesDetailsStops({
     this.name,
@@ -199,7 +199,7 @@ class PostRideModelRidesDetailsStops {
     latitude = json['latitude']?.toDouble();
     originToStopFair = json['originToStopFair']?.toString();
     stopToStopFair = json['stopToStopFair']?.toString();
-    stopTodestinationFair = json['stopTodestinationFair']?.toInt();
+    stopTodestinationFair = json['stopTodestinationFair']?.toString();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -340,7 +340,7 @@ class PostRideModelRidesDetails {
 
   PostRideModelRidesDetailsOrigin? origin;
   PostRideModelRidesDetailsDestination? destination;
-  List<PostRideModelRidesDetailsStops?>? stops;
+  List<PostRideModelRidesDetailsStops>? stops;
   String? tripType;
   String? date;
   String? time;

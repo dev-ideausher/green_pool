@@ -50,8 +50,10 @@ class StudentDiscountsController extends GetxController {
 
   studentDiscountAPI() async {
     try {
-      final response = await APIManager.postStudentDiscount(
-          email: emailTextController.value.text);
+      final response = await APIManager.postStudentDiscount(body: {
+        "email": emailTextController.value.text,
+        "school": searchTextController.text,
+      });
       print(response.toString());
       if (response.data['status']) {
         requestSent.value = true;

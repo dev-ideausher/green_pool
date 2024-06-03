@@ -379,7 +379,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                 onPressed: () {
                   controller.chatWithDriver();
                 },
-                label: 'Message',
+                label: Strings.message,
                 isBorder: true),
             GreenPoolButton(
                     onPressed: () => controller.confirmRideAPI(),

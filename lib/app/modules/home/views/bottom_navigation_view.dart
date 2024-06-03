@@ -46,7 +46,7 @@ class BottomNavigationView extends GetView<HomeController> {
                   }
                 : (index) {
                     if (index != 0) {
-                      Get.toNamed(Routes.CREATE_ACCOUNT,
+                      Get.toNamed(Routes.LOGIN,
                           arguments: {'isDriver': false, 'fromNavBar': true});
                     }
                   },

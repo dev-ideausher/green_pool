@@ -6,6 +6,7 @@ import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../constants/image_constant.dart';
+import '../../../res/strings.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/colors.dart';
 import '../../../services/text_style_util.dart';
@@ -17,8 +18,8 @@ class RiderPostRideView extends GetView<RiderPostRideController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const GreenPoolAppBar(
-        title: Text('Post a Ride'),
+      appBar:  GreenPoolAppBar(
+        title: Text(Strings.postARide),
       ),
       body: SafeArea(
         child: Column(

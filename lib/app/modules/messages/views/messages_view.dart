@@ -13,18 +13,18 @@ import 'package:green_pool/app/services/text_style_util.dart';
 
 import '../../../components/common_image_view.dart';
 import '../../../components/greenpool_appbar.dart';
+import '../../../res/strings.dart';
 import '../controllers/messages_controller.dart';
 
 class MessagesView extends GetView<MessagesController> {
   const MessagesView({super.key});
+
   @override
   Widget build(BuildContext context) {
     Get.lazyPut(() => MessagesController());
+    controller.getMessageListAPI();
     return Scaffold(
-      appBar: const GreenPoolAppBar(
-        title: Text('Messages'),
-        leading: SizedBox(),
-      ),
+      appBar: GreenPoolAppBar(title: Text(Strings.messages), leading: SizedBox()),
       body: Get.find<GetStorageService>().getLoggedIn
           ? Obx(
               () => controller.isLoading.value
@@ -38,45 +38,18 @@ class MessagesView extends GetView<MessagesController> {
                           ),
                         )
                       : ListView.builder(
-                          itemCount: controller
-                              .messagesModel.value.chatRoomIds!.length,
+                          itemCount: controller.messagesModel.value.chatRoomIds!.length,
                           itemBuilder: (context, index) {
+                            final message = controller.messagesModel.value.chatRoomIds?[index];
                             return MessageTile(
                                 onTap: () {
                                   Get.toNamed(Routes.CHAT_PAGE,
-                                      arguments: ChatArg(
-                                          chatRoomId: controller
-                                              .messagesModel
-                                              .value
-                                              .chatRoomIds?[index]
-                                              ?.chatRoomId,
-                                          id: controller.messagesModel.value
-                                              .chatRoomIds?[index]?.Id,
-                                          image: controller
-                                              .messagesModel
-                                              .value
-                                              .chatRoomIds?[index]
-                                              ?.user2
-                                              ?.profilePic
-                                              ?.url,
-                                          name: controller
-                                              .messagesModel
-                                              .value
-                                              .chatRoomIds?[index]
-                                              ?.user2
-                                              ?.fullName,
-                                          rideId: controller
-                                              .messagesModel
-                                              .value
-                                              .chatRoomIds?[index]
-                                              ?.ridePostId));
+                                      arguments:
+                                          ChatArg(chatRoomId: message?.chatRoomId ?? "", id: message?.user2?.Id??"", image: message?.user2?.profilePic?.url, name: message?.user2?.fullName));
                                 },
-                                title:
-                                    "${controller.messagesModel.value.chatRoomIds?[index]?.user2?.fullName}",
-                                path:
-                                    "${controller.messagesModel.value.chatRoomIds?[index]?.user2?.profilePic?.url}",
-                                subtitle:
-                                    'No worries, I will be there on time.');
+                                title: controller.messagesModel.value.chatRoomIds?[index]?.user2?.fullName ?? "",
+                                path: controller.messagesModel.value.chatRoomIds?[index]?.user2?.profilePic?.url ?? "",
+                                subtitle: message?.lastMessage ?? "").paddingOnly( top: 8.kh);
                           },
                         ).paddingOnly(left: 16.kw, right: 16.kw, top: 32.kh),
             )
@@ -84,41 +57,7 @@ class MessagesView extends GetView<MessagesController> {
               child: Text(
               "Tap on profile to continue",
               style: TextStyleUtil.k20Heading600(),
-            )
-              // Text.rich(
-              //   TextSpan(
-              //     children: [
-              //       TextSpan(
-              //         text: 'Please  ',
-              //         style: TextStyleUtil.k16Regular(),
-              //       ),
-              //       TextSpan(
-              //           text: 'Login  ',
-              //           style: TextStyleUtil.k20Heading700(
-              //               color: ColorUtil.kPrimary01),
-              //           recognizer: TapGestureRecognizer()
-              //             ..onTap = () => Get.toNamed(Routes.LOGIN, arguments: {
-              //                   'isDriver': false,
-              //                   'fromNavBar': true
-              //                 })),
-              //       TextSpan(
-              //         text: 'or  ',
-              //         style: TextStyleUtil.k16Regular(),
-              //       ),
-              //       TextSpan(
-              //           text: 'SignUp',
-              //           style: TextStyleUtil.k20Heading700(
-              //               color: ColorUtil.kPrimary01),
-              //           recognizer: TapGestureRecognizer()
-              //             ..onTap = () => Get.toNamed(Routes.CREATE_ACCOUNT,
-              //                     arguments: {
-              //                       'isDriver': false,
-              //                       'fromNavBar': true
-              //                     })),
-              //     ],
-              //   ),
-              // ),
-              ),
+            )),
     );
   }
 }
@@ -126,6 +65,7 @@ class MessagesView extends GetView<MessagesController> {
 class MessageTile extends StatelessWidget {
   final String title, path, subtitle;
   final Function() onTap;
+
   const MessageTile({
     super.key,
     required this.title,
@@ -141,8 +81,7 @@ class MessageTile extends StatelessWidget {
       child: ListTile(
         tileColor: ColorUtil.kWhiteColor,
         onTap: onTap,
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.kh)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.kh)),
         title: Text(
           title,
           style: TextStyleUtil.k14Semibold(),

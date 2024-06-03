@@ -31,22 +31,12 @@ class RiderStartRideMapView extends GetView<RiderStartRideMapController> {
             ? const GpProgress()
             : GoogleMap(
                 onMapCreated: controller.onMapCreated,
-                initialCameraPosition: CameraPosition(
-                    target: LatLng(controller.latitude, controller.longitude),
-                    zoom: 14),
+                initialCameraPosition: CameraPosition(target: LatLng(controller.currentLat.value, controller.currentLong.value), zoom: 14),
                 mapType: MapType.terrain,
+                myLocationEnabled: true,
                 markers: Set<Marker>.of(controller.markers),
-                // onCameraMove: (position) {
-                //   GpUtil.moveCamera(controller.mapController, position.target);
-                // },
                 polylines: {
-                  Polyline(
-                    visible: true,
-                    width: 4,
-                    polylineId: const PolylineId('polyline'),
-                    points: controller.polylineCoordinates,
-                    patterns: [PatternItem.dash(10), PatternItem.gap(10)],
-                  ),
+                  Polyline(polylineId: const PolylineId('polyline'), points: controller.polylineCoordinates),
                 },
               ),
       ),
@@ -54,57 +44,12 @@ class RiderStartRideMapView extends GetView<RiderStartRideMapController> {
       floatingActionButton: FloatingActionButton(
         shape: const CircleBorder(),
         backgroundColor: ColorUtil.kError4,
-        onPressed: () {
-          Get.dialog(
-            useSafeArea: true,
-            Center(
-              child: Container(
-                padding: EdgeInsets.all(16.kh),
-                height: 50.h,
-                width: 80.w,
-                decoration: BoxDecoration(
-                  color: ColorUtil.kWhiteColor,
-                  borderRadius: BorderRadius.circular(8.kh),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Sending SOS',
-                      style: TextStyleUtil.k24Heading700(),
-                      textAlign: TextAlign.center,
-                    ).paddingSymmetric(vertical: 4.kh),
-                    SizedBox(),
-                    Text(
-                      'Share message and location with emergency contacts',
-                      style: TextStyleUtil.k14Regular(
-                        color: ColorUtil.kBlack04,
-                      ),
-                      textAlign: TextAlign.center,
-                    ).paddingOnly(bottom: 40.kh),
-                    GreenPoolButton(
-                      onPressed: () {},
-                      height: 40.kh,
-                      width: 60.w,
-                      label: 'Cancel',
-                      fontSize: 14.kh,
-                      padding: const EdgeInsets.all(8),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          );
-        },
+        onPressed: () => controller.sos(),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.notifications_active_outlined,
-                color: ColorUtil.kWhiteColor),
-            Text(Strings.sos,
-                style: TextStyleUtil.k14Regular(
-                    color: ColorUtil.kWhiteColor, fontWeight: FontWeight.w700)),
+            const Icon(Icons.notifications_active_outlined, color: ColorUtil.kWhiteColor),
+            Text(Strings.sos, style: TextStyleUtil.k14Regular(color: ColorUtil.kWhiteColor, fontWeight: FontWeight.w700)),
           ],
         ),
       ),

@@ -1,23 +1,28 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:green_pool/app/services/dio/api_service.dart';
+
+import '../../../data/transactions_model.dart';
 
 class TransactionHistoryController extends GetxController {
-  //TODO: Implement TransactionHistoryController
+  final RxBool isLoad = true.obs;
+  final RxList<TransactionsModelTransactions> transactions = <TransactionsModelTransactions>[].obs;
 
-  final count = 0.obs;
   @override
   void onInit() {
     super.onInit();
+    getTransactionHistory();
+    isLoad.value = false;
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
+  Future<void> getTransactionHistory() async {
+    try {
+      final res = await APIManager.transactions();
+      final transactionsModel = TransactionsModel.fromJson(res.data);
+      transactions.value = transactionsModel.transactions!;
 
-  @override
-  void onClose() {
-    super.onClose();
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
-
-  void increment() => count.value++;
 }

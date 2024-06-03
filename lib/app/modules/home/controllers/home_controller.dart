@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:green_pool/app/res/strings.dart';
@@ -32,29 +33,20 @@ class HomeController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
-    isPinkModeOn.value = Get.find<GetStorageService>().isPinkMode;
-    await _determinePosition().then((value) => {
-          latitude.value = value.latitude,
-          longitude.value = value.longitude,
-        });
-    await setupMessage();
-    onChangeLocation();
+    try {
+      await userInfoAPI();
+
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 
   void onChangeLocation() {
-    const LocationSettings locationSettings = LocationSettings(
-        accuracy: LocationAccuracy.bestForNavigation, distanceFilter: 100);
-    Geolocator.getPositionStream(locationSettings: locationSettings)
-        .listen((Position? position) async {
+    const LocationSettings locationSettings = LocationSettings(accuracy: LocationAccuracy.bestForNavigation, distanceFilter: 100);
+    Geolocator.getPositionStream(locationSettings: locationSettings).listen((Position? position) async {
       if (position != null) {
-        DatabaseReference databaseReference =
-            FirebaseDatabase.instance.ref().child('locations');
-        databaseReference
-            .child(Get.find<GetStorageService>().getUserAppId ?? "")
-            .set({
-          'latitude': position.latitude,
-          'longitude': position.longitude
-        });
+        DatabaseReference databaseReference = FirebaseDatabase.instance.ref().child('locations');
+        databaseReference.child(Get.find<GetStorageService>().getUserAppId ?? "").set({'latitude': position.latitude, 'longitude': position.longitude, 'heading': position.heading});
       }
     });
   }
@@ -62,7 +54,6 @@ class HomeController extends GetxController {
   @override
   void onReady() async {
     super.onReady();
-    userInfoAPI();
   }
 
   // @override
@@ -72,22 +63,35 @@ class HomeController extends GetxController {
 
   userInfoAPI() async {
     if (Get.find<GetStorageService>().getLoggedIn == true) {
-      final response = await APIManager.getUserByID();
-      var data = jsonDecode(response.toString());
-      userInfo.value = UserInfoModel.fromJson(data);
-      PushNotificationService.subFcm("${userInfo.value.data?.Id}");
+      try {
+        final response = await APIManager.getUserByID();
+        var data = jsonDecode(response.toString());
+        userInfo.value = UserInfoModel.fromJson(data);
+        userInfo.refresh();
+        PushNotificationService.subFcm("${userInfo.value.data?.Id}");
+        isPinkModeOn.value = Get.find<GetStorageService>().isPinkMode;
+        onChangeLocation();
+                await _determinePosition().then((value) => {
+                  latitude.value = value.latitude,
+                  longitude.value = value.longitude,
+                });
+
+                await setupMessage();
+
+
+      } catch (e) {
+        debugPrint(e.toString());
+      }
       log("User info API called");
-    } else {}
+    }
   }
 
   setupMessage() async {
-    await PushNotificationService().setupInteractedMessage();
-    RemoteMessage? initialMessage =
-        await FirebaseMessaging.instance.getInitialMessage();
-    if (initialMessage != null) {
-      PushNotificationService().saveNotification(initialMessage);
-      // App received a notification when it was killed
-    }
+    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+    const InitializationSettings initializationSettings =
+        InitializationSettings(android: AndroidInitializationSettings('logo'), iOS: DarwinInitializationSettings());
+    await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+    PushNotificationService(flutterLocalNotificationsPlugin).setupInteractedMessage();
   }
 
   Future<Position> _determinePosition() async {
@@ -108,8 +112,7 @@ class HomeController extends GetxController {
     }
 
     if (permission == LocationPermission.deniedForever) {
-      return Future.error(
-          'Location permissions are permanently denied, we cannot request permissions.');
+      return Future.error('Location permissions are permanently denied, we cannot request permissions.');
     }
 
     return await Geolocator.getCurrentPosition();

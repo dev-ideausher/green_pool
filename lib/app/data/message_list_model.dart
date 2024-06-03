@@ -4,8 +4,8 @@
 class MessageListModelChatRoomIdsUser2ProfilePic {
 /*
 {
-  "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/2a6a2dc3-ed34-4611-a82a-5904317211ab-download.png"
-} 
+  "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/ac11d443-b43e-49b3-ab1f-1c2526940922-compressed_image_picker_89D3D04F-F400-48C4-9980-B1775E6C0205-95174-00002D1496CDBB31.jpg"
+}
 */
 
   String? url;
@@ -13,8 +13,7 @@ class MessageListModelChatRoomIdsUser2ProfilePic {
   MessageListModelChatRoomIdsUser2ProfilePic({
     this.url,
   });
-  MessageListModelChatRoomIdsUser2ProfilePic.fromJson(
-      Map<String, dynamic> json) {
+  MessageListModelChatRoomIdsUser2ProfilePic.fromJson(Map<String, dynamic> json) {
     url = json['url']?.toString();
   }
   Map<String, dynamic> toJson() {
@@ -27,12 +26,12 @@ class MessageListModelChatRoomIdsUser2ProfilePic {
 class MessageListModelChatRoomIdsUser2 {
 /*
 {
-  "_id": "660933dcc5ee2a8a9e8ead93",
-  "fullName": "Neha Customer 1",
+  "_id": "661f6b6d2e30e94be6c6cf29",
+  "fullName": "Amar",
   "profilePic": {
-    "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/2a6a2dc3-ed34-4611-a82a-5904317211ab-download.png"
+    "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/ac11d443-b43e-49b3-ab1f-1c2526940922-compressed_image_picker_89D3D04F-F400-48C4-9980-B1775E6C0205-95174-00002D1496CDBB31.jpg"
   }
-} 
+}
 */
 
   String? Id;
@@ -47,10 +46,7 @@ class MessageListModelChatRoomIdsUser2 {
   MessageListModelChatRoomIdsUser2.fromJson(Map<String, dynamic> json) {
     Id = json['_id']?.toString();
     fullName = json['fullName']?.toString();
-    profilePic = (json['profilePic'] != null)
-        ? MessageListModelChatRoomIdsUser2ProfilePic.fromJson(
-            json['profilePic'])
-        : null;
+    profilePic = (json['profilePic'] != null) ? MessageListModelChatRoomIdsUser2ProfilePic.fromJson(json['profilePic']) : null;
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -66,46 +62,44 @@ class MessageListModelChatRoomIdsUser2 {
 class MessageListModelChatRoomIds {
 /*
 {
-  "_id": "663b5c7dc10d2d6a33b4f283",
+  "_id": "6622780ab22f6106f26ecc60",
+  "lastMessage": "Hi",
   "user2": {
-    "_id": "660933dcc5ee2a8a9e8ead93",
-    "fullName": "Neha Customer 1",
+    "_id": "661f6b6d2e30e94be6c6cf29",
+    "fullName": "Amar",
     "profilePic": {
-      "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/2a6a2dc3-ed34-4611-a82a-5904317211ab-download.png"
+      "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/ac11d443-b43e-49b3-ab1f-1c2526940922-compressed_image_picker_89D3D04F-F400-48C4-9980-B1775E6C0205-95174-00002D1496CDBB31.jpg"
     }
   },
-  "chatRoomId": "-NxMsJTfmPpHRn-GFs0x",
-  "ridePostId": "6639c92158249d84ebc50780"
-} 
+  "chatRoomId": "-NvqdDOYI7ygN2zqiSXy"
+}
 */
 
   String? Id;
+  String? lastMessage;
   MessageListModelChatRoomIdsUser2? user2;
   String? chatRoomId;
-  String? ridePostId;
 
   MessageListModelChatRoomIds({
     this.Id,
+    this.lastMessage,
     this.user2,
     this.chatRoomId,
-    this.ridePostId,
   });
   MessageListModelChatRoomIds.fromJson(Map<String, dynamic> json) {
     Id = json['_id']?.toString();
-    user2 = (json['user2'] != null)
-        ? MessageListModelChatRoomIdsUser2.fromJson(json['user2'])
-        : null;
+    lastMessage = json['lastMessage']?.toString();
+    user2 = (json['user2'] != null) ? MessageListModelChatRoomIdsUser2.fromJson(json['user2']) : null;
     chatRoomId = json['chatRoomId']?.toString();
-    ridePostId = json['ridePostId']?.toString();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['_id'] = Id;
+    data['lastMessage'] = lastMessage;
     if (user2 != null) {
       data['user2'] = user2!.toJson();
     }
     data['chatRoomId'] = chatRoomId;
-    data['ridePostId'] = ridePostId;
     return data;
   }
 }
@@ -115,19 +109,19 @@ class MessageListModel {
 {
   "chatRoomIds": [
     {
-      "_id": "663b5c7dc10d2d6a33b4f283",
+      "_id": "6622780ab22f6106f26ecc60",
+      "lastMessage": "Hi",
       "user2": {
-        "_id": "660933dcc5ee2a8a9e8ead93",
-        "fullName": "Neha Customer 1",
+        "_id": "661f6b6d2e30e94be6c6cf29",
+        "fullName": "Amar",
         "profilePic": {
-          "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/2a6a2dc3-ed34-4611-a82a-5904317211ab-download.png"
+          "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/ac11d443-b43e-49b3-ab1f-1c2526940922-compressed_image_picker_89D3D04F-F400-48C4-9980-B1775E6C0205-95174-00002D1496CDBB31.jpg"
         }
       },
-      "chatRoomId": "-NxMsJTfmPpHRn-GFs0x",
-      "ridePostId": "6639c92158249d84ebc50780"
+      "chatRoomId": "-NvqdDOYI7ygN2zqiSXy"
     }
   ]
-} 
+}
 */
 
   List<MessageListModelChatRoomIds?>? chatRoomIds;

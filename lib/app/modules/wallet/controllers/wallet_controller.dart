@@ -1,23 +1,39 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:green_pool/app/services/dio/api_service.dart';
+
+import '../../../routes/app_pages.dart';
 
 class WalletController extends GetxController {
-  //TODO: Implement WalletController
+  final RxBool isLoad = true.obs;
+  final RxInt walletBalance = 0.obs;
 
-  final count = 0.obs;
   @override
-  void onInit() {
+  Future<void> onInit() async {
     super.onInit();
+    await getWallet();
+    isLoad.value = false;
   }
 
-  @override
-  void onReady() {
-    super.onReady();
+  getWallet() async {
+    try {
+      final res = await APIManager.walletBalance();
+      walletBalance.value = res.data['wallet']['balance'] ?? 0;
+      walletBalance.refresh();
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 
-  @override
-  void onClose() {
-    super.onClose();
+  history() {
+    Get.toNamed(Routes.TRANSACTION_HISTORY);
   }
 
-  void increment() => count.value++;
+  addMoney() {
+    Get.toNamed(Routes.WALLET_ADD_MONEY);
+  }
+
+  sendMoney() {
+    Get.toNamed(Routes.WALLET_TO_BANK_ACC);
+  }
 }

@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -28,10 +25,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -49,11 +43,23 @@ class DefaultFirebaseOptions {
     }
   }
 
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyDSZkJQiEkbXGtChLOZcx-GBxIm_BuP2q8',
+    appId: '1:523344243189:web:5382e4f1f98541307e58bc',
+    messagingSenderId: '523344243189',
+    projectId: 'greenpool-ccb5d',
+    authDomain: 'greenpool-ccb5d.firebaseapp.com',
+    databaseURL: 'https://greenpool-ccb5d-default-rtdb.firebaseio.com',
+    storageBucket: 'greenpool-ccb5d.appspot.com',
+    measurementId: 'G-87K390C98C',
+  );
+
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyAs_QL4LPuvaU23w-t0wOUJyUziRmSIlkE',
     appId: '1:523344243189:android:200401933623e0d17e58bc',
     messagingSenderId: '523344243189',
     projectId: 'greenpool-ccb5d',
+    databaseURL: 'https://greenpool-ccb5d-default-rtdb.firebaseio.com',
     storageBucket: 'greenpool-ccb5d.appspot.com',
   );
 
@@ -62,7 +68,22 @@ class DefaultFirebaseOptions {
     appId: '1:523344243189:ios:dd0e1ca94fb1a18e7e58bc',
     messagingSenderId: '523344243189',
     projectId: 'greenpool-ccb5d',
+    databaseURL: 'https://greenpool-ccb5d-default-rtdb.firebaseio.com',
     storageBucket: 'greenpool-ccb5d.appspot.com',
+    androidClientId: '523344243189-8164suqbkbnq4si7auoqqvntu2i2t515.apps.googleusercontent.com',
+    iosClientId: '523344243189-6fp5otgbsfl1erueb8qvp93sj833d217.apps.googleusercontent.com',
     iosBundleId: 'com.iu.greenPool',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyBq5jpn2f8NAb4pb562ejP2YCg47uX1_nU',
+    appId: '1:523344243189:ios:95ff417f25d4af037e58bc',
+    messagingSenderId: '523344243189',
+    projectId: 'greenpool-ccb5d',
+    databaseURL: 'https://greenpool-ccb5d-default-rtdb.firebaseio.com',
+    storageBucket: 'greenpool-ccb5d.appspot.com',
+    androidClientId: '523344243189-8164suqbkbnq4si7auoqqvntu2i2t515.apps.googleusercontent.com',
+    iosClientId: '523344243189-c8vop56jrgs2oj8vs659a7gsh3k791st.apps.googleusercontent.com',
+    iosBundleId: 'com.iu.greenPool.RunnerTests',
   );
 }

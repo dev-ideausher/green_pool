@@ -42,7 +42,7 @@ class VerifyController extends GetxController {
       }
     } catch (e) {
       isDriver = Get.arguments['isDriver'];
-      phoneNumber = Get.arguments['phoneNumber'];
+      phoneNumber = Get.arguments['phoneNumber']??"";
       fromNavBar = Get.arguments['fromNavBar'];
     }
   }
@@ -59,8 +59,7 @@ class VerifyController extends GetxController {
 
   verifyOTP() async {
     try {
-      bool isStatus = await Get.find<AuthService>()
-          .verifyMobileOtp(otp: otpController.text);
+      bool isStatus = await Get.find<AuthService>().verifyMobileOtp(otp: otpController.text);
       if (isStatus) {
         await loginAPI();
       } else {
@@ -76,12 +75,9 @@ class VerifyController extends GetxController {
       final response = await APIManager.getLogin();
       final userInfo = UserInfoModel.fromJson(response.data);
       Get.find<GetStorageService>().setUserAppId = userInfo.data?.Id;
-      Get.find<GetStorageService>().profilePicUrl =
-          userInfo.data?.profilePic?.url ?? "";
-      Get.find<GetStorageService>().isPinkMode =
-          userInfo.data?.pinkMode ?? false;
-      Get.find<HomeController>().isPinkModeOn.value =
-          userInfo.data?.pinkMode ?? false;
+      Get.find<GetStorageService>().profilePicUrl = userInfo.data?.profilePic?.url ?? "";
+      Get.find<GetStorageService>().isPinkMode = userInfo.data?.pinkMode ?? false;
+      Get.find<HomeController>().isPinkModeOn.value = userInfo.data?.pinkMode ?? false;
       //? here if the profileStatus is not true which means it is a new user or the user did not fill the entire user data, so the user will be automatically redirected to the Profile Setup
       if (fromNavBar) {
         Get.find<GetStorageService>().setLoggedIn = true;
@@ -89,44 +85,27 @@ class VerifyController extends GetxController {
         Get.find<GetStorageService>().setDriver = isDriver;
         Get.find<HomeController>().userInfoAPI();
         if (userInfo.data!.profileStatus!) {
-          // Get.find<ProfileController>().userInfo.refresh();
-          // Get.back();
-          // Get.find<ProfileController>().userInfo.refresh();
-          Get.until((route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
+          Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
+
           showMySnackbar(msg: 'Login Successful');
         } else {
-          Get.offNamed(Routes.VERIFICATION_DONE,
-              arguments: {'fromNavBar': fromNavBar, 'isDriver': false});
+          Get.offNamed(Routes.VERIFICATION_DONE, arguments: {'fromNavBar': fromNavBar, 'isDriver': false});
         }
       } else if (userInfo.status!) {
         if (Get.find<HomeController>().findingRide.value) {
           if (userInfo.data!.profileStatus!) {
-            // Get.offNamed(Routes.FIND_RIDE, arguments: isDriver);
             Get.back();
             showMySnackbar(msg: "Successfully logged in");
           } else {
-            Get.offNamed(Routes.VERIFICATION_DONE, arguments: {
-              'isDriver': isDriver,
-              'fromNavBar': false,
-              'findRideModel': findRideModel.value
-            });
-            // Get.offNamed(Routes.RIDER_PROFILE_SETUP, arguments: false);
+            Get.offNamed(Routes.VERIFICATION_DONE, arguments: {'isDriver': isDriver, 'fromNavBar': false, 'findRideModel': findRideModel.value});
           }
         } else {
           if (userInfo.data!.profileStatus! && userInfo.data!.vehicleStatus!) {
-            // Get.offNamed(Routes.CARPOOL_SCHEDULE, arguments: isDriver);
-            // Get.until((route) => Get.currentRoute == Routes.POST_RIDE);
             showMySnackbar(msg: "Successfully logged in");
-            Get.offNamed(Routes.POST_RIDE_STEP_TWO,
-                arguments: postRideModel.value);
+            Get.offNamed(Routes.POST_RIDE_STEP_TWO, arguments: postRideModel.value);
           } else {
             //TODO: what to show when it is a new user but tries to LOGIN directly
-            Get.offNamed(Routes.VERIFICATION_DONE, arguments: {
-              'isDriver': isDriver,
-              'fromNavBar': false,
-              'postRideModel': postRideModel.value
-            });
-            // Get.offNamed(Routes.PROFILE_SETUP, arguments: false);
+            Get.offNamed(Routes.VERIFICATION_DONE, arguments: {'isDriver': isDriver, 'fromNavBar': false, 'postRideModel': postRideModel.value});
           }
         }
         Get.find<GetStorageService>().setLoggedIn = true;
@@ -135,15 +114,9 @@ class VerifyController extends GetxController {
         Get.find<HomeController>().userInfoAPI();
       } else {
         if (isDriver) {
-          Get.offNamed(Routes.PROFILE_SETUP, arguments: {
-            'fromNavBar': false,
-            'postRideModel': postRideModel.value
-          });
+          Get.offNamed(Routes.PROFILE_SETUP, arguments: {'fromNavBar': false, 'postRideModel': postRideModel.value});
         } else {
-          Get.offNamed(Routes.RIDER_PROFILE_SETUP, arguments: {
-            'fromNavBar': false,
-            'findRideModel': findRideModel.value
-          });
+          Get.offNamed(Routes.RIDER_PROFILE_SETUP, arguments: {'fromNavBar': false, 'findRideModel': findRideModel.value});
         }
       }
     } catch (e) {

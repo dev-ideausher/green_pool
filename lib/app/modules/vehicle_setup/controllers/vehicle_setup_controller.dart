@@ -19,6 +19,7 @@ class VehicleSetupController extends GetxController {
   bool fromNavBar = false;
   Rx<File?> selectedVehicleImagePath = Rx<File?>(null);
   TextEditingController model = TextEditingController();
+
   // TextEditingController color = TextEditingController();
   // TextEditingController type = TextEditingController();
   RxBool isVehicleImagePicked = false.obs;
@@ -34,14 +35,14 @@ class VehicleSetupController extends GetxController {
   final Rx<PostRideModel> postRideModel = PostRideModel().obs;
 
   final count = 0.obs;
+
   @override
   void onInit() {
     super.onInit();
     try {
-      fromNavBar = Get.arguments['fromNavBar'];
-      postRideModel.value = Get.arguments['postRideModel'];
+      postRideModel.value = Get.arguments;
     } catch (e) {
-      fromNavBar = Get.arguments;
+      debugPrint(e.toString());
     }
   }
 
@@ -102,25 +103,24 @@ class VehicleSetupController extends GetxController {
       )
     });
 
-    if (Get.find<GetStorageService>().profileStatus == true) {
+/*    if (Get.find<GetStorageService>().profileStatus == true) {*/
       try {
         await APIManager.postVehicleDetails(body: vehicleData);
         showMySnackbar(msg: "Data filled successfully");
         Get.find<HomeController>().userInfoAPI();
         // Get.offNamed(Routes.CARPOOL_SCHEDULE, arguments: isDriver);
         if (fromNavBar) {
-          Get.until((route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
+          Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
         } else {
           // Get.until((route) => Get.currentRoute == Routes.POST_RIDE);
-          Get.offNamed(Routes.POST_RIDE_STEP_TWO,
-              arguments: postRideModel.value);
+          Get.offNamed(Routes.POST_RIDE_STEP_TWO, arguments: postRideModel.value);
         }
       } catch (e) {
         throw Exception(e);
       }
-    } else {
-      showMySnackbar(msg: 'Please fill in user details');
-    }
+    /*} else {
+      showMySnackbar(msg: 'Please fill in all the details');
+    }*/
   }
 
   String? validateModel(String? value) {

@@ -134,9 +134,10 @@ class VehicleDetailsController extends GetxController {
       final response = await APIManager.updateVehicleDetails(body: userData);
       showMySnackbar(msg: response.data['message']);
       // Refresh user info after update
+      Get.find<HomeController>().changeTabIndex(0);
       Get.find<HomeController>().userInfoAPI();
       // Navigate back to home screen
-      Get.until((route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
+      Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
     } catch (error) {
       throw Exception(error);
     }

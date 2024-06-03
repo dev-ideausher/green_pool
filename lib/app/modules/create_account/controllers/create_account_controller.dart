@@ -222,12 +222,9 @@ class CreateAccountController extends GetxController {
               'fromNavBar': false,
               'findRideModel': findRideModel.value
             });
-            // Get.offNamed(Routes.RIDER_PROFILE_SETUP, arguments: false);
           }
         } else {
           if (userInfo.data!.profileStatus! && userInfo.data!.vehicleStatus!) {
-            // Get.offNamed(Routes.CARPOOL_SCHEDULE, arguments: isDriver);
-            // Get.until((route) => Get.currentRoute == Routes.POST_RIDE);
             Get.offNamed(Routes.POST_RIDE_STEP_TWO,
                 arguments: postRideModel.value);
           } else {
@@ -237,7 +234,6 @@ class CreateAccountController extends GetxController {
               'fromNavBar': false,
               'postRideModel': postRideModel.value
             });
-            // Get.offNamed(Routes.PROFILE_SETUP, arguments: false);
           }
         }
         Get.find<GetStorageService>().setLoggedIn = true;

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>523344243189-c8vop56jrgs2oj8vs659a7gsh3k791st.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.523344243189-c8vop56jrgs2oj8vs659a7gsh3k791st</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>523344243189-8164suqbkbnq4si7auoqqvntu2i2t515.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBq5jpn2f8NAb4pb562ejP2YCg47uX1_nU</string>
+	<key>GCM_SENDER_ID</key>
+	<string>523344243189</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.iu.greenPool.RunnerTests</string>
+	<key>PROJECT_ID</key>
+	<string>greenpool-ccb5d</string>
+	<key>STORAGE_BUCKET</key>
+	<string>greenpool-ccb5d.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:523344243189:ios:95ff417f25d4af037e58bc</string>
+	<key>DATABASE_URL</key>
+	<string>https://greenpool-ccb5d-default-rtdb.firebaseio.com</string>
+</dict>
+</plist>

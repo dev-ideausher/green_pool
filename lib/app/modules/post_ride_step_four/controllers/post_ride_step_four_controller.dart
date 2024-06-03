@@ -36,9 +36,14 @@ class PostRideStepFourController extends GetxController {
   postRideAPI() async {
     try {
       final postRideDataJson = postRideModel.value.toJson();
-      await APIManager.postDriverPostRide(body: postRideDataJson);
-      showMySnackbar(msg: "Ride posted successfully");
-      await Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
+      final res = await APIManager.postDriverPostRide(body: postRideDataJson);
+
+      if (res.data['status']) {
+        showMySnackbar(msg: "Ride posted successfully");
+        await Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
+      } else {
+        showMySnackbar(msg: res.data['message']);
+      }
     } catch (e) {
       throw Exception(e);
     }

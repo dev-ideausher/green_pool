@@ -179,6 +179,7 @@ class StudentDiscountsView extends GetView<StudentDiscountsController> {
                   ).paddingOnly(bottom: 8.kh),
                   GreenPoolTextField(
                     hintText: 'Enter student Email ID',
+                    keyboardType:  TextInputType.emailAddress,
                     controller: controller.emailTextController,
                     onchanged: (p0) {
                       controller.toggleButton();

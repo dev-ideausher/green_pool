@@ -1257,6 +1257,7 @@ class MatchingRidesModelData {
 
   String? Id;
   String? driverId;
+  int? price;
   MatchingRidesModelDataOrigin? origin;
   MatchingRidesModelDataDestination? destination;
   List<MatchingRidesModelDataStops?>? stops;
@@ -1284,6 +1285,7 @@ class MatchingRidesModelData {
   MatchingRidesModelData({
     this.Id,
     this.driverId,
+    this.price,
     this.origin,
     this.destination,
     this.stops,
@@ -1311,6 +1313,12 @@ class MatchingRidesModelData {
   MatchingRidesModelData.fromJson(Map<String, dynamic> json) {
     Id = json['_id']?.toString();
     driverId = json['driverId']?.toString();
+    try {
+      price = json['price']?.toInt();
+    } catch (e) {
+      price = int.parse(json['price']);
+      print(e);
+    }
     origin = (json['origin'] != null)
         ? MatchingRidesModelDataOrigin.fromJson(json['origin'])
         : null;
@@ -1376,6 +1384,7 @@ class MatchingRidesModelData {
     final data = <String, dynamic>{};
     data['_id'] = Id;
     data['driverId'] = driverId;
+    data['price'] = price;
     if (origin != null) {
       data['origin'] = origin!.toJson();
     }

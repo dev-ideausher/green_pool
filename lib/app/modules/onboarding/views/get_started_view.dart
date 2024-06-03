@@ -19,8 +19,8 @@ class GetStartedView extends GetView {
         Center(
           child: SvgPicture.asset(
             ImageConstant.svgGetStarted,
-            height: 348.kh,
-            width: 348.kw,
+            height: 288.kh,
+            width: 288.kw,
           ),
         ).paddingOnly(bottom: 3.kh),
         Text(

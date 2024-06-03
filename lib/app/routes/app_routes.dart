@@ -87,6 +87,8 @@ abstract class Routes {
   static const MAP_RIDER_CONFIRM_REQUEST = _Paths.MAP_RIDER_CONFIRM_REQUEST;
   static const MAP_RIDER_SEND_REQUEST = _Paths.MAP_RIDER_SEND_REQUEST;
   static const VEHICLE_SETUP = _Paths.VEHICLE_SETUP;
+  static const WEB_ADD_PAY = _Paths.WEB_ADD_PAY;
+  static const ADD_GIFT = _Paths.ADD_GIFT;
 }
 
 abstract class _Paths {
@@ -172,4 +174,6 @@ abstract class _Paths {
   static const MAP_RIDER_CONFIRM_REQUEST = '/map-rider-confirm-request';
   static const MAP_RIDER_SEND_REQUEST = '/map-rider-send-request';
   static const VEHICLE_SETUP = '/vehicle-setup';
+  static const WEB_ADD_PAY = '/web-add-pay';
+  static const ADD_GIFT = '/add-gift';
 }

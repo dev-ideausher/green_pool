@@ -27,14 +27,4 @@ class MessagesController extends GetxController {
       debugPrint(e.toString());
     }
   }
-
-  // @override
-  // void onReady() {
-  //   super.onReady();
-  // }
-
-  // @override
-  // void onClose() {
-  //   super.onClose();
-  // }
 }

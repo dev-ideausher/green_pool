@@ -18,11 +18,12 @@ import '../../../services/storage.dart';
 class FindRideController extends GetxController {
   bool isDriver = false;
   TextEditingController seatAvailable = TextEditingController();
-  int numberOfSeatAvailable = 0;
+  int numberOfSeatAvailable = 1;
   RxBool isActive = false.obs;
 
   TextEditingController date = TextEditingController();
   TextEditingController departureDate = TextEditingController();
+
   // TextEditingController time = TextEditingController();
   TextEditingController selectedTime = TextEditingController();
   TextEditingController descriptionTextController = TextEditingController();
@@ -31,14 +32,18 @@ class FindRideController extends GetxController {
   TextEditingController riderOriginTextController = TextEditingController();
   double riderDestinationLat = 0.0;
   double riderDestinationLong = 0.0;
-  TextEditingController riderDestinationTextController =
-      TextEditingController();
+  TextEditingController riderDestinationTextController = TextEditingController();
+
   // GlobalKey<FormState> validationKey = GlobalKey<FormState>();
   final Rx<MatchingRidesModel> matchingRidesModel = MatchingRidesModel().obs;
 
   @override
   void onInit() {
     super.onInit();
+    seatAvailable.text=numberOfSeatAvailable.toString();
+    final pickedDate = DateTime.now();
+    date.text = pickedDate.toIso8601String();
+    departureDate.text = "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
     isDriver = Get.arguments;
   }
 
@@ -54,8 +59,7 @@ class FindRideController extends GetxController {
 
   decideRouting() async {
     if (Get.find<GetStorageService>().getLoggedIn) {
-      if (Get.find<HomeController>().userInfo.value.data?.profileStatus ==
-          true) {
+      if (Get.find<HomeController>().userInfo.value.data?.profileStatus == true) {
         await getMatchingRidesAPI();
       } else {
         Get.toNamed(Routes.RIDER_PROFILE_SETUP, arguments: false);
@@ -112,14 +116,10 @@ class FindRideController extends GetxController {
 
     try {
       final findRideDataJson = findRideData.toJson();
-      final response =
-          await APIManager.postMatchngRides(body: findRideDataJson);
+      final response = await APIManager.postMatchngRides(body: findRideDataJson);
       var data = jsonDecode(response.toString());
       matchingRidesModel.value = MatchingRidesModel.fromJson(data);
-      Get.toNamed(Routes.MATCHING_RIDES, arguments: {
-        'findRideData': findRideDataJson,
-        'matchingRidesModel': matchingRidesModel.value
-      });
+      Get.toNamed(Routes.MATCHING_RIDES, arguments: {'findRideData': findRideDataJson, 'matchingRidesModel': matchingRidesModel.value});
     } catch (error) {
       throw Exception(error);
     }
@@ -147,8 +147,7 @@ class FindRideController extends GetxController {
     );
     try {
       final findRideDataJson = findRideData.toJson();
-      final response =
-          await APIManager.postRiderFindRide(body: findRideDataJson);
+      final response = await APIManager.postRiderFindRide(body: findRideDataJson);
       var data = jsonDecode(response.toString());
       rideresponse.value = FindRideResponseModel.fromJson(data);
       final String riderRideId = "${rideresponse.value.data![0]?.Id}";
@@ -174,22 +173,16 @@ class FindRideController extends GetxController {
             // Define the custom theme for the date picker
             data: ThemeData(
               // Define the primary color
-              primaryColor: Get.find<HomeController>().isPinkModeOn.value
-                  ? ColorUtil.kPrimaryPinkMode
-                  : ColorUtil.kPrimary01,
+              primaryColor: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimaryPinkMode : ColorUtil.kPrimary01,
               // Define the color scheme for the date picker
               colorScheme: ColorScheme.light(
                 // Define the primary color for the date picker
-                primary: Get.find<HomeController>().isPinkModeOn.value
-                    ? ColorUtil.kPrimaryPinkMode
-                    : ColorUtil.kPrimary01,
+                primary: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimaryPinkMode : ColorUtil.kPrimary01,
                 // Define the background color for the date picker
                 surface: Colors.white,
                 // Define the on-primary color for the date picker
                 onPrimary: Colors.white,
-                secondary: Get.find<HomeController>().isPinkModeOn.value
-                    ? ColorUtil.kPrimaryPinkMode
-                    : ColorUtil.kPrimary01,
+                secondary: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimaryPinkMode : ColorUtil.kPrimary01,
               ),
             ),
             // Apply the custom theme to the child widget
@@ -203,8 +196,7 @@ class FindRideController extends GetxController {
     if (pickedDate != null) {
       String isoFormattedDate = pickedDate.toIso8601String();
       date.text = isoFormattedDate;
-      departureDate.text =
-          "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
+      departureDate.text = "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
     }
   }
 
@@ -243,22 +235,16 @@ class FindRideController extends GetxController {
           // Define the custom theme for the date picker
           data: ThemeData(
             // Define the primary color
-            primaryColor: Get.find<HomeController>().isPinkModeOn.value
-                ? ColorUtil.kPrimaryPinkMode
-                : ColorUtil.kPrimary01,
+            primaryColor: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimaryPinkMode : ColorUtil.kPrimary01,
             // Define the color scheme for the date picker
             colorScheme: ColorScheme.light(
               // Define the primary color for the date picker
-              primary: Get.find<HomeController>().isPinkModeOn.value
-                  ? ColorUtil.kPrimaryPinkMode
-                  : ColorUtil.kPrimary01,
+              primary: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimaryPinkMode : ColorUtil.kPrimary01,
               // Define the background color for the date picker
               surface: Colors.white,
               // Define the on-primary color for the date picker
               onPrimary: Colors.white,
-              secondary: Get.find<HomeController>().isPinkModeOn.value
-                  ? ColorUtil.kPrimaryPinkMode
-                  : ColorUtil.kPrimary01,
+              secondary: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimaryPinkMode : ColorUtil.kPrimary01,
             ),
           ),
           // Apply the custom theme to the child widget
@@ -274,9 +260,7 @@ class FindRideController extends GetxController {
   }
 
   setActiveState() {
-    if (riderOriginTextController.value.text.isNotEmpty &&
-        riderDestinationTextController.value.text.isNotEmpty &&
-        seatAvailable.value.text.isNotEmpty) {
+    if (riderOriginTextController.value.text.isNotEmpty && riderDestinationTextController.value.text.isNotEmpty ) {
       isActive.value = true;
     } else {
       isActive.value = false;

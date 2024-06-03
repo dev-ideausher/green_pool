@@ -355,7 +355,7 @@ class MyRidesModelDataPostsInfoRiderPostsDetails {
   int? seatAvailable;
   String? createdAt;
   String? updatedAt;
-  List<MyRidesModelDataPostsInfoRiderPostsDetailsRidersDetails?>? ridersDetails;
+  List<MyRidesModelDataPostsInfoRiderPostsDetailsRidersDetails>? ridersDetails;
 
   MyRidesModelDataPostsInfoRiderPostsDetails({
     this.Id,
@@ -2305,6 +2305,7 @@ class MyRidesModelDataConfirmDriverDetails {
   String? Id;
   String? driverRideId;
   String? riderRideId;
+  int ? price;
   String? distance;
   bool? cancelByDriver;
   bool? cancelByRider;
@@ -2323,6 +2324,7 @@ class MyRidesModelDataConfirmDriverDetails {
     this.Id,
     this.driverRideId,
     this.riderRideId,
+    this.price,
     this.distance,
     this.cancelByDriver,
     this.cancelByRider,
@@ -2340,6 +2342,7 @@ class MyRidesModelDataConfirmDriverDetails {
     Id = json['_id']?.toString();
     driverRideId = json['driverRideId']?.toString();
     riderRideId = json['riderRideId']?.toString();
+    price=   json['price']?.toInt();
     distance = json['distance']?.toString();
     cancelByDriver = json['cancelByDriver'];
     cancelByRider = json['cancelByRider'];
@@ -3251,7 +3254,7 @@ class MyRidesModelData {
   String? updatedAt;
   List<MyRidesModelDataVehicleDetails?>? vehicleDetails;
   List<MyRidesModelDataConfirmDriverDetails?>? confirmDriverDetails;
-  List<MyRidesModelDataPostsInfo?>? postsInfo;
+  List<MyRidesModelDataPostsInfo>? postsInfo;
   String? rideStatus;
 
   MyRidesModelData({

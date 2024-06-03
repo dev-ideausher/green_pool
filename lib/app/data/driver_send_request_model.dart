@@ -1100,7 +1100,7 @@ class DriverSendRequestModel {
 
   bool? status;
   String? message;
-  List<DriverSendRequestModelData?>? data;
+  List<DriverSendRequestModelData>? data;
 
   DriverSendRequestModel({
     this.status,

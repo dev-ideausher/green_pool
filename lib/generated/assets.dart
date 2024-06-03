@@ -36,6 +36,7 @@ class Assets {
   static const String homeFindRide = 'assets/images/home/FindRide.svg';
   static const String homeNeedRide = 'assets/images/home/need_ride.svg';
   static const String homeNoRides = 'assets/images/home/no_rides.svg';
+  static const String homeNoRidesPink = 'assets/images/home/no_rides_pink.svg';
   static const String homePinkFindRide = 'assets/images/home/pink_FindRide.svg';
   static const String homePinkPostRide = 'assets/images/home/pink_PostRide.svg';
   static const String homePinkRiderDriving = 'assets/images/home/pink_RiderDriving.svg';
@@ -69,6 +70,7 @@ class Assets {
   static const String iconsIconsTime = 'assets/images/icons/icons_time.svg';
   static const String iconsIconsUpload = 'assets/images/icons/icons_upload.svg';
   static const String iconsIconsUploadPhoto = 'assets/images/icons/icons_upload_photo.svg';
+  static const String iconsLogo = 'assets/images/icons/logo.png';
   static const String iconsProfilePic = 'assets/images/icons/profile_pic.svg';
   static const String iconsProfilepic = 'assets/images/icons/profilepic.png';
   static const String imagesOnboardingOnboard2 = 'assets/images/onboarding/onboard2.svg';
@@ -90,6 +92,7 @@ class Assets {
   static const String profileAbout = 'assets/images/profile/about.svg';
   static const String profileBug = 'assets/images/profile/bug.svg';
   static const String profileCall = 'assets/images/profile/call.svg';
+  static const String profileChatbox = 'assets/images/profile/chatbox.svg';
   static const String profileEditPen = 'assets/images/profile/edit_pen.svg';
   static const String profileFile = 'assets/images/profile/file.svg';
   static const String profileFollow = 'assets/images/profile/follow.svg';
@@ -113,5 +116,12 @@ class Assets {
   static const String setupprofileUploadId = 'assets/images/setupprofile/upload_id.svg';
   static const String setupprofileUploadVehicle = 'assets/images/setupprofile/upload_vehicle.svg';
   static const String splashSplashLogo = 'assets/images/splash/splash_logo.svg';
+  static const String svgChat = 'assets/svg/chat.svg';
+  static const String svgChatbox = 'assets/svg/chatbox.svg';
+  static const String svgPinkModegirl = 'assets/svg/pink_modegirl.svg';
+  static const String walletAddCard = 'assets/images/wallet/add_card.svg';
+  static const String walletAddMoney = 'assets/images/wallet/add_money.svg';
+  static const String walletSendMoney1 = 'assets/images/wallet/send_money_1.svg';
+  static const String walletTransactionHistory = 'assets/images/wallet/transaction_history.svg';
 
 }

@@ -10,7 +10,6 @@ import '../../../routes/app_pages.dart';
 
 class PostRideStepThreeController extends GetxController {
   final Rx<PostRideModel> postRideModel = PostRideModel().obs;
-
   TextEditingController totalPrice = TextEditingController();
   TextEditingController originToStop1Price = TextEditingController();
   TextEditingController OriginToStop2Price = TextEditingController();
@@ -18,82 +17,79 @@ class PostRideStepThreeController extends GetxController {
   TextEditingController Stop1ToDestinationPrice = TextEditingController();
   TextEditingController Stop2toDestinationPrice = TextEditingController();
   TextEditingController descriptionTextController = TextEditingController();
-  var rideFareModel = RideFareModel().obs;
 
-  RxBool isActivePricingButton = false.obs;
+  RxBool isActivePricingButton = true.obs;
   RxBool viewPrice = false.obs;
-  RxBool isLoading = false.obs;
-
-  final String distance = "100";
-  // final String totalDistance = GpUtil.calculateDistance(startLat: postRideModel.value.ridesDetails?.origin?.latitude, startLong: startLong, endLat: endLat, endLong: endLong).toStringAsFixed(2);
-  final String originToStop1Distance = "100";
-  final String OriginToStop2Distance = "100";
-  final String Stop1ToStop2Distance = "100";
-  final String Stop1ToDestinationDistance = "100";
-  final String Stop2toDestinationDistance = "100";
-
-  double? maxFarePrice;
-  double? minFarePrice;
-
-  double? originToStop1;
-  double? OriginToStop2;
-  double? Stop1ToStop2;
-  double? Stop1ToDestination;
-  double? Stop2toDestination;
+  RxBool isLoading = true.obs;
+  double maxFarePrice = 0.0;
+  double minFarePrice = 0.0;
 
   @override
-  void onInit() {
+  void onClose() {
+    super.onClose();
+    totalPrice.dispose();
+    originToStop1Price.dispose();
+    OriginToStop2Price.dispose();
+    Stop1ToStop2Price.dispose();
+    Stop1ToDestinationPrice.dispose();
+    Stop2toDestinationPrice.dispose();
+    descriptionTextController.dispose();
+  }
+
+  num totalDistance = 0;
+
+  @override
+  Future<void> onInit() async {
     super.onInit();
     postRideModel.value = Get.arguments;
-    getRideFareAPI();
+    await getRideFareAPI();
+    isLoading.value = false;
   }
 
   getRideFareAPI() async {
     try {
-      isLoading.value = true;
-      final response = await APIManager.getRideFare(
-          distance: GpUtil.calculateDistance(
-                  startLat:
-                      postRideModel.value.ridesDetails?.origin?.latitude ?? 0.0,
-                  startLong:
-                      postRideModel.value.ridesDetails?.origin?.longitude ??
-                          0.0,
-                  endLat:
-                      postRideModel.value.ridesDetails?.destination?.latitude ??
-                          0.0,
-                  endLong: postRideModel
-                          .value.ridesDetails?.destination?.longitude ??
-                      0.0)
-              .toStringAsFixed(2));
-      rideFareModel.value = RideFareModel.fromJson(response.data);
-      maxFarePrice = rideFareModel.value.data!.maxPrice!;
-      minFarePrice = rideFareModel.value.data!.minPrice!;
-      isLoading.value = false;
+      totalDistance = await GpUtil.calculateDistanceInInt(
+          startLat: postRideModel.value.ridesDetails?.origin?.latitude ?? 0.0,
+          startLong: postRideModel.value.ridesDetails?.origin?.longitude ?? 0.0,
+          endLat: postRideModel.value.ridesDetails?.destination?.latitude ?? 0.0,
+          endLong: postRideModel.value.ridesDetails?.destination?.longitude ?? 0.0);
+
+      final response = await APIManager.getRideFare(distance: totalDistance.round());
+      final rideFareModel = RideFareModel.fromJson(response.data);
+      maxFarePrice = rideFareModel.data!.maxPrice!;
+      minFarePrice = rideFareModel.data!.minPrice!;
+
       //?set values of prices and pink mode
-      postRideModel.value.ridesDetails?.pinkMode =
-          Get.find<GetStorageService>().isPinkMode;
-      /*postRideModel.value.ridesDetails?.stops?[0]?.originToStopFair =
-        originToStop1Price.value.text;
-    postRideModel.value.ridesDetails?.stops?[0]?.stopTodestinationFair =
-        int.parse(Stop1ToDestinationPrice.value.text ?? "0");
-    postRideModel.value.ridesDetails?.stops?[0]?.stopToStopFair =
-        Stop1ToStop2Price.value.text;
-    postRideModel.value.ridesDetails?.stops?[1]?.originToStopFair =
-        OriginToStop2Price.value.text;
-    postRideModel.value.ridesDetails?.stops?[1]?.stopTodestinationFair =
-        int.parse(Stop2toDestinationPrice.value.text ?? '0');*/
+      postRideModel.value.ridesDetails?.pinkMode = Get.find<GetStorageService>().isPinkMode;
+      totalPrice.text = minFarePrice.round().toString();
+
+      if (postRideModel.value.ridesDetails?.stops?.first.name?.isNotEmpty ?? false) {
+        await createPrice();
+        (totalPrice.text.isNotEmpty) ? isActivePricingButton.value = true : isActivePricingButton.value = false;
+      } else {
+        isActivePricingButton.value = true;
+      }
     } catch (e) {
       debugPrint("get fare api error: $e");
     }
   }
 
-  setActiveStatePricing() {
+  setActiveStatePricing() async {
     String? validationResult = fareValidator(totalPrice.value.text);
 
     if (validationResult != null) {
       isActivePricingButton.value = false;
     } else {
-      isActivePricingButton.value = true;
+      if (postRideModel.value.ridesDetails?.stops?.isNotEmpty ?? false) {
+        if (postRideModel.value.ridesDetails?.stops?.first.name?.isNotEmpty ?? false) {
+          await createPrice();
+          (totalPrice.text.isNotEmpty) ? isActivePricingButton.value = true : isActivePricingButton.value = false;
+        } else {
+          isActivePricingButton.value = true;
+        }
+      } else {
+        isActivePricingButton.value = true;
+      }
     }
   }
 
@@ -119,10 +115,77 @@ class PostRideStepThreeController extends GetxController {
       return 'Enter a pricing';
     }
 
-    return null; // Return null if the value is valid
+    return null;
   }
 
   moveToGuidelines() {
+    postRideModel.value.ridesDetails?.origin?.originDestinationFair = totalPrice.text;
+    if (postRideModel.value.ridesDetails?.stops?.isNotEmpty ?? false) {
+      postRideModel.value.ridesDetails?.stops?.first.originToStopFair = originToStop1Price.text;
+      postRideModel.value.ridesDetails?.stops?.first.stopTodestinationFair = Stop1ToDestinationPrice.text;
+      postRideModel.value.ridesDetails?.stops?.first.stopToStopFair = Stop1ToStop2Price.text;
+      if (postRideModel.value.ridesDetails?.stops?.length == 2) {
+        postRideModel.value.ridesDetails?.stops?[1].originToStopFair = OriginToStop2Price.text;
+        postRideModel.value.ridesDetails?.stops?[1].stopTodestinationFair = Stop2toDestinationPrice.text;
+        postRideModel.value.ridesDetails?.stops?[1].stopToStopFair = Stop1ToStop2Price.text;
+      }
+    }
+
     Get.toNamed(Routes.POST_RIDE_STEP_FOUR, arguments: postRideModel.value);
+  }
+
+  Future<void> createPrice() async {
+    try {
+      isActivePricingButton.value = false;
+      final ratePerKm = calculateRatePerKm(totalDistance: totalDistance, totalPrice: int.parse(totalPrice.text));
+      if (postRideModel.value.ridesDetails?.stops?.first.name?.isNotEmpty ?? false) {
+        final originToStop1Distance = await GpUtil.calculateDistanceInInt(
+            startLat: postRideModel.value.ridesDetails?.origin?.latitude ?? 0.0,
+            startLong: postRideModel.value.ridesDetails?.origin?.longitude ?? 0.0,
+            endLat: postRideModel.value.ridesDetails?.stops?.first.latitude ?? 0.0,
+            endLong: postRideModel.value.ridesDetails?.stops?.first.longitude ?? 0.0);
+        originToStop1Price.text = (originToStop1Distance * ratePerKm).round().toString();
+        final stop1toDestinationDistance = await GpUtil.calculateDistanceInInt(
+            startLat: postRideModel.value.ridesDetails?.stops?.first.latitude ?? 0.0,
+            startLong: postRideModel.value.ridesDetails?.stops?.first.longitude ?? 0.0,
+            endLat: postRideModel.value.ridesDetails?.destination?.latitude ?? 0.0,
+            endLong: postRideModel.value.ridesDetails?.destination?.longitude ?? 0.0);
+        Stop1ToDestinationPrice.text = (stop1toDestinationDistance * ratePerKm).round().toString();
+
+        if (postRideModel.value.ridesDetails?.stops?[1].name?.isNotEmpty ?? false) {
+          final originToStop2Distance = await GpUtil.calculateDistanceInInt(
+              startLat: postRideModel.value.ridesDetails?.origin?.latitude ?? 0.0,
+              startLong: postRideModel.value.ridesDetails?.origin?.longitude ?? 0.0,
+              endLat: postRideModel.value.ridesDetails?.stops?[1].latitude ?? 0.0,
+              endLong: postRideModel.value.ridesDetails?.stops?[1].longitude ?? 0.0);
+          final stop1toStop2Distance = await GpUtil.calculateDistanceInInt(
+              startLat: postRideModel.value.ridesDetails?.origin?.latitude ?? 0.0,
+              startLong: postRideModel.value.ridesDetails?.origin?.longitude ?? 0.0,
+              endLat: postRideModel.value.ridesDetails?.stops?[1].latitude ?? 0.0,
+              endLong: postRideModel.value.ridesDetails?.stops?[1].longitude ?? 0.0);
+
+          final stop2toDestinationDistance = await GpUtil.calculateDistanceInInt(
+              startLat: postRideModel.value.ridesDetails?.stops?[1].latitude ?? 0.0,
+              startLong: postRideModel.value.ridesDetails?.stops?[1].longitude ?? 0.0,
+              endLat: postRideModel.value.ridesDetails?.destination?.latitude ?? 0.0,
+              endLong: postRideModel.value.ridesDetails?.destination?.longitude ?? 0.0);
+
+          OriginToStop2Price.text = (originToStop2Distance * ratePerKm).round().toString();
+          Stop1ToStop2Price.text = (stop1toStop2Distance * ratePerKm).round().toString();
+          Stop2toDestinationPrice.text = (stop2toDestinationDistance * ratePerKm).round().toString();
+        }
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+
+    setActiveStatePricing();
+  }
+
+  double calculateRatePerKm({required num totalDistance, required num totalPrice}) {
+    if (totalDistance <= 0) {
+      return 1;
+    }
+    return (totalPrice / totalDistance);
   }
 }

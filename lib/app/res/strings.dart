@@ -5,13 +5,11 @@ class Strings {
 
   static var yourRideIsArrived = "Your ride has arrived!";
 
-  static String youAreAboutToReachYourDestination =
-      "You are about to reach your destination.";
+  static String youAreAboutToReachYourDestination = "You are about to reach your destination.";
 
   static String sos = "SOS";
 
-  static String youWillReachYourDestinationIn =
-      "You'll reach your destination in ";
+  static String youWillReachYourDestinationIn = "You'll reach your destination in ";
 
   static var viewMatchingRiders = "View Matching Riders";
 
@@ -39,8 +37,7 @@ class Strings {
 
   static String termsAndConditions = "Terms and Condition";
 
-  static String agreeToTermsAndConditions =
-      "Before you proceed you must read and agree to\nGreen Pool's Terms and Conditions.";
+  static String agreeToTermsAndConditions = "Before you proceed you must read and agree to\nGreen Pool's Terms and Conditions.";
 
   static String driverDetails = 'Driver Details';
 
@@ -52,8 +49,7 @@ class Strings {
 
   static String coPassengers = 'Co-Passengers';
 
-  static String noPassengersAvailable =
-      "No co-passengers are available at the moment";
+  static String noPassengersAvailable = "No co-passengers are available at the moment";
 
   static String vehicleDetails = 'Vehicle Details';
 
@@ -97,13 +93,11 @@ class Strings {
 
   static String findRide = 'Find a Ride';
 
-  static String origin = 'Origin';
+  static String pickup = 'Pickup';
 
-  static String enterOrigin = 'Enter origin address';
+  static String enterOrigin = 'Enter pickup address';
 
-  static String destination = 'Destination';
-
-  static String enterDestination = 'Enter a destination';
+  static String destination = 'Dropoff';
 
   static String departureDateAndTime = 'Departure Date & Time ';
 
@@ -167,7 +161,7 @@ class Strings {
 
   static String rideDetails = 'Ride Details';
 
-  static String originToDestination = "Origin to Destination";
+  static String pickupToDrop = "Pickup to Drop";
 
   static String youHavePostedNoRides = "You have posted no rides";
 
@@ -179,13 +173,11 @@ class Strings {
 
   static String recurringTrips = 'Recurring Trips';
 
-  static String notPostedRecurringRides =
-      "You have not posted any recurring rides";
+  static String notPostedRecurringRides = "You have not posted any recurring rides";
 
   static String riderDetails = "Rider Details";
 
-  static String noRidesBetweenCities =
-      "There are no rides between these two cities";
+  static String noRidesBetweenCities = "There are no rides between these two cities";
 
   static String pleaseTryAgain = "Please try again after few days.";
 
@@ -220,24 +212,21 @@ class Strings {
 
   static String getStarted1 = "Save money ,\nShare rides &\nSocialize";
 
-  static String getStarted2 =
-      "Let's make environment greener and\ncommuting smarter together!";
+  static String getStarted2 = "Let's make environment greener and\ncommuting smarter together!";
 
   static String onboard1text1 = 'Find carpool effortlessly\nwith Greenpool';
 
   static String onboard1text2 =
       "Discover the convenience of sharing rides\nwith Greenpool. Whether you're a driver\nlooking to share your journey or a rider in\nneed of a ride, we've got you covered.";
 
-  static String onboard2text1 =
-      'Introducing Pinkpool exclusively for female users.';
+  static String onboard2text1 = 'Introducing Pinkpool exclusively for female users.';
 
   static String onboard2text2 =
       'Greenpool ensures safety for female\ncommuters with female drivers and SOS\nfeature, empowering journeys with\nconfidence and security.';
 
   static String onboard3text1 = 'Seamless ride sharing platform.';
 
-  static String onboard3text2 =
-      'Discover seamless Carpooling trip searches\nand rides with our unique features.\nExplore now.';
+  static String onboard3text2 = 'Discover seamless Carpooling trip searches\nand rides with our unique features.\nExplore now.';
 
   static String skip = 'Skip';
 
@@ -256,4 +245,76 @@ class Strings {
   static String driverCancellationPolicy = 'Driver Cancellation Policy';
 
   static String privacyPolicy = 'Privacy Policy';
+
+  static String vehicleSetup = 'Vehicle Setup';
+
+  static var areYouSureYouWantToDeleteThisChat = 'Are you sure you want to delete this chat?';
+
+  static var deleteChat = "Delete Chat";
+
+  static String cancel = "Cancel";
+
+  static String delete = "Delete";
+
+  static String addStops = "Add Stops";
+
+  static String wallet = "Wallet";
+
+  static String giftCard = "Gift card";
+
+  static var transactionHistory = "Transaction History";
+  static var sendMoneyToBankAccount = "Send Money to Bank Account";
+  static var addMoneyToWallet = "Add money to wallet";
+
+  static String greenpoolCash = "Greenpool Cash";
+
+  static var deleteAccount = "Delete Account";
+
+  static String riders = "Riders";
+
+  static var deleteRide = "Delete Ride";
+
+  static String areYouSureYouWantToDeleteThisRide = "Are you sure you want to delete this ride?";
+
+  static String chatWithOurExperts = "Chat with our experts";
+
+  static String addGiftCard = "Add Gift Card";
+
+  static var enterGiftCode = "Enter gift code";
+
+  static String call = "Call";
+
+  static String rideRequest = 'Ride request';
+
+  static String na = "NA";
+
+  static String postARide = "Post a ride";
+
+  static var riderDroppedOffSuccessfully = "Rider Dropped Off Successfully ";
+
+  static String rideHistory = "Ride History'";
+
+  static var requestRider = "Request  Rider";
+
+  static String driverRequest = "Driver Request";
+
+  static String sendingSOS = "Sending SOS";
+
+  static String sosMessage = "Share message and location with emergency contacts";
+
+  static var enterAdestination = "Enter a drop-off location";
+
+  static var enterDestinationAddress = "Enter drop-off address";
+
+  static String pleaseLoginOrSignUp="Please Login or SignUp";
+
+  static String allRides="All Rides";
+
+  static String ridesBooked="Rides Booked";
+
+  static String ridesPublished="Rides Published";
+
+  static var booked ="Booked";
+
+  static var published  ="Published";
 }

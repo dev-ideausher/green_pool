@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+
 //test
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
@@ -17,6 +18,7 @@ import 'package:green_pool/app/services/snackbar.dart';
 
 import '../../../data/booking_detail_model.dart';
 import '../../../data/chat_arg.dart';
+import '../../../res/strings.dart';
 import '../../../services/gp_util.dart';
 import '../../home/controllers/home_controller.dart';
 
@@ -28,8 +30,11 @@ class StartRideController extends GetxController {
   final RxList<LatLng> polylineCoordinates = <LatLng>[].obs;
   final Rx<BookingDetailModelData> myRidesModel = BookingDetailModelData().obs;
   RxBool isLoad = true.obs;
-  RxBool isRideStarted = false.obs;
   var startRideResponse = StartRideModel().obs;
+  final RxBool isPicked = false.obs;
+  final RxInt selectedRider = 0.obs;
+  final RxString btnText = "".obs;
+  final RxBool isEndRide = false.obs;
 
   @override
   Future<void> onInit() async {
@@ -40,6 +45,7 @@ class StartRideController extends GetxController {
     //  myRidesModel.value.riderBookingDetails?.origin?.coordinates = [74.9454334456202, 30.211063461596073];
     //  myRidesModel.value.riderBookingDetails?.destination?.coordinates = [74.91410641185684, 30.321220704270132];
     await getPolyPoints();
+    getButtonLabel();
     //myRidesModel.value.isStarted! ? null :
     isLoad.value = false;
   }
@@ -49,6 +55,7 @@ class StartRideController extends GetxController {
       final response = await APIManager.getMyRidesDetails(rideId: rideId);
       var data = jsonDecode(response.toString());
       myRidesModel.value = BookingDetailModel.fromJson(data).data!;
+      print(myRidesModel.value);
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -60,23 +67,15 @@ class StartRideController extends GetxController {
       CameraPosition(
           bearing: 270.0,
           target: LatLng(
-              myRidesModel
-                      .value
-                      .driverBookingDetails
-                      ?.riders?[0]
-                      ?.riderBookingDetails?[0]
-                      ?.origin
-                      ?.coordinates
-                      ?.last ?? //source
-                  0.0,
-              myRidesModel.value.driverBookingDetails?.riders?[0]
-                      ?.riderBookingDetails?[0]?.origin?.coordinates?.first ??
-                  0.0),
+              getLat() //source
+              ,
+              getLong()),
           tilt: 30.0,
           zoom: 17.0),
     ));
-    mapController.animateCamera(CameraUpdate.newLatLngBounds(
-        boundsFromLatLngList(polylineCoordinates), 70));
+    if (polylineCoordinates.isNotEmpty) {
+      mapController.animateCamera(CameraUpdate.newLatLngBounds(boundsFromLatLngList(polylineCoordinates), 70));
+    }
 
     polylineCoordinates.refresh();
     onChangeLocation();
@@ -84,41 +83,20 @@ class StartRideController extends GetxController {
 
   Future<void> getPolyPoints() async {
     try {
-      final List<double?> originCoordinates = myRidesModel
-              .value
-              .driverBookingDetails
-              ?.riders?[0]
-              ?.riderBookingDetails?[0]
-              ?.origin
-              ?.coordinates ??
-          [0.0, 0.0];
-      final List<double?> destinationCoordinates = myRidesModel
-              .value
-              .driverBookingDetails
-              ?.riders?[0]
-              ?.riderBookingDetails?[0]
-              ?.destination
-              ?.coordinates ??
-          [0.0, 0.0];
-      PolylineResult result = await PolylinePoints().getRouteBetweenCoordinates(
-          Endpoints.googleApiKey,
-          PointLatLng(originCoordinates.last!, originCoordinates.first!),
-          PointLatLng(
-              destinationCoordinates.last!, destinationCoordinates.first!));
+      final List<double?> originCoordinates =
+          myRidesModel.value.driverBookingDetails?.riderBookingDetails?[selectedRider.value]?.origin?.coordinates ?? [0.0, 0.0];
+      final List<double?> destinationCoordinates =
+          myRidesModel.value.driverBookingDetails?.riderBookingDetails?[selectedRider.value]?.destination?.coordinates ?? [0.0, 0.0];
+      PolylineResult result = await PolylinePoints().getRouteBetweenCoordinates(Endpoints.googleApiKey,
+          PointLatLng(originCoordinates.last!, originCoordinates.first!), PointLatLng(destinationCoordinates.last!, destinationCoordinates.first!));
       if (result.points.isNotEmpty) {
-        polylineCoordinates.assignAll(result.points
-            .map((point) => LatLng(point.latitude, point.longitude))
-            .toList());
+        polylineCoordinates.assignAll(result.points.map((point) => LatLng(point.latitude, point.longitude)).toList());
       }
       polylineCoordinates.refresh();
       markers.clear();
-      addMarkers(LatLng(originCoordinates.last!, originCoordinates.first!),
-          ImageConstant.pngSourceIcon);
-      addMarkers(
-          LatLng(destinationCoordinates.last!, destinationCoordinates.first!),
-          ImageConstant.pngDestinationIcon);
-      mapController.animateCamera(CameraUpdate.newLatLngBounds(
-          GpUtil.boundsFromLatLngList(polylineCoordinates), 70));
+      addMarkers(LatLng(originCoordinates.last!, originCoordinates.first!), ImageConstant.pngSourceIcon);
+      addMarkers(LatLng(destinationCoordinates.last!, destinationCoordinates.first!), ImageConstant.pngDestinationIcon);
+      mapController.animateCamera(CameraUpdate.newLatLngBounds(GpUtil.boundsFromLatLngList(polylineCoordinates), 70));
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -137,8 +115,7 @@ class StartRideController extends GetxController {
         snippet: 'Car Marker',
       ),
       // icon: BitmapDescriptor.fromBytes(bytes), //Icon for Marker
-      icon: await BitmapDescriptor.fromAssetImage(
-          ImageConfiguration(size: Size(200.kw, 200.kh)), image),
+      icon: await BitmapDescriptor.fromAssetImage(ImageConfiguration(size: Size(200.kw, 200.kh)), image),
     ));
   }
 
@@ -153,8 +130,7 @@ class StartRideController extends GetxController {
       if (point.longitude < minLng) minLng = point.longitude;
       if (point.longitude > maxLng) maxLng = point.longitude;
     }
-    return LatLngBounds(
-        southwest: LatLng(minLat, minLng), northeast: LatLng(maxLat, maxLng));
+    return LatLngBounds(southwest: LatLng(minLat, minLng), northeast: LatLng(maxLat, maxLng));
   }
 
   StreamSubscription<Position>? positionStream;
@@ -165,19 +141,11 @@ class StartRideController extends GetxController {
       distanceFilter: 100,
     );
 
-    positionStream =
-        Geolocator.getPositionStream(locationSettings: locationSettings)
-            .listen((Position? position) async {
+    positionStream = Geolocator.getPositionStream(locationSettings: locationSettings).listen((Position? position) async {
       if (position != null) {
         final currentLat = position.latitude;
         final currentLong = position.longitude;
-        myRidesModel
-            .value
-            .driverBookingDetails
-            ?.riders?[0]
-            ?.riderBookingDetails?[0]
-            ?.origin
-            ?.coordinates = [currentLong, currentLat];
+        myRidesModel.value.driverBookingDetails?.riderBookingDetails?[selectedRider.value]?.origin?.coordinates = [currentLong, currentLat];
         mapController.animateCamera(
           CameraUpdate.newCameraPosition(
             CameraPosition(
@@ -194,63 +162,72 @@ class StartRideController extends GetxController {
 
   startRideAPI() async {
     try {
-      final response = await APIManager.startRide(
-          body: {"driverRideId": myRidesModel.value.driverRideId});
+      final response = await APIManager.startRide(body: {"driverRideId": myRidesModel.value.driverRideId});
       var data = jsonDecode(response.toString());
       if (data['status']) {
-        isRideStarted.value = true;
+        myRidesModel.value.driverBookingDetails?.isStarted = true;
       }
-
-      showMySnackbar(msg: "${response.statusMessage}");
+      myRidesModel.refresh();
+      showMySnackbar(msg: response.data['message']);
     } catch (e) {
       debugPrint(e.toString());
     }
+
+    myRidesModel.refresh();
   }
 
   endRideAPI() async {
     try {
-      final response = await APIManager.endRide(
-          body: {"driverRideId": myRidesModel.value.driverRideId});
-      log("END RIDE EXECUTED--------> ${response.statusMessage}}");
-      Get.offNamed(Routes.RATING_DRIVER_SIDE, arguments: myRidesModel.value);
+      final response = await APIManager.endRide(body: {"driverRideId": myRidesModel.value.driverRideId});
+      if (response.data['status']) {
+        Get.offNamed(Routes.RATING_DRIVER_SIDE, arguments: myRidesModel.value);
+      } else {
+        showMySnackbar(msg: response.data['message']);
+      }
     } catch (e) {
       debugPrint(e.toString());
     }
   }
 
-  pickUpAPI() async {
+  pickUpAPI(String riderId) async {
     try {
       final response = await APIManager.pickUpRider(body: {
-        "riderId": myRidesModel.value.driverBookingDetails?.riders?[0]
-            ?.riderBookingDetails?[0]?.riderId,
+        "riderId": riderId,
         "riderRideId": myRidesModel.value.riderRideId,
-        "riderNotificationPreferences": myRidesModel
-            .value.driverBookingDetails?.riders?[0]?.notificationPreferences!
-            .toJson(),
-        "riderName":
-            myRidesModel.value.driverBookingDetails?.riders?[0]?.fullName,
+        "riderNotificationPreferences":
+            myRidesModel.value.driverBookingDetails?.riderBookingDetails?[selectedRider.value]?.riderDetails?.notificationPreferences?.toJson(),
+        "riderName": myRidesModel.value.driverBookingDetails?.riderBookingDetails?.firstOrNull?.riderDetails?.fullName,
         "driverId": myRidesModel.value.driverId
       });
-      print("pickup API res: ${response.data.toString()}");
+      if (response.data['status']) {
+        myRidesModel.value.driverBookingDetails?.riderBookingDetails?[selectedRider.value].isStarted = true;
+        myRidesModel.refresh();
+        showMySnackbar(msg: response.data['message']);
+      } else {
+        showMySnackbar(msg: response.data['message']);
+      }
     } catch (e) {
       debugPrint(e.toString());
     }
+    myRidesModel.value.driverBookingDetails!.isCompleted = true;
+    myRidesModel.refresh();
   }
 
-  dropOffAPI() async {
+  dropOffAPI(String riderId) async {
     try {
       final res = await APIManager.dropOffRider(body: {
-        "riderId": myRidesModel.value.driverBookingDetails?.riders?[0]
-            ?.riderBookingDetails?[0]?.riderId,
+        "riderId": riderId,
         "riderRideId": myRidesModel.value.riderRideId,
-        "riderNotificationPreferences": myRidesModel
-            .value.driverBookingDetails?.riders?[0]?.notificationPreferences!
-            .toJson(),
-        "riderName":
-            myRidesModel.value.driverBookingDetails?.riders?[0]?.fullName,
+        "riderNotificationPreferences":
+            myRidesModel.value.driverBookingDetails?.riderBookingDetails?[selectedRider.value]?.riderDetails?.notificationPreferences!.toJson(),
+        "riderName": myRidesModel.value.driverBookingDetails?.riderBookingDetails?.firstOrNull?.riderDetails?.fullName,
         "driverRideId": myRidesModel.value.driverRideId
       });
-      print(res.data.toString());
+      if (res.data["status"]) {
+        myRidesModel.value.driverBookingDetails?.riderBookingDetails?[selectedRider.value].isCompleted = true;
+      } else {
+        showMySnackbar(msg: res.data["message"]);
+      }
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -264,38 +241,139 @@ class StartRideController extends GetxController {
 
   showChatBottomSheet() async {
     try {
-      final res = await APIManager.getChatRoomId(
-          receiverId: myRidesModel.value.driverBookingDetails?.riders?[0]
-                  ?.riderBookingDetails?[0]?.Id ??
-              "",
-          ridePostId: myRidesModel.value.driverBookingDetails?.riders?[0]
-                  ?.riderBookingDetails?[0]?.Id ??
-              "");
+      final res = await APIManager.getChatRoomId(receiverId: myRidesModel.value.driverBookingDetails?.riderBookingDetails?[selectedRider.value]?.Id ?? "");
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
               chatRoomId: res.data["chatChannelId"] ?? "",
-              rideId: myRidesModel.value.driverBookingDetails?.riders?[0]
-                      ?.riderBookingDetails?[0]?.Id ??
-                  "",
-              id: myRidesModel.value.driverBookingDetails?.riders?[0]
-                  ?.riderBookingDetails?[0]?.Id,
-              name:
-                  myRidesModel.value.driverBookingDetails?.riders?[0]?.fullName,
-              image: myRidesModel
-                  .value.driverBookingDetails?.riders?[0]?.profilePic?.url));
+              id: myRidesModel.value.driverBookingDetails?.riderBookingDetails?[selectedRider.value]?.Id,
+              name: myRidesModel.value.driverBookingDetails?.riderBookingDetails?.firstOrNull?.riderDetails?.fullName ?? "",
+              image: myRidesModel.value.driverBookingDetails?.riderBookingDetails?.firstOrNull?.riderDetails?.profilePic?.url ?? ""));
     } catch (e) {
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
-              rideId: myRidesModel.value.driverBookingDetails?.riders?[0]
-                      ?.riderBookingDetails?[0]?.Id ??
-                  "",
-              id: myRidesModel.value.driverBookingDetails?.riders?[0]
-                  ?.riderBookingDetails?[0]?.Id,
-              name:
-                  myRidesModel.value.driverBookingDetails?.riders?[0]?.fullName,
-              image: myRidesModel
-                  .value.driverBookingDetails?.riders?[0]?.profilePic?.url));
+              id: myRidesModel.value.driverBookingDetails?.riderBookingDetails?[selectedRider.value]?.Id,
+              name: myRidesModel.value.driverBookingDetails?.riderBookingDetails?.firstOrNull?.riderDetails?.fullName ?? "",
+              image: myRidesModel.value.driverBookingDetails?.riderBookingDetails?.firstOrNull?.riderDetails?.profilePic?.url ?? ""));
       debugPrint(e.toString());
     }
+  }
+
+  double getLat() {
+    final originCoordinates = myRidesModel.value.driverBookingDetails?.riders?.isNotEmpty ?? false
+        ? myRidesModel.value.driverBookingDetails?.riders?.isNotEmpty ?? false
+            ? myRidesModel.value.driverBookingDetails?.riderBookingDetails?.firstOrNull?.origin?.coordinates?.last
+            : null
+        : null;
+
+    final coordinates = originCoordinates ?? 0.0;
+    return coordinates;
+  }
+
+  double getLong() {
+    final originCoordinates = myRidesModel.value.driverBookingDetails?.riders?.isNotEmpty ?? false
+        ? myRidesModel.value.driverBookingDetails?.riders?.isNotEmpty ?? false
+            ? myRidesModel.value.driverBookingDetails?.riderBookingDetails?.first?.origin?.coordinates?.first
+            : null
+        : null;
+
+    final coordinates = originCoordinates ?? 0.0;
+    return coordinates;
+  }
+
+  getOrigin() {
+    try {
+      return myRidesModel.value.driverBookingDetails?.riderBookingDetails?[selectedRider.value]?.origin?.name;
+    } catch (e) {
+      debugPrint(e.toString());
+      return "";
+    }
+  }
+
+  getDestination() {
+    try {
+      return myRidesModel.value.driverBookingDetails?.riderBookingDetails?[selectedRider.value]?.destination?.name;
+    } catch (e) {
+      debugPrint(e.toString());
+      return "";
+    }
+  }
+
+  getImage() {
+    try {
+      return myRidesModel.value.driverBookingDetails?.riderBookingDetails?[selectedRider.value]?.riderDetails?.profilePic?.url;
+    } catch (e) {
+      debugPrint(e.toString());
+      return "";
+    }
+  }
+
+  String getName() {
+    try {
+      return myRidesModel.value.driverBookingDetails?.riderBookingDetails?[selectedRider.value]?.riderDetails?.fullName ?? "";
+    } catch (e) {
+      debugPrint(e.toString());
+      return "";
+    }
+  }
+
+  getPhone() {
+    try {
+      return myRidesModel.value.driverBookingDetails?.riderBookingDetails?.firstOrNull?.riderDetails?.phone ?? "";
+    } catch (e) {
+      debugPrint(e.toString());
+      return "";
+    }
+  }
+
+  actionTap() async {
+    if (myRidesModel.value.driverBookingDetails?.isStarted ?? false) {
+      if (myRidesModel.value.driverBookingDetails?.riderBookingDetails?[selectedRider.value].isStarted ?? false) {
+        bool? allTrue = myRidesModel.value.driverBookingDetails?.riderBookingDetails?.every((element) => element.isStarted ?? false);
+        if (allTrue ?? false) {
+          bool? allisCompleted = myRidesModel.value.driverBookingDetails?.riderBookingDetails?.every((element) => element.isCompleted ?? false);
+          if (allisCompleted ?? false) {
+            await endRideAPI();
+          } else {
+            await dropOffAPI(myRidesModel.value.driverBookingDetails?.riderBookingDetails?[selectedRider.value].riderId ?? "");
+          }
+        } else {
+          await dropOffAPI(myRidesModel.value.driverBookingDetails?.riderBookingDetails?[selectedRider.value].riderId ?? "");
+        }
+      } else {
+        await pickUpAPI(myRidesModel.value.driverBookingDetails?.riderBookingDetails?[selectedRider.value].riderId ?? "");
+      }
+    } else {
+      await startRideAPI();
+    }
+    getButtonLabel();
+  }
+
+  getButtonLabel() {
+    if (myRidesModel.value.driverBookingDetails?.isStarted ?? false) {
+      if (myRidesModel.value.driverBookingDetails?.riderBookingDetails?[selectedRider.value].isStarted ?? false) {
+        bool? allTrue = myRidesModel.value.driverBookingDetails?.riderBookingDetails?.every((element) => element.isStarted ?? false);
+        if (allTrue ?? false) {
+          bool? allisCompleted = myRidesModel.value.driverBookingDetails?.riderBookingDetails?.every((element) => element.isCompleted ?? false);
+          if (allisCompleted ?? false) {
+            isEndRide.value = true;
+            btnText.value = Strings.endRide;
+          } else {
+            btnText.value = Strings.riderDroppedOffSuccessfully;
+          }
+        } else {
+          btnText.value = Strings.riderDroppedOffSuccessfully;
+        }
+      } else {
+        btnText.value = Strings.riderPickedUpSuccessfully;
+      }
+    } else {
+      btnText.value = Strings.startRide;
+    }
+  }
+
+  updateIndex(int index1) {
+    selectedRider.value = index1;
+    myRidesModel.refresh();
+    getButtonLabel();
   }
 }

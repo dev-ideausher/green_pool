@@ -6,9 +6,14 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:permission_handler/permission_handler.dart';
+import '../modules/my_rides_one_time/controllers/my_rides_one_time_controller.dart';
 import '../routes/app_pages.dart';
 
 class PushNotificationService {
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+
+  PushNotificationService(this.flutterLocalNotificationsPlugin);
+
   RemoteMessage? actionData;
 
   Future<void> setupInteractedMessage() async {
@@ -18,8 +23,7 @@ class PushNotificationService {
           await Permission.notification.request();
         }
       });
-      FirebaseMessaging.onMessageOpenedApp
-          .listen((RemoteMessage message) async {
+      FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
         saveNotification(message);
       });
       enableIOSNotifications();
@@ -32,79 +36,10 @@ class PushNotificationService {
 
   Future<void> registerNotificationListeners() async {
     final AndroidNotificationChannel channel = androidNotificationChannel();
-    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-        FlutterLocalNotificationsPlugin();
-    await flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>()
-        ?.createNotificationChannel(channel);
-    const AndroidInitializationSettings androidSettings =
-        AndroidInitializationSettings('logo');
-    const DarwinInitializationSettings iOSSettings =
-        DarwinInitializationSettings(
-            requestSoundPermission: true,
-            requestBadgePermission: true,
-            requestAlertPermission: true);
-    const InitializationSettings initSettings =
-        InitializationSettings(android: androidSettings, iOS: iOSSettings);
-    flutterLocalNotificationsPlugin.initialize(
-      initSettings,
-      onDidReceiveNotificationResponse: (NotificationResponse details) {
-        if (actionData != null) {
-          if (actionData!.data["type"] == "Start_Ride") {
-            Get.toNamed(Routes.RIDER_START_RIDE_MAP);
-          } else if (actionData!.data["type"] == "End_Ride") {
-            //TODO: HAVE TO SET A CHECK FOR RIDER
-            //? one thing that can be done is that in response of end ride the data will contain who was driver and who were the companions and then from there we can maybe check and navigate them to corresponding pages
-            //? OR else set driver state from home controller and store it in storage service
-            if (Get.find<HomeController>().userInfo.value.data?.isDriver ==
-                true) {
-              Get.offNamed(Routes.RATING_DRIVER_SIDE);
-            } else {
-              Get.offNamed(Routes.RATING_RIDER_SIDE);
-            }
-          }
-        }
-        print(details);
+    await flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()?.createNotificationChannel(channel);
 
-        // if (actionData != null) {
-        //   if (actionData!.data["type"] == "Start_Ride") {
-        //     Map<String, dynamic> jsond = json.decode(actionData!.data["rideDetails"]);
-        //     // final rideDetails = ChatNotificationModel.fromJson(jsond);
-        //     if (Get.currentRoute == Routes.CHAT) {
-        //       if (Get.find<ChatController>().chatRoom.value.chatRoomId == rideDetails.chatRoomId) {
-        //         Get.find<ChatController>().getMessages();
-        //       }
-        //     } else {
-        //       ChatRoomModelChatRoom chatRoomModelChatRoom;
-        //       if (Get.find<GetStorageService>().userId == (rideDetails.senderData?.senderId ?? "")) {
-        //         chatRoomModelChatRoom = ChatRoomModelChatRoom(
-        //             name: rideDetails.senderData?.name,
-        //             Id: rideDetails.senderData?.rideId,
-        //             rideId: rideDetails.senderData?.senderId,
-        //             image: "",
-        //             chatRoomId: rideDetails.chatRoomId);
-        //       } else {
-        //         chatRoomModelChatRoom = ChatRoomModelChatRoom(
-        //             name: rideDetails.senderData?.name,
-        //             Id: rideDetails.senderData?.senderId,
-        //             rideId: rideDetails.senderData?.rideId,
-        //             image: "",
-        //             chatRoomId: rideDetails.chatRoomId);
-        //       }
-        //       Get.toNamed(Routes.CHAT, arguments: chatRoomModelChatRoom);
-        //     }
-        //   }
-        // }
-        // print(details);
-      },
-      onDidReceiveBackgroundNotificationResponse: (details) {
-        print(details);
-      },
-    );
     try {
-      FirebaseMessaging.onBackgroundMessage(
-          _firebaseMessagingBackgroundHandler);
+      FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
     } catch (e) {
       print(e);
     }
@@ -121,10 +56,8 @@ class PushNotificationService {
           notification.title,
           notification.body,
           NotificationDetails(
-              android: AndroidNotificationDetails(channel.id, channel.name,
-                  channelDescription: channel.description,
-                  icon: "logo",
-                  color: ColorUtil.kPrimary07)), //?color
+              android:
+                  AndroidNotificationDetails(channel.id, channel.name, channelDescription: channel.description, icon: "logo", color: Get.context!.iconColor)),
         );
         saveNotification(message);
       }
@@ -144,73 +77,63 @@ class PushNotificationService {
     );
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
       print('User granted permission');
-    } else if (settings.authorizationStatus ==
-        AuthorizationStatus.provisional) {
+    } else if (settings.authorizationStatus == AuthorizationStatus.provisional) {
       print('User granted provisional permission');
     } else {
       print('User declined or has not accepted permission');
     }
-    await FirebaseMessaging.instance
-        .setForegroundNotificationPresentationOptions(
+    await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
       alert: true, // Required to display a heads up notification
       badge: true,
       sound: true,
     );
   }
 
-  AndroidNotificationChannel androidNotificationChannel() =>
-      const AndroidNotificationChannel(
+  AndroidNotificationChannel androidNotificationChannel() => const AndroidNotificationChannel(
         'high_importance_channel', // id
         'High Importance Notifications', // title
-        description:
-            'This channel is used for important notifications.', // description
+        description: 'This channel is used for important notifications.', // description
         importance: Importance.max,
       );
 
-  Future<void> _firebaseMessagingBackgroundHandler(
-      RemoteMessage message) async {
+  static Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
     await Firebase.initializeApp();
     print("Background Message Handler Working...");
 
     try {
       await Future.delayed(const Duration(seconds: 2));
-      saveNotification(message);
+      PushNotificationService(FlutterLocalNotificationsPlugin()).saveNotification(message);
     } catch (e) {
-      debugPrint(e.toString());
+      print(e);
     }
   }
 
   saveNotification(RemoteMessage message) {
     actionData = message;
-    // try {
-    //   if (message.data["type"] == "request") {
+    if (actionData != null) {
+      if (actionData!.data["notification_type"] == "Start_Ride") {
+        Get.find<MyRidesOneTimeController>().myRidesAPI();
+      }
+      if (actionData!.data["notification_type"] == "Rider_Dropoff_Request") {
+        Get.find<MyRidesOneTimeController>().myRidesAPI();
+      }
 
-    //   } else if (message.data["type"] == "Completed") {
-    //     Map<String, dynamic> jsond = json.decode(message.data["rideDetails"]);
-    //     final rideDetails = UserRideComplete.fromJson(jsond);
-    //     Get.offAllNamed(Routes.ORDER_SUMMARY_USER, arguments: rideDetails);
-    //     /* Get.dialog(CancelRide(
-    //       title: message.notification?.title,
-    //       content: "Would you like to rate your experience",
-    //       onPressYes: () {
+      if (actionData!.data["notification_type"] == "Rider_Pickup_Request") {
+        Get.find<MyRidesOneTimeController>().myRidesAPI();
+      }
+      if (actionData!.data["notification_type"] == "Rider_Ride_Request") {
+        Get.find<MyRidesOneTimeController>().myRidesAPI();
+      }
+      if (actionData!.data["notification_type"] == "Driver_Ride_Request") {
+        Get.find<MyRidesOneTimeController>().myRidesAPI();
+      }
 
-    //       },
-    //     ));*/
-    //   } else if (message.data["type"] == "accept") {
-    //   } else if (message.data["type"] == "chat") {
-    //     if (Get.currentRoute == Routes.CHAT) {
-    //       Map<String, dynamic> jsond = json.decode(message.data["rideDetails"]);
-    //       final rideDetails = ChatNotificationModel.fromJson(jsond);
-    //       if (Get.find<ChatController>().chatRoom.value.chatRoomId == rideDetails.chatRoomId) {
-    //         Get.find<ChatController>().getMessages();
-    //       }
-    //     }
-    //     //
-    //   }
-    // } catch (e) {
-    //   debugPrint(e.toString());
-
-    // }
+      if (actionData!.data["notification_type"] == "Start_Ride") {
+        Get.find<MyRidesOneTimeController>().myRidesAPI();
+      } else if (actionData!.data["notification_type"] == "End_Ride") {
+        Get.offNamed(Routes.RATING_RIDER_SIDE);
+      }
+    }
   }
 
   static Future<void> subFcm(String topic) async {

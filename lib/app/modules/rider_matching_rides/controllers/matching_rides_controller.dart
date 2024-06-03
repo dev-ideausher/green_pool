@@ -7,6 +7,7 @@ import '../../../services/gp_util.dart';
 class MatchingRidesController extends GetxController {
   Map<String, dynamic>? rideDetails;
   String driverRideId = '';
+
   // String minStopDistance = '';
   double latitude = Get.find<HomeController>().latitude.value;
   double longitude = Get.find<HomeController>().longitude.value;
@@ -30,32 +31,27 @@ class MatchingRidesController extends GetxController {
   // }
 
   moveToFilter() {
-    Get.toNamed(Routes.RIDER_FILTER, arguments: {
-      'rideDetails': rideDetails,
-      'matchingRidesModel': matchingRidesModel.value
-    })?.then((value) {
+    Get.toNamed(Routes.RIDER_FILTER, arguments: {'rideDetails': rideDetails, 'matchingRidesModel': matchingRidesModel.value})?.then((value) {
       matchingRidesModel.value = value;
       matchingRidesModel.refresh();
     });
   }
 
-  void moveToDriverDetails(index) {
+  Future<void> moveToDriverDetails(index) async {
     driverRideId = "${matchingRidesModel.value.data?[index]?.Id}";
     // minStopDistance =
     //     "${matchingRidesModel.value.data?[index]?.minStopDistance}";
+
+   final distance= await GpUtil.calculateDistanceInInt(
+        startLat:    matchingRidesModel.value.data?[index]?.origin?.coordinates?.last ?? latitude,
+        startLong:  matchingRidesModel.value.data?[index]?.origin?.coordinates?.first ?? longitude,
+        endLat:   matchingRidesModel.value.data?[index]?.destination?.coordinates?.last ?? latitude,
+        endLong: matchingRidesModel.value.data?[index]?.destination?.coordinates?.first ?? longitude  );
     Get.toNamed(Routes.DRIVER_DETAILS, arguments: {
       'rideDetails': rideDetails,
       'driverRideId': driverRideId,
-      'distance': GpUtil.calculateDistance(
-              startLat: latitude,
-              startLong: longitude,
-              endLat: matchingRidesModel
-                      .value.data?[index]?.origin?.coordinates?.last ??
-                  latitude,
-              endLong: matchingRidesModel
-                      .value.data?[index]?.origin?.coordinates?.first ??
-                  longitude)
-          .toStringAsFixed(2),
+      "price": matchingRidesModel.value.data?[index]?.price ?? 0,
+      'distance': distance.toString(),
       'matchingRidesmodel': matchingRidesModel.value.data?[index]
     });
   }

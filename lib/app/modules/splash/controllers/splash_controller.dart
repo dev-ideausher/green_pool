@@ -5,11 +5,6 @@ import '../../../routes/app_pages.dart';
 import '../../../services/storage.dart';
 
 class SplashController extends GetxController {
-  // @override
-  // void onInit() {
-  //   super.onInit();
-  // }
-
   @override
   void onReady() {
     super.onReady();
@@ -31,9 +26,4 @@ class SplashController extends GetxController {
       Get.offNamed(Routes.ONBOARDING);
     }
   }
-
-  // @override
-  // void onClose() {
-  //   super.onClose();
-  // }
 }

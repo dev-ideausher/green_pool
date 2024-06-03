@@ -204,7 +204,7 @@ class ProfileView extends GetView<ProfileController> {
                                   //           )),
                                   //     ),
                                   onTap: () async {
-                                    await Share.share("Check this cool app!");
+                                    await Share.share("Check this cool app! \nhttps://play.google.com/store/apps/details?id=com.greenpool.app");
                                   },
                                   image: ImageConstant.svgProfileRefer,
                                   text: "Refer a friend"),
@@ -293,7 +293,7 @@ class ProfileView extends GetView<ProfileController> {
                               ProfileContainer(
                                   onTap: () => Get.toNamed(Routes.HELP_SUPPORT),
                                   image: ImageConstant.svgProfileHelp,
-                                  text: "Help & Suppurt"),
+                                  text: "Help & Support"),
                               ProfileContainer(
                                   onTap: () =>
                                       Get.toNamed(Routes.TERMS_CONDITIONS),

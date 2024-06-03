@@ -19,12 +19,13 @@ class RiderSendRequestModelDataDriverDetailsVehicleDetailsVehiclePic {
     this.url,
     this.Id,
   });
-  RiderSendRequestModelDataDriverDetailsVehicleDetailsVehiclePic.fromJson(
-      Map<String, dynamic> json) {
+
+  RiderSendRequestModelDataDriverDetailsVehicleDetailsVehiclePic.fromJson(Map<String, dynamic> json) {
     key = json['key']?.toString();
     url = json['url']?.toString();
     Id = json['_id']?.toString();
   }
+
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['key'] = key;
@@ -77,14 +78,11 @@ class RiderSendRequestModelDataDriverDetailsVehicleDetails {
     this.createdAt,
     this.updatedAt,
   });
-  RiderSendRequestModelDataDriverDetailsVehicleDetails.fromJson(
-      Map<String, dynamic> json) {
+
+  RiderSendRequestModelDataDriverDetailsVehicleDetails.fromJson(Map<String, dynamic> json) {
     Id = json['_id']?.toString();
     driverId = json['driverId']?.toString();
-    vehiclePic = (json['vehiclePic'] != null)
-        ? RiderSendRequestModelDataDriverDetailsVehicleDetailsVehiclePic
-            .fromJson(json['vehiclePic'])
-        : null;
+    vehiclePic = (json['vehiclePic'] != null) ? RiderSendRequestModelDataDriverDetailsVehicleDetailsVehiclePic.fromJson(json['vehiclePic']) : null;
     model = json['model']?.toString();
     type = json['type']?.toString();
     color = json['color']?.toString();
@@ -93,6 +91,7 @@ class RiderSendRequestModelDataDriverDetailsVehicleDetails {
     createdAt = json['createdAt']?.toString();
     updatedAt = json['updatedAt']?.toString();
   }
+
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['_id'] = Id;
@@ -116,7 +115,7 @@ class RiderSendRequestModelDataDriverDetailsProfilePic {
 {
   "key": "usersProfile/277d7f6a-5d3c-47dc-b1cb-d11d4cbe62ba-1000000036.jpg",
   "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/277d7f6a-5d3c-47dc-b1cb-d11d4cbe62ba-1000000036.jpg"
-} 
+}
 */
 
   String? key;
@@ -126,11 +125,12 @@ class RiderSendRequestModelDataDriverDetailsProfilePic {
     this.key,
     this.url,
   });
-  RiderSendRequestModelDataDriverDetailsProfilePic.fromJson(
-      Map<String, dynamic> json) {
+
+  RiderSendRequestModelDataDriverDetailsProfilePic.fromJson(Map<String, dynamic> json) {
     key = json['key']?.toString();
     url = json['url']?.toString();
   }
+
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['key'] = key;
@@ -144,7 +144,7 @@ class RiderSendRequestModelDataDriverDetailsIdPic {
 {
   "key": "idPic/fdf1f112-b004-436f-b81f-e804cd9119ae-1000000034.jpg",
   "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/idPic/fdf1f112-b004-436f-b81f-e804cd9119ae-1000000034.jpg"
-} 
+}
 */
 
   String? key;
@@ -154,11 +154,12 @@ class RiderSendRequestModelDataDriverDetailsIdPic {
     this.key,
     this.url,
   });
-  RiderSendRequestModelDataDriverDetailsIdPic.fromJson(
-      Map<String, dynamic> json) {
+
+  RiderSendRequestModelDataDriverDetailsIdPic.fromJson(Map<String, dynamic> json) {
     key = json['key']?.toString();
     url = json['url']?.toString();
   }
+
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['key'] = key;
@@ -175,7 +176,7 @@ class RiderSendRequestModelDataDriverDetailsNotificationPreferences {
   "payments": true,
   "transactions": true,
   "offers": true
-} 
+}
 */
 
   bool? trip;
@@ -191,14 +192,15 @@ class RiderSendRequestModelDataDriverDetailsNotificationPreferences {
     this.transactions,
     this.offers,
   });
-  RiderSendRequestModelDataDriverDetailsNotificationPreferences.fromJson(
-      Map<String, dynamic> json) {
+
+  RiderSendRequestModelDataDriverDetailsNotificationPreferences.fromJson(Map<String, dynamic> json) {
     trip = json['trip'];
     alerts = json['alerts'];
     payments = json['payments'];
     transactions = json['transactions'];
     offers = json['offers'];
   }
+
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['trip'] = trip;
@@ -266,7 +268,7 @@ class RiderSendRequestModelDataDriverDetails {
       "updatedAt": "2024-04-15T13:24:37.094Z"
     }
   ]
-} 
+}
 */
 
   String? Id;
@@ -283,8 +285,7 @@ class RiderSendRequestModelDataDriverDetails {
   bool? vehicleStatus;
   String? status;
   int? wallet;
-  RiderSendRequestModelDataDriverDetailsNotificationPreferences?
-      notificationPreferences;
+  RiderSendRequestModelDataDriverDetailsNotificationPreferences? notificationPreferences;
   String? firebaseUid;
   String? firebaseSignInProvider;
   int? rating;
@@ -321,6 +322,7 @@ class RiderSendRequestModelDataDriverDetails {
     this.totalRides,
     this.vehicleDetails,
   });
+
   RiderSendRequestModelDataDriverDetails.fromJson(Map<String, dynamic> json) {
     Id = json['_id']?.toString();
     pinkMode = json['pinkMode'];
@@ -336,33 +338,26 @@ class RiderSendRequestModelDataDriverDetails {
     vehicleStatus = json['vehicleStatus'];
     status = json['status']?.toString();
     wallet = json['wallet']?.toInt();
-    notificationPreferences = (json['notificationPreferences'] != null)
-        ? RiderSendRequestModelDataDriverDetailsNotificationPreferences
-            .fromJson(json['notificationPreferences'])
-        : null;
+    notificationPreferences =
+        (json['notificationPreferences'] != null) ? RiderSendRequestModelDataDriverDetailsNotificationPreferences.fromJson(json['notificationPreferences']) : null;
     firebaseUid = json['firebaseUid']?.toString();
     firebaseSignInProvider = json['firebaseSignInProvider']?.toString();
     rating = json['rating']?.toInt();
     createdAt = json['createdAt']?.toString();
     updatedAt = json['updatedAt']?.toString();
-    idPic = (json['idPic'] != null)
-        ? RiderSendRequestModelDataDriverDetailsIdPic.fromJson(json['idPic'])
-        : null;
-    profilePic = (json['profilePic'] != null)
-        ? RiderSendRequestModelDataDriverDetailsProfilePic.fromJson(
-            json['profilePic'])
-        : null;
+    idPic = (json['idPic'] != null) ? RiderSendRequestModelDataDriverDetailsIdPic.fromJson(json['idPic']) : null;
+    profilePic = (json['profilePic'] != null) ? RiderSendRequestModelDataDriverDetailsProfilePic.fromJson(json['profilePic']) : null;
     totalRides = json['totalRides']?.toInt();
     if (json['vehicleDetails'] != null) {
       final v = json['vehicleDetails'];
       final arr0 = <RiderSendRequestModelDataDriverDetailsVehicleDetails>[];
       v.forEach((v) {
-        arr0.add(
-            RiderSendRequestModelDataDriverDetailsVehicleDetails.fromJson(v));
+        arr0.add(RiderSendRequestModelDataDriverDetailsVehicleDetails.fromJson(v));
       });
       vehicleDetails = arr0;
     }
   }
+
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['_id'] = Id;
@@ -411,7 +406,7 @@ class RiderSendRequestModelDataRidersDetatilsProfilePic {
 {
   "key": "usersProfile/a71bbbb2-acbf-4bd1-8504-c1c501341388-images..jpg",
   "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/a71bbbb2-acbf-4bd1-8504-c1c501341388-images..jpg"
-} 
+}
 */
 
   String? key;
@@ -421,11 +416,12 @@ class RiderSendRequestModelDataRidersDetatilsProfilePic {
     this.key,
     this.url,
   });
-  RiderSendRequestModelDataRidersDetatilsProfilePic.fromJson(
-      Map<String, dynamic> json) {
+
+  RiderSendRequestModelDataRidersDetatilsProfilePic.fromJson(Map<String, dynamic> json) {
     key = json['key']?.toString();
     url = json['url']?.toString();
   }
+
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['key'] = key;
@@ -439,7 +435,7 @@ class RiderSendRequestModelDataRidersDetatilsIdPic {
 {
   "key": "idPic/692044ef-538e-4718-bd71-215ec7c12d23-images..jpg",
   "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/idPic/692044ef-538e-4718-bd71-215ec7c12d23-images..jpg"
-} 
+}
 */
 
   String? key;
@@ -449,11 +445,12 @@ class RiderSendRequestModelDataRidersDetatilsIdPic {
     this.key,
     this.url,
   });
-  RiderSendRequestModelDataRidersDetatilsIdPic.fromJson(
-      Map<String, dynamic> json) {
+
+  RiderSendRequestModelDataRidersDetatilsIdPic.fromJson(Map<String, dynamic> json) {
     key = json['key']?.toString();
     url = json['url']?.toString();
   }
+
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['key'] = key;
@@ -490,7 +487,7 @@ class RiderSendRequestModelDataRidersDetatils {
   "createdAt": "2024-02-06T13:00:06.059Z",
   "updatedAt": "2024-02-06T13:00:06.059Z",
   "status": "active"
-} 
+}
 */
 
   String? Id;
@@ -534,6 +531,7 @@ class RiderSendRequestModelDataRidersDetatils {
     this.updatedAt,
     this.status,
   });
+
   RiderSendRequestModelDataRidersDetatils.fromJson(Map<String, dynamic> json) {
     Id = json['_id']?.toString();
     pinkMode = json['pinkMode'];
@@ -549,17 +547,13 @@ class RiderSendRequestModelDataRidersDetatils {
     vehicleStatus = json['vehicleStatus'];
     firebaseUid = json['firebaseUid']?.toString();
     firebaseSignInProvider = json['firebaseSignInProvider']?.toString();
-    idPic = (json['idPic'] != null)
-        ? RiderSendRequestModelDataRidersDetatilsIdPic.fromJson(json['idPic'])
-        : null;
-    profilePic = (json['profilePic'] != null)
-        ? RiderSendRequestModelDataRidersDetatilsProfilePic.fromJson(
-            json['profilePic'])
-        : null;
+    idPic = (json['idPic'] != null) ? RiderSendRequestModelDataRidersDetatilsIdPic.fromJson(json['idPic']) : null;
+    profilePic = (json['profilePic'] != null) ? RiderSendRequestModelDataRidersDetatilsProfilePic.fromJson(json['profilePic']) : null;
     createdAt = json['createdAt']?.toString();
     updatedAt = json['updatedAt']?.toString();
     status = json['status']?.toString();
   }
+
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['_id'] = Id;
@@ -597,7 +591,7 @@ class RiderSendRequestModelDataMatchedDestinationLocation {
   "coordinates": [
     72.84047029999999
   ]
-} 
+}
 */
 
   String? name;
@@ -609,8 +603,8 @@ class RiderSendRequestModelDataMatchedDestinationLocation {
     this.type,
     this.coordinates,
   });
-  RiderSendRequestModelDataMatchedDestinationLocation.fromJson(
-      Map<String, dynamic> json) {
+
+  RiderSendRequestModelDataMatchedDestinationLocation.fromJson(Map<String, dynamic> json) {
     name = json['name']?.toString();
     type = json['type']?.toString();
     if (json['coordinates'] != null) {
@@ -622,6 +616,7 @@ class RiderSendRequestModelDataMatchedDestinationLocation {
       coordinates = arr0;
     }
   }
+
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['name'] = name;
@@ -647,7 +642,7 @@ class RiderSendRequestModelDataMatchedOriginLocation {
     72.99778409999999
   ],
   "originDestinationFair": "12.34"
-} 
+}
 */
 
   String? name;
@@ -661,8 +656,8 @@ class RiderSendRequestModelDataMatchedOriginLocation {
     this.coordinates,
     this.originDestinationFair,
   });
-  RiderSendRequestModelDataMatchedOriginLocation.fromJson(
-      Map<String, dynamic> json) {
+
+  RiderSendRequestModelDataMatchedOriginLocation.fromJson(Map<String, dynamic> json) {
     name = json['name']?.toString();
     type = json['type']?.toString();
     if (json['coordinates'] != null) {
@@ -675,6 +670,7 @@ class RiderSendRequestModelDataMatchedOriginLocation {
     }
     originDestinationFair = json['originDestinationFair']?.toString();
   }
+
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['name'] = name;
@@ -703,7 +699,7 @@ class RiderSendRequestModelDataPreferencesOther {
   "CoolingOrHeating": false,
   "BabySeat": false,
   "HeatedSeats": false
-} 
+}
 */
 
   bool? AppreciatesConversation;
@@ -725,8 +721,8 @@ class RiderSendRequestModelDataPreferencesOther {
     this.BabySeat,
     this.HeatedSeats,
   });
-  RiderSendRequestModelDataPreferencesOther.fromJson(
-      Map<String, dynamic> json) {
+
+  RiderSendRequestModelDataPreferencesOther.fromJson(Map<String, dynamic> json) {
     AppreciatesConversation = json['AppreciatesConversation'];
     EnjoysMusic = json['EnjoysMusic'];
     SmokeFree = json['SmokeFree'];
@@ -736,6 +732,7 @@ class RiderSendRequestModelDataPreferencesOther {
     BabySeat = json['BabySeat'];
     HeatedSeats = json['HeatedSeats'];
   }
+
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['AppreciatesConversation'] = AppreciatesConversation;
@@ -764,7 +761,7 @@ class RiderSendRequestModelDataPreferences {
     "BabySeat": false,
     "HeatedSeats": false
   }
-} 
+}
 */
 
   String? luggageType;
@@ -774,12 +771,12 @@ class RiderSendRequestModelDataPreferences {
     this.luggageType,
     this.other,
   });
+
   RiderSendRequestModelDataPreferences.fromJson(Map<String, dynamic> json) {
     luggageType = json['luggageType']?.toString();
-    other = (json['other'] != null)
-        ? RiderSendRequestModelDataPreferencesOther.fromJson(json['other'])
-        : null;
+    other = (json['other'] != null) ? RiderSendRequestModelDataPreferencesOther.fromJson(json['other']) : null;
   }
+
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['luggageType'] = luggageType;
@@ -796,7 +793,7 @@ class RiderSendRequestModelDataReturnTrip {
   "isReturnTrip": false,
   "returnDate": null,
   "returnTime": ""
-} 
+}
 */
 
   bool? isReturnTrip;
@@ -808,11 +805,13 @@ class RiderSendRequestModelDataReturnTrip {
     this.returnDate,
     this.returnTime,
   });
+
   RiderSendRequestModelDataReturnTrip.fromJson(Map<String, dynamic> json) {
     isReturnTrip = json['isReturnTrip'];
     returnDate = json['returnDate']?.toString();
     returnTime = json['returnTime']?.toString();
   }
+
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['isReturnTrip'] = isReturnTrip;
@@ -831,7 +830,7 @@ class RiderSendRequestModelDataRecurringTrip {
   "recurringTripIds": [
     "661e1936d6fbf5d15c41738c"
   ]
-} 
+}
 */
 
   List<int?>? recurringTripDays;
@@ -841,6 +840,7 @@ class RiderSendRequestModelDataRecurringTrip {
     this.recurringTripDays,
     this.recurringTripIds,
   });
+
   RiderSendRequestModelDataRecurringTrip.fromJson(Map<String, dynamic> json) {
     if (json['recurringTripDays'] != null) {
       final v = json['recurringTripDays'];
@@ -859,6 +859,7 @@ class RiderSendRequestModelDataRecurringTrip {
       recurringTripIds = arr0;
     }
   }
+
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     if (recurringTripDays != null) {
@@ -893,12 +894,12 @@ class RiderSendRequestModelDataStops {
   "stopToStopFair": "",
   "stopTodestinationFair": null,
   "_id": "661e1936d6fbf5d15c417389"
-} 
+}
 */
 
   String? name;
   String? type;
-  List<int?>? coordinates;
+  List<double?>? coordinates;
   String? originToStopFair;
   String? stopToStopFair;
   String? stopTodestinationFair;
@@ -913,14 +914,15 @@ class RiderSendRequestModelDataStops {
     this.stopTodestinationFair,
     this.Id,
   });
+
   RiderSendRequestModelDataStops.fromJson(Map<String, dynamic> json) {
     name = json['name']?.toString();
     type = json['type']?.toString();
     if (json['coordinates'] != null) {
       final v = json['coordinates'];
-      final arr0 = <int>[];
+      final arr0 = <double>[];
       v.forEach((v) {
-        arr0.add(v.toInt());
+        arr0.add(v.toDouble());
       });
       coordinates = arr0;
     }
@@ -929,6 +931,7 @@ class RiderSendRequestModelDataStops {
     stopTodestinationFair = json['stopTodestinationFair']?.toString();
     Id = json['_id']?.toString();
   }
+
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['name'] = name;
@@ -957,7 +960,7 @@ class RiderSendRequestModelDataDestination {
   "coordinates": [
     72.84047029999999
   ]
-} 
+}
 */
 
   String? name;
@@ -969,6 +972,7 @@ class RiderSendRequestModelDataDestination {
     this.type,
     this.coordinates,
   });
+
   RiderSendRequestModelDataDestination.fromJson(Map<String, dynamic> json) {
     name = json['name']?.toString();
     type = json['type']?.toString();
@@ -981,6 +985,7 @@ class RiderSendRequestModelDataDestination {
       coordinates = arr0;
     }
   }
+
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['name'] = name;
@@ -1006,7 +1011,7 @@ class RiderSendRequestModelDataOrigin {
     72.99778409999999
   ],
   "originDestinationFair": "12.34"
-} 
+}
 */
 
   String? name;
@@ -1020,6 +1025,7 @@ class RiderSendRequestModelDataOrigin {
     this.coordinates,
     this.originDestinationFair,
   });
+
   RiderSendRequestModelDataOrigin.fromJson(Map<String, dynamic> json) {
     name = json['name']?.toString();
     type = json['type']?.toString();
@@ -1033,6 +1039,7 @@ class RiderSendRequestModelDataOrigin {
     }
     originDestinationFair = json['originDestinationFair']?.toString();
   }
+
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['name'] = name;
@@ -1240,7 +1247,7 @@ class RiderSendRequestModelData {
       ]
     }
   ]
-} 
+}
 */
 
   String? Id;
@@ -1272,58 +1279,55 @@ class RiderSendRequestModelData {
   int? distanceFromDestination;
   List<double?>? destinationStopsDistances;
   double? minDestinationStopDistance;
-  RiderSendRequestModelDataMatchedDestinationLocation?
-      matchedDestinationLocation;
+  RiderSendRequestModelDataMatchedDestinationLocation? matchedDestinationLocation;
   int? originDistance;
   int? destinationDistance;
+  num? price;
   List<RiderSendRequestModelDataRidersDetatils?>? ridersDetatils;
   List<RiderSendRequestModelDataDriverDetails?>? driverDetails;
 
-  RiderSendRequestModelData({
-    this.Id,
-    this.driverId,
-    this.origin,
-    this.destination,
-    this.stops,
-    this.tripType,
-    this.recurringTrip,
-    this.date,
-    this.time,
-    this.returnTrip,
-    this.arrivalDate,
-    this.arrivalTime,
-    this.seatAvailable,
-    this.preferences,
-    this.isStarted,
-    this.isCompleted,
-    this.isCancelled,
-    this.riders,
-    this.drivers,
-    this.description,
-    this.createdAt,
-    this.updatedAt,
-    this.distanceFromOrigin,
-    this.stopsDistances,
-    this.minStopDistance,
-    this.matchedOriginLocation,
-    this.distanceFromDestination,
-    this.destinationStopsDistances,
-    this.minDestinationStopDistance,
-    this.matchedDestinationLocation,
-    this.originDistance,
-    this.destinationDistance,
-    this.ridersDetatils,
-    this.driverDetails,
-  });
+  RiderSendRequestModelData(
+      {this.Id,
+      this.driverId,
+      this.origin,
+      this.destination,
+      this.stops,
+      this.tripType,
+      this.recurringTrip,
+      this.date,
+      this.time,
+      this.returnTrip,
+      this.arrivalDate,
+      this.arrivalTime,
+      this.seatAvailable,
+      this.preferences,
+      this.isStarted,
+      this.isCompleted,
+      this.isCancelled,
+      this.riders,
+      this.drivers,
+      this.description,
+      this.createdAt,
+      this.updatedAt,
+      this.distanceFromOrigin,
+      this.stopsDistances,
+      this.minStopDistance,
+      this.matchedOriginLocation,
+      this.distanceFromDestination,
+      this.destinationStopsDistances,
+      this.minDestinationStopDistance,
+      this.matchedDestinationLocation,
+      this.originDistance,
+      this.destinationDistance,
+      this.ridersDetatils,
+      this.driverDetails,
+      this.price});
+
   RiderSendRequestModelData.fromJson(Map<String, dynamic> json) {
     Id = json['_id']?.toString();
     driverId = json['driverId']?.toString();
-    origin = (json['origin'] != null)
-        ? RiderSendRequestModelDataOrigin.fromJson(json['origin'])
-        : null;
-    destination = (json['destination'] != null)
-        ? RiderSendRequestModelDataDestination.fromJson(json['destination'])
-        : null;
+    origin = (json['origin'] != null) ? RiderSendRequestModelDataOrigin.fromJson(json['origin']) : null;
+    destination = (json['destination'] != null) ? RiderSendRequestModelDataDestination.fromJson(json['destination']) : null;
     if (json['stops'] != null) {
       final v = json['stops'];
       final arr0 = <RiderSendRequestModelDataStops>[];
@@ -1332,21 +1336,27 @@ class RiderSendRequestModelData {
       });
       stops = arr0;
     }
+    try {
+      if (json['price'] is int || json['price'] is double) {
+        price = json['price'];
+      } else if (json['price'] is String) {
+        price = num.parse(json['price']);
+      } else {
+        price = 0;
+      }
+    } catch (e) {
+      print('Error parsing price: $e');
+      price = 0; // Default value or handle error appropriately
+    }
     tripType = json['tripType']?.toString();
-    recurringTrip = (json['recurringTrip'] != null)
-        ? RiderSendRequestModelDataRecurringTrip.fromJson(json['recurringTrip'])
-        : null;
+    recurringTrip = (json['recurringTrip'] != null) ? RiderSendRequestModelDataRecurringTrip.fromJson(json['recurringTrip']) : null;
     date = json['date']?.toString();
     time = json['time']?.toString();
-    returnTrip = (json['returnTrip'] != null)
-        ? RiderSendRequestModelDataReturnTrip.fromJson(json['returnTrip'])
-        : null;
+    returnTrip = (json['returnTrip'] != null) ? RiderSendRequestModelDataReturnTrip.fromJson(json['returnTrip']) : null;
     arrivalDate = json['arrivalDate']?.toString();
     arrivalTime = json['arrivalTime']?.toString();
     seatAvailable = json['seatAvailable']?.toInt();
-    preferences = (json['preferences'] != null)
-        ? RiderSendRequestModelDataPreferences.fromJson(json['preferences'])
-        : null;
+    preferences = (json['preferences'] != null) ? RiderSendRequestModelDataPreferences.fromJson(json['preferences']) : null;
     isStarted = json['isStarted'];
     isCompleted = json['isCompleted'];
     isCancelled = json['isCancelled'];
@@ -1379,10 +1389,7 @@ class RiderSendRequestModelData {
       stopsDistances = arr0;
     }
     minStopDistance = json['minStopDistance']?.toDouble();
-    matchedOriginLocation = (json['matchedOriginLocation'] != null)
-        ? RiderSendRequestModelDataMatchedOriginLocation.fromJson(
-            json['matchedOriginLocation'])
-        : null;
+    matchedOriginLocation = (json['matchedOriginLocation'] != null) ? RiderSendRequestModelDataMatchedOriginLocation.fromJson(json['matchedOriginLocation']) : null;
     distanceFromDestination = json['distanceFromDestination']?.toInt();
     if (json['destinationStopsDistances'] != null) {
       final v = json['destinationStopsDistances'];
@@ -1393,10 +1400,8 @@ class RiderSendRequestModelData {
       destinationStopsDistances = arr0;
     }
     minDestinationStopDistance = json['minDestinationStopDistance']?.toDouble();
-    matchedDestinationLocation = (json['matchedDestinationLocation'] != null)
-        ? RiderSendRequestModelDataMatchedDestinationLocation.fromJson(
-            json['matchedDestinationLocation'])
-        : null;
+    matchedDestinationLocation =
+        (json['matchedDestinationLocation'] != null) ? RiderSendRequestModelDataMatchedDestinationLocation.fromJson(json['matchedDestinationLocation']) : null;
     originDistance = json['originDistance']?.toInt();
     destinationDistance = json['destinationDistance']?.toInt();
     if (json['ridersDetatils'] != null) {
@@ -1416,10 +1421,12 @@ class RiderSendRequestModelData {
       driverDetails = arr0;
     }
   }
+
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['_id'] = Id;
     data['driverId'] = driverId;
+    data['price'] = price;
     if (origin != null) {
       data['origin'] = origin!.toJson();
     }
@@ -1719,7 +1726,7 @@ class RiderSendRequestModel {
 */
 
   bool? status;
-  List<RiderSendRequestModelData?>? data;
+  List<RiderSendRequestModelData>? data;
   String? message;
 
   RiderSendRequestModel({
@@ -1727,6 +1734,7 @@ class RiderSendRequestModel {
     this.data,
     this.message,
   });
+
   RiderSendRequestModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     if (json['data'] != null) {
@@ -1739,6 +1747,7 @@ class RiderSendRequestModel {
     }
     message = json['message']?.toString();
   }
+
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['status'] = status;

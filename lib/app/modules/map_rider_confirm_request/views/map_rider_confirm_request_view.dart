@@ -18,6 +18,7 @@ class MapRiderConfirmRequestView
         () => controller.isLoading.value
             ? const GpProgress()
             : GoogleMap(
+          myLocationEnabled: true,
                 onMapCreated: controller.onMapCreated,
                 initialCameraPosition: CameraPosition(
                     target: LatLng(controller.latitude, controller.longitude),

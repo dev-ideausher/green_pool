@@ -21,6 +21,7 @@ import '../controllers/my_rides_page_controller.dart';
 
 class MyRidesPageView extends GetView<MyRidesPageController> {
   const MyRidesPageView({super.key});
+
   @override
   Widget build(BuildContext context) {
     Get.put(MyRidesRecurringController());
@@ -33,62 +34,62 @@ class MyRidesPageView extends GetView<MyRidesPageController> {
       body: Get.find<GetStorageService>().getLoggedIn
           ? SafeArea(
               child: DefaultTabController(
-                length: 2,
+                length: 3,
                 child: Column(
                   children: [
                     TabBar(
+
                         onTap: (index) async {
-                          if (index == 1) {
-                            // await controller.allSendRequestAPI();
-                            await Get.find<MyRidesRecurringController>()
-                                .allRecurringRidesAPI();
+                          if (index == 0) {
+                            await Get.find<MyRidesOneTimeController>().myRidesAPI(isRecurring: true);
                           } else {
-                            // await controller.allConfirmRequestAPI();
-                            await Get.find<MyRidesOneTimeController>()
-                                .myRidesAPI();
+                            await Get.find<MyRidesOneTimeController>().myRidesAPI();
                           }
                         },
                         indicatorSize: TabBarIndicatorSize.tab,
                         splashBorderRadius: BorderRadius.circular(4.kh),
-                        unselectedLabelStyle: TextStyleUtil.k14Semibold(
-                            color: ColorUtil.kSecondary01),
+                        unselectedLabelStyle: TextStyleUtil.k14Semibold(color: ColorUtil.kSecondary01),
                         labelStyle: TextStyleUtil.k14Semibold(
-                          color: Get.find<HomeController>().isPinkModeOn.value
-                              ? ColorUtil.kPrimary3PinkMode
-                              : ColorUtil.kSecondary01,
+                          color: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01,
                         ),
-                        overlayColor: MaterialStatePropertyAll(
-                            ColorUtil.kSecondary01.withOpacity(0.05)),
+                        overlayColor: MaterialStatePropertyAll(ColorUtil.kSecondary01.withOpacity(0.05)),
                         indicator: UnderlineTabIndicator(
                           borderSide: BorderSide(
-                              color:
-                                  Get.find<HomeController>().isPinkModeOn.value
-                                      ? ColorUtil.kPrimary3PinkMode
-                                      : ColorUtil.kSecondary01,
-                              width: 2.kh),
+                              color: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01, width: 2.kh),
                         ),
-                        labelColor:
-                            Get.find<HomeController>().isPinkModeOn.value
-                                ? ColorUtil.kPrimary3PinkMode
-                                : ColorUtil.kSecondary01,
-                        tabs:  [
+                        isScrollable: true,
+                        tabAlignment: TabAlignment.center,
+                        labelColor: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01,
+                        tabs: [
                           Tab(
                             child: Text(
-                              Strings.oneTimeTrips,
+                              Strings.allRides,
                             ),
                           ),
                           Tab(
+                            child: Text(
+                              Strings.ridesBooked,
+                            ),
+                          ),
+                          Tab(
+                            child: Text(
+                              Strings.ridesPublished,
+                            ),
+                          ),
+                          /*  Tab(
                             child: Text(
                               Strings.recurringTrips,
                             ),
-                          ),
+                          ),*/
                         ]).paddingSymmetric(horizontal: 16.kw),
-                    const Expanded(
+                    Expanded(
                       child: TabBarView(
                         physics: NeverScrollableScrollPhysics(),
                         children: [
                           MyRidesOneTimeView(),
-                          MyRidesRecurringView()
+                          MyRidesOneTimeView(type: Strings.booked),
+                          MyRidesOneTimeView(type: Strings.published),
+                          //  MyRidesRecurringView()
                         ],
                       ),
                     ),
@@ -100,41 +101,7 @@ class MyRidesPageView extends GetView<MyRidesPageController> {
               child: Text(
               "Tap on profile to continue",
               style: TextStyleUtil.k20Heading600(),
-            )
-              //  Text.rich(
-              //   TextSpan(
-              //     children: [
-              //       TextSpan(
-              //         text: 'Please  ',
-              //         style: TextStyleUtil.k16Regular(),
-              //       ),
-              //       TextSpan(
-              //           text: 'Login  ',
-              //           style: TextStyleUtil.k20Heading700(
-              //               color: ColorUtil.kPrimary01),
-              //           recognizer: TapGestureRecognizer()
-              //             ..onTap = () => Get.toNamed(Routes.LOGIN, arguments: {
-              //                   'isDriver': false,
-              //                   'fromNavBar': true
-              //                 })),
-              //       TextSpan(
-              //         text: 'or  ',
-              //         style: TextStyleUtil.k16Regular(),
-              //       ),
-              //       TextSpan(
-              //           text: 'SignUp',
-              //           style: TextStyleUtil.k20Heading700(
-              //               color: ColorUtil.kPrimary01),
-              //           recognizer: TapGestureRecognizer()
-              //             ..onTap = () => Get.toNamed(Routes.CREATE_ACCOUNT,
-              //                     arguments: {
-              //                       'isDriver': false,
-              //                       'fromNavBar': true
-              //                     })),
-              //     ],
-              //   ),
-              // ),
-              ),
+            )),
     );
   }
 }

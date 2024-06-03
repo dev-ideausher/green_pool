@@ -25,8 +25,8 @@ class RiderConfirmedRideDetailsView
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const GreenPoolAppBar(
-        title: Text('Ride Details'),
+      appBar:  GreenPoolAppBar(
+        title: Text(Strings.riderDetails),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -110,7 +110,7 @@ class RiderConfirmedRideDetailsView
                                   ),
                                   TextSpan(
                                     text:
-                                        '\$ ${controller.myRidesModel.value.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.origin?.originDestinationFair}',
+                                        '\$ ${controller.myRidesModel.value.confirmDriverDetails?[0]?.price}',
                                     style: TextStyleUtil.k16Semibold(
                                         fontSize: 16.kh,
                                         color: ColorUtil.kSecondary01),
@@ -269,7 +269,7 @@ class RiderConfirmedRideDetailsView
                                                 "${controller.myRidesModel.value.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.ridersDetails?[index]?.profilePic?.url}"))),
                               ).paddingOnly(bottom: 4.kh),
                               Text(
-                                "${controller.myRidesModel.value.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.ridersDetails?[index]?.fullName.toString().split(" ").first}\n${controller.myRidesModel.value.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.ridersDetails?[index]?.fullName.toString().split(" ").last}",
+                                "${controller.myRidesModel.value.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.ridersDetails?[index]?.fullName.toString().split(" ").first}",
                                 style: TextStyleUtil.k12Semibold(),
                                 textAlign: TextAlign.center,
                               ),
@@ -458,7 +458,7 @@ class RiderConfirmedRideDetailsView
             const GreenPoolDivider().paddingOnly(top: 8.kh),
             GreenPoolButton(
               onPressed: () {},
-              label: 'Message',
+              label: Strings.message,
             ).paddingOnly(top: 40.kh, bottom: 16.kh),
             GreenPoolButton(
               onPressed: () {},

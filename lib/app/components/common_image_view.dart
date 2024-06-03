@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:green_pool/generated/assets.dart';
 
 // ignore: must_be_immutable
 class CommonImageView extends StatelessWidget {
@@ -28,7 +29,7 @@ class CommonImageView extends StatelessWidget {
     this.height,
     this.width,
     this.fit = BoxFit.cover,
-    this.placeHolder = 'assets/images/image_not_found.png',
+    this.placeHolder = Assets.splashSplashLogo,
   });
 
   @override

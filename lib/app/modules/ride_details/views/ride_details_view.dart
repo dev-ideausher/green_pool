@@ -13,17 +13,19 @@ import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
 import '../../../constants/image_constant.dart';
+import '../../../res/strings.dart';
 import '../../home/controllers/home_controller.dart';
 import '../controllers/ride_details_controller.dart';
 import 'copassenger_list.dart';
 
 class RideDetailsView extends GetView<RideDetailsController> {
   const RideDetailsView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const GreenPoolAppBar(
-        title: Text('Ride Details'),
+      appBar: GreenPoolAppBar(
+        title: Text(Strings.rideDetails),
       ),
       body: SizedBox(),
       /*Column(

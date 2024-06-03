@@ -47,6 +47,7 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
               ).paddingOnly(bottom: 8.kh),
               GreenPoolTextField(
                 hintText: 'Enter here',
+                keyboardType:  TextInputType.emailAddress,
                 // controller: controller.phoneNumberController,
                 // validator: (value) => controller.phoneNumberValidator(value),
                 onchanged: (v) {},

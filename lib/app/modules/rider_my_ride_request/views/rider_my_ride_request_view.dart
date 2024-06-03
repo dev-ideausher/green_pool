@@ -6,6 +6,7 @@ import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../constants/image_constant.dart';
+import '../../../res/strings.dart';
 import '../../../services/colors.dart';
 import '../../../services/text_style_util.dart';
 import '../../home/controllers/home_controller.dart';
@@ -65,7 +66,7 @@ class RiderMyRideRequestView extends GetView<RiderMyRideRequestController> {
                   labelColor: Get.find<HomeController>().isPinkModeOn.value
                       ? ColorUtil.kPrimary3PinkMode
                       : ColorUtil.kSecondary01,
-                  tabs: const [
+                  tabs:  [
                     Tab(
                       child: Text(
                         'Confirm Requests',
@@ -73,7 +74,7 @@ class RiderMyRideRequestView extends GetView<RiderMyRideRequestController> {
                     ),
                     Tab(
                       child: Text(
-                        'Send Requests',
+                        Strings.sendRequests,
                       ),
                     ),
                   ]).paddingSymmetric(horizontal: 16.kw),

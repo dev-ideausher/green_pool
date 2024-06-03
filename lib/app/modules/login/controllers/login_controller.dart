@@ -159,9 +159,15 @@ class LoginController extends GetxController {
     } else {
       Get.offNamed(Routes.CREATE_ACCOUNT, arguments: {
         'isDriver': isDriver,
-        'fromNavBar': false,
+        'fromNavBar': fromNavBar,
         'postRideModel': postRideModel.value
       });
     }
+  }
+
+  Future<void> appleAuth() async {
+    Get.lazyPut(() => VerifyController());
+    await Get.find<AuthService>().apple();
+    await Get.find<VerifyController>().loginAPI();
   }
 }

@@ -161,7 +161,7 @@ class DriverConfirmRequestModelDataRideDetailsRiderDetails {
   bool? pinkMode;
   DriverConfirmRequestModelDataRideDetailsRiderDetailsNotificationPreferences?
       notificationPreferences;
-  int? rating;
+  double? rating;
   int? totalRides;
 
   DriverConfirmRequestModelDataRideDetailsRiderDetails({
@@ -219,7 +219,7 @@ class DriverConfirmRequestModelDataRideDetailsRiderDetails {
         ? DriverConfirmRequestModelDataRideDetailsRiderDetailsNotificationPreferences
             .fromJson(json['notificationPreferences'])
         : null;
-    rating = json['rating']?.toInt();
+    rating = json['rating']?.toDouble();
     totalRides = json['totalRides']?.toInt();
   }
   Map<String, dynamic> toJson() {
@@ -1195,7 +1195,7 @@ class DriverConfirmRequestModel {
 
   bool? status;
   String? message;
-  List<DriverConfirmRequestModelData?>? data;
+  List<DriverConfirmRequestModelData>? data;
 
   DriverConfirmRequestModel({
     this.status,

@@ -145,8 +145,10 @@ class LoginView extends GetView<LoginController> {
                 ).paddingOnly(bottom: 40.kh),
                 Socials(
                   onPressedGoogle: () {
-                    //TODO: googleAuth
-                    controller.googleAuth();
+                   controller.googleAuth();
+                  },
+                  onPressedApple: () {
+                    controller.appleAuth();
                   },
                 ),
                 const Expanded(child: SizedBox()),

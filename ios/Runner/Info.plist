@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Green Pool</string>
+	<string>Greenpool</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -15,7 +15,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>green_pool</string>
+	<string>Greenpool</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -29,7 +29,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>app-1-523344243189-ios-dd0e1ca94fb1a18e7e58bc</string>
+				<string>com.googleusercontent.apps.523344243189-6fp5otgbsfl1erueb8qvp93sj833d217</string>
 			</array>
 		</dict>
 	</array>
@@ -49,7 +49,7 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This app needs access to location when open.</string>
     <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-    <string>Your location is required for fetch local doctor</string>
+    <string>Your location is required for fetch local driver</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>
@@ -78,5 +78,7 @@
      <string>Photo Library Use</string>
      <key>NSCameraUsageDescription</key>
      <string>Camera Library Use</string>
+     <key>GoogleService-Info</key>
+     <string>${PROJECT_DIR}/GoogleService-Info.plist</string>
 </dict>
 </plist>

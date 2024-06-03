@@ -20,6 +20,7 @@ import '../controllers/file_dispute_controller.dart';
 
 class FileDisputeView extends GetView<FileDisputeController> {
   const FileDisputeView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,105 +37,65 @@ class FileDisputeView extends GetView<FileDisputeController> {
                       style: TextStyleUtil.k18Heading600(),
                     ),
                   )
-                : SizedBox(),
-
-        /*Column(
+                : Column(
                     children: [
                       Expanded(
                         child: ListView.builder(
-                          itemCount:
-                              controller.rideHistModel.value.data?.length,
+                          itemCount: controller.rideHistModel.value.data?.length,
                           itemBuilder: (context, index) {
                             return Container(
                               padding: EdgeInsets.all(16.kh),
                               decoration: BoxDecoration(
                                   color: ColorUtil.kWhiteColor,
                                   borderRadius: BorderRadius.circular(8.kh),
-                                  border: Border(
-                                      bottom: BorderSide(
-                                          color: ColorUtil.kNeutral7,
-                                          width: 2.kh))),
+                                  border: Border(bottom: BorderSide(color: ColorUtil.kNeutral7, width: 2.kh))),
                               child: Column(
                                 children: [
+
+                                  12.kheightBox,
                                   Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        '${controller.rideHistModel.value.data?[index]?.driverBookingDetails?[0]?.time ?? "00:00"}',
-                                        style: TextStyleUtil.k16Bold(),
-                                      ),
-                                      SizedBox(
-                                        height: 24.kh,
-                                        width: 170.kw,
-                                        child: ListView.builder(
-                                          itemCount: controller
-                                                      .rideHistModel
-                                                      .value
-                                                      .data?[index]
-                                                      ?.driverBookingDetails?[0]
-                                                      ?.riders
-                                                      ?.length ==
-                                                  0
-                                              ? 4
-                                              : controller
-                                                  .rideHistModel
-                                                  .value
-                                                  .data?[index]
-                                                  ?.driverBookingDetails?[0]
-                                                  ?.riders
-                                                  ?.length,
-                                          reverse: true,
-                                          scrollDirection: Axis.horizontal,
-                                          itemBuilder: (context, index1) {
-                                            return Container(
-                                              decoration: const BoxDecoration(
-                                                shape: BoxShape.circle,
-                                              ),
-                                              child: ClipOval(
-                                                child: SizedBox.fromSize(
-                                                  size: Size.fromRadius(12.kh),
-                                                  child: (controller
-                                                                  .rideHistModel
-                                                                  .value
-                                                                  .data?[index]
-                                                                  ?.driverBookingDetails?[
-                                                                      0]
-                                                                  ?.riders
-                                                                  ?.length ??
-                                                              0) ==
-                                                          0
-                                                      ? Image.asset(
-                                                          ImageConstant
-                                                              .pngEmptyPassenger,
-                                                        )
-                                                      : CommonImageView(
-                                                          url:
-                                                              "${controller.rideHistModel.value.data?[index]?.driverBookingDetails?[0]?.riders?[index1]?.profilePic?.url}"),
-                                                ),
-                                              ),
-                                            ).paddingOnly(right: 4.kw);
-                                          },
-                                        ),
-                                      ),
-                                    ],
-                                  ).paddingOnly(bottom: 8.kh),
-                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       SvgPicture.asset(
                                         ImageConstant.svgIconCalendarTime,
-                                        colorFilter: ColorFilter.mode(
-                                            Get.find<HomeController>()
-                                                    .isPinkModeOn
-                                                    .value
-                                                ? ColorUtil.kPrimary3PinkMode
-                                                : ColorUtil.kSecondary01,
-                                            BlendMode.srcIn),
+                                        colorFilter:
+                                            ColorFilter.mode(Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01, BlendMode.srcIn),
                                       ).paddingOnly(right: 4.kw),
-                                      Text(
-                                        '${controller.rideHistModel.value.data?[index]?.driverBookingDetails?[0]?.date.toString().split("T").first ?? ""}  ${controller.rideHistModel.value.data?[index]?.driverBookingDetails?[0]?.time ?? ""}',
-                                        style: TextStyleUtil.k12Regular(
-                                            color: ColorUtil.kBlack03),
+                                      /*Text(
+                                        '${controller.rideHistModel.value.data?[index]?.driver?.fullName ?? ""} ',
+                                        style: TextStyleUtil.k12Regular(color: ColorUtil.kBlack03),
+                                      ),*/
+                                      Align(
+                                        alignment: Alignment.centerRight,
+                                        child: SizedBox(
+                                          height: 24.kh,
+                                          width: 170.kw,
+                                          child: Align(
+                                            alignment: Alignment.centerRight,
+                                            child: ListView.builder(
+                                              shrinkWrap: true,
+                                              itemCount: controller.rideHistModel.value.data?[index]?.riders?.length,
+                                              scrollDirection: Axis.horizontal,
+                                              itemBuilder: (context, index1) {
+                                                return Container(
+                                                  decoration: const BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                  ),
+                                                  child: ClipOval(
+                                                    child: SizedBox.fromSize(
+                                                      size: Size.fromRadius(12.kh),
+                                                      child: (controller.rideHistModel.value.data?[index]?.riders?.length ?? 0) == 0
+                                                          ? Image.asset(
+                                                        ImageConstant.pngEmptyPassenger,
+                                                      )
+                                                          : CommonImageView(url: controller.rideHistModel.value.data?[index]!.riders?[index1]?.profilePic?.url ?? ""),
+                                                    ),
+                                                  ),
+                                                ).paddingOnly(right: 4.kw);
+                                              },
+                                            ),
+                                          ),
+                                        ),
                                       ),
                                     ],
                                   ).paddingOnly(bottom: 8.kh),
@@ -145,10 +106,8 @@ class FileDisputeView extends GetView<FileDisputeController> {
                                   ).paddingOnly(bottom: 16.kh),
                                   OriginToDestination(
                                       needPickupText: false,
-                                      origin:
-                                          "${controller.rideHistModel.value.data?[index]?.driverBookingDetails?[0]?.origin?.name}",
-                                      destination:
-                                          "${controller.rideHistModel.value.data?[index]?.driverBookingDetails?[0]?.destination?.name}}"),
+                                      origin: "${controller.rideHistModel.value.data?[index]?.origin?.name}",
+                                      destination: "${controller.rideHistModel.value.data?[index]?.destination?.name}}"),
                                   Container(
                                     width: 100.w,
                                     height: 1.kh,
@@ -156,24 +115,14 @@ class FileDisputeView extends GetView<FileDisputeController> {
                                   ).paddingOnly(bottom: 16.kh),
                                   GreenPoolButton(
                                     onPressed: () {
-                                      Get.toNamed(Routes.SUBMIT_DISPUTE,
-                                          arguments: controller.rideHistModel
-                                              .value.data?[index]?.Id);
+                                      Get.toNamed(Routes.SUBMIT_DISPUTE, arguments: controller.rideHistModel.value.data?[index]?.Id);
                                     },
                                     isBorder: true,
                                     height: 40.kh,
                                     padding: EdgeInsets.all(8.kh),
                                     fontSize: 14.kh,
-                                    borderColor: Get.find<HomeController>()
-                                            .isPinkModeOn
-                                            .value
-                                        ? ColorUtil.kPrimary3PinkMode
-                                        : ColorUtil.kSecondary01,
-                                    labelColor: Get.find<HomeController>()
-                                            .isPinkModeOn
-                                            .value
-                                        ? ColorUtil.kPrimary3PinkMode
-                                        : ColorUtil.kSecondary01,
+                                    borderColor: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01,
+                                    labelColor: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01,
                                     label: Strings.fileDispute,
                                   ),
                                 ],
@@ -183,7 +132,7 @@ class FileDisputeView extends GetView<FileDisputeController> {
                         ).paddingOnly(top: 32.kh),
                       ),
                     ],
-                  ).paddingSymmetric(horizontal: 16.kw),*/
+                  ).paddingSymmetric(horizontal: 16.kw),
       ),
     );
   }
