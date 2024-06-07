@@ -33,69 +33,86 @@ class MyRidesPageView extends GetView<MyRidesPageController> {
       ),
       body: Get.find<GetStorageService>().getLoggedIn
           ? SafeArea(
-              child: DefaultTabController(
-                length: 3,
-                child: Column(
-                  children: [
-                    TabBar(
-
-                        onTap: (index) async {
-                          if (index == 0) {
-                            await Get.find<MyRidesOneTimeController>().myRidesAPI(isRecurring: true);
-                          } else {
-                            await Get.find<MyRidesOneTimeController>().myRidesAPI();
-                          }
-                        },
-                        indicatorSize: TabBarIndicatorSize.tab,
-                        splashBorderRadius: BorderRadius.circular(4.kh),
-                        unselectedLabelStyle: TextStyleUtil.k14Semibold(color: ColorUtil.kSecondary01),
-                        labelStyle: TextStyleUtil.k14Semibold(
-                          color: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01,
-                        ),
-                        overlayColor: MaterialStatePropertyAll(ColorUtil.kSecondary01.withOpacity(0.05)),
-                        indicator: UnderlineTabIndicator(
-                          borderSide: BorderSide(
-                              color: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01, width: 2.kh),
-                        ),
-                        isScrollable: true,
-                        tabAlignment: TabAlignment.center,
-                        labelColor: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01,
-                        tabs: [
-                          Tab(
-                            child: Text(
-                              Strings.allRides,
-                            ),
-                          ),
-                          Tab(
-                            child: Text(
-                              Strings.ridesBooked,
-                            ),
-                          ),
-                          Tab(
-                            child: Text(
-                              Strings.ridesPublished,
-                            ),
-                          ),
-                          /*  Tab(
+              child: Get.find<HomeController>().userInfo.value.data?.isDriver ??
+                      false
+                  ? DefaultTabController(
+                      length: 3,
+                      child: Column(
+                        children: [
+                          TabBar(
+                              onTap: (index) async {
+                                if (index == 0) {
+                                  await Get.find<MyRidesOneTimeController>()
+                                      .myRidesAPI(isRecurring: true);
+                                } else {
+                                  await Get.find<MyRidesOneTimeController>()
+                                      .myRidesAPI();
+                                }
+                              },
+                              indicatorSize: TabBarIndicatorSize.tab,
+                              splashBorderRadius: BorderRadius.circular(4.kh),
+                              unselectedLabelStyle: TextStyleUtil.k14Semibold(
+                                  color: ColorUtil.kSecondary01),
+                              labelStyle: TextStyleUtil.k14Semibold(
+                                color: Get.find<HomeController>()
+                                        .isPinkModeOn
+                                        .value
+                                    ? ColorUtil.kPrimary3PinkMode
+                                    : ColorUtil.kSecondary01,
+                              ),
+                              overlayColor: MaterialStatePropertyAll(
+                                  ColorUtil.kSecondary01.withOpacity(0.05)),
+                              indicator: UnderlineTabIndicator(
+                                borderSide: BorderSide(
+                                    color: Get.find<HomeController>()
+                                            .isPinkModeOn
+                                            .value
+                                        ? ColorUtil.kPrimary3PinkMode
+                                        : ColorUtil.kSecondary01,
+                                    width: 2.kh),
+                              ),
+                              isScrollable: false,
+                              labelColor:
+                                  Get.find<HomeController>().isPinkModeOn.value
+                                      ? ColorUtil.kPrimary3PinkMode
+                                      : ColorUtil.kSecondary01,
+                              tabs: [
+                                Tab(
+                                  child: Text(
+                                    Strings.allRides,
+                                  ),
+                                ),
+                                Tab(
+                                  child: Text(
+                                    Strings.driver,
+                                  ),
+                                ),
+                                Tab(
+                                  child: Text(
+                                    Strings.rider,
+                                  ),
+                                ),
+                                /*  Tab(
                             child: Text(
                               Strings.recurringTrips,
                             ),
                           ),*/
-                        ]).paddingSymmetric(horizontal: 16.kw),
-                    Expanded(
-                      child: TabBarView(
-                        physics: NeverScrollableScrollPhysics(),
-                        children: [
-                          MyRidesOneTimeView(),
-                          MyRidesOneTimeView(type: Strings.booked),
-                          MyRidesOneTimeView(type: Strings.published),
-                          //  MyRidesRecurringView()
+                              ]).paddingSymmetric(horizontal: 16.kw),
+                          Expanded(
+                            child: TabBarView(
+                              physics: NeverScrollableScrollPhysics(),
+                              children: [
+                                MyRidesOneTimeView(),
+                                MyRidesOneTimeView(type: Strings.booked),
+                                MyRidesOneTimeView(type: Strings.published),
+                                //  MyRidesRecurringView()
+                              ],
+                            ),
+                          ),
                         ],
                       ),
-                    ),
-                  ],
-                ),
-              ),
+                    )
+                  : MyRidesOneTimeView(),
             )
           : Center(
               child: Text(

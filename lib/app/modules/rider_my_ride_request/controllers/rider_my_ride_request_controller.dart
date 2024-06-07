@@ -58,7 +58,8 @@ class RiderMyRideRequestController extends GetxController {
     try {
       // need driver id which will come from confirm ride by rider
       isLoading.value = true;
-      final confirmReqResponse = await APIManager.getAllRiderConfirmRequest(driverRideId: rideIdFromMyRides);
+      final confirmReqResponse = await APIManager.getAllRiderConfirmRequest(
+          driverRideId: rideIdFromMyRides);
       var data = jsonDecode(confirmReqResponse.toString());
       riderConfirmRequestModel.value = RiderConfirmRequestModel.fromJson(data);
       isLoading.value = false;
@@ -71,7 +72,8 @@ class RiderMyRideRequestController extends GetxController {
     // to view list of drivers available on same route in SendRequest View (riders side)
     try {
       isLoading.value = true;
-      final response = await APIManager.postAllRiderSendRequest(rideId: rideIdFromMyRides);
+      final response =
+          await APIManager.postAllRiderSendRequest(rideId: rideIdFromMyRides);
       var data = jsonDecode(response.toString());
       riderSendRequestModel.value = RiderSendRequestModel.fromJson(data);
       isLoading.value = false;
@@ -80,15 +82,19 @@ class RiderMyRideRequestController extends GetxController {
     }
   }
 
-  sendRideRequestToDriverAPI(RiderSendRequestModelData riderSendRequestModelData) async {
+  sendRideRequestToDriverAPI(
+      RiderSendRequestModelData riderSendRequestModelData) async {
     //rider will send request to matching drivers going on the same path (in rider send request section)
     // and
     //rider can accept the request sent by driver (in rider confirm request section)
 
     final String driverRideId = "${riderSendRequestModelData.Id}";
     final String driverId = "${riderSendRequestModelData.driverId}";
-    final String driverName = "${riderSendRequestModelData.driverDetails?[0]?.fullName}";
-    final dynamic driverNotificationPref = riderSendRequestModelData.driverDetails?[0]?.notificationPreferences!.toJson();
+    final String driverName =
+        "${riderSendRequestModelData.driverDetails?[0]?.fullName}";
+    final dynamic driverNotificationPref = riderSendRequestModelData
+        .driverDetails?[0]?.notificationPreferences!
+        .toJson();
 
     final Map<String, dynamic> rideData = {
       "riderRideId": rideIdFromMyRides,
@@ -103,7 +109,6 @@ class RiderMyRideRequestController extends GetxController {
       print(response);
       if (response.data['status']) {
         allRiderSendRequestAPI();
-        allRiderSendRequestAPI();
         showBottom();
       } else {
         showMySnackbar(msg: response.data['message']);
@@ -115,8 +120,11 @@ class RiderMyRideRequestController extends GetxController {
 
   acceptDriversRequestAPI(int index, {bool showAcceptBottom = false}) async {
     try {
-      final response = await APIManager.acceptDriversRequest(
-          body: {"ridePostId": riderConfirmRequestModel.value.data?[index]?.Id, "price": (riderConfirmRequestModel.value.data?[index]?.price ?? 0).toString()});
+      final response = await APIManager.acceptDriversRequest(body: {
+        "ridePostId": riderConfirmRequestModel.value.data?[index]?.Id,
+        "price":
+            (riderConfirmRequestModel.value.data?[index]?.price ?? 0).toString()
+      });
       if (response.data['status']) {
         allRiderConfirmRequestAPI();
         if (showAcceptBottom) {
@@ -135,7 +143,9 @@ class RiderMyRideRequestController extends GetxController {
 
   rejectDriversRequestAPI(int index) async {
     try {
-      final response = await APIManager.rejectDriversRequest(body: {"ridePostId": riderConfirmRequestModel.value.data?[index]?.Id});
+      final response = await APIManager.rejectDriversRequest(body: {
+        "ridePostId": riderConfirmRequestModel.value.data?[index]?.Id
+      });
       allRiderConfirmRequestAPI();
       showMySnackbar(msg: response.data["message"]);
       Get.back();
@@ -146,7 +156,8 @@ class RiderMyRideRequestController extends GetxController {
 
   openMessage(RiderSendRequestModelData data) async {
     try {
-      final res = await APIManager.getChatRoomId(receiverId: data.driverDetails?[0]?.Id ?? "");
+      final res = await APIManager.getChatRoomId(
+          receiverId: data.driverDetails?[0]?.Id ?? "");
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
               chatRoomId: res.data["chatChannelId"] ?? "",
@@ -155,14 +166,19 @@ class RiderMyRideRequestController extends GetxController {
               image: data.driverDetails?[0]?.profilePic?.url));
     } catch (e) {
       Get.toNamed(Routes.CHAT_PAGE,
-          arguments: ChatArg(id: data.driverDetails?[0]?.Id, name: data.driverDetails?[0]?.fullName, image: data.driverDetails?[0]?.profilePic?.url));
+          arguments: ChatArg(
+              id: data.driverDetails?[0]?.Id,
+              name: data.driverDetails?[0]?.fullName,
+              image: data.driverDetails?[0]?.profilePic?.url));
       debugPrint(e.toString());
     }
   }
 
-  openMessageFromConfirm(RiderConfirmRequestModelDataDriverRideDetails? data) async {
+  openMessageFromConfirm(
+      RiderConfirmRequestModelDataDriverRideDetails? data) async {
     try {
-      final res = await APIManager.getChatRoomId(receiverId: data?.driverId ?? "");
+      final res =
+          await APIManager.getChatRoomId(receiverId: data?.driverId ?? "");
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
               chatRoomId: res.data["chatChannelId"] ?? "",
@@ -171,8 +187,10 @@ class RiderMyRideRequestController extends GetxController {
               image: data?.driverDetails?.firstOrNull?.profilePic?.url));
     } catch (e) {
       Get.toNamed(Routes.CHAT_PAGE,
-          arguments:
-              ChatArg(id: data?.driverId, name: data?.driverDetails?.firstOrNull?.fullName ?? "", image: data?.driverDetails?.firstOrNull?.profilePic?.url));
+          arguments: ChatArg(
+              id: data?.driverId,
+              name: data?.driverDetails?.firstOrNull?.fullName ?? "",
+              image: data?.driverDetails?.firstOrNull?.profilePic?.url));
       debugPrint(e.toString());
     }
   }

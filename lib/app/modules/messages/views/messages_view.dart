@@ -24,7 +24,8 @@ class MessagesView extends GetView<MessagesController> {
     Get.lazyPut(() => MessagesController());
     controller.getMessageListAPI();
     return Scaffold(
-      appBar: GreenPoolAppBar(title: Text(Strings.messages), leading: SizedBox()),
+      appBar:
+          GreenPoolAppBar(title: Text(Strings.messages), leading: SizedBox()),
       body: Get.find<GetStorageService>().getLoggedIn
           ? Obx(
               () => controller.isLoading.value
@@ -38,20 +39,41 @@ class MessagesView extends GetView<MessagesController> {
                           ),
                         )
                       : ListView.builder(
-                          itemCount: controller.messagesModel.value.chatRoomIds!.length,
+                          itemCount: controller
+                              .messagesModel.value.chatRoomIds!.length,
                           itemBuilder: (context, index) {
-                            final message = controller.messagesModel.value.chatRoomIds?[index];
+                            final message = controller
+                                .messagesModel.value.chatRoomIds?[index];
                             return MessageTile(
-                                onTap: () {
-                                  Get.toNamed(Routes.CHAT_PAGE,
-                                      arguments:
-                                          ChatArg(chatRoomId: message?.chatRoomId ?? "", id: message?.user2?.Id??"", image: message?.user2?.profilePic?.url, name: message?.user2?.fullName));
-                                },
-                                title: controller.messagesModel.value.chatRoomIds?[index]?.user2?.fullName ?? "",
-                                path: controller.messagesModel.value.chatRoomIds?[index]?.user2?.profilePic?.url ?? "",
-                                subtitle: message?.lastMessage ?? "").paddingOnly( top: 8.kh);
+                                    onTap: () {
+                                      Get.toNamed(Routes.CHAT_PAGE,
+                                          arguments: ChatArg(
+                                              chatRoomId:
+                                                  message?.chatRoomId ?? "",
+                                              id: message?.user2?.Id ?? "",
+                                              image: message
+                                                  ?.user2?.profilePic?.url,
+                                              name: message?.user2?.fullName));
+                                    },
+                                    title: controller
+                                            .messagesModel
+                                            .value
+                                            .chatRoomIds?[index]
+                                            ?.user2
+                                            ?.fullName ??
+                                        "",
+                                    path: controller
+                                            .messagesModel
+                                            .value
+                                            .chatRoomIds?[index]
+                                            ?.user2
+                                            ?.profilePic
+                                            ?.url ??
+                                        "",
+                                    subtitle: message?.lastMessage ?? "")
+                                .paddingOnly(top: 8.kh);
                           },
-                        ).paddingOnly(left: 16.kw, right: 16.kw, top: 32.kh),
+                        ).paddingOnly(left: 16.kw, right: 16.kw, top: 8.kh),
             )
           : Center(
               child: Text(
@@ -81,7 +103,8 @@ class MessageTile extends StatelessWidget {
       child: ListTile(
         tileColor: ColorUtil.kWhiteColor,
         onTap: onTap,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.kh)),
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.kh)),
         title: Text(
           title,
           style: TextStyleUtil.k14Semibold(),

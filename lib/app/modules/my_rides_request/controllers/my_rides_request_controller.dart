@@ -21,8 +21,10 @@ class MyRidesRequestController extends GetxController {
   double latitude = Get.find<HomeController>().latitude.value;
   double longitude = Get.find<HomeController>().longitude.value;
   RxBool isLoading = true.obs;
-  final Rx<DriverSendRequestModel> sendRequestModel = DriverSendRequestModel().obs;
-  final Rx<DriverConfirmRequestModel> confirmRequestModel = DriverConfirmRequestModel().obs;
+  final Rx<DriverSendRequestModel> sendRequestModel =
+      DriverSendRequestModel().obs;
+  final Rx<DriverConfirmRequestModel> confirmRequestModel =
+      DriverConfirmRequestModel().obs;
   var sendRiderRequestModel = SendRiderRequestModel().obs;
   final Rx<RideDetailId> rideDetailId = RideDetailId().obs;
 
@@ -44,7 +46,8 @@ class MyRidesRequestController extends GetxController {
     // this api will show all the confirmed rides (which the customer has confrimed that they will go with the particular driver)
     try {
       // need driver id which will come from confirm ride by rider
-      final confirmReqResponse = await APIManager.getAllDriverConfirmRequest(driverRideId: rideDetailId.value.driverRidId ?? "");
+      final confirmReqResponse = await APIManager.getAllDriverConfirmRequest(
+          driverRideId: rideDetailId.value.driverRidId ?? "");
       var data = jsonDecode(confirmReqResponse.toString());
       confirmRequestModel.value = DriverConfirmRequestModel.fromJson(data);
       isLoading = false.obs;
@@ -56,12 +59,17 @@ class MyRidesRequestController extends GetxController {
 
   acceptRidersRequestAPI(DriverConfirmRequestModelData? driverRideData) async {
     try {
-      final acceptRiderResponse = await APIManager.postAcceptRiderRequest(body: {"ridePostId": driverRideData?.Id ?? ""});
+      final acceptRiderResponse = await APIManager.postAcceptRiderRequest(
+          body: {"ridePostId": driverRideData?.Id ?? ""});
 
       if (acceptRiderResponse.data['status']) {
         allConfirmRequestAPI();
-        await Get.bottomSheet(BookingConfirmBottom(driverRideData: driverRideData),isScrollControlled: true);
-        showMySnackbar(msg: acceptRiderResponse.data?['message'] ?? 'Request accepted successfully!');
+        await Get.bottomSheet(
+            BookingConfirmBottom(driverRideData: driverRideData),
+            isScrollControlled: true);
+        showMySnackbar(
+            msg: acceptRiderResponse.data?['message'] ??
+                'Request accepted successfully!');
       } else {
         showMySnackbar(msg: acceptRiderResponse.data?['message'] ?? "");
       }
@@ -76,8 +84,10 @@ class MyRidesRequestController extends GetxController {
     final Map<String, dynamic> rideData = {"ridePostId": ridePostId};
 
     try {
-      final rejectRiderResponse = await APIManager.postRejectRiderRequest(body: rideData);
+      final rejectRiderResponse =
+          await APIManager.postRejectRiderRequest(body: rideData);
       var data = jsonDecode(rejectRiderResponse.toString());
+      Get.back();
       showMySnackbar(msg: 'Request rejected successfully!');
     } catch (e) {
       throw Exception(e);
@@ -87,7 +97,8 @@ class MyRidesRequestController extends GetxController {
   allSendRequestAPI() async {
     try {
       isLoading = true.obs;
-      final sendReqResponse = await APIManager.getAllDriverSendRequest(driverId: rideDetailId.value.driverRidId ?? "");
+      final sendReqResponse = await APIManager.getAllDriverSendRequest(
+          driverId: rideDetailId.value.driverRidId ?? "");
       var data = jsonDecode(sendReqResponse.toString());
       sendRequestModel.value = DriverSendRequestModel.fromJson(data);
       isLoading = false.obs;
@@ -97,11 +108,13 @@ class MyRidesRequestController extends GetxController {
   }
 
   sendRiderRequestAPI(DriverSendRequestModelData driverSendModelData) async {
-    final dynamic riderNotificationPref = driverSendModelData.riderDetails?[0]?.notificationPreferences!.toJson();
+    final dynamic riderNotificationPref =
+        driverSendModelData.riderDetails?[0]?.notificationPreferences!.toJson();
 
     try {
       // driver will send request to the customer (from send request view)
-      final sendRiderRequestResponse = await APIManager.postSendRequestToRider(body: {
+      final sendRiderRequestResponse =
+          await APIManager.postSendRequestToRider(body: {
         "riderRideId": driverSendModelData.Id,
         "driverRideId": rideDetailId.value.driverRidId,
         "riderName": driverSendModelData.riderDetails?[0]?.fullName,
@@ -122,7 +135,8 @@ class MyRidesRequestController extends GetxController {
 
   openMessage(DriverSendRequestModelData data) async {
     try {
-      final res = await APIManager.getChatRoomId(receiverId: data.riderDetails?[0]?.Id ?? "");
+      final res = await APIManager.getChatRoomId(
+          receiverId: data.riderDetails?[0]?.Id ?? "");
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
               chatRoomId: res.data["chatChannelId"] ?? "",
@@ -131,26 +145,32 @@ class MyRidesRequestController extends GetxController {
               image: data.riderDetails?[0]?.profilePic?.url));
     } catch (e) {
       Get.toNamed(Routes.CHAT_PAGE,
-          arguments: ChatArg(id: data.riderDetails?[0]?.Id, name: data.riderDetails?[0]?.fullName, image: data.riderDetails?[0]?.profilePic?.url));
+          arguments: ChatArg(
+              id: data.riderDetails?[0]?.Id,
+              name: data.riderDetails?[0]?.fullName,
+              image: data.riderDetails?[0]?.profilePic?.url));
       debugPrint(e.toString());
     }
   }
 
   openMessageConfirm(DriverConfirmRequestModelData data) async {
     try {
-      final res = await APIManager.getChatRoomId(receiverId: data.rideDetails?[0]?.Id ?? "");
+      final res = await APIManager.getChatRoomId(
+          receiverId: data.rideDetails?[0]?.Id ?? "");
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
               chatRoomId: res.data["chatChannelId"] ?? "",
               id: data.rideDetails?[0]?.Id,
               name: data.rideDetails?[0]?.riderDetails?.first?.fullName ?? "",
-              image: data.rideDetails?[0]?.riderDetails?.first?.profilePic?.url));
+              image:
+                  data.rideDetails?[0]?.riderDetails?.first?.profilePic?.url));
     } catch (e) {
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
               id: data.rideDetails?[0]?.Id,
               name: data.rideDetails?[0]?.riderDetails?.first?.fullName,
-              image: data.rideDetails?[0]?.riderDetails?.first?.profilePic?.url));
+              image:
+                  data.rideDetails?[0]?.riderDetails?.first?.profilePic?.url));
       debugPrint(e.toString());
     }
   }

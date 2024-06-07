@@ -28,9 +28,15 @@ class WalletView extends GetView<WalletController> {
               : Column(
                   children: [
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 16.kw, vertical: 24.kh),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 16.kw, vertical: 24.kh),
                       width: 100.w,
-                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(16.kh), gradient: const LinearGradient(colors: [ColorUtil.kPrimary04, ColorUtil.kPrimary01])),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(16.kh),
+                          gradient: const LinearGradient(colors: [
+                            ColorUtil.kPrimary04,
+                            ColorUtil.kPrimary01
+                          ])),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -40,9 +46,10 @@ class WalletView extends GetView<WalletController> {
                           ).paddingOnly(bottom: 16.kh),
                           Text(
                             "\$ ${controller.walletBalance.value}",
-                            style: TextStyleUtil.k32Heading700(color: ColorUtil.kSecondary01),
+                            style: TextStyleUtil.k32Heading700(
+                                color: ColorUtil.kSecondary01),
                           ).paddingOnly(bottom: 20.kh),
-                         /* Container(
+                          /* Container(
                             width: 126.kw,
                             padding: EdgeInsets.symmetric(horizontal: 24.kw, vertical: 8.kh),
                             decoration: BoxDecoration(color: ColorUtil.kSecondary01, borderRadius: BorderRadius.circular(80.kh)),
@@ -71,8 +78,7 @@ class WalletView extends GetView<WalletController> {
                     WalletTile(
                       title: Strings.sendMoneyToBankAccount,
                       path: ImageConstant.svgSendMoney,
-                      onTap: () =>controller.sendMoney(),
-
+                      onTap: () => controller.sendMoney(),
                     ).paddingOnly(bottom: 8.kh),
                     WalletTile(
                       title: Strings.transactionHistory,
@@ -103,7 +109,8 @@ class WalletTile extends StatelessWidget {
       child: ListTile(
         tileColor: ColorUtil.kWhiteColor,
         onTap: onTap,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.kh)),
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.kh)),
         title: Text(
           title,
           style: TextStyleUtil.k14Semibold(),
@@ -113,7 +120,9 @@ class WalletTile extends StatelessWidget {
           height: 48.kh,
           width: 48.kw,
           alignment: Alignment.center,
-          decoration: BoxDecoration(color: ColorUtil.kBlack07, borderRadius: BorderRadius.circular(12.kh)),
+          decoration: BoxDecoration(
+              color: ColorUtil.kBlack07,
+              borderRadius: BorderRadius.circular(12.kh)),
           child: CommonImageView(
             svgPath: path,
             height: 24.kh,

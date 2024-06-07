@@ -5,11 +5,13 @@ class Strings {
 
   static var yourRideIsArrived = "Your ride has arrived!";
 
-  static String youAreAboutToReachYourDestination = "You are about to reach your destination.";
+  static String youAreAboutToReachYourDestination =
+      "You are about to reach your destination.";
 
   static String sos = "SOS";
 
-  static String youWillReachYourDestinationIn = "You'll reach your destination in ";
+  static String youWillReachYourDestinationIn =
+      "You'll reach your destination in ";
 
   static var viewMatchingRiders = "View Matching Riders";
 
@@ -37,7 +39,8 @@ class Strings {
 
   static String termsAndConditions = "Terms and Condition";
 
-  static String agreeToTermsAndConditions = "Before you proceed you must read and agree to\nGreen Pool's Terms and Conditions.";
+  static String agreeToTermsAndConditions =
+      "Before you proceed you must read and agree to\nGreen Pool's Terms and Conditions.";
 
   static String driverDetails = 'Driver Details';
 
@@ -49,7 +52,8 @@ class Strings {
 
   static String coPassengers = 'Co-Passengers';
 
-  static String noPassengersAvailable = "No co-passengers are available at the moment";
+  static String noPassengersAvailable =
+      "No co-passengers are available at the moment";
 
   static String vehicleDetails = 'Vehicle Details';
 
@@ -173,11 +177,13 @@ class Strings {
 
   static String recurringTrips = 'Recurring Trips';
 
-  static String notPostedRecurringRides = "You have not posted any recurring rides";
+  static String notPostedRecurringRides =
+      "You have not posted any recurring rides";
 
   static String riderDetails = "Rider Details";
 
-  static String noRidesBetweenCities = "There are no rides between these two cities";
+  static String noRidesBetweenCities =
+      "There are no rides between these two cities";
 
   static String pleaseTryAgain = "Please try again after few days.";
 
@@ -212,21 +218,24 @@ class Strings {
 
   static String getStarted1 = "Save money ,\nShare rides &\nSocialize";
 
-  static String getStarted2 = "Let's make environment greener and\ncommuting smarter together!";
+  static String getStarted2 =
+      "Let's make environment greener and\ncommuting smarter together!";
 
   static String onboard1text1 = 'Find carpool effortlessly\nwith Greenpool';
 
   static String onboard1text2 =
       "Discover the convenience of sharing rides\nwith Greenpool. Whether you're a driver\nlooking to share your journey or a rider in\nneed of a ride, we've got you covered.";
 
-  static String onboard2text1 = 'Introducing Pinkpool exclusively for female users.';
+  static String onboard2text1 =
+      'Introducing Pinkpool exclusively for female users.';
 
   static String onboard2text2 =
       'Greenpool ensures safety for female\ncommuters with female drivers and SOS\nfeature, empowering journeys with\nconfidence and security.';
 
   static String onboard3text1 = 'Seamless ride sharing platform.';
 
-  static String onboard3text2 = 'Discover seamless Carpooling trip searches\nand rides with our unique features.\nExplore now.';
+  static String onboard3text2 =
+      'Discover seamless Carpooling trip searches\nand rides with our unique features.\nExplore now.';
 
   static String skip = 'Skip';
 
@@ -248,7 +257,8 @@ class Strings {
 
   static String vehicleSetup = 'Vehicle Setup';
 
-  static var areYouSureYouWantToDeleteThisChat = 'Are you sure you want to delete this chat?';
+  static var areYouSureYouWantToDeleteThisChat =
+      'Are you sure you want to delete this chat?';
 
   static var deleteChat = "Delete Chat";
 
@@ -274,7 +284,8 @@ class Strings {
 
   static var deleteRide = "Delete Ride";
 
-  static String areYouSureYouWantToDeleteThisRide = "Are you sure you want to delete this ride?";
+  static String areYouSureYouWantToDeleteThisRide =
+      "Are you sure you want to delete this ride?";
 
   static String chatWithOurExperts = "Chat with our experts";
 
@@ -300,21 +311,26 @@ class Strings {
 
   static String sendingSOS = "Sending SOS";
 
-  static String sosMessage = "Share message and location with emergency contacts";
+  static String sosMessage =
+      "Share message and location with emergency contacts";
 
   static var enterAdestination = "Enter a drop-off location";
 
   static var enterDestinationAddress = "Enter drop-off address";
 
-  static String pleaseLoginOrSignUp="Please Login or SignUp";
+  static String pleaseLoginOrSignUp = "Please Login or SignUp";
 
-  static String allRides="All Rides";
+  static String allRides = "All Rides";
 
-  static String ridesBooked="Rides Booked";
+  static String ridesBooked = "Rides Booked";
 
-  static String ridesPublished="Rides Published";
+  static String ridesPublished = "Rides Published";
 
-  static var booked ="Booked";
+  static String driver = "Driver";
 
-  static var published  ="Published";
+  static String rider = "Rider";
+
+  static var booked = "Booked";
+
+  static var published = "Published";
 }

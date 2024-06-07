@@ -9,7 +9,7 @@ class RideHistoryModelDataRidersNotificationPreferences {
   "payments": true,
   "transactions": true,
   "offers": true
-}
+} 
 */
 
   bool? trip;
@@ -25,7 +25,8 @@ class RideHistoryModelDataRidersNotificationPreferences {
     this.transactions,
     this.offers,
   });
-  RideHistoryModelDataRidersNotificationPreferences.fromJson(Map<String, dynamic> json) {
+  RideHistoryModelDataRidersNotificationPreferences.fromJson(
+      Map<String, dynamic> json) {
     trip = json['trip'];
     alerts = json['alerts'];
     payments = json['payments'];
@@ -49,7 +50,7 @@ class RideHistoryModelDataRidersIdPic {
   "key": "idPic/03fb4f4e-c5d2-4532-b301-e2a2753b9bdd-compressed_image_picker_6D053889-80A9-42C8-91F6-2D6F41BCDAF6-12556-0000078B873B8FDE.jpg",
   "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/idPic/03fb4f4e-c5d2-4532-b301-e2a2753b9bdd-compressed_image_picker_6D053889-80A9-42C8-91F6-2D6F41BCDAF6-12556-0000078B873B8FDE.jpg",
   "_id": "664b3d653732bc9ccad99165"
-}
+} 
 */
 
   String? key;
@@ -81,7 +82,7 @@ class RideHistoryModelDataRidersProfilePic {
   "key": "usersProfile/448341dc-ad54-46c9-8d55-116d059f7358-compressed_image_picker_76EB2E72-E7D5-4F31-A3F0-A0ECC32E8669-12556-0000078B4CDF0493.jpg",
   "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/448341dc-ad54-46c9-8d55-116d059f7358-compressed_image_picker_76EB2E72-E7D5-4F31-A3F0-A0ECC32E8669-12556-0000078B4CDF0493.jpg",
   "_id": "664b3d653732bc9ccad99164"
-}
+} 
 */
 
   String? key;
@@ -150,7 +151,7 @@ class RideHistoryModelDataRiders {
   "firebaseSignInProvider": "phone",
   "createdAt": "2024-05-20T08:25:51.820Z",
   "updatedAt": "2024-05-27T07:33:15.032Z"
-}
+} 
 */
 
   String? Id;
@@ -217,8 +218,12 @@ class RideHistoryModelDataRiders {
     phone = json['phone']?.toString();
     email = json['email']?.toString();
     city = json['city']?.toString();
-    profilePic = (json['profilePic'] != null) ? RideHistoryModelDataRidersProfilePic.fromJson(json['profilePic']) : null;
-    idPic = (json['idPic'] != null) ? RideHistoryModelDataRidersIdPic.fromJson(json['idPic']) : null;
+    profilePic = (json['profilePic'] != null)
+        ? RideHistoryModelDataRidersProfilePic.fromJson(json['profilePic'])
+        : null;
+    idPic = (json['idPic'] != null)
+        ? RideHistoryModelDataRidersIdPic.fromJson(json['idPic'])
+        : null;
     dob = json['dob']?.toString();
     gender = json['gender']?.toString();
     isDriver = json['isDriver'];
@@ -230,7 +235,10 @@ class RideHistoryModelDataRiders {
     rating = json['rating']?.toDouble();
     totalRides = json['totalRides']?.toInt();
     isRecurringTripEnabled = json['isRecurringTripEnabled'];
-    notificationPreferences = (json['notificationPreferences'] != null) ? RideHistoryModelDataRidersNotificationPreferences.fromJson(json['notificationPreferences']) : null;
+    notificationPreferences = (json['notificationPreferences'] != null)
+        ? RideHistoryModelDataRidersNotificationPreferences.fromJson(
+            json['notificationPreferences'])
+        : null;
     firebaseUid = json['firebaseUid']?.toString();
     firebaseSignInProvider = json['firebaseSignInProvider']?.toString();
     createdAt = json['createdAt']?.toString();
@@ -282,7 +290,7 @@ class RideHistoryModelDataDriverNotificationPreferences {
   "payments": true,
   "transactions": true,
   "offers": true
-}
+} 
 */
 
   bool? trip;
@@ -298,7 +306,8 @@ class RideHistoryModelDataDriverNotificationPreferences {
     this.transactions,
     this.offers,
   });
-  RideHistoryModelDataDriverNotificationPreferences.fromJson(Map<String, dynamic> json) {
+  RideHistoryModelDataDriverNotificationPreferences.fromJson(
+      Map<String, dynamic> json) {
     trip = json['trip'];
     alerts = json['alerts'];
     payments = json['payments'];
@@ -322,7 +331,7 @@ class RideHistoryModelDataDriverProfilePic {
   "key": "usersProfile/343e91cd-5339-4cb2-ab54-bb2c5c85ef7b-compressed_image_picker_E10F697C-B897-4693-A1EE-3FAC86253315-80244-000007221A4BE6ED.jpg",
   "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/343e91cd-5339-4cb2-ab54-bb2c5c85ef7b-compressed_image_picker_E10F697C-B897-4693-A1EE-3FAC86253315-80244-000007221A4BE6ED.jpg",
   "_id": "664af3b5cd651d9acab11363"
-}
+} 
 */
 
   String? key;
@@ -354,7 +363,7 @@ class RideHistoryModelDataDriverIdPic {
   "key": "idPic/14a1f67c-67d3-417a-88ab-de80318076ce-compressed_image_picker_27017447-33A6-4FD5-9E68-9E333A4519E7-80244-000007220A59499C.jpg",
   "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/idPic/14a1f67c-67d3-417a-88ab-de80318076ce-compressed_image_picker_27017447-33A6-4FD5-9E68-9E333A4519E7-80244-000007220A59499C.jpg",
   "_id": "664af3b5cd651d9acab11364"
-}
+} 
 */
 
   String? key;
@@ -421,7 +430,7 @@ class RideHistoryModelDataDriver {
   "totalRides": 0,
   "isRegister": true,
   "role": "user"
-}
+} 
 */
 
   String? Id;
@@ -490,12 +499,19 @@ class RideHistoryModelDataDriver {
     firebaseSignInProvider = json['firebaseSignInProvider']?.toString();
     createdAt = json['createdAt']?.toString();
     updatedAt = json['updatedAt']?.toString();
-    idPic = (json['idPic'] != null) ? RideHistoryModelDataDriverIdPic.fromJson(json['idPic']) : null;
-    profilePic = (json['profilePic'] != null) ? RideHistoryModelDataDriverProfilePic.fromJson(json['profilePic']) : null;
+    idPic = (json['idPic'] != null)
+        ? RideHistoryModelDataDriverIdPic.fromJson(json['idPic'])
+        : null;
+    profilePic = (json['profilePic'] != null)
+        ? RideHistoryModelDataDriverProfilePic.fromJson(json['profilePic'])
+        : null;
     status = json['status']?.toString();
     city = json['city']?.toString();
     pinkMode = json['pinkMode'];
-    notificationPreferences = (json['notificationPreferences'] != null) ? RideHistoryModelDataDriverNotificationPreferences.fromJson(json['notificationPreferences']) : null;
+    notificationPreferences = (json['notificationPreferences'] != null)
+        ? RideHistoryModelDataDriverNotificationPreferences.fromJson(
+            json['notificationPreferences'])
+        : null;
     rating = json['rating']?.toDouble();
     totalRides = json['totalRides']?.toInt();
     isRegister = json['isRegister'];
@@ -545,7 +561,7 @@ class RideHistoryModelDataDestination {
   "coordinates": [
     -101.6819128
   ]
-}
+} 
 */
 
   String? name;
@@ -593,14 +609,14 @@ class RideHistoryModelDataOrigin {
   "coordinates": [
     -101.6720515
   ],
-  "originDestinationFair": 100
-}
+  "originDestinationFair": "100"
+} 
 */
 
   String? name;
   String? type;
   List<double?>? coordinates;
-  int? originDestinationFair;
+  String? originDestinationFair;
 
   RideHistoryModelDataOrigin({
     this.name,
@@ -619,7 +635,7 @@ class RideHistoryModelDataOrigin {
       });
       coordinates = arr0;
     }
-    originDestinationFair = json['originDestinationFair']?.toInt();
+    originDestinationFair = json['originDestinationFair']?.toString();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -648,7 +664,7 @@ class RideHistoryModelData {
     "coordinates": [
       -101.6720515
     ],
-    "originDestinationFair": 100
+    "originDestinationFair": "100"
   },
   "destination": {
     "name": "Lake Rd, Division #23, Unorganized",
@@ -658,6 +674,7 @@ class RideHistoryModelData {
     ]
   },
   "date": "2024-05-22T12:05:03.255Z",
+  "time": "",
   "driver": {
     "_id": "65c228fd32f497dc57fdeff8",
     "fullName": "Amar",
@@ -742,13 +759,14 @@ class RideHistoryModelData {
       "updatedAt": "2024-05-27T07:33:15.032Z"
     }
   ]
-}
+} 
 */
 
   String? Id;
   RideHistoryModelDataOrigin? origin;
   RideHistoryModelDataDestination? destination;
   String? date;
+  String? time;
   RideHistoryModelDataDriver? driver;
   List<RideHistoryModelDataRiders?>? riders;
 
@@ -757,15 +775,23 @@ class RideHistoryModelData {
     this.origin,
     this.destination,
     this.date,
+    this.time,
     this.driver,
     this.riders,
   });
   RideHistoryModelData.fromJson(Map<String, dynamic> json) {
     Id = json['_id']?.toString();
-    origin = (json['origin'] != null) ? RideHistoryModelDataOrigin.fromJson(json['origin']) : null;
-    destination = (json['destination'] != null) ? RideHistoryModelDataDestination.fromJson(json['destination']) : null;
+    origin = (json['origin'] != null)
+        ? RideHistoryModelDataOrigin.fromJson(json['origin'])
+        : null;
+    destination = (json['destination'] != null)
+        ? RideHistoryModelDataDestination.fromJson(json['destination'])
+        : null;
     date = json['date']?.toString();
-    driver = (json['driver'] != null) ? RideHistoryModelDataDriver.fromJson(json['driver']) : null;
+    time = json['time']?.toString();
+    driver = (json['driver'] != null)
+        ? RideHistoryModelDataDriver.fromJson(json['driver'])
+        : null;
     if (json['riders'] != null) {
       final v = json['riders'];
       final arr0 = <RideHistoryModelDataRiders>[];
@@ -785,6 +811,7 @@ class RideHistoryModelData {
       data['destination'] = destination!.toJson();
     }
     data['date'] = date;
+    data['time'] = time;
     if (driver != null) {
       data['driver'] = driver!.toJson();
     }
@@ -813,7 +840,7 @@ class RideHistoryModel {
         "coordinates": [
           -101.6720515
         ],
-        "originDestinationFair": 100
+        "originDestinationFair": "100"
       },
       "destination": {
         "name": "Lake Rd, Division #23, Unorganized",
@@ -823,6 +850,7 @@ class RideHistoryModel {
         ]
       },
       "date": "2024-05-22T12:05:03.255Z",
+      "time": "",
       "driver": {
         "_id": "65c228fd32f497dc57fdeff8",
         "fullName": "Amar",
@@ -910,7 +938,7 @@ class RideHistoryModel {
     }
   ],
   "message": "Record found."
-}
+} 
 */
 
   bool? status;

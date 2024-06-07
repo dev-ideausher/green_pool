@@ -43,54 +43,79 @@ class RideHistoryView extends GetView<RideHistoryController> {
                     children: [
                       Expanded(
                         child: ListView.builder(
-                            itemCount: controller.rideHistModel.value.data?.length,
+                            itemCount:
+                                controller.rideHistModel.value.data?.length,
                             itemBuilder: (context, index) {
-                              final his = controller.rideHistModel.value.data?[index];
-                              return ((his?.driver?.Id ?? "") == Get.find<GetStorageService>().getFirebaseUid)
+                              final his =
+                                  controller.rideHistModel.value.data?[index];
+                              return ((his?.driver?.Id ?? "") ==
+                                      Get.find<GetStorageService>()
+                                          .getFirebaseUid)
                                   ? GestureDetector(
                                       onTap: () {
-                                        Get.toNamed(Routes.RIDE_DETAILS, arguments: controller.rideHistModel.value.data?[index]);
+                                        Get.toNamed(Routes.RIDE_DETAILS,
+                                            arguments: controller.rideHistModel
+                                                .value.data?[index]);
                                       },
                                       child: Container(
                                         padding: EdgeInsets.all(16.kh),
                                         decoration: BoxDecoration(
                                             color: ColorUtil.kWhiteColor,
-                                            borderRadius: BorderRadius.circular(8.kh),
-                                            border: Border(bottom: BorderSide(color: ColorUtil.kNeutral7, width: 2.kh))),
+                                            borderRadius:
+                                                BorderRadius.circular(8.kh),
+                                            border: Border(
+                                                bottom: BorderSide(
+                                                    color: ColorUtil.kNeutral7,
+                                                    width: 2.kh))),
                                         child: Column(
                                           children: [
                                             Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: [
                                                 Text(
                                                   '${(controller.rideHistModel.value.data?[index]?.driver?.fullName ?? "")}',
-                                                  style: TextStyleUtil.k16Bold(),
+                                                  style:
+                                                      TextStyleUtil.k16Bold(),
                                                 ),
                                                 SizedBox(
                                                   height: 24.kh,
                                                   width: 170.kw,
                                                   child: ListView.builder(
-                                                    itemCount: his?.riders?.length ?? 0,
+                                                    itemCount:
+                                                        his?.riders?.length ??
+                                                            0,
                                                     reverse: true,
-                                                    scrollDirection: Axis.horizontal,
-                                                    itemBuilder: (context, index1) {
+                                                    scrollDirection:
+                                                        Axis.horizontal,
+                                                    itemBuilder:
+                                                        (context, index1) {
                                                       return Container(
-                                                        decoration: const BoxDecoration(
-                                                          shape: BoxShape.circle,
+                                                        decoration:
+                                                            const BoxDecoration(
+                                                          shape:
+                                                              BoxShape.circle,
                                                         ),
                                                         child: ClipOval(
-                                                          child: SizedBox.fromSize(
-                                                            size: Size.fromRadius(12.kh),
-                                                            child: CommonImageView(url: "${his?.riders?[index1]?.profilePic?.url}"),
+                                                          child:
+                                                              SizedBox.fromSize(
+                                                            size:
+                                                                Size.fromRadius(
+                                                                    12.kh),
+                                                            child: CommonImageView(
+                                                                url:
+                                                                    "${his?.riders?[index1]?.profilePic?.url}"),
                                                           ),
                                                         ),
-                                                      ).paddingOnly(right: 4.kw);
+                                                      ).paddingOnly(
+                                                          right: 4.kw);
                                                     },
                                                   ),
                                                 ),
                                               ],
                                             ).paddingOnly(bottom: 8.kh),
-                                         /*   Row(
+                                            /*   Row(
                                               children: [
                                                 SvgPicture.asset(
                                                   ImageConstant.svgIconCalendarTime,
@@ -107,34 +132,35 @@ class RideHistoryView extends GetView<RideHistoryController> {
                                   ),
                                               ],
                                             ).paddingOnly(bottom: 8.kh),*/
-                                            Container(
-                                              width: 100.w,
-                                              height: 1.kh,
-                                              color: ColorUtil.kBlack07,
-                                            ).paddingOnly(bottom: 16.kh),
+                                            const GreenPoolDivider()
+                                                .paddingOnly(bottom: 16.kh),
                                             OriginToDestination(
-                                                needPickupText: false, origin: "${his?.origin?.name}", destination: "${his?.destination?.name}}"),
-                                            Container(
-                                              width: 100.w,
-                                              height: 1.kh,
-                                              color: ColorUtil.kBlack07,
-                                            ).paddingOnly(bottom: 16.kh),
+                                                needPickupText: false,
+                                                origin: "${his?.origin?.name}",
+                                                destination:
+                                                    "${his?.destination?.name}}"),
+                                            const GreenPoolDivider()
+                                                .paddingOnly(bottom: 16.kh),
                                           ],
                                         ),
                                       ).paddingOnly(bottom: 16.kh),
                                     )
                                   : GestureDetector(
                                       onTap: () {
-                                        Get.toNamed(Routes.RIDE_DETAILS, arguments: controller.rideHistModel.value.data?[index]);
+                                        Get.toNamed(Routes.RIDE_DETAILS,
+                                            arguments: controller.rideHistModel
+                                                .value.data?[index]);
                                       },
                                       child: Container(
                                         padding: EdgeInsets.all(16.kh),
                                         decoration: BoxDecoration(
                                           color: ColorUtil.kWhiteColor,
-                                          borderRadius: BorderRadius.circular(8.kh),
+                                          borderRadius:
+                                              BorderRadius.circular(8.kh),
                                         ),
                                         child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
                                             Row(
                                               children: [
@@ -144,10 +170,13 @@ class RideHistoryView extends GetView<RideHistoryController> {
                                                     Container(
                                                       height: 64.kh,
                                                       width: 64.kw,
-                                                      decoration: const BoxDecoration(
+                                                      decoration:
+                                                          const BoxDecoration(
                                                         shape: BoxShape.circle,
                                                       ),
-                                                      child: CommonImageView(url: "${his?.driver?.profilePic?.url}"),
+                                                      child: CommonImageView(
+                                                          url:
+                                                              "${his?.driver?.profilePic?.url}"),
                                                     ).paddingOnly(bottom: 8.kh),
                                                     Positioned(
                                                       top: 52.kh,
@@ -155,69 +184,107 @@ class RideHistoryView extends GetView<RideHistoryController> {
                                                       child: Container(
                                                         width: 50.kw,
                                                         height: 20.kh,
-                                                        padding: EdgeInsets.symmetric(horizontal: 8.kw),
+                                                        padding: EdgeInsets
+                                                            .symmetric(
+                                                                horizontal:
+                                                                    8.kw),
                                                         decoration: BoxDecoration(
-                                                            color: Get.find<HomeController>().isPinkModeOn.value
-                                                                ? ColorUtil.kPrimary3PinkMode
-                                                                : ColorUtil.kSecondary01,
-                                                            borderRadius: BorderRadius.circular(16.kh)),
+                                                            color: Get.find<
+                                                                        HomeController>()
+                                                                    .isPinkModeOn
+                                                                    .value
+                                                                ? ColorUtil
+                                                                    .kPrimary3PinkMode
+                                                                : ColorUtil
+                                                                    .kSecondary01,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        16.kh)),
                                                         child: Row(
                                                           children: [
                                                             Icon(
                                                               Icons.star,
-                                                              color: Get.find<HomeController>().isPinkModeOn.value
-                                                                  ? ColorUtil.kWhiteColor
-                                                                  : ColorUtil.kYellowColor,
+                                                              color: Get.find<
+                                                                          HomeController>()
+                                                                      .isPinkModeOn
+                                                                      .value
+                                                                  ? ColorUtil
+                                                                      .kWhiteColor
+                                                                  : ColorUtil
+                                                                      .kYellowColor,
                                                               size: 12.kh,
-                                                            ).paddingOnly(right: 2.kw),
+                                                            ).paddingOnly(
+                                                                right: 2.kw),
                                                             Text(
                                                               // '4.5',
                                                               "${his?.driver?.rating?.toStringAsFixed(1)}",
                                                               style: TextStyleUtil.k12Semibold(
-                                                                  color: Get.find<HomeController>().isPinkModeOn.value
-                                                                      ? ColorUtil.kBlack02
-                                                                      : ColorUtil.kWhiteColor),
+                                                                  color: Get.find<
+                                                                              HomeController>()
+                                                                          .isPinkModeOn
+                                                                          .value
+                                                                      ? ColorUtil
+                                                                          .kBlack02
+                                                                      : ColorUtil
+                                                                          .kWhiteColor),
                                                             ),
                                                           ],
                                                         ),
                                                       ),
                                                     ),
                                                   ],
-                                                ).paddingOnly(right: 16.kw, bottom: 16.kh),
+                                                ).paddingOnly(
+                                                    right: 16.kw,
+                                                    bottom: 16.kh),
                                                 //for name and date
                                                 Expanded(
                                                   child: Column(
-                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
                                                     children: [
                                                       Text(
                                                         // 'Savannah Nguyen',
                                                         "${his?.driver?.fullName}",
-                                                        style: TextStyleUtil.k16Bold(),
-                                                      ).paddingOnly(bottom: 8.kh),
+                                                        style: TextStyleUtil
+                                                            .k16Bold(),
+                                                      ).paddingOnly(
+                                                          bottom: 8.kh),
                                                       Row(
-                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
                                                         children: [
                                                           Row(
                                                             children: [
                                                               SvgPicture.asset(
-                                                                ImageConstant.svgIconCalendarTime,
+                                                                ImageConstant
+                                                                    .svgIconCalendarTime,
                                                                 colorFilter: ColorFilter.mode(
-                                                                    Get.find<HomeController>().isPinkModeOn.value
-                                                                        ? ColorUtil.kPrimary3PinkMode
-                                                                        : ColorUtil.kSecondary01,
-                                                                    BlendMode.srcIn),
-                                                              ).paddingOnly(right: 4.kw),
-                                                                 Text(
-                                                    // '07 Nov 2023, 3:00pm',
-                                                                   GpUtil.getDateFormat(his?.date),
-                                                    style: TextStyleUtil
-                                                        .k12Regular(
-                                                        color: ColorUtil
-                                                            .kBlack03),
-                                                  ),
+                                                                    Get.find<HomeController>()
+                                                                            .isPinkModeOn
+                                                                            .value
+                                                                        ? ColorUtil
+                                                                            .kPrimary3PinkMode
+                                                                        : ColorUtil
+                                                                            .kSecondary01,
+                                                                    BlendMode
+                                                                        .srcIn),
+                                                              ).paddingOnly(
+                                                                  right: 4.kw),
+                                                              Text(
+                                                                // '07 Nov 2023, 3:00pm',
+                                                                GpUtil.getDateFormat(
+                                                                    his?.date),
+                                                                style: TextStyleUtil
+                                                                    .k12Regular(
+                                                                        color: ColorUtil
+                                                                            .kBlack03),
+                                                              ),
                                                             ],
                                                           ),
-                                                          Row(
+                                                          /*Row(
                                                             children: [
                                                               Icon(
                                                                 Icons.time_to_leave,
@@ -226,15 +293,15 @@ class RideHistoryView extends GetView<RideHistoryController> {
                                                                     ? ColorUtil.kPrimary3PinkMode
                                                                     : ColorUtil.kSecondary01,
                                                               ).paddingOnly(right: 8.kw),
-                                                              /* Text(
+                                                              Text(
                                                     '${controller.rideHistModel.value.data?[index]?.driverBookingDetails?[0]?.seatAvailable} seats',
                                                     style: TextStyleUtil
                                                         .k14Regular(
                                                         color: ColorUtil
                                                             .kBlack03),
-                                                  ),*/
+                                                  ),
                                                             ],
-                                                          ),
+                                                          ),*/
                                                         ],
                                                       ),
                                                     ],
@@ -244,8 +311,14 @@ class RideHistoryView extends GetView<RideHistoryController> {
                                             ),
 
                                             //middle divider
-                                            const GreenPoolDivider().paddingOnly(bottom: 16.kh),
-                                            OriginToDestination(needPickupText: false, origin: "${his?.origin?.name}", destination: "${his?.destination?.name}")
+                                            const GreenPoolDivider()
+                                                .paddingOnly(bottom: 16.kh),
+                                            OriginToDestination(
+                                                    needPickupText: false,
+                                                    origin:
+                                                        "${his?.origin?.name}",
+                                                    destination:
+                                                        "${his?.destination?.name}")
                                                 .paddingOnly(bottom: 8.kh),
                                           ],
                                         ).paddingOnly(bottom: 16.kh),

@@ -26,7 +26,6 @@ class ProfileView extends GetView<ProfileController> {
   const ProfileView({super.key});
   @override
   Widget build(BuildContext context) {
-    // controller.userInfo.refresh();
     return Scaffold(
       appBar: const GreenPoolAppBar(
         title: Text('Profile'),
@@ -204,7 +203,8 @@ class ProfileView extends GetView<ProfileController> {
                                   //           )),
                                   //     ),
                                   onTap: () async {
-                                    await Share.share("Check this cool app! \nhttps://play.google.com/store/apps/details?id=com.greenpool.app");
+                                    await Share.share(
+                                        "Check this cool app! \nhttps://play.google.com/store/apps/details?id=com.greenpool.app");
                                   },
                                   image: ImageConstant.svgProfileRefer,
                                   text: "Refer a friend"),

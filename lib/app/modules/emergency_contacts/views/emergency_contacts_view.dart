@@ -48,11 +48,8 @@ class EmergencyContactsView extends GetView<EmergencyContactsController> {
             hintText: Strings.enterPhoneNumber,
             keyboardType: TextInputType.phone,
             controller: controller.emergencyNumber1,
-            // onchanged: (value) {
-            //     controller.emergencyContacts1.phone = value;
-            // },
           ).paddingOnly(bottom: 24.kh),
-          const GreenPoolDivider(),
+          const GreenPoolDivider().paddingOnly(bottom: 16.kh),
           Text(
             'Contact number 2',
             style: TextStyleUtil.k14Bold(color: ColorUtil.kBlack02),
@@ -73,9 +70,6 @@ class EmergencyContactsView extends GetView<EmergencyContactsController> {
             hintText: Strings.enterPhoneNumber,
             keyboardType: TextInputType.phone,
             controller: controller.emergencyNumber2,
-            // onchanged: (value) {
-            //     controller.emergencyContacts1.phone = value;
-            // },
           ).paddingOnly(bottom: 24.kh),
           const GreenPoolDivider(),
           const Expanded(child: SizedBox()),

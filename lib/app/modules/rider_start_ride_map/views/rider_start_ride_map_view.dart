@@ -31,12 +31,19 @@ class RiderStartRideMapView extends GetView<RiderStartRideMapController> {
             ? const GpProgress()
             : GoogleMap(
                 onMapCreated: controller.onMapCreated,
-                initialCameraPosition: CameraPosition(target: LatLng(controller.currentLat.value, controller.currentLong.value), zoom: 14),
+                initialCameraPosition: CameraPosition(
+                    target: LatLng(controller.currentLat.value,
+                        controller.currentLong.value),
+                    zoom: 14),
                 mapType: MapType.terrain,
                 myLocationEnabled: true,
                 markers: Set<Marker>.of(controller.markers),
                 polylines: {
-                  Polyline(polylineId: const PolylineId('polyline'), points: controller.polylineCoordinates),
+                  Polyline(
+                      polylineId: const PolylineId('polyline'),
+                      points: controller.polylineCoordinates,
+                      width: 4,
+                      color: ColorUtil.kSecondary01),
                 },
               ),
       ),
@@ -48,8 +55,11 @@ class RiderStartRideMapView extends GetView<RiderStartRideMapController> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.notifications_active_outlined, color: ColorUtil.kWhiteColor),
-            Text(Strings.sos, style: TextStyleUtil.k14Regular(color: ColorUtil.kWhiteColor, fontWeight: FontWeight.w700)),
+            const Icon(Icons.notifications_active_outlined,
+                color: ColorUtil.kWhiteColor),
+            Text(Strings.sos,
+                style: TextStyleUtil.k14Regular(
+                    color: ColorUtil.kWhiteColor, fontWeight: FontWeight.w700)),
           ],
         ),
       ),

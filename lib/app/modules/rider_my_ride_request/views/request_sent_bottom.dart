@@ -18,7 +18,11 @@ class RequestSentBottom extends StatelessWidget {
         padding: EdgeInsets.all(24.kh),
         // height: 317.kh,
         width: 100.w,
-        decoration: BoxDecoration(color: ColorUtil.kWhiteColor, borderRadius: BorderRadius.only(topLeft: Radius.circular(40.kh), topRight: Radius.circular(40.kh))),
+        decoration: BoxDecoration(
+            color: ColorUtil.kWhiteColor,
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(40.kh),
+                topRight: Radius.circular(40.kh))),
         child: Column(
           children: [
             Text(
@@ -31,20 +35,22 @@ class RequestSentBottom extends StatelessWidget {
               width: 64.kw,
             ).paddingOnly(bottom: 16.kh),
             Text(
-              "Payment Successful!\nRide request has been sent to the driver.\nYour booking is awaiting the driver'sapproval.",
+              "Payment Successful!\nRide request has been sent to the rider",
               textAlign: TextAlign.center,
               style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
             ).paddingOnly(bottom: 40.kh),
             GreenPoolButton(
                 label: 'Continue',
                 onPressed: () {
-                  Get.until((route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
+                  Get.until(
+                      (route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
                 }),
             GreenPoolButton(
                 label: 'Cancel Request',
                 isBorder: true,
                 onPressed: () {
-                  Get.until((route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
+                  Get.until(
+                      (route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
                 }).paddingOnly(top: 16.kh),
           ],
         ));

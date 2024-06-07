@@ -12,7 +12,7 @@ class GreenPoolDivider extends StatelessWidget {
     return Container(
       width: 100.w,
       height: 1.kh,
-      color: color ?? ColorUtil.kBlack07,
+      color: color ?? ColorUtil.kNeutral9,
     );
   }
 }

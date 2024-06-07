@@ -3,6 +3,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:get/get.dart';
+import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../components/green_pool_divider.dart';
@@ -36,7 +37,8 @@ class RatingRiderSideView extends GetView<RatingRiderSideController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text("Esther Howard"),
+                  Text(
+                      "${controller.myRidesModel?.value.driverDetails?.fullName}"),
                   Image.asset(ImageConstant.pngUserSquare)
                 ],
               ),
@@ -113,7 +115,10 @@ class RatingRiderSideView extends GetView<RatingRiderSideController> {
                     }),
               ),
               GreenPoolButton(
-                onPressed: () {},
+                onPressed: () {
+                  Get.until(
+                      (route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
+                },
                 label: "Continue",
               ).paddingOnly(top: 40.kh, bottom: 10.kh),
             ],

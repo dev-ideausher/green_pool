@@ -46,7 +46,9 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
               prefix: Icon(
                 Icons.location_on,
                 size: 24.kh,
-                color: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01,
+                color: Get.find<HomeController>().isPinkModeOn.value
+                    ? ColorUtil.kPrimary3PinkMode
+                    : ColorUtil.kSecondary01,
               ),
             ).paddingOnly(top: 8.kh, bottom: 16.kh),
             RichTextHeading(text: Strings.destination),
@@ -64,7 +66,9 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
               prefix: Icon(
                 Icons.location_on,
                 size: 24.kh,
-                color: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01,
+                color: Get.find<HomeController>().isPinkModeOn.value
+                    ? ColorUtil.kPrimary3PinkMode
+                    : ColorUtil.kSecondary01,
               ),
             ).paddingOnly(top: 8.kh, bottom: 16.kh),
             Visibility(
@@ -80,7 +84,9 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
                 hintText: 'Add stops',
                 keyboardType: TextInputType.streetAddress,
                 fillColor: Colors.transparent,
-                border: OutlineInputBorder(borderSide: const BorderSide(color: ColorUtil.kBlack06), borderRadius: BorderRadius.circular(8.kh)),
+                border: OutlineInputBorder(
+                    borderSide: const BorderSide(color: ColorUtil.kBlack06),
+                    borderRadius: BorderRadius.circular(8.kh)),
                 onTap: () {
                   // Get.toNamed(Routes.ORIGIN, arguments: LocationValues.addStop1)
                   //     ?.then((value) => controller.isStop1Added.value = true);
@@ -91,45 +97,59 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
                 prefix: Icon(
                   Icons.add_circle,
                   size: 20.kh,
-                  color: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01,
+                  color: Get.find<HomeController>().isPinkModeOn.value
+                      ? ColorUtil.kPrimary3PinkMode
+                      : ColorUtil.kSecondary01,
                 ),
                 suffix: controller.isStop1Added.value
-                    ? InkWell( onTap: ()=>controller.removeStop1(),child: Icon(Icons.cancel))
+                    ? InkWell(
+                        onTap: () => controller.removeStop1(),
+                        child: Icon(Icons.cancel))
                     : SvgPicture.asset(
                         ImageConstant.svgIconReorder,
                         colorFilter: ColorFilter.mode(
-                            Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01, BlendMode.srcIn),
+                            Get.find<HomeController>().isPinkModeOn.value
+                                ? ColorUtil.kPrimary3PinkMode
+                                : ColorUtil.kSecondary01,
+                            BlendMode.srcIn),
                       ),
               ).paddingOnly(top: 8.kh, bottom: 16.kh),
             ),
             Visibility(
               visible: controller.isStop1Added.value,
               child: GreenPoolTextField(
-                        hintText: 'Add stops',
-                        keyboardType: TextInputType.streetAddress,
-                        fillColor: Colors.transparent,
-                        border: OutlineInputBorder(borderSide: const BorderSide(color: ColorUtil.kBlack06), borderRadius: BorderRadius.circular(8.kh)),
-                        onTap: () {
-                          controller.moveToSetStop2();
-                        },
-                        controller: controller.stop2TextController,
-                        readOnly: true,
-                        prefix: Icon(
-                          Icons.add_circle,
-                          size: 20.kh,
-                          color: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01,
-                        ),
-                        suffix:controller.isStop2Added.value
-                            ? InkWell( onTap: ()=>controller.removeStop2(),child: Icon(Icons.cancel))
-                            : SvgPicture.asset(
-                          ImageConstant.svgIconReorder,
-                          colorFilter: ColorFilter.mode(
-                              Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01, BlendMode.srcIn),
-                        ),
-                      ).paddingOnly(top: 8.kh, bottom: 16.kh),
+                hintText: 'Add stops',
+                keyboardType: TextInputType.streetAddress,
+                fillColor: Colors.transparent,
+                border: OutlineInputBorder(
+                    borderSide: const BorderSide(color: ColorUtil.kBlack06),
+                    borderRadius: BorderRadius.circular(8.kh)),
+                onTap: () {
+                  controller.moveToSetStop2();
+                },
+                controller: controller.stop2TextController,
+                readOnly: true,
+                prefix: Icon(
+                  Icons.add_circle,
+                  size: 20.kh,
+                  color: Get.find<HomeController>().isPinkModeOn.value
+                      ? ColorUtil.kPrimary3PinkMode
+                      : ColorUtil.kSecondary01,
+                ),
+                suffix: controller.isStop2Added.value
+                    ? InkWell(
+                        onTap: () => controller.removeStop2(),
+                        child: Icon(Icons.cancel))
+                    : SvgPicture.asset(
+                        ImageConstant.svgIconReorder,
+                        colorFilter: ColorFilter.mode(
+                            Get.find<HomeController>().isPinkModeOn.value
+                                ? ColorUtil.kPrimary3PinkMode
+                                : ColorUtil.kSecondary01,
+                            BlendMode.srcIn),
+                      ),
+              ).paddingOnly(top: 8.kh, bottom: 16.kh),
             ),
-
-
             const Expanded(child: SizedBox()),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,

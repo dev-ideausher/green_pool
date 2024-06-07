@@ -15,7 +15,14 @@ import 'package:http/http.dart' as http;
 
 import '../../../data/google_location_model.dart';
 
-enum LocationValues { origin, destination, addStop1, addStop2, findRideOrigin, findRideDestination }
+enum LocationValues {
+  origin,
+  destination,
+  addStop1,
+  addStop2,
+  findRideOrigin,
+  findRideDestination
+}
 
 class OriginController extends GetxController {
   TextEditingController originController = TextEditingController();
@@ -47,14 +54,18 @@ class OriginController extends GetxController {
 
     try {
       isLoading.value = true;
-      String baseURL = 'https://maps.googleapis.com/maps/api/place/autocomplete/json';
-      String components = 'country:ca';
-      String request = '$baseURL?input=$input&location=$lat%$long&radius=500&key=$apiKey&sessiontoken=$_sessionToken&components=$components';
+      String baseURL =
+          'https://maps.googleapis.com/maps/api/place/autocomplete/json';
+      // String components = 'country:ca';
+      // String request = '$baseURL?input=$input&location=$lat%$long&radius=500&key=$apiKey&sessiontoken=$_sessionToken&components=$components';
+      String request =
+          '$baseURL?input=$input&location=$lat%$long&radius=500&key=$apiKey&sessiontoken=$_sessionToken';
 
       var response = await http.get(Uri.parse(request));
 
       if (response.statusCode == 200) {
-        addressSugestionList.value = jsonDecode(response.body.toString())['predictions'];
+        addressSugestionList.value =
+            jsonDecode(response.body.toString())['predictions'];
       } else {
         throw Exception('Failed to load data');
       }
@@ -68,15 +79,16 @@ class OriginController extends GetxController {
     String placeApiKey = Endpoints.googleApiKey;
     String baseurl = 'https://maps.googleapis.com/maps/api/place';
     try {
-      String request = '$baseurl/details/json?place_id=$placeId&key=$placeApiKey';
+      String request =
+          '$baseurl/details/json?place_id=$placeId&key=$placeApiKey';
       var response = await http.get(Uri.parse(request));
-      final geometry = GoogleLocationModel.fromJson(jsonDecode(response.body)).result;
+      final geometry =
+          GoogleLocationModel.fromJson(jsonDecode(response.body)).result;
 
-      double lat =geometry?.geometry?.location?.lat ?? 0.0;
+      double lat = geometry?.geometry?.location?.lat ?? 0.0;
       double long = geometry?.geometry?.location?.lng ?? 0.0;
 
-
-      String nameOfLocation =     geometry?.formattedAddress??"";
+      String nameOfLocation = geometry?.formattedAddress ?? "";
       return [lat, long, nameOfLocation];
     } catch (e) {
       log("getLatLong error: $e");
@@ -94,30 +106,37 @@ class OriginController extends GetxController {
       if (locationValues.name == LocationValues.origin.name) {
         Get.find<PostRideController>().originLatitude.value = fetchLatLong[0];
         Get.find<PostRideController>().originLongitude.value = fetchLatLong[1];
-        Get.find<PostRideController>().originTextController.text = fetchLatLong[2];
+        Get.find<PostRideController>().originTextController.text =
+            fetchLatLong[2];
         // postRideModel.value.ridesDetails?.origin?.latitude = fetchLatLong[0];
         // postRideModel.value.ridesDetails?.origin?.longitude = fetchLatLong[1];
         // postRideModel.value.ridesDetails?.origin?.name = fetchLatLong[2];
       } else if (locationValues.name == LocationValues.destination.name) {
         Get.find<PostRideController>().destLatitude.value = fetchLatLong[0];
         Get.find<PostRideController>().destLongitude.value = fetchLatLong[1];
-        Get.find<PostRideController>().destinationTextController.text = fetchLatLong[2];
+        Get.find<PostRideController>().destinationTextController.text =
+            fetchLatLong[2];
       } else if (locationValues.name == LocationValues.addStop1.name) {
         Get.find<PostRideController>().stop1Lat.value = fetchLatLong[0];
         Get.find<PostRideController>().stop1Long.value = fetchLatLong[1];
-        Get.find<PostRideController>().stop1TextController.text = fetchLatLong[2];
+        Get.find<PostRideController>().stop1TextController.text =
+            fetchLatLong[2];
       } else if (locationValues.name == LocationValues.addStop2.name) {
         Get.find<PostRideController>().stop2Lat.value = fetchLatLong[0];
         Get.find<PostRideController>().stop2Long.value = fetchLatLong[1];
-        Get.find<PostRideController>().stop2TextController.text = fetchLatLong[2];
+        Get.find<PostRideController>().stop2TextController.text =
+            fetchLatLong[2];
       } else if (locationValues.name == LocationValues.findRideOrigin.name) {
         Get.find<FindRideController>().riderOriginLat = fetchLatLong[0];
         Get.find<FindRideController>().riderOriginLong = fetchLatLong[1];
-        Get.find<FindRideController>().riderOriginTextController.text = fetchLatLong[2];
-      } else if (locationValues.name == LocationValues.findRideDestination.name) {
+        Get.find<FindRideController>().riderOriginTextController.text =
+            fetchLatLong[2];
+      } else if (locationValues.name ==
+          LocationValues.findRideDestination.name) {
         Get.find<FindRideController>().riderDestinationLat = fetchLatLong[0];
         Get.find<FindRideController>().riderDestinationLong = fetchLatLong[1];
-        Get.find<FindRideController>().riderDestinationTextController.text = fetchLatLong[2];
+        Get.find<FindRideController>().riderDestinationTextController.text =
+            fetchLatLong[2];
       }
     } catch (e) {
       log("setLocationData error: $e");

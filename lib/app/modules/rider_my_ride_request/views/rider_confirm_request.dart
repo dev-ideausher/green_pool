@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/modules/map_rider_confirm_request/views/map_rider_confirm_request_view.dart';
 import 'package:green_pool/app/modules/rider_my_ride_request/controllers/rider_my_ride_request_controller.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
+import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../components/common_image_view.dart';
@@ -164,7 +165,7 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                                 ).paddingOnly(right: 4.kw),
                                                 Text(
                                                   // '07 July 2023, 3:00pm',
-                                                  "${controller.riderConfirmRequestModel.value.data?[index]?.driverRideDetails?.date.toString().split("T")[0]}  ${controller.riderConfirmRequestModel.value.data?[index]?.driverRideDetails?.time}",
+                                                  "${GpUtil.getDateFormat(controller.riderConfirmRequestModel.value.data?[index]?.driverRideDetails?.date)}  ${controller.riderConfirmRequestModel.value.data?[index]?.driverRideDetails?.time}",
                                                   style: TextStyleUtil.k12Regular(color: ColorUtil.kBlack02),
                                                 ),
                                               ],

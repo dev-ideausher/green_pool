@@ -72,8 +72,7 @@ class PushNotificationsController extends GetxController {
       final response =
           await APIManager.notificationPreferences(body: notiPrefData);
       var data = jsonDecode(response.toString());
-      print(data.toString());
-      log(data.toString());
+      Get.find<HomeController>().userInfoAPI();
     } catch (e) {
       throw Exception(e);
     }

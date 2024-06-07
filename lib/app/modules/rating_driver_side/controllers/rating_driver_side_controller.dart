@@ -9,7 +9,6 @@ import '../../../services/dio/api_service.dart';
 import '../../home/controllers/home_controller.dart';
 
 class RatingDriverSideController extends GetxController {
-  // final Rx<MyRidesModelData> myRidesModel = MyRidesModelData().obs;
   final Rx<BookingDetailModelData> myRidesModel = BookingDetailModelData().obs;
   RxDouble rating =4.5.obs;
 

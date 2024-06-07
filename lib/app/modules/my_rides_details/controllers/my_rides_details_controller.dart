@@ -9,7 +9,8 @@ import '../../../services/dio/api_service.dart';
 import '../views/bottom_riders.dart';
 
 class MyRidesDetailsController extends GetxController {
-  final Rx<BookingDetailModelData> myRidesModelData = BookingDetailModelData().obs;
+  final Rx<BookingDetailModelData> myRidesModelData =
+      BookingDetailModelData().obs;
   final RxBool isLoad = true.obs;
 
   @override
@@ -33,24 +34,37 @@ class MyRidesDetailsController extends GetxController {
     }
   }
 
-  void viewMatchingRiders() =>
-      Get.toNamed(Routes.MY_RIDES_REQUEST, arguments: RideDetailId(driverRidId: myRidesModelData.value.driverRideId ?? "", riderRidId: myRidesModelData.value.riderRideId ?? ""));
+  void viewMatchingRiders() => Get.toNamed(Routes.MY_RIDES_REQUEST,
+      arguments: RideDetailId(
+          driverRidId: myRidesModelData.value.driverRideId ?? "",
+          riderRidId: myRidesModelData.value.riderRideId ?? ""));
 
   viewOnMap() {
-    Get.toNamed(Routes.START_RIDE, arguments: myRidesModelData.value.driverRideId);
+    Get.toNamed(Routes.START_RIDE,
+        arguments: myRidesModelData.value.driverRideId);
   }
 
   openMessage() async {
     Get.bottomSheet(BottomRiders(
-      riders: myRidesModelData.value.driverBookingDetails!.riderBookingDetails ?? [],
+      riders:
+          myRidesModelData.value.driverBookingDetails!.riderBookingDetails ??
+              [],
       onPressed: (rider) async {
         try {
-          final res = await APIManager.getChatRoomId(receiverId: rider.Id ?? "");
+          final res =
+              await APIManager.getChatRoomId(receiverId: rider.Id ?? "");
           Get.toNamed(Routes.CHAT_PAGE,
               arguments: ChatArg(
-                  chatRoomId: res.data["chatChannelId"] ?? "", id: rider.riderDetails?.Id, name: rider.riderDetails?.fullName ?? "", image: rider.riderDetails?.profilePic?.url));
+                  chatRoomId: res.data["chatChannelId"] ?? "",
+                  id: rider.riderDetails?.Id,
+                  name: rider.riderDetails?.fullName ?? "",
+                  image: rider.riderDetails?.profilePic?.url));
         } catch (e) {
-          Get.toNamed(Routes.CHAT_PAGE, arguments: ChatArg(id: rider.riderDetails?.Id, name: rider.riderDetails?.fullName, image: rider.riderDetails?.profilePic?.url));
+          Get.toNamed(Routes.CHAT_PAGE,
+              arguments: ChatArg(
+                  id: rider.riderDetails?.Id,
+                  name: rider.riderDetails?.fullName,
+                  image: rider.riderDetails?.profilePic?.url));
           debugPrint(e.toString());
         }
       },

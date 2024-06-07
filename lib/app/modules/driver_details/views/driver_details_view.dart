@@ -14,6 +14,7 @@ import '../../../components/green_pool_divider.dart';
 import '../../../components/greenpool_appbar.dart';
 import '../../../constants/image_constant.dart';
 import '../../../services/colors.dart';
+import '../../../services/gp_util.dart';
 import '../../../services/text_style_util.dart';
 import '../../home/controllers/home_controller.dart';
 import '../../post_ride/views/amenities.dart';
@@ -103,10 +104,8 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                                             : ColorUtil.kSecondary01,
                                         BlendMode.srcIn),
                                   ).paddingOnly(right: 4.kw),
-                                  //might give problems with big names, have to cut short month names
                                   Text(
-                                    // '07 Nov 2023, 3:00pm',
-                                    "${controller.matchingRidesModelData.value.date.toString().split("T")[0] ?? ""}  ${controller.matchingRidesModelData.value.time ?? ""}",
+                                    "${GpUtil.getDateFormat(controller.matchingRidesModelData.value.date)} ${controller.matchingRidesModelData.value.time ?? ""}",
                                     style: TextStyleUtil.k12Regular(
                                         color: ColorUtil.kBlack03),
                                   ),

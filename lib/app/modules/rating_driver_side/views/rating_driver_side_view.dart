@@ -49,7 +49,7 @@ class RatingDriverSideView extends GetView<RatingDriverSideController> {
                     ),
                     Expanded(
                       child: ListView.builder(
-                          itemCount: controller.myRidesModel.value.driverBookingDetails!.riderBookingDetails!.length,
+                          itemCount:  controller.myRidesModel.value.driverBookingDetails!.riderBookingDetails!.length,
                           itemBuilder: (context, index) {
                             final riderDetails = controller.myRidesModel.value.driverBookingDetails!.riderBookingDetails?[index].riderDetails;
                             return Column(

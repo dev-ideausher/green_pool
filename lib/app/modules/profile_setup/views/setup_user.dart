@@ -54,14 +54,20 @@ class SetupUser extends GetView<ProfileSetupController> {
                                     child: SizedBox.fromSize(
                                       size: Size.fromRadius(44.kh),
                                       child: Image.file(
-                                        controller.selectedProfileImagePath.value!,
+                                        controller
+                                            .selectedProfileImagePath.value!,
                                       ),
                                     ),
                                   ),
                                 )
                               : Container(
-                                  decoration: BoxDecoration(shape: BoxShape.circle, border: controller.imageNotUploaded.value ? Border.all(color: ColorUtil.kError2) : null),
-                                  child: SvgPicture.asset(ImageConstant.svgSetupProfilePic),
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      border: controller.imageNotUploaded.value
+                                          ? Border.all(color: ColorUtil.kError2)
+                                          : null),
+                                  child: SvgPicture.asset(
+                                      ImageConstant.svgSetupProfilePic),
                                 ),
                         ),
                         SvgPicture.asset(ImageConstant.svgSetupAdd),
@@ -83,16 +89,18 @@ class SetupUser extends GetView<ProfileSetupController> {
               autovalidateMode: AutovalidateMode.onUserInteraction,
               suffix: SvgPicture.asset(ImageConstant.svgProfileEditPen),
             ).paddingOnly(bottom: 16.kh),
-            const RichTextHeading(text: 'Email Address').paddingOnly(bottom: 8.kh),
+            const RichTextHeading(text: 'Email Address')
+                .paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
               hintText: 'Email ID',
               controller: controller.email,
-              keyboardType:  TextInputType.emailAddress,
+              keyboardType: TextInputType.emailAddress,
               validator: (value) => controller.validateEmail(value),
               autovalidateMode: AutovalidateMode.onUserInteraction,
               suffix: SvgPicture.asset(ImageConstant.svgProfileEditPen),
             ).paddingOnly(bottom: 16.kh),
-            const RichTextHeading(text: 'Phone Number').paddingOnly(bottom: 8.kh),
+            const RichTextHeading(text: 'Phone Number')
+                .paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
               hintText: 'Enter phone number',
               // initialValue: FirebaseAuth.instance.currentUser?.phoneNumber.toString(),
@@ -103,7 +111,7 @@ class SetupUser extends GetView<ProfileSetupController> {
             const RichTextHeading(text: 'Gender').paddingOnly(bottom: 8.kh),
             GreenPoolDropDown(
               hintText: 'Select your Gender',
-              value: controller.gender.value,
+              // value: controller.gender.value,
               items: [
                 DropdownMenuItem(
                     value: "Male",
@@ -130,10 +138,11 @@ class SetupUser extends GetView<ProfileSetupController> {
               validator: (value) => controller.validateGender(value),
               autovalidateMode: AutovalidateMode.onUserInteraction,
             ).paddingOnly(bottom: 16.kh),
-            const RichTextHeading(text: 'City Province').paddingOnly(bottom: 8.kh),
+            const RichTextHeading(text: 'City Province')
+                .paddingOnly(bottom: 8.kh),
             GreenPoolDropDown(
               hintText: 'Select your City',
-              value: controller.selectedCity.value,
+              // value: controller.selectedCity.value,
               items: CityList.cityNames
                   .map((e) => DropdownMenuItem<Object>(
                         value: e,
@@ -178,7 +187,8 @@ class SetupUser extends GetView<ProfileSetupController> {
               validator: (value) => controller.validateDOB(value),
               autovalidateMode: AutovalidateMode.onUserInteraction,
             ).paddingOnly(bottom: 16.kh),
-            const RichTextHeading(text: 'ID Verification').paddingOnly(bottom: 8.kh),
+            const RichTextHeading(text: 'ID Verification')
+                .paddingOnly(bottom: 8.kh),
             GestureDetector(
               onTap: () => Get.to(() => UploadIDView(
                     onPressedGallery: () {
@@ -190,9 +200,12 @@ class SetupUser extends GetView<ProfileSetupController> {
                   )),
               child: Obx(
                 () => Container(
-                  padding: EdgeInsets.symmetric(vertical: 68.kh, horizontal: 76.kw),
+                  padding:
+                      EdgeInsets.symmetric(vertical: 68.kh, horizontal: 76.kw),
                   decoration: BoxDecoration(
-                      border: controller.imageNotUploaded.value ? Border.all(color: ColorUtil.kError2) : null,
+                      border: controller.imageNotUploaded.value
+                          ? Border.all(color: ColorUtil.kError2)
+                          : null,
                       color: ColorUtil.kGreyColor,
                       borderRadius: BorderRadius.circular(8.kh)),
                   child: controller.isIDPicked.value
@@ -202,10 +215,12 @@ class SetupUser extends GetView<ProfileSetupController> {
                       : Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            SvgPicture.asset(ImageConstant.svgIconUpload).paddingOnly(right: 8.kw),
+                            SvgPicture.asset(ImageConstant.svgIconUpload)
+                                .paddingOnly(right: 8.kw),
                             Text(
                               'Upload ID',
-                              style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
+                              style: TextStyleUtil.k14Regular(
+                                  color: ColorUtil.kBlack03),
                             ),
                           ],
                         ),

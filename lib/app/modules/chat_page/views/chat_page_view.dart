@@ -25,8 +25,12 @@ class ChatPageView extends GetView<ChatPageController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimaryPinkMode : ColorUtil.kPrimary01,
-        surfaceTintColor: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimaryPinkMode : ColorUtil.kPrimary01,
+        backgroundColor: Get.find<HomeController>().isPinkModeOn.value
+            ? ColorUtil.kPrimaryPinkMode
+            : ColorUtil.kPrimary01,
+        surfaceTintColor: Get.find<HomeController>().isPinkModeOn.value
+            ? ColorUtil.kPrimaryPinkMode
+            : ColorUtil.kPrimary01,
         elevation: 1,
         toolbarHeight: 64.kh,
         title: Obx(
@@ -53,17 +57,20 @@ class ChatPageView extends GetView<ChatPageController> {
         ),
         actions: [
           PopupMenuButton(
+            color: ColorUtil.kWhiteColor,
+            
             itemBuilder: (context) {
               return [
                 PopupMenuItem(
                   onTap: () => controller.call(),
                   value: 1,
-                  child: Text(Strings.call),
+                  child: Text(Strings.call, style: TextStyleUtil.k12Medium()),
                 ),
                 PopupMenuItem(
                   onTap: () => controller.deleteChat(),
                   value: 1,
-                  child: Text(Strings.deleteChat),
+                  child: Text(Strings.deleteChat,
+                      style: TextStyleUtil.k12Medium()),
                 ),
               ];
             },
@@ -83,10 +90,15 @@ class ChatPageView extends GetView<ChatPageController> {
                       controller: controller.scrollController,
                       itemBuilder: (context, index) {
                         final message = controller.messages[index];
-                        final isSender = message.senderId == Get.find<GetStorageService>().getUserAppId;
+                        final isSender = message.senderId ==
+                            Get.find<GetStorageService>().getUserAppId;
 
                         return Container(
-                          padding: EdgeInsets.only(left: 14.kw, right: 14.kw, top: 10.kh, bottom: 10.kh),
+                          padding: EdgeInsets.only(
+                              left: 14.kw,
+                              right: 14.kw,
+                              top: 10.kh,
+                              bottom: 10.kh),
                           child: Column(
                             children: [
                               Row(
@@ -94,9 +106,11 @@ class ChatPageView extends GetView<ChatPageController> {
                                 children: [
                                   if (!isSender)
                                     Padding(
-                                      padding: const EdgeInsets.only(right: 8.0),
+                                      padding:
+                                          const EdgeInsets.only(right: 8.0),
                                       child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(100.kh),
+                                        borderRadius:
+                                            BorderRadius.circular(100.kh),
                                         child: CommonImageView(
                                           url: controller.chatArg.value.image,
                                           height: 32.kh,
@@ -106,25 +120,33 @@ class ChatPageView extends GetView<ChatPageController> {
                                     ),
                                   Expanded(
                                     child: Column(
-                                      crossAxisAlignment: isSender ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+                                      crossAxisAlignment: isSender
+                                          ? CrossAxisAlignment.end
+                                          : CrossAxisAlignment.start,
                                       children: [
                                         Container(
                                           decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.all(Radius.circular(15.0.kh)),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(15.0.kh)),
                                             color: Colors.white,
                                           ),
                                           padding: const EdgeInsets.all(16),
                                           child: Column(
-                                            crossAxisAlignment: isSender ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+                                            crossAxisAlignment: isSender
+                                                ? CrossAxisAlignment.end
+                                                : CrossAxisAlignment.start,
                                             children: [
                                               Text(
                                                 message.message ?? "",
-                                                style: TextStyleUtil.k14Regular(),
+                                                style:
+                                                    TextStyleUtil.k14Regular(),
                                               ),
                                               4.kheightBox, // Add some space between message and time
                                               Text(
-                                                GpUtil.formatTime(message.timestamp), // Replace with actual time
-                                                style: TextStyleUtil.k10Regular(),
+                                                GpUtil.formatTime(message
+                                                    .timestamp), // Replace with actual time
+                                                style:
+                                                    TextStyleUtil.k10Regular(),
                                               ),
                                             ],
                                           ),
@@ -136,9 +158,11 @@ class ChatPageView extends GetView<ChatPageController> {
                                     Padding(
                                       padding: const EdgeInsets.only(left: 8.0),
                                       child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(100.kh),
+                                        borderRadius:
+                                            BorderRadius.circular(100.kh),
                                         child: CommonImageView(
-                                          url: Get.find<GetStorageService>().profilePicUrl,
+                                          url: Get.find<GetStorageService>()
+                                              .profilePicUrl,
                                           height: 32.kh,
                                           width: 32.kh,
                                         ),
@@ -159,13 +183,15 @@ class ChatPageView extends GetView<ChatPageController> {
                         );
                         bool showDate = true;
                         if (index > 0) {
-                          final previousMessage = controller.messages[index - 1];
+                          final previousMessage =
+                              controller.messages[index - 1];
                           final previousMessageDate = DateTime(
                             previousMessage.timestamp.year,
                             previousMessage.timestamp.month,
                             previousMessage.timestamp.day,
                           );
-                          if (messageDate.isAtSameMomentAs(previousMessageDate)) {
+                          if (messageDate
+                              .isAtSameMomentAs(previousMessageDate)) {
                             showDate = false;
                           }
                         }
@@ -178,12 +204,16 @@ class ChatPageView extends GetView<ChatPageController> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Text(
-                                      GpUtil.isToday(message.timestamp) ? Strings.today : DateFormat.E().format(message.timestamp),
+                                      GpUtil.isToday(message.timestamp)
+                                          ? Strings.today
+                                          : DateFormat.E()
+                                              .format(message.timestamp),
                                       style: TextStyleUtil.k14Regular(),
                                     ),
                                     Text(
                                       GpUtil.formatDate(message.timestamp),
-                                      style: TextStyleUtil.k12Regular(color: ColorUtil.kBlack04),
+                                      style: TextStyleUtil.k12Regular(
+                                          color: ColorUtil.kBlack04),
                                     ),
                                   ],
                                 ).paddingOnly(top: 8.kh),
@@ -196,7 +226,9 @@ class ChatPageView extends GetView<ChatPageController> {
                   GreenPoolTextField(
                     controller: controller.eMsg,
                     hintText: Strings.writeMsg,
-                    suffix: InkWell(onTap: () => controller.sendMsg(), child: SvgPicture.asset(ImageConstant.svgIconSend)),
+                    suffix: InkWell(
+                        onTap: () => controller.sendMsg(),
+                        child: SvgPicture.asset(ImageConstant.svgIconSend)),
                   ).paddingOnly(bottom: 40.kh)
                 ],
               ).paddingSymmetric(horizontal: 16.kw),

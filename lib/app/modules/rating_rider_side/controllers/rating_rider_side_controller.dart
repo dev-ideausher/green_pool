@@ -1,8 +1,9 @@
 import 'package:get/get.dart';
 
-class RatingRiderSideController extends GetxController {
-  //TODO: Implement RatingRiderSideController
+import '../../../data/booking_detail_model.dart';
 
+class RatingRiderSideController extends GetxController {
+  final Rx<BookingDetailModelData> myRidesModel = BookingDetailModelData().obs;
   int numberOfRiders = 3;
 
   final count = 0.obs;
@@ -10,6 +11,6 @@ class RatingRiderSideController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    // myRidesModel.value = Get.arguments;
   }
-
 }

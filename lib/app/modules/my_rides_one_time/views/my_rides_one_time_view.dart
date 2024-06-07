@@ -39,14 +39,18 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
             ? Obx(
                 () => controller.isLoad.value
                     ? const GpProgress()
-                    : controller.myRidesModelData.isEmpty&&(controller.recurringResp.value.data?.isEmpty??false)
+                    : controller.myRidesModelData.isEmpty
                         ? Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Center(
-                                  child: Get.find<HomeController>().isPinkModeOn.value
-                                      ? CommonImageView(svgPath: Assets.svgPinkModegirl)
-                                      : SvgPicture.asset(ImageConstant.svgNoRides)),
+                                  child: Get.find<HomeController>()
+                                          .isPinkModeOn
+                                          .value
+                                      ? CommonImageView(
+                                          svgPath: Assets.svgPinkModegirl)
+                                      : SvgPicture.asset(
+                                          ImageConstant.svgNoRides)),
                               Text(
                                 Strings.youHavePostedNoRides,
                                 style: TextStyleUtil.k24Heading600(),
@@ -58,15 +62,23 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                             child: Column(
                               children: [
                                 Visibility(
-                                  visible: type==null,
-                                  child: (controller.recurringResp.value.data?.isEmpty ?? true)
+                                  visible: type == null,
+                                  child: (controller.recurringResp.value.data
+                                              ?.isEmpty ??
+                                          true)
                                       ? const SizedBox()
                                       : ListView.builder(
                                           shrinkWrap: true,
-                                          physics: NeverScrollableScrollPhysics(),
-                                          itemCount: controller.recurringResp.value.data?.length,
+                                          physics:
+                                              NeverScrollableScrollPhysics(),
+                                          itemCount: controller
+                                              .recurringResp.value.data?.length,
                                           itemBuilder: (context, index) {
-                                            return RecurringTile(recurringResp: controller.recurringResp.value.data?[index]);
+                                            return RecurringTile(
+                                                recurringResp: controller
+                                                    .recurringResp
+                                                    .value
+                                                    .data?[index]);
                                           }),
                                 ),
                                 ListView.builder(
@@ -75,28 +87,42 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                   itemCount: controller.myRidesModelData.length,
                                   itemBuilder: (context, index) {
                                     if (type == null) {
-                                      if (controller.myRidesModelData[index].driverId != null) {
+                                      if (controller.myRidesModelData[index]
+                                              .driverId !=
+                                          null) {
                                         return
                                             // --------------- for driver tile -----------------//
-                                            DriverTile(myRidesModelData: controller.myRidesModelData[index]);
+                                            DriverTile(
+                                                myRidesModelData: controller
+                                                    .myRidesModelData[index]);
                                       } else {
                                         //---------------- for rider tile ------------------//
-                                        return RiderTile(myRidesModelData: controller.myRidesModelData[index]);
+                                        return RiderTile(
+                                            myRidesModelData: controller
+                                                .myRidesModelData[index]);
                                       }
                                     } else {
                                       if (type == Strings.booked) {
-                                        if (controller.myRidesModelData[index].driverId != null) {
-                                          return DriverTile(myRidesModelData: controller.myRidesModelData[index]);
+                                        if (controller.myRidesModelData[index]
+                                                .driverId !=
+                                            null) {
+                                          return DriverTile(
+                                              myRidesModelData: controller
+                                                  .myRidesModelData[index]);
                                         } else {
                                           //---------------- for rider tile ------------------//
                                           return const SizedBox();
                                         }
                                       } else {
-                                        if (controller.myRidesModelData[index].driverId != null) {
+                                        if (controller.myRidesModelData[index]
+                                                .driverId !=
+                                            null) {
                                           return const SizedBox();
                                         } else {
                                           //---------------- for rider tile ------------------//
-                                          return RiderTile(myRidesModelData: controller.myRidesModelData[index]);
+                                          return RiderTile(
+                                              myRidesModelData: controller
+                                                  .myRidesModelData[index]);
                                         }
                                       }
                                     }
