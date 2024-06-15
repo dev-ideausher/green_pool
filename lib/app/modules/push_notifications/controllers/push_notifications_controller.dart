@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/services/dio/api_service.dart';
 
+import '../../../services/snackbar.dart';
+
 class PushNotificationsController extends GetxController {
   RxBool trips = Get.find<HomeController>()
       .userInfo
@@ -73,6 +75,8 @@ class PushNotificationsController extends GetxController {
           await APIManager.notificationPreferences(body: notiPrefData);
       var data = jsonDecode(response.toString());
       Get.find<HomeController>().userInfoAPI();
+      Get.back();
+      showMySnackbar(msg: "Notification prefernces updated");
     } catch (e) {
       throw Exception(e);
     }

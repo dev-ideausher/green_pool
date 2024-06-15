@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/components/gp_progress.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
 import 'package:green_pool/app/data/chat_arg.dart';
+import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
@@ -29,7 +30,47 @@ class MessagesView extends GetView<MessagesController> {
       body: Get.find<GetStorageService>().getLoggedIn
           ? Obx(
               () => controller.isLoading.value
-                  ? const GpProgress()
+                  ? ListView.builder(
+                      itemCount: 5,
+                      itemBuilder: (context, index) {
+                        return SizedBox(
+                          height: 78.kh,
+                          child: ListTile(
+                            tileColor: ColorUtil.kWhiteColor,
+                            onTap: () {},
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.kh)),
+                            title: Container(
+                              height: 10.kh,
+                              width: 100.w,
+                              child: LinearProgressIndicator(
+                                color: ColorUtil.kGreyColor,
+                              ),
+                            ),
+                            subtitle: Container(
+                              height: 10.kh,
+                              width: 100.w,
+                              child: LinearProgressIndicator(
+                                color: ColorUtil.kGreyColor,
+                              ),
+                            ),
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 24.kw, vertical: 8.kh),
+                            leading: SizedBox(
+                              height: 40.kh,
+                              width: 40.kw,
+                              child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(8.kh),
+                                  child: LinearProgressIndicator(
+                                    color: ColorUtil.kGreyColor,
+                                  )),
+                            ),
+                            trailing: SvgPicture.asset(
+                                ImageConstant.svgIconRightArrow),
+                          ),
+                        );
+                      },
+                    )
                   : controller.messagesModel.value.chatRoomIds!.isEmpty
                       ? Center(
                           child: Text(
@@ -44,34 +85,53 @@ class MessagesView extends GetView<MessagesController> {
                           itemBuilder: (context, index) {
                             final message = controller
                                 .messagesModel.value.chatRoomIds?[index];
+                            final isPinkModeOn =
+                                Get.find<HomeController>().isPinkModeOn.value;
+                            final messageRead = controller.messagesModel.value
+                                        .chatRoomIds?[index]?.unReadCount ==
+                                    0 ||
+                                controller.messagesModel.value
+                                        .chatRoomIds?[index]?.unReadCount ==
+                                    null;
                             return MessageTile(
-                                    onTap: () {
-                                      Get.toNamed(Routes.CHAT_PAGE,
-                                          arguments: ChatArg(
-                                              chatRoomId:
-                                                  message?.chatRoomId ?? "",
-                                              id: message?.user2?.Id ?? "",
-                                              image: message
-                                                  ?.user2?.profilePic?.url,
-                                              name: message?.user2?.fullName));
-                                    },
-                                    title: controller
-                                            .messagesModel
-                                            .value
-                                            .chatRoomIds?[index]
-                                            ?.user2
-                                            ?.fullName ??
-                                        "",
-                                    path: controller
-                                            .messagesModel
-                                            .value
-                                            .chatRoomIds?[index]
-                                            ?.user2
-                                            ?.profilePic
-                                            ?.url ??
-                                        "",
-                                    subtitle: message?.lastMessage ?? "")
-                                .paddingOnly(top: 8.kh);
+                              onTap: () {
+                                controller.getToChatPage(message);
+                              },
+                              title: controller.messagesModel.value
+                                      .chatRoomIds?[index]?.user2?.fullName ??
+                                  "",
+                              path: controller
+                                      .messagesModel
+                                      .value
+                                      .chatRoomIds?[index]
+                                      ?.user2
+                                      ?.profilePic
+                                      ?.url ??
+                                  "",
+                              subtitle: message?.lastMessage ?? "",
+                              subtitleStyle: messageRead
+                                  ? TextStyleUtil.k14Regular(
+                                      color: ColorUtil.kBlack03)
+                                  : TextStyleUtil.k14Bold(
+                                      color: isPinkModeOn
+                                          ? ColorUtil.kPrimary3PinkMode
+                                          : ColorUtil.kSecondary03),
+                              trailing: messageRead
+                                  ? SvgPicture.asset(
+                                      ImageConstant.svgIconRightArrow)
+                                  : Container(
+                                      padding: EdgeInsets.all(10.kh),
+                                      decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: isPinkModeOn
+                                              ? ColorUtil.kPrimaryPinkMode
+                                              : ColorUtil.kPrimary01),
+                                      child: Text(
+                                        "${controller.messagesModel.value.chatRoomIds?[index]?.unReadCount}",
+                                        style: TextStyleUtil.k12Bold(),
+                                      ),
+                                    ),
+                            ).paddingOnly(top: 8.kh);
                           },
                         ).paddingOnly(left: 16.kw, right: 16.kw, top: 8.kh),
             )
@@ -86,6 +146,8 @@ class MessagesView extends GetView<MessagesController> {
 
 class MessageTile extends StatelessWidget {
   final String title, path, subtitle;
+  final Widget trailing;
+  final TextStyle? subtitleStyle;
   final Function() onTap;
 
   const MessageTile({
@@ -94,6 +156,8 @@ class MessageTile extends StatelessWidget {
     required this.path,
     required this.onTap,
     required this.subtitle,
+    required this.trailing,
+    this.subtitleStyle,
   });
 
   @override
@@ -111,7 +175,8 @@ class MessageTile extends StatelessWidget {
         ),
         subtitle: Text(
           subtitle,
-          style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
+          style: subtitleStyle ??
+              TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
           overflow: TextOverflow.ellipsis,
         ),
         contentPadding: EdgeInsets.symmetric(horizontal: 24.kw, vertical: 8.kh),
@@ -125,7 +190,7 @@ class MessageTile extends StatelessWidget {
             ),
           ),
         ),
-        trailing: SvgPicture.asset(ImageConstant.svgIconRightArrow),
+        trailing: trailing,
       ),
     );
   }

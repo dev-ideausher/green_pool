@@ -37,10 +37,10 @@ class SubmitDisputeController extends GetxController {
   // }
 
   getImage(ImageSource imageSource) async {
-    // final pickedFile = await ImagePicker().pickImage(source: imageSource);
     XFile? pickedFile = await GpUtil.compressImage(imageSource);
     if (pickedFile != null) {
       selectedImagePath.value = File(pickedFile.path);
+      showMySnackbar(msg: 'Image selected');
       isImageSelected.value = true;
       update();
     } else {
@@ -49,33 +49,43 @@ class SubmitDisputeController extends GetxController {
   }
 
   Future<void> fileDisputeAPI() async {
-    final File pickedImageFile = File(selectedImagePath.value!.path);
-    String extension = pickedImageFile.path.split('.').last;
-    String mediaType;
+    dio.FormData disputeData;
 
-    if (extension == 'jpg' || extension == 'jpeg') {
-      mediaType = 'image/jpeg';
-    } else if (extension == 'png') {
-      mediaType = 'image/png';
+    if (isImageSelected.value) {
+      final File? pickedImageFile = selectedImagePath!.value;
+      String extension = pickedImageFile!.path.split('.').last;
+      String mediaType;
+
+      if (extension == 'jpg' || extension == 'jpeg') {
+        mediaType = 'image/jpeg';
+      } else if (extension == 'png') {
+        mediaType = 'image/png';
+      } else {
+        mediaType = 'application/octet-stream';
+      }
+
+      disputeData = dio.FormData.fromMap({
+        'ridePostId': bookingId,
+        'description': descriptionTextController.value.text,
+        'fileDisputePic': await dio.MultipartFile.fromFile(
+          pickedImageFile.path,
+          contentType: MediaType.parse(mediaType),
+          filename: path.basename(pickedImageFile.path),
+        )
+      });
     } else {
-      mediaType = 'application/octet-stream';
+      disputeData = dio.FormData.fromMap({
+        'ridePostId': bookingId,
+        'description': descriptionTextController.value.text,
+        'fileDisputePic': ""
+      });
     }
-
-    final disputeData = dio.FormData.fromMap({
-      'ridePostId': bookingId,
-      'description': descriptionTextController.value.text,
-      'fileDisputePic': await dio.MultipartFile.fromFile(
-        pickedImageFile.path,
-        contentType: MediaType.parse(mediaType),
-        filename: path.basename(pickedImageFile.path),
-      ),
-    });
 
     try {
       final response = await APIManager.postFileDispute(body: disputeData);
       var data = jsonDecode(response.toString());
-      showMySnackbar(msg: data['message']);
       Get.until((route) => Get.currentRoute == Routes.FILE_DISPUTE);
+      showMySnackbar(msg: data['message']);
     } catch (e) {
       throw Exception(e);
     }

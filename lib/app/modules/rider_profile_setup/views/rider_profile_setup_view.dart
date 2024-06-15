@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
+import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -26,8 +27,9 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
     print(controller.isProfileImagePickedCheck.value);
     Get.lazyPut(() => RiderProfileSetupController());
     return Scaffold(
-      appBar: AppBar(
-        leading: SizedBox(),
+      appBar: GreenPoolAppBar(
+        leading: const SizedBox(),
+        appBarSize: 8.kh,
       ),
       body: SingleChildScrollView(
         child: Form(
@@ -63,7 +65,12 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 border: Border.all(
-                                    color: controller.isProfileImagePickedCheck.value && (controller.selectedProfileImagePath.value?.path ?? "").isEmpty
+                                    color: controller.isProfileImagePickedCheck
+                                                .value &&
+                                            (controller.selectedProfileImagePath
+                                                        .value?.path ??
+                                                    "")
+                                                .isEmpty
                                         ? Colors.red
                                         : Colors.transparent,
                                     style: BorderStyle.solid),
@@ -73,11 +80,13 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
                                       child: SizedBox.fromSize(
                                         size: Size.fromRadius(44.kh),
                                         child: Image.file(
-                                          controller.selectedProfileImagePath.value!,
+                                          controller
+                                              .selectedProfileImagePath.value!,
                                         ),
                                       ),
                                     )
-                                  : SvgPicture.asset(ImageConstant.svgSetupProfilePic),
+                                  : SvgPicture.asset(
+                                      ImageConstant.svgSetupProfilePic),
                             ),
                           ),
                           SvgPicture.asset(ImageConstant.svgSetupAdd),
@@ -86,12 +95,14 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
                     ),
                     Text(
                       'Take or upload profile photo',
-                      style: TextStyleUtil.k16Regular(color: ColorUtil.kNeutral4),
+                      style:
+                          TextStyleUtil.k16Regular(color: ColorUtil.kNeutral4),
                     ),
                   ],
                 ),
               ).paddingOnly(bottom: 40.kh),
-              const RichTextHeading(text: 'Full Name').paddingOnly(bottom: 8.kh),
+              const RichTextHeading(text: 'Full Name')
+                  .paddingOnly(bottom: 8.kh),
               GreenPoolTextField(
                 hintText: 'Enter name',
                 controller: controller.fullName,
@@ -99,16 +110,18 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 suffix: SvgPicture.asset(ImageConstant.svgProfileEditPen),
               ).paddingOnly(bottom: 16.kh),
-              const RichTextHeading(text: 'Email Address').paddingOnly(bottom: 8.kh),
+              const RichTextHeading(text: 'Email Address')
+                  .paddingOnly(bottom: 8.kh),
               GreenPoolTextField(
                 hintText: 'Enter Email ID',
                 controller: controller.email,
                 validator: (value) => controller.validateEmail(value),
-                keyboardType:  TextInputType.emailAddress,
+                keyboardType: TextInputType.emailAddress,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 suffix: SvgPicture.asset(ImageConstant.svgProfileEditPen),
               ).paddingOnly(bottom: 16.kh),
-              const RichTextHeading(text: 'Phone Number').paddingOnly(bottom: 8.kh),
+              const RichTextHeading(text: 'Phone Number')
+                  .paddingOnly(bottom: 8.kh),
               GreenPoolTextField(
                 hintText: 'Enter phone number',
                 controller: controller.phoneNumber,
@@ -144,10 +157,11 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
                   controller.gender.text = val.toString();
                 },
               ).paddingOnly(bottom: 16.kh),
-             /* const RichTextHeading(text: 'City Province').paddingOnly(bottom: 8.kh),
+              const RichTextHeading(text: 'City Province')
+                  .paddingOnly(bottom: 8.kh),
               GreenPoolDropDown(
                 hintText: 'Select your City',
-                value: controller.selectedCity.value,
+                // value: controller.selectedCity.value,
                 items: CityList.cityNames
                     .map((e) => DropdownMenuItem<Object>(
                           value: e,
@@ -157,10 +171,11 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
                           ),
                         ))
                     .toList(),
-                onChanged: (city) => controller.updateSelectedCity(city.toString()),
+                onChanged: (city) =>
+                    controller.updateSelectedCity(city.toString()),
                 validator: (value) => controller.validateCity(value),
                 autovalidateMode: AutovalidateMode.onUserInteraction,
-              ).paddingOnly(bottom: 16.kh),*/
+              ).paddingOnly(bottom: 16.kh),
               Text.rich(
                 TextSpan(
                   children: [
@@ -170,7 +185,8 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
                     ),
                     TextSpan(
                       text: '(should be above 18)',
-                      style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack04),
+                      style:
+                          TextStyleUtil.k14Regular(color: ColorUtil.kBlack04),
                     ),
                   ],
                 ),
@@ -184,7 +200,8 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
                 onTap: () => controller.setDate(context),
                 suffix: SvgPicture.asset(ImageConstant.svgIconCalendar),
               ).paddingOnly(bottom: 16.kh),
-              const RichTextHeading(text: 'ID Verification').paddingOnly(bottom: 8.kh),
+              const RichTextHeading(text: 'ID Verification')
+                  .paddingOnly(bottom: 8.kh),
               GestureDetector(
                 onTap: () => Get.to(() => UploadIDView(
                       onPressedGallery: () {
@@ -195,8 +212,11 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
                       },
                     )),
                 child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 68.kh, horizontal: 76.kw),
-                  decoration: BoxDecoration(color: ColorUtil.kGreyColor, borderRadius: BorderRadius.circular(8.kh)),
+                  padding:
+                      EdgeInsets.symmetric(vertical: 68.kh, horizontal: 76.kw),
+                  decoration: BoxDecoration(
+                      color: ColorUtil.kGreyColor,
+                      borderRadius: BorderRadius.circular(8.kh)),
                   child: Obx(
                     () => controller.isIDPicked.value
                         ? Image.file(
@@ -205,10 +225,12 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
                         : Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              SvgPicture.asset(ImageConstant.svgIconUpload).paddingOnly(right: 8.kw),
+                              SvgPicture.asset(ImageConstant.svgIconUpload)
+                                  .paddingOnly(right: 8.kw),
                               Text(
                                 'Upload ID',
-                                style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
+                                style: TextStyleUtil.k14Regular(
+                                    color: ColorUtil.kBlack03),
                               ),
                             ],
                           ),

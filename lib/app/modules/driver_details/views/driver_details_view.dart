@@ -38,23 +38,20 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     //for profile pic and rating
-                    Stack(
-                      children: [
-                        Container(
-                          height: 74.kh,
-                          width: 74.kw,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                          ),
-                          child: ClipRRect(
-                              borderRadius: BorderRadius.circular(8.kh),
-                              child: CommonImageView(
-                                  url:
-                                      "${controller.matchingRidesModelData.value.driverDetails?[0]?.profilePic?.url}")),
-                        ).paddingOnly(bottom: 8.kh),
-                      ],
+                    Container(
+                      height: 64.kh,
+                      width: 64.kw,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                      ),
+                      child: ClipRRect(
+                          borderRadius: BorderRadius.circular(8.kh),
+                          child: CommonImageView(
+                              url:
+                                  "${controller.matchingRidesModelData.value.driverDetails?[0]?.profilePic?.url}")),
                     ).paddingOnly(right: 16.kw, bottom: 16.kh),
                     //for name and date
                     Expanded(
@@ -67,28 +64,28 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                               Text(
                                 // 'Sam Alexander',
                                 "${controller.matchingRidesModelData.value.driverDetails?[0]?.fullName}",
-                                style: TextStyleUtil.k16Bold(),
+                                style: TextStyleUtil.k18Bold(),
                               ),
                               Text.rich(
                                 TextSpan(
                                   children: [
                                     TextSpan(
                                       text: Strings.fare,
-                                      style: TextStyleUtil.k14Semibold(
+                                      style: TextStyleUtil.k16Semibold(
+                                          fontSize: 16.kh,
                                           color: ColorUtil.kSecondary01),
                                     ),
                                     TextSpan(
                                       text:
                                           '\$ ${controller.matchingRidesModelData.value.origin?.originDestinationFair}',
-                                      style: TextStyleUtil.k16Semibold(
-                                          fontSize: 16.kh,
+                                      style: TextStyleUtil.k18Semibold(
                                           color: ColorUtil.kSecondary01),
                                     ),
                                   ],
                                 ),
                               ),
                             ],
-                          ).paddingOnly(bottom: 8.kh),
+                          ).paddingOnly(bottom: 8.kh, top: 4.kh),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -135,20 +132,19 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                       ),
                     ),
                   ],
-                ).paddingOnly(top: 32.kh),
+                ).paddingOnly(top: 8.kh),
                 //middle divider
-                const GreenPoolDivider().paddingOnly(bottom: 16.kh),
+                const GreenPoolDivider().paddingOnly(bottom: 8.kh),
                 OriginToDestination(
-                        needPickupText: true,
-                        origin:
-                            "${controller.matchingRidesModelData.value.origin?.name}",
-                        destination:
-                            "${controller.matchingRidesModelData.value.destination?.name}")
-                    .paddingOnly(bottom: 8.kh),
+                    needPickupText: true,
+                    origin:
+                        "${controller.matchingRidesModelData.value.origin?.name}",
+                    destination:
+                        "${controller.matchingRidesModelData.value.destination?.name}"),
                 //bottom line
-                const GreenPoolDivider(),
+                const GreenPoolDivider().paddingOnly(top: 8.kh),
               ],
-            ).paddingOnly(bottom: 16.kh),
+            ).paddingOnly(bottom: 12.kh),
 
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -214,7 +210,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                   ],
                 ),
               ],
-            ).paddingOnly(bottom: 8.kh),
+            ).paddingOnly(bottom: 12.kh),
 
             const GreenPoolDivider().paddingOnly(bottom: 16.kh),
 
@@ -231,7 +227,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                       Strings.noPassengersAvailable,
                       style: TextStyleUtil.k14Semibold(),
                     ),
-                  )
+                  ).paddingOnly(bottom: 16.kh)
                 : CoPassengerList(
                     itemcount: controller
                         .matchingRidesModelData.value?.ridersDetatils?.length,
@@ -240,7 +236,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                             "${controller.matchingRidesModelData.value.ridersDetatils?[0]?.profilePic?.url}"),
                     name:
                         "${controller.matchingRidesModelData.value.ridersDetatils?[0]?.fullName.toString().split(" ").first}\n${controller.matchingRidesModelData.value.ridersDetatils?[0]?.fullName.toString().split(" ").last}",
-                  ).paddingOnly(bottom: 10.kh),
+                  ).paddingOnly(bottom: 16.kh),
             const GreenPoolDivider().paddingOnly(bottom: 16.kh),
 
             //Vehicle details
@@ -291,7 +287,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                 ),
               ],
             ),
-            const GreenPoolDivider().paddingOnly(top: 8.kh, bottom: 16.kh),
+            const GreenPoolDivider().paddingOnly(top: 16.kh, bottom: 16.kh),
 
             //Features available
 
@@ -373,15 +369,16 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
 
-            const GreenPoolDivider().paddingSymmetric(vertical: 8.kh),
+            const GreenPoolDivider().paddingSymmetric(vertical: 16.kh),
             GreenPoolButton(
-                onPressed: () {
-                  controller.chatWithDriver();
-                },
-                label: Strings.message,
-                isBorder: true),
+                    onPressed: () {
+                      controller.chatWithDriver();
+                    },
+                    label: Strings.message,
+                    isBorder: true)
+                .paddingOnly(top: 8.kh),
             GreenPoolButton(
-                    onPressed: () => controller.confirmRideAPI(),
+                    onPressed: () => controller.moveToPayment(),
                     label: 'Request Ride')
                 .paddingOnly(bottom: 40.kh, top: 16.kh),
           ],

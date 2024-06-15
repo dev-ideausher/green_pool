@@ -298,10 +298,14 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                       fontSize: 14.kh,
                                       label: Strings.request,
                                       onPressed: () async {
-                                        await controller
-                                            .sendRideRequestToDriverAPI(
-                                                controller.riderSendRequestModel
-                                                    .value.data![index]);
+                                        // await controller
+                                        //     .sendRideRequestToDriverAPI(
+                                        //         controller.riderSendRequestModel
+                                        //             .value.data![index]);
+                                        controller.moveToPaymentFromSendRequest(controller
+                                            .riderSendRequestModel
+                                            .value
+                                            .data![index]);
                                       },
                                     ),
                                   ],

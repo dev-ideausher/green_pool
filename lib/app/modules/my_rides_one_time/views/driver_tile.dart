@@ -6,6 +6,7 @@ import 'package:green_pool/app/data/my_rides_model.dart';
 import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/storage.dart';
+import 'package:intl/intl.dart';
 
 import '../../../components/common_image_view.dart';
 import '../../../components/origin_to_destination.dart';
@@ -143,6 +144,7 @@ class DriverTile extends StatelessWidget {
                   //     style: TextStyleUtil.k16Bold(color: ColorUtil.kError2),
                   //   )
                   GreenPoolButton(
+                      //this button is when the ride is started so the user cannot cancel the ride
                       onPressed: myRidesModelData.isCompleted!
                           ? () {}
                           : () {
@@ -196,7 +198,8 @@ class DriverTile extends StatelessWidget {
                             ),
                           ],
                         )
-                      : isToday(myRidesModelData.date ?? "")
+                      // : isToday(myRidesModelData.date ?? "")
+                      : isWithinTimeRange(myRidesModelData.time ?? "")
                           ? Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -217,7 +220,7 @@ class DriverTile extends StatelessWidget {
                                             : (myRidesModelData
                                                         .postsInfo?.isEmpty ??
                                                     false)
-                                                ? Strings.viewDetails
+                                                ? Strings.requests
                                                 : Strings.startRide),
                                 GreenPoolButton(
                                   onPressed: () {
@@ -304,9 +307,36 @@ class DriverTile extends StatelessWidget {
         dateTime.day == now.day;
   }
 
-  bool isNow(String s) {
-    DateTime dateTime = DateTime.parse(s).toLocal();
-    DateTime now = DateTime.now().toLocal();
-    return dateTime.hour == now.hour;
+  bool isWithinTimeRange(String timeString) {
+    try {
+      // Parse the input time string
+      DateFormat format = DateFormat.jm(); // e.g., "5:00 PM"
+      DateTime parsedTime = format.parse(timeString);
+
+      // Get the current time
+      DateTime now = DateTime.now();
+
+      // Create DateTime objects with the same date but the input time
+      DateTime inputTimeWithCurrentDate = DateTime(
+        now.year,
+        now.month,
+        now.day,
+        parsedTime.hour,
+        parsedTime.minute,
+      );
+
+      // Calculate the time range: 30 minutes before the current hour and 2 hours after the current hour
+      DateTime startTime = DateTime(now.year, now.month, now.day, now.hour)
+          .subtract(const Duration(minutes: 30));
+      DateTime endTime = DateTime(now.year, now.month, now.day, now.hour)
+          .add(const Duration(hours: 2));
+
+      // Check if the input time falls within this range
+      return inputTimeWithCurrentDate.isAfter(startTime) &&
+          inputTimeWithCurrentDate.isBefore(endTime);
+    } catch (e) {
+      debugPrint('Error parsing time string: $e');
+      return false;
+    }
   }
 }

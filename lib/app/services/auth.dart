@@ -163,6 +163,7 @@ class AuthService extends GetxService {
     DialogHelper.showLoading();
     // erase the user's token and data in GetStorageService
     Get.find<GetStorageService>().logout();
+    Get.find<GetStorageService>().setLoggedIn = false;
     // firbase logout
     auth.logout();
     // navigate to login page

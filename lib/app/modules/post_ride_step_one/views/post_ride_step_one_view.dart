@@ -31,7 +31,7 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
         () => Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            RichTextHeading(text: Strings.pickup).paddingOnly(top: 32.kh),
+            RichTextHeading(text: Strings.pickup).paddingOnly(top: 12.kh),
             GreenPoolTextField(
               hintText: Strings.enterOrigin,
               keyboardType: TextInputType.streetAddress,

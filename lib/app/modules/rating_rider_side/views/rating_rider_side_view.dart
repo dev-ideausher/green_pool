@@ -3,6 +3,8 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:get/get.dart';
+import 'package:green_pool/app/components/common_image_view.dart';
+import 'package:green_pool/app/components/gp_progress.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
@@ -11,6 +13,7 @@ import '../../../constants/image_constant.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
 import '../../../services/text_style_util.dart';
+import '../../home/controllers/home_controller.dart';
 import '../controllers/rating_rider_side_controller.dart';
 
 class RatingRiderSideView extends GetView<RatingRiderSideController> {
@@ -18,112 +21,163 @@ class RatingRiderSideView extends GetView<RatingRiderSideController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomSheet: Container(
-        height: 450.kh,
-        decoration: BoxDecoration(
-            color: ColorUtil.kWhiteColor,
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(40.kh),
-                topRight: Radius.circular(40.kh))),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Rate Driver",
-                style: TextStyleUtil.k18Heading600(),
-              ).paddingOnly(top: 40.kh, bottom: 16.kh),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                      "${controller.myRidesModel?.value.driverDetails?.fullName}"),
-                  Image.asset(ImageConstant.pngUserSquare)
-                ],
-              ),
-              SizedBox(
-                height: 28.kh,
-                child: RatingBar(
-                  allowHalfRating: true,
-                  glow: false,
-                  ratingWidget: RatingWidget(
-                    full: const Icon(
-                      Icons.star,
-                      color: Colors.amber,
-                    ),
-                    half: const Icon(
-                      Icons.star,
-                      color: Colors.red,
-                    ),
-                    empty: const Icon(
-                      Icons.star,
-                      color: ColorUtil.kGreyColor,
-                    ),
-                  ),
-                  onRatingUpdate: (double value) {},
-                ),
-              ),
-              const GreenPoolDivider().paddingOnly(top: 16.kh, bottom: 24.kh),
-              Text(
-                "Rate your Carpool Companions",
-                style: TextStyleUtil.k18Heading600(),
-              ).paddingOnly(bottom: 16.kh),
-              SizedBox(
-                height: controller.numberOfRiders * 92.kh,
-                child: ListView.builder(
-                    itemCount: controller.numberOfRiders,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      return Column(
+      bottomSheet: Obx(
+        () => !controller.isLoading.value
+            ? const GpProgress()
+            : Container(
+                height: 400.kh,
+                decoration: BoxDecoration(
+                    color: ColorUtil.kWhiteColor,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(40.kh),
+                        topRight: Radius.circular(40.kh))),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Rate Driver",
+                        style: TextStyleUtil.k18Heading600(),
+                      ).paddingOnly(top: 40.kh, bottom: 16.kh),
+                      Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text("Esther Howard"),
-                              Image.asset(ImageConstant.pngUserSquare)
-                            ],
-                          ),
-                          SizedBox(
-                            height: 28.kh,
-                            child: RatingBar(
-                              allowHalfRating: true,
-                              glow: false,
-                              ratingWidget: RatingWidget(
-                                full: const Icon(
-                                  Icons.star,
-                                  color: Colors.amber,
-                                ),
-                                half: Icon(
-                                  Icons.star,
-                                  color: Colors.amber.withOpacity(0.5),
-                                ),
-                                empty: const Icon(
-                                  Icons.star,
-                                  color: ColorUtil.kGreyColor,
-                                ),
-                              ),
-                              onRatingUpdate: (double value) {},
+                          Text(
+                              "${controller.myRidesModel.value.data?.driverDetails?.fullName}"),
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(8.kh),
+                            child: CommonImageView(
+                                height: 42.kh,
+                                width: 42.kw,
+                                url:
+                                    "${controller.myRidesModel.value.data?.driverDetails?.profilePic?.url}"),
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        height: 28.kh,
+                        child: RatingBar(
+                          allowHalfRating: true,
+                          glow: false,
+                          ratingWidget: RatingWidget(
+                            full: const Icon(
+                              Icons.star,
+                              color: Colors.amber,
+                            ),
+                            half: const Icon(
+                              Icons.star,
+                              color: Colors.red,
+                            ),
+                            empty: const Icon(
+                              Icons.star,
+                              color: ColorUtil.kGreyColor,
                             ),
                           ),
-                          const GreenPoolDivider()
-                              .paddingOnly(top: 16.kh, bottom: 16.kh),
-                        ],
-                      );
-                    }),
+                          onRatingUpdate: (double value) {
+                            controller.driverRating.value = value;
+                            controller.rateDriverAPI(
+                                "${controller.myRidesModel.value.data?.driverBookingDetails?.driverId}");
+                          },
+                        ),
+                      ),
+                      const GreenPoolDivider()
+                          .paddingOnly(top: 16.kh, bottom: 24.kh),
+                      Text(
+                        "Rate your Carpool Companions",
+                        style: TextStyleUtil.k18Heading600(),
+                      ).paddingOnly(bottom: 16.kh),
+                      SizedBox(
+                        height: (controller
+                                    .myRidesModel
+                                    .value
+                                    .data
+                                    ?.driverBookingDetails
+                                    ?.riderBookingDetails
+                                    ?.length ??
+                                1) *
+                            98.kh,
+                        child: ListView.builder(
+                            itemCount: controller
+                                .myRidesModel
+                                .value
+                                .data
+                                ?.driverBookingDetails
+                                ?.riderBookingDetails
+                                ?.length,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              final rider = controller
+                                  .myRidesModel
+                                  .value
+                                  .data
+                                  ?.driverBookingDetails
+                                  ?.riderBookingDetails?[index]
+                                  .riderDetails;
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text("${rider?.fullName}"),
+                                      ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(8.kh),
+                                        child: CommonImageView(
+                                            height: 42.kh,
+                                            width: 42.kw,
+                                            url: "${rider?.profilePic?.url}"),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 28.kh,
+                                    child: RatingBar(
+                                      allowHalfRating: true,
+                                      glow: false,
+                                      ratingWidget: RatingWidget(
+                                        full: const Icon(
+                                          Icons.star,
+                                          color: Colors.amber,
+                                        ),
+                                        half: Icon(
+                                          Icons.star,
+                                          color: Colors.amber.withOpacity(0.5),
+                                        ),
+                                        empty: const Icon(
+                                          Icons.star,
+                                          color: ColorUtil.kGreyColor,
+                                        ),
+                                      ),
+                                      onRatingUpdate: (double value) {
+                                        controller.rating.value = value;
+                                        controller.debouncer(() => controller
+                                            .rateUserAPI("${rider?.Id}"));
+                                      },
+                                    ),
+                                  ),
+                                  const GreenPoolDivider()
+                                      .paddingOnly(top: 16.kh, bottom: 16.kh),
+                                ],
+                              );
+                            }),
+                      ),
+                      GreenPoolButton(
+                        onPressed: () {
+                          Get.find<HomeController>().changeTabIndex(0);
+                          Get.until((route) =>
+                              Get.currentRoute == Routes.BOTTOM_NAVIGATION);
+                        },
+                        label: "Continue",
+                      ).paddingOnly(top: 20.kh, bottom: 10.kh),
+                    ],
+                  ).paddingSymmetric(horizontal: 16.kw),
+                ),
               ),
-              GreenPoolButton(
-                onPressed: () {
-                  Get.until(
-                      (route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
-                },
-                label: "Continue",
-              ).paddingOnly(top: 40.kh, bottom: 10.kh),
-            ],
-          ).paddingSymmetric(horizontal: 16.kw),
-        ),
       ),
       body: Center(
         child: Column(

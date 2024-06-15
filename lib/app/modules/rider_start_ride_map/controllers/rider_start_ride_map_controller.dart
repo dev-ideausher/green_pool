@@ -11,9 +11,11 @@ import 'package:green_pool/app/data/chat_arg.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/dio/api_service.dart';
 import 'package:green_pool/app/services/gp_util.dart';
+import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/storage.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../constants/image_constant.dart';
 import '../../../data/booking_detail_model.dart';
 import '../../../data/live_location_model.dart';
 import '../../../data/my_rides_model.dart';
@@ -45,8 +47,8 @@ class RiderStartRideMapController extends GetxController {
     final MyRidesModelData myRidesModel = Get.arguments;
     await myRidesDetailsAPI(
         myRidesModel.confirmDriverDetails!.firstOrNull?.driverRideId ?? "");
-    currentLat.value = myRidesModel.origin!.coordinates!.first ?? 0.0;
-    currentLong.value = myRidesModel.origin!.coordinates!.last ?? 0.0;
+    currentLat.value = myRidesModel.origin!.coordinates!.last ?? 0.0;
+    currentLong.value = myRidesModel.origin!.coordinates!.first ?? 0.0;
     destinationLat.value = myRidesModel.destination?.coordinates?.last ?? 0.0;
     destinationLong.value = myRidesModel.destination?.coordinates?.first ?? 0.0;
     await drawPolyline();
@@ -127,12 +129,6 @@ class RiderStartRideMapController extends GetxController {
         final liveLocation =
             LiveLocationModel.fromMap(Map<String, dynamic>.from(data));
         // rotation: liveLocation.heading ?? 0.0,
-        mapController.animateCamera(CameraUpdate.newCameraPosition(
-            CameraPosition(
-                bearing: 270.0,
-                target: LatLng(currentLat.value, currentLong.value),
-                tilt: 30.0,
-                zoom: 17.0)));
         currentLat.value = liveLocation.latitude ?? 0.0;
         currentLong.value = liveLocation.longitude ?? 0.0;
         mapController.animateCamera(CameraUpdate.newCameraPosition(
@@ -175,7 +171,12 @@ class RiderStartRideMapController extends GetxController {
                       .value.driverBookingDetails?.origin?.coordinates?.first ??
                   0.0);
         }
-        drawPolyline();
+        markers.clear();
+        addVehicleMarker(
+            LatLng(currentLat.value, currentLong.value),
+            bookingDetail
+                    .value.driverDetails?.vehicleDetails?.vehiclePic?.url ??
+                "");
       }
     }, onError: (Object error) {
       debugPrint("Error: $error");
@@ -195,7 +196,7 @@ class RiderStartRideMapController extends GetxController {
         polylineCoordinates.assignAll(result.points
             .map((PointLatLng point) => LatLng(point.latitude, point.longitude))
             .toList());
-        addMarker(
+        addVehicleMarker(
             polylineCoordinates.first,
             bookingDetail
                     .value.driverDetails?.vehicleDetails?.vehiclePic?.url ??
@@ -203,14 +204,16 @@ class RiderStartRideMapController extends GetxController {
 
         bookingDetail.value.driverBookingDetails?.riderBookingDetails?.forEach(
           (element) {
-            addMarker(
+            addMarkers(
                 LatLng(element.origin?.coordinates?.lastOrNull ?? 0.0,
                     element.origin?.coordinates?.firstOrNull ?? 0.0),
-                element.riderDetails?.profilePic?.url ?? "");
-            addMarker(
+                ImageConstant.pngSourceIcon ?? "",
+                "Origin");
+            addMarkers(
                 LatLng(element.destination?.coordinates?.lastOrNull ?? 0.0,
                     element.destination?.coordinates?.firstOrNull ?? 0.0),
-                element.riderDetails?.profilePic?.url ?? "");
+                ImageConstant.pngDestinationIcon ?? "",
+                "Destination");
           },
         );
         mapController.animateCamera(CameraUpdate.newLatLngBounds(
@@ -221,7 +224,7 @@ class RiderStartRideMapController extends GetxController {
     }
   }
 
-  Future<void> addMarker(LatLng position, String url) async {
+  Future<void> addVehicleMarker(LatLng position, String url) async {
     final bytes = await GpUtil.getMarkerIconFromUrl(
         bookingDetail.value.driverDetails?.vehicleDetails?.vehiclePic?.url ??
             "");
@@ -230,6 +233,24 @@ class RiderStartRideMapController extends GetxController {
         position: position,
         icon: url.isEmpty ? BitmapDescriptor.defaultMarker : bytes,
         rotation: 0));
+  }
+
+  addMarkers(LatLng carLocation, String image, String? title) async {
+    // String imgurl = "https://www.fluttercampus.com/img/car.png";
+    // Uint8List bytes = (await NetworkAssetBundle(Uri.parse(imgurl)).load(imgurl))
+    //     .buffer
+    //     .asUint8List();
+    markers.add(Marker(
+      markerId: MarkerId(carLocation.toString()),
+      position: carLocation, //position of marker
+      infoWindow: InfoWindow(
+        title: title,
+        snippet: '',
+      ),
+      // icon: BitmapDescriptor.fromBytes(bytes), //Icon for Marker
+      icon: await BitmapDescriptor.fromAssetImage(
+          ImageConfiguration(size: Size(200.kw, 200.kh)), image),
+    ));
   }
 
   void getArrivalTime(double latitude, double longitude, double destinationLat,

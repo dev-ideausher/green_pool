@@ -83,8 +83,7 @@ class ImageConstant {
   static String svgIconInfo = 'assets/images/icons/icons_info.svg';
   static String svgIconTime = 'assets/images/icons/icons_time.svg';
   static String pngIconProfilePic = 'assets/images/icons/profilepic.png';
-  static String pngAssistantNavigation =
-      'assets/images/icons/assistant_navigation.png';
+  static String pngYourLocation = 'assets/images/icons/your_location.png';
 
 //home
   static String svgPostRide = 'assets/images/home/PostRide.svg';

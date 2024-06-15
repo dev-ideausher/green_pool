@@ -5,7 +5,7 @@ class MessageListModelChatRoomIdsUser2ProfilePic {
 /*
 {
   "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/ac11d443-b43e-49b3-ab1f-1c2526940922-compressed_image_picker_89D3D04F-F400-48C4-9980-B1775E6C0205-95174-00002D1496CDBB31.jpg"
-}
+} 
 */
 
   String? url;
@@ -13,7 +13,8 @@ class MessageListModelChatRoomIdsUser2ProfilePic {
   MessageListModelChatRoomIdsUser2ProfilePic({
     this.url,
   });
-  MessageListModelChatRoomIdsUser2ProfilePic.fromJson(Map<String, dynamic> json) {
+  MessageListModelChatRoomIdsUser2ProfilePic.fromJson(
+      Map<String, dynamic> json) {
     url = json['url']?.toString();
   }
   Map<String, dynamic> toJson() {
@@ -31,7 +32,7 @@ class MessageListModelChatRoomIdsUser2 {
   "profilePic": {
     "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/ac11d443-b43e-49b3-ab1f-1c2526940922-compressed_image_picker_89D3D04F-F400-48C4-9980-B1775E6C0205-95174-00002D1496CDBB31.jpg"
   }
-}
+} 
 */
 
   String? Id;
@@ -46,7 +47,10 @@ class MessageListModelChatRoomIdsUser2 {
   MessageListModelChatRoomIdsUser2.fromJson(Map<String, dynamic> json) {
     Id = json['_id']?.toString();
     fullName = json['fullName']?.toString();
-    profilePic = (json['profilePic'] != null) ? MessageListModelChatRoomIdsUser2ProfilePic.fromJson(json['profilePic']) : null;
+    profilePic = (json['profilePic'] != null)
+        ? MessageListModelChatRoomIdsUser2ProfilePic.fromJson(
+            json['profilePic'])
+        : null;
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -71,26 +75,32 @@ class MessageListModelChatRoomIds {
       "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/ac11d443-b43e-49b3-ab1f-1c2526940922-compressed_image_picker_89D3D04F-F400-48C4-9980-B1775E6C0205-95174-00002D1496CDBB31.jpg"
     }
   },
-  "chatRoomId": "-NvqdDOYI7ygN2zqiSXy"
-}
+  "chatRoomId": "-NvqdDOYI7ygN2zqiSXy",
+  "unReadCount": 2
+} 
 */
 
   String? Id;
   String? lastMessage;
   MessageListModelChatRoomIdsUser2? user2;
   String? chatRoomId;
+  int? unReadCount;
 
   MessageListModelChatRoomIds({
     this.Id,
     this.lastMessage,
     this.user2,
     this.chatRoomId,
+    this.unReadCount,
   });
   MessageListModelChatRoomIds.fromJson(Map<String, dynamic> json) {
     Id = json['_id']?.toString();
     lastMessage = json['lastMessage']?.toString();
-    user2 = (json['user2'] != null) ? MessageListModelChatRoomIdsUser2.fromJson(json['user2']) : null;
+    user2 = (json['user2'] != null)
+        ? MessageListModelChatRoomIdsUser2.fromJson(json['user2'])
+        : null;
     chatRoomId = json['chatRoomId']?.toString();
+    unReadCount = json['unReadCount']?.toInt();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -100,6 +110,7 @@ class MessageListModelChatRoomIds {
       data['user2'] = user2!.toJson();
     }
     data['chatRoomId'] = chatRoomId;
+    data['unReadCount'] = unReadCount;
     return data;
   }
 }
@@ -118,10 +129,11 @@ class MessageListModel {
           "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/ac11d443-b43e-49b3-ab1f-1c2526940922-compressed_image_picker_89D3D04F-F400-48C4-9980-B1775E6C0205-95174-00002D1496CDBB31.jpg"
         }
       },
-      "chatRoomId": "-NvqdDOYI7ygN2zqiSXy"
+      "chatRoomId": "-NvqdDOYI7ygN2zqiSXy",
+      "unReadCount": 2
     }
   ]
-}
+} 
 */
 
   List<MessageListModelChatRoomIds?>? chatRoomIds;

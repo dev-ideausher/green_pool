@@ -23,7 +23,7 @@ class ProfileSetupView extends GetView<ProfileSetupController> {
             Text(
               'Profile Setup',
               style: TextStyleUtil.k32Heading700(),
-            ).paddingOnly(bottom: 4.kh, top: 32.kh),
+            ).paddingOnly(bottom: 4.kh, top: 42.kh),
             Text(
               'Enter your profile details',
               style: TextStyleUtil.k16Regular(color: ColorUtil.kNeutral4),

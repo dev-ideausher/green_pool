@@ -17,21 +17,18 @@ class RequestBottom extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         padding: EdgeInsets.all(24.kh),
-        // height: 317.kh,
+        height: 350.kh,
         width: 100.w,
         decoration: BoxDecoration(
             color: ColorUtil.kWhiteColor,
             borderRadius: BorderRadius.only(
-                topLeft:
-                Radius.circular(40.kh),
-                topRight: Radius.circular(
-                    40.kh))),
+                topLeft: Radius.circular(40.kh),
+                topRight: Radius.circular(40.kh))),
         child: Column(
           children: [
             Text(
               Strings.requestSent,
-              style: TextStyleUtil
-                  .k18Heading600(),
+              style: TextStyleUtil.k18Heading600(),
             ).paddingOnly(bottom: 24.kh),
             SvgPicture.asset(
               ImageConstant.svgCompleteTick,
@@ -39,29 +36,23 @@ class RequestBottom extends StatelessWidget {
               width: 64.kw,
             ).paddingOnly(bottom: 16.kh),
             Text(
-              Strings.paymentDoneRequestSentToDriver,
+              Strings.requestSentToRider,
               textAlign: TextAlign.center,
-              style:
-              TextStyleUtil.k16Semibold(
-                  fontSize: 16.kh),
+              style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
             ).paddingOnly(bottom: 40.kh),
             GreenPoolButton(
                 label: Strings.continueText,
                 onPressed: () {
-                  Get.until((route) =>
-                  Get.currentRoute ==
-                      Routes
-                          .BOTTOM_NAVIGATION);
-                }),
-            GreenPoolButton(
+                  Get.until(
+                      (route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
+                }).paddingOnly(bottom: 16.kh),
+            /*GreenPoolButton(
                 label: Strings.cancelRequest,
                 isBorder: true,
                 onPressed: () {
-                  Get.until((route) =>
-                  Get.currentRoute ==
-                      Routes
-                          .BOTTOM_NAVIGATION);
-                }).paddingOnly(top: 16.kh),
+                  Get.until(
+                      (route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
+                }),*/
           ],
         ));
   }

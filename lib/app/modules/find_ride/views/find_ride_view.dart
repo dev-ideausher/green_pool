@@ -26,17 +26,18 @@ class FindRideView extends GetView<FindRideController> {
   Widget build(BuildContext context) {
     final pickedDate = DateTime.now();
     controller.date.text = pickedDate.toIso8601String();
-    controller.departureDate.text = "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
+    controller.departureDate.text =
+        "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
     return Scaffold(
       appBar: GreenPoolAppBar(
         title: Text(Strings.findRide),
       ),
       body: Obx(
-        ()=> SingleChildScrollView(
+        () => SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              RichTextHeading(text: Strings.pickup).paddingOnly(top: 32.kh),
+              RichTextHeading(text: Strings.pickup).paddingOnly(top: 12.kh),
               GreenPoolTextField(
                 hintText: Strings.enterOrigin,
                 keyboardType: TextInputType.streetAddress,
@@ -44,14 +45,19 @@ class FindRideView extends GetView<FindRideController> {
                   controller.setActiveState();
                 },
                 onTap: () {
-                  Get.toNamed(Routes.ORIGIN, arguments: LocationValues.findRideOrigin)?.then((v) => controller.setActiveState());;
+                  Get.toNamed(Routes.ORIGIN,
+                          arguments: LocationValues.findRideOrigin)
+                      ?.then((v) => controller.setActiveState());
+                  ;
                 },
                 controller: controller.riderOriginTextController,
                 readOnly: true,
                 prefix: Icon(
                   Icons.location_on,
                   size: 24.kh,
-                  color: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01,
+                  color: Get.find<HomeController>().isPinkModeOn.value
+                      ? ColorUtil.kPrimary3PinkMode
+                      : ColorUtil.kSecondary01,
                 ),
               ).paddingOnly(top: 8.kh, bottom: 16.kh),
               RichTextHeading(text: Strings.destination),
@@ -62,13 +68,17 @@ class FindRideView extends GetView<FindRideController> {
                   controller.setActiveState();
                 },
                 onTap: () {
-                  Get.toNamed(Routes.ORIGIN, arguments: LocationValues.findRideDestination)?.then((v) => controller.setActiveState());
+                  Get.toNamed(Routes.ORIGIN,
+                          arguments: LocationValues.findRideDestination)
+                      ?.then((v) => controller.setActiveState());
                 },
                 controller: controller.riderDestinationTextController,
                 prefix: Icon(
                   Icons.location_on,
                   size: 24.kh,
-                  color: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01,
+                  color: Get.find<HomeController>().isPinkModeOn.value
+                      ? ColorUtil.kPrimary3PinkMode
+                      : ColorUtil.kSecondary01,
                 ),
                 readOnly: true,
               ).paddingOnly(top: 8.kh, bottom: 16.kh),
@@ -78,10 +88,6 @@ class FindRideView extends GetView<FindRideController> {
                     TextSpan(
                       text: Strings.departureDateAndTime,
                       style: TextStyleUtil.k14Semibold(),
-                    ),
-                    TextSpan(
-                      text: Strings.optional,
-                      style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack04),
                     ),
                   ],
                 ),
@@ -101,7 +107,10 @@ class FindRideView extends GetView<FindRideController> {
                       prefix: SvgPicture.asset(
                         ImageConstant.svgIconCalendarClear,
                         colorFilter: ColorFilter.mode(
-                            Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01, BlendMode.srcIn),
+                            Get.find<HomeController>().isPinkModeOn.value
+                                ? ColorUtil.kPrimary3PinkMode
+                                : ColorUtil.kSecondary01,
+                            BlendMode.srcIn),
                       ),
                     ).paddingOnly(top: 8.kh, bottom: 16.kh, right: 8.kw),
                   ),
@@ -117,13 +126,17 @@ class FindRideView extends GetView<FindRideController> {
                       prefix: SvgPicture.asset(
                         ImageConstant.svgIconTime,
                         colorFilter: ColorFilter.mode(
-                            Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01, BlendMode.srcIn),
+                            Get.find<HomeController>().isPinkModeOn.value
+                                ? ColorUtil.kPrimary3PinkMode
+                                : ColorUtil.kSecondary01,
+                            BlendMode.srcIn),
                       ),
                     ).paddingOnly(top: 8.kh, bottom: 16.kh),
                   ),
                 ],
               ).paddingOnly(bottom: 16.kh),
-              RichTextHeading(text: Strings.seatsAvailable).paddingOnly(bottom: 8.kh),
+              RichTextHeading(text: Strings.seatsAvailable)
+                  .paddingOnly(bottom: 8.kh),
               GreenPoolTextField(
                 hintText: Strings.enterNumberOfSeats,
                 controller: controller.seatAvailable,
@@ -133,7 +146,9 @@ class FindRideView extends GetView<FindRideController> {
                 },
                 prefix: Icon(
                   Icons.time_to_leave,
-                  color: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01,
+                  color: Get.find<HomeController>().isPinkModeOn.value
+                      ? ColorUtil.kPrimary3PinkMode
+                      : ColorUtil.kSecondary01,
                 ),
               ).paddingOnly(bottom: 16.kh),
               Text(
@@ -147,12 +162,11 @@ class FindRideView extends GetView<FindRideController> {
               ),
               // const Expanded(child: SizedBox()),
               GreenPoolButton(
-                  padding: const EdgeInsets.all(0),
-                  onPressed: () => controller.decideRouting(),
-                  isActive: controller.isActive.value,
-                  label: Strings.findMatchingRides,
-                ).paddingSymmetric(vertical: 40.kh),
-
+                padding: const EdgeInsets.all(0),
+                onPressed: () => controller.decideRouting(),
+                isActive: controller.isActive.value,
+                label: Strings.findMatchingRides,
+              ).paddingSymmetric(vertical: 40.kh),
             ],
           ).paddingSymmetric(horizontal: 16.kw),
         ),

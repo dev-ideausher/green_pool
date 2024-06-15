@@ -38,41 +38,54 @@ class DriverDetailsController extends GetxController {
   //   super.onClose();
   // }
 
-  confirmRideAPI() async {
+  moveToPayment() {
     final Map<String, dynamic> rideData = {
       "ridesDetails": rideDetails!["ridesDetails"],
       "driverRideId": driverRideId,
       "distance": minStopDistance,
     };
-    try {
-      final response = await APIManager.postConfirmRide(body: rideData);
-
-      requestRideModel.value = RequestRideByRiderModel.fromJson(response.data);
-      if (requestRideModel.value.status ?? false) {
-        Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
-      } else {
-        showMySnackbar(msg: requestRideModel.value.message ?? "");
-      }
-    } catch (e) {
-      debugPrint(e.toString());
-    }
+    Get.toNamed(Routes.PAYMENT, arguments: rideData);
   }
+
+  // confirmRideAPI() async {
+  //   // final Map<String, dynamic> rideData = {
+  //   //   "ridesDetails": rideDetails!["ridesDetails"],
+  //   //   "driverRideId": driverRideId,
+  //   //   "distance": minStopDistance,
+  //   // };
+  //   try {
+  //     final response = await APIManager.postConfirmRide(body: rideData);
+
+  //     requestRideModel.value = RequestRideByRiderModel.fromJson(response.data);
+  //     if (requestRideModel.value.status ?? false) {
+  //       Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
+  //     } else {
+  //       showMySnackbar(msg: requestRideModel.value.message ?? "");
+  //     }
+  //   } catch (e) {
+  //     debugPrint(e.toString());
+  //   }
+  // }
 
   Future<void> chatWithDriver() async {
     try {
-      final res = await APIManager.getChatRoomId(receiverId: matchingRidesModelData.value.driverDetails?.first?.Id ?? "");
+      final res = await APIManager.getChatRoomId(
+          receiverId:
+              matchingRidesModelData.value.driverDetails?.first?.Id ?? "");
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
               chatRoomId: res.data["chatChannelId"] ?? "",
               id: matchingRidesModelData.value.driverDetails?.first?.Id,
               name: matchingRidesModelData.value.driverDetails?.first?.fullName,
-              image: matchingRidesModelData.value.driverDetails?.first?.profilePic?.url));
+              image: matchingRidesModelData
+                  .value.driverDetails?.first?.profilePic?.url));
     } catch (e) {
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
               id: matchingRidesModelData.value.driverDetails?.first?.Id,
               name: matchingRidesModelData.value.driverDetails?.first?.fullName,
-              image: matchingRidesModelData.value.driverDetails?.first?.profilePic?.url));
+              image: matchingRidesModelData
+                  .value.driverDetails?.first?.profilePic?.url));
       debugPrint(e.toString());
     }
   }

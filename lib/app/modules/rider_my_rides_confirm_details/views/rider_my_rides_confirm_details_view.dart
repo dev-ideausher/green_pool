@@ -22,7 +22,8 @@ import '../../profile/controllers/profile_controller.dart';
 import '../../rider_my_ride_request/controllers/rider_my_ride_request_controller.dart';
 import '../controllers/rider_my_rides_confirm_details_controller.dart';
 
-class RiderMyRidesConfirmDetailsView extends GetView<RiderMyRidesConfirmDetailsController> {
+class RiderMyRidesConfirmDetailsView
+    extends GetView<RiderMyRidesConfirmDetailsController> {
   const RiderMyRidesConfirmDetailsView({super.key});
 
   @override
@@ -53,7 +54,8 @@ class RiderMyRidesConfirmDetailsView extends GetView<RiderMyRidesConfirmDetailsC
                           child: ClipRRect(
                               borderRadius: BorderRadius.circular(8.kh),
                               child: CommonImageView(
-                                  url: "${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.driverDetails?[0]?.profilePic?.url}")),
+                                  url:
+                                      "${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.driverDetails?[0]?.profilePic?.url}")),
                         ).paddingOnly(bottom: 8.kh),
                       ],
                     ).paddingOnly(right: 16.kw, bottom: 16.kh),
@@ -75,11 +77,15 @@ class RiderMyRidesConfirmDetailsView extends GetView<RiderMyRidesConfirmDetailsC
                                   children: [
                                     TextSpan(
                                       text: 'Fare: ',
-                                      style: TextStyleUtil.k14Semibold(color: ColorUtil.kSecondary01),
+                                      style: TextStyleUtil.k14Semibold(
+                                          color: ColorUtil.kSecondary01),
                                     ),
                                     TextSpan(
-                                      text: '\$ ${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.origin?.originDestinationFair}',
-                                      style: TextStyleUtil.k16Semibold(fontSize: 16.kh, color: ColorUtil.kSecondary01),
+                                      text:
+                                          '\$ ${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.origin?.originDestinationFair}',
+                                      style: TextStyleUtil.k16Semibold(
+                                          fontSize: 16.kh,
+                                          color: ColorUtil.kSecondary01),
                                     ),
                                   ],
                                 ),
@@ -93,13 +99,19 @@ class RiderMyRidesConfirmDetailsView extends GetView<RiderMyRidesConfirmDetailsC
                                 children: [
                                   SvgPicture.asset(
                                     ImageConstant.svgIconCalendarTime,
-                                    colorFilter:
-                                        ColorFilter.mode(Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01, BlendMode.srcIn),
+                                    colorFilter: ColorFilter.mode(
+                                        Get.find<HomeController>()
+                                                .isPinkModeOn
+                                                .value
+                                            ? ColorUtil.kPrimary3PinkMode
+                                            : ColorUtil.kSecondary01,
+                                        BlendMode.srcIn),
                                   ).paddingOnly(right: 4.kw),
                                   Text(
                                     // '07 Nov 2023, 3:00pm',
                                     "${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.date.toString().split("T")[0]}  ${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.time}",
-                                    style: TextStyleUtil.k12Regular(color: ColorUtil.kBlack03),
+                                    style: TextStyleUtil.k12Regular(
+                                        color: ColorUtil.kBlack03),
                                   ),
                                 ],
                               ),
@@ -108,11 +120,16 @@ class RiderMyRidesConfirmDetailsView extends GetView<RiderMyRidesConfirmDetailsC
                                   Icon(
                                     Icons.time_to_leave,
                                     size: 18.kh,
-                                    color: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01,
+                                    color: Get.find<HomeController>()
+                                            .isPinkModeOn
+                                            .value
+                                        ? ColorUtil.kPrimary3PinkMode
+                                        : ColorUtil.kSecondary01,
                                   ).paddingOnly(right: 8.kw),
                                   Text(
                                     "${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.seatAvailable} seats",
-                                    style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
+                                    style: TextStyleUtil.k14Regular(
+                                        color: ColorUtil.kBlack03),
                                   ),
                                 ],
                               ),
@@ -126,8 +143,10 @@ class RiderMyRidesConfirmDetailsView extends GetView<RiderMyRidesConfirmDetailsC
                 //middle divider
                 const GreenPoolDivider().paddingOnly(bottom: 16.kh),
                 OriginToDestination(
-                        origin: "${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.origin?.name}",
-                        destination: "${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.destination?.name}",
+                        origin:
+                            "${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.origin?.name}",
+                        destination:
+                            "${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.destination?.name}",
                         needPickupText: true)
                     .paddingOnly(bottom: 8.kh),
                 //bottom line
@@ -146,15 +165,20 @@ class RiderMyRidesConfirmDetailsView extends GetView<RiderMyRidesConfirmDetailsC
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 12.kw, vertical: 2.kh),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 12.kw, vertical: 2.kh),
                       decoration: BoxDecoration(
-                        color: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kPrimary01,
+                        color: Get.find<HomeController>().isPinkModeOn.value
+                            ? ColorUtil.kPrimary3PinkMode
+                            : ColorUtil.kPrimary01,
                         borderRadius: BorderRadius.circular(16.kh),
                       ),
                       child: Row(children: [
                         Icon(
                           Icons.star,
-                          color: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kWhiteColor : ColorUtil.kYellowColor,
+                          color: Get.find<HomeController>().isPinkModeOn.value
+                              ? ColorUtil.kWhiteColor
+                              : ColorUtil.kYellowColor,
                           size: 12.kh,
                         ).paddingOnly(right: 4.kw),
                         Text(
@@ -174,7 +198,8 @@ class RiderMyRidesConfirmDetailsView extends GetView<RiderMyRidesConfirmDetailsC
                     ).paddingOnly(bottom: 4.kh),
                     Text(
                       "${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.driverDetails?[0]?.totalRides} people",
-                      style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
+                      style:
+                          TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                     ),
                   ],
                 ),
@@ -187,7 +212,8 @@ class RiderMyRidesConfirmDetailsView extends GetView<RiderMyRidesConfirmDetailsC
                     ).paddingOnly(bottom: 4.kh),
                     Text(
                       'in ${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.createdAt.toString().split("-")[0]}',
-                      style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
+                      style:
+                          TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                     ),
                   ],
                 ),
@@ -198,21 +224,36 @@ class RiderMyRidesConfirmDetailsView extends GetView<RiderMyRidesConfirmDetailsC
 
             //co passengers
             Text(
-              'Co-Passsengers',
+              Strings.coPassengers,
               style: TextStyleUtil.k14Bold(),
             ).paddingOnly(bottom: 16.kh),
             Obx(
-              () => controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.riders?.length == 0
+              () => (controller
+                              .riderConfirmRequestModel
+                              .value
+                              .data?[controller.index]
+                              ?.driverRideDetails
+                              ?.riders
+                              ?.length ??
+                          0) ==
+                      0
                   ? Center(
                       child: Text(
-                        "No co-passengers are available at the moment",
+                        Strings.noPassengersAvailable,
                         style: TextStyleUtil.k14Semibold(),
                       ),
-                    )
+                    ).paddingOnly(bottom: 16.kh)
                   : SizedBox(
                       height: 96.kh,
                       child: ListView.builder(
-                          itemCount: controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.riders?.length ?? 6,
+                          itemCount: controller
+                                  .riderConfirmRequestModel
+                                  .value
+                                  .data?[controller.index]
+                                  ?.driverRideDetails
+                                  ?.riders
+                                  ?.length ??
+                              6,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index1) {
                             return Column(
@@ -236,7 +277,7 @@ class RiderMyRidesConfirmDetailsView extends GetView<RiderMyRidesConfirmDetailsC
                               ],
                             ).paddingOnly(right: 32.kw);
                           }),
-                    ).paddingOnly(bottom: 10.kh),
+                    ).paddingOnly(bottom: 16.kh),
             ),
             const GreenPoolDivider().paddingOnly(bottom: 16.kh),
 
@@ -252,7 +293,8 @@ class RiderMyRidesConfirmDetailsView extends GetView<RiderMyRidesConfirmDetailsC
                   child: CommonImageView(
                           height: 64.kh,
                           width: 64.kw,
-                          url: "${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.driverDetails?[0]?.profilePic?.url}")
+                          url:
+                              "${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.driverDetails?[0]?.profilePic?.url}")
                       .paddingOnly(right: 8.kh),
                 ),
                 Column(
@@ -266,7 +308,8 @@ class RiderMyRidesConfirmDetailsView extends GetView<RiderMyRidesConfirmDetailsC
                       children: [
                         Text(
                           "${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.driverDetails?[0]?.vehicleDetails?[0]?.type}",
-                          style: TextStyleUtil.k14Semibold(color: ColorUtil.kBlack03),
+                          style: TextStyleUtil.k14Semibold(
+                              color: ColorUtil.kBlack03),
                         ),
                         Container(
                           width: 1.kw,
@@ -275,7 +318,8 @@ class RiderMyRidesConfirmDetailsView extends GetView<RiderMyRidesConfirmDetailsC
                         ).paddingSymmetric(vertical: 2.5.kh, horizontal: 8.kw),
                         Text(
                           "${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.driverDetails?[0]?.vehicleDetails?[0]?.licencePlate}",
-                          style: TextStyleUtil.k14Semibold(color: ColorUtil.kBlack03),
+                          style: TextStyleUtil.k14Semibold(
+                              color: ColorUtil.kBlack03),
                         ),
                       ],
                     ),
@@ -292,34 +336,96 @@ class RiderMyRidesConfirmDetailsView extends GetView<RiderMyRidesConfirmDetailsC
               style: TextStyleUtil.k14Bold(),
             ).paddingOnly(bottom: 16.kh),
 
-            controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.preferences?.other?.AppreciatesConversation == true
-                ? Amenities(toggleSwitch: false, text: "Appreciates Conversation", image: ImageConstant.svgAmenities1).paddingOnly(bottom: 8.kh)
+            controller
+                        .riderConfirmRequestModel
+                        .value
+                        .data?[controller.index]
+                        ?.driverRideDetails
+                        ?.preferences
+                        ?.other
+                        ?.AppreciatesConversation ==
+                    true
+                ? Amenities(
+                        toggleSwitch: false,
+                        text: "Appreciates Conversation",
+                        image: ImageConstant.svgAmenities1)
+                    .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
-            controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.preferences?.other?.EnjoysMusic == true
-                ? Amenities(toggleSwitch: false, text: "Enjoys Music", image: ImageConstant.svgAmenities2).paddingOnly(bottom: 8.kh)
+            controller.riderConfirmRequestModel.value.data?[controller.index]
+                        ?.driverRideDetails?.preferences?.other?.EnjoysMusic ==
+                    true
+                ? Amenities(
+                        toggleSwitch: false,
+                        text: "Enjoys Music",
+                        image: ImageConstant.svgAmenities2)
+                    .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
-            controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.preferences?.other?.SmokeFree == true
-                ? Amenities(toggleSwitch: false, text: "Smoke-Free", image: ImageConstant.svgAmenities3).paddingOnly(bottom: 8.kh)
+            controller.riderConfirmRequestModel.value.data?[controller.index]
+                        ?.driverRideDetails?.preferences?.other?.SmokeFree ==
+                    true
+                ? Amenities(
+                        toggleSwitch: false,
+                        text: "Smoke-Free",
+                        image: ImageConstant.svgAmenities3)
+                    .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
-            controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.preferences?.other?.PetFriendly == true
-                ? Amenities(toggleSwitch: false, text: "Pet-friendly", image: ImageConstant.svgAmenities4).paddingOnly(bottom: 8.kh)
+            controller.riderConfirmRequestModel.value.data?[controller.index]
+                        ?.driverRideDetails?.preferences?.other?.PetFriendly ==
+                    true
+                ? Amenities(
+                        toggleSwitch: false,
+                        text: "Pet-friendly",
+                        image: ImageConstant.svgAmenities4)
+                    .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
-            controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.preferences?.other?.WinterTires == true
-                ? Amenities(toggleSwitch: false, text: "Winter Tires", image: ImageConstant.svgAmenities5).paddingOnly(bottom: 8.kh)
+            controller.riderConfirmRequestModel.value.data?[controller.index]
+                        ?.driverRideDetails?.preferences?.other?.WinterTires ==
+                    true
+                ? Amenities(
+                        toggleSwitch: false,
+                        text: "Winter Tires",
+                        image: ImageConstant.svgAmenities5)
+                    .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
-            controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.preferences?.other?.CoolingOrHeating == true
-                ? Amenities(toggleSwitch: false, text: "Cooling or Heating", image: ImageConstant.svgAmenities6).paddingOnly(bottom: 8.kh)
+            controller
+                        .riderConfirmRequestModel
+                        .value
+                        .data?[controller.index]
+                        ?.driverRideDetails
+                        ?.preferences
+                        ?.other
+                        ?.CoolingOrHeating ==
+                    true
+                ? Amenities(
+                        toggleSwitch: false,
+                        text: "Cooling or Heating",
+                        image: ImageConstant.svgAmenities6)
+                    .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
-            controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.preferences?.other?.BabySeat == true
-                ? Amenities(toggleSwitch: false, text: "Baby Seats", image: ImageConstant.svgAmenities7).paddingOnly(bottom: 8.kh)
+            controller.riderConfirmRequestModel.value.data?[controller.index]
+                        ?.driverRideDetails?.preferences?.other?.BabySeat ==
+                    true
+                ? Amenities(
+                        toggleSwitch: false,
+                        text: "Baby Seats",
+                        image: ImageConstant.svgAmenities7)
+                    .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
-            (controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.preferences?.other?.HeatedSeats) == true
-                ? Amenities(toggleSwitch: false, text: "Heated Seats", image: ImageConstant.svgAmenities8).paddingOnly(bottom: 8.kh)
+            (controller.riderConfirmRequestModel.value.data?[controller.index]
+                        ?.driverRideDetails?.preferences?.other?.HeatedSeats) ==
+                    true
+                ? Amenities(
+                        toggleSwitch: false,
+                        text: "Heated Seats",
+                        image: ImageConstant.svgAmenities8)
+                    .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
 
             const GreenPoolDivider().paddingOnly(top: 8.kh),
             GreenPoolButton(
-              onPressed: () => Get.find<RiderMyRideRequestController>().openMessageFromConfirm(controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails),
+              onPressed: () => Get.find<RiderMyRideRequestController>()
+                  .openMessageFromConfirm(controller.riderConfirmRequestModel
+                      .value.data?[controller.index]?.driverRideDetails),
               label: Strings.message,
               isBorder: true,
             ),
@@ -329,7 +435,8 @@ class RiderMyRidesConfirmDetailsView extends GetView<RiderMyRidesConfirmDetailsC
                 GreenPoolButton(
                   onPressed: () async {
                     try {
-                      await Get.find<RiderMyRideRequestController>().acceptDriversRequestAPI(controller.index);
+                      await Get.find<RiderMyRideRequestController>()
+                          .acceptDriversRequestAPI(controller.index);
                     } catch (e) {
                       throw Exception(e);
                     }

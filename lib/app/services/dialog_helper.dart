@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import '../constants/image_constant.dart';
 import '../modules/home/controllers/home_controller.dart';
+import '../res/strings.dart';
+import '../routes/app_pages.dart';
 import 'colors.dart';
+import 'custom_button.dart';
 import 'responsive_size.dart';
+import 'text_style_util.dart';
 
 class DialogHelper {
   static void showLoading([String? message]) {
@@ -49,5 +55,102 @@ class DialogHelper {
   //hide loading
   static Future<void> hideDialog() async {
     if (Get.isDialogOpen!) Get.until((route) => !Get.isDialogOpen!);
+  }
+
+  static void paymentSuccessfull() {
+    Get.bottomSheet(
+      Container(
+          padding: EdgeInsets.all(24.kh),
+          height: 380.kh,
+          width: 100.w,
+          decoration: BoxDecoration(
+              color: ColorUtil.kWhiteColor,
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(40.kh),
+                  topRight: Radius.circular(40.kh))),
+          child: Column(
+            children: [
+              Text(
+                Strings.requestSent,
+                style: TextStyleUtil.k18Heading600(),
+              ).paddingOnly(bottom: 24.kh),
+              SvgPicture.asset(
+                ImageConstant.svgCompleteTick,
+                height: 64.kh,
+                width: 64.kw,
+              ).paddingOnly(bottom: 16.kh),
+              Text(
+                Strings.paymentDoneRequestSentToDriver,
+                textAlign: TextAlign.center,
+                style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
+              ).paddingOnly(bottom: 40.kh),
+              GreenPoolButton(
+                  label: Strings.continueText,
+                  onPressed: () {
+                    Get.until((route) =>
+                        Get.currentRoute == Routes.BOTTOM_NAVIGATION);
+                  }),
+              // GreenPoolButton(
+              //     label: Strings.cancelRequest,
+              //     isBorder: true,
+              //     onPressed: () {
+              //       Get.until((route) =>
+              //           Get.currentRoute == Routes.BOTTOM_NAVIGATION);
+              //     }).paddingOnly(top: 16.kh),
+            ],
+          )),
+    );
+  }
+
+  static void deleteRideDialog(Function() onPressed) {
+    Get.dialog(
+      useSafeArea: true,
+      Center(
+        child: Container(
+          padding: EdgeInsets.all(16.kh),
+          height: 212.kh,
+          width: 80.w,
+          decoration: BoxDecoration(
+            color: ColorUtil.kWhiteColor,
+            borderRadius: BorderRadius.circular(8.kh),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              GestureDetector(
+                onTap: () => Get.back(),
+                child: Container(
+                  alignment: Alignment.centerRight,
+                  child: const Icon(Icons.close),
+                ),
+              ),
+              Text(
+                Strings.delete,
+                style: TextStyleUtil.k18Semibold(),
+                textAlign: TextAlign.left,
+              ).paddingSymmetric(vertical: 4.kh),
+              Text(
+                Strings.areYouSureYouWantToDeleteThisRide,
+                style: TextStyleUtil.k14Regular(
+                  color: ColorUtil.kBlack04,
+                ),
+                textAlign: TextAlign.left,
+              ).paddingOnly(bottom: 40.kh),
+              Container(
+                alignment: Alignment.centerRight,
+                child: GreenPoolButton(
+                  onPressed: onPressed,
+                  height: 40.kh,
+                  width: 144.kw,
+                  label: Strings.delete,
+                  fontSize: 14.kh,
+                  padding: const EdgeInsets.all(8),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

@@ -119,10 +119,11 @@ class StartRideController extends GetxController {
       polylineCoordinates.refresh();
       markers.clear();
       addMarkers(LatLng(originCoordinates.last!, originCoordinates.first!),
-          ImageConstant.pngSourceIcon);
+          ImageConstant.pngSourceIcon, "Origin");
       addMarkers(
           LatLng(destinationCoordinates.last!, destinationCoordinates.first!),
-          ImageConstant.pngDestinationIcon);
+          ImageConstant.pngDestinationIcon,
+          "Destination");
       mapController.animateCamera(CameraUpdate.newLatLngBounds(
           GpUtil.boundsFromLatLngList(polylineCoordinates), 70));
     } catch (e) {
@@ -130,7 +131,7 @@ class StartRideController extends GetxController {
     }
   }
 
-  addMarkers(LatLng carLocation, String image) async {
+  addMarkers(LatLng carLocation, String image, String? title) async {
     // String imgurl = "https://www.fluttercampus.com/img/car.png";
     // Uint8List bytes = (await NetworkAssetBundle(Uri.parse(imgurl)).load(imgurl))
     //     .buffer
@@ -138,9 +139,9 @@ class StartRideController extends GetxController {
     markers.add(Marker(
       markerId: MarkerId(carLocation.toString()),
       position: carLocation, //position of marker
-      infoWindow: const InfoWindow(
-        title: 'Car Point ',
-        snippet: 'Car Marker',
+      infoWindow: InfoWindow(
+        title: title,
+        snippet: '',
       ),
       // icon: BitmapDescriptor.fromBytes(bytes), //Icon for Marker
       icon: await BitmapDescriptor.fromAssetImage(
@@ -186,14 +187,14 @@ class StartRideController extends GetxController {
         mapController.animateCamera(
           CameraUpdate.newCameraPosition(
             CameraPosition(
-              zoom: 13.5,
+              zoom: 17,
               target: LatLng(currentLat, currentLong),
             ),
           ),
         );
         markers.clear();
         addMarkers(LatLng(currentLat, currentLong),
-            ImageConstant.pngAssistantNavigation,);
+            ImageConstant.pngYourLocation, "Current Location");
       }
     });
   }

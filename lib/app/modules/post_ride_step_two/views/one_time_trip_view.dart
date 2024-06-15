@@ -18,13 +18,15 @@ class OneTimeTripView extends GetView<PostRideStepTwoController> {
   Widget build(BuildContext context) {
     final pickedDate = DateTime.now();
     controller.selectedDateOneTime.text = pickedDate.toIso8601String();
-    controller.formattedOneTimeDate.text = "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
+    controller.formattedOneTimeDate.text =
+        "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           'Enter the specific date and time, specifying  am (morning) or pm (afternoon)',
-          style: TextStyleUtil.k16Semibold(fontSize: 16.kh, color: ColorUtil.kBlack02),
+          style: TextStyleUtil.k16Semibold(
+              fontSize: 16.kh, color: ColorUtil.kBlack02),
         ).paddingOnly(top: 24.kh, bottom: 16.kh),
 
         const RichTextHeading(text: "Date"),
@@ -37,11 +39,17 @@ class OneTimeTripView extends GetView<PostRideStepTwoController> {
                 ImageConstant.svgIconCalendar,
                 height: 24.kh,
                 width: 24.kw,
-                colorFilter: ColorFilter.mode(controller.isPinkMode.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01, BlendMode.srcIn),
+                colorFilter: ColorFilter.mode(
+                    controller.isPinkMode.value
+                        ? ColorUtil.kPrimary3PinkMode
+                        : ColorUtil.kSecondary01,
+                    BlendMode.srcIn),
               ).paddingOnly(right: 16.kw),
             ),
             onTap: () {
-              controller.setDate(context).then((value) => controller.setActiveStateCarpoolSchedule());
+              controller
+                  .setDate(context)
+                  .then((value) => controller.setActiveStateCarpoolSchedule());
             }).paddingOnly(top: 8.kh, bottom: 16.kh),
         const RichTextHeading(text: "Time"),
         GreenPoolTextField(
@@ -57,7 +65,6 @@ class OneTimeTripView extends GetView<PostRideStepTwoController> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            //TODO: toggle switch
             Text(
               'Return trip',
               style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
@@ -69,13 +76,20 @@ class OneTimeTripView extends GetView<PostRideStepTwoController> {
                   value: controller.isReturn.value,
                   onChanged: (value) {
                     controller.isReturn.value = value;
+                    controller.setActiveStateCarpoolSchedule();
                   },
                   inactiveThumbColor: ColorUtil.kNeutral1,
-                  inactiveTrackColor: controller.isPinkMode.value ? ColorUtil.kSecondaryPinkMode : ColorUtil.kPrimary05,
-                  activeTrackColor: controller.isPinkMode.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01,
+                  inactiveTrackColor: controller.isPinkMode.value
+                      ? ColorUtil.kSecondaryPinkMode
+                      : ColorUtil.kPrimary05,
+                  activeTrackColor: controller.isPinkMode.value
+                      ? ColorUtil.kPrimary3PinkMode
+                      : ColorUtil.kSecondary01,
                   trackOutlineWidth: const MaterialStatePropertyAll(0),
-                  thumbColor: const MaterialStatePropertyAll(ColorUtil.kWhiteColor),
-                  trackOutlineColor: const MaterialStatePropertyAll(ColorUtil.kNeutral1),
+                  thumbColor:
+                      const MaterialStatePropertyAll(ColorUtil.kWhiteColor),
+                  trackOutlineColor:
+                      const MaterialStatePropertyAll(ColorUtil.kNeutral1),
                 ),
               ),
             ),
@@ -117,14 +131,15 @@ class OneTimeTripView extends GetView<PostRideStepTwoController> {
                           ImageConstant.svgIconCalendar,
                           height: 24.kh,
                           width: 24.kw,
-                          colorFilter: ColorFilter.mode(controller.isPinkMode.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01, BlendMode.srcIn),
+                          colorFilter: ColorFilter.mode(
+                              controller.isPinkMode.value
+                                  ? ColorUtil.kPrimary3PinkMode
+                                  : ColorUtil.kSecondary01,
+                              BlendMode.srcIn),
                         ).paddingOnly(right: 16.kw),
                       ),
                     ).paddingOnly(top: 8.kh, bottom: 16.kh),
-                    Text(
-                      'Time',
-                      style: TextStyleUtil.k14Semibold(),
-                    ),
+                    const RichTextHeading(text: "Time"),
                     GreenPoolTextField(
                       hintText: 'Select Time',
                       onTap: () {

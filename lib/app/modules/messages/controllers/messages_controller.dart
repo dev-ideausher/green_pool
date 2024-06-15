@@ -5,6 +5,9 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/data/message_list_model.dart';
 import 'package:green_pool/app/services/dio/api_service.dart';
 
+import '../../../data/chat_arg.dart';
+import '../../../routes/app_pages.dart';
+
 class MessagesController extends GetxController {
   RxBool refreshPage = true.obs;
   RxBool isLoading = false.obs;
@@ -26,5 +29,15 @@ class MessagesController extends GetxController {
     } catch (e) {
       debugPrint(e.toString());
     }
+  }
+
+  Future<void> getToChatPage(message) async {
+    Get.toNamed(Routes.CHAT_PAGE,
+            arguments: ChatArg(
+                chatRoomId: message?.chatRoomId ?? "",
+                id: message?.user2?.Id ?? "",
+                image: message?.user2?.profilePic?.url,
+                name: message?.user2?.fullName))!
+        .then((value) => getMessageListAPI());
   }
 }

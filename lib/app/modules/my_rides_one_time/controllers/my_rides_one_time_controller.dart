@@ -5,12 +5,14 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/data/driver_cofirm_request_model.dart';
 
 import 'package:green_pool/app/data/my_rides_model.dart';
+import 'package:green_pool/app/services/dialog_helper.dart';
 import 'package:green_pool/app/services/dio/api_service.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/snackbar.dart';
 
 import '../../../data/booking_detail_model.dart';
 import '../../../data/recurring_rides_model.dart';
+import '../../../data/ride_detail_id.dart';
 import '../../../res/strings.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/colors.dart';
@@ -20,6 +22,8 @@ import '../../../services/text_style_util.dart';
 class MyRidesOneTimeController extends GetxController {
   RxString ridePostId = ''.obs;
   final RxList<MyRidesModelData> myRidesModelData = <MyRidesModelData>[].obs;
+  final Rx<BookingDetailModelData> rideBookingData =
+      BookingDetailModelData().obs;
   var confirmRequestModel = DriverConfirmRequestModel().obs;
   final RxBool isLoad = true.obs;
   var recurringResp = RecurringRidesModel().obs;
@@ -50,119 +54,43 @@ class MyRidesOneTimeController extends GetxController {
   }
 
   riderCancelRideAPI(MyRidesModelData myRidesModelData) async {
-    final Map<String, dynamic> riderRideId = {
-      "riderRideId": myRidesModelData.Id
-    };
-    try {
-      isLoad.value = true;
-      final cancelRideResponse =
-          await APIManager.riderCancelRide(body: riderRideId);
-      var data = jsonDecode(cancelRideResponse.toString());
-      await myRidesAPI();
-      isLoad.value = false;
-    } catch (e) {
-      throw Exception(e);
-    }
+    DialogHelper.deleteRideDialog(() async {
+      Get.back();
+      final Map<String, dynamic> riderRideId = {
+        "riderRideId": myRidesModelData.Id
+      };
+      try {
+        isLoad.value = true;
+        final cancelRideResponse =
+            await APIManager.riderCancelRide(body: riderRideId);
+        var data = jsonDecode(cancelRideResponse.toString());
+        await myRidesAPI();
+        isLoad.value = false;
+      } catch (e) {
+        throw Exception(e);
+      }
+    });
   }
 
   cancelRideAPI(MyRidesModelData myRidesModelData) async {
-    Get.dialog(
-      useSafeArea: true,
-      Center(
-        child: Container(
-          padding: EdgeInsets.all(16.kh),
-          height: 212.kh,
-          width: 80.w,
-          decoration: BoxDecoration(
-            color: ColorUtil.kWhiteColor,
-            borderRadius: BorderRadius.circular(8.kh),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              GestureDetector(
-                onTap: () => Get.back(),
-                child: Container(
-                  alignment: Alignment.centerRight,
-                  child: const Icon(Icons.close),
-                ),
-              ),
-              Text(
-                Strings.delete,
-                style: TextStyleUtil.k18Semibold(),
-                textAlign: TextAlign.left,
-              ).paddingSymmetric(vertical: 4.kh),
-              Text(
-                Strings.areYouSureYouWantToDeleteThisRide,
-                style: TextStyleUtil.k14Regular(
-                  color: ColorUtil.kBlack04,
-                ),
-                textAlign: TextAlign.left,
-              ).paddingOnly(bottom: 40.kh),
-              Container(
-                alignment: Alignment.centerRight,
-                child: GreenPoolButton(
-                  onPressed: () async {
-                    Get.back();
-                    final Map<String, dynamic> driverRideId = {
-                      "driverRideId": myRidesModelData.Id,
-                    };
-                    try {
-                      isLoad.value = true;
-                      final cancelRideResponse =
-                          await APIManager.cancelRide(body: driverRideId);
-                      var data = jsonDecode(cancelRideResponse.toString());
-                      await myRidesAPI();
-                      isLoad.value = false;
-                    } catch (e) {
-                      debugPrint(e.toString());
-                    }
-                  },
-                  height: 40.kh,
-                  width: 144.kw,
-                  label: Strings.delete,
-                  fontSize: 14.kh,
-                  padding: const EdgeInsets.all(8),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+    DialogHelper.deleteRideDialog(
+      () async {
+        Get.back();
+        final Map<String, dynamic> driverRideId = {
+          "driverRideId": myRidesModelData.Id,
+        };
+        try {
+          isLoad.value = true;
+          final cancelRideResponse =
+              await APIManager.cancelRide(body: driverRideId);
+          var data = jsonDecode(cancelRideResponse.toString());
+          await myRidesAPI();
+          isLoad.value = false;
+        } catch (e) {
+          debugPrint(e.toString());
+        }
+      },
     );
-    // Get.defaultDialog(
-    //   title: Strings.deleteRide
-    //   content: Text(Strings.areYouSureYouWantToDeleteThisRide),
-    //   actions: [
-    //     TextButton(
-    //       onPressed: () {
-    //         Get.back();
-    //       },
-    //       child: Text(
-    //         Strings.cancel,
-    //         style: TextStyleUtil.k14Bold(color: ColorUtil.kBlack03),
-    //       ),
-    //     ),
-    //     ElevatedButton(
-    //       onPressed: () async {
-    //         Get.back();
-    //         final Map<String, dynamic> driverRideId = {
-    //           "driverRideId": myRidesModelData.Id,
-    //         };
-    //         try {
-    //           isLoad.value = true;
-    //           final cancelRideResponse = await APIManager.cancelRide(body: driverRideId);
-    //           var data = jsonDecode(cancelRideResponse.toString());
-    //           await myRidesAPI();
-    //           isLoad.value = false;
-    //         } catch (e) {
-    //           debugPrint(e.toString());
-    //         }
-    //       },
-    //       child: Text(Strings.delete, style: TextStyleUtil.k14Bold(color: ColorUtil.kError4)),
-    //     ),
-    //   ],
-    // );
   }
 
   void viewDetails(MyRidesModelData myRidesModelData) {
@@ -200,26 +128,29 @@ class MyRidesOneTimeController extends GetxController {
           Get.toNamed(Routes.RIDER_CONFIRMED_RIDE_DETAILS,
                   arguments: myRidesModelData)
               ?.then((v) => myRidesAPI);
-          ;
         } else {
           Get.toNamed(Routes.RIDER_MY_RIDE_REQUEST,
                   arguments: myRidesModelData.Id)
               ?.then((v) => myRidesAPI);
-          ;
         }
       }
     }
   }
 
-  void startRide(MyRidesModelData value) {
+  Future<void> startRide(MyRidesModelData value) async {
     if (value.postsInfo?.isEmpty ?? false) {
-      openMyRideDetail(value);
+      // openMyRideDetail(value);
+      await Get.toNamed(Routes.MY_RIDES_REQUEST,
+              arguments: RideDetailId(
+                  driverRidId: value?.Id ?? "",
+                  // riderRidId: myRidesModelData.value.riderRideId ?? ""
+                  riderRidId: ""))
+          ?.then((v) => myRidesAPI);
     } else {
       if (value.postsInfo!.isNotEmpty) {
         Get.toNamed(Routes.START_RIDE,
                 arguments: value.postsInfo?[0].driverRideId)
             ?.then((v) => myRidesAPI);
-        ;
       } else {
         showMySnackbar(msg: "You have no riders at the moment");
       }

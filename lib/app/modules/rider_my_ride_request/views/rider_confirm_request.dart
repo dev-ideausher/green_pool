@@ -45,7 +45,8 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                     ).paddingOnly(bottom: 16.kh),
                     Text(
                       "Please try again after few days.",
-                      style: TextStyleUtil.k18Regular(color: ColorUtil.kBlack04),
+                      style:
+                          TextStyleUtil.k18Regular(color: ColorUtil.kBlack04),
                       textAlign: TextAlign.center,
                     ),
                   ],
@@ -53,11 +54,13 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
               : controller.mapViewType.value
                   ? const MapRiderConfirmRequestView()
                   : ListView.builder(
-                      itemCount: controller.riderConfirmRequestModel.value.data?.length,
+                      itemCount: controller
+                          .riderConfirmRequestModel.value.data?.length,
                       itemBuilder: (context, index) {
                         return GestureDetector(
                           onTap: () {
-                            Get.toNamed(Routes.RIDER_MY_RIDES_CONFIRM_DETAILS, arguments: index);
+                            Get.toNamed(Routes.RIDER_MY_RIDES_CONFIRM_DETAILS,
+                                arguments: index);
                           },
                           child: Container(
                             padding: EdgeInsets.all(16.kh),
@@ -65,7 +68,8 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                               color: ColorUtil.kWhiteColor,
                               borderRadius: BorderRadius.circular(8.kh),
                               border: Border(
-                                bottom: BorderSide(color: ColorUtil.kNeutral7, width: 2.kh),
+                                bottom: BorderSide(
+                                    color: ColorUtil.kNeutral7, width: 2.kh),
                               ),
                             ),
                             child: Column(
@@ -77,11 +81,13 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                       children: [
                                         Center(
                                           child: ClipRRect(
-                                              borderRadius: BorderRadius.circular(8.kh),
+                                              borderRadius:
+                                                  BorderRadius.circular(8.kh),
                                               child: CommonImageView(
                                                   height: 64.kh,
                                                   width: 64.kw,
-                                                  url: "${controller.riderConfirmRequestModel.value.data![index]?.driverRideDetails!?.driverDetails?[0]?.profilePic?.url}")),
+                                                  url:
+                                                      "${controller.riderConfirmRequestModel.value.data![index]?.driverRideDetails!?.driverDetails?[0]?.profilePic?.url}")),
                                         ).paddingOnly(bottom: 8.kh),
                                         Positioned(
                                           top: 52.kh,
@@ -89,26 +95,56 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                           child: Container(
                                             width: 50.kw,
                                             height: 20.kh,
-                                            padding: EdgeInsets.symmetric(horizontal: 8.kw),
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 8.kw),
                                             decoration: BoxDecoration(
-                                                color: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01,
-                                                borderRadius: BorderRadius.circular(16.kh)),
+                                                color:
+                                                    Get.find<HomeController>()
+                                                            .isPinkModeOn
+                                                            .value
+                                                        ? ColorUtil
+                                                            .kPrimary3PinkMode
+                                                        : ColorUtil
+                                                            .kSecondary01,
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        16.kh)),
                                             child: Row(
                                               children: [
                                                 Icon(
                                                   Icons.star,
-                                                  color: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kWhiteColor : ColorUtil.kYellowColor,
+                                                  color:
+                                                      Get.find<HomeController>()
+                                                              .isPinkModeOn
+                                                              .value
+                                                          ? ColorUtil
+                                                              .kWhiteColor
+                                                          : ColorUtil
+                                                              .kYellowColor,
                                                   size: 12.kh,
                                                 ).paddingOnly(right: 2.kw),
                                                 Text(
                                                   // '0.0',
                                                   //TODO: rating
-                                                  controller.riderConfirmRequestModel.value.data?[index]?.driverRideDetails?.driverDetails?[0]?.rating
-                                                          ?.toStringAsFixed(1) ??
+                                                  controller
+                                                          .riderConfirmRequestModel
+                                                          .value
+                                                          .data?[index]
+                                                          ?.driverRideDetails
+                                                          ?.driverDetails?[0]
+                                                          ?.rating
+                                                          ?.toStringAsFixed(
+                                                              1) ??
                                                       '0.0',
                                                   overflow: TextOverflow.fade,
-                                                  style:
-                                                      TextStyleUtil.k12Semibold(color: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kBlack02 : ColorUtil.kWhiteColor),
+                                                  style: TextStyleUtil.k12Semibold(
+                                                      color: Get.find<
+                                                                  HomeController>()
+                                                              .isPinkModeOn
+                                                              .value
+                                                          ? ColorUtil.kBlack02
+                                                          : ColorUtil
+                                                              .kWhiteColor),
                                                 ),
                                               ],
                                             ),
@@ -117,56 +153,89 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                       ],
                                     ).paddingOnly(right: 16.kw, bottom: 16.kh),
                                     Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Row(
                                           //TODO: space between
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(
                                               "${controller.riderConfirmRequestModel.value.data?[index]?.driverRideDetails?.driverDetails?[0]?.fullName}",
-                                              style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
+                                              style: TextStyleUtil.k16Semibold(
+                                                  fontSize: 16.kh),
                                             ),
-
                                             8.kwidthBox,
                                             Text.rich(
                                               TextSpan(
                                                 children: [
                                                   TextSpan(
-                                                    text: "\$ ${(controller.riderConfirmRequestModel.value.data![index]?.price??0)}",
-                                                    style: TextStyleUtil.k16Bold(color: ColorUtil.kSecondary01),
+                                                    text:
+                                                        "\$ ${(controller.riderConfirmRequestModel.value.data![index]?.price ?? 0)}",
+                                                    style:
+                                                        TextStyleUtil.k16Bold(
+                                                            color: ColorUtil
+                                                                .kSecondary01),
                                                   ),
                                                 ],
                                               ),
                                             ),
                                             8.kwidthBox,
                                             InkWell(
-                                              onTap: ()=>controller.openMessageFromConfirm(controller.riderConfirmRequestModel.value.data?[index]?.driverRideDetails),
-                                              child : Container(
-                                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(40.kh), border: Border.all(color: ColorUtil.kSecondary01)),
+                                              onTap: () => controller
+                                                  .openMessageFromConfirm(
+                                                      controller
+                                                          .riderConfirmRequestModel
+                                                          .value
+                                                          .data?[index]
+                                                          ?.driverRideDetails),
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            40.kh),
+                                                    border: Border.all(
+                                                        color: ColorUtil
+                                                            .kSecondary01)),
                                                 child: Text(
                                                   Strings.message,
-                                                  style: TextStyleUtil.k12Semibold(),
-                                                ).paddingSymmetric(vertical: 4.kh, horizontal: 16.kw),
+                                                  style: TextStyleUtil
+                                                      .k12Semibold(),
+                                                ).paddingSymmetric(
+                                                    vertical: 4.kh,
+                                                    horizontal: 16.kw),
                                               ),
                                             )
                                           ],
                                         ),
                                         Row(
                                           //TODO: space between
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
                                             Row(
                                               children: [
                                                 SvgPicture.asset(
-                                                  ImageConstant.svgIconCalendarTime,
+                                                  ImageConstant
+                                                      .svgIconCalendarTime,
                                                   colorFilter: ColorFilter.mode(
-                                                      Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01, BlendMode.srcIn),
+                                                      Get.find<HomeController>()
+                                                              .isPinkModeOn
+                                                              .value
+                                                          ? ColorUtil
+                                                              .kPrimary3PinkMode
+                                                          : ColorUtil
+                                                              .kSecondary01,
+                                                      BlendMode.srcIn),
                                                 ).paddingOnly(right: 4.kw),
                                                 Text(
                                                   // '07 July 2023, 3:00pm',
                                                   "${GpUtil.getDateFormat(controller.riderConfirmRequestModel.value.data?[index]?.driverRideDetails?.date)}  ${controller.riderConfirmRequestModel.value.data?[index]?.driverRideDetails?.time}",
-                                                  style: TextStyleUtil.k12Regular(color: ColorUtil.kBlack02),
+                                                  style:
+                                                      TextStyleUtil.k12Regular(
+                                                          color: ColorUtil
+                                                              .kBlack02),
                                                 ),
                                               ],
                                             ).paddingOnly(right: 10.kw),
@@ -175,11 +244,21 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                                 Icon(
                                                   Icons.time_to_leave,
                                                   size: 18.kh,
-                                                  color: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01,
+                                                  color:
+                                                      Get.find<HomeController>()
+                                                              .isPinkModeOn
+                                                              .value
+                                                          ? ColorUtil
+                                                              .kPrimary3PinkMode
+                                                          : ColorUtil
+                                                              .kSecondary01,
                                                 ).paddingOnly(right: 5.kw),
                                                 Text(
                                                   '${controller.riderConfirmRequestModel.value.data![index]?.driverRideDetails?.seatAvailable} seats',
-                                                  style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
+                                                  style:
+                                                      TextStyleUtil.k14Regular(
+                                                          color: ColorUtil
+                                                              .kBlack03),
                                                 ),
                                               ],
                                             ).paddingOnly(top: 8.kh),
@@ -189,15 +268,20 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                     ),
                                   ],
                                 ),
-                                const GreenPoolDivider().paddingOnly(bottom: 16.kh),
+                                const GreenPoolDivider()
+                                    .paddingOnly(bottom: 16.kh),
                                 OriginToDestination(
-                                  origin: "${controller.riderConfirmRequestModel.value.data?[index]?.driverRideDetails?.origin?.name}",
-                                  destination: "${controller.riderConfirmRequestModel.value.data?[index]?.driverRideDetails?.destination?.name}",
+                                  origin:
+                                      "${controller.riderConfirmRequestModel.value.data?[index]?.driverRideDetails?.origin?.name}",
+                                  destination:
+                                      "${controller.riderConfirmRequestModel.value.data?[index]?.driverRideDetails?.destination?.name}",
                                   needPickupText: false,
                                 ).paddingOnly(bottom: 8.kh),
-                                const GreenPoolDivider().paddingOnly(bottom: 16.kh),
+                                const GreenPoolDivider()
+                                    .paddingOnly(bottom: 16.kh),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     GreenPoolButton(
                                       width: 144.kw,
@@ -206,21 +290,36 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                       fontSize: 14.kh,
                                       label: Strings.accept,
                                       onPressed: () async {
-                                        await controller.acceptDriversRequestAPI(index,showAcceptBottom: true);
-
+                                        // await controller.acceptDriversRequestAPI(index,showAcceptBottom: true);
+                                        controller
+                                            .moveToPaymentFromConfirmSection(
+                                                index,
+                                                controller
+                                                    .riderConfirmRequestModel
+                                                    .value
+                                                    .data![index]!);
                                       },
                                     ),
                                     GreenPoolButton(
                                       onPressed: () {
-                                        controller.rejectDriversRequestAPI(index);
+                                        controller
+                                            .rejectDriversRequestAPI(index);
                                       },
                                       width: 144.kw,
                                       height: 40.kh,
                                       padding: EdgeInsets.all(8.kh),
                                       fontSize: 14.kh,
                                       isBorder: true,
-                                      borderColor: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01,
-                                      labelColor: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01,
+                                      borderColor: Get.find<HomeController>()
+                                              .isPinkModeOn
+                                              .value
+                                          ? ColorUtil.kPrimary3PinkMode
+                                          : ColorUtil.kSecondary01,
+                                      labelColor: Get.find<HomeController>()
+                                              .isPinkModeOn
+                                              .value
+                                          ? ColorUtil.kPrimary3PinkMode
+                                          : ColorUtil.kSecondary01,
                                       label: 'Reject',
                                     ),
                                   ],

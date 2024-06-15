@@ -9,6 +9,7 @@ import '../../../components/greenpool_textfield.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
 import '../../../services/text_style_util.dart';
+import '../../home/controllers/home_controller.dart';
 import '../controllers/wallet_to_bank_acc_controller.dart';
 
 class WalletToBankAccView extends GetView<WalletToBankAccController> {
@@ -29,8 +30,13 @@ class WalletToBankAccView extends GetView<WalletToBankAccController> {
             height: 188.kh,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16.kh),
-                gradient: const LinearGradient(
-                    colors: [ColorUtil.kPrimary04, ColorUtil.kPrimary01])),
+                gradient: Get.find<HomeController>().isPinkModeOn.value
+                    ? LinearGradient(colors: [
+                        ColorUtil.kSecondaryPinkMode,
+                        ColorUtil.kPrimaryPinkMode
+                      ])
+                    : LinearGradient(
+                        colors: [ColorUtil.kPrimary04, ColorUtil.kPrimary01])),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

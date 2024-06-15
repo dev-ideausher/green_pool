@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -82,20 +83,32 @@ class VerifyView extends GetView<VerifyController> {
                           borderRadius: BorderRadius.circular(8.kh),
                           border: Border.all(color: ColorUtil.kBlack01))),
                 ).paddingOnly(bottom: 16.kh),
-                Text.rich(
-                  TextSpan(
-                    children: [
-                      TextSpan(
-                          text: "Didn't get the code? ",
-                          style: TextStyleUtil.k14Regular(
-                              color: ColorUtil.kBlack04)),
-                      TextSpan(
-                          text: 'Resend',
-                          style: TextStyleUtil.k16Semibold(
-                              fontSize: 16.kh, color: ColorUtil.kSecondary01)),
-                    ],
+                Obx(
+                  () => Text.rich(
+                    TextSpan(
+                      children: [
+                        TextSpan(
+                            text: "Didn't get the code? ",
+                            style: TextStyleUtil.k14Regular(
+                                color: ColorUtil.kBlack04)),
+                        controller.seconds.value == 0
+                            ? TextSpan(
+                                text: 'Resend',
+                                style: TextStyleUtil.k16Semibold(
+                                    fontSize: 16.kh,
+                                    color: ColorUtil.kSecondary01),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () => controller.otpAuth())
+                            : TextSpan(
+                                text: controller.seconds.value.toString(),
+                                style: TextStyleUtil.k16Semibold(
+                                    fontSize: 16.kh,
+                                    color: ColorUtil.kSecondary01),
+                              ),
+                      ],
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                  textAlign: TextAlign.center,
                 ),
               ],
             ),

@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:green_pool/app/modules/add_gift/bindings/add_gift_binding.dart';
 import 'package:green_pool/app/modules/add_gift/views/add_gift_view.dart';
+import 'package:green_pool/app/modules/payment/bindings/payment_binding.dart';
 
 import '../modules/about/bindings/about_binding.dart';
 import '../modules/about/views/about_view.dart';
@@ -63,6 +64,7 @@ import '../modules/origin/bindings/origin_binding.dart';
 import '../modules/origin/views/origin_view.dart';
 import '../modules/password_changed/bindings/password_changed_binding.dart';
 import '../modules/password_changed/views/password_changed_view.dart';
+import '../modules/payment/views/payment_view.dart';
 import '../modules/payment_method/bindings/payment_method_binding.dart';
 import '../modules/payment_method/views/payment_method_view.dart';
 import '../modules/policy_cancellation/bindings/policy_cancellation_binding.dart';
@@ -514,6 +516,11 @@ class AppPages {
       name: _Paths.PAYMENT_METHOD,
       page: () => const PaymentMethodView(),
       binding: PaymentMethodBinding(),
+    ),
+    GetPage(
+      name: _Paths.PAYMENT,
+      page: () => const PaymentView(),
+      binding: PaymentBinding(),
     ),
     GetPage(
       name: _Paths.ADD_CARD,

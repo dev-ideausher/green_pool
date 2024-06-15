@@ -29,12 +29,32 @@ class TransactionHistoryView extends GetView<TransactionHistoryController> {
                 itemBuilder: (context, index) {
                   final transaction = controller.transactions[index];
                   return TransactionTile(
-                          title: Get.find<HomeController>().userInfo.value.data?.fullName ?? "",
-                          path: Get.find<HomeController>().userInfo.value.data?.profilePic?.url ?? "",
+                          title: Get.find<HomeController>()
+                                  .userInfo
+                                  .value
+                                  .data
+                                  ?.fullName ??
+                              "",
+                          path: Get.find<HomeController>()
+                                  .userInfo
+                                  .value
+                                  .data
+                                  ?.profilePic
+                                  ?.url ??
+                              "",
                           onTap: () {},
                           trailing: Text(
                             "\$ ${transaction.amount}",
-                            style: TextStyleUtil.k16Semibold(fontSize: 16.kh, color: (transaction?.transactionType ?? "") == "credit" ? ColorUtil.kGreenColor : ColorUtil.kError4),
+                            style: TextStyleUtil.k16Semibold(
+                                fontSize: 16.kh,
+                                color: (transaction?.transactionType ?? "") ==
+                                        "credit"
+                                    ? Get.find<HomeController>()
+                                            .isPinkModeOn
+                                            .value
+                                        ? ColorUtil.kPrimary2PinkMode
+                                        : ColorUtil.kGreenColor
+                                    : ColorUtil.kError4),
                           ),
                           subtitle: "Id: #${transaction.Id}")
                       .paddingOnly(bottom: 8.kh);
@@ -65,7 +85,8 @@ class TransactionTile extends StatelessWidget {
       child: ListTile(
         tileColor: ColorUtil.kWhiteColor,
         onTap: onTap,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.kh)),
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.kh)),
         title: Text(
           title,
           style: TextStyleUtil.k14Semibold(),
@@ -73,13 +94,16 @@ class TransactionTile extends StatelessWidget {
         subtitle: Text(
           subtitle,
           style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack04),
+          overflow: TextOverflow.ellipsis,
         ),
         contentPadding: EdgeInsets.symmetric(horizontal: 24.kw, vertical: 8.kh),
         leading: Container(
           height: 40.kh,
           width: 40.kw,
           alignment: Alignment.center,
-          decoration: BoxDecoration(color: ColorUtil.kBlack07, borderRadius: BorderRadius.circular(12.kh)),
+          decoration: BoxDecoration(
+              color: ColorUtil.kBlack07,
+              borderRadius: BorderRadius.circular(12.kh)),
           child: CommonImageView(
             url: path,
           ),

@@ -30,7 +30,7 @@ class PostRideStepFourView extends GetView<PostRideStepFourController> {
               Text(
                 'Guidelines for sharing\na ride',
                 style: TextStyleUtil.k32Heading700(),
-              ).paddingOnly(bottom: 56.kh),
+              ).paddingOnly(bottom: 36.kh),
               Guidelines(
                 image: Get.find<HomeController>().isPinkModeOn.value
                     ? ImageConstant.svgPinkGuideline1

@@ -24,17 +24,25 @@ class WelcomeTile extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Obx(
-                () => Text(
-                  Get.find<GetStorageService>().getLoggedIn
-                      ? "${controller.welcomeText.value} ${controller.userInfo.value.data?.fullName ?? "..."}"
-                      : controller.welcomeText.value,
-                  style: TextStyleUtil.k24Heading700(),
+                () => Text.rich(
+                  TextSpan(
+                    children: [
+                      TextSpan(
+                        text: controller.welcomeText.value,
+                        style: TextStyleUtil.k24Heading700(),
+                      ),
+                      TextSpan(
+                        text: Get.find<GetStorageService>().getLoggedIn
+                            ? " ${controller.userInfo.value.data?.fullName ?? "..."}"
+                            : "",
+                        style: TextStyleUtil.k24Heading700(
+                            color: Get.find<GetStorageService>().isPinkMode
+                                ? ColorUtil.kPrimaryPinkMode
+                                : ColorUtil.kPrimary01),
+                      ),
+                    ],
+                  ),
                 ).paddingOnly(bottom: 4.kh),
-              ),
-              Text(
-                
-                Strings.whatWouldYouLikeToDoToday,
-                style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack04),
               )
             ],
           ),
@@ -48,7 +56,7 @@ class WelcomeTile extends StatelessWidget {
                   alignment: Alignment.topRight,
                   children: [
                     Visibility(
-                      visible:false,// controller.unReadCount.value > 0,
+                      visible: false, // controller.unReadCount.value > 0,
                       child: Container(
                         height: 10.kh,
                         width: 10.kw,

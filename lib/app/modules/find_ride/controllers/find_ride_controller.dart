@@ -32,7 +32,8 @@ class FindRideController extends GetxController {
   TextEditingController riderOriginTextController = TextEditingController();
   double riderDestinationLat = 0.0;
   double riderDestinationLong = 0.0;
-  TextEditingController riderDestinationTextController = TextEditingController();
+  TextEditingController riderDestinationTextController =
+      TextEditingController();
 
   // GlobalKey<FormState> validationKey = GlobalKey<FormState>();
   final Rx<MatchingRidesModel> matchingRidesModel = MatchingRidesModel().obs;
@@ -40,10 +41,16 @@ class FindRideController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    seatAvailable.text=numberOfSeatAvailable.toString();
+    final now = TimeOfDay.now();
+    seatAvailable.text = numberOfSeatAvailable.toString();
     final pickedDate = DateTime.now();
     date.text = pickedDate.toIso8601String();
-    departureDate.text = "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
+    departureDate.text =
+        "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
+    selectedTime.text = TimeOfDay(hour: now.hour + 1, minute: 0)
+        .format(Get.context!)
+        .toString();
+
     isDriver = Get.arguments;
   }
 
@@ -59,7 +66,8 @@ class FindRideController extends GetxController {
 
   decideRouting() async {
     if (Get.find<GetStorageService>().getLoggedIn) {
-      if (Get.find<HomeController>().userInfo.value.data?.profileStatus == true) {
+      if (Get.find<HomeController>().userInfo.value.data?.profileStatus ==
+          true) {
         await getMatchingRidesAPI();
       } else {
         Get.toNamed(Routes.RIDER_PROFILE_SETUP, arguments: false);
@@ -116,10 +124,14 @@ class FindRideController extends GetxController {
 
     try {
       final findRideDataJson = findRideData.toJson();
-      final response = await APIManager.postMatchngRides(body: findRideDataJson);
+      final response =
+          await APIManager.postMatchngRides(body: findRideDataJson);
       var data = jsonDecode(response.toString());
       matchingRidesModel.value = MatchingRidesModel.fromJson(data);
-      Get.toNamed(Routes.MATCHING_RIDES, arguments: {'findRideData': findRideDataJson, 'matchingRidesModel': matchingRidesModel.value});
+      Get.toNamed(Routes.MATCHING_RIDES, arguments: {
+        'findRideData': findRideDataJson,
+        'matchingRidesModel': matchingRidesModel.value
+      });
     } catch (error) {
       throw Exception(error);
     }
@@ -147,7 +159,8 @@ class FindRideController extends GetxController {
     );
     try {
       final findRideDataJson = findRideData.toJson();
-      final response = await APIManager.postRiderFindRide(body: findRideDataJson);
+      final response =
+          await APIManager.postRiderFindRide(body: findRideDataJson);
       var data = jsonDecode(response.toString());
       rideresponse.value = FindRideResponseModel.fromJson(data);
       final String riderRideId = "${rideresponse.value.data![0]?.Id}";
@@ -173,16 +186,22 @@ class FindRideController extends GetxController {
             // Define the custom theme for the date picker
             data: ThemeData(
               // Define the primary color
-              primaryColor: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimaryPinkMode : ColorUtil.kPrimary01,
+              primaryColor: Get.find<HomeController>().isPinkModeOn.value
+                  ? ColorUtil.kPrimaryPinkMode
+                  : ColorUtil.kPrimary01,
               // Define the color scheme for the date picker
               colorScheme: ColorScheme.light(
                 // Define the primary color for the date picker
-                primary: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimaryPinkMode : ColorUtil.kPrimary01,
+                primary: Get.find<HomeController>().isPinkModeOn.value
+                    ? ColorUtil.kPrimaryPinkMode
+                    : ColorUtil.kPrimary01,
                 // Define the background color for the date picker
                 surface: Colors.white,
                 // Define the on-primary color for the date picker
                 onPrimary: Colors.white,
-                secondary: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimaryPinkMode : ColorUtil.kPrimary01,
+                secondary: Get.find<HomeController>().isPinkModeOn.value
+                    ? ColorUtil.kPrimaryPinkMode
+                    : ColorUtil.kPrimary01,
               ),
             ),
             // Apply the custom theme to the child widget
@@ -196,61 +215,43 @@ class FindRideController extends GetxController {
     if (pickedDate != null) {
       String isoFormattedDate = pickedDate.toIso8601String();
       date.text = isoFormattedDate;
-      departureDate.text = "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
+      departureDate.text =
+          "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
     }
   }
-
-  // Future<void> setDate(BuildContext context) async {
-  //   DateTime minimumDate = DateTime.now();
-  //   DateTime? pickedDate = await showModalBottomSheet(
-  //     context: context,
-  //     builder: (BuildContext builder) {
-  //       return Container(
-  //         height: MediaQuery.of(context).size.height / 3,
-  //         child: CupertinoDatePicker(
-  //           initialDateTime: minimumDate,
-  //           minimumDate: minimumDate,
-  //           maximumDate: minimumDate.add(const Duration(days: 3 * 30)),
-  //           mode: CupertinoDatePickerMode.date,
-  //           onDateTimeChanged: (DateTime dateTime) {},
-  //         ),
-  //       );
-  //     },
-  //   );
-  //   if (pickedDate != null) {
-  //     String isoFormattedDate = pickedDate.toIso8601String();
-  //     date.text = isoFormattedDate;
-  //     departureDate.text =
-  //         "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
-  //   }
-  // }
 
   Future<void> setTime(BuildContext context) async {
     TimeOfDay? pickedTime = await showTimePicker(
       context: context,
-      initialTime: TimeOfDay.now(),
-      initialEntryMode: TimePickerEntryMode.input,
       builder: (BuildContext context, Widget? child) {
         return Theme(
           // Define the custom theme for the date picker
           data: ThemeData(
             // Define the primary color
-            primaryColor: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimaryPinkMode : ColorUtil.kPrimary01,
+            primaryColor: Get.find<HomeController>().isPinkModeOn.value
+                ? ColorUtil.kPrimaryPinkMode
+                : ColorUtil.kPrimary01,
             // Define the color scheme for the date picker
             colorScheme: ColorScheme.light(
               // Define the primary color for the date picker
-              primary: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimaryPinkMode : ColorUtil.kPrimary01,
+              primary: Get.find<HomeController>().isPinkModeOn.value
+                  ? ColorUtil.kPrimaryPinkMode
+                  : ColorUtil.kPrimary01,
               // Define the background color for the date picker
               surface: Colors.white,
               // Define the on-primary color for the date picker
               onPrimary: Colors.white,
-              secondary: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimaryPinkMode : ColorUtil.kPrimary01,
+              secondary: Get.find<HomeController>().isPinkModeOn.value
+                  ? ColorUtil.kPrimaryPinkMode
+                  : ColorUtil.kPrimary01,
             ),
           ),
           // Apply the custom theme to the child widget
           child: child!,
         );
       },
+      initialTime: TimeOfDay.now(),
+      initialEntryMode: TimePickerEntryMode.input,
     );
 
     if (pickedTime != null) {
@@ -260,7 +261,8 @@ class FindRideController extends GetxController {
   }
 
   setActiveState() {
-    if (riderOriginTextController.value.text.isNotEmpty && riderDestinationTextController.value.text.isNotEmpty ) {
+    if (riderOriginTextController.value.text.isNotEmpty &&
+        riderDestinationTextController.value.text.isNotEmpty) {
       isActive.value = true;
     } else {
       isActive.value = false;

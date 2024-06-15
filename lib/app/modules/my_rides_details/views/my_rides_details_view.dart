@@ -108,9 +108,9 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                         ? Center(
                             child: Text(
                               Strings.noPassengersAvailable,
-                              style: TextStyleUtil.k16Regular(),
+                              style: TextStyleUtil.k14Semibold(),
                             ),
-                          )
+                          ).paddingOnly(bottom: 16.kh)
                         : SizedBox(
                             height: ((controller
                                         .myRidesModelData
@@ -158,7 +158,7 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                                                   "",
                                               style:
                                                   TextStyleUtil.k14Semibold(),
-                                            )
+                                            ),
                                           ],
                                         ).paddingOnly(bottom: 12.kh),
                                         OriginToDestination(
@@ -172,7 +172,7 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                                     ),
                                   );
                                 }),
-                          ),
+                          ).paddingOnly(bottom: 16.kh),
                     const GreenPoolDivider().paddingOnly(bottom: 16.kh),
 
                     //Vehicle details

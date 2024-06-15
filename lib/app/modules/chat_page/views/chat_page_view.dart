@@ -58,7 +58,6 @@ class ChatPageView extends GetView<ChatPageController> {
         actions: [
           PopupMenuButton(
             color: ColorUtil.kWhiteColor,
-            
             itemBuilder: (context) {
               return [
                 PopupMenuItem(
@@ -128,9 +127,17 @@ class ChatPageView extends GetView<ChatPageController> {
                                           decoration: BoxDecoration(
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(15.0.kh)),
-                                            color: Colors.white,
+                                            color: isSender
+                                                ? Get.find<HomeController>()
+                                                        .isPinkModeOn
+                                                        .value
+                                                    ? ColorUtil
+                                                        .kSecondaryPinkMode
+                                                        .withOpacity(0.5)
+                                                    : ColorUtil.kPrimary07
+                                                : Colors.white,
                                           ),
-                                          padding: const EdgeInsets.all(16),
+                                          padding: EdgeInsets.all(16.kh),
                                           child: Column(
                                             crossAxisAlignment: isSender
                                                 ? CrossAxisAlignment.end
@@ -150,13 +157,16 @@ class ChatPageView extends GetView<ChatPageController> {
                                               ),
                                             ],
                                           ),
-                                        ),
+                                        ).paddingOnly(
+                                            left: isSender ? 32.kw : 0,
+                                            right: isSender ? 0 : 32.kw),
                                       ],
                                     ),
                                   ),
                                   if (isSender)
                                     Padding(
-                                      padding: const EdgeInsets.only(left: 8.0),
+                                      padding:
+                                          const EdgeInsets.only(left: 18.0),
                                       child: ClipRRect(
                                         borderRadius:
                                             BorderRadius.circular(100.kh),
@@ -226,6 +236,7 @@ class ChatPageView extends GetView<ChatPageController> {
                   GreenPoolTextField(
                     controller: controller.eMsg,
                     hintText: Strings.writeMsg,
+                    keyboardType: TextInputType.text,
                     suffix: InkWell(
                         onTap: () => controller.sendMsg(),
                         child: SvgPicture.asset(ImageConstant.svgIconSend)),

@@ -207,10 +207,20 @@ class Strings {
 
   static String request = 'Request';
 
+  static String requests = 'Requests';
+
   static String requestSent = 'Request Sent';
 
   static String paymentDoneRequestSentToDriver =
       "Payment Successful!\nRide request has been sent to the driver.\nYour booking is awaiting the driver'sapproval.";
+
+  static String requestSentToRider =
+      "Ride request has been sent to the rider.\nYour booking is awaiting the riders's approval.";
+
+  static String requestAccepted = 'Request Accepted';
+
+  static String requestAcceptedSuccesfully =
+      "Request has been accepted\nsuccesfully!";
 
   static String notifications = 'Notifications';
 
@@ -303,7 +313,7 @@ class Strings {
 
   static var riderDroppedOffSuccessfully = "Rider Dropped Off Successfully ";
 
-  static String rideHistory = "Ride History'";
+  static String rideHistory = "Ride History";
 
   static var requestRider = "Request  Rider";
 

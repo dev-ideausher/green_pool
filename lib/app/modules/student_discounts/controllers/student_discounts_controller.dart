@@ -40,7 +40,7 @@ class StudentDiscountsController extends GetxController {
         schoolListModel.value = SchoolListModel.fromJson(data);
         if (schoolListModel.value.data!.isNotEmpty) {
           schoolSugestionList.value = schoolListModel.value.data!;
-        } else {}
+        }
         isLoading.value = false;
       } catch (e) {
         throw Exception(e);
@@ -54,7 +54,6 @@ class StudentDiscountsController extends GetxController {
         "email": emailTextController.value.text,
         "school": searchTextController.text,
       });
-      print(response.toString());
       if (response.data['status']) {
         requestSent.value = true;
         confettiController.play();

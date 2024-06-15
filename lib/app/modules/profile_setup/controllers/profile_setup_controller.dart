@@ -7,6 +7,7 @@ import 'package:green_pool/app/data/post_ride_model.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/modules/post_ride/controllers/post_ride_controller.dart';
 import 'package:green_pool/app/modules/profile_setup/views/review_picture.dart';
+import 'package:green_pool/app/modules/rider_profile_setup/controllers/city_list.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/snackbar.dart';
 import 'package:green_pool/app/services/storage.dart';
@@ -20,7 +21,8 @@ import '../../../services/dio/api_service.dart';
 import '../../../services/gp_util.dart';
 import '../../../services/text_style_util.dart';
 
-class ProfileSetupController extends GetxController with GetSingleTickerProviderStateMixin {
+class ProfileSetupController extends GetxController
+    with GetSingleTickerProviderStateMixin {
   bool fromNavBar = false;
   final pageIndex = 0.obs;
   String name = '';
@@ -28,10 +30,12 @@ class ProfileSetupController extends GetxController with GetSingleTickerProvider
   Rx<File?> selectedIDImagePath = Rx<File?>(null);
   RxBool isProfileImagePicked = false.obs;
   RxBool isIDPicked = false.obs;
+  RxBool expandList = false.obs;
   RxBool imageNotUploaded = false.obs;
   TextEditingController fullName = TextEditingController();
   TextEditingController email = TextEditingController();
-  TextEditingController phoneNumber = TextEditingController(text: Get.find<AuthService>().auth.currentUser?.phoneNumber);
+  TextEditingController phoneNumber = TextEditingController(
+      text: Get.find<AuthService>().auth.currentUser?.phoneNumber);
 
   // TextEditingController gender = TextEditingController();
   RxString gender = 'Prefer not to say'.obs;
@@ -80,7 +84,8 @@ class ProfileSetupController extends GetxController with GetSingleTickerProvider
   Future<void> setDate(BuildContext context) async {
     DateTime lastDate = DateTime.now().subtract(const Duration(days: 18 * 365));
 
-    DateTime initialDate = DateTime.now().isAfter(lastDate) ? lastDate : DateTime.now();
+    DateTime initialDate =
+        DateTime.now().isAfter(lastDate) ? lastDate : DateTime.now();
 
     DateTime? pickedDate = await showDatePicker(
       context: context,
@@ -92,16 +97,22 @@ class ProfileSetupController extends GetxController with GetSingleTickerProvider
           // Define the custom theme for the date picker
           data: ThemeData(
             // Define the primary color
-            primaryColor: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimaryPinkMode : ColorUtil.kPrimary01,
+            primaryColor: Get.find<HomeController>().isPinkModeOn.value
+                ? ColorUtil.kPrimaryPinkMode
+                : ColorUtil.kPrimary01,
             // Define the color scheme for the date picker
             colorScheme: ColorScheme.light(
               // Define the primary color for the date picker
-              primary: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimaryPinkMode : ColorUtil.kPrimary01,
+              primary: Get.find<HomeController>().isPinkModeOn.value
+                  ? ColorUtil.kPrimaryPinkMode
+                  : ColorUtil.kPrimary01,
               // Define the background color for the date picker
               surface: ColorUtil.kWhiteColor,
               // Define the on-primary color for the date picker
               onPrimary: ColorUtil.kBlack01,
-              secondary: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimaryPinkMode : ColorUtil.kPrimary01,
+              secondary: Get.find<HomeController>().isPinkModeOn.value
+                  ? ColorUtil.kPrimaryPinkMode
+                  : ColorUtil.kPrimary01,
             ),
           ),
           // Apply the custom theme to the child widget
@@ -113,7 +124,8 @@ class ProfileSetupController extends GetxController with GetSingleTickerProvider
     if (pickedDate != null) {
       String formattedDate = pickedDate.toString().split(" ")[0];
       dateOfBirth.text = formattedDate;
-      formattedDateOfBirth.text = "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
+      formattedDateOfBirth.text =
+          "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
     }
   }
 
@@ -241,7 +253,12 @@ class ProfileSetupController extends GetxController with GetSingleTickerProvider
         showMySnackbar(msg: "Data filled successfully");
         Get.find<HomeController>().userInfoAPI();
 
-        Get.toNamed(Routes.EMERGENCY_CONTACTS, arguments: {'fromNavBar': false, 'postRideModel': postRideModel.value}, parameters: {"profileType": "driver"});
+        Get.toNamed(Routes.EMERGENCY_CONTACTS, arguments: {
+          'fromNavBar': false,
+          'postRideModel': postRideModel.value
+        }, parameters: {
+          "profileType": "driver"
+        });
       } catch (e) {
         throw Exception(e);
       }
@@ -412,4 +429,6 @@ class ProfileSetupController extends GetxController with GetSingleTickerProvider
       }
     }
   }
+
+  
 }

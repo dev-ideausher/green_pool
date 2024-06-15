@@ -52,13 +52,13 @@ class TextStyleUtil {
     );
   }
 
-  //Manrope
+  //inter
   static k18Regular({
     Color color = ColorUtil.kBlack01,
     FontWeight fontWeight = FontWeight.w400,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
-    return GoogleFonts.manrope(
+    return GoogleFonts.inter(
       fontWeight: fontWeight,
       color: color,
       fontStyle: FontStyle.normal,
@@ -73,7 +73,7 @@ class TextStyleUtil {
     FontWeight fontWeight = FontWeight.w500,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
-    return GoogleFonts.manrope(
+    return GoogleFonts.inter(
       fontWeight: fontWeight,
       color: color,
       fontStyle: FontStyle.normal,
@@ -88,7 +88,7 @@ class TextStyleUtil {
     FontWeight fontWeight = FontWeight.w600,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
-    return GoogleFonts.manrope(
+    return GoogleFonts.inter(
       fontWeight: fontWeight,
       color: color,
       fontStyle: FontStyle.normal,
@@ -103,7 +103,7 @@ class TextStyleUtil {
     FontWeight fontWeight = FontWeight.w600,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
-    return GoogleFonts.manrope(
+    return GoogleFonts.inter(
       fontWeight: fontWeight,
       color: color,
       fontStyle: FontStyle.normal,
@@ -118,7 +118,7 @@ class TextStyleUtil {
     FontWeight fontWeight = FontWeight.w400,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
-    return GoogleFonts.manrope(
+    return GoogleFonts.inter(
       fontWeight: fontWeight,
       color: color,
       fontStyle: FontStyle.normal,
@@ -133,7 +133,7 @@ class TextStyleUtil {
     FontWeight fontWeight = FontWeight.w600,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
-    return GoogleFonts.manrope(
+    return GoogleFonts.inter(
       fontWeight: fontWeight,
       color: color,
       fontStyle: FontStyle.normal,
@@ -149,7 +149,7 @@ class TextStyleUtil {
     required double fontSize,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
-    return GoogleFonts.manrope(
+    return GoogleFonts.inter(
       fontWeight: fontWeight,
       color: color,
       fontStyle: FontStyle.normal,
@@ -164,7 +164,7 @@ class TextStyleUtil {
     FontWeight fontWeight = FontWeight.w600,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
-    return GoogleFonts.manrope(
+    return GoogleFonts.inter(
       fontWeight: fontWeight,
       color: color,
       fontStyle: FontStyle.normal,
@@ -179,7 +179,7 @@ class TextStyleUtil {
     FontWeight fontWeight = FontWeight.w400,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
-    return GoogleFonts.manrope(
+    return GoogleFonts.inter(
       fontWeight: fontWeight,
       color: color,
       fontStyle: FontStyle.normal,
@@ -194,7 +194,7 @@ class TextStyleUtil {
     FontWeight fontWeight = FontWeight.w600,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
-    return GoogleFonts.manrope(
+    return GoogleFonts.inter(
       fontWeight: fontWeight,
       color: color,
       fontStyle: FontStyle.normal,
@@ -209,7 +209,7 @@ class TextStyleUtil {
     FontWeight fontWeight = FontWeight.w500,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
-    return GoogleFonts.manrope(
+    return GoogleFonts.inter(
       fontWeight: fontWeight,
       color: color,
       fontStyle: FontStyle.normal,
@@ -224,7 +224,7 @@ class TextStyleUtil {
     FontWeight fontWeight = FontWeight.w600,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
-    return GoogleFonts.manrope(
+    return GoogleFonts.inter(
       fontWeight: fontWeight,
       color: color,
       fontStyle: FontStyle.normal,
@@ -239,7 +239,7 @@ class TextStyleUtil {
     FontWeight fontWeight = FontWeight.w400,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
-    return GoogleFonts.manrope(
+    return GoogleFonts.inter(
       fontWeight: fontWeight,
       color: color,
       fontStyle: FontStyle.normal,
@@ -254,7 +254,7 @@ class TextStyleUtil {
     FontWeight fontWeight = FontWeight.w600,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
-    return GoogleFonts.manrope(
+    return GoogleFonts.inter(
       fontWeight: fontWeight,
       color: color,
       fontStyle: FontStyle.normal,
@@ -269,7 +269,7 @@ class TextStyleUtil {
     FontWeight fontWeight = FontWeight.w500,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
-    return GoogleFonts.manrope(
+    return GoogleFonts.inter(
       fontWeight: fontWeight,
       color: color,
       fontStyle: FontStyle.normal,
@@ -284,7 +284,7 @@ class TextStyleUtil {
     FontWeight fontWeight = FontWeight.w600,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
-    return GoogleFonts.manrope(
+    return GoogleFonts.inter(
       fontWeight: fontWeight,
       color: color,
       fontStyle: FontStyle.normal,
@@ -299,7 +299,7 @@ class TextStyleUtil {
     FontWeight fontWeight = FontWeight.w400,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
-    return GoogleFonts.manrope(
+    return GoogleFonts.inter(
       fontWeight: fontWeight,
       color: color,
       fontStyle: FontStyle.normal,
@@ -314,7 +314,7 @@ class TextStyleUtil {
     FontWeight fontWeight = FontWeight.w600,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
-    return GoogleFonts.manrope(
+    return GoogleFonts.inter(
       fontWeight: fontWeight,
       color: color,
       fontStyle: FontStyle.normal,
@@ -329,7 +329,7 @@ class TextStyleUtil {
     FontWeight fontWeight = FontWeight.w500,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
-    return GoogleFonts.manrope(
+    return GoogleFonts.inter(
       fontWeight: fontWeight,
       color: color,
       fontStyle: FontStyle.normal,
@@ -344,7 +344,7 @@ class TextStyleUtil {
     FontWeight fontWeight = FontWeight.w600,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
-    return GoogleFonts.manrope(
+    return GoogleFonts.inter(
       fontWeight: fontWeight,
       color: color,
       fontStyle: FontStyle.normal,
@@ -359,7 +359,7 @@ class TextStyleUtil {
     FontWeight fontWeight = FontWeight.w700,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
-    return GoogleFonts.manrope(
+    return GoogleFonts.inter(
       fontWeight: fontWeight,
       color: color,
       fontStyle: FontStyle.normal,
@@ -374,7 +374,7 @@ class TextStyleUtil {
     FontWeight fontWeight = FontWeight.w700,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
-    return GoogleFonts.manrope(
+    return GoogleFonts.inter(
       fontWeight: fontWeight,
       color: color,
       fontStyle: FontStyle.normal,
@@ -389,7 +389,7 @@ class TextStyleUtil {
     FontWeight fontWeight = FontWeight.w700,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
-    return GoogleFonts.manrope(
+    return GoogleFonts.inter(
       fontWeight: fontWeight,
       color: color,
       fontStyle: FontStyle.normal,
@@ -404,7 +404,7 @@ class TextStyleUtil {
     FontWeight fontWeight = FontWeight.w700,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
-    return GoogleFonts.manrope(
+    return GoogleFonts.inter(
       fontWeight: fontWeight,
       color: color,
       fontStyle: FontStyle.normal,
@@ -419,7 +419,7 @@ class TextStyleUtil {
     FontWeight fontWeight = FontWeight.w700,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
-    return GoogleFonts.manrope(
+    return GoogleFonts.inter(
       fontWeight: fontWeight,
       color: color,
       fontStyle: FontStyle.normal,
@@ -434,7 +434,7 @@ class TextStyleUtil {
     FontWeight fontWeight = FontWeight.w700,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
-    return GoogleFonts.manrope(
+    return GoogleFonts.inter(
       fontWeight: fontWeight,
       color: color,
       fontStyle: FontStyle.normal,
@@ -449,7 +449,7 @@ class TextStyleUtil {
     FontWeight fontWeight = FontWeight.w600,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
-    return GoogleFonts.manrope(
+    return GoogleFonts.inter(
       fontWeight: fontWeight,
       color: color,
       fontStyle: FontStyle.normal,
@@ -464,7 +464,7 @@ class TextStyleUtil {
     FontWeight fontWeight = FontWeight.w600,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
-    return GoogleFonts.manrope(
+    return GoogleFonts.inter(
       fontWeight: fontWeight,
       color: color,
       fontStyle: FontStyle.normal,
@@ -479,7 +479,7 @@ class TextStyleUtil {
     FontWeight fontWeight = FontWeight.w600,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
-    return GoogleFonts.manrope(
+    return GoogleFonts.inter(
       fontWeight: fontWeight,
       color: color,
       fontStyle: FontStyle.normal,
@@ -494,7 +494,7 @@ class TextStyleUtil {
     FontWeight fontWeight = FontWeight.w600,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
-    return GoogleFonts.manrope(
+    return GoogleFonts.inter(
       fontWeight: fontWeight,
       color: color,
       fontStyle: FontStyle.normal,
@@ -509,7 +509,7 @@ class TextStyleUtil {
     FontWeight fontWeight = FontWeight.w600,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
-    return GoogleFonts.manrope(
+    return GoogleFonts.inter(
       fontWeight: fontWeight,
       color: color,
       fontStyle: FontStyle.normal,
@@ -524,7 +524,7 @@ class TextStyleUtil {
     FontWeight fontWeight = FontWeight.w600,
     TextDecoration textDecoration = TextDecoration.none,
   }) {
-    return GoogleFonts.manrope(
+    return GoogleFonts.inter(
       fontWeight: fontWeight,
       color: color,
       fontStyle: FontStyle.normal,

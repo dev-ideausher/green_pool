@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/common_image_view.dart';
 import 'package:green_pool/app/components/gp_progress.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
+import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
@@ -33,10 +35,16 @@ class WalletView extends GetView<WalletController> {
                       width: 100.w,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(16.kh),
-                          gradient: const LinearGradient(colors: [
-                            ColorUtil.kPrimary04,
-                            ColorUtil.kPrimary01
-                          ])),
+                          gradient:
+                              Get.find<HomeController>().isPinkModeOn.value
+                                  ? LinearGradient(colors: [
+                                      ColorUtil.kSecondaryPinkMode,
+                                      ColorUtil.kPrimaryPinkMode
+                                    ])
+                                  : LinearGradient(colors: [
+                                      ColorUtil.kPrimary04,
+                                      ColorUtil.kPrimary01
+                                    ])),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -49,20 +57,36 @@ class WalletView extends GetView<WalletController> {
                             style: TextStyleUtil.k32Heading700(
                                 color: ColorUtil.kSecondary01),
                           ).paddingOnly(bottom: 20.kh),
-                          /* Container(
+                          /*Container(
                             width: 126.kw,
-                            padding: EdgeInsets.symmetric(horizontal: 24.kw, vertical: 8.kh),
-                            decoration: BoxDecoration(color: ColorUtil.kSecondary01, borderRadius: BorderRadius.circular(80.kh)),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 24.kw, vertical: 8.kh),
+                            decoration: BoxDecoration(
+                                color: Get.find<HomeController>()
+                                        .isPinkModeOn
+                                        .value
+                                    ? ColorUtil.kPrimary2PinkMode
+                                    : ColorUtil.kSecondary01,
+                                borderRadius: BorderRadius.circular(80.kh)),
                             child: Row(
                               children: [
                                 Icon(
                                   Icons.add,
-                                  color: ColorUtil.kWhiteColor,
+                                  color: Get.find<HomeController>()
+                                          .isPinkModeOn
+                                          .value
+                                      ? ColorUtil.kSecondary01
+                                      : ColorUtil.kWhiteColor,
                                   size: 16.kh,
                                 ).paddingOnly(right: 3.kw),
                                 Text(
                                   Strings.giftCard,
-                                  style: TextStyleUtil.k14Semibold(color: ColorUtil.kWhiteColor),
+                                  style: TextStyleUtil.k14Semibold(
+                                      color: Get.find<HomeController>()
+                                              .isPinkModeOn
+                                              .value
+                                          ? ColorUtil.kSecondary01
+                                          : ColorUtil.kWhiteColor),
                                 )
                               ],
                             ),
@@ -123,9 +147,14 @@ class WalletTile extends StatelessWidget {
           decoration: BoxDecoration(
               color: ColorUtil.kBlack07,
               borderRadius: BorderRadius.circular(12.kh)),
-          child: CommonImageView(
-            svgPath: path,
+          child: SvgPicture.asset(
+            path,
             height: 24.kh,
+            colorFilter: ColorFilter.mode(
+                Get.find<HomeController>().isPinkModeOn.value
+                    ? ColorUtil.kPrimary3PinkMode
+                    : ColorUtil.kSecondary01,
+                BlendMode.srcIn),
           ),
         ),
         trailing: CommonImageView(svgPath: ImageConstant.svgIconRightArrow),

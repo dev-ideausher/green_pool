@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../constants/image_constant.dart';
@@ -16,14 +17,17 @@ class RequestAcceptedBottom extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         padding: EdgeInsets.all(24.kh),
-        // height: 317.kh,
+        height: 350.kh,
         width: 100.w,
         decoration: BoxDecoration(
-            color: ColorUtil.kWhiteColor, borderRadius: BorderRadius.only(topLeft: Radius.circular(40.kh), topRight: Radius.circular(40.kh))),
+            color: ColorUtil.kWhiteColor,
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(40.kh),
+                topRight: Radius.circular(40.kh))),
         child: Column(
           children: [
             Text(
-              'Request Accepted',
+              Strings.requestAccepted,
               style: TextStyleUtil.k18Heading600(),
             ).paddingOnly(bottom: 24.kh),
             SvgPicture.asset(
@@ -32,21 +36,22 @@ class RequestAcceptedBottom extends StatelessWidget {
               width: 64.kw,
             ).paddingOnly(bottom: 16.kh),
             Text(
-              "Request has been accepted\nsuccesfully!",
+              Strings.requestAcceptedSuccesfully,
               textAlign: TextAlign.center,
               style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
             ).paddingOnly(bottom: 40.kh),
             GreenPoolButton(
                 label: 'Continue',
                 onPressed: () {
-                  Get.until((route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
-                }),
-            GreenPoolButton(
+                  Get.until(
+                      (route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
+                }).paddingOnly(bottom: 16.kh),
+            /*GreenPoolButton(
                 label: 'Cancel Request',
                 isBorder: true,
                 onPressed: () {
                   Get.until((route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
-                }).paddingOnly(top: 16.kh),
+                }),*/
           ],
         ));
   }

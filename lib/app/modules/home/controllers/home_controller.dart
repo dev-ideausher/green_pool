@@ -35,18 +35,26 @@ class HomeController extends GetxController {
     super.onInit();
     try {
       await userInfoAPI();
-
     } catch (e) {
       debugPrint(e.toString());
     }
   }
 
   void onChangeLocation() {
-    const LocationSettings locationSettings = LocationSettings(accuracy: LocationAccuracy.bestForNavigation, distanceFilter: 100);
-    Geolocator.getPositionStream(locationSettings: locationSettings).listen((Position? position) async {
+    const LocationSettings locationSettings = LocationSettings(
+        accuracy: LocationAccuracy.bestForNavigation, distanceFilter: 100);
+    Geolocator.getPositionStream(locationSettings: locationSettings)
+        .listen((Position? position) async {
       if (position != null) {
-        DatabaseReference databaseReference = FirebaseDatabase.instance.ref().child('locations');
-        databaseReference.child(Get.find<GetStorageService>().getUserAppId ?? "").set({'latitude': position.latitude, 'longitude': position.longitude, 'heading': position.heading});
+        DatabaseReference databaseReference =
+            FirebaseDatabase.instance.ref().child('locations');
+        databaseReference
+            .child(Get.find<GetStorageService>().getUserAppId ?? "")
+            .set({
+          'latitude': position.latitude,
+          'longitude': position.longitude,
+          'heading': position.heading
+        });
       }
     });
   }
@@ -71,14 +79,12 @@ class HomeController extends GetxController {
         PushNotificationService.subFcm("${userInfo.value.data?.Id}");
         isPinkModeOn.value = Get.find<GetStorageService>().isPinkMode;
         onChangeLocation();
-                await _determinePosition().then((value) => {
-                  latitude.value = value.latitude,
-                  longitude.value = value.longitude,
-                });
+        await _determinePosition().then((value) => {
+              latitude.value = value.latitude,
+              longitude.value = value.longitude,
+            });
 
-                await setupMessage();
-
-
+        await setupMessage();
       } catch (e) {
         debugPrint(e.toString());
       }
@@ -87,11 +93,15 @@ class HomeController extends GetxController {
   }
 
   setupMessage() async {
-    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+        FlutterLocalNotificationsPlugin();
     const InitializationSettings initializationSettings =
-        InitializationSettings(android: AndroidInitializationSettings('logo'), iOS: DarwinInitializationSettings());
+        InitializationSettings(
+            android: AndroidInitializationSettings('logo'),
+            iOS: DarwinInitializationSettings());
     await flutterLocalNotificationsPlugin.initialize(initializationSettings);
-    PushNotificationService(flutterLocalNotificationsPlugin).setupInteractedMessage();
+    PushNotificationService(flutterLocalNotificationsPlugin)
+        .setupInteractedMessage();
   }
 
   Future<Position> _determinePosition() async {
@@ -112,7 +122,8 @@ class HomeController extends GetxController {
     }
 
     if (permission == LocationPermission.deniedForever) {
-      return Future.error('Location permissions are permanently denied, we cannot request permissions.');
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
     }
 
     return await Geolocator.getCurrentPosition();

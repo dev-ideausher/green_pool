@@ -65,7 +65,7 @@ class FileDisputeView extends GetView<FileDisputeController> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            "${controller.rideHistModel.value.data?[index]?.time}",
+                                            "${controller.rideHistModel.value.data?[index]?.driver?.fullName}",
                                             style: TextStyleUtil.k16Bold(),
                                           ),
                                           12.kheightBox,
@@ -93,6 +93,11 @@ class FileDisputeView extends GetView<FileDisputeController> {
                                                 style: TextStyleUtil.k12Regular(
                                                     color: ColorUtil.kBlack03),
                                               ),
+                                              /*Text(
+                                                "${controller.rideHistModel.value.data?[index]?.time}",
+                                                style: TextStyleUtil.k12Regular(
+                                                    color: ColorUtil.kBlack03),
+                                              ).paddingOnly(left: 8.kw),*/
                                             ],
                                           ),
                                         ],

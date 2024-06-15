@@ -245,19 +245,24 @@ class RiderMyRidesSendDetailsView
 
             //co passengers
             Text(
-              'Co-Passengers',
+              Strings.coPassengers,
               style: TextStyleUtil.k14Bold(),
             ).paddingOnly(bottom: 16.kh),
             Obx(
-              () => controller.riderSendRequestModel.value
-                          .data?[controller.index]?.ridersDetatils?.length ==
+              () => (controller
+                              .riderSendRequestModel
+                              .value
+                              .data?[controller.index]
+                              ?.ridersDetatils
+                              ?.length ??
+                          0) ==
                       0
                   ? Center(
                       child: Text(
-                        "No co-passengers are available at the moment",
+                        Strings.noPassengersAvailable,
                         style: TextStyleUtil.k14Semibold(),
                       ),
-                    )
+                    ).paddingOnly(bottom: 16.kh)
                   : SizedBox(
                       height: 96.kh,
                       child: ListView.builder(
@@ -291,7 +296,7 @@ class RiderMyRidesSendDetailsView
                               ],
                             ).paddingOnly(right: 32.kw);
                           }),
-                    ).paddingOnly(bottom: 10.kh),
+                    ).paddingOnly(bottom: 16.kh),
             ),
             const GreenPoolDivider().paddingOnly(bottom: 16.kh),
 

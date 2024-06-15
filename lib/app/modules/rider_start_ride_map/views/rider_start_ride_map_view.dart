@@ -38,6 +38,7 @@ class RiderStartRideMapView extends GetView<RiderStartRideMapController> {
                 mapType: MapType.terrain,
                 myLocationEnabled: true,
                 markers: Set<Marker>.of(controller.markers),
+                zoomGesturesEnabled: true,
                 polylines: {
                   Polyline(
                       polylineId: const PolylineId('polyline'),
@@ -45,7 +46,7 @@ class RiderStartRideMapView extends GetView<RiderStartRideMapController> {
                       width: 4,
                       color: ColorUtil.kSecondary01),
                 },
-              ),
+              ).paddingOnly(bottom: 210.kh),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
       floatingActionButton: FloatingActionButton(

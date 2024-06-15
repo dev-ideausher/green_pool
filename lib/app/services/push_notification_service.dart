@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
+import 'package:green_pool/app/modules/messages/controllers/messages_controller.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../modules/my_rides_one_time/controllers/my_rides_one_time_controller.dart';
@@ -23,7 +24,8 @@ class PushNotificationService {
           await Permission.notification.request();
         }
       });
-      FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
+      FirebaseMessaging.onMessageOpenedApp
+          .listen((RemoteMessage message) async {
         saveNotification(message);
       });
       enableIOSNotifications();
@@ -36,10 +38,14 @@ class PushNotificationService {
 
   Future<void> registerNotificationListeners() async {
     final AndroidNotificationChannel channel = androidNotificationChannel();
-    await flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()?.createNotificationChannel(channel);
+    await flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
+        ?.createNotificationChannel(channel);
 
     try {
-      FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+      FirebaseMessaging.onBackgroundMessage(
+          _firebaseMessagingBackgroundHandler);
     } catch (e) {
       print(e);
     }
@@ -56,8 +62,10 @@ class PushNotificationService {
           notification.title,
           notification.body,
           NotificationDetails(
-              android:
-                  AndroidNotificationDetails(channel.id, channel.name, channelDescription: channel.description, icon: "logo", color: Get.context!.iconColor)),
+              android: AndroidNotificationDetails(channel.id, channel.name,
+                  channelDescription: channel.description,
+                  icon: "logo",
+                  color: Get.context!.iconColor)),
         );
         saveNotification(message);
       }
@@ -77,32 +85,38 @@ class PushNotificationService {
     );
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
       print('User granted permission');
-    } else if (settings.authorizationStatus == AuthorizationStatus.provisional) {
+    } else if (settings.authorizationStatus ==
+        AuthorizationStatus.provisional) {
       print('User granted provisional permission');
     } else {
       print('User declined or has not accepted permission');
     }
-    await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+    await FirebaseMessaging.instance
+        .setForegroundNotificationPresentationOptions(
       alert: true, // Required to display a heads up notification
       badge: true,
       sound: true,
     );
   }
 
-  AndroidNotificationChannel androidNotificationChannel() => const AndroidNotificationChannel(
+  AndroidNotificationChannel androidNotificationChannel() =>
+      const AndroidNotificationChannel(
         'high_importance_channel', // id
         'High Importance Notifications', // title
-        description: 'This channel is used for important notifications.', // description
+        description:
+            'This channel is used for important notifications.', // description
         importance: Importance.max,
       );
 
-  static Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  static Future<void> _firebaseMessagingBackgroundHandler(
+      RemoteMessage message) async {
     await Firebase.initializeApp();
     print("Background Message Handler Working...");
 
     try {
       await Future.delayed(const Duration(seconds: 2));
-      PushNotificationService(FlutterLocalNotificationsPlugin()).saveNotification(message);
+      PushNotificationService(FlutterLocalNotificationsPlugin())
+          .saveNotification(message);
     } catch (e) {
       print(e);
     }
@@ -116,9 +130,15 @@ class PushNotificationService {
       }
       if (actionData!.data["notification_type"] == "Rider_Dropoff_Request") {
         Get.find<MyRidesOneTimeController>().myRidesAPI();
+        Get.offNamed(Routes.RATING_RIDER_SIDE, arguments: actionData?.data);
       }
-
       if (actionData!.data["notification_type"] == "Rider_Pickup_Request") {
+        Get.find<MyRidesOneTimeController>().myRidesAPI();
+      }
+      if (actionData!.data["notification_type"] == "Rider_Confirm_Request") {
+        Get.find<MyRidesOneTimeController>().myRidesAPI();
+      }
+      if (actionData!.data["notification_type"] == "Rider_Cancel_Request") {
         Get.find<MyRidesOneTimeController>().myRidesAPI();
       }
       if (actionData!.data["notification_type"] == "Rider_Ride_Request") {
@@ -127,11 +147,17 @@ class PushNotificationService {
       if (actionData!.data["notification_type"] == "Driver_Ride_Request") {
         Get.find<MyRidesOneTimeController>().myRidesAPI();
       }
+      if (actionData!.data["notification_type"] == "Driver_Confirm_Request") {
+        Get.find<MyRidesOneTimeController>().myRidesAPI();
+      }
+      if (actionData!.data["notification_type"] == "Chat") {
+        Get.find<MessagesController>().getMessageListAPI();
+      }
 
       if (actionData!.data["notification_type"] == "Start_Ride") {
         Get.find<MyRidesOneTimeController>().myRidesAPI();
       } else if (actionData!.data["notification_type"] == "End_Ride") {
-        Get.offNamed(Routes.RATING_RIDER_SIDE);
+        // Get.offNamed(Routes.RATING_RIDER_SIDE);
       }
     }
   }

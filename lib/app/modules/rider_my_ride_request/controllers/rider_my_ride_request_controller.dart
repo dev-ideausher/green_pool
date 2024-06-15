@@ -84,10 +84,6 @@ class RiderMyRideRequestController extends GetxController {
 
   sendRideRequestToDriverAPI(
       RiderSendRequestModelData riderSendRequestModelData) async {
-    //rider will send request to matching drivers going on the same path (in rider send request section)
-    // and
-    //rider can accept the request sent by driver (in rider confirm request section)
-
     final String driverRideId = "${riderSendRequestModelData.Id}";
     final String driverId = "${riderSendRequestModelData.driverId}";
     final String driverName =
@@ -106,7 +102,6 @@ class RiderMyRideRequestController extends GetxController {
     };
     try {
       final response = await APIManager.postSendRequestToDriver(body: rideData);
-      print(response);
       if (response.data['status']) {
         allRiderSendRequestAPI();
         showBottom();
@@ -197,5 +192,40 @@ class RiderMyRideRequestController extends GetxController {
 
   void showBottom() {
     Get.bottomSheet(RequestSentBottom());
+  }
+
+  void moveToPaymentFromConfirmSection(
+      int index, RiderConfirmRequestModelData riderConfirmRequestModelData) {
+    Get.toNamed(Routes.PAYMENT, arguments: {
+      "ridePostId": riderConfirmRequestModel.value.data?[index]?.Id,
+      "price":
+          (riderConfirmRequestModel.value.data?[index]?.price ?? 0).toString(),
+      'riderConfirmRequestModelData': riderConfirmRequestModelData
+    });
+  }
+
+  moveToPaymentFromSendRequest(
+      RiderSendRequestModelData riderSendRequestModelData) async {
+    final String driverRideId = "${riderSendRequestModelData.Id}";
+    final String driverId = "${riderSendRequestModelData.driverId}";
+    final String driverName =
+        "${riderSendRequestModelData.driverDetails?[0]?.fullName}";
+    final dynamic driverNotificationPref = riderSendRequestModelData
+        .driverDetails?[0]?.notificationPreferences!
+        .toJson();
+
+    final Map<String, dynamic> rideData = {
+      "riderRideId": rideIdFromMyRides,
+      "driverRideId": driverRideId,
+      "driverId": driverId,
+      "driverName": driverName,
+      "driverNotificationPreferences": driverNotificationPref,
+      "price": riderSendRequestModelData.price ?? 0
+    };
+
+    Get.toNamed(Routes.PAYMENT, arguments: {
+      'rideData': rideData,
+      'riderSendRequestModelData': riderSendRequestModelData
+    });
   }
 }

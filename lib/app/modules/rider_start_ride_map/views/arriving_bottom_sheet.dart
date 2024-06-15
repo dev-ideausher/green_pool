@@ -18,70 +18,101 @@ class ArrivingBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<RiderStartRideMapController>(builder: (controller) {
       return Obx(
-        () =>controller.isLoad.value?GpProgress(): Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Card(
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(8.kh), topRight: Radius.circular(8.kh))),
-                margin: EdgeInsets.zero,
-                color: ColorUtil.kSecondary01,
-                child: ListTile(
-                  visualDensity: const VisualDensity(horizontal: -4, vertical: -4),
-                  leading: const Icon(Icons.access_time_rounded, color: ColorUtil.kWhiteColor),
-                  title: Text(controller.getMsg(), style: TextStyleUtil.k14Regular(color: ColorUtil.kWhiteColor)),
-                )),
-            12.kheightBox,
-            ListTile(
-              leading: SizedBox(
-                  height: 50.kh,
-                  width: 50.kh,
-                  child: Stack(
-                    children: [
-                      Align(
-                        alignment: Alignment.bottomRight,
-                        child: CommonImageView(url: controller.bookingDetail.value.driverDetails?.vehicleDetails?.vehiclePic?.url, height: 30, width: 30),
+        () => controller.isLoad.value
+            ? GpProgress()
+            : Container(
+                color: ColorUtil.kWhiteColor,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Card(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(8.kh),
+                                topRight: Radius.circular(8.kh))),
+                        margin: EdgeInsets.zero,
+                        color: ColorUtil.kSecondary01,
+                        child: ListTile(
+                          visualDensity:
+                              const VisualDensity(horizontal: -4, vertical: -4),
+                          leading: const Icon(Icons.access_time_rounded,
+                              color: ColorUtil.kWhiteColor),
+                          title: Text(controller.getMsg(),
+                              style: TextStyleUtil.k14Regular(
+                                  color: ColorUtil.kWhiteColor)),
+                        )),
+                    12.kheightBox,
+                    ListTile(
+                      leading: SizedBox(
+                          height: 50.kh,
+                          width: 50.kh,
+                          child: Stack(
+                            children: [
+                              Align(
+                                alignment: Alignment.bottomRight,
+                                child: CommonImageView(
+                                    url: controller
+                                        .bookingDetail
+                                        .value
+                                        .driverDetails
+                                        ?.vehicleDetails
+                                        ?.vehiclePic
+                                        ?.url,
+                                    height: 30,
+                                    width: 30),
+                              ),
+                              Align(
+                                alignment: Alignment.topLeft,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(100),
+                                  child: CommonImageView(
+                                      url: controller.bookingDetail.value
+                                          .driverDetails?.profilePic?.url,
+                                      height: 40,
+                                      width: 40),
+                                ),
+                              ),
+                            ],
+                          )),
+                      title: Text(
+                          controller.bookingDetail.value.driverDetails
+                                  ?.fullName ??
+                              "",
+                          style: TextStyleUtil.k16Medium()),
+                      subtitle: Text(
+                          "${controller.bookingDetail.value.driverDetails?.vehicleDetails?.color ?? ""} ${controller.bookingDetail.value.driverDetails?.vehicleDetails?.model ?? ""}",
+                          style: TextStyleUtil.k16Medium()),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          InkWell(
+                            onTap: () => controller.callToDriver(),
+                            child: CommonImageView(
+                              svgPath: Assets.iconsCall,
+                            ),
+                          ),
+                          12.kwidthBox,
+                          InkWell(
+                            onTap: () => controller.chatWithDriver(),
+                            child: CommonImageView(
+                              svgPath: Assets.iconsChat,
+                            ),
+                          ),
+                        ],
                       ),
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(100),
-                          child: CommonImageView(url: controller.bookingDetail.value.driverDetails?.profilePic?.url, height: 40, width: 40),
-                        ),
-                      ),
-                    ],
-                  )),
-              title: Text(controller.bookingDetail.value.driverDetails?.fullName ?? "", style: TextStyleUtil.k16Medium()),
-              subtitle: Text(
-                  "${controller.bookingDetail.value.driverDetails?.vehicleDetails?.color ?? ""} ${controller.bookingDetail.value.driverDetails?.vehicleDetails?.model ?? ""}",
-                  style: TextStyleUtil.k16Medium()),
-              trailing: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  InkWell(
-                    onTap: () => controller.callToDriver(),
-                    child: CommonImageView(
-                      svgPath: Assets.iconsCall,
                     ),
-                  ),
-                  12.kwidthBox,
-                  InkWell(
-                    onTap: () => controller.chatWithDriver(),
-                    child: CommonImageView(
-                      svgPath: Assets.iconsChat,
-                    ),
-                  ),
-                ],
+                    12.kheightBox,
+                    OriginToDestination(
+                            needPickupText: true,
+                            origin:
+                                "${controller.bookingDetail.value.driverBookingDetails?.origin?.name}",
+                            destination:
+                                "${controller.bookingDetail.value.driverBookingDetails?.destination?.name}")
+                        .paddingSymmetric(horizontal: 12.kw),
+                    24.kheightBox,
+                  ],
+                ),
               ),
-            ),
-            12.kheightBox,
-            OriginToDestination(
-                    needPickupText: true,
-                    origin: "${controller.bookingDetail.value.driverBookingDetails?.origin?.name}",
-                    destination: "${controller.bookingDetail.value.driverBookingDetails?.destination?.name}")
-                .paddingSymmetric(horizontal: 12.kw),
-            24.kheightBox,
-          ],
-        ),
       );
     });
   }

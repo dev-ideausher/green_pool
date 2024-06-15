@@ -210,14 +210,18 @@ class RideDetailsView extends GetView<RideDetailsController> {
 
           //co passengers
           Text(
-            'Co-Passengers',
+            Strings.coPassengers,
             style: TextStyleUtil.k14Bold(),
           ).paddingOnly(bottom: 16.kh),
           SizedBox(
             height: 96.kh,
             child: controller.rideHistory.value.riders?.length == 0
-                ? const Center(
-                    child: Text("No co-passengers are available at the moment"))
+                ? Center(
+                    child: Text(
+                      Strings.noPassengersAvailable,
+                      style: TextStyleUtil.k14Semibold(),
+                    ),
+                  ).paddingOnly(bottom: 16.kh)
                 : ListView.builder(
                     itemCount: controller.rideHistory.value.riders?.length ?? 6,
                     scrollDirection: Axis.horizontal,
