@@ -134,15 +134,16 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                   ],
                 ).paddingOnly(top: 8.kh),
                 //middle divider
-                const GreenPoolDivider().paddingOnly(bottom: 8.kh),
+                const GreenPoolDivider(),
                 OriginToDestination(
-                    needPickupText: true,
-                    origin:
-                        "${controller.matchingRidesModelData.value.origin?.name}",
-                    destination:
-                        "${controller.matchingRidesModelData.value.destination?.name}"),
+                        needPickupText: true,
+                        origin:
+                            "${controller.matchingRidesModelData.value.origin?.name}",
+                        destination:
+                            "${controller.matchingRidesModelData.value.destination?.name}")
+                    .paddingSymmetric(vertical: 8.kh),
                 //bottom line
-                const GreenPoolDivider().paddingOnly(top: 8.kh),
+                const GreenPoolDivider(),
               ],
             ).paddingOnly(bottom: 12.kh),
 

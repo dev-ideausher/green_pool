@@ -11,14 +11,11 @@ import '../../../components/greenpool_appbar.dart';
 import '../../../components/origin_to_destination.dart';
 import '../../../constants/image_constant.dart';
 import '../../../res/strings.dart';
-import '../../../routes/app_pages.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
-import '../../../services/snackbar.dart';
 import '../../../services/text_style_util.dart';
 import '../../home/controllers/home_controller.dart';
 import '../../post_ride/views/amenities.dart';
-import '../../profile/controllers/profile_controller.dart';
 import '../../rider_my_ride_request/controllers/rider_my_ride_request_controller.dart';
 import '../controllers/rider_my_rides_confirm_details_controller.dart';
 
@@ -41,24 +38,23 @@ class RiderMyRidesConfirmDetailsView
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     //for profile pic and rating
-                    Stack(
-                      children: [
-                        Container(
-                          height: 74.kh,
-                          width: 74.kw,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                          ),
-                          child: ClipRRect(
-                              borderRadius: BorderRadius.circular(8.kh),
-                              child: CommonImageView(
-                                  url:
-                                      "${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.driverDetails?[0]?.profilePic?.url}")),
-                        ).paddingOnly(bottom: 8.kh),
-                      ],
-                    ).paddingOnly(right: 16.kw, bottom: 16.kh),
+                    Container(
+                      height: 64.kh,
+                      width: 64.kw,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                      ),
+                      child: ClipRRect(
+                          borderRadius: BorderRadius.circular(8.kh),
+                          child: CommonImageView(
+                              url:
+                                  "${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.driverDetails?[0]?.profilePic?.url}")),
+                    )
+                        .paddingOnly(bottom: 8.kh)
+                        .paddingOnly(right: 16.kw, bottom: 16.kh),
                     //for name and date
                     Expanded(
                       child: Column(
@@ -91,7 +87,7 @@ class RiderMyRidesConfirmDetailsView
                                 ),
                               ),
                             ],
-                          ).paddingOnly(bottom: 8.kh),
+                          ).paddingOnly(bottom: 8.kh, top: 4.kh),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -139,20 +135,20 @@ class RiderMyRidesConfirmDetailsView
                       ),
                     ),
                   ],
-                ).paddingOnly(top: 32.kh),
+                ).paddingOnly(top: 8.kh),
                 //middle divider
-                const GreenPoolDivider().paddingOnly(bottom: 16.kh),
+                const GreenPoolDivider(),
                 OriginToDestination(
                         origin:
                             "${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.origin?.name}",
                         destination:
                             "${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.destination?.name}",
                         needPickupText: true)
-                    .paddingOnly(bottom: 8.kh),
+                    .paddingSymmetric(vertical: 8.kh),
                 //bottom line
                 const GreenPoolDivider(),
               ],
-            ).paddingOnly(bottom: 16.kh),
+            ),
 
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -218,7 +214,7 @@ class RiderMyRidesConfirmDetailsView
                   ],
                 ),
               ],
-            ).paddingOnly(bottom: 8.kh),
+            ).paddingSymmetric(vertical: 8.kh),
 
             const GreenPoolDivider().paddingOnly(bottom: 16.kh),
 
@@ -421,14 +417,14 @@ class RiderMyRidesConfirmDetailsView
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
 
-            const GreenPoolDivider().paddingOnly(top: 8.kh),
+            const GreenPoolDivider().paddingSymmetric(vertical: 16.kh),
             GreenPoolButton(
               onPressed: () => Get.find<RiderMyRideRequestController>()
                   .openMessageFromConfirm(controller.riderConfirmRequestModel
                       .value.data?[controller.index]?.driverRideDetails),
               label: Strings.message,
               isBorder: true,
-            ),
+            ).paddingOnly(top: 8.kh),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -443,15 +439,15 @@ class RiderMyRidesConfirmDetailsView
                   },
                   width: 162.kw,
                   label: 'Accept',
-                ).paddingSymmetric(vertical: 40.kh),
+                ),
                 GreenPoolButton(
                   onPressed: () {},
                   width: 162.kw,
                   label: 'Reject',
                   isBorder: true,
-                ).paddingSymmetric(vertical: 40.kh),
+                ),
               ],
-            ),
+            ).paddingOnly(top: 16.kh, bottom: 40.kh),
           ],
         ).paddingSymmetric(horizontal: 16.kw),
       ),
