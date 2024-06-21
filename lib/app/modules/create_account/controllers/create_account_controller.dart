@@ -145,6 +145,22 @@ class CreateAccountController extends GetxController {
     return null; // Return null if the value is valid
   }
 
+  moveToLogin() {
+    if (Get.find<HomeController>().findingRide.value) {
+      Get.offNamed(Routes.LOGIN, arguments: {
+        'isDriver': isDriver,
+        'fromNavBar': fromNavBar,
+        'findRideModel': findRideModel.value
+      });
+    } else {
+      Get.offNamed(Routes.LOGIN, arguments: {
+        'isDriver': isDriver,
+        'fromNavBar': false,
+        'postRideModel': postRideModel.value
+      });
+    }
+  }
+
   otpAuth() async {
     try {
       if (isChecked.value == true) {
@@ -179,13 +195,13 @@ class CreateAccountController extends GetxController {
   void googleAuth() async {
     try {
       await Get.find<AuthService>().google();
-      await loginAPI();
+      // await loginAPI();
     } catch (error) {
       log("google auth error: $error");
     }
   }
 
-  loginAPI() async {
+  /*loginAPI() async {
     try {
       final response = await APIManager.getLogin();
       final userInfo = UserInfoModel.fromJson(response.data);
@@ -198,7 +214,7 @@ class CreateAccountController extends GetxController {
           userInfo.data?.pinkMode ?? false;
       //? here if the profileStatus is not true which means it is a new user or the user did not fill the entire user data, so the user will be automatically redirected to the Profile Setup
       if (fromNavBar) {
-        Get.find<GetStorageService>().setLoggedIn = true;
+        Get.find<GetStorageService>().isLoggedIn = true;
         Get.find<GetStorageService>().setProfileStatus = true;
         Get.find<GetStorageService>().setDriver = isDriver;
         Get.find<HomeController>().userInfoAPI();
@@ -236,7 +252,7 @@ class CreateAccountController extends GetxController {
             });
           }
         }
-        Get.find<GetStorageService>().setLoggedIn = true;
+        Get.find<GetStorageService>().isLoggedIn = true;
         Get.find<GetStorageService>().setProfileStatus = true;
         Get.find<GetStorageService>().setDriver = isDriver;
         Get.find<HomeController>().userInfoAPI();
@@ -250,21 +266,5 @@ class CreateAccountController extends GetxController {
     } catch (e) {
       debugPrint("login error: $e");
     }
-  }
-
-  moveToLogin() {
-    if (Get.find<HomeController>().findingRide.value) {
-      Get.offNamed(Routes.LOGIN, arguments: {
-        'isDriver': isDriver,
-        'fromNavBar': fromNavBar,
-        'findRideModel': findRideModel.value
-      });
-    } else {
-      Get.offNamed(Routes.LOGIN, arguments: {
-        'isDriver': isDriver,
-        'fromNavBar': false,
-        'postRideModel': postRideModel.value
-      });
-    }
-  }
+  }*/
 }

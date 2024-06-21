@@ -45,12 +45,12 @@ class RiderStartRideMapController extends GetxController {
   Future<void> onInit() async {
     super.onInit();
     final MyRidesModelData myRidesModel = Get.arguments;
-    await myRidesDetailsAPI(
-        myRidesModel.confirmDriverDetails!.firstOrNull?.driverRideId ?? "");
     currentLat.value = myRidesModel.origin!.coordinates!.last ?? 0.0;
     currentLong.value = myRidesModel.origin!.coordinates!.first ?? 0.0;
     destinationLat.value = myRidesModel.destination?.coordinates?.last ?? 0.0;
     destinationLong.value = myRidesModel.destination?.coordinates?.first ?? 0.0;
+    await myRidesDetailsAPI(
+        myRidesModel.confirmDriverDetails!.firstOrNull?.driverRideId ?? "");
     await drawPolyline();
     isLoad.value = false;
   }
@@ -63,7 +63,8 @@ class RiderStartRideMapController extends GetxController {
       final driverBookingDetails = bookingDetail.value.driverBookingDetails;
       if (driverBookingDetails != null && firebaseUid != null) {
         riderBookingDetail.value = driverBookingDetails.riderBookingDetails!
-            .firstWhere((element) => (element.Id ?? "").contains(firebaseUid));
+            .firstWhere((element) => (element.riderDetails?.firebaseUid ?? "")
+                .contains(firebaseUid));
         if (riderBookingDetail.value.isStarted ?? false) {
           getArrivalTime(
               bookingDetail
@@ -90,7 +91,7 @@ class RiderStartRideMapController extends GetxController {
         }
       }
     } catch (e) {
-      debugPrint(e.toString());
+      debugPrint("myrides details api error: $e");
     }
   }
 
@@ -129,6 +130,7 @@ class RiderStartRideMapController extends GetxController {
         final liveLocation =
             LiveLocationModel.fromMap(Map<String, dynamic>.from(data));
         // rotation: liveLocation.heading ?? 0.0,
+        final heading = liveLocation.heading;
         currentLat.value = liveLocation.latitude ?? 0.0;
         currentLong.value = liveLocation.longitude ?? 0.0;
         mapController.animateCamera(CameraUpdate.newCameraPosition(
@@ -172,11 +174,24 @@ class RiderStartRideMapController extends GetxController {
                   0.0);
         }
         markers.clear();
-        addVehicleMarker(
-            LatLng(currentLat.value, currentLong.value),
-            bookingDetail
-                    .value.driverDetails?.vehicleDetails?.vehiclePic?.url ??
-                "");
+        bookingDetail.value.driverBookingDetails?.riderBookingDetails?.forEach(
+          (element) {
+            addMarkers(
+                LatLng(element.origin?.coordinates?.lastOrNull ?? 0.0,
+                    element.origin?.coordinates?.firstOrNull ?? 0.0),
+                "",
+                "Origin",
+                0.0);
+            addMarkers(
+                LatLng(element.destination?.coordinates?.lastOrNull ?? 0.0,
+                    element.destination?.coordinates?.firstOrNull ?? 0.0),
+                "",
+                "Destination",
+                0.0);
+          },
+        );
+        addMarkers(LatLng(currentLat.value, currentLong.value),
+            ImageConstant.pngCarPointer, "", heading);
       }
     }, onError: (Object error) {
       debugPrint("Error: $error");
@@ -207,13 +222,21 @@ class RiderStartRideMapController extends GetxController {
             addMarkers(
                 LatLng(element.origin?.coordinates?.lastOrNull ?? 0.0,
                     element.origin?.coordinates?.firstOrNull ?? 0.0),
-                ImageConstant.pngSourceIcon ?? "",
-                "Origin");
+                "",
+                "Origin",
+                0.0);
+            addMarkers(
+                LatLng(element.origin?.coordinates?.lastOrNull ?? 0.0,
+                    element.origin?.coordinates?.firstOrNull ?? 0.0),
+                ImageConstant.pngCarPointer,
+                "Origin",
+                0.0);
             addMarkers(
                 LatLng(element.destination?.coordinates?.lastOrNull ?? 0.0,
                     element.destination?.coordinates?.firstOrNull ?? 0.0),
-                ImageConstant.pngDestinationIcon ?? "",
-                "Destination");
+                "",
+                "Destination",
+                0.0);
           },
         );
         mapController.animateCamera(CameraUpdate.newLatLngBounds(
@@ -235,11 +258,8 @@ class RiderStartRideMapController extends GetxController {
         rotation: 0));
   }
 
-  addMarkers(LatLng carLocation, String image, String? title) async {
-    // String imgurl = "https://www.fluttercampus.com/img/car.png";
-    // Uint8List bytes = (await NetworkAssetBundle(Uri.parse(imgurl)).load(imgurl))
-    //     .buffer
-    //     .asUint8List();
+  addMarkers(
+      LatLng carLocation, String image, String? title, double? rotation) async {
     markers.add(Marker(
       markerId: MarkerId(carLocation.toString()),
       position: carLocation, //position of marker
@@ -247,14 +267,16 @@ class RiderStartRideMapController extends GetxController {
         title: title,
         snippet: '',
       ),
-      // icon: BitmapDescriptor.fromBytes(bytes), //Icon for Marker
-      icon: await BitmapDescriptor.fromAssetImage(
-          ImageConfiguration(size: Size(200.kw, 200.kh)), image),
+      rotation: rotation ?? 0.0,
+      icon: image == ""
+          ? BitmapDescriptor.defaultMarker
+          : await BitmapDescriptor.fromAssetImage(
+              ImageConfiguration(size: Size(200.kw, 200.kh)), image),
     ));
   }
 
-  void getArrivalTime(double latitude, double longitude, double destinationLat,
-      double destinationLong) async {
+  void getArrivalTime(double latitude, double longitude, double originLat,
+      double originLong) async {
     try {
       final response = await APIManager.getArrivalTime(
           origin: ("$latitude,$longitude"),
@@ -302,12 +324,9 @@ class RiderStartRideMapController extends GetxController {
   }
 
   callToDriver() async {
-    final url = Uri.parse('tel:${bookingDetail.value.driverDetails?.phone}');
-    if (await canLaunchUrl(url)) {
-      await launchUrl(url);
-    } else {
-      throw 'Could not launch $url';
-    }
+    final url =
+        Uri.parse('tel:${bookingDetail.value.driverDetails?.phone ?? ""}');
+    await launchUrl(url);
   }
 
   chatWithDriver() async {

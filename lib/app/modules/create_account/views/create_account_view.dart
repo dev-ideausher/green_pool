@@ -111,30 +111,32 @@ class CreateAccountView extends GetView<CreateAccountController> {
                       },
                     ),
                   ),
-                  Text.rich(
-                    TextSpan(
-                      children: [
-                        TextSpan(
-                          text: 'I have read and I agree to Green Pool\'s ',
-                          style: TextStyleUtil.k12Regular(),
-                        ),
-                        TextSpan(
-                            text: 'Terms and \nconditions',
-                            style: TextStyleUtil.k12Semibold(
-                                color: ColorUtil.kSecondary03),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () => Get.to(const TermsView())),
-                        TextSpan(
-                          text: ' and ',
-                          style: TextStyleUtil.k12Regular(),
-                        ),
-                        TextSpan(
-                            text: 'Privacy policy',
-                            style: TextStyleUtil.k12Semibold(
-                                color: ColorUtil.kSecondary03),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () => Get.to(const TermsView())),
-                      ],
+                  Expanded(
+                    child: Text.rich(
+                      TextSpan(
+                        children: [
+                          TextSpan(
+                            text: 'I have read and I agree to Green Pool\'s ',
+                            style: TextStyleUtil.k12Regular(),
+                          ),
+                          TextSpan(
+                              text: 'Terms and \nconditions',
+                              style: TextStyleUtil.k12Semibold(
+                                  color: ColorUtil.kSecondary03),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () => Get.to(const TermsView())),
+                          TextSpan(
+                            text: ' and ',
+                            style: TextStyleUtil.k12Regular(),
+                          ),
+                          TextSpan(
+                              text: 'Privacy policy',
+                              style: TextStyleUtil.k12Semibold(
+                                  color: ColorUtil.kSecondary03),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () => Get.to(const TermsView())),
+                        ],
+                      ),
                     ),
                   ),
                 ],

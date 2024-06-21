@@ -59,9 +59,11 @@ class DialogHelper {
 
   static void paymentSuccessfull() {
     Get.bottomSheet(
+      isDismissible: false,
+      persistent: true,
       Container(
           padding: EdgeInsets.all(24.kh),
-          height: 380.kh,
+          // height: 380.kh,
           width: 100.w,
           decoration: BoxDecoration(
               color: ColorUtil.kWhiteColor,
@@ -90,19 +92,17 @@ class DialogHelper {
                     Get.until((route) =>
                         Get.currentRoute == Routes.BOTTOM_NAVIGATION);
                   }),
-              // GreenPoolButton(
-              //     label: Strings.cancelRequest,
-              //     isBorder: true,
-              //     onPressed: () {
-              //       Get.until((route) =>
-              //           Get.currentRoute == Routes.BOTTOM_NAVIGATION);
-              //     }).paddingOnly(top: 16.kh),
+              /*GreenPoolButton(
+                label: Strings.cancelRequest,
+                isBorder: true,
+                onPressed: onPressedCancel,
+              ).paddingOnly(top: 16.kh),*/
             ],
           )),
     );
   }
 
-  static void deleteRideDialog(Function() onPressed) {
+  static void cancelRideDialog(Function() onPressed) {
     Get.dialog(
       useSafeArea: true,
       Center(
@@ -125,12 +125,12 @@ class DialogHelper {
                 ),
               ),
               Text(
-                Strings.delete,
+                Strings.cancelRide,
                 style: TextStyleUtil.k18Semibold(),
                 textAlign: TextAlign.left,
               ).paddingSymmetric(vertical: 4.kh),
               Text(
-                Strings.areYouSureYouWantToDeleteThisRide,
+                Strings.areYouSureYouWantToCancelThisRide,
                 style: TextStyleUtil.k14Regular(
                   color: ColorUtil.kBlack04,
                 ),
@@ -142,10 +142,73 @@ class DialogHelper {
                   onPressed: onPressed,
                   height: 40.kh,
                   width: 144.kw,
-                  label: Strings.delete,
+                  label: Strings.cancelRide,
                   fontSize: 14.kh,
                   padding: const EdgeInsets.all(8),
                 ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  static void selectOriginOrDestination(
+      Function() onPressedPickup, Function() onPressedDropoff) {
+    Get.dialog(
+      useSafeArea: true,
+      Center(
+        child: Container(
+          padding: EdgeInsets.all(16.kh),
+          height: 212.kh,
+          width: 80.w,
+          decoration: BoxDecoration(
+            color: ColorUtil.kWhiteColor,
+            borderRadius: BorderRadius.circular(8.kh),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              GestureDetector(
+                onTap: () => Get.back(),
+                child: Container(
+                  alignment: Alignment.centerRight,
+                  child: const Icon(Icons.close),
+                ),
+              ),
+              Text(
+                Strings.setLocation,
+                style: TextStyleUtil.k18Semibold(),
+                textAlign: TextAlign.left,
+              ).paddingSymmetric(vertical: 4.kh),
+              Text(
+                Strings.selectOriginOrDestination,
+                style: TextStyleUtil.k14Regular(
+                  color: ColorUtil.kBlack04,
+                ),
+                textAlign: TextAlign.left,
+              ).paddingOnly(bottom: 40.kh),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  GreenPoolButton(
+                    onPressed: onPressedPickup,
+                    height: 40.kh,
+                    width: 124.kw,
+                    label: Strings.pickup,
+                    fontSize: 14.kh,
+                    padding: const EdgeInsets.all(8),
+                  ),
+                  GreenPoolButton(
+                    onPressed: onPressedDropoff,
+                    height: 40.kh,
+                    width: 124.kw,
+                    label: Strings.destination,
+                    fontSize: 14.kh,
+                    padding: const EdgeInsets.all(8),
+                  ),
+                ],
               ),
             ],
           ),

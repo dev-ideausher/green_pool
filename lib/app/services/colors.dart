@@ -37,6 +37,8 @@ extension ColorUtil on BuildContext {
   static const Color kPrimaryPinkMode = Color(0xffffc0cb);
   static const Color kPrimary2PinkMode = Color(0xfffe889d);
   static const Color kPrimary3PinkMode = Color(0xffff6782);
+  static const Color kPrimary4PinkMode = Color(0xffffd3da);
+  static const Color kPrimary5PinkMode = Color(0xffffeff1);
 
   //neutral
   static const Color kNeutral1 = Color(0xFFEEEEEE);

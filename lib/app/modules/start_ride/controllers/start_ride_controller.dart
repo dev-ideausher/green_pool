@@ -91,21 +91,6 @@ class StartRideController extends GetxController {
       final List<double?> destinationCoordinates =
           myRidesModel.value.driverBookingDetails?.destination?.coordinates ??
               [0.0, 0.0];
-      // final List<double?> originCoordinates = myRidesModel
-      //         .value
-      //         .driverBookingDetails
-      //         ?.riderBookingDetails?[selectedRider.value]
-      //         ?.origin
-      //         ?.coordinates ??
-      //     [0.0, 0.0];
-
-      // final List<double?> destinationCoordinates = myRidesModel
-      //         .value
-      //         .driverBookingDetails
-      //         ?.riderBookingDetails?[selectedRider.value]
-      //         ?.destination
-      //         ?.coordinates ??
-      //     [0.0, 0.0];
       PolylineResult result = await PolylinePoints().getRouteBetweenCoordinates(
           Endpoints.googleApiKey,
           PointLatLng(originCoordinates.last!, originCoordinates.first!),
@@ -118,12 +103,15 @@ class StartRideController extends GetxController {
       }
       polylineCoordinates.refresh();
       markers.clear();
+      addMarkers(LatLng(originCoordinates.last!, originCoordinates.first!), "",
+          "Origin", 0.0);
       addMarkers(LatLng(originCoordinates.last!, originCoordinates.first!),
-          ImageConstant.pngSourceIcon, "Origin");
+          ImageConstant.pngCarPointer, "Origin", 0.0);
       addMarkers(
           LatLng(destinationCoordinates.last!, destinationCoordinates.first!),
-          ImageConstant.pngDestinationIcon,
-          "Destination");
+          "",
+          "Destination",
+          0.0);
       mapController.animateCamera(CameraUpdate.newLatLngBounds(
           GpUtil.boundsFromLatLngList(polylineCoordinates), 70));
     } catch (e) {
@@ -131,7 +119,8 @@ class StartRideController extends GetxController {
     }
   }
 
-  addMarkers(LatLng carLocation, String image, String? title) async {
+  addMarkers(
+      LatLng carLocation, String image, String? title, double? rotation) async {
     // String imgurl = "https://www.fluttercampus.com/img/car.png";
     // Uint8List bytes = (await NetworkAssetBundle(Uri.parse(imgurl)).load(imgurl))
     //     .buffer
@@ -143,9 +132,13 @@ class StartRideController extends GetxController {
         title: title,
         snippet: '',
       ),
+      rotation: rotation ?? 0.0,
+      //anchor: ,
       // icon: BitmapDescriptor.fromBytes(bytes), //Icon for Marker
-      icon: await BitmapDescriptor.fromAssetImage(
-          ImageConfiguration(size: Size(200.kw, 200.kh)), image),
+      icon: image == ""
+          ? BitmapDescriptor.defaultMarker
+          : await BitmapDescriptor.fromAssetImage(
+              ImageConfiguration(size: Size(200.kw, 200.kh)), image),
     ));
   }
 
@@ -178,6 +171,7 @@ class StartRideController extends GetxController {
       if (position != null) {
         final currentLat = position.latitude;
         final currentLong = position.longitude;
+        final heading = position.heading;
         myRidesModel
             .value
             .driverBookingDetails
@@ -193,8 +187,32 @@ class StartRideController extends GetxController {
           ),
         );
         markers.clear();
-        addMarkers(LatLng(currentLat, currentLong),
-            ImageConstant.pngYourLocation, "Current Location");
+        addMarkers(
+            LatLng(
+                myRidesModel.value.driverBookingDetails?.origin?.coordinates
+                        ?.last ??
+                    0.0,
+                myRidesModel.value.driverBookingDetails?.origin?.coordinates
+                        ?.first ??
+                    0.0),
+            "",
+            "Origin",
+            0.0);
+
+        addMarkers(
+            LatLng(
+                myRidesModel.value.driverBookingDetails?.destination
+                        ?.coordinates?.last ??
+                    0.0,
+                myRidesModel.value.driverBookingDetails?.destination
+                        ?.coordinates?.first ??
+                    0.0),
+            "",
+            "Destination",
+            0.0);
+
+        addMarkers(LatLng(currentLat, currentLong), ImageConstant.pngCarPointer,
+            "Current Location", heading);
       }
     });
   }

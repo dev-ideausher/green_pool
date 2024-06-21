@@ -17,7 +17,7 @@ class FirebaseDbServices {
   late StreamSubscription<DatabaseEvent> _subscription;
 
   Future<FirebaseDbServices> initState() async {
-    if (Get.find<GetStorageService>().getLoggedIn) {
+    if (Get.find<GetStorageService>().isLoggedIn) {
       _subscription = _database
           .child(Get.find<GetStorageService>().getFirebaseUid)
           .onValue

@@ -198,13 +198,15 @@ class RiderMyRideRequestController extends GetxController {
       int index, RiderConfirmRequestModelData riderConfirmRequestModelData) {
     Get.toNamed(Routes.PAYMENT, arguments: {
       "ridePostId": riderConfirmRequestModel.value.data?[index]?.Id,
-      "price":
-          (riderConfirmRequestModel.value.data?[index]?.price ?? 0).toString(),
+      "price": ((riderConfirmRequestModel.value.data?[index]?.price)! *
+              (riderConfirmRequestModelData.riderRideDetails!.seatAvailable!))
+          .toString(),
       'riderConfirmRequestModelData': riderConfirmRequestModelData
     });
   }
 
   moveToPaymentFromSendRequest(
+      //need to multiply by no of seats
       RiderSendRequestModelData riderSendRequestModelData) async {
     final String driverRideId = "${riderSendRequestModelData.Id}";
     final String driverId = "${riderSendRequestModelData.driverId}";
@@ -220,8 +222,12 @@ class RiderMyRideRequestController extends GetxController {
       "driverId": driverId,
       "driverName": driverName,
       "driverNotificationPreferences": driverNotificationPref,
-      "price": riderSendRequestModelData.price ?? 0
+      "price": riderSendRequestModelData.price! *
+          (riderSendRequestModel.value.riderRideDetails!.seatAvailable!)
     };
+
+    print(
+        "PRICE: ${riderSendRequestModelData.price! * (riderSendRequestModel.value.riderRideDetails!.seatAvailable!)}");
 
     Get.toNamed(Routes.PAYMENT, arguments: {
       'rideData': rideData,

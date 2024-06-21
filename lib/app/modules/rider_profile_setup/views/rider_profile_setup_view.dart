@@ -159,29 +159,62 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
               ).paddingOnly(bottom: 16.kh),
               const RichTextHeading(text: 'City Province')
                   .paddingOnly(bottom: 8.kh),
-              GreenPoolDropDown(
-                hintText: 'Select your City',
-                // value: controller.selectedCity.value,
-                items: CityList.cityNames
-                    .map((e) => DropdownMenuItem<Object>(
-                          value: e,
-                          child: Text(
-                            e,
-                            style: TextStyleUtil.k14Regular(),
-                          ),
-                        ))
-                    .toList(),
-                onChanged: (city) =>
-                    controller.updateSelectedCity(city.toString()),
-                validator: (value) => controller.validateCity(value),
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-              ).paddingOnly(bottom: 16.kh),
+              Obx(
+                () => GreenPoolTextField(
+                  hintText: "Select your City",
+                  controller: controller.city,
+                  suffix: controller.isCityListExpanded.value
+                      ? const Icon(Icons.arrow_drop_up)
+                      : const Icon(Icons.arrow_drop_down),
+                  onPressedSuffix: () {
+                    controller.isCityListExpanded.toggle();
+                    controller.addCityNames(controller.city.value.text);
+                  },
+                  onchanged: (value) {
+                    controller.addCityNames(value ?? "");
+                  },
+                ).paddingOnly(
+                    bottom: controller.isCityListExpanded.value ? 4.kh : 16.kh),
+              ),
+              Obx(
+                () => Visibility(
+                  visible: controller.isCityListExpanded.value,
+                  child: SizedBox(
+                    height: 120.kh,
+                    child: ListView.builder(
+                        itemCount: controller.cityNames.length ?? 0,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            decoration: BoxDecoration(
+                                border: Border(
+                                    bottom: BorderSide(
+                                        width: 1.kh,
+                                        color: ColorUtil.kNeutral7)),
+                                borderRadius: BorderRadius.circular(8.kh)),
+                            child: ListTile(
+                              title: Text(controller.cityNames[index]),
+                              selectedColor: ColorUtil.kPrimary01,
+                              onTap: () {
+                                controller.city.text =
+                                    controller.cityNames[index];
+                                controller.isCityListExpanded.value = false;
+                              },
+                            ),
+                          );
+                        }),
+                  ).paddingOnly(bottom: 16.kh),
+                ),
+              ),
               Text.rich(
                 TextSpan(
                   children: [
                     TextSpan(
                       text: 'Date of Birth ',
                       style: TextStyleUtil.k14Semibold(),
+                    ),
+                    TextSpan(
+                      text: '*',
+                      style: TextStyleUtil.k14Regular(color: ColorUtil.kError3),
                     ),
                     TextSpan(
                       text: '(should be above 18)',

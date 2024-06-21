@@ -100,7 +100,7 @@ class VerifyView extends GetView<VerifyController> {
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () => controller.otpAuth())
                             : TextSpan(
-                                text: controller.seconds.value.toString(),
+                                text: "${controller.seconds.value} sec",
                                 style: TextStyleUtil.k16Semibold(
                                     fontSize: 16.kh,
                                     color: ColorUtil.kSecondary01),

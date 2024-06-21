@@ -252,50 +252,49 @@ class RideDetailsView extends GetView<RideDetailsController> {
 
           //Vehicle details
           Text(
-            'Vehicle Details',
+            Strings.vehicleDetails,
             style: TextStyleUtil.k14Bold(),
           ).paddingOnly(bottom: 16.kh),
-          // Row(
-          //   children: [
-          //     ClipRRect(
-          //       borderRadius: BorderRadius.circular(8.kh),
-          //       child: CommonImageView(
-          //               height: 64.kh,
-          //               width: 64.kw,
-          //               url:
-          //                   "${controller.rideHistory.value.driverDetails?[0]?.vechileDetails?[0]?.vehiclePic?.url}")
-          //           .paddingOnly(right: 8.kh),
-          //     ),
-          //     Column(
-          //       crossAxisAlignment: CrossAxisAlignment.start,
-          //       children: [
-          //         Text(
-          //           '${controller.rideHistory.value.driverDetails?[0]?.vechileDetails?[0]?.model}',
-          //           style: TextStyleUtil.k16Bold(color: ColorUtil.kBlack02),
-          //         ).paddingOnly(bottom: 4.kh),
-          //         Row(
-          //           children: [
-          //             Text(
-          //               '${controller.rideHistory.value.driverDetails?[0]?.vechileDetails?[0]?.type}',
-          //               style: TextStyleUtil.k14Semibold(
-          //                   color: ColorUtil.kBlack03),
-          //             ),
-          //             Container(
-          //               width: 1.kw,
-          //               height: 16.kh,
-          //               color: ColorUtil.kBlack03,
-          //             ).paddingSymmetric(vertical: 2.5.kh, horizontal: 8.kw),
-          //             Text(
-          //               '${controller.rideHistory.value.driverDetails?[0]?.vechileDetails?[0]?.licencePlate}',
-          //               style: TextStyleUtil.k14Semibold(
-          //                   color: ColorUtil.kBlack03),
-          //             ),
-          //           ],
-          //         ),
-          //       ],
-          //     ),
-          //   ],
-          // ),
+          /*Row(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8.kh),
+                child: CommonImageView(
+                    height: 64.kh,
+                    width: 64.kw,
+                    url:
+                        "${controller.rideHistory.value.driverDetails?[0]?.vechileDetails?[0]?.vehiclePic?.url}"),
+              ).paddingOnly(right: 8.kh),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '${controller.rideHistory.value.driverDetails?[0]?.vechileDetails?[0]?.model}',
+                    style: TextStyleUtil.k16Bold(color: ColorUtil.kBlack02),
+                  ).paddingOnly(bottom: 4.kh),
+                  Row(
+                    children: [
+                      Text(
+                        '${controller.rideHistory.value.driverDetails?[0]?.vechileDetails?[0]?.type}',
+                        style: TextStyleUtil.k14Semibold(
+                            color: ColorUtil.kBlack03),
+                      ),
+                      Container(
+                        width: 1.kw,
+                        height: 16.kh,
+                        color: ColorUtil.kBlack03,
+                      ).paddingSymmetric(vertical: 2.5.kh, horizontal: 8.kw),
+                      Text(
+                        '${controller.rideHistory.value.driverDetails?[0]?.vechileDetails?[0]?.licencePlate}',
+                        style: TextStyleUtil.k14Semibold(
+                            color: ColorUtil.kBlack03),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),*/
           const GreenPoolDivider().paddingSymmetric(vertical: 16.kh),
 
           //Bill details

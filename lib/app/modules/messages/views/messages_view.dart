@@ -27,7 +27,7 @@ class MessagesView extends GetView<MessagesController> {
     return Scaffold(
       appBar:
           GreenPoolAppBar(title: Text(Strings.messages), leading: SizedBox()),
-      body: Get.find<GetStorageService>().getLoggedIn
+      body: Get.find<GetStorageService>().isLoggedIn
           ? Obx(
               () => controller.isLoading.value
                   ? ListView.builder(

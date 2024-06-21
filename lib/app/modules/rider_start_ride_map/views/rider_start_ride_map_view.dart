@@ -1,21 +1,14 @@
-import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
-import 'package:green_pool/generated/assets.dart';
 
-import '../../../components/common_image_view.dart';
 import '../../../components/gp_progress.dart';
-import '../../../components/origin_to_destination.dart';
 import '../../../res/strings.dart';
 import '../../../services/colors.dart';
-import '../../../services/custom_button.dart';
-import '../../../services/gp_util.dart';
 import '../../../services/text_style_util.dart';
 import '../controllers/rider_start_ride_map_controller.dart';
 import 'arriving_bottom_sheet.dart';
@@ -26,6 +19,7 @@ class RiderStartRideMapView extends GetView<RiderStartRideMapController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: const GreenPoolAppBar(),
       body: Obx(
         () => controller.isLoad.value
             ? const GpProgress()

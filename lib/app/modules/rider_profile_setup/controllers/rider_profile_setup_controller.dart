@@ -24,24 +24,31 @@ import 'package:dio/dio.dart' as dio;
 
 import '../../../services/text_style_util.dart';
 import '../../profile/controllers/profile_controller.dart';
+import 'city_list.dart';
 
 class RiderProfileSetupController extends GetxController {
   RxBool isPicked = false.obs;
   bool fromNavBar = false;
+  RxList<String> cityNames = <String>[].obs;
   String name = '';
   Rx<File?> selectedProfileImagePath = Rx<File?>(null);
   Rx<File?> selectedIDImagePath = Rx<File?>(null);
   RxBool isProfileImagePicked = false.obs;
   RxBool isProfileImagePickedCheck = false.obs;
   RxBool isIDPicked = false.obs;
-  TextEditingController fullName = TextEditingController(text: Get.find<AuthService>().auth.currentUser?.displayName);
-  TextEditingController email = TextEditingController(text: Get.find<AuthService>().auth.currentUser?.email);
-  TextEditingController phoneNumber = TextEditingController(text: Get.find<AuthService>().auth.currentUser?.phoneNumber);
+  TextEditingController fullName = TextEditingController(
+      text: Get.find<AuthService>().auth.currentUser?.displayName);
+  TextEditingController email = TextEditingController(
+      text: Get.find<AuthService>().auth.currentUser?.email);
+  TextEditingController phoneNumber = TextEditingController(
+      text: Get.find<AuthService>().auth.currentUser?.phoneNumber);
   TextEditingController gender = TextEditingController();
 
   TextEditingController dateOfBirth = TextEditingController();
   TextEditingController formattedDateOfBirth = TextEditingController();
   RxString selectedCity = 'Brampton'.obs;
+  TextEditingController city = TextEditingController();
+  RxBool isCityListExpanded = false.obs;
 
   GlobalKey<FormState> userFormKey = GlobalKey<FormState>();
 
@@ -63,9 +70,11 @@ class RiderProfileSetupController extends GetxController {
   }
 
   Future<void> setDate(BuildContext context) async {
-    DateTime lastDate = DateTime.now().subtract(const Duration(days: 18 * 365)); // Subtracting 18 years
+    DateTime lastDate = DateTime.now()
+        .subtract(const Duration(days: 18 * 365)); // Subtracting 18 years
 
-    DateTime initialDate = DateTime.now().isAfter(lastDate) ? lastDate : DateTime.now();
+    DateTime initialDate =
+        DateTime.now().isAfter(lastDate) ? lastDate : DateTime.now();
 
     DateTime? pickedDate = await showDatePicker(
       context: context,
@@ -77,16 +86,22 @@ class RiderProfileSetupController extends GetxController {
           // Define the custom theme for the date picker
           data: ThemeData(
             // Define the primary color
-            primaryColor: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimaryPinkMode : ColorUtil.kPrimary01,
+            primaryColor: Get.find<HomeController>().isPinkModeOn.value
+                ? ColorUtil.kPrimaryPinkMode
+                : ColorUtil.kPrimary01,
             // Define the color scheme for the date picker
             colorScheme: ColorScheme.light(
               // Define the primary color for the date picker
-              primary: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimaryPinkMode : ColorUtil.kPrimary01,
+              primary: Get.find<HomeController>().isPinkModeOn.value
+                  ? ColorUtil.kPrimaryPinkMode
+                  : ColorUtil.kPrimary01,
               // Define the background color for the date picker
               surface: ColorUtil.kWhiteColor,
               // Define the on-primary color for the date picker
               onPrimary: ColorUtil.kBlack01,
-              secondary: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimaryPinkMode : ColorUtil.kPrimary01,
+              secondary: Get.find<HomeController>().isPinkModeOn.value
+                  ? ColorUtil.kPrimaryPinkMode
+                  : ColorUtil.kPrimary01,
             ),
           ),
           // Apply the custom theme to the child widget
@@ -98,7 +113,8 @@ class RiderProfileSetupController extends GetxController {
     if (pickedDate != null) {
       String formattedDate = pickedDate.toString().split(" ")[0];
       dateOfBirth.text = formattedDate;
-      formattedDateOfBirth.text = "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
+      formattedDateOfBirth.text =
+          "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
     }
   }
 
@@ -168,10 +184,12 @@ class RiderProfileSetupController extends GetxController {
 
       showMySnackbar(msg: responses.data['message']);
       Get.find<GetStorageService>().setUserName = fullName.text;
+      Get.find<GetStorageService>().isLoggedIn = true;
       Get.find<GetStorageService>().setProfileStatus = true;
       Get.find<HomeController>().userInfoAPI();
-      Get.offNamed(Routes.EMERGENCY_CONTACTS, arguments: {'fromNavBar': fromNavBar, 'isDriver': false},parameters: {"profileType": "user"});
-
+      Get.offNamed(Routes.EMERGENCY_CONTACTS,
+          arguments: {'fromNavBar': fromNavBar, 'isDriver': false},
+          parameters: {"profileType": "user"});
     } catch (e) {
       throw Exception(e);
     }
@@ -250,6 +268,17 @@ class RiderProfileSetupController extends GetxController {
         userFormKey.currentState!.save();
         await userDetailsAPI();
       }
+    }
+  }
+
+  void addCityNames(String value) {
+    if (value.isEmpty || value == "") {
+      cityNames.value = CityList.cityNames;
+    } else {
+      isCityListExpanded.value = true;
+      cityNames.value = CityList.cityNames.where((city) {
+        return city.toLowerCase().contains(value.toLowerCase());
+      }).toList();
     }
   }
 }

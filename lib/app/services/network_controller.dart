@@ -78,7 +78,7 @@ class NetworkController extends GetxController {
         textAlign: TextAlign.center,
       ),
       onPressed: () {
-        if (Get.find<GetStorageService>().getLoggedIn) {
+        if (Get.find<GetStorageService>().isLoggedIn) {
           Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
         } else {
           Get.back();

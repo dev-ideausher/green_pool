@@ -7,17 +7,12 @@ import 'package:green_pool/app/data/driver_cofirm_request_model.dart';
 import 'package:green_pool/app/data/my_rides_model.dart';
 import 'package:green_pool/app/services/dialog_helper.dart';
 import 'package:green_pool/app/services/dio/api_service.dart';
-import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/snackbar.dart';
 
 import '../../../data/booking_detail_model.dart';
 import '../../../data/recurring_rides_model.dart';
 import '../../../data/ride_detail_id.dart';
-import '../../../res/strings.dart';
 import '../../../routes/app_pages.dart';
-import '../../../services/colors.dart';
-import '../../../services/custom_button.dart';
-import '../../../services/text_style_util.dart';
 
 class MyRidesOneTimeController extends GetxController {
   RxString ridePostId = ''.obs;
@@ -54,7 +49,7 @@ class MyRidesOneTimeController extends GetxController {
   }
 
   riderCancelRideAPI(MyRidesModelData myRidesModelData) async {
-    DialogHelper.deleteRideDialog(() async {
+    DialogHelper.cancelRideDialog(() async {
       Get.back();
       final Map<String, dynamic> riderRideId = {
         "riderRideId": myRidesModelData.Id
@@ -65,6 +60,7 @@ class MyRidesOneTimeController extends GetxController {
             await APIManager.riderCancelRide(body: riderRideId);
         var data = jsonDecode(cancelRideResponse.toString());
         await myRidesAPI();
+        Get.back();
         isLoad.value = false;
       } catch (e) {
         throw Exception(e);
@@ -73,7 +69,7 @@ class MyRidesOneTimeController extends GetxController {
   }
 
   cancelRideAPI(MyRidesModelData myRidesModelData) async {
-    DialogHelper.deleteRideDialog(
+    DialogHelper.cancelRideDialog(
       () async {
         Get.back();
         final Map<String, dynamic> driverRideId = {

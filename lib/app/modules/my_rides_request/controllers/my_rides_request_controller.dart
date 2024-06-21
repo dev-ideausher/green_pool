@@ -1,9 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:green_pool/app/data/ride_detail_id.dart';
-import 'package:green_pool/app/services/gp_util.dart';
 import '../../../data/chat_arg.dart';
 import '../../../data/driver_cofirm_request_model.dart';
 import '../../../data/driver_send_request_model.dart';
@@ -59,13 +57,15 @@ class MyRidesRequestController extends GetxController {
 
   acceptRidersRequestAPI(DriverConfirmRequestModelData? driverRideData) async {
     try {
-      final acceptRiderResponse = await APIManager.postAcceptRiderRequest(
+      final acceptRiderResponse = await APIManager.patchAcceptRiderRequest(
           body: {"ridePostId": driverRideData?.Id ?? ""});
 
       if (acceptRiderResponse.data['status']) {
         allConfirmRequestAPI();
         await Get.bottomSheet(
-            BookingConfirmBottom(driverRideData: driverRideData),
+            BookingConfirmBottom(
+              driverRideData: driverRideData,
+            ),
             isScrollControlled: true);
         showMySnackbar(
             msg: acceptRiderResponse.data?['message'] ??
@@ -85,7 +85,7 @@ class MyRidesRequestController extends GetxController {
 
     try {
       final rejectRiderResponse =
-          await APIManager.postRejectRiderRequest(body: rideData);
+          await APIManager.patchRejectRiderRequest(body: rideData);
       var data = jsonDecode(rejectRiderResponse.toString());
       Get.back();
       showMySnackbar(msg: 'Request rejected successfully!');

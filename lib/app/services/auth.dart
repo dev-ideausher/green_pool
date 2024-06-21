@@ -151,7 +151,7 @@ class AuthService extends GetxService {
     // final userPhoneNumber = _firebaseAuth.currentUser?.phoneNumber;
     // final userEmail = _firebaseAuth.currentUser?.email;
 
-    Get.find<GetStorageService>().setLoggedIn = true;
+    Get.find<GetStorageService>().isLoggedIn = true;
     Get.find<GetStorageService>().encjwToken = mytoken!;
     Get.find<GetStorageService>().setFirebaseUid = fireUid;
     Get.find<GetStorageService>().setUserName = userName;
@@ -163,7 +163,7 @@ class AuthService extends GetxService {
     DialogHelper.showLoading();
     // erase the user's token and data in GetStorageService
     Get.find<GetStorageService>().logout();
-    Get.find<GetStorageService>().setLoggedIn = false;
+    Get.find<GetStorageService>().isLoggedIn = false;
     // firbase logout
     auth.logout();
     // navigate to login page

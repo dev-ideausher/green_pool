@@ -1,17 +1,17 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/data/find_ride_model.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
-import 'package:green_pool/app/modules/profile/controllers/profile_controller.dart';
 import 'package:green_pool/app/services/colors.dart';
+import 'package:green_pool/app/services/snackbar.dart';
 
 import '../../../data/find_ride_response_model.dart';
 import '../../../data/matching_rides_model.dart';
 import '../../../routes/app_pages.dart';
+import '../../../services/dialog_helper.dart';
 import '../../../services/dio/api_service.dart';
 import '../../../services/storage.dart';
 
@@ -65,7 +65,7 @@ class FindRideController extends GetxController {
   // }
 
   decideRouting() async {
-    if (Get.find<GetStorageService>().getLoggedIn) {
+    if (Get.find<GetStorageService>().isLoggedIn) {
       if (Get.find<HomeController>().userInfo.value.data?.profileStatus ==
           true) {
         await getMatchingRidesAPI();
@@ -174,6 +174,7 @@ class FindRideController extends GetxController {
 
       // await Get.toNamed(Routes.MATCHING_RIDES, arguments: riderRideId);
     } catch (e) {
+      showMySnackbar(msg: "Same ride is already posted");
       throw Exception(e);
     }
   }
@@ -282,5 +283,30 @@ class FindRideController extends GetxController {
 
     // If all validations pass, return null (indicating no error)
     return null;
+  }
+
+  void selectLocation(index) {
+    final storageService = Get.find<GetStorageService>();
+    DialogHelper.selectOriginOrDestination(() {
+                                  //on pressed pickup
+                                  riderOriginLat =
+                                      storageService.locations[index][0];
+                                  riderOriginLong =
+                                      storageService.locations[index][1];
+                                  riderOriginTextController.text =
+                                      storageService.locations[index][2];
+                                  Get.back();
+                                  setActiveState();
+                                }, () {
+                                  //on pressed drop off
+                                  riderDestinationLat =
+                                      storageService.locations[index][0];
+                                  riderDestinationLong =
+                                      storageService.locations[index][1];
+                                  riderDestinationTextController.text =
+                                      storageService.locations[index][2];
+                                  Get.back();
+                                  setActiveState();
+                                });
   }
 }

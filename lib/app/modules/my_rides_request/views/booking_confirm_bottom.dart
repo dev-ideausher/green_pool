@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -12,7 +14,9 @@ import '../../../res/strings.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
+import '../../../services/dio/api_service.dart';
 import '../../../services/gp_util.dart';
+import '../../../services/snackbar.dart';
 import '../../../services/text_style_util.dart';
 import '../../home/controllers/home_controller.dart';
 import '../controllers/my_rides_request_controller.dart';
@@ -29,7 +33,11 @@ class BookingConfirmBottom extends StatelessWidget {
         //TODO: height and drag indicator
         // height: 610.kh,
         width: 100.w,
-        decoration: BoxDecoration(color: ColorUtil.kWhiteColor, borderRadius: BorderRadius.only(topLeft: Radius.circular(40.kh), topRight: Radius.circular(40.kh))),
+        decoration: BoxDecoration(
+            color: ColorUtil.kWhiteColor,
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(40.kh),
+                topRight: Radius.circular(40.kh))),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,7 +74,9 @@ class BookingConfirmBottom extends StatelessWidget {
                     child: ClipOval(
                       child: SizedBox.fromSize(
                         size: Size.fromRadius(20.kh),
-                        child: CommonImageView(url: "${driverRideData?.rideDetails?[0]?.riderDetails?[0]?.profilePic?.url}"),
+                        child: CommonImageView(
+                            url:
+                                "${driverRideData?.rideDetails?[0]?.riderDetails?[0]?.profilePic?.url}"),
                       ),
                     ),
                   ).paddingOnly(right: 8.kw),
@@ -84,13 +94,19 @@ class BookingConfirmBottom extends StatelessWidget {
                             children: [
                               SvgPicture.asset(
                                 ImageConstant.svgIconCalendarTime,
-                                colorFilter:
-                                    ColorFilter.mode(Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01, BlendMode.srcIn),
+                                colorFilter: ColorFilter.mode(
+                                    Get.find<HomeController>()
+                                            .isPinkModeOn
+                                            .value
+                                        ? ColorUtil.kPrimary3PinkMode
+                                        : ColorUtil.kSecondary01,
+                                    BlendMode.srcIn),
                               ).paddingOnly(right: 4.kw),
                               Text(
                                 // '07 July 2023, 3:00pm',
                                 "${driverRideData?.rideDetails?[0]?.date.toString().split("T")[0]}  ${driverRideData?.rideDetails?[0]?.time}",
-                                style: TextStyleUtil.k12Regular(color: ColorUtil.kBlack02),
+                                style: TextStyleUtil.k12Regular(
+                                    color: ColorUtil.kBlack02),
                               ),
                             ],
                           ),
@@ -99,27 +115,43 @@ class BookingConfirmBottom extends StatelessWidget {
                               Icon(
                                 Icons.location_on,
                                 size: 16.kh,
-                                color: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01,
+                                color: Get.find<HomeController>()
+                                        .isPinkModeOn
+                                        .value
+                                    ? ColorUtil.kPrimary3PinkMode
+                                    : ColorUtil.kSecondary01,
                               ),
                               FutureBuilder<String>(
                                 future: GpUtil.calculateDistance(
-                                    startLat: Get.find<HomeController>().latitude.value,
-                                    startLong: Get.find<HomeController>().longitude.value,
-                                    endLat: driverRideData?.rideDetails?[0]?.origin?.coordinates?.last ?? 0.0,
-                                    endLong: driverRideData?.rideDetails?[0]?.origin?.coordinates?.first ?? 0.0),
+                                    startLat: Get.find<HomeController>()
+                                        .latitude
+                                        .value,
+                                    startLong: Get.find<HomeController>()
+                                        .longitude
+                                        .value,
+                                    endLat: driverRideData?.rideDetails?[0]
+                                            ?.origin?.coordinates?.last ??
+                                        0.0,
+                                    endLong: driverRideData?.rideDetails?[0]
+                                            ?.origin?.coordinates?.first ??
+                                        0.0),
                                 builder: (context, snapshot) {
-                                  if (snapshot.connectionState == ConnectionState.waiting) {
-                                    return const Text("..."); // Show a loading indicator while fetching data
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.waiting) {
+                                    return const Text(
+                                        "..."); // Show a loading indicator while fetching data
                                   } else if (snapshot.hasError) {
                                     // return Text('Error: ${snapshot.error}');
                                     return Text(
                                       Strings.na,
-                                      style: TextStyleUtil.k12Regular(color: ColorUtil.kBlack02),
+                                      style: TextStyleUtil.k12Regular(
+                                          color: ColorUtil.kBlack02),
                                     );
                                   } else {
                                     return Text(
                                       snapshot.data.toString(),
-                                      style: TextStyleUtil.k12Regular(color: ColorUtil.kBlack02),
+                                      style: TextStyleUtil.k12Regular(
+                                          color: ColorUtil.kBlack02),
                                     );
                                   }
                                 },
@@ -134,20 +166,35 @@ class BookingConfirmBottom extends StatelessWidget {
               ),
               const GreenPoolDivider().paddingOnly(bottom: 16.kh),
               OriginToDestination(
-                      origin: "${driverRideData?.rideDetails?[0]?.origin?.name}", destination: "${driverRideData?.rideDetails?[0]?.destination?.name}", needPickupText: false)
+                      origin:
+                          "${driverRideData?.rideDetails?[0]?.origin?.name}",
+                      destination:
+                          "${driverRideData?.rideDetails?[0]?.destination?.name}",
+                      needPickupText: false)
                   .paddingOnly(bottom: 8.kh),
               const GreenPoolDivider().paddingOnly(top: 8.kh, bottom: 40.kh),
               GreenPoolButton(
                   label: Strings.continueText,
                   onPressed: () {
-                    Get.until((route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
+                    Get.until((route) =>
+                        Get.currentRoute == Routes.BOTTOM_NAVIGATION);
                   }),
               GreenPoolButton(
-                  label: Strings.cancelRequest,
-                  isBorder: true,
-                  onPressed: () {
-                    Get.until((route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
-                  }).paddingOnly(top: 16.kh),
+                label: Strings.cancelRequest,
+                isBorder: true,
+                onPressed: () async {
+                  try {
+                    final rejectRiderResponse =
+                        await APIManager.patchRejectRiderRequest(
+                            body: {"ridePostId": driverRideData?.Id});
+                    var data = jsonDecode(rejectRiderResponse.toString());
+                    Get.back();
+                    showMySnackbar(msg: 'Request rejected successfully!');
+                  } catch (e) {
+                    throw Exception(e);
+                  }
+                },
+              ).paddingOnly(top: 16.kh),
             ],
           ),
         ));

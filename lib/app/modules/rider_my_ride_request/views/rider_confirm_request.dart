@@ -210,9 +210,10 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                           ],
                                         ),
                                         Row(
-                                          //TODO: space between
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.end,
                                           children: [
                                             Row(
                                               children: [
@@ -230,7 +231,6 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                                       BlendMode.srcIn),
                                                 ).paddingOnly(right: 4.kw),
                                                 Text(
-                                                  // '07 July 2023, 3:00pm',
                                                   "${GpUtil.getDateFormat(controller.riderConfirmRequestModel.value.data?[index]?.driverRideDetails?.date)}  ${controller.riderConfirmRequestModel.value.data?[index]?.driverRideDetails?.time}",
                                                   style:
                                                       TextStyleUtil.k12Regular(

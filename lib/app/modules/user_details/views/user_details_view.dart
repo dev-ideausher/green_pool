@@ -49,27 +49,40 @@ class UserDetailsView extends GetView<UserDetailsController> {
                             decoration: const BoxDecoration(
                               shape: BoxShape.circle,
                             ),
-                            child: controller.isProfilePicUpdated?.value ?? false
-                                ? ClipOval(
-                                    child: SizedBox.fromSize(
-                                      size: Size.fromRadius(50.kh),
-                                      child: Image.file(controller.selectedProfileImagePath?.value ?? File('')),
-                                    ),
-                                  )
-                                : ClipOval(
-                                    child: SizedBox.fromSize(
-                                      size: Size.fromRadius(50.kh),
-                                      child: CommonImageView(
-                                        height: 50.kh,
-                                        width: 50.kw,
-                                        url: Get.find<ProfileController>().userInfo.value.data?.profilePic?.url ?? '',
+                            child:
+                                controller.isProfilePicUpdated?.value ?? false
+                                    ? ClipOval(
+                                        child: SizedBox.fromSize(
+                                          size: Size.fromRadius(50.kh),
+                                          child: Image.file(controller
+                                                  .selectedProfileImagePath
+                                                  ?.value ??
+                                              File('')),
+                                        ),
+                                      )
+                                    : ClipOval(
+                                        child: SizedBox.fromSize(
+                                          size: Size.fromRadius(50.kh),
+                                          child: CommonImageView(
+                                            height: 50.kh,
+                                            width: 50.kw,
+                                            url: Get.find<ProfileController>()
+                                                    .userInfo
+                                                    .value
+                                                    .data
+                                                    ?.profilePic
+                                                    ?.url ??
+                                                '',
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                  ),
                           ),
                         ),
                         SvgPicture.asset(
-                          Get.find<HomeController>().isPinkModeOn?.value ?? false ? ImageConstant.svgPinkSetupAdd : ImageConstant.svgSetupAdd,
+                          Get.find<HomeController>().isPinkModeOn?.value ??
+                                  false
+                              ? ImageConstant.svgPinkSetupAdd
+                              : ImageConstant.svgSetupAdd,
                         ),
                       ],
                     ).paddingOnly(bottom: 12.kh, top: 32.kh),
@@ -88,18 +101,22 @@ class UserDetailsView extends GetView<UserDetailsController> {
               suffix: SvgPicture.asset(
                 ImageConstant.svgProfileEditPen,
                 colorFilter: ColorFilter.mode(
-                  Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01,
+                  Get.find<HomeController>().isPinkModeOn.value
+                      ? ColorUtil.kPrimary3PinkMode
+                      : ColorUtil.kSecondary01,
                   BlendMode.srcIn,
                 ),
               ),
             ).paddingOnly(bottom: 16.kh),
-            const RichTextHeading(text: 'Email Address').paddingOnly(bottom: 8.kh),
+            const RichTextHeading(text: 'Email Address')
+                .paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
               hintText: 'Email ID',
-              keyboardType:  TextInputType.emailAddress,
+              keyboardType: TextInputType.emailAddress,
               controller: controller.emailTextController,
             ).paddingOnly(bottom: 16.kh),
-            const RichTextHeading(text: 'Phone number').paddingOnly(bottom: 8.kh),
+            const RichTextHeading(text: 'Phone number')
+                .paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
               hintText: 'Phone number',
               controller: controller.phoneTextController,
@@ -111,29 +128,53 @@ class UserDetailsView extends GetView<UserDetailsController> {
               controller: controller.genderTextController,
               readOnly: true,
             ).paddingOnly(bottom: 16.kh),
-            const RichTextHeading(text: 'City Province').paddingOnly(bottom: 8.kh),
-            GreenPoolDropDown(
-              hintText: 'Select your City',
-              value: controller.selectedCity.value,
-              items: CityList.cityNames
-                  .map((e) => DropdownMenuItem<Object>(
-                value: e,
-                child: Text(
-                  e,
-                  style: TextStyleUtil.k14Regular(),
-                ),
-              ))
-                  .toList(),
-              onChanged: (value) {
-                controller.selectedCity.value = value.toString();
-              },
-              validator: (value) => controller.validateCity(value),
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-            ).paddingOnly(bottom: 16.kh),
-         /*   GreenPoolTextField(
-              hintText: 'city',
-              controller: controller.cityTextController,
-            ).paddingOnly(bottom: 16.kh),*/
+            const RichTextHeading(text: 'City Province')
+                .paddingOnly(bottom: 8.kh),
+            Obx(
+              () => GreenPoolTextField(
+                hintText: "Select your City",
+                controller: controller.city,
+                suffix: controller.isCityListExpanded.value
+                    ? const Icon(Icons.arrow_drop_up)
+                    : const Icon(Icons.arrow_drop_down),
+                onPressedSuffix: () {
+                  controller.isCityListExpanded.toggle();
+                  controller.addCityNames("");
+                },
+                onchanged: (value) {
+                  controller.addCityNames(value ?? "");
+                },
+              ).paddingOnly(
+                  bottom: controller.isCityListExpanded.value ? 4.kh : 16.kh),
+            ),
+            Obx(
+              () => Visibility(
+                visible: controller.isCityListExpanded.value,
+                child: SizedBox(
+                  height: 120.kh,
+                  child: ListView.builder(
+                      itemCount: controller.cityNames.length ?? 0,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          decoration: BoxDecoration(
+                              border: Border(
+                                  bottom: BorderSide(
+                                      width: 1.kh, color: ColorUtil.kNeutral7)),
+                              borderRadius: BorderRadius.circular(8.kh)),
+                          child: ListTile(
+                            title: Text(controller.cityNames[index]),
+                            selectedColor: ColorUtil.kPrimary01,
+                            onTap: () {
+                              controller.city.text =
+                                  controller.cityNames[index];
+                              controller.isCityListExpanded.value = false;
+                            },
+                          ),
+                        );
+                      }),
+                ).paddingOnly(bottom: 16.kh),
+              ),
+            ),
             Text.rich(
               TextSpan(
                 children: [
@@ -153,22 +194,31 @@ class UserDetailsView extends GetView<UserDetailsController> {
               controller: controller.dobTextController,
               readOnly: true,
             ).paddingOnly(bottom: 16.kh),
-            const RichTextHeading(text: 'ID Verification').paddingOnly(bottom: 8.kh),
+            const RichTextHeading(text: 'ID Verification')
+                .paddingOnly(bottom: 8.kh),
             GestureDetector(
               onTap: () {
                 controller.getIDImage(ImageSource.gallery);
               },
               child: Obx(
                 () => Container(
-                  padding: EdgeInsets.symmetric(vertical: 68.kh, horizontal: 76.kw),
+                  padding:
+                      EdgeInsets.symmetric(vertical: 68.kh, horizontal: 76.kw),
                   decoration: BoxDecoration(
                     color: ColorUtil.kGreyColor,
                     borderRadius: BorderRadius.circular(8.kh),
                   ),
                   child: controller.isIDPicUpdated?.value == true
-                      ? Image.file(controller.selectedIDImagePath?.value ?? File(''))
+                      ? Image.file(
+                          controller.selectedIDImagePath?.value ?? File(''))
                       : CommonImageView(
-                          url: Get.find<ProfileController>().userInfo.value.data?.idPic?.url ?? '',
+                          url: Get.find<ProfileController>()
+                                  .userInfo
+                                  .value
+                                  .data
+                                  ?.idPic
+                                  ?.url ??
+                              '',
                         ),
                 ),
               ),

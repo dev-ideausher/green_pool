@@ -188,17 +188,16 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                             height: 64.kh,
                             width: 64.kw,
                             child: CommonImageView(
-                                    url: (controller
-                                            .myRidesModelData
-                                            .value
-                                            .driverDetails
-                                            ?.vehicleDetails
-                                            ?.vehiclePic
-                                            ?.url ??
-                                        ""))
-                                .paddingOnly(right: 8.kw),
+                                url: (controller
+                                        .myRidesModelData
+                                        .value
+                                        .driverDetails
+                                        ?.vehicleDetails
+                                        ?.vehiclePic
+                                        ?.url ??
+                                    "")),
                           ),
-                        ),
+                        ).paddingOnly(right: 8.kw),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [

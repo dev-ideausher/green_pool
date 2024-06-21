@@ -6,6 +6,7 @@ import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/modules/profile/controllers/profile_controller.dart';
 import 'package:green_pool/app/modules/profile/views/profile_container.dart';
+import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
@@ -46,7 +47,7 @@ class ProfileSettingsView extends GetView<ProfileSettingsController> {
               ? ProfileContainer(
                   onTap: () => Get.toNamed(Routes.VEHICLE_DETAILS),
                   image: ImageConstant.svgProfileCar,
-                  text: 'Vehicle Details')
+                  text: Strings.vehicleDetails)
               : const SizedBox(),
           // ProfileContainer(
           //     onTap: () => Get.toNamed(Routes.CHANGE_PASSWORD),

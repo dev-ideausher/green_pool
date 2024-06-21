@@ -35,7 +35,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
     controller.myRidesAPI();
     return Scaffold(
       body: SafeArea(
-        child: Get.find<GetStorageService>().getLoggedIn
+        child: Get.find<GetStorageService>().isLoggedIn
             ? Obx(
                 () => controller.isLoad.value
                     ? const GpProgress()

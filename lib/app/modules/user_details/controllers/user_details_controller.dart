@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/get_rx.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:http_parser/http_parser.dart';
@@ -15,23 +14,34 @@ import '../../../services/gp_util.dart';
 import '../../../services/push_notification_service.dart';
 import '../../../services/snackbar.dart';
 
-// import '../../profile/controllers/profile_controller.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:path/path.dart' as path;
+
+import '../../rider_profile_setup/controllers/city_list.dart';
 
 class UserDetailsController extends GetxController {
   RxString genderValue = "".obs;
   var userInformation = Get.find<HomeController>().userInfo.value.data;
-  TextEditingController nameTextController = TextEditingController(text: Get.find<HomeController>().userInfo.value.data?.fullName);
-  TextEditingController emailTextController = TextEditingController(text: Get.find<HomeController>().userInfo.value.data?.email);
-  TextEditingController phoneTextController = TextEditingController(text: Get.find<HomeController>().userInfo.value.data?.phone);
-  RxString selectedCity =  (Get.find<HomeController>().userInfo.value.data?.city??'Brampton').obs;
-  TextEditingController genderTextController = TextEditingController(text: Get.find<HomeController>().userInfo.value.data?.gender);
-  TextEditingController dobTextController = TextEditingController(text: Get.find<HomeController>().userInfo.value.data?.dob);
+  TextEditingController nameTextController = TextEditingController(
+      text: Get.find<HomeController>().userInfo.value.data?.fullName);
+  TextEditingController emailTextController = TextEditingController(
+      text: Get.find<HomeController>().userInfo.value.data?.email);
+  TextEditingController phoneTextController = TextEditingController(
+      text: Get.find<HomeController>().userInfo.value.data?.phone);
+  TextEditingController city = TextEditingController(
+      text: Get.find<HomeController>().userInfo.value.data?.city);
+  // RxString selectedCity =
+  //     (Get.find<HomeController>().userInfo.value.data?.city ?? 'Brampton').obs;
+  TextEditingController genderTextController = TextEditingController(
+      text: Get.find<HomeController>().userInfo.value.data?.gender);
+  TextEditingController dobTextController = TextEditingController(
+      text: Get.find<HomeController>().userInfo.value.data?.dob);
   Rx<File?>? selectedProfileImagePath = Rx<File?>(null);
   Rx<File?>? selectedIDImagePath = Rx<File?>(null);
   RxBool isProfilePicUpdated = false.obs;
   RxBool isIDPicUpdated = false.obs;
+  RxBool isCityListExpanded = false.obs;
+  RxList<String> cityNames = <String>[].obs;
 
   getProfileImage(ImageSource imageSource) async {
     XFile? pickedFile = await GpUtil.compressImage(imageSource);
@@ -88,12 +98,20 @@ class UserDetailsController extends GetxController {
 
     if (isProfilePicUpdated.value == true && isIDPicUpdated.value == true) {
       userData = dio.FormData.fromMap({
-        'fullName': nameTextController.value.text.isEmpty ? userInformation?.fullName : nameTextController.value.text,
-        'email': emailTextController.value.text.isEmpty ? userInformation?.email : emailTextController.value.text,
+        'fullName': nameTextController.value.text.isEmpty
+            ? userInformation?.fullName
+            : nameTextController.value.text,
+        'email': emailTextController.value.text.isEmpty
+            ? userInformation?.email
+            : emailTextController.value.text,
         'phone': userInformation?.phone,
-        'gender': genderValue.value == "" ? userInformation?.gender : genderValue.value,
-        'city': selectedCity.value,
-        'dob': dobTextController.value.text.isEmpty ? userInformation?.dob : dobTextController.value.text,
+        'gender': genderValue.value == ""
+            ? userInformation?.gender
+            : genderValue.value,
+        'city': city.value.text,
+        'dob': dobTextController.value.text.isEmpty
+            ? userInformation?.dob
+            : dobTextController.value.text,
         if (pickedIDFile != null)
           'idPic': await dio.MultipartFile.fromFile(
             pickedIDFile.path,
@@ -109,12 +127,20 @@ class UserDetailsController extends GetxController {
       });
     } else if (isIDPicUpdated.value == true) {
       userData = dio.FormData.fromMap({
-        'fullName': nameTextController.value.text.isEmpty ? userInformation?.fullName : nameTextController.value.text,
-        'email': emailTextController.value.text.isEmpty ? userInformation?.email : emailTextController.value.text,
+        'fullName': nameTextController.value.text.isEmpty
+            ? userInformation?.fullName
+            : nameTextController.value.text,
+        'email': emailTextController.value.text.isEmpty
+            ? userInformation?.email
+            : emailTextController.value.text,
         'phone': userInformation?.phone,
-        'gender': genderValue.value == "" ? userInformation?.gender : genderValue.value,
-        'city': selectedCity.value,
-        'dob': dobTextController.value.text.isEmpty ? userInformation?.dob : dobTextController.value.text,
+        'gender': genderValue.value == ""
+            ? userInformation?.gender
+            : genderValue.value,
+        'city': city.value.text,
+        'dob': dobTextController.value.text.isEmpty
+            ? userInformation?.dob
+            : dobTextController.value.text,
         if (pickedIDFile != null)
           'idPic': await dio.MultipartFile.fromFile(
             pickedIDFile.path,
@@ -124,12 +150,20 @@ class UserDetailsController extends GetxController {
       });
     } else if (isProfilePicUpdated.value == true) {
       userData = dio.FormData.fromMap({
-        'fullName': nameTextController.value.text.isEmpty ? userInformation?.fullName : nameTextController.value.text,
-        'email': emailTextController.value.text.isEmpty ? userInformation?.email : emailTextController.value.text,
+        'fullName': nameTextController.value.text.isEmpty
+            ? userInformation?.fullName
+            : nameTextController.value.text,
+        'email': emailTextController.value.text.isEmpty
+            ? userInformation?.email
+            : emailTextController.value.text,
         'phone': userInformation?.phone,
-        'gender': genderValue.value == "" ? userInformation?.gender : genderValue.value,
-        'city': selectedCity.value,
-        'dob': dobTextController.value.text.isEmpty ? userInformation?.dob : dobTextController.value.text,
+        'gender': genderValue.value == ""
+            ? userInformation?.gender
+            : genderValue.value,
+        'city': city.value.text,
+        'dob': dobTextController.value.text.isEmpty
+            ? userInformation?.dob
+            : dobTextController.value.text,
         if (pickedImageFile != null)
           'profilePic': await dio.MultipartFile.fromFile(
             pickedImageFile.path,
@@ -139,12 +173,20 @@ class UserDetailsController extends GetxController {
       });
     } else {
       userData = dio.FormData.fromMap({
-        'fullName': nameTextController.value.text.isEmpty ? userInformation?.fullName : nameTextController.value.text,
-        'email': emailTextController.value.text.isEmpty ? userInformation?.email : emailTextController.value.text,
+        'fullName': nameTextController.value.text.isEmpty
+            ? userInformation?.fullName
+            : nameTextController.value.text,
+        'email': emailTextController.value.text.isEmpty
+            ? userInformation?.email
+            : emailTextController.value.text,
         'phone': userInformation?.phone,
-        'gender': genderValue.value == "" ? userInformation?.gender : genderValue.value,
-        'city': selectedCity.value,
-        'dob': dobTextController.value.text.isEmpty ? userInformation?.dob : dobTextController.value.text,
+        'gender': genderValue.value == ""
+            ? userInformation?.gender
+            : genderValue.value,
+        'city': city.value.text,
+        'dob': dobTextController.value.text.isEmpty
+            ? userInformation?.dob
+            : dobTextController.value.text,
       });
     }
 
@@ -169,7 +211,8 @@ class UserDetailsController extends GetxController {
         confirmTextColor: Colors.white,
         onConfirm: () async {
           final res = await APIManager.deleteAccount();
-          PushNotificationService.unsubFcm("${Get.find<HomeController>().userInfo.value.data?.Id}");
+          PushNotificationService.unsubFcm(
+              "${Get.find<HomeController>().userInfo.value.data?.Id}");
           Get.find<AuthService>().logOutUser();
           Get.find<HomeController>().userInfoAPI();
           Get.find<HomeController>().changeTabIndex(0);
@@ -189,5 +232,16 @@ class UserDetailsController extends GetxController {
       return 'Please select your city';
     }
     return null;
+  }
+
+  void addCityNames(String value) {
+    if (value.isEmpty || value == "") {
+      cityNames.value = CityList.cityNames;
+    } else {
+      isCityListExpanded.value = true;
+      cityNames.value = CityList.cityNames.where((city) {
+        return city.toLowerCase().contains(value.toLowerCase());
+      }).toList();
+    }
   }
 }

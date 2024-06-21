@@ -111,7 +111,7 @@ class PostRideController extends GetxController {
 
   decideRouting() {
     // Decides if the user is logged in and redirects accordingly
-    if (Get.find<GetStorageService>().getLoggedIn) {
+    if (Get.find<GetStorageService>().isLoggedIn) {
       if (Get.find<HomeController>().userInfo.value.data?.vehicleStatus == false) {
         showMySnackbar(msg: 'Please fill in vehicle details');
         Get.toNamed(Routes.PROFILE_SETUP, arguments: false);

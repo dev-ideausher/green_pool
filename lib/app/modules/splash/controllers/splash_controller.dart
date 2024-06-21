@@ -12,16 +12,17 @@ class SplashController extends GetxController {
   }
 
   decideRouting() {
-    if (Get.find<GetStorageService>().getLoggedIn) {
-      if (Get.find<GetStorageService>().profileStatus) {
-        Get.offNamed(Routes.BOTTOM_NAVIGATION);
-      } else {
-        if (Get.find<HomeController>().findingRide.value) {
-          Get.offNamed(Routes.RIDER_PROFILE_SETUP, arguments: true);
-        } else {
-          Get.offNamed(Routes.PROFILE_SETUP, arguments: true);
-        }
-      }
+    if (Get.find<GetStorageService>().isLoggedIn) {
+      Get.offNamed(Routes.BOTTOM_NAVIGATION);
+      // if (Get.find<GetStorageService>().profileStatus) {
+      //   Get.offNamed(Routes.BOTTOM_NAVIGATION);
+      // } else {
+      //   if (Get.find<HomeController>().findingRide.value) {
+      //     Get.offNamed(Routes.RIDER_PROFILE_SETUP, arguments: true);
+      //   } else {
+      //     Get.offNamed(Routes.PROFILE_SETUP, arguments: true);
+      //   }
+      // }
     } else {
       Get.offNamed(Routes.ONBOARDING);
     }

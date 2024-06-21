@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/gp_progress.dart';
 import 'package:green_pool/app/components/green_pool_divider.dart';
@@ -158,7 +156,7 @@ class PaymentView extends GetView<PaymentController> {
                                         style: TextStyleUtil.k14Regular(
                                             color: ColorUtil.kBlack03))
                                     : Text(
-                                        "\$${controller.riderSendRequestModelData.price.toString()}",
+                                        "\$${controller.rideData['price'].toString()}",
                                         style: TextStyleUtil.k14Regular(
                                             color: ColorUtil.kBlack03)))
                           ],
@@ -184,7 +182,7 @@ class PaymentView extends GetView<PaymentController> {
                                         style: TextStyleUtil.k14Bold(
                                             color: ColorUtil.kBlack02))
                                     : Text(
-                                        "\$${controller.riderSendRequestModelData.price.toString()}",
+                                        "\$${controller.rideData['price'].toString()}",
                                         style: TextStyleUtil.k14Bold(
                                             color: ColorUtil.kBlack02)))
                           ],

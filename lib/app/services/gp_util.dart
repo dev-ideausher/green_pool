@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'dart:ui' as ui;
 
 import 'dio/endpoints.dart';
@@ -18,10 +19,15 @@ class GpUtil {
     final pickedFile = await ImagePicker().pickImage(source: imageSource);
     final originalImage = File(pickedFile!.path);
     final targetPath = originalImage.path;
-    final directory = originalImage.parent; // Get the parent directory of the original image
-    final fileName = 'compressed_${originalImage.uri.pathSegments.last}'; // Create a new filename
-    final compressedPath = '${directory.path}/$fileName'; // Ensure it ends with .jpg
-    final compressedImage = await FlutterImageCompress.compressAndGetFile(targetPath, compressedPath, quality: 10);
+    final directory =
+        originalImage.parent; // Get the parent directory of the original image
+    final fileName =
+        'compressed_${originalImage.uri.pathSegments.last}'; // Create a new filename
+    final compressedPath =
+        '${directory.path}/$fileName'; // Ensure it ends with .jpg
+    final compressedImage = await FlutterImageCompress.compressAndGetFile(
+        targetPath, compressedPath,
+        quality: 10);
     if (compressedImage != null) {
       return XFile(compressedImage.path);
     } else {
@@ -36,7 +42,8 @@ class GpUtil {
     required double endLat,
     required double endLong,
   }) async {
-    GoogleMapsDirections directions = GoogleMapsDirections(apiKey: Endpoints.googleApiKey);
+    GoogleMapsDirections directions =
+        GoogleMapsDirections(apiKey: Endpoints.googleApiKey);
     DirectionsResponse response = await directions.directionsWithLocation(
       Location(lat: startLat, lng: startLong),
       Location(lat: endLat, lng: endLong),
@@ -136,14 +143,20 @@ class GpUtil {
   }
 
   static bool isPositionInsideBounds(LatLng position) {
-    return position.latitude >= 41.675537 && position.latitude <= 83.110626 && position.longitude >= -141.001873 && position.longitude <= -52.619403;
+    return position.latitude >= 41.675537 &&
+        position.latitude <= 83.110626 &&
+        position.longitude >= -141.001873 &&
+        position.longitude <= -52.619403;
   }
 
   static Future<Uint8List> getMarker(String path, int width) async {
     ByteData data = await rootBundle.load(path);
-    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(), targetWidth: width);
+    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
+        targetWidth: width);
     ui.FrameInfo fi = await codec.getNextFrame();
-    return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!.buffer.asUint8List();
+    return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!
+        .buffer
+        .asUint8List();
   }
 
   static String getAgoTime(String? dateTimeString) {
@@ -155,7 +168,9 @@ class GpUtil {
 
       Duration difference = now.difference(dateTime);
 
-      if (now.year == dateTime.year && now.month == dateTime.month && now.day == dateTime.day) {
+      if (now.year == dateTime.year &&
+          now.month == dateTime.month &&
+          now.day == dateTime.day) {
         // If the date is today
         if (difference.inHours > 0) {
           return "${difference.inHours} hour${difference.inHours > 1 ? 's' : ''} ago";
@@ -170,21 +185,27 @@ class GpUtil {
       }
     }
   }
+
   static String formatTime(DateTime timestamp) {
     final localTime = timestamp.toLocal(); // Convert to local time zone
 
     return DateFormat.jm().format(localTime);
   }
+
   static String formatDate(DateTime timestamp) {
     final localTimestamp = timestamp.toLocal(); // Convert to local time zone
 
     return DateFormat('dd MMM yyyy').format(localTimestamp);
   }
-static  bool isToday(DateTime timestamp) {
+
+  static bool isToday(DateTime timestamp) {
     final dateToCheck = timestamp.toLocal();
     DateTime now = DateTime.now();
-    return dateToCheck.year == now.year && dateToCheck.month == now.month && dateToCheck.day == now.day;
+    return dateToCheck.year == now.year &&
+        dateToCheck.month == now.month &&
+        dateToCheck.day == now.day;
   }
+
   static String getDateFormat(var mnow) {
     var outputDate = "";
     if (mnow != null) {
@@ -221,12 +242,14 @@ static  bool isToday(DateTime timestamp) {
 
   static Future<BitmapDescriptor> getMarkerIconFromUrl(String url) async {
     final Dio dio = Dio();
-    final Response response = await dio.get(url, options: Options(responseType: ResponseType.bytes));
+    final Response response =
+        await dio.get(url, options: Options(responseType: ResponseType.bytes));
     if (response.statusCode != 200) {
       throw Exception('Failed to load image');
     }
     final Uint8List bytes = Uint8List.fromList(response.data);
-    final ui.Codec codec = await ui.instantiateImageCodec(bytes, targetWidth: 100, targetHeight: 100);
+    final ui.Codec codec = await ui.instantiateImageCodec(bytes,
+        targetWidth: 100, targetHeight: 100);
     final ui.FrameInfo frameInfo = await codec.getNextFrame();
     final ui.Image image = frameInfo.image;
 
@@ -241,10 +264,23 @@ static  bool isToday(DateTime timestamp) {
     canvas.clipPath(Path()..addOval(Rect.fromLTWH(0, 0, size, size)));
     canvas.drawImage(image, Offset(0, 0), paint);
 
-    final ui.Image circularImage = await pictureRecorder.endRecording().toImage(size.toInt(), size.toInt());
-    final ByteData? byteData = await circularImage.toByteData(format: ui.ImageByteFormat.png);
+    final ui.Image circularImage = await pictureRecorder
+        .endRecording()
+        .toImage(size.toInt(), size.toInt());
+    final ByteData? byteData =
+        await circularImage.toByteData(format: ui.ImageByteFormat.png);
     final Uint8List resizedBytes = byteData!.buffer.asUint8List();
 
     return BitmapDescriptor.fromBytes(resizedBytes);
+  }
+
+  static Future<void> openGoogleMap(double latitude, double longitude) async {
+    String googleUrl =
+        'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
+    if (await canLaunchUrl(Uri.parse(googleUrl))) {
+      await launchUrl(Uri.parse(googleUrl));
+    } else {
+      throw 'Could not open the map.';
+    }
   }
 }

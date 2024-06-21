@@ -36,11 +36,11 @@ class ChatPageView extends GetView<ChatPageController> {
         title: Obx(
           () => Row(children: [
             ClipRRect(
-                borderRadius: BorderRadius.circular(16.kh),
+                borderRadius: BorderRadius.circular(8.kh),
                 child: CommonImageView(
                   url: controller.chatArg.value.image,
-                  height: 40.kh,
-                  width: 40.kh,
+                  height: 32.kh,
+                  width: 32.kh,
                 )),
             12.kwidthBox,
             Text(
@@ -91,11 +91,13 @@ class ChatPageView extends GetView<ChatPageController> {
                         final message = controller.messages[index];
                         final isSender = message.senderId ==
                             Get.find<GetStorageService>().getUserAppId;
+                        final isPinkModeOn =
+                            Get.find<HomeController>().isPinkModeOn.value;
 
                         return Container(
                           padding: EdgeInsets.only(
-                              left: 14.kw,
-                              right: 14.kw,
+                              left: 2.kw,
+                              right: 2.kw,
                               top: 10.kh,
                               bottom: 10.kh),
                           child: Column(
@@ -124,49 +126,93 @@ class ChatPageView extends GetView<ChatPageController> {
                                           : CrossAxisAlignment.start,
                                       children: [
                                         Container(
+                                          width: 60.w,
                                           decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(15.0.kh)),
+                                            borderRadius: BorderRadius.only(
+                                              bottomLeft:
+                                                  Radius.circular(15.kh),
+                                              bottomRight:
+                                                  Radius.circular(15.kh),
+                                              topLeft: Radius.circular(
+                                                  isSender ? 15.kh : 0.kh),
+                                              topRight: Radius.circular(
+                                                  isSender ? 0.kh : 15.kh),
+                                            ),
                                             color: isSender
-                                                ? Get.find<HomeController>()
-                                                        .isPinkModeOn
-                                                        .value
+                                                ? isPinkModeOn
                                                     ? ColorUtil
-                                                        .kSecondaryPinkMode
-                                                        .withOpacity(0.5)
-                                                    : ColorUtil.kPrimary07
-                                                : Colors.white,
+                                                        .kPrimary5PinkMode
+                                                    : ColorUtil.kPrimary01
+                                                : isPinkModeOn
+                                                    ? ColorUtil
+                                                        .kPrimary4PinkMode
+                                                    : ColorUtil.kSecondary01,
                                           ),
-                                          padding: EdgeInsets.all(16.kh),
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 8.kh,
+                                              horizontal: 12.kw),
                                           child: Column(
                                             crossAxisAlignment: isSender
                                                 ? CrossAxisAlignment.end
                                                 : CrossAxisAlignment.start,
                                             children: [
-                                              Text(
-                                                message.message ?? "",
-                                                style:
-                                                    TextStyleUtil.k14Regular(),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    message.message ?? "",
+                                                    style: TextStyleUtil
+                                                        .k14Regular(
+                                                      color: isSender
+                                                          ? isPinkModeOn
+                                                              ? ColorUtil
+                                                                  .kBlack01
+                                                              : ColorUtil
+                                                                  .kSecondary01
+                                                          : isPinkModeOn
+                                                              ? ColorUtil
+                                                                  .kBlack01
+                                                              : ColorUtil
+                                                                  .kPrimary01,
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
                                               4.kheightBox, // Add some space between message and time
-                                              Text(
-                                                GpUtil.formatTime(message
-                                                    .timestamp), // Replace with actual time
-                                                style:
-                                                    TextStyleUtil.k10Regular(),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.end,
+                                                children: [
+                                                  Text(
+                                                    GpUtil.formatTime(message
+                                                        .timestamp), // Replace with actual time
+                                                    style: TextStyleUtil
+                                                        .k10Regular(
+                                                      color: isSender
+                                                          ? isPinkModeOn
+                                                              ? ColorUtil
+                                                                  .kBlack03
+                                                              : ColorUtil
+                                                                  .kSecondary01
+                                                          : isPinkModeOn
+                                                              ? ColorUtil
+                                                                  .kBlack03
+                                                              : ColorUtil
+                                                                  .kWhiteColor,
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
                                             ],
                                           ),
-                                        ).paddingOnly(
-                                            left: isSender ? 32.kw : 0,
-                                            right: isSender ? 0 : 32.kw),
+                                        ),
                                       ],
                                     ),
                                   ),
                                   if (isSender)
                                     Padding(
-                                      padding:
-                                          const EdgeInsets.only(left: 18.0),
+                                      padding: const EdgeInsets.only(left: 8.0),
                                       child: ClipRRect(
                                         borderRadius:
                                             BorderRadius.circular(100.kh),
@@ -237,6 +283,7 @@ class ChatPageView extends GetView<ChatPageController> {
                     controller: controller.eMsg,
                     hintText: Strings.writeMsg,
                     keyboardType: TextInputType.text,
+                    textCapitalization: TextCapitalization.words,
                     suffix: InkWell(
                         onTap: () => controller.sendMsg(),
                         child: SvgPicture.asset(ImageConstant.svgIconSend)),

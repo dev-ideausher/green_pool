@@ -5,12 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/services/dio/api_service.dart';
+import 'package:green_pool/app/services/snackbar.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/storage.dart';
 
 class ProfileController extends GetxController {
   RxBool pinkMode = Get.find<HomeController>().isPinkModeOn;
   var userInfo = Get.find<HomeController>().userInfo;
+  TextEditingController ratingTextController = TextEditingController();
+  RxDouble rating = 4.5.obs;
 
   // @override
   // void onInit() {
@@ -47,5 +50,22 @@ class ProfileController extends GetxController {
     Get.toNamed(Routes.LOGIN,
             arguments: {'isDriver': false, 'fromNavBar': true})
         ?.then((value) => userInfo.refresh());
+  }
+
+  Future<void> submitFeedback() async {
+    try {
+      final response = await APIManager.postRateApplication(body: {
+        "rating": rating.value,
+        "review": ratingTextController.value.text
+      });
+      if (response.statusMessage == "OK") {
+        Get.back();
+        showMySnackbar(
+            msg:
+                "Thank you for rating our app! Your feedback helps us improve and serve you better.");
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 }

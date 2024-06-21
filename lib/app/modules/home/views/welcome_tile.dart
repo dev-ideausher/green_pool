@@ -32,7 +32,7 @@ class WelcomeTile extends StatelessWidget {
                         style: TextStyleUtil.k24Heading700(),
                       ),
                       TextSpan(
-                        text: Get.find<GetStorageService>().getLoggedIn
+                        text: Get.find<GetStorageService>().isLoggedIn
                             ? " ${controller.userInfo.value.data?.fullName ?? "..."}"
                             : "",
                         style: TextStyleUtil.k24Heading700(
@@ -47,7 +47,7 @@ class WelcomeTile extends StatelessWidget {
             ],
           ),
           Visibility(
-            visible: Get.find<GetStorageService>().getLoggedIn,
+            visible: Get.find<GetStorageService>().isLoggedIn,
             child: GestureDetector(
                 onTap: () {
                   Get.toNamed(Routes.NOTIFICATIONS);

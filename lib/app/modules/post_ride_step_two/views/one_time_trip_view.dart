@@ -145,6 +145,13 @@ class OneTimeTripView extends GetView<PostRideStepTwoController> {
                       onTap: () {
                         controller.setReturnTime(context);
                       },
+                      // validator: (value) {
+                      //   controller.validateReturnTime(value ?? "");
+                      // },
+                      // onchanged: (value) {
+                      //   controller.validateReturnTime(value ?? "");
+                      // },
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
                       readOnly: true,
                       controller: controller.selectedTimeReturnTrip,
                     ).paddingOnly(top: 8.kh),

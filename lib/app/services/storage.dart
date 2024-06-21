@@ -19,9 +19,9 @@ class GetStorageService extends GetxService {
 
   // we are utilisig encrypt class we decrypt once we read and encrypt before write.
 
-  bool get getLoggedIn =>
+  bool get isLoggedIn =>
       _runData.read('isLogin') ?? false; // 2:follow system 1:dark 0:light
-  set setLoggedIn(bool val) => _runData.write('isLogin', val);
+  set isLoggedIn(bool val) => _runData.write('isLogin', val);
 
   int get themeMode =>
       _runData.read('themeMode') ?? 2; // 2:follow system 1:dark 0:light
@@ -30,6 +30,8 @@ class GetStorageService extends GetxService {
   void intialiseIfNull() {
     _runData.writeIfNull('themeMode', 0);
   }
+
+  RxList<List<dynamic>> locations = <List<dynamic>>[].obs;
 
   bool get isDriver => _runData.read('isDriver') ?? false;
   set setDriver(bool val) => _runData.write('isDriver', val);

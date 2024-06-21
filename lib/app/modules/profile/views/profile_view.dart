@@ -16,11 +16,13 @@ import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/push_notification_service.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../services/storage.dart';
 import '../../../services/text_style_util.dart';
 import '../controllers/profile_controller.dart';
 import 'profile_container.dart';
+import 'rating_bottomsheet.dart';
 
 class ProfileView extends GetView<ProfileController> {
   const ProfileView({super.key});
@@ -31,13 +33,29 @@ class ProfileView extends GetView<ProfileController> {
         title: Text('Profile'),
         leading: SizedBox(),
       ),
-      body: Get.find<GetStorageService>().getLoggedIn
+      body: Get.find<GetStorageService>().isLoggedIn
           ? Obx(
               () => controller.userInfo.value.data == null
                   ? Center(
-                      child: Text(
-                        "Oops! Something went wrong",
-                        style: TextStyleUtil.k18Heading600(),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Oops! Something went wrong",
+                            style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
+                          ).paddingOnly(bottom: 12.kh),
+                          TextButton(
+                            onPressed: () {
+                              Get.toNamed(Routes.RIDER_PROFILE_SETUP,
+                                  arguments: true);
+                            },
+                            child: Text(
+                              "Complete user profile setup",
+                              style: TextStyleUtil.k18Heading600(
+                                  color: ColorUtil.kSecondary01),
+                            ),
+                          )
+                        ],
                       ),
                     )
                   : controller.userInfo.value.data?.profileStatus == false
@@ -80,8 +98,8 @@ class ProfileView extends GetView<ProfileController> {
                                           child: CommonImageView(
                                               height: 44.kh,
                                               width: 44.kw,
-                                              url:
-                                                  "${controller.userInfo.value.data?.profilePic?.url}"))),
+                                              url: Get.find<GetStorageService>()
+                                                  .profilePicUrl))),
                                 ).paddingOnly(bottom: 8.kh, top: 16.kh),
                               ),
                               Text(
@@ -210,73 +228,7 @@ class ProfileView extends GetView<ProfileController> {
                                   text: "Refer a friend"),
                               ProfileContainer(
                                       onTap: () => Get.bottomSheet(
-                                            Container(
-                                              padding: EdgeInsets.all(24.kh),
-                                              width: 100.w,
-                                              decoration: BoxDecoration(
-                                                  color: ColorUtil.kWhiteColor,
-                                                  borderRadius:
-                                                      BorderRadius.only(
-                                                          topLeft:
-                                                              Radius.circular(
-                                                                  40.kh),
-                                                          topRight:
-                                                              Radius.circular(
-                                                                  40.kh))),
-                                              child: Column(
-                                                children: [
-                                                  Text(
-                                                    'Enjoying Green Pool App ?',
-                                                    style: TextStyleUtil
-                                                        .k18Semibold(),
-                                                  ).paddingOnly(bottom: 8.kh),
-                                                  Image.asset(
-                                                    ImageConstant.gifRateUs,
-                                                    height: 200.kh,
-                                                    width: 200.kw,
-                                                  ),
-                                                  Text(
-                                                    'Support us by giving rate and your\nprecious review !\nIt will take few seconds only.',
-                                                    style: TextStyleUtil
-                                                        .k14Semibold(
-                                                            color: ColorUtil
-                                                                .kBlack04),
-                                                    textAlign: TextAlign.center,
-                                                  ).paddingOnly(bottom: 24.kh),
-                                                  RatingBar(
-                                                    allowHalfRating: false,
-                                                    glow: false,
-                                                    ratingWidget: RatingWidget(
-                                                      full: const Icon(
-                                                        Icons.star,
-                                                        color: Colors.amber,
-                                                      ),
-                                                      half: const Icon(
-                                                        Icons.star,
-                                                        color: Colors.amber,
-                                                      ),
-                                                      empty: const Icon(
-                                                        Icons.star,
-                                                        color: ColorUtil
-                                                            .kGreyColor,
-                                                      ),
-                                                    ),
-                                                    onRatingUpdate:
-                                                        (double value) {},
-                                                  ),
-                                                  const Expanded(
-                                                      child: SizedBox()),
-                                                  TextButton(
-                                                    onPressed: () => Get.back(),
-                                                    child: Text(
-                                                      'Maybe Later',
-                                                      style: TextStyleUtil
-                                                          .k16Bold(),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
+                                            RatingBottomSheet(),
                                           ),
                                       image: ImageConstant.svgProfileStar,
                                       text: "Rate us")
@@ -300,6 +252,10 @@ class ProfileView extends GetView<ProfileController> {
                                   image: ImageConstant.svgProfileTerms,
                                   text: "Terms & Conditions"),
                               ProfileContainer(
+                                  onTap: () async {
+                                    await launchUrl(Uri.parse(
+                                        "https://greenpool-admin-2-c3d6.vercel.app/login"));
+                                  },
                                   image: ImageConstant.svgProfileFollow,
                                   text: "Follow us on Social Media"),
                               ProfileContainer(

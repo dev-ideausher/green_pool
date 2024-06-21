@@ -14,6 +14,7 @@ import 'package:uuid/uuid.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../data/google_location_model.dart';
+import '../../../services/storage.dart';
 
 enum LocationValues {
   origin,
@@ -34,6 +35,7 @@ class OriginController extends GetxController {
   RxBool isOrigin = false.obs;
   LocationValues locationValues = LocationValues.origin;
   var postRideModel = PostRideModel().obs;
+  final locationList = Get.find<GetStorageService>().locations;
 
   @override
   void onInit() {
@@ -75,6 +77,20 @@ class OriginController extends GetxController {
     }
   }
 
+  bool _isSameLocation(List<dynamic> location1, List<dynamic> location2) {
+    return location1[0] == location2[0] &&
+        location1[1] == location2[1] &&
+        location1[2] == location2[2];
+  }
+
+  void _addLocation(List<dynamic> newLocation) {
+    // If the list exceeds the max length, remove the oldest element
+    if (locationList.length >= 5) {
+      locationList.removeAt(0);
+    }
+    locationList.add(newLocation);
+  }
+
   Future<List<dynamic>> getLatLong(String placeId) async {
     String placeApiKey = Endpoints.googleApiKey;
     String baseurl = 'https://maps.googleapis.com/maps/api/place';
@@ -87,9 +103,15 @@ class OriginController extends GetxController {
 
       double lat = geometry?.geometry?.location?.lat ?? 0.0;
       double long = geometry?.geometry?.location?.lng ?? 0.0;
-
       String nameOfLocation = geometry?.formattedAddress ?? "";
-      return [lat, long, nameOfLocation];
+
+      List<dynamic> newLocation = [lat, long, nameOfLocation];
+      // Check if the location already exists in the list
+      if (!locationList
+          .any((location) => _isSameLocation(location, newLocation))) {
+        _addLocation(newLocation);
+      }
+      return newLocation;
     } catch (e) {
       log("getLatLong error: $e");
       throw Exception('Failed to load data');

@@ -103,7 +103,7 @@ class Strings {
 
   static String destination = 'Dropoff';
 
-  static String departureDateAndTime = 'Departure Date & Time ';
+  static String departureDate = 'Departure Date';
 
   static String optional = '(optional)';
 
@@ -212,7 +212,7 @@ class Strings {
   static String requestSent = 'Request Sent';
 
   static String paymentDoneRequestSentToDriver =
-      "Payment Successful!\nRide request has been sent to the driver.\nYour booking is awaiting the driver'sapproval.";
+      "Payment Successful!\nRide request has been sent to the driver.\nYour booking is awaiting the driver's approval.";
 
   static String requestSentToRider =
       "Ride request has been sent to the rider.\nYour booking is awaiting the riders's approval.";
@@ -294,8 +294,8 @@ class Strings {
 
   static var deleteRide = "Delete Ride";
 
-  static String areYouSureYouWantToDeleteThisRide =
-      "Are you sure you want to delete this ride?";
+  static String areYouSureYouWantToCancelThisRide =
+      "Are you sure you want to cancel this ride?";
 
   static String chatWithOurExperts = "Chat with our experts";
 
@@ -340,7 +340,15 @@ class Strings {
 
   static String rider = "Rider";
 
+  static String previouslySearched = "Previously searched";
+
+  static String userDetails = 'User Details';
+
   static var booked = "Booked";
 
   static var published = "Published";
+
+  static String setLocation = "Set location";
+
+  static String selectOriginOrDestination = "You want to select this location as your Pickup point or Drop off point?";
 }

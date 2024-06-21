@@ -216,6 +216,30 @@ class RiderTile extends StatelessWidget {
                       ],
                     ).paddingOnly(bottom: 16.kh)
                   : const SizedBox(),
+
+              Visibility(
+                visible: myRidesModelData?.isStarted ?? false,
+                child: Container(
+                  width: 100.w,
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 18.kw, vertical: 8.kh),
+                  decoration: BoxDecoration(
+                      color: ColorUtil.kPrimary07,
+                      borderRadius: BorderRadius.circular(4.kh)),
+                  child: Row(
+                    children: [
+                      const Icon(
+                        Icons.emoji_transportation,
+                        color: ColorUtil.kBlack01,
+                      ).paddingOnly(right: 8.kw),
+                      Text(
+                        "Ongoing Ride",
+                        style: TextStyleUtil.k14Regular(),
+                      ),
+                    ],
+                  ),
+                ).paddingOnly(bottom: 16.kh),
+              ),
               //middle divider
               myRidesModelData?.date == null
                   ? const SizedBox()

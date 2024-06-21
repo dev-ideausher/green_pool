@@ -279,7 +279,7 @@ class RiderMyRidesConfirmDetailsView
 
             //Vehicle details
             Text(
-              'Vehicle Details',
+              Strings.vehicleDetails,
               style: TextStyleUtil.k14Bold(),
             ).paddingOnly(bottom: 16.kh),
             Row(
@@ -287,12 +287,11 @@ class RiderMyRidesConfirmDetailsView
                 ClipRRect(
                   borderRadius: BorderRadius.circular(8.kh),
                   child: CommonImageView(
-                          height: 64.kh,
-                          width: 64.kw,
-                          url:
-                              "${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.driverDetails?[0]?.profilePic?.url}")
-                      .paddingOnly(right: 8.kh),
-                ),
+                      height: 64.kh,
+                      width: 64.kw,
+                      url:
+                          "${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.driverDetails?[0]?.profilePic?.url}"),
+                ).paddingOnly(right: 8.kh),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

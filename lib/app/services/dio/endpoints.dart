@@ -1,13 +1,17 @@
 import 'dart:io';
 
 class Endpoints {
-  static String success_url = "http://api.greenpool.ca/v1/payment/paymentSuccess";
-  static String cancel_url = "http://api.greenpool.ca/v1/payment/paymentCancelled";
+  static String success_url =
+      "http://api.greenpool.ca/v1/payment/paymentSuccess";
+  static String cancel_url =
+      "http://api.greenpool.ca/v1/payment/paymentCancelled";
 
   Endpoints._();
 
   //TODO: update in android manifest too if any changes
-  static String googleApiKey = Platform.isAndroid ? 'AIzaSyAs_QL4LPuvaU23w-t0wOUJyUziRmSIlkE' : 'AIzaSyBq5jpn2f8NAb4pb562ejP2YCg47uX1_nU';
+  static String googleApiKey = Platform.isAndroid
+      ? 'AIzaSyAs_QL4LPuvaU23w-t0wOUJyUziRmSIlkE'
+      : 'AIzaSyBq5jpn2f8NAb4pb562ejP2YCg47uX1_nU';
 
   // base url
   static const String baseUrl = "https://api.greenpool.ca/v1/";
@@ -27,12 +31,14 @@ class Endpoints {
   static const String fileDispute = "fileDispute";
   static const String driverPostRide = "driver/ride";
   static const String riderFindRide = "rider/ride";
-  static const String riderRideRequest = "rider/confirmRide";
-  static const String sendRequestToRider = "driver/sendRequestToRider"; // to send request to riders from Send Requests view
+  static const String riderCreateAlert = "rider/createAlert";
+  static const String sendRequestToRider =
+      "driver/sendRequestToRider"; // to send request to riders from Send Requests view
   static const String sendRequestToDriver = "rider/sendReuestToDriver";
   static const String rateAnyUser = "user/ratingByUser";
   static const String studentDiscount = "email/send";
   static const String addAmount = "payment/addAmount";
+  static const String appRating = "app/ratingByUser";
 
   //get url
   static const String userLogin = "auth/login";
@@ -47,13 +53,19 @@ class Endpoints {
   static const String allRecurringRides = "driver/recurringRides";
   static const String recurringRideDetails = "driver/recurringRides/";
   static const String rideHistory = "rider/rideHistory";
-  static const String matchingRides = "rider/driversRequests"; // to get matching rides according to the Find ride data
-  static const String riderAllSendRequests = 'rider/driversRequests?rideId=';
-  static const String allDriverSendRequests = "driver/sendRequestOfRiders/"; // to get riders in send request column
-  static const String allDriverConfirmRequests = "driver/ridersRequest/"; // to get all the requests that riders have sent to driver
-  static const String acceptRidersRequest = "driver/confirmRide"; // to accept the riders request from Confirm Request View
-  static const String rejectRidersRequest = "driver/cancelRide"; // to reject the riders request from Confirm Request View
-  static const String viewDriversRequest = "rider/requestSendByDriver/"; // to view the drivers request from Confirm Request View
+  static const String matchingRides =
+      "rider/matchingDrivers"; // to get matching rides according to the Find ride data
+  static const String riderAllSendRequests = 'rider/matchingDrivers?rideId=';
+  static const String allDriverSendRequests =
+      "driver/matchingRiders/"; // to get riders in send request column
+  static const String allDriverConfirmRequests =
+      "driver/riderSendRequests/"; // to get all the requests that riders have sent to driver
+  static const String acceptRidersRequest =
+      "driver/acceptRiderRequest"; // to accept the riders request from Confirm Request View
+  static const String rejectRidersRequest =
+      "driver/rejectRiderRequest"; // to reject the riders request from Confirm Request View
+  static const String viewDriversRequest =
+      "rider/driverSendRequests/"; // to view the drivers request from Confirm Request View
   static const String companyDetails = "company/companyDetails";
   static const String rideFare = "admin/fare/";
   static const String privacyPolicy = "admin/app/privacyPolicy";
@@ -66,19 +78,21 @@ class Endpoints {
   //patch url
   static const String emergencyContactsUpdate = "user/emergencyContacts";
   static const String userDetails = "user/updateProfileDetails";
-  static const String acceptDriversRequest = "rider/acceptConfirmRide";
-  static const String rejectDriversRequest = "rider/rejectConfirmRide";
+  static const String acceptDriversRequest = "rider/acceptDriverRequest";
+  static const String rejectDriversRequest = "rider/rejectDriverRequest";
   static const String startRide = "driver/startRideByDriver";
   static const String endRide = "driver/endRideByDriver";
   static const String pickUpRider = "rider/pickUpRider";
   static const String dropOffRider = "rider/dropOffRider";
   static const String pinkMode = "user/updatePinkMode";
-  static const String notificationPreferences = "user/updateNotificationPreferences";
+  static const String notificationPreferences =
+      "user/updateNotificationPreferences";
   static const String cancelRide = "driver/cancelRideByMyRides";
   static const String riderCancelRide = "rider/cancelRideByMyRides";
   static const String googleBaseUrl = "https://maps.googleapis.com/maps/api/";
   static const String getArrivalTime = "directions/json?origin=";
-  static const String enableOrDisableRecurring = "driver/recurringRides?driverRideId=";
+  static const String enableOrDisableRecurring =
+      "driver/recurringRides?driverRideId=";
   static const String addPromoCode = "rider/ride/promoCode";
 
   //delete url

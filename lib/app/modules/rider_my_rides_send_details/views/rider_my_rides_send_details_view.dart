@@ -302,7 +302,7 @@ class RiderMyRidesSendDetailsView
 
             //Vehicle details
             Text(
-              'Vehicle Details',
+              Strings.vehicleDetails,
               style: TextStyleUtil.k14Bold(),
             ).paddingOnly(bottom: 16.kh),
             Row(
@@ -310,12 +310,11 @@ class RiderMyRidesSendDetailsView
                 ClipRRect(
                   borderRadius: BorderRadius.circular(8.kh),
                   child: CommonImageView(
-                          height: 64.kh,
-                          width: 64.kw,
-                          url:
-                              "${controller.riderSendRequestModel.value.data?[controller.index]?.driverDetails?[0]?.vehicleDetails?[0]?.vehiclePic?.url}")
-                      .paddingOnly(right: 8.kh),
-                ),
+                      height: 64.kh,
+                      width: 64.kw,
+                      url:
+                          "${controller.riderSendRequestModel.value.data?[controller.index]?.driverDetails?[0]?.vehicleDetails?[0]?.vehiclePic?.url}"),
+                ).paddingOnly(right: 8.kh),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

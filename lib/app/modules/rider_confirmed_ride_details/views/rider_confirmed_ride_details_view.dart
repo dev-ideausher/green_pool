@@ -66,11 +66,11 @@ class RiderConfirmedRideDetailsView
                       contentPadding: EdgeInsets.zero,
                       leading: ClipRRect(
                         borderRadius: BorderRadius.circular(8.kh),
-                        child: Image.network(
-                          "${controller.myRidesModel.value.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.driverDetails?[0]?.profilePic?.url}",
+                        child: CommonImageView(
+                          url:
+                              "${controller.myRidesModel.value.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.driverDetails?[0]?.profilePic?.url}",
                           height: 50.kh,
-                          width: 50.kh,
-                          fit: BoxFit.cover,
+                          width: 50.kw,
                         ),
                       ),
                       title: Text(
@@ -282,7 +282,7 @@ class RiderConfirmedRideDetailsView
             const GreenPoolDivider().paddingOnly(bottom: 16.kh),
 
             Text(
-              'Vehicle Details',
+              Strings.vehicleDetails,
               style: TextStyleUtil.k14Bold(),
             ).paddingOnly(bottom: 16.kh),
             Row(
@@ -290,12 +290,11 @@ class RiderConfirmedRideDetailsView
                 ClipRRect(
                   borderRadius: BorderRadius.circular(8.kh),
                   child: CommonImageView(
-                          height: 64.kh,
-                          width: 64.kw,
-                          url:
-                              "${controller.myRidesModel.value.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.driverDetails?[0]?.vehicleDetails?[0]?.vehiclePic?.url}")
-                      .paddingOnly(right: 8.kh),
-                ),
+                      height: 64.kh,
+                      width: 64.kw,
+                      url:
+                          "${controller.myRidesModel.value.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.driverDetails?[0]?.vehicleDetails?[0]?.vehiclePic?.url}"),
+                ).paddingOnly(right: 8.kh),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -468,7 +467,6 @@ class RiderConfirmedRideDetailsView
               onPressed: () async {
                 await Get.find<MyRidesOneTimeController>()
                     .riderCancelRideAPI(controller.myRidesModel.value);
-                Get.back();
               },
               label: 'Cancel',
               isBorder: true,

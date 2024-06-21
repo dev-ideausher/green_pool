@@ -1,11 +1,11 @@
 import 'dart:async';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/data/find_ride_model.dart';
 import 'package:green_pool/app/data/post_ride_model.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
-import 'package:green_pool/app/modules/profile/controllers/profile_controller.dart';
 import 'package:green_pool/app/services/snackbar.dart';
 import 'package:stacked_firebase_auth/stacked_firebase_auth.dart';
 
@@ -14,6 +14,8 @@ import '../../../data/user_info_model.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/auth.dart';
 import '../../../services/dio/api_service.dart';
+import '../../../services/dio/exceptions.dart';
+import '../../../services/push_notification_service.dart';
 import '../../../services/storage.dart';
 
 class VerifyController extends GetxController {
@@ -38,11 +40,13 @@ class VerifyController extends GetxController {
         phoneNumber = Get.arguments['phoneNumber'];
         fromNavBar = Get.arguments['fromNavBar'];
         findRideModel.value = Get.arguments['findRideModel'];
+        fullName = Get.arguments['fullName'];
       } else {
         isDriver = Get.arguments['isDriver'];
         phoneNumber = Get.arguments['phoneNumber'];
         fromNavBar = Get.arguments['fromNavBar'];
         postRideModel.value = Get.arguments['postRideModel'];
+        fullName = Get.arguments['fullName'];
       }
     } catch (e) {
       isDriver = Get.arguments['isDriver'];
@@ -96,75 +100,206 @@ class VerifyController extends GetxController {
     });
   }
 
-  loginAPI() async {
-    try {
-      final response = await APIManager.getLogin();
-      final userInfo = UserInfoModel.fromJson(response.data);
-      Get.find<GetStorageService>().setUserAppId = userInfo.data?.Id;
-      Get.find<GetStorageService>().profilePicUrl =
-          userInfo.data?.profilePic?.url ?? "";
-      Get.find<GetStorageService>().isPinkMode =
-          userInfo.data?.pinkMode ?? false;
-      Get.find<HomeController>().isPinkModeOn.value =
-          userInfo.data?.pinkMode ?? false;
-      Get.find<GetStorageService>().setLoggedIn = true;
-      //? here if the profileStatus is not true which means it is a new user or the user did not fill the entire user data, so the user will be automatically redirected to the Profile Setup
-      if (fromNavBar) {
-        Get.find<GetStorageService>().setLoggedIn = true;
-        Get.find<GetStorageService>().setProfileStatus = true;
-        Get.find<GetStorageService>().setDriver = isDriver;
-        Get.find<HomeController>().userInfoAPI();
+  Future<void> loginAPI() async {
+    final storageService = Get.find<GetStorageService>();
+    final homeController = Get.find<HomeController>();
+    final authService = Get.find<AuthService>();
+    if (fullName != '') {
+      //USER CREATING NEW ACC
+      try {
+        final response =
+            await APIManager.postRegisterAcc(body: {"fullName": fullName});
+        final userInfo = UserInfoModel.fromJson(response.data);
+
+        //if profile status is true then the user had previously logged in and already has an acc
         if (userInfo.data!.profileStatus!) {
-          Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
-          showMySnackbar(msg: 'Login Successful');
-        } else {
-          Get.offNamed(Routes.VERIFICATION_DONE,
-              arguments: {'fromNavBar': fromNavBar, 'isDriver': false});
-        }
-      } else if (userInfo.status!) {
-        if (Get.find<HomeController>().findingRide.value) {
-          if (userInfo.data!.profileStatus!) {
-            Get.back();
-            showMySnackbar(msg: "Successfully logged in");
+          if (fromNavBar) {
+            //if user is coming from nav bar then they should logout and should not transfer post/find ride data
+            authService.logOutUser();
+            Get.offNamed(Routes.LOGIN,
+                arguments: {'isDriver': isDriver, 'fromNavBar': fromNavBar});
+            PushNotificationService.unsubFcm("${userInfo.data?.Id}");
+            showMySnackbar(msg: "This account already exists. Please Login");
           } else {
-            Get.offNamed(Routes.VERIFICATION_DONE, arguments: {
-              'isDriver': isDriver,
-              'fromNavBar': false,
-              'findRideModel': findRideModel.value
-            });
+            //if the user is trying to post or find a ride then they should be logged out and redirected to Login page with the current data that they have entered
+            try {
+              authService.logOutUser();
+              if (homeController.findingRide.value) {
+                //if the user was finding
+                Get.offNamed(Routes.LOGIN, arguments: {
+                  'isDriver': isDriver,
+                  'fromNavBar': fromNavBar,
+                  'findRideModel': findRideModel
+                });
+              } else {
+                //if the user was posting
+                Get.offNamed(Routes.LOGIN, arguments: {
+                  'isDriver': isDriver,
+                  'fromNavBar': fromNavBar,
+                  'postRideModel': postRideModel
+                });
+              }
+
+              PushNotificationService.unsubFcm("${userInfo.data?.Id}");
+              showMySnackbar(msg: "This account already exists. Please Login");
+            } catch (e) {
+              throw Exception(e.toString());
+            }
           }
         } else {
-          if (userInfo.data!.profileStatus! && userInfo.data!.vehicleStatus!) {
-            showMySnackbar(msg: "Successfully logged in");
-            Get.offNamed(Routes.POST_RIDE_STEP_TWO,
-                arguments: postRideModel.value);
-          } else {
-            //TODO: what to show when it is a new user but tries to LOGIN directly
+          //check if the user is creating acc from navBar
+          if (fromNavBar) {
+            //user wont have post/find ride data
             Get.offNamed(Routes.VERIFICATION_DONE, arguments: {
-              'isDriver': isDriver,
-              'fromNavBar': false,
-              'postRideModel': postRideModel.value
+              'fromNavBar': fromNavBar,
+              'isDriver': false,
             });
+          } else {
+            //user will have post/find ride data which needs to be transferred
+            //check if driver or rider
+            if (homeController.findingRide.value) {
+              //rider
+              Get.offNamed(Routes.RIDER_PROFILE_SETUP, arguments: {
+                'fromNavBar': false,
+                'findRideModel': findRideModel.value,
+              });
+            } else {
+              //driver
+              Get.offNamed(Routes.PROFILE_SETUP, arguments: {
+                'fromNavBar': false,
+                'postRideModel': postRideModel.value,
+              });
+            }
           }
         }
-        Get.find<GetStorageService>().setProfileStatus = true;
-        Get.find<GetStorageService>().setDriver = isDriver;
-        Get.find<HomeController>().userInfoAPI();
-      } else {
-        if (isDriver) {
-          Get.offNamed(Routes.PROFILE_SETUP, arguments: {
-            'fromNavBar': false,
-            'postRideModel': postRideModel.value
-          });
+      } catch (e) {
+        _handleError(e);
+      }
+    } else {
+      //USER LOGIN
+      try {
+        final response = await APIManager.postLogin();
+        final userInfo = UserInfoModel.fromJson(response.data);
+
+        //if profile status is false then this is a new user and needs to create a new acc
+        if (userInfo.data!.profileStatus!) {
+          // Set user information in storage service
+          storageService.setUserAppId = userInfo.data?.Id;
+          storageService.profilePicUrl = userInfo.data?.profilePic?.url ?? "";
+          storageService.isPinkMode = userInfo.data?.pinkMode ?? false;
+
+          // Update UI elements
+          homeController.isPinkModeOn.value = userInfo.data?.pinkMode ?? false;
+
+          //if the user is trying to login from nav bar
+          if (fromNavBar) {
+            Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
+            showMySnackbar(msg: 'Login Successful');
+            await homeController.userInfoAPI();
+            storageService.setProfileStatus = true;
+            storageService.isLoggedIn = true;
+          } else {
+            //check if the user is driver
+            if (homeController.findingRide.value) {
+              //user is rider
+              Get.back();
+              showMySnackbar(msg: "Successfully logged in");
+              await homeController.userInfoAPI();
+              storageService.isLoggedIn = true;
+              storageService.setProfileStatus = true;
+            } else {
+              //user is driver
+              //if the user is driver then check if previously they have filled vehicle details
+              if (userInfo.data!.vehicleStatus!) {
+                //if they have filled then proceed to post ride step 2
+                showMySnackbar(msg: "Successfully logged in");
+                await homeController.userInfoAPI();
+                storageService.isLoggedIn = true;
+                storageService.setProfileStatus = true;
+                storageService.setDriver = true;
+                Get.offNamed(Routes.POST_RIDE_STEP_TWO,
+                    arguments: postRideModel.value);
+              } else {
+                //if not then redirect to vehicle details page
+                Get.toNamed(Routes.VEHICLE_SETUP,
+                    arguments: postRideModel.value);
+                showMySnackbar(
+                    msg: "To proceed please fill in vehicle details");
+              }
+            }
+          }
         } else {
-          Get.offNamed(Routes.RIDER_PROFILE_SETUP, arguments: {
-            'fromNavBar': false,
-            'findRideModel': findRideModel.value
-          });
+          //redirecting to create acc page
+          if (fromNavBar) {
+            //if user is coming from nav bar then they should logout and should not transfer post/find ride data
+            authService.logOutUser();
+            Get.offNamed(Routes.CREATE_ACCOUNT,
+                arguments: {'isDriver': isDriver, 'fromNavBar': fromNavBar});
+            PushNotificationService.unsubFcm("${userInfo.data?.Id}");
+            showMySnackbar(msg: "This account already exists. Please Login");
+          } else {
+            //if the user is trying to post or find a ride then they should be logged out and redirected to Login page with the current data that they have entered
+            try {
+              authService.logOutUser();
+              if (homeController.findingRide.value) {
+                //if the user was finding
+                Get.offNamed(Routes.CREATE_ACCOUNT, arguments: {
+                  'isDriver': isDriver,
+                  'fromNavBar': fromNavBar,
+                  'findRideModel': findRideModel
+                });
+              } else {
+                //if the user was posting
+                Get.offNamed(Routes.CREATE_ACCOUNT, arguments: {
+                  'isDriver': isDriver,
+                  'fromNavBar': fromNavBar,
+                  'postRideModel': postRideModel
+                });
+              }
+
+              PushNotificationService.unsubFcm("${userInfo.data?.Id}");
+              showMySnackbar(
+                  msg: "This account does not exists. Please create a new acc");
+            } catch (e) {
+              throw Exception(e.toString());
+            }
+          }
         }
+      } catch (e) {
+        _handleError(e);
+      }
+    }
+  }
+
+  Future<void> _handleError(dynamic e) async {
+    try {
+      final errorMessage =
+          DioExceptions.fromDioError(e as DioException).message;
+
+      if (errorMessage == "User doesn't exist. Please create account" ||
+          errorMessage == "User doesn't exist anymore") {
+        await _navigateToProfileSetup();
       }
     } catch (e) {
-      debugPrint("login error: $e");
+      debugPrint(e.toString());
+    }
+  }
+
+  Future<void> _navigateToProfileSetup() async {
+    if (fromNavBar) {
+      Get.toNamed(Routes.PROFILE_SETUP, arguments: false);
+    } else {
+      if (Get.find<HomeController>().findingRide.value) {
+        Get.toNamed(Routes.RIDER_PROFILE_SETUP, arguments: {
+          "fromNavBar": fromNavBar,
+          "findRideModel": findRideModel.value,
+        });
+      } else {
+        Get.toNamed(Routes.PROFILE_SETUP, arguments: {
+          "fromNavBar": fromNavBar,
+          "postRideModel": postRideModel.value,
+        });
+      }
     }
   }
 }

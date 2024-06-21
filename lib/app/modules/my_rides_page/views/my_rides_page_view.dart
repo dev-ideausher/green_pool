@@ -31,7 +31,7 @@ class MyRidesPageView extends GetView<MyRidesPageController> {
         title: Text('My Rides'),
         leading: SizedBox(),
       ),
-      body: Get.find<GetStorageService>().getLoggedIn
+      body: Get.find<GetStorageService>().isLoggedIn
           ? SafeArea(
               child: Get.find<HomeController>().userInfo.value.data?.isDriver ??
                       false

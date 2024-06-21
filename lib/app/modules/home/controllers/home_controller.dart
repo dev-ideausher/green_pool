@@ -7,7 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:green_pool/app/modules/home/views/permissions_location.dart';
 import 'package:green_pool/app/res/strings.dart';
+import 'package:green_pool/app/routes/app_pages.dart';
+import 'package:green_pool/app/services/location_service.dart';
 import 'package:green_pool/app/services/push_notification_service.dart';
 import 'package:green_pool/app/services/storage.dart';
 
@@ -23,11 +26,17 @@ class HomeController extends GetxController {
   var userInfo = UserInfoModel().obs;
   RxString welcomeText = Strings.welcome.obs;
   RxBool isPinkModeOn = false.obs;
+  bool canPop = false;
 
   // RxBool isPink = Get.find<HomeController>().isPinkModeOn.value.obs;
 
   void changeTabIndex(int index) {
     selectedIndex.value = index;
+    pageController?.animateToPage(
+      index,
+      duration: const Duration(milliseconds: 1),
+      curve: Curves.easeIn,
+    );
   }
 
   @override
@@ -35,6 +44,8 @@ class HomeController extends GetxController {
     super.onInit();
     try {
       await userInfoAPI();
+      latitude.value = await LocationService().getLatitude();
+      longitude.value = await LocationService().getLongitude();
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -70,25 +81,37 @@ class HomeController extends GetxController {
   // }
 
   userInfoAPI() async {
-    if (Get.find<GetStorageService>().getLoggedIn == true) {
+    final storageService = Get.find<GetStorageService>();
+    LocationPermission permission;
+    permission = await Geolocator.checkPermission();
+
+    if (storageService.isLoggedIn == true) {
       try {
         final response = await APIManager.getUserByID();
         var data = jsonDecode(response.toString());
         userInfo.value = UserInfoModel.fromJson(data);
         userInfo.refresh();
         PushNotificationService.subFcm("${userInfo.value.data?.Id}");
-        isPinkModeOn.value = Get.find<GetStorageService>().isPinkMode;
+        isPinkModeOn.value = storageService.isPinkMode;
+        print(storageService.encjwToken);
         onChangeLocation();
-        await _determinePosition().then((value) => {
-              latitude.value = value.latitude,
-              longitude.value = value.longitude,
-            });
-
+        if (permission == LocationPermission.denied ||
+            permission == LocationPermission.unableToDetermine) {
+          Get.to(const PermissionsLocation());
+          return Future.error('Location services are disabled.');
+        } else {
+          await determinePosition().then((value) => {
+                latitude.value = value.latitude,
+                longitude.value = value.longitude,
+              });
+        }
         await setupMessage();
       } catch (e) {
         debugPrint(e.toString());
       }
       log("User info API called");
+    } else {
+      print("User not logged in");
     }
   }
 
@@ -104,7 +127,7 @@ class HomeController extends GetxController {
         .setupInteractedMessage();
   }
 
-  Future<Position> _determinePosition() async {
+  Future<Position> determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;
 
@@ -116,8 +139,11 @@ class HomeController extends GetxController {
 
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        return Future.error('Location permissions are denied');
+      if (permission == LocationPermission.always ||
+          permission == LocationPermission.whileInUse) {
+        Get.until((route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
+        await setupMessage();
+        return Future.error('Location permissions are granted');
       }
     }
 

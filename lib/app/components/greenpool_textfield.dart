@@ -8,8 +8,8 @@ class GreenPoolTextField extends StatelessWidget {
   final String? Function(String?)? validator;
   final TextEditingController? controller;
   final String hintText;
-  // final EdgeInsetsGeometry? suffixPadding;
   final Color? fillColor, hintColor;
+  final TextCapitalization textCapitalization;
   final bool? isSuffixNeeded;
   final InputBorder? border;
   final TextInputType? keyboardType;
@@ -38,12 +38,12 @@ class GreenPoolTextField extends StatelessWidget {
       this.readOnly,
       this.autovalidateMode,
       this.onSaved,
-      // this.suffixPadding,
       this.keyboardType,
       this.fillColor,
       this.border,
       this.isSuffixNeeded,
-      this.hintColor});
+      this.hintColor,
+      this.textCapitalization = TextCapitalization.none});
 
   @override
   Widget build(BuildContext context) {
@@ -61,13 +61,12 @@ class GreenPoolTextField extends StatelessWidget {
       obscureText: obscureText ?? false,
       autofocus: autofocus ?? false,
       readOnly: readOnly ?? false,
+      textCapitalization: textCapitalization,
       keyboardType: keyboardType ?? TextInputType.name,
       decoration: InputDecoration(
         suffixIcon: isSuffixNeeded ?? true
             ? Padding(
-                padding:
-                    // suffixPadding ??
-                    EdgeInsets.only(right: 16.kw, left: 8.kw),
+                padding: EdgeInsets.only(right: 16.kw, left: 8.kw),
                 child: IconButton(
                   icon: suffix ?? const SizedBox(),
                   onPressed: onPressedSuffix,

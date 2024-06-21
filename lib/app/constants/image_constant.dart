@@ -111,6 +111,8 @@ class ImageConstant {
   static String svgAmenities10 = 'assets/images/home/amenities10.svg';
   static String svgNoRides = 'assets/images/home/no_rides.svg';
   static String svgNoRidesPink = 'assets/images/home/no_rides_pink.svg';
+  static String gifLocation = 'assets/images/home/location_gif.gif';
+  static String pngCarPointer = 'assets/images/home/car_pointer.png';
 
 //profile
   static String svgProfileAbout = 'assets/images/profile/about.svg';

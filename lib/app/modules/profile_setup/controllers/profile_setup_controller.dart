@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_rx/src/rx_workers/utils/debouncer.dart';
 import 'package:green_pool/app/data/post_ride_model.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/modules/post_ride/controllers/post_ride_controller.dart';
@@ -24,6 +25,9 @@ import '../../../services/text_style_util.dart';
 class ProfileSetupController extends GetxController
     with GetSingleTickerProviderStateMixin {
   bool fromNavBar = false;
+  RxBool isCityListExpanded = false.obs;
+  RxList<String> cityNames = <String>[].obs;
+  final debouncer = Debouncer(delay: const Duration(milliseconds: 50));
   final pageIndex = 0.obs;
   String name = '';
   Rx<File?> selectedProfileImagePath = Rx<File?>(null);
@@ -167,6 +171,7 @@ class ProfileSetupController extends GetxController
   }
 
   Future<void> userDetailsAPI() async {
+    final storageService = Get.find<GetStorageService>();
     final File pickedImageFile = File(selectedProfileImagePath.value!.path);
     final File pickedIDFile = File(selectedIDImagePath.value!.path);
     String extension = pickedImageFile.path.split('.').last;
@@ -212,8 +217,8 @@ class ProfileSetupController extends GetxController
     try {
       final responses = await APIManager.userDetails(body: userData);
       showMySnackbar(msg: responses.data['message']);
-      Get.find<GetStorageService>().setUserName = fullName.text;
-      Get.find<GetStorageService>().setProfileStatus = true;
+      storageService.setUserName = fullName.text;
+      storageService.setProfileStatus = true;
       tabBarController.index = 1;
     } catch (e) {
       throw Exception(e);
@@ -221,6 +226,8 @@ class ProfileSetupController extends GetxController
   }
 
   Future<void> vehicleDetailsAPI() async {
+    final storageService = Get.find<GetStorageService>();
+    final homeController = Get.find<HomeController>();
     final File pickedVehicleFile = File(selectedVehicleImagePath.value!.path);
     String extension = pickedVehicleFile.path.split('.').last;
     String mediaType;
@@ -234,7 +241,7 @@ class ProfileSetupController extends GetxController
     }
 
     final vehicleData = dio.FormData.fromMap({
-      'driverId': Get.find<GetStorageService>().getUserAppId,
+      'driverId': storageService.getUserAppId,
       'model': model.text,
       'type': type.value,
       'color': color.value,
@@ -247,11 +254,13 @@ class ProfileSetupController extends GetxController
       )
     });
 
-    if (Get.find<GetStorageService>().profileStatus == true) {
+    if (storageService.profileStatus == true) {
       try {
         await APIManager.postVehicleDetails(body: vehicleData);
         showMySnackbar(msg: "Data filled successfully");
-        Get.find<HomeController>().userInfoAPI();
+        homeController.userInfoAPI();
+        storageService.isLoggedIn = true;
+        storageService.setDriver = true;
 
         Get.toNamed(Routes.EMERGENCY_CONTACTS, arguments: {
           'fromNavBar': false,
@@ -430,5 +439,14 @@ class ProfileSetupController extends GetxController
     }
   }
 
-  
+  void addCityNames(String value) {
+    if (value.isEmpty || value == "") {
+      cityNames.value = CityList.cityNames;
+    } else {
+      isCityListExpanded.value = true;
+      cityNames.value = CityList.cityNames.where((city) {
+        return city.toLowerCase().contains(value.toLowerCase());
+      }).toList();
+    }
+  }
 }

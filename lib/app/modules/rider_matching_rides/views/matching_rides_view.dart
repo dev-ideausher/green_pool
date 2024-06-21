@@ -46,6 +46,8 @@ class MatchingRidesView extends GetView<MatchingRidesController> {
               await Get.find<FindRideController>().riderPostRideAPI();
 
               await Get.bottomSheet(
+                isDismissible: false,
+                persistent: true,
                 Container(
                     padding: EdgeInsets.all(24.kh),
                     height: 390.kh,

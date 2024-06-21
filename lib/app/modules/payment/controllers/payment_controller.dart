@@ -1,5 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
+import 'package:green_pool/app/modules/my_rides_one_time/controllers/my_rides_one_time_controller.dart';
+import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/dialog_helper.dart';
 
 import '../../../data/request_ride_by_rider_model.dart';
@@ -65,10 +70,19 @@ class PaymentController extends GetxController {
     }
   }
 
-  confirmRideAPI() async {
-    try {
-      final response = await APIManager.postConfirmRide(body: rideData);
+  void decideAPI() {
+    if (fromDriverDetails.value) {
+      createRideAlert();
+    } else if (fromConfirmRequestSection.value) {
+      confirmRequestOfDriverAPI();
+    } else {
+      sendRequesttoDriverAPI();
+    }
+  }
 
+  createRideAlert() async {
+    try {
+      final response = await APIManager.postCreateAlert(body: rideData);
       requestRideModel.value = RequestRideByRiderModel.fromJson(response.data);
       if (requestRideModel.value.status ?? false) {
         DialogHelper.paymentSuccessfull();
@@ -80,17 +94,7 @@ class PaymentController extends GetxController {
     }
   }
 
-  void decideAPI() {
-    if (fromDriverDetails.value) {
-      confirmRideAPI();
-    } else if (fromConfirmRequestSection.value) {
-      confirmRequestOfDriverAPI();
-    } else {
-      sendRequestAPI();
-    }
-  }
-
-  Future<void> sendRequestAPI() async {
+  Future<void> sendRequesttoDriverAPI() async {
     try {
       final response = await APIManager.postSendRequestToDriver(body: rideData);
       if (response.data['status']) {
@@ -108,7 +112,7 @@ class PaymentController extends GetxController {
       final response = await APIManager.acceptDriversRequest(
           body: {"ridePostId": ridePostId, "price": price});
       if (response.data['status']) {
-        Get.bottomSheet(RequestAcceptedBottom());
+        Get.bottomSheet(const RequestAcceptedBottom());
       } else {
         showMySnackbar(msg: response.data['message']);
       }

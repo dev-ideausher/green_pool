@@ -60,6 +60,16 @@ class FileDisputeView extends GetView<FileDisputeController> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
+                                      ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(8.kh),
+                                        child: CommonImageView(
+                                          url:
+                                              "${controller.rideHistModel.value.data?[index]?.driver?.profilePic?.url}",
+                                          height: 46.kh,
+                                          width: 46.kw,
+                                        ),
+                                      ).paddingOnly(right: 8.kw),
                                       Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
@@ -106,7 +116,7 @@ class FileDisputeView extends GetView<FileDisputeController> {
                                         alignment: Alignment.centerRight,
                                         child: SizedBox(
                                           height: 24.kh,
-                                          width: 170.kw,
+                                          width: 150.kw,
                                           child: Align(
                                             alignment: Alignment.centerRight,
                                             child: ListView.builder(

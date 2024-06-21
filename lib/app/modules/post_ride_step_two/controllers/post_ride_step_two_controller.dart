@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/data/post_ride_model.dart';
+import 'package:green_pool/app/services/snackbar.dart';
+import 'package:intl/intl.dart';
 
 import '../../../routes/app_pages.dart';
 import '../../../services/colors.dart';
@@ -236,8 +238,14 @@ class PostRideStepTwoController extends GetxController {
 
     if (pickedTime != null) {
       String formattedTime = pickedTime.format(context);
-      selectedTimeReturnTrip.text = formattedTime.toString();
-      setActiveStateCarpoolSchedule();
+      if (validateReturnTime(formattedTime)) {
+        selectedTimeReturnTrip.text = formattedTime.toString();
+        setActiveStateCarpoolSchedule();
+      } else {
+        showMySnackbar(
+            msg:
+                "Please ensure that the return time is a minimum of 2 hours later than the scheduled time.");
+      }
     }
   }
 
@@ -368,5 +376,35 @@ class PostRideStepTwoController extends GetxController {
             ),
           ),
         ));
+  }
+
+  bool validateReturnTime(String returnTime) {
+    try {
+      // Parse the input time string
+      DateFormat format = DateFormat.jm(); // e.g., "5:00 PM"
+      DateTime parsedTime = format.parse(returnTime);
+      DateTime scheduledTime = format.parse(selectedTimeOneTime.value.text);
+
+      // Get the current time
+      DateTime now = scheduledTime.subtract(const Duration(seconds: 5));
+
+      // Create DateTime object for the return time with the current date
+      DateTime returnDateTime = DateTime(
+        now.year,
+        now.month,
+        now.day,
+        parsedTime.hour,
+        parsedTime.minute,
+      );
+
+      // Add 2 hours to the current time
+      DateTime validTime = now.add(const Duration(hours: 2));
+
+      // Check if the return time is at least 2 hours more than the current time
+      return returnDateTime.isAfter(validTime);
+    } catch (e) {
+      print("Error parsing time string: $e");
+      return false;
+    }
   }
 }
