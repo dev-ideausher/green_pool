@@ -212,13 +212,12 @@ class ProfileSetupController extends GetxController
         filename: path.basename(pickedIDFile.path),
       ),
     });
-    log("profile setup user data: $userData");
-
     try {
       final responses = await APIManager.userDetails(body: userData);
       showMySnackbar(msg: responses.data['message']);
       storageService.setUserName = fullName.text;
-      storageService.setProfileStatus = true;
+      Get.find<HomeController>().userInfoAPI();
+      storageService.profileStatus = true;
       tabBarController.index = 1;
     } catch (e) {
       throw Exception(e);
@@ -262,7 +261,7 @@ class ProfileSetupController extends GetxController
         storageService.isLoggedIn = true;
         storageService.setDriver = true;
 
-        Get.toNamed(Routes.EMERGENCY_CONTACTS, arguments: {
+        Get.offNamed(Routes.EMERGENCY_CONTACTS, arguments: {
           'fromNavBar': false,
           'postRideModel': postRideModel.value
         }, parameters: {

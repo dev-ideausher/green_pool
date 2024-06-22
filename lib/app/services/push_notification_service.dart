@@ -161,12 +161,14 @@ class PushNotificationService {
       case 'Driver_Ride_Request':
       case 'Driver_Confirm_Request':
       case 'Rider Ride Confirmation':
+      case 'Driver Request Accept':
         Get.find<MyRidesOneTimeController>().myRidesAPI();
         break;
       case 'Chat':
         Get.find<MessagesController>().getMessageListAPI();
         break;
       case 'End_Ride':
+        Get.find<MyRidesOneTimeController>().myRidesAPI();
         break;
       case 'Rider New request':
       case 'Rider Ride Confirmation':
@@ -231,6 +233,12 @@ class PushNotificationService {
       //when rider accepts from confirm section
     } else if (payload == "Driver Request Accept") {
       //when driver accepts from confirm section
+      if (Get.currentRoute == Routes.BOTTOM_NAVIGATION) {
+        Get.find<HomeController>().changeTabIndex(1);
+      } else {
+        Get.until((route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
+        Get.find<HomeController>().changeTabIndex(1);
+      }
     } else if (payload == "Driver Ride Cancellation") {
       //when driver cancels the ride
     } else if (payload == "Rider Request Declined") {
@@ -238,7 +246,14 @@ class PushNotificationService {
     } else if (payload == "Payment Deduction") {
       //when payment deducts from wallet
     } else if (payload == 'Rider_Dropoff_Request') {
-      Get.off(Routes.RATING_RIDER_SIDE, arguments: actionData?.data);
+      if (Get.currentRoute == Routes.RIDER_START_RIDE_MAP) {
+        Get.offNamed(Routes.RATING_RIDER_SIDE, arguments: actionData?.data);
+      } else {
+        Get.toNamed(Routes.RATING_RIDER_SIDE, arguments: actionData?.data);
+      }
+    } else if (payload == 'Start_Ride') {
+      // Get.toNamed(Routes.RIDER_START_RIDE_MAP, arguments: actionData?.data);
+      //need my rides model data
     }
 
     //

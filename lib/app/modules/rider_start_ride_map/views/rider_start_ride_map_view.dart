@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../components/gp_progress.dart';
@@ -19,7 +18,7 @@ class RiderStartRideMapView extends GetView<RiderStartRideMapController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const GreenPoolAppBar(),
+      // appBar: const GreenPoolAppBar(),
       body: Obx(
         () => controller.isLoad.value
             ? const GpProgress()
@@ -43,21 +42,47 @@ class RiderStartRideMapView extends GetView<RiderStartRideMapController> {
               ).paddingOnly(bottom: 210.kh),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
-      floatingActionButton: FloatingActionButton(
-        shape: const CircleBorder(),
-        backgroundColor: ColorUtil.kError4,
-        onPressed: () => controller.sos(),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Icon(Icons.notifications_active_outlined,
-                color: ColorUtil.kWhiteColor),
-            Text(Strings.sos,
-                style: TextStyleUtil.k14Regular(
-                    color: ColorUtil.kWhiteColor, fontWeight: FontWeight.w700)),
-          ],
-        ),
-      ),
+      floatingActionButton: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              FloatingActionButton(
+                shape: const CircleBorder(),
+                backgroundColor: ColorUtil.kWhiteColor,
+                onPressed: () {
+                  Get.back();
+                },
+                child: Icon(
+                  Icons.arrow_back_rounded,
+                  color: ColorUtil.kBlack01,
+                  size: 24.kh,
+                ),
+              ).paddingOnly(bottom: 4.kh, left: 24.kw),
+              FloatingActionButton(
+                shape: const CircleBorder(),
+                backgroundColor: ColorUtil.kBlueColor,
+                tooltip: Strings.openGoogleMaps,
+                onPressed: () {
+                  controller.openGoogleMaps();
+                },
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.directions_outlined,
+                        color: ColorUtil.kWhiteColor, size: 28.kh),
+                  ],
+                ),
+              ).paddingOnly(bottom: 4.kh),
+            ],
+          ),
+          Text(Strings.openGoogleMaps,
+              style: TextStyleUtil.k12Bold(
+                  color: ColorUtil.kBlueColor, fontWeight: FontWeight.w700)),
+        ],
+      ).paddingOnly(top: 8.kh),
       bottomSheet: const ArrivingBottomSheet(),
     );
   }

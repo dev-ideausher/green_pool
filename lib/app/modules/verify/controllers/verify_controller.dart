@@ -15,7 +15,6 @@ import '../../../routes/app_pages.dart';
 import '../../../services/auth.dart';
 import '../../../services/dio/api_service.dart';
 import '../../../services/dio/exceptions.dart';
-import '../../../services/push_notification_service.dart';
 import '../../../services/storage.dart';
 
 class VerifyController extends GetxController {
@@ -111,67 +110,7 @@ class VerifyController extends GetxController {
             await APIManager.postRegisterAcc(body: {"fullName": fullName});
         final userInfo = UserInfoModel.fromJson(response.data);
 
-        //if profile status is true then the user had previously logged in and already has an acc
-        if (userInfo.data!.profileStatus!) {
-          if (fromNavBar) {
-            //if user is coming from nav bar then they should logout and should not transfer post/find ride data
-            authService.logOutUser();
-            Get.offNamed(Routes.LOGIN,
-                arguments: {'isDriver': isDriver, 'fromNavBar': fromNavBar});
-            PushNotificationService.unsubFcm("${userInfo.data?.Id}");
-            showMySnackbar(msg: "This account already exists. Please Login");
-          } else {
-            //if the user is trying to post or find a ride then they should be logged out and redirected to Login page with the current data that they have entered
-            try {
-              authService.logOutUser();
-              if (homeController.findingRide.value) {
-                //if the user was finding
-                Get.offNamed(Routes.LOGIN, arguments: {
-                  'isDriver': isDriver,
-                  'fromNavBar': fromNavBar,
-                  'findRideModel': findRideModel
-                });
-              } else {
-                //if the user was posting
-                Get.offNamed(Routes.LOGIN, arguments: {
-                  'isDriver': isDriver,
-                  'fromNavBar': fromNavBar,
-                  'postRideModel': postRideModel
-                });
-              }
-
-              PushNotificationService.unsubFcm("${userInfo.data?.Id}");
-              showMySnackbar(msg: "This account already exists. Please Login");
-            } catch (e) {
-              throw Exception(e.toString());
-            }
-          }
-        } else {
-          //check if the user is creating acc from navBar
-          if (fromNavBar) {
-            //user wont have post/find ride data
-            Get.offNamed(Routes.VERIFICATION_DONE, arguments: {
-              'fromNavBar': fromNavBar,
-              'isDriver': false,
-            });
-          } else {
-            //user will have post/find ride data which needs to be transferred
-            //check if driver or rider
-            if (homeController.findingRide.value) {
-              //rider
-              Get.offNamed(Routes.RIDER_PROFILE_SETUP, arguments: {
-                'fromNavBar': false,
-                'findRideModel': findRideModel.value,
-              });
-            } else {
-              //driver
-              Get.offNamed(Routes.PROFILE_SETUP, arguments: {
-                'fromNavBar': false,
-                'postRideModel': postRideModel.value,
-              });
-            }
-          }
-        }
+        _handleNewUser(userInfo, authService, homeController, storageService);
       } catch (e) {
         _handleError(e);
       }
@@ -181,92 +120,163 @@ class VerifyController extends GetxController {
         final response = await APIManager.postLogin();
         final userInfo = UserInfoModel.fromJson(response.data);
 
-        //if profile status is false then this is a new user and needs to create a new acc
-        if (userInfo.data!.profileStatus!) {
-          // Set user information in storage service
-          storageService.setUserAppId = userInfo.data?.Id;
-          storageService.profilePicUrl = userInfo.data?.profilePic?.url ?? "";
-          storageService.isPinkMode = userInfo.data?.pinkMode ?? false;
-
-          // Update UI elements
-          homeController.isPinkModeOn.value = userInfo.data?.pinkMode ?? false;
-
-          //if the user is trying to login from nav bar
-          if (fromNavBar) {
-            Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
-            showMySnackbar(msg: 'Login Successful');
-            await homeController.userInfoAPI();
-            storageService.setProfileStatus = true;
-            storageService.isLoggedIn = true;
-          } else {
-            //check if the user is driver
-            if (homeController.findingRide.value) {
-              //user is rider
-              Get.back();
-              showMySnackbar(msg: "Successfully logged in");
-              await homeController.userInfoAPI();
-              storageService.isLoggedIn = true;
-              storageService.setProfileStatus = true;
-            } else {
-              //user is driver
-              //if the user is driver then check if previously they have filled vehicle details
-              if (userInfo.data!.vehicleStatus!) {
-                //if they have filled then proceed to post ride step 2
-                showMySnackbar(msg: "Successfully logged in");
-                await homeController.userInfoAPI();
-                storageService.isLoggedIn = true;
-                storageService.setProfileStatus = true;
-                storageService.setDriver = true;
-                Get.offNamed(Routes.POST_RIDE_STEP_TWO,
-                    arguments: postRideModel.value);
-              } else {
-                //if not then redirect to vehicle details page
-                Get.toNamed(Routes.VEHICLE_SETUP,
-                    arguments: postRideModel.value);
-                showMySnackbar(
-                    msg: "To proceed please fill in vehicle details");
-              }
-            }
-          }
-        } else {
-          //redirecting to create acc page
-          if (fromNavBar) {
-            //if user is coming from nav bar then they should logout and should not transfer post/find ride data
-            authService.logOutUser();
-            Get.offNamed(Routes.CREATE_ACCOUNT,
-                arguments: {'isDriver': isDriver, 'fromNavBar': fromNavBar});
-            PushNotificationService.unsubFcm("${userInfo.data?.Id}");
-            showMySnackbar(msg: "This account already exists. Please Login");
-          } else {
-            //if the user is trying to post or find a ride then they should be logged out and redirected to Login page with the current data that they have entered
-            try {
-              authService.logOutUser();
-              if (homeController.findingRide.value) {
-                //if the user was finding
-                Get.offNamed(Routes.CREATE_ACCOUNT, arguments: {
-                  'isDriver': isDriver,
-                  'fromNavBar': fromNavBar,
-                  'findRideModel': findRideModel
-                });
-              } else {
-                //if the user was posting
-                Get.offNamed(Routes.CREATE_ACCOUNT, arguments: {
-                  'isDriver': isDriver,
-                  'fromNavBar': fromNavBar,
-                  'postRideModel': postRideModel
-                });
-              }
-
-              PushNotificationService.unsubFcm("${userInfo.data?.Id}");
-              showMySnackbar(
-                  msg: "This account does not exists. Please create a new acc");
-            } catch (e) {
-              throw Exception(e.toString());
-            }
-          }
-        }
+        _handleUserLogin(userInfo, authService, homeController, storageService);
       } catch (e) {
         _handleError(e);
+      }
+    }
+  }
+
+  void _handleNewUser(UserInfoModel userInfo, AuthService authService,
+      HomeController homeController, GetStorageService storageService) {
+    //if profile status is true then the user had previously logged in and already has an acc
+    if (userInfo.data!.profileStatus!) {
+      if (fromNavBar) {
+        //if user is coming from nav bar then they should logout and should not transfer post/find ride data
+
+        Get.offNamed(Routes.LOGIN,
+            arguments: {'isDriver': isDriver, 'fromNavBar': fromNavBar});
+        authService.logOutUser();
+        // PushNotificationService.unsubFcm("${userInfo.data?.Id}");
+        showMySnackbar(msg: "This account already exists. Please Login");
+      } else {
+        //if the user is trying to post or find a ride then they should be logged out and redirected to Login page with the current data that they have entered
+        try {
+          if (homeController.findingRide.value) {
+            //if the user was finding
+            Get.offNamed(Routes.LOGIN, arguments: {
+              'isDriver': isDriver,
+              'fromNavBar': fromNavBar,
+              'findRideModel': findRideModel.value
+            });
+          } else {
+            //if the user was posting
+            Get.offNamed(Routes.LOGIN, arguments: {
+              'isDriver': isDriver,
+              'fromNavBar': fromNavBar,
+              'postRideModel': postRideModel.value
+            });
+          }
+          authService.logOutUser();
+          // PushNotificationService.unsubFcm("${userInfo.data?.Id}");
+          showMySnackbar(msg: "This account already exists. Please Login");
+        } catch (e) {
+          throw Exception(e.toString());
+        }
+      }
+    } else {
+      //check if the user is creating acc from navBar
+      if (fromNavBar) {
+        //user wont have post/find ride data
+        Get.offNamed(Routes.VERIFICATION_DONE, arguments: {
+          'fromNavBar': fromNavBar,
+          'isDriver': false,
+        });
+      } else {
+        //user will have post/find ride data which needs to be transferred
+        //check if driver or rider
+        if (homeController.findingRide.value) {
+          //rider
+          Get.offNamed(Routes.RIDER_PROFILE_SETUP, arguments: {
+            'fromNavBar': false,
+            'findRideModel': findRideModel.value,
+          });
+        } else {
+          //driver
+          Get.offNamed(Routes.PROFILE_SETUP, arguments: {
+            'fromNavBar': false,
+            'postRideModel': postRideModel.value,
+          });
+        }
+      }
+    }
+  }
+
+  Future<void> _handleUserLogin(UserInfoModel userInfo, AuthService authService,
+      HomeController homeController, GetStorageService storageService) async {
+    //if profile status is false then this is a new user and needs to create a new acc
+    if (userInfo.data!.profileStatus!) {
+      // Set user information in storage service
+      storageService.setUserAppId = userInfo.data?.Id;
+      storageService.setUserName = userInfo.data?.fullName;
+      storageService.profilePicUrl = userInfo.data?.profilePic?.url ?? "";
+      storageService.isPinkMode = userInfo.data?.pinkMode ?? false;
+
+      // Update UI elements
+      homeController.isPinkModeOn.value = userInfo.data?.pinkMode ?? false;
+
+      //if the user is trying to login from nav bar
+      if (fromNavBar) {
+        Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
+        showMySnackbar(msg: 'Login Successful');
+        storageService.profileStatus = true;
+        storageService.isLoggedIn = true;
+        await homeController.userInfoAPI();
+      } else {
+        //check if the user is driver
+        if (homeController.findingRide.value) {
+          //user is rider
+          Get.back();
+          showMySnackbar(msg: "Successfully logged in");
+          storageService.isLoggedIn = true;
+          storageService.profileStatus = true;
+          await homeController.userInfoAPI();
+        } else {
+          //user is driver
+          //if the user is driver then check if previously they have filled vehicle details
+          if (userInfo.data!.vehicleStatus!) {
+            //if they have filled then proceed to post ride step 2
+            Get.offNamed(Routes.POST_RIDE_STEP_TWO,
+                arguments: postRideModel.value);
+            showMySnackbar(msg: "Successfully logged in");
+            storageService.isLoggedIn = true;
+            storageService.profileStatus = true;
+            storageService.setDriver = true;
+            await homeController.userInfoAPI();
+          } else {
+            //if not then redirect to vehicle details page
+            Get.toNamed(Routes.VEHICLE_SETUP, arguments: postRideModel.value);
+            showMySnackbar(msg: "To proceed please fill in vehicle details");
+          }
+        }
+      }
+    } else {
+      //redirecting to create acc page
+      if (fromNavBar) {
+        //if user is coming from nav bar then they should logout and should not transfer post/find ride data
+
+        Get.offNamed(Routes.CREATE_ACCOUNT,
+            arguments: {'isDriver': isDriver, 'fromNavBar': fromNavBar});
+        authService.logOutUser();
+        // PushNotificationService.unsubFcm("${userInfo.data?.Id}");
+        showMySnackbar(
+            msg: "This account does not exists. Please create a new acc");
+      } else {
+        //if the user is trying to post or find a ride then they should be logged out and redirected to Login page with the current data that they have entered
+        try {
+          if (homeController.findingRide.value) {
+            //if the user was finding
+            Get.offNamed(Routes.CREATE_ACCOUNT, arguments: {
+              'isDriver': isDriver,
+              'fromNavBar': fromNavBar,
+              'findRideModel': findRideModel.value
+            });
+          } else {
+            //if the user was posting
+            Get.offNamed(Routes.CREATE_ACCOUNT, arguments: {
+              'isDriver': isDriver,
+              'fromNavBar': fromNavBar,
+              'postRideModel': postRideModel.value
+            });
+          }
+
+          authService.logOutUser();
+          // PushNotificationService.unsubFcm("${userInfo.data?.Id}");
+          showMySnackbar(
+              msg: "This account does not exists. Please create a new acc");
+        } catch (e) {
+          throw Exception(e.toString());
+        }
       }
     }
   }

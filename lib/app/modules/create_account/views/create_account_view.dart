@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/components/greenpool_textfield.dart';
 import 'package:green_pool/app/components/socials.dart';
 import 'package:green_pool/app/modules/create_account/views/terms_view.dart';
-import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
@@ -104,7 +103,7 @@ class CreateAccountView extends GetView<CreateAccountController> {
                 children: [
                   Obx(
                     () => Checkbox(
-                      value: controller.isChecked.value,
+                      value: controller.isTermsAccepted.value,
                       activeColor: ColorUtil.kSecondary01,
                       onChanged: (value) {
                         controller.toggleCheckbox();
@@ -146,7 +145,7 @@ class CreateAccountView extends GetView<CreateAccountController> {
                   onPressed: () async {
                     await controller.checkValidation();
                   },
-                  isActive: controller.isChecked.value,
+                  isActive: controller.isTermsAccepted.value,
                   label: 'Sign Up',
                 ).paddingOnly(bottom: 16.kh),
               ),

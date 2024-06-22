@@ -46,8 +46,8 @@ class RatingRiderSideController extends GetxController {
 
   rateDriverAPI(String driverId) async {
     final Map<String, dynamic> data = {
-      "ratedTo": driverId,
-      "rating": driverRating.value
+      "ratedTo": driverId, //65c228fd32f497dc57fdeff8
+      "rating": driverRating.value //4.0
     };
 
     try {
@@ -55,7 +55,7 @@ class RatingRiderSideController extends GetxController {
       if (res.data['status']) {
         showMySnackbar(msg: "Thankyou for rating!");
         Get.find<HomeController>().changeTabIndex(0);
-        Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
+        // Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
       } else {
         showMySnackbar(msg: res.data['message']);
       }

@@ -4,11 +4,15 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
+import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
+import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../services/auth.dart';
+import '../../../services/colors.dart';
+import '../../../services/custom_button.dart';
 import '../../../services/dio/api_service.dart';
 import '../../../services/gp_util.dart';
 import '../../../services/push_notification_service.dart';
@@ -17,6 +21,7 @@ import '../../../services/snackbar.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:path/path.dart' as path;
 
+import '../../../services/text_style_util.dart';
 import '../../rider_profile_setup/controllers/city_list.dart';
 
 class UserDetailsController extends GetxController {
@@ -203,25 +208,96 @@ class UserDetailsController extends GetxController {
 
   deleteAccountAPI() async {
     try {
-      Get.defaultDialog(
-        title: "Delete Account",
-        middleText: "Are you sure you want to delete your account?",
-        textCancel: "Cancel",
-        textConfirm: "Delete",
-        confirmTextColor: Colors.white,
-        onConfirm: () async {
-          final res = await APIManager.deleteAccount();
-          PushNotificationService.unsubFcm(
-              "${Get.find<HomeController>().userInfo.value.data?.Id}");
-          Get.find<AuthService>().logOutUser();
-          Get.find<HomeController>().userInfoAPI();
-          Get.find<HomeController>().changeTabIndex(0);
-          Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
-        },
-        onCancel: () {
-          Get.back(); // Close the dialog
-        },
+      Get.dialog(
+        useSafeArea: true,
+        Center(
+          child: Container(
+            padding: EdgeInsets.all(16.kh),
+            height: 212.kh,
+            width: 80.w,
+            decoration: BoxDecoration(
+              color: ColorUtil.kWhiteColor,
+              borderRadius: BorderRadius.circular(8.kh),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                GestureDetector(
+                  onTap: () => Get.back(),
+                  child: Container(
+                    alignment: Alignment.centerRight,
+                    child: const Icon(Icons.close),
+                  ),
+                ),
+                Text(
+                  Strings.deleteAccount,
+                  style: TextStyleUtil.k18Semibold(),
+                  textAlign: TextAlign.left,
+                ).paddingSymmetric(vertical: 4.kh),
+                Text(
+                  Strings.areYouSureYouWantToDeleteYourAcc,
+                  style: TextStyleUtil.k14Regular(
+                    color: ColorUtil.kBlack04,
+                  ),
+                  textAlign: TextAlign.left,
+                ).paddingOnly(bottom: 40.kh),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    GreenPoolButton(
+                      onPressed: () {
+                        Get.back(); // Close the dialog
+                      },
+                      height: 40.kh,
+                      width: 124.kw,
+                      label: Strings.cancel,
+                      fontSize: 14.kh,
+                      isBorder: true,
+                      padding: const EdgeInsets.all(8),
+                    ),
+                    GreenPoolButton(
+                      onPressed: () async {
+                        final res = await APIManager.deleteAccount();
+                        PushNotificationService.unsubFcm(
+                            "${Get.find<HomeController>().userInfo.value.data?.Id}");
+                        Get.find<AuthService>().logOutUser();
+                        Get.find<HomeController>().userInfoAPI();
+                        Get.find<HomeController>().changeTabIndex(0);
+                        Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
+                      },
+                      height: 40.kh,
+                      width: 124.kw,
+                      label: Strings.delete,
+                      fontSize: 14.kh,
+                      padding: const EdgeInsets.all(8),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
       );
+
+      // Get.defaultDialog(
+      //   title: "Delete Account",
+      //   middleText: "Are you sure you want to delete your account?",
+      //   textCancel: "Cancel",
+      //   textConfirm: "Delete",
+      //   confirmTextColor: Colors.white,
+      //   onConfirm: () async {
+      //     final res = await APIManager.deleteAccount();
+      //     PushNotificationService.unsubFcm(
+      //         "${Get.find<HomeController>().userInfo.value.data?.Id}");
+      //     Get.find<AuthService>().logOutUser();
+      //     Get.find<HomeController>().userInfoAPI();
+      //     Get.find<HomeController>().changeTabIndex(0);
+      //     Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
+      //   },
+      //   onCancel: () {
+      //     Get.back(); // Close the dialog
+      //   },
+      // );
     } catch (e) {
       debugPrint(e.toString());
     }

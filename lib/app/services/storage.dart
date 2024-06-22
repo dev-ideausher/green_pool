@@ -12,8 +12,6 @@ class GetStorageService extends GetxService {
   Future<GetStorageService> initState() async {
     await GetStorage.init('runData');
     intialiseIfNull();
-    // Get.put(ProfileController());
-    // Get.find<GetStorageService>().isPinkMode = isPinkMode;
     return this;
   }
 
@@ -40,7 +38,7 @@ class GetStorageService extends GetxService {
   set isPinkMode(bool val) => _runData.write('isPinkMode', val);
 
   bool get profileStatus => _runData.read('profileStatus') ?? false;
-  set setProfileStatus(bool val) => _runData.write('profileStatus', val);
+  set profileStatus(bool val) => _runData.write('profileStatus', val);
 
   String get getFirebaseUid => _runData.read('firebaseUid') ?? '';
   set setFirebaseUid(String val) => _runData.write('firebaseUid', val);

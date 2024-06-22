@@ -11,8 +11,6 @@ import 'package:green_pool/app/services/gp_util.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../../data/matching_rides_model.dart';
-import '../../../data/user_info_model.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/auth.dart';
 import '../../../services/colors.dart';
@@ -22,8 +20,6 @@ import '../../../services/storage.dart';
 import 'package:path/path.dart' as path;
 import 'package:dio/dio.dart' as dio;
 
-import '../../../services/text_style_util.dart';
-import '../../profile/controllers/profile_controller.dart';
 import 'city_list.dart';
 
 class RiderProfileSetupController extends GetxController {
@@ -146,6 +142,7 @@ class RiderProfileSetupController extends GetxController {
 
   //
   Future<void> userDetailsAPI() async {
+    final storageService = Get.find<GetStorageService>();
     final File pickedImageFile = File(selectedProfileImagePath.value!.path);
     final File pickedIDFile = File(selectedIDImagePath.value!.path);
     String extension = pickedImageFile.path.split('.').last;
@@ -183,9 +180,9 @@ class RiderProfileSetupController extends GetxController {
       final responses = await APIManager.userDetails(body: userData);
 
       showMySnackbar(msg: responses.data['message']);
-      Get.find<GetStorageService>().setUserName = fullName.text;
-      Get.find<GetStorageService>().isLoggedIn = true;
-      Get.find<GetStorageService>().setProfileStatus = true;
+      storageService.setUserName = fullName.text;
+      storageService.isLoggedIn = true;
+      storageService.profileStatus = true;
       Get.find<HomeController>().userInfoAPI();
       Get.offNamed(Routes.EMERGENCY_CONTACTS,
           arguments: {'fromNavBar': fromNavBar, 'isDriver': false},

@@ -15,8 +15,6 @@ import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
 import '../../../services/text_style_util.dart';
 import '../../../components/upload_add_picture.dart';
-import '../controllers/city_list.dart';
-import '../controllers/city_list.dart';
 import '../controllers/rider_profile_setup_controller.dart';
 
 class RiderProfileSetupView extends GetView<RiderProfileSetupController> {

@@ -379,4 +379,8 @@ class RiderStartRideMapController extends GetxController {
   sos() {
     Get.dialog(useSafeArea: true, const SosDialog());
   }
+
+  void openGoogleMaps() {
+    GpUtil.openGoogleMap(destinationLat.value, destinationLong.value);
+  }
 }

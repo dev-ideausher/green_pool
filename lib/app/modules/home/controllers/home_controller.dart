@@ -43,9 +43,9 @@ class HomeController extends GetxController {
   Future<void> onInit() async {
     super.onInit();
     try {
-      await userInfoAPI();
       latitude.value = await LocationService().getLatitude();
       longitude.value = await LocationService().getLongitude();
+      await userInfoAPI();
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -82,19 +82,31 @@ class HomeController extends GetxController {
 
   userInfoAPI() async {
     final storageService = Get.find<GetStorageService>();
+
+    // Check the current location permission status
     LocationPermission permission;
     permission = await Geolocator.checkPermission();
 
+    // Check if the user is logged in
     if (storageService.isLoggedIn == true) {
       try {
         final response = await APIManager.getUserByID();
         var data = jsonDecode(response.toString());
+        //update the user info
         userInfo.value = UserInfoModel.fromJson(data);
         userInfo.refresh();
+
+        // Subscribe to FCM notifications using the user ID
         PushNotificationService.subFcm("${userInfo.value.data?.Id}");
+
+        // Update the pink mode status from storage service
         isPinkModeOn.value = storageService.isPinkMode;
         print(storageService.encjwToken);
+
+        //method to handle location changes
         onChangeLocation();
+
+        // Check and request location permission if necessary
         if (permission == LocationPermission.denied ||
             permission == LocationPermission.unableToDetermine) {
           Get.to(const PermissionsLocation());
@@ -105,6 +117,7 @@ class HomeController extends GetxController {
                 longitude.value = value.longitude,
               });
         }
+        // Setup message notifications
         await setupMessage();
       } catch (e) {
         debugPrint(e.toString());
@@ -142,6 +155,8 @@ class HomeController extends GetxController {
       if (permission == LocationPermission.always ||
           permission == LocationPermission.whileInUse) {
         Get.until((route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
+        latitude.value = await LocationService().getLatitude();
+        longitude.value = await LocationService().getLongitude();
         await setupMessage();
         return Future.error('Location permissions are granted');
       }

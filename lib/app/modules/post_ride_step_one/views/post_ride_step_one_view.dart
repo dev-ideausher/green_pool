@@ -23,7 +23,7 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
   Widget build(BuildContext context) {
     print(Get.find<HomeController>().userInfo.value.data?.Id ?? "");
     return Scaffold(
-      appBar: GreenPoolAppBar(
+      appBar: const GreenPoolAppBar(
         title: Text('Post a Ride'),
       ),
       resizeToAvoidBottomInset: false,
@@ -104,7 +104,7 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
                 suffix: controller.isStop1Added.value
                     ? InkWell(
                         onTap: () => controller.removeStop1(),
-                        child: Icon(Icons.cancel))
+                        child: const Icon(Icons.cancel))
                     : SvgPicture.asset(
                         ImageConstant.svgIconReorder,
                         colorFilter: ColorFilter.mode(
@@ -139,7 +139,7 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
                 suffix: controller.isStop2Added.value
                     ? InkWell(
                         onTap: () => controller.removeStop2(),
-                        child: Icon(Icons.cancel))
+                        child: const Icon(Icons.cancel))
                     : SvgPicture.asset(
                         ImageConstant.svgIconReorder,
                         colorFilter: ColorFilter.mode(

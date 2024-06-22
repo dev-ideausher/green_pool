@@ -28,7 +28,7 @@ class StartRideView extends GetView<StartRideController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const GreenPoolAppBar(),
+      // appBar: const GreenPoolAppBar(),
       body: Obx(
         () => controller.isLoad.value
             ? const GpProgress()
@@ -53,13 +53,50 @@ class StartRideView extends GetView<StartRideController> {
                       color: ColorUtil.kSecondary01,
                       points: controller.polylineCoordinates)
                 },
-              ).paddingOnly(
-                bottom: controller.myRidesModel.value.driverBookingDetails
-                            ?.isStarted ??
-                        false
-                    ? 325.kh
-                    : 290.kh),
+              ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
+      floatingActionButton: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              FloatingActionButton(
+                shape: const CircleBorder(),
+                backgroundColor: ColorUtil.kWhiteColor,
+                onPressed: () {
+                  Get.back();
+                },
+                child: Icon(
+                  Icons.arrow_back_rounded,
+                  color: ColorUtil.kBlack01,
+                  size: 24.kh,
+                ),
+              ).paddingOnly(bottom: 4.kh, left: 24.kw),
+              FloatingActionButton(
+                shape: const CircleBorder(),
+                backgroundColor: ColorUtil.kBlueColor,
+                tooltip: Strings.openGoogleMaps,
+                onPressed: () {
+                  controller.openGoogleMaps();
+                },
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.directions_outlined,
+                        color: ColorUtil.kWhiteColor, size: 28.kh),
+                  ],
+                ),
+              ).paddingOnly(bottom: 4.kh),
+            ],
+          ),
+          Text(Strings.openGoogleMaps,
+              style: TextStyleUtil.k12Bold(
+                  color: ColorUtil.kBlueColor, fontWeight: FontWeight.w700)),
+        ],
+      ).paddingOnly(top: 8.kh),
       bottomSheet: Obx(
         () => controller.isLoad.value
             ? const GpProgress()

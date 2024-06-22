@@ -5,7 +5,6 @@ import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../constants/image_constant.dart';
-import '../../../res/strings.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/colors.dart';
 import '../../../services/storage.dart';
@@ -17,6 +16,7 @@ class WelcomeTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(builder: (controller) {
+      final storageService = Get.find<GetStorageService>();
       return Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -32,11 +32,11 @@ class WelcomeTile extends StatelessWidget {
                         style: TextStyleUtil.k24Heading700(),
                       ),
                       TextSpan(
-                        text: Get.find<GetStorageService>().isLoggedIn
+                        text: storageService.isLoggedIn
                             ? " ${controller.userInfo.value.data?.fullName ?? "..."}"
                             : "",
                         style: TextStyleUtil.k24Heading700(
-                            color: Get.find<GetStorageService>().isPinkMode
+                            color: storageService.isPinkMode
                                 ? ColorUtil.kPrimaryPinkMode
                                 : ColorUtil.kPrimary01),
                       ),
@@ -47,7 +47,7 @@ class WelcomeTile extends StatelessWidget {
             ],
           ),
           Visibility(
-            visible: Get.find<GetStorageService>().isLoggedIn,
+            visible: storageService.isLoggedIn,
             child: GestureDetector(
                 onTap: () {
                   Get.toNamed(Routes.NOTIFICATIONS);

@@ -514,4 +514,14 @@ class StartRideController extends GetxController {
     myRidesModel.refresh();
     getButtonLabel();
   }
+
+  void openGoogleMaps() {
+    GpUtil.openGoogleMap(
+        myRidesModel
+                .value.driverBookingDetails?.destination?.coordinates?.last ??
+            0.0,
+        myRidesModel
+                .value.driverBookingDetails?.destination?.coordinates?.first ??
+            0.0);
+  }
 }

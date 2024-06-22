@@ -10,6 +10,7 @@ import 'package:green_pool/app/modules/my_rides_page/views/my_rides_page_view.da
 import 'package:green_pool/app/modules/profile/views/profile_view.dart';
 import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
+import 'package:green_pool/app/services/snackbar.dart';
 import 'package:green_pool/app/services/storage.dart';
 
 import '../../../services/colors.dart';
@@ -19,6 +20,7 @@ class BottomNavigationView extends GetView<HomeController> {
   const BottomNavigationView({super.key});
   @override
   Widget build(BuildContext context) {
+    final isPinkModeOn = Get.find<HomeController>().isPinkModeOn.value;
     return PopScope(
       canPop: controller.canPop,
       onPopInvoked: (didPop) {
@@ -32,7 +34,7 @@ class BottomNavigationView extends GetView<HomeController> {
       child: Scaffold(
         bottomNavigationBar: Obx(
           () => BottomNavigationBar(
-              selectedLabelStyle: Get.find<HomeController>().isPinkModeOn.value
+              selectedLabelStyle: isPinkModeOn
                   ? TextStyleUtil.k12Semibold(
                       color: ColorUtil.kPrimary3PinkMode)
                   : TextStyleUtil.k12Semibold(color: ColorUtil.kSecondary01),
@@ -43,18 +45,28 @@ class BottomNavigationView extends GetView<HomeController> {
               currentIndex: controller.selectedIndex.value,
               enableFeedback: true,
               unselectedItemColor: ColorUtil.kBlack05,
-              selectedItemColor: Get.find<HomeController>().isPinkModeOn.value
+              selectedItemColor: isPinkModeOn
                   ? ColorUtil.kPrimary3PinkMode
                   : ColorUtil.kSecondary01,
               onTap: Get.find<GetStorageService>().isLoggedIn
-                  ? (index) {
-                      controller.changeTabIndex(index);
-                      // controller.pageController?.animateToPage(
-                      //   index,
-                      //   duration: const Duration(milliseconds: 1),
-                      //   curve: Curves.easeIn,
-                      // );
-                    }
+                  ? Get.find<GetStorageService>().profileStatus
+                      ? (index) {
+                          controller.changeTabIndex(index);
+                          // controller.pageController?.animateToPage(
+                          //   index,
+                          //   duration: const Duration(milliseconds: 1),
+                          //   curve: Curves.easeIn,
+                          // );
+                        }
+                      : (index) {
+                          if (index != 0) {
+                            Get.toNamed(Routes.RIDER_PROFILE_SETUP,
+                                arguments: true);
+                            showMySnackbar(
+                                msg:
+                                    Strings.pleaseCompleteProfileSetup);
+                          }
+                        }
                   : (index) {
                       if (index != 0) {
                         Get.toNamed(Routes.LOGIN,
@@ -66,7 +78,7 @@ class BottomNavigationView extends GetView<HomeController> {
                   activeIcon: SvgPicture.asset(
                     ImageConstant.svgNavHomeFilled,
                     colorFilter: ColorFilter.mode(
-                        Get.find<HomeController>().isPinkModeOn.value
+                        isPinkModeOn
                             ? ColorUtil.kPrimary3PinkMode
                             : ColorUtil.kSecondary01,
                         BlendMode.srcIn),
@@ -78,7 +90,7 @@ class BottomNavigationView extends GetView<HomeController> {
                   activeIcon: SvgPicture.asset(
                     ImageConstant.svgNavCarFilled,
                     colorFilter: ColorFilter.mode(
-                        Get.find<HomeController>().isPinkModeOn.value
+                        isPinkModeOn
                             ? ColorUtil.kPrimary3PinkMode
                             : ColorUtil.kSecondary01,
                         BlendMode.srcIn),
@@ -90,7 +102,7 @@ class BottomNavigationView extends GetView<HomeController> {
                   activeIcon: SvgPicture.asset(
                     ImageConstant.svgNavMessagesFilled,
                     colorFilter: ColorFilter.mode(
-                        Get.find<HomeController>().isPinkModeOn.value
+                        isPinkModeOn
                             ? ColorUtil.kPrimary3PinkMode
                             : ColorUtil.kSecondary01,
                         BlendMode.srcIn),
@@ -102,7 +114,7 @@ class BottomNavigationView extends GetView<HomeController> {
                   activeIcon: SvgPicture.asset(
                     ImageConstant.svgNavProfileFilled,
                     colorFilter: ColorFilter.mode(
-                        Get.find<HomeController>().isPinkModeOn.value
+                        isPinkModeOn
                             ? ColorUtil.kPrimary3PinkMode
                             : ColorUtil.kSecondary01,
                         BlendMode.srcIn),

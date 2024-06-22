@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
+import 'package:green_pool/app/res/strings.dart';
+import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
@@ -26,8 +28,12 @@ class PermissionsLocation extends GetView<HomeController> {
             ),
           ),
           Text(
-            "Enable Location",
+            Strings.enableLocation,
             style: TextStyleUtil.k24Heading600(),
+          ).paddingOnly(bottom: 8.kh),
+          Text(
+            Strings.allowLocationAccess,
+            style: TextStyleUtil.k16Regular(color: ColorUtil.kBlack04),
           ).paddingOnly(bottom: 8.kh),
           const Expanded(child: SizedBox()),
           Center(
@@ -35,7 +41,7 @@ class PermissionsLocation extends GetView<HomeController> {
               onPressed: () {
                 controller.determinePosition();
               },
-              label: "Allow Access",
+              label: Strings.allowAccess,
             ).paddingSymmetric(vertical: 40.kh),
           ),
         ],

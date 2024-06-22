@@ -8,17 +8,13 @@ import 'package:green_pool/app/data/find_ride_model.dart';
 import 'package:green_pool/app/data/post_ride_model.dart';
 import 'package:green_pool/app/services/snackbar.dart';
 
-import '../../../data/user_info_model.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/auth.dart';
-import '../../../services/dio/api_service.dart';
-import '../../../services/storage.dart';
 import '../../home/controllers/home_controller.dart';
-import '../../profile/controllers/profile_controller.dart';
 
 class CreateAccountController extends GetxController {
   RxBool isVisible = false.obs;
-  RxBool isChecked = false.obs;
+  RxBool isTermsAccepted = false.obs;
   bool isDriver = false;
   bool fromNavBar = false;
   final Rx<PostRideModel> postRideModel = PostRideModel().obs;
@@ -62,7 +58,7 @@ class CreateAccountController extends GetxController {
   // }
 
   void toggleCheckbox() {
-    isChecked.value = !isChecked.value;
+    isTermsAccepted.value = !isTermsAccepted.value;
   }
 
   setVisible() {
@@ -163,7 +159,7 @@ class CreateAccountController extends GetxController {
 
   otpAuth() async {
     try {
-      if (isChecked.value == true) {
+      if (isTermsAccepted.value == true) {
         await Get.find<AuthService>()
             .mobileOtp(phoneno: countryCode + phoneNumberController.text);
 
@@ -200,71 +196,4 @@ class CreateAccountController extends GetxController {
       log("google auth error: $error");
     }
   }
-
-  /*loginAPI() async {
-    try {
-      final response = await APIManager.getLogin();
-      final userInfo = UserInfoModel.fromJson(response.data);
-      Get.find<GetStorageService>().setUserAppId = userInfo.data?.Id;
-      Get.find<GetStorageService>().profilePicUrl =
-          userInfo.data?.profilePic?.url ?? "";
-      Get.find<GetStorageService>().isPinkMode =
-          userInfo.data?.pinkMode ?? false;
-      Get.find<HomeController>().isPinkModeOn.value =
-          userInfo.data?.pinkMode ?? false;
-      //? here if the profileStatus is not true which means it is a new user or the user did not fill the entire user data, so the user will be automatically redirected to the Profile Setup
-      if (fromNavBar) {
-        Get.find<GetStorageService>().isLoggedIn = true;
-        Get.find<GetStorageService>().setProfileStatus = true;
-        Get.find<GetStorageService>().setDriver = isDriver;
-        Get.find<HomeController>().userInfoAPI();
-        if (userInfo.data!.profileStatus!) {
-          Get.find<ProfileController>().userInfo.refresh();
-          Get.back();
-          Get.find<ProfileController>().userInfo.refresh();
-          showMySnackbar(msg: 'Login Successful');
-        } else {
-          Get.offNamed(Routes.VERIFICATION_DONE,
-              arguments: {'fromNavBar': fromNavBar, 'isDriver': false});
-        }
-      } else if (userInfo.status!) {
-        if (Get.find<HomeController>().findingRide.value) {
-          if (userInfo.data!.profileStatus!) {
-            // Get.offNamed(Routes.FIND_RIDE, arguments: isDriver);
-            Get.back();
-          } else {
-            Get.offNamed(Routes.VERIFICATION_DONE, arguments: {
-              'isDriver': isDriver,
-              'fromNavBar': false,
-              'findRideModel': findRideModel.value
-            });
-          }
-        } else {
-          if (userInfo.data!.profileStatus! && userInfo.data!.vehicleStatus!) {
-            Get.offNamed(Routes.POST_RIDE_STEP_TWO,
-                arguments: postRideModel.value);
-          } else {
-            //TODO: what to show when it is a new user but tries to LOGIN directly
-            Get.offNamed(Routes.VERIFICATION_DONE, arguments: {
-              'isDriver': isDriver,
-              'fromNavBar': false,
-              'postRideModel': postRideModel.value
-            });
-          }
-        }
-        Get.find<GetStorageService>().isLoggedIn = true;
-        Get.find<GetStorageService>().setProfileStatus = true;
-        Get.find<GetStorageService>().setDriver = isDriver;
-        Get.find<HomeController>().userInfoAPI();
-      } else {
-        if (isDriver) {
-          Get.offNamed(Routes.PROFILE_SETUP, arguments: false);
-        } else {
-          Get.offNamed(Routes.RIDER_PROFILE_SETUP, arguments: false);
-        }
-      }
-    } catch (e) {
-      debugPrint("login error: $e");
-    }
-  }*/
 }

@@ -32,6 +32,7 @@ extension ColorUtil on BuildContext {
   static Color kBackgroundColor = Colors.grey.shade50;
   static const Color kGreenColor = Color(0xFF34A853);
   static const Color kYellowColor = Color(0xFFF6DD00);
+  static const Color kBlueColor = Color(0xFF4285F4);
 
   static const Color kSecondaryPinkMode = Color(0xffffe5e9);
   static const Color kPrimaryPinkMode = Color(0xffffc0cb);

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:get/get.dart';
+import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:image_picker/image_picker.dart';
@@ -22,7 +23,7 @@ class VehicleSetupView extends GetView<VehicleSetupController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: GreenPoolAppBar(
         title: Text(Strings.vehicleSetup),
       ),
       body: Padding(
@@ -33,7 +34,8 @@ class VehicleSetupView extends GetView<VehicleSetupController> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const RichTextHeading(text: 'Vehicle Photo').paddingOnly(top: 32.kh, bottom: 8.kh),
+                const RichTextHeading(text: 'Vehicle Photo')
+                    .paddingOnly(top: 32.kh, bottom: 8.kh),
                 GestureDetector(
                   onTap: () => Get.to(() => VehiclePictureView(
                         onPressedGallery: () {
@@ -45,9 +47,12 @@ class VehicleSetupView extends GetView<VehicleSetupController> {
                       )),
                   child: Obx(
                     () => Container(
-                      padding: EdgeInsets.symmetric(vertical: 68.kh, horizontal: 76.kw),
+                      padding: EdgeInsets.symmetric(
+                          vertical: 68.kh, horizontal: 76.kw),
                       decoration: BoxDecoration(
-                          border: controller.vehicleImageNotUploaded.value ? Border.all(color: ColorUtil.kError2) : null,
+                          border: controller.vehicleImageNotUploaded.value
+                              ? Border.all(color: ColorUtil.kError2)
+                              : null,
                           color: ColorUtil.kGreyColor,
                           borderRadius: BorderRadius.circular(8.kh)),
                       child: controller.isVehicleImagePicked.value
@@ -57,10 +62,12 @@ class VehicleSetupView extends GetView<VehicleSetupController> {
                           : Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                SvgPicture.asset(ImageConstant.svgIconUpload).paddingOnly(right: 8.kw),
+                                SvgPicture.asset(ImageConstant.svgIconUpload)
+                                    .paddingOnly(right: 8.kw),
                                 Text(
                                   'Upload Photo',
-                                  style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
+                                  style: TextStyleUtil.k14Regular(
+                                      color: ColorUtil.kBlack03),
                                 ),
                               ],
                             ),
@@ -208,7 +215,8 @@ class VehicleSetupView extends GetView<VehicleSetupController> {
                   keyboardType: const TextInputType.numberWithOptions(),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                 ).paddingOnly(bottom: 16.kh),
-                const RichTextHeading(text: 'License Plate').paddingOnly(bottom: 8.kh),
+                const RichTextHeading(text: 'License Plate')
+                    .paddingOnly(bottom: 8.kh),
                 GreenPoolTextField(
                   hintText: 'License plate',
                   controller: controller.licencePlate,
@@ -217,7 +225,8 @@ class VehicleSetupView extends GetView<VehicleSetupController> {
                 ),
                 GreenPoolButton(
                   // onPressed: () async => await controller.vehicleDetailsAPI(),
-                  onPressed: () async => await controller.checkVehicleValidations(),
+                  onPressed: () async =>
+                      await controller.checkVehicleValidations(),
                   label: 'Proceed',
                 ).paddingSymmetric(vertical: 40.kh),
               ],

@@ -7,6 +7,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:green_pool/app/components/common_image_view.dart';
 import 'package:green_pool/app/components/green_pool_divider.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
+import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
@@ -23,7 +24,8 @@ class RatingDriverSideView extends GetView<RatingDriverSideController> {
       body: Center(
         child: Column(
           children: [
-            SvgPicture.asset(ImageConstant.svgRideCompleted).paddingOnly(top: 40.kh, bottom: 24.kh),
+            SvgPicture.asset(ImageConstant.svgRideCompleted)
+                .paddingOnly(top: 40.kh, bottom: 24.kh),
             Text(
               "Ride Completed!",
               style: TextStyleUtil.k24Heading600(),
@@ -37,7 +39,10 @@ class RatingDriverSideView extends GetView<RatingDriverSideController> {
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
-                    color: ColorUtil.kWhiteColor, borderRadius: BorderRadius.only(topLeft: Radius.circular(40.kh), topRight: Radius.circular(40.kh))),
+                    color: ColorUtil.kWhiteColor,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(40.kh),
+                        topRight: Radius.circular(40.kh))),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -49,15 +54,26 @@ class RatingDriverSideView extends GetView<RatingDriverSideController> {
                     ),
                     Expanded(
                       child: ListView.builder(
-                          itemCount:  controller.myRidesModel.value.driverBookingDetails!.riderBookingDetails!.length,
+                          itemCount: controller
+                              .myRidesModel
+                              .value
+                              .driverBookingDetails!
+                              .riderBookingDetails!
+                              .length,
                           itemBuilder: (context, index) {
-                            final riderDetails = controller.myRidesModel.value.driverBookingDetails!.riderBookingDetails?[index].riderDetails;
+                            final riderDetails = controller
+                                .myRidesModel
+                                .value
+                                .driverBookingDetails!
+                                .riderBookingDetails?[index]
+                                .riderDetails;
                             return Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(riderDetails?.fullName ?? ""),
                                     Container(
@@ -67,15 +83,18 @@ class RatingDriverSideView extends GetView<RatingDriverSideController> {
                                           shape: BoxShape.circle,
                                         ),
                                         child: ClipRRect(
-                                          borderRadius: BorderRadius.circular(8.kh),
+                                          borderRadius:
+                                              BorderRadius.circular(8.kh),
                                           child: CommonImageView(
-                                            url: riderDetails?.profilePic?.url ?? "",
+                                            url:
+                                                riderDetails?.profilePic?.url ??
+                                                    "",
                                           ),
                                         )),
                                   ],
                                 ),
                                 RatingBar(
-                                  initialRating:  controller.rating.value,
+                                  initialRating: controller.rating.value,
                                   allowHalfRating: true,
                                   itemSize: 28.kh,
                                   glow: false,
@@ -94,10 +113,13 @@ class RatingDriverSideView extends GetView<RatingDriverSideController> {
                                     ),
                                   ),
                                   onRatingUpdate: (double? value) {
-                                    controller.rating.value = value??4.5;
+                                    controller.rating.value = value ?? 4.5;
+                                    controller.debouncer(() => controller
+                                        .rateUserAPI("${riderDetails?.Id}"));
                                   },
                                 ),
-                                const GreenPoolDivider().paddingOnly(top: 16.kh, bottom: 16.kh),
+                                const GreenPoolDivider()
+                                    .paddingOnly(top: 16.kh, bottom: 16.kh),
                               ],
                             );
                           }),
@@ -105,14 +127,16 @@ class RatingDriverSideView extends GetView<RatingDriverSideController> {
                     GreenPoolButton(
                       onPressed: () {
                         //?index in riders
-                        controller.rateUserAPI("${controller.myRidesModel.value.driverBookingDetails!.riders?[0]}");
+                        // controller.rateUserAPI(
+                        //     "${controller.myRidesModel.value.driverBookingDetails!.riders?[0]}");
+                        Get.until((route) =>
+                            Get.currentRoute == Routes.BOTTOM_NAVIGATION);
                       },
                       label: "Continue",
                     ).paddingOnly(top: 40.kh, bottom: 10.kh),
                     12.kheightBox,
                   ],
                 ).paddingSymmetric(horizontal: 16.kw),
-
               ),
             )
           ],

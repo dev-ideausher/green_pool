@@ -87,6 +87,7 @@ class MyRidesRequestController extends GetxController {
       final rejectRiderResponse =
           await APIManager.patchRejectRiderRequest(body: rideData);
       var data = jsonDecode(rejectRiderResponse.toString());
+      allConfirmRequestAPI();
       Get.back();
       showMySnackbar(msg: 'Request rejected successfully!');
     } catch (e) {

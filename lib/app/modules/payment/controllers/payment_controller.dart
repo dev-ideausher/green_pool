@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/modules/my_rides_one_time/controllers/my_rides_one_time_controller.dart';
+import 'package:green_pool/app/modules/rider_my_ride_request/controllers/rider_my_ride_request_controller.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/dialog_helper.dart';
 
@@ -99,6 +100,8 @@ class PaymentController extends GetxController {
       final response = await APIManager.postSendRequestToDriver(body: rideData);
       if (response.data['status']) {
         DialogHelper.paymentSuccessfull();
+        Get.find<MyRidesOneTimeController>().myRidesAPI();
+        Get.find<RiderMyRideRequestController>().allRiderSendRequestAPI();
       } else {
         showMySnackbar(msg: response.data['message']);
       }
@@ -113,6 +116,8 @@ class PaymentController extends GetxController {
           body: {"ridePostId": ridePostId, "price": price});
       if (response.data['status']) {
         Get.bottomSheet(const RequestAcceptedBottom());
+        Get.find<RiderMyRideRequestController>().allRiderConfirmRequestAPI();
+        Get.find<MyRidesOneTimeController>().myRidesAPI();
       } else {
         showMySnackbar(msg: response.data['message']);
       }

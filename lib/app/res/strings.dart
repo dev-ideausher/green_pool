@@ -350,5 +350,21 @@ class Strings {
 
   static String setLocation = "Set location";
 
-  static String selectOriginOrDestination = "You want to select this location as your Pickup point or Drop off point?";
+  static String selectOriginOrDestination =
+      "You want to select this location as your Pickup point or Drop off point?";
+
+  static String pleaseCompleteProfileSetup =
+      "To proceed please complete your profile setup";
+
+  static String areYouSureYouWantToDeleteYourAcc =
+      "Are you sure you want to delete your account?";
+
+  static String enableLocation = "Enable Location";
+
+  static String allowLocationAccess =
+      "Please allow Greenpool acces to location services.";
+
+  static var allowAccess = "Allow Access";
+
+  static var openGoogleMaps = "Open Google Maps";
 }
