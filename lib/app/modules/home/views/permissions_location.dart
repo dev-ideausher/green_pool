@@ -33,7 +33,8 @@ class PermissionsLocation extends GetView<HomeController> {
           ).paddingOnly(bottom: 8.kh),
           Text(
             Strings.allowLocationAccess,
-            style: TextStyleUtil.k16Regular(color: ColorUtil.kBlack04),
+            style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack04),
+            textAlign: TextAlign.center,
           ).paddingOnly(bottom: 8.kh),
           const Expanded(child: SizedBox()),
           Center(

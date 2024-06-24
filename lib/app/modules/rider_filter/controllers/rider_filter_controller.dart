@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:get/get.dart';
 import 'package:green_pool/app/services/dio/api_service.dart';
@@ -11,7 +10,7 @@ class RiderFilterController extends GetxController {
   RxBool earlyDeparture = false.obs;
   RxBool lowestPrice = false.obs;
   RxBool closeToDeparture = false.obs;
-  RxBool closeToarrival = false.obs;
+  RxBool closeToArrival = false.obs;
   RxBool appreciatesConvo = false.obs;
   RxBool enjoysMusic = false.obs;
   RxBool smokeFree = false.obs;
@@ -21,6 +20,7 @@ class RiderFilterController extends GetxController {
   RxBool babySeat = false.obs;
   RxBool heatedSeats = false.obs;
   bool preferenceAdded = false;
+  bool sortByAdded = false;
   var matchingRidesModel = MatchingRidesModel().obs;
 
   @override
@@ -34,7 +34,7 @@ class RiderFilterController extends GetxController {
     earlyDeparture.value = false;
     lowestPrice.value = false;
     closeToDeparture.value = false;
-    closeToarrival.value = false;
+    closeToArrival.value = false;
     appreciatesConvo.value = false;
     enjoysMusic.value = false;
     smokeFree.value = false;
@@ -47,20 +47,36 @@ class RiderFilterController extends GetxController {
 
   filterRideAPI() async {
     String queryParam = "";
-    var preferencesData = {
-      "AppreciatesConversation": appreciatesConvo.value,
-      "EnjoysMusic": enjoysMusic.value,
-      "CoolingOrHeating": coolOrHeat.value,
-      "SmokeFree": smokeFree.value,
-      "PetFriendly": petFriendly.value,
-      "WinterTires": winterTires.value,
-      "BabySeats": babySeat.value,
-      "HeatedSeats": heatedSeats.value
-    };
-    final Map<String, dynamic> preferences = {
-      "sortByCloseToDeparture": closeToDeparture.value,
-      "preferences": jsonEncode(preferencesData)
-    };
+
+    Map<String, dynamic> getPreferencesData() {
+      final Map<String, dynamic> preferencesData = {};
+
+      if (appreciatesConvo.value)
+        preferencesData["AppreciatesConversation"] = true;
+      if (enjoysMusic.value) preferencesData["EnjoysMusic"] = true;
+      if (coolOrHeat.value) preferencesData["CoolingOrHeating"] = true;
+      if (smokeFree.value) preferencesData["SmokeFree"] = true;
+      if (petFriendly.value) preferencesData["PetFriendly"] = true;
+      if (winterTires.value) preferencesData["WinterTires"] = true;
+      if (babySeat.value) preferencesData["BabySeats"] = true;
+      if (heatedSeats.value) preferencesData["HeatedSeats"] = true;
+
+      return preferencesData;
+    }
+
+    Map<String, dynamic> getSortByFilters() {
+      final Map<String, dynamic> sortType = {};
+
+      if (closeToArrival.value) sortType["sortByCloseToArrival"] = true;
+      if (closeToDeparture.value) sortType["sortByCloseToDeparture"] = true;
+      if (earlyDeparture.value) sortType["sortByDeparture"] = true;
+      if (lowestPrice.value) sortType["sortByPrice"] = true;
+
+      return sortType;
+    }
+
+    String sortTypeJson = jsonEncode(getSortByFilters());
+    String preferencesDataJson = jsonEncode(getPreferencesData());
 
     if (appreciatesConvo.value == true ||
         enjoysMusic.value == true ||
@@ -75,55 +91,30 @@ class RiderFilterController extends GetxController {
       preferenceAdded = false;
     }
 
-    if (closeToarrival.value == true) {
-      if (closeToDeparture.value == true) {
-        if (preferenceAdded) {
-          queryParam = preferences.toString() +
-              "&sortBycloseToArrival=${closeToarrival.value}&sortByCloseToDeparture=${closeToDeparture.value}";
-        } else {
-          queryParam =
-              "sortBycloseToArrival=${closeToarrival.value}&sortByCloseToDeparture=${closeToDeparture.value}";
-        }
-      } else {
-        if (preferenceAdded) {
-          queryParam = preferences.toString() +
-              "&sortBycloseToArrival=${closeToarrival.value}";
-        } else {
-          queryParam = "sortBycloseToArrival=${closeToarrival.value}";
-        }
-      }
-    } else if (closeToDeparture.value == true) {
-      if (closeToarrival.value == true) {
-        if (preferenceAdded) {
-          queryParam = preferences.toString() +
-              "&sortBycloseToArrival=${closeToarrival.value}&sortByCloseToDeparture=${closeToDeparture.value}";
-        } else {
-          queryParam =
-              "sortBycloseToArrival=${closeToarrival.value}&sortByCloseToDeparture=${closeToDeparture.value}";
-        }
-      } else {
-        if (preferenceAdded) {
-          queryParam = preferences.toString() +
-              "&sortByCloseToDeparture=${closeToDeparture.value}";
-        } else {
-          queryParam = "sortByCloseToDeparture=${closeToDeparture.value}";
-        }
-      }
+    if (closeToArrival.value ||
+        closeToDeparture.value ||
+        earlyDeparture.value ||
+        lowestPrice.value) {
+      sortByAdded = true;
     } else {
-      if (preferenceAdded) {
-        queryParam = preferences.toString();
-      } else {
-        queryParam = "";
-      }
+      sortByAdded = false;
+    }
+
+    if (sortByAdded && preferenceAdded) {
+      queryParam =
+          "?sortType=${sortTypeJson}&preferences=${preferencesDataJson}";
+    } else if (sortByAdded) {
+      queryParam = "?sortType=${sortTypeJson}";
+    } else {
+      queryParam = "?preferences=${preferencesDataJson}";
     }
 
     try {
       final response = await APIManager.postMatchngRides(
-          body: rideDetails, queryParam: preferences);
+          body: rideDetails, queryParam: queryParam);
       var data = jsonDecode(response.toString());
       matchingRidesModel.value = MatchingRidesModel.fromJson(data);
       Get.back(result: matchingRidesModel.value);
-      log("filter resp data: ${data.toString()}");
     } catch (e) {
       throw Exception(e);
     }

@@ -18,7 +18,7 @@ class RatingRiderSideController extends GetxController {
   RxDouble rating = 4.5.obs;
   RxDouble driverRating = 4.5.obs;
   final debouncer = Debouncer(delay: const Duration(milliseconds: 50));
-  RxBool isLoading = false.obs;
+  RxBool isLoading = true.obs;
 
   @override
   void onInit() async {

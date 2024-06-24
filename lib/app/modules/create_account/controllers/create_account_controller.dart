@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/data/find_ride_model.dart';
 import 'package:green_pool/app/data/post_ride_model.dart';
+import 'package:green_pool/app/modules/verify/controllers/verify_controller.dart';
 import 'package:green_pool/app/services/snackbar.dart';
 
 import '../../../routes/app_pages.dart';
@@ -190,8 +191,9 @@ class CreateAccountController extends GetxController {
 
   void googleAuth() async {
     try {
+      Get.lazyPut(() => VerifyController());
       await Get.find<AuthService>().google();
-      // await loginAPI();
+      await Get.find<VerifyController>().loginAPI();
     } catch (error) {
       log("google auth error: $error");
     }

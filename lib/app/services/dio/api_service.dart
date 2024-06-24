@@ -25,9 +25,9 @@ class APIManager {
   static Future<Response> postMatchngRides(
           {required dynamic body, dynamic queryParam}) async =>
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).post(
-          Endpoints.matchingRides,
-          data: jsonEncode(body),
-          queryParameters: queryParam);
+        Endpoints.matchingRides + queryParam,
+        data: jsonEncode(body),
+      );
 
   static Future<Response> postAllRiderSendRequest(
           {required dynamic rideId}) async =>

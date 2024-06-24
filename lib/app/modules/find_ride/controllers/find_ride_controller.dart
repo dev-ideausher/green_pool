@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/data/find_ride_model.dart';
+import 'package:green_pool/app/data/location_model.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/snackbar.dart';
@@ -34,6 +35,7 @@ class FindRideController extends GetxController {
   double riderDestinationLong = 0.0;
   TextEditingController riderDestinationTextController =
       TextEditingController();
+  RxList<LocationModel> locationModelNames = <LocationModel>[].obs;
 
   // GlobalKey<FormState> validationKey = GlobalKey<FormState>();
   final Rx<MatchingRidesModel> matchingRidesModel = MatchingRidesModel().obs;
@@ -50,8 +52,22 @@ class FindRideController extends GetxController {
     selectedTime.text = TimeOfDay(hour: now.hour + 1, minute: 0)
         .format(Get.context!)
         .toString();
-
     isDriver = Get.arguments;
+    // Get.find<GetStorageService>().locationsName = "";
+    try {
+      if (Get.find<GetStorageService>().locationsName.toString().isNotEmpty) {
+        print("location Names" +
+            Get.find<GetStorageService>().locationsName.toString());
+        List<dynamic> locationListMap =
+            jsonDecode(Get.find<GetStorageService>().locationsName);
+
+        locationModelNames.value = locationListMap
+            .map((json) => LocationModel.fromJson(json as Map<String, dynamic>))
+            .toList();
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 
   // @override
@@ -68,6 +84,23 @@ class FindRideController extends GetxController {
     if (Get.find<GetStorageService>().isLoggedIn) {
       if (Get.find<HomeController>().userInfo.value.data?.profileStatus ==
           true) {
+        LocationModel locationModel = LocationModel(
+            originLocation: LocationModelOriginLocation(
+              lat: riderOriginLat,
+              long: riderOriginLong,
+              nameOfLocation: riderOriginTextController.value.text,
+            ),
+            destinationLocation: LocationModelDestinationLocation(
+              lat: riderDestinationLat,
+              long: riderDestinationLong,
+              nameOfLocation: riderDestinationTextController.value.text,
+            ));
+
+        locationModelNames.add(locationModel);
+        String pickUpDropoffData = jsonEncode(locationModelNames);
+
+        Get.find<GetStorageService>().locationsName = pickUpDropoffData;
+
         await getMatchingRidesAPI();
       } else {
         Get.toNamed(Routes.RIDER_PROFILE_SETUP, arguments: false);
@@ -124,8 +157,8 @@ class FindRideController extends GetxController {
 
     try {
       final findRideDataJson = findRideData.toJson();
-      final response =
-          await APIManager.postMatchngRides(body: findRideDataJson);
+      final response = await APIManager.postMatchngRides(
+          body: findRideDataJson, queryParam: "");
       var data = jsonDecode(response.toString());
       matchingRidesModel.value = MatchingRidesModel.fromJson(data);
       Get.toNamed(Routes.MATCHING_RIDES, arguments: {
@@ -285,28 +318,35 @@ class FindRideController extends GetxController {
     return null;
   }
 
-  void selectLocation(index) {
-    final storageService = Get.find<GetStorageService>();
-    DialogHelper.selectOriginOrDestination(() {
-                                  //on pressed pickup
-                                  riderOriginLat =
-                                      storageService.locations[index][0];
-                                  riderOriginLong =
-                                      storageService.locations[index][1];
-                                  riderOriginTextController.text =
-                                      storageService.locations[index][2];
-                                  Get.back();
-                                  setActiveState();
-                                }, () {
-                                  //on pressed drop off
-                                  riderDestinationLat =
-                                      storageService.locations[index][0];
-                                  riderDestinationLong =
-                                      storageService.locations[index][1];
-                                  riderDestinationTextController.text =
-                                      storageService.locations[index][2];
-                                  Get.back();
-                                  setActiveState();
-                                });
+  void setLocation(int index) {
+    riderOriginLat = locationModelNames?[index]?.originLocation?.lat ?? 0.0;
+    riderOriginLong = locationModelNames?[index]?.originLocation?.long ?? 0.0;
+    riderOriginTextController.text =
+        locationModelNames?[index]?.originLocation?.nameOfLocation ?? "";
+
+    riderDestinationLat =
+        locationModelNames?[index]?.destinationLocation?.lat ?? 0.0;
+    riderDestinationLong =
+        locationModelNames?[index]?.destinationLocation?.long ?? 0.0;
+    riderDestinationTextController.text =
+        locationModelNames?[index]?.destinationLocation?.nameOfLocation ?? "";
   }
+
+  // void selectLocation(index) {
+  //   final storageService = Get.find<GetStorageService>();
+  //   DialogHelper.selectOriginOrDestination(() {
+  //     //on pressed pickup
+  //     riderOriginLat = storageService.locations[index][0];
+  //     riderOriginLong = storageService.locations[index][1];
+  //     riderOriginTextController.text = storageService.locations[index][2];
+  //     Get.back();
+  //     setActiveState();
+  //   }, () {
+  //     //on pressed drop off
+  //     riderDestinationLat = storageService.locations[index][0];
+  //     riderDestinationLong = storageService.locations[index][1];
+  //     riderDestinationTextController.text = storageService.locations[index][2];
+  //     Get.back();
+  //     setActiveState();
+  //   });
 }

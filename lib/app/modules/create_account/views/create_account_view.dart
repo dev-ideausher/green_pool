@@ -65,7 +65,7 @@ class CreateAccountView extends GetView<CreateAccountController> {
                   padding: const EdgeInsets.all(0),
                   initialSelection: 'CA',
                   showFlag: true,
-                  countryFilter: const ['CA', 'IN'],
+                  countryFilter: const ['CA', 'IN', 'US'],
                   searchDecoration: InputDecoration(
                     focusColor: ColorUtil.kNeutral6,
                     focusedBorder: OutlineInputBorder(

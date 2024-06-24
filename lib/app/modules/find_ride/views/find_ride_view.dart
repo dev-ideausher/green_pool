@@ -161,7 +161,7 @@ class FindRideView extends GetView<FindRideController> {
             ).paddingOnly(bottom: 16.kh),
             Obx(
               () => Visibility(
-                visible: Get.find<GetStorageService>().locations.isNotEmpty,
+                visible: controller.locationModelNames.isNotEmpty,
                 child: Text(
                   Strings.previouslySearched,
                   style: TextStyleUtil.k14Semibold(),
@@ -170,12 +170,11 @@ class FindRideView extends GetView<FindRideController> {
             ),
             Obx(
               () => Visibility(
-                  visible: Get.find<GetStorageService>().locations.isNotEmpty,
+                  visible: controller.locationModelNames.isNotEmpty,
                   child: SizedBox(
                     height: 180.kh,
                     child: ListView.builder(
-                        itemCount:
-                            Get.find<GetStorageService>().locations.length,
+                        itemCount: controller.locationModelNames.length,
                         itemBuilder: (context, index) {
                           final storageService = Get.find<GetStorageService>();
                           return Container(
@@ -192,9 +191,11 @@ class FindRideView extends GetView<FindRideController> {
                                 Icons.history,
                                 color: ColorUtil.kNeutral4,
                               ),
-                              title: Text(storageService.locations[index][2]),
+                              title: Text(
+                                  "${controller.locationModelNames?[index]?.originLocation?.nameOfLocation ?? ""} to ${controller.locationModelNames?[index]?.destinationLocation?.nameOfLocation}" ??
+                                      ""),
                               onTap: () {
-                                controller.selectLocation(index);
+                                controller.setLocation(index);
                               },
                             ),
                           ).paddingOnly(bottom: 2.kh);

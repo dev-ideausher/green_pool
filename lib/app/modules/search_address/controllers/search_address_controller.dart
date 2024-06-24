@@ -86,40 +86,6 @@ class SearchAddressController extends GetxController {
     }
   }
 
-  /*bool _isSameLocation(List<dynamic> location1, List<dynamic> location2) {
-    return location1[0] == location2[0] &&
-        location1[1] == location2[1] &&
-        location1[2] == location2[2];
-  }
-
-  Future<List<dynamic>> getLatLong(String placeId) async {
-    final locationList = Get.find<GetStorageService>().locations;
-    String placeApiKey = 'YOUR_GOOGLE_API_KEY';
-    String baseUrl = 'https://maps.googleapis.com/maps/api/place';
-
-    try {
-      String request =
-          '$baseUrl/details/json?place_id=$placeId&key=$placeApiKey';
-      var response = await http.get(Uri.parse(request));
-      final geometry =
-          GoogleLocationModel.fromJson(jsonDecode(response.body)).result;
-      double lat = geometry?.geometry?.location?.lat ?? 0.0;
-      double long = geometry?.geometry?.location?.lng ?? 0.0;
-      String nameOfLocation = geometry?.formattedAddress ?? "";
-      List<dynamic> newLocation = [lat, long, nameOfLocation];
-
-      // Check if the location already exists in the list
-      if (!locationList
-          .any((location) => _isSameLocation(location, newLocation))) {
-        locationList.add(newLocation);
-      }
-      return newLocation;
-    } catch (e) {
-      debugPrint("getLatLong error: $e");
-      throw Exception('Failed to load data');
-    }
-  }*/
-
   Future<void> setLocationData(String placeId) async {
     // set lat and long to origin latlong if isOrigin is true
     final postRideStepOneController = Get.find<PostRideStepOneController>();

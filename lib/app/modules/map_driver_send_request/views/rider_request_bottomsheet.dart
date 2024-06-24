@@ -203,7 +203,7 @@ class RiderRequestBottomsheet extends StatelessWidget {
             ),
             const GreenPoolDivider().paddingOnly(bottom: 16.kh, top: 8.kh),
             GreenPoolButton(
-              onPressed: () => Get.find<MyRidesRequestController>().sendRiderRequestAPI(element!),
+              onPressed: () => Get.find<MyRidesRequestController>().sendRequestToRiderAPI(element!),
               label: Strings.requestRider,
               fontSize: 14.kh,
               height: 40.kh,

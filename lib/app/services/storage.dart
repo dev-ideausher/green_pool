@@ -29,7 +29,10 @@ class GetStorageService extends GetxService {
     _runData.writeIfNull('themeMode', 0);
   }
 
-  RxList<List<dynamic>> locations = <List<dynamic>>[].obs;
+  // RxList<List<dynamic>> locations = <List<dynamic>>[].obs;
+
+  String get locationsName => _runData.read('locationsName') ?? '';
+  set locationsName(String val) => _runData.write('locationsName', val);
 
   bool get isDriver => _runData.read('isDriver') ?? false;
   set setDriver(bool val) => _runData.write('isDriver', val);

@@ -108,7 +108,7 @@ class MyRidesRequestController extends GetxController {
     }
   }
 
-  sendRiderRequestAPI(DriverSendRequestModelData driverSendModelData) async {
+  sendRequestToRiderAPI(DriverSendRequestModelData driverSendModelData) async {
     final dynamic riderNotificationPref =
         driverSendModelData.riderDetails?[0]?.notificationPreferences!.toJson();
 
@@ -119,7 +119,8 @@ class MyRidesRequestController extends GetxController {
         "riderRideId": driverSendModelData.Id,
         "driverRideId": rideDetailId.value.driverRidId,
         "riderName": driverSendModelData.riderDetails?[0]?.fullName,
-        "riderNotificationPreferences": riderNotificationPref
+        "riderNotificationPreferences": riderNotificationPref,
+        "price": driverSendModelData.price
       });
       var data = jsonDecode(sendRiderRequestResponse.toString());
       sendRiderRequestModel.value = SendRiderRequestModel.fromJson(data);

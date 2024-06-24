@@ -154,7 +154,8 @@ class HomeController extends GetxController {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.always ||
           permission == LocationPermission.whileInUse) {
-        Get.until((route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
+        // Get.until((route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
+        Get.back();
         latitude.value = await LocationService().getLatitude();
         longitude.value = await LocationService().getLongitude();
         await setupMessage();

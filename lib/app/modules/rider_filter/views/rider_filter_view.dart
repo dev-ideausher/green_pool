@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/green_pool_divider.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
-import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
@@ -57,9 +56,9 @@ class RiderFilterView extends GetView<RiderFilterController> {
               image: ImageConstant.svgAmenities9,
               text: 'Close to arrival',
               onChanged: (value) {
-                controller.closeToarrival.value = value!;
+                controller.closeToArrival.value = value!;
               },
-              value: controller.closeToarrival.value,
+              value: controller.closeToArrival.value,
             ),
             const GreenPoolDivider().paddingSymmetric(vertical: 16.kh),
             Text(

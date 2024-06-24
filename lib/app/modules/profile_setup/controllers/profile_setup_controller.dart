@@ -216,7 +216,6 @@ class ProfileSetupController extends GetxController
       final responses = await APIManager.userDetails(body: userData);
       showMySnackbar(msg: responses.data['message']);
       storageService.setUserName = fullName.text;
-      Get.find<HomeController>().userInfoAPI();
       storageService.profileStatus = true;
       tabBarController.index = 1;
     } catch (e) {

@@ -56,7 +56,7 @@ class LoginView extends GetView<LoginController> {
                     },
                     padding: const EdgeInsets.all(0),
                     initialSelection: 'CA',
-                    countryFilter: const ['CA', 'IN'],
+                    countryFilter: const ['CA', 'IN', 'US'],
                     showFlag: true,
                     searchDecoration: InputDecoration(
                       focusColor: ColorUtil.kNeutral6,
@@ -145,7 +145,7 @@ class LoginView extends GetView<LoginController> {
                 ).paddingOnly(bottom: 40.kh),
                 Socials(
                   onPressedGoogle: () {
-                   controller.googleAuth();
+                    controller.googleAuth();
                   },
                   onPressedApple: () {
                     controller.appleAuth();
