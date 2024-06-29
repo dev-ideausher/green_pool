@@ -4,9 +4,9 @@
 class HelpModelDataQuesAns {
 /*
 {
-  "question": "refund policy",
+  "question": "refund policy12",
   "answer": "adfsadfad"
-}
+} 
 */
 
   String? question;
@@ -31,26 +31,36 @@ class HelpModelDataQuesAns {
 class HelpModelDataCategory {
 /*
 {
-  "_id": "664601f13ab5113fc9767026",
-  "title": "Refund"
-}
+  "_id": "6666f6a3e8691202eb693e71",
+  "title": "Pyment",
+  "createdAt": "2024-06-10T12:50:43.642Z",
+  "updatedAt": "2024-06-10T12:50:43.642Z"
+} 
 */
 
   String? Id;
   String? title;
+  String? createdAt;
+  String? updatedAt;
 
   HelpModelDataCategory({
     this.Id,
     this.title,
+    this.createdAt,
+    this.updatedAt,
   });
   HelpModelDataCategory.fromJson(Map<String, dynamic> json) {
     Id = json['_id']?.toString();
     title = json['title']?.toString();
+    createdAt = json['createdAt']?.toString();
+    updatedAt = json['updatedAt']?.toString();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['_id'] = Id;
     data['title'] = title;
+    data['createdAt'] = createdAt;
+    data['updatedAt'] = updatedAt;
     return data;
   }
 }
@@ -58,18 +68,20 @@ class HelpModelDataCategory {
 class HelpModelData {
 /*
 {
-  "_id": "664601f13ab5113fc9767026",
+  "_id": "6666f6a3e8691202eb693e71",
   "category": {
-    "_id": "664601f13ab5113fc9767026",
-    "title": "Refund"
+    "_id": "6666f6a3e8691202eb693e71",
+    "title": "Pyment",
+    "createdAt": "2024-06-10T12:50:43.642Z",
+    "updatedAt": "2024-06-10T12:50:43.642Z"
   },
   "quesAns": [
     {
-      "question": "refund policy",
+      "question": "refund policy12",
       "answer": "adfsadfad"
     }
   ]
-}
+} 
 */
 
   String? Id;
@@ -83,7 +95,9 @@ class HelpModelData {
   });
   HelpModelData.fromJson(Map<String, dynamic> json) {
     Id = json['_id']?.toString();
-    category = (json['category'] != null) ? HelpModelDataCategory.fromJson(json['category']) : null;
+    category = (json['category'] != null)
+        ? HelpModelDataCategory.fromJson(json['category'])
+        : null;
     if (json['quesAns'] != null) {
       final v = json['quesAns'];
       final arr0 = <HelpModelDataQuesAns>[];
@@ -116,14 +130,16 @@ class HelpModel {
 {
   "data": [
     {
-      "_id": "664601f13ab5113fc9767026",
+      "_id": "6666f6a3e8691202eb693e71",
       "category": {
-        "_id": "664601f13ab5113fc9767026",
-        "title": "Refund"
+        "_id": "6666f6a3e8691202eb693e71",
+        "title": "Pyment",
+        "createdAt": "2024-06-10T12:50:43.642Z",
+        "updatedAt": "2024-06-10T12:50:43.642Z"
       },
       "quesAns": [
         {
-          "question": "refund policy",
+          "question": "refund policy12",
           "answer": "adfsadfad"
         }
       ]
@@ -131,7 +147,7 @@ class HelpModel {
   ],
   "status": true,
   "message": "success"
-}
+} 
 */
 
   List<HelpModelData>? data;

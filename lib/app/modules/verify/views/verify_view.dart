@@ -49,7 +49,7 @@ class VerifyView extends GetView<VerifyController> {
                   length: 6,
                   controller: controller.otpController,
                   keyboardType: const TextInputType.numberWithOptions(),
-                  autofocus: true,
+                  autofocus: false,
                   closeKeyboardWhenCompleted: true,
                   onCompleted: (value) async {
                     await controller.verifyOTP();

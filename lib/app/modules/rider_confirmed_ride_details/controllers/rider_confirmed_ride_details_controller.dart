@@ -23,23 +23,19 @@ class RiderConfirmedRideDetailsController extends GetxController {
   openMessage(MyRidesModelData data) async {
     try {
       final res = await APIManager.getChatRoomId(
-          receiverId: data.confirmDriverDetails?[0]?.Id ?? "");
+          receiverId: data.confirmDriverDetails?[0]?.driverPostsDetails?[0]
+                  ?.driverDetails?[0]?.Id ??
+              "");
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
               chatRoomId: res.data["chatChannelId"] ?? "",
-              id: data.confirmDriverDetails?[0]?.Id,
+              id: data.confirmDriverDetails?[0]?.driverPostsDetails?[0]
+                  ?.driverDetails?[0]?.Id,
               name: data.confirmDriverDetails?[0]?.driverPostsDetails?[0]
                   ?.driverDetails?[0]?.fullName,
               image: data.confirmDriverDetails?[0]?.driverPostsDetails?[0]
                   ?.driverDetails?[0]?.profilePic?.url));
     } catch (e) {
-      Get.toNamed(Routes.CHAT_PAGE,
-          arguments: ChatArg(
-              id: data.confirmDriverDetails?[0]?.Id,
-              name: data.confirmDriverDetails?[0]?.driverPostsDetails?[0]
-                  ?.driverDetails?[0]?.fullName,
-              image: data.confirmDriverDetails?[0]?.driverPostsDetails?[0]
-                  ?.driverDetails?[0]?.profilePic?.url));
       debugPrint(e.toString());
     }
   }

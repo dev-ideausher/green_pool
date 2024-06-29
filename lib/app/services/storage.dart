@@ -46,11 +46,15 @@ class GetStorageService extends GetxService {
   String get getFirebaseUid => _runData.read('firebaseUid') ?? '';
   set setFirebaseUid(String val) => _runData.write('firebaseUid', val);
 
-  String? get getUserName => _runData.read('userName') ?? '';
-  set setUserName(String? val) => _runData.write('userName', val);
+  String get getUserName => _runData.read('userName') ?? '';
+  set setUserName(String val) => _runData.write('userName', val);
+  
+  String get emailId => _runData.read('emailId') ?? '';
+  set emailId(String val) => _runData.write('emailId', val);
 
   String? get getUserAppId => _runData.read('userAppId') ?? '';
   set setUserAppId(String? val) => _runData.write('userAppId', val);
+
   String? get profilePicUrl => _runData.read('profilePicUrl') ?? '';
   set profilePicUrl(String? val) => _runData.write('profilePicUrl', val);
 

@@ -17,6 +17,7 @@ import '../../../services/dio/api_service.dart';
 class ChatPageController extends GetxController {
   final Rx<ChatArg> chatArg = ChatArg().obs;
   final RxBool isLoad = true.obs;
+  final RxBool sendingMsg = false.obs;
   final TextEditingController eMsg = TextEditingController();
   final RxList<MessageModel> messages = <MessageModel>[].obs;
   final ScrollController scrollController = ScrollController();
@@ -70,7 +71,7 @@ class ChatPageController extends GetxController {
   void _scrollToBottom() {
     scrollController.animateTo(
       scrollController.position.maxScrollExtent,
-      duration: Duration(milliseconds: 100),
+      duration: Duration(milliseconds: 200),
       curve: Curves.easeOut,
     );
   }
@@ -88,11 +89,13 @@ class ChatPageController extends GetxController {
     FocusScope.of(Get.context!).unfocus();
     eMsg.clear();
     try {
+      sendingMsg.value = true;
       final res = await APIManager.sendMessage(
           body: {"message": msg, "receiverId": chatArg.value.id});
       eMsg.clear();
       chatArg.value.chatRoomId = res.data["chatRoomId"];
       getChat();
+      sendingMsg.value = false;
     } catch (e) {
       debugPrint(e.toString());
     }

@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:green_pool/app/res/strings.dart';
 import 'package:intl/intl.dart';
@@ -160,21 +158,23 @@ class ChatPageView extends GetView<ChatPageController> {
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.start,
                                                 children: [
-                                                  Text(
-                                                    message.message ?? "",
-                                                    style: TextStyleUtil
-                                                        .k14Regular(
-                                                      color: isSender
-                                                          ? isPinkModeOn
-                                                              ? ColorUtil
-                                                                  .kBlack01
-                                                              : ColorUtil
-                                                                  .kSecondary01
-                                                          : isPinkModeOn
-                                                              ? ColorUtil
-                                                                  .kBlack01
-                                                              : ColorUtil
-                                                                  .kPrimary01,
+                                                  Expanded(
+                                                    child: Text(
+                                                      message.message ?? "",
+                                                      style: TextStyleUtil
+                                                          .k14Regular(
+                                                        color: isSender
+                                                            ? isPinkModeOn
+                                                                ? ColorUtil
+                                                                    .kBlack01
+                                                                : ColorUtil
+                                                                    .kSecondary01
+                                                            : isPinkModeOn
+                                                                ? ColorUtil
+                                                                    .kBlack01
+                                                                : ColorUtil
+                                                                    .kPrimary01,
+                                                      ),
                                                     ),
                                                   ),
                                                 ],
@@ -237,17 +237,17 @@ class ChatPageView extends GetView<ChatPageController> {
                           message.timestamp.month,
                           message.timestamp.day,
                         );
+
                         bool showDate = true;
-                        if (index > 0) {
-                          final previousMessage =
-                              controller.messages[index - 1];
-                          final previousMessageDate = DateTime(
-                            previousMessage.timestamp.year,
-                            previousMessage.timestamp.month,
-                            previousMessage.timestamp.day,
+                        if (index < controller.messages.length - 1) {
+                          final nextMessage = controller.messages[index + 1];
+                          final nextMessageDate = DateTime(
+                            nextMessage.timestamp.year,
+                            nextMessage.timestamp.month,
+                            nextMessage.timestamp.day,
                           );
-                          if (messageDate
-                              .isAtSameMomentAs(previousMessageDate)) {
+
+                          if (messageDate.isAtSameMomentAs(nextMessageDate)) {
                             showDate = false;
                           }
                         }
@@ -279,6 +279,14 @@ class ChatPageView extends GetView<ChatPageController> {
                       },
                     ),
                   ),
+                  Visibility(
+                      visible: controller.sendingMsg.value,
+                      child: LinearProgressIndicator(
+                        color: Get.find<HomeController>().isPinkModeOn.value
+                            ? ColorUtil.kPrimary2PinkMode
+                            : ColorUtil.kPrimary01,
+                        minHeight: 2.kh,
+                      )).paddingSymmetric(horizontal: 4.kw),
                   GreenPoolTextField(
                     controller: controller.eMsg,
                     hintText: Strings.writeMsg,
@@ -287,7 +295,7 @@ class ChatPageView extends GetView<ChatPageController> {
                     suffix: InkWell(
                         onTap: () => controller.sendMsg(),
                         child: SvgPicture.asset(ImageConstant.svgIconSend)),
-                  ).paddingOnly(bottom: 40.kh)
+                  ).paddingOnly(bottom: 40.kh, top: 5.kh)
                 ],
               ).paddingSymmetric(horizontal: 16.kw),
       ),

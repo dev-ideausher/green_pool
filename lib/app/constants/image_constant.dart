@@ -22,6 +22,7 @@ class ImageConstant {
   static String svgConfetti = 'assets/images/createacc/confetti.svg';
   static String svgPinkCompleteTick =
       'assets/images/createacc/pink_complete_tick.svg';
+  static String svgCross = 'assets/images/createacc/svgCross.svg';
 
 //guideline
   static String svgGuideline1 = 'assets/images/guidelines/guideline1.svg';
@@ -111,6 +112,8 @@ class ImageConstant {
   static String svgAmenities10 = 'assets/images/home/amenities10.svg';
   static String svgNoRides = 'assets/images/home/no_rides.svg';
   static String svgNoRidesPink = 'assets/images/home/no_rides_pink.svg';
+  static String svgEnableNotification =
+      'assets/images/home/enable_notification.svg';
   static String gifLocation = 'assets/images/home/location_gif.gif';
   static String pngCarPointer = 'assets/images/home/car_pointer.png';
 
@@ -154,6 +157,7 @@ class ImageConstant {
 //navigation
   static String svgRideCompleted =
       'assets/images/navigation/ride_completed.svg';
+  static String svgGooleMaps = 'assets/images/navigation/google_maps.svg';
   static String pngSourceIcon = 'assets/images/navigation/source_location.png';
   static String pngDestinationIcon =
       'assets/images/navigation/destination_location.png';

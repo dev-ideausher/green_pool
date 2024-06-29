@@ -86,10 +86,17 @@ class HelpSupportView extends GetView<HelpSupportController> {
                                     item?.question ?? "",
                                     style: TextStyleUtil.k18Bold(),
                                   ),
-                                  subtitle: Visibility(visible: index==controller.selectedIndex.value ,child: Text(item?.answer ?? "")),
+                                  subtitle: Visibility(
+                                      visible: index ==
+                                          controller.selectedIndex.value,
+                                      child: Text(item?.answer ?? "")),
                                   trailing: IconButton(
-                                      onPressed: () => controller.showHide(index),
-                                      icon: Icon(controller.selectedIndex == index ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down)),
+                                      onPressed: () =>
+                                          controller.showHide(index),
+                                      icon: Icon(
+                                          controller.selectedIndex == index
+                                              ? Icons.keyboard_arrow_up
+                                              : Icons.keyboard_arrow_down)),
                                   // Add more UI components for displaying additional information if needed
                                 );
                               },

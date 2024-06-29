@@ -69,11 +69,14 @@ class Endpoints {
   static const String companyDetails = "company/companyDetails";
   static const String rideFare = "admin/fare/";
   static const String privacyPolicy = "admin/app/privacyPolicy";
-  static const String cancelAndRefundPolicy = "admin/cancelAndRefundPolicy";
+  static const String cancelAndRefundPolicy =
+      "admin/cancelAndRefundPolicy/driver";
   static const String walletBalance = "payment/walletBalance";
   static const String transactions = "payment/transactions";
   static const String notifications = "user/notifications";
   static const String helpAndSupport = "company/helpAndSupport";
+  static const String welcomeEmail = "email/welComeEmail";
+  static const String promoCode = "admin/promoCode/web";
 
   //patch url
   static const String emergencyContactsUpdate = "user/emergencyContacts";

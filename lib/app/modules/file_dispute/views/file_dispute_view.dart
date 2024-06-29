@@ -50,10 +50,9 @@ class FileDisputeView extends GetView<FileDisputeController> {
                               decoration: BoxDecoration(
                                   color: ColorUtil.kWhiteColor,
                                   borderRadius: BorderRadius.circular(8.kh),
-                                  border: Border(
-                                      bottom: BorderSide(
-                                          color: ColorUtil.kNeutral7,
-                                          width: 2.kh))),
+                                  border: Border.all(
+                                      color: ColorUtil.kNeutral10,
+                                      width: 0.3.kh)),
                               child: Column(
                                 children: [
                                   Row(

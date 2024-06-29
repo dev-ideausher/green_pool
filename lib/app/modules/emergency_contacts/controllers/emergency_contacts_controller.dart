@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/data/emergency_contacts_model.dart';
 import 'package:green_pool/app/data/emergency_update_model.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
-import 'package:green_pool/app/services/auth.dart';
 import 'package:green_pool/app/services/dio/api_service.dart';
 import 'package:green_pool/app/services/snackbar.dart';
 
@@ -22,6 +21,7 @@ class EmergencyContactsController extends GetxController {
   final Rx<FindRideModel> findRideModel = FindRideModel().obs;
   final Rx<PostRideModel> postRideModel = PostRideModel().obs;
   final RxBool isUpdated = false.obs;
+  final RxBool buttonState = false.obs;
 
   @override
   void onInit() {
@@ -148,6 +148,15 @@ class EmergencyContactsController extends GetxController {
       }
     } catch (e) {
       debugPrint(e.toString());
+    }
+  }
+
+  setButtonState() {
+    if (emergencyNumber1.value.text.isNotEmpty &&
+        fullName1.value.text.isNotEmpty) {
+      buttonState.value = true;
+    } else {
+      buttonState.value = false;
     }
   }
 }

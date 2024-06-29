@@ -48,7 +48,8 @@ class SendRequest extends GetView<MyRidesRequestController> {
                     ).paddingOnly(bottom: 16.kh),
                     Text(
                       Strings.pleaseTryAgain,
-                      style: TextStyleUtil.k18Regular(color: ColorUtil.kBlack04),
+                      style:
+                          TextStyleUtil.k18Regular(color: ColorUtil.kBlack04),
                       textAlign: TextAlign.center,
                     ),
                   ],
@@ -56,50 +57,71 @@ class SendRequest extends GetView<MyRidesRequestController> {
               : controller.mapViewType.value
                   ? const MapDriverSendRequestView()
                   : ListView.builder(
-                      itemCount: controller.sendRequestModel.value.data?.length ?? 0,
+                      itemCount:
+                          controller.sendRequestModel.value.data?.length ?? 0,
                       itemBuilder: (context, index) {
                         return Container(
                           padding: EdgeInsets.all(16.kh),
                           decoration: BoxDecoration(
                               color: ColorUtil.kWhiteColor,
                               borderRadius: BorderRadius.circular(8.kh),
-                              border: Border(bottom: BorderSide(color: ColorUtil.kNeutral7, width: 2.kh))),
+                              border: Border.all(
+                                  color: ColorUtil.kNeutral10, width: 0.3.kh)),
                           child: Column(
                             children: [
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Container(
-                                    decoration: const BoxDecoration(shape: BoxShape.circle),
+                                    decoration: const BoxDecoration(
+                                        shape: BoxShape.circle),
                                     child: ClipOval(
                                         child: SizedBox.fromSize(
                                             size: Size.fromRadius(20.kh),
-                                            child:
-                                                CommonImageView(url: "${controller.sendRequestModel.value.data![index]!.riderDetails?[0]?.profilePic?.url}"))),
+                                            child: CommonImageView(
+                                                url:
+                                                    "${controller.sendRequestModel.value.data![index]!.riderDetails?.profilePic?.url}"))),
                                   ).paddingOnly(right: 8.kw),
                                   Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         // 'full name',
-                                        controller.sendRequestModel.value.data![index]!.riderDetails![0]!.fullName.toString(),
-                                        style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
+                                        controller
+                                            .sendRequestModel
+                                            .value
+                                            .data![index]!
+                                            .riderDetails!
+                                            .fullName
+                                            .toString(),
+                                        style: TextStyleUtil.k16Semibold(
+                                            fontSize: 16.kh),
                                       ).paddingOnly(bottom: 8.kh),
                                       Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
                                           Row(
                                             children: [
                                               SvgPicture.asset(
-                                                ImageConstant.svgIconCalendarTime,
+                                                ImageConstant
+                                                    .svgIconCalendarTime,
                                                 colorFilter: ColorFilter.mode(
-                                                    Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01,
+                                                    Get.find<HomeController>()
+                                                            .isPinkModeOn
+                                                            .value
+                                                        ? ColorUtil
+                                                            .kPrimary3PinkMode
+                                                        : ColorUtil
+                                                            .kSecondary01,
                                                     BlendMode.srcIn),
                                               ).paddingOnly(right: 4.kw),
                                               Text(
                                                 // '07 July 2023, 3:00pm',
                                                 "${controller.sendRequestModel.value.data![index]?.date?.split('T')[0] ?? ""}  ${controller.sendRequestModel.value.data![index]?.time ?? ""}",
-                                                style: TextStyleUtil.k12Regular(color: ColorUtil.kBlack02),
+                                                style: TextStyleUtil.k12Regular(
+                                                    color: ColorUtil.kBlack02),
                                               ),
                                             ],
                                           ),
@@ -109,28 +131,60 @@ class SendRequest extends GetView<MyRidesRequestController> {
                                               Icon(
                                                 Icons.location_on,
                                                 size: 16.kh,
-                                                color: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01,
+                                                color:
+                                                    Get.find<HomeController>()
+                                                            .isPinkModeOn
+                                                            .value
+                                                        ? ColorUtil
+                                                            .kPrimary3PinkMode
+                                                        : ColorUtil
+                                                            .kSecondary01,
                                               ),
                                               FutureBuilder<String>(
                                                 future: GpUtil.calculateDistance(
-                                                    startLat: controller.latitude,
-                                                    startLong: controller.longitude,
-                                                    endLat: controller.sendRequestModel.value.data?[index]?.origin?.coordinates?.last ?? controller.latitude,
-                                                    endLong:
-                                                        controller.sendRequestModel.value.data?[index]?.origin?.coordinates?.first ?? controller.longitude),
+                                                    startLat:
+                                                        controller.latitude,
+                                                    startLong:
+                                                        controller.longitude,
+                                                    endLat: controller
+                                                            .sendRequestModel
+                                                            .value
+                                                            .data?[index]
+                                                            ?.origin
+                                                            ?.coordinates
+                                                            ?.last ??
+                                                        controller.latitude,
+                                                    endLong: controller
+                                                            .sendRequestModel
+                                                            .value
+                                                            .data?[index]
+                                                            ?.origin
+                                                            ?.coordinates
+                                                            ?.first ??
+                                                        controller.longitude),
                                                 builder: (context, snapshot) {
-                                                  if (snapshot.connectionState == ConnectionState.waiting) {
-                                                    return const Text("..."); // Show a loading indicator while fetching data
-                                                  } else if (snapshot.hasError) {
+                                                  if (snapshot
+                                                          .connectionState ==
+                                                      ConnectionState.waiting) {
+                                                    return const Text(
+                                                        "..."); // Show a loading indicator while fetching data
+                                                  } else if (snapshot
+                                                      .hasError) {
                                                     // return Text('Error: ${snapshot.error}');
                                                     return Text(
                                                       Strings.na,
-                                                      style: TextStyleUtil.k12Regular(color: ColorUtil.kBlack02),
+                                                      style: TextStyleUtil
+                                                          .k12Regular(
+                                                              color: ColorUtil
+                                                                  .kBlack02),
                                                     );
                                                   } else {
                                                     return Text(
                                                       snapshot.data.toString(),
-                                                      style: TextStyleUtil.k12Regular(color: ColorUtil.kBlack02),
+                                                      style: TextStyleUtil
+                                                          .k12Regular(
+                                                              color: ColorUtil
+                                                                  .kBlack02),
                                                     );
                                                   }
                                                 },
@@ -143,26 +197,37 @@ class SendRequest extends GetView<MyRidesRequestController> {
                                   ),
                                 ],
                               ),
-                              const GreenPoolDivider().paddingOnly(bottom: 16.kh),
+                              const GreenPoolDivider()
+                                  .paddingOnly(bottom: 16.kh),
                               OriginToDestination(
-                                      origin: "${controller.sendRequestModel.value.data![index]?.origin?.name}",
-                                      destination: "${controller.sendRequestModel.value.data![index]?.destination?.name}",
+                                      origin:
+                                          "${controller.sendRequestModel.value.data![index]?.origin?.name}",
+                                      destination:
+                                          "${controller.sendRequestModel.value.data![index]?.destination?.name}",
                                       needPickupText: false)
                                   .paddingOnly(bottom: 8.kh),
-                              const GreenPoolDivider().paddingOnly(bottom: 16.kh),
+                              const GreenPoolDivider()
+                                  .paddingOnly(bottom: 16.kh),
                               //
 
                               //
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   InkWell(
-                                    onTap: () => controller.openMessage(controller.sendRequestModel.value.data![index]!),
+                                    onTap: () => controller.openMessage(
+                                        controller.sendRequestModel.value
+                                            .data![index]!),
                                     child: Container(
                                       height: 38.kh,
                                       width: 134.kw,
                                       alignment: Alignment.center,
-                                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(40.kh), border: Border.all(color: ColorUtil.kSecondary01)),
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(40.kh),
+                                          border: Border.all(
+                                              color: ColorUtil.kSecondary01)),
                                       child: Text(
                                         Strings.message,
                                         style: TextStyleUtil.k12Semibold(),
@@ -175,7 +240,11 @@ class SendRequest extends GetView<MyRidesRequestController> {
                                     padding: EdgeInsets.all(8.kh),
                                     fontSize: 14.kh,
                                     label: Strings.request,
-                                    onPressed: () async => await controller.sendRequestToRiderAPI(controller.sendRequestModel.value.data![index]),
+                                    onPressed: () async => await controller
+                                        .sendRequestToRiderAPI(controller
+                                            .sendRequestModel
+                                            .value
+                                            .data![index]),
                                   ),
                                 ],
                               ),

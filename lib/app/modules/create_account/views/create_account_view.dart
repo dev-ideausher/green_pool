@@ -191,7 +191,12 @@ class CreateAccountView extends GetView<CreateAccountController> {
                 ],
               ).paddingOnly(bottom: 24.kh),
               Socials(
-                onPressedGoogle: () => controller.googleAuth(),
+                onPressedGoogle: () {
+                  controller.googleAuth();
+                },
+                onPressedApple: () {
+                  controller.appleAuth();
+                },
               ).paddingOnly(bottom: 40.kh),
             ],
           ).paddingOnly(left: 16.kw, right: 16.kw),

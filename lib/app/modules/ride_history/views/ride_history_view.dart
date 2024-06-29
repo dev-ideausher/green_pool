@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/components/common_image_view.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
+import 'package:green_pool/app/data/ride_history_model.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
@@ -17,7 +18,6 @@ import '../../../components/origin_to_destination.dart';
 import '../../../res/strings.dart';
 import '../../../services/colors.dart';
 import '../../home/controllers/home_controller.dart';
-import '../../profile/controllers/profile_controller.dart';
 import '../controllers/ride_history_controller.dart';
 
 class RideHistoryView extends GetView<RideHistoryController> {
@@ -48,10 +48,15 @@ class RideHistoryView extends GetView<RideHistoryController> {
                             itemBuilder: (context, index) {
                               final his =
                                   controller.rideHistModel.value.data?[index];
-                              return ((his?.driver?.Id ?? "") ==
+                              return ((his?.driver?.firebaseUid ?? "") ==
                                       Get.find<GetStorageService>()
                                           .getFirebaseUid)
-                                  ? GestureDetector(
+                                  ? DriverRideHistTile(
+                                      controller: controller,
+                                      his: his,
+                                      index: index,
+                                    )
+                                  : GestureDetector(
                                       onTap: () {
                                         Get.toNamed(Routes.RIDE_DETAILS,
                                             arguments: controller.rideHistModel
@@ -63,101 +68,9 @@ class RideHistoryView extends GetView<RideHistoryController> {
                                             color: ColorUtil.kWhiteColor,
                                             borderRadius:
                                                 BorderRadius.circular(8.kh),
-                                            border: Border(
-                                                bottom: BorderSide(
-                                                    color: ColorUtil.kNeutral7,
-                                                    width: 2.kh))),
-                                        child: Column(
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  '${(controller.rideHistModel.value.data?[index]?.driver?.fullName ?? "")}',
-                                                  style:
-                                                      TextStyleUtil.k16Bold(),
-                                                ),
-                                                SizedBox(
-                                                  height: 24.kh,
-                                                  width: 170.kw,
-                                                  child: ListView.builder(
-                                                    itemCount:
-                                                        his?.riders?.length ??
-                                                            0,
-                                                    reverse: true,
-                                                    scrollDirection:
-                                                        Axis.horizontal,
-                                                    itemBuilder:
-                                                        (context, index1) {
-                                                      return Container(
-                                                        decoration:
-                                                            const BoxDecoration(
-                                                          shape:
-                                                              BoxShape.circle,
-                                                        ),
-                                                        child: ClipOval(
-                                                          child:
-                                                              SizedBox.fromSize(
-                                                            size:
-                                                                Size.fromRadius(
-                                                                    12.kh),
-                                                            child: CommonImageView(
-                                                                url:
-                                                                    "${his?.riders?[index1]?.profilePic?.url}"),
-                                                          ),
-                                                        ),
-                                                      ).paddingOnly(
-                                                          right: 4.kw);
-                                                    },
-                                                  ),
-                                                ),
-                                              ],
-                                            ).paddingOnly(bottom: 8.kh),
-                                            /*   Row(
-                                              children: [
-                                                SvgPicture.asset(
-                                                  ImageConstant.svgIconCalendarTime,
-                                                  colorFilter: ColorFilter.mode(
-                                                      Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01,
-                                                      BlendMode.srcIn),
-                                                ).paddingOnly(right: 4.kw),
-                                                Text(
-                                    GpUtil.getDateFormat(his?.date),
-                                    style:
-                                    TextStyleUtil.k12Regular(
-                                        color: ColorUtil
-                                            .kBlack03),
-                                  ),
-                                              ],
-                                            ).paddingOnly(bottom: 8.kh),*/
-                                            const GreenPoolDivider()
-                                                .paddingOnly(bottom: 16.kh),
-                                            OriginToDestination(
-                                                needPickupText: false,
-                                                origin: "${his?.origin?.name}",
-                                                destination:
-                                                    "${his?.destination?.name}}"),
-                                            const GreenPoolDivider()
-                                                .paddingOnly(bottom: 16.kh),
-                                          ],
-                                        ),
-                                      ).paddingOnly(bottom: 16.kh),
-                                    )
-                                  : GestureDetector(
-                                      onTap: () {
-                                        Get.toNamed(Routes.RIDE_DETAILS,
-                                            arguments: controller.rideHistModel
-                                                .value.data?[index]);
-                                      },
-                                      child: Container(
-                                        padding: EdgeInsets.all(16.kh),
-                                        decoration: BoxDecoration(
-                                          color: ColorUtil.kWhiteColor,
-                                          borderRadius:
-                                              BorderRadius.circular(8.kh),
-                                        ),
+                                            border: Border.all(
+                                                color: ColorUtil.kNeutral10,
+                                                width: 0.3.kh)),
                                         child: Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
@@ -174,9 +87,14 @@ class RideHistoryView extends GetView<RideHistoryController> {
                                                           const BoxDecoration(
                                                         shape: BoxShape.circle,
                                                       ),
-                                                      child: CommonImageView(
-                                                          url:
-                                                              "${his?.driver?.profilePic?.url}"),
+                                                      child: ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.kh),
+                                                        child: CommonImageView(
+                                                            url:
+                                                                "${his?.driver?.profilePic?.url}"),
+                                                      ),
                                                     ).paddingOnly(bottom: 8.kh),
                                                     Positioned(
                                                       top: 52.kh,
@@ -329,6 +247,145 @@ class RideHistoryView extends GetView<RideHistoryController> {
                     ],
                   ).paddingSymmetric(horizontal: 16.kw),
       ),
+    );
+  }
+}
+
+class DriverRideHistTile extends StatelessWidget {
+  const DriverRideHistTile({
+    super.key,
+    required this.controller,
+    required this.his,
+    required this.index,
+  });
+
+  final RideHistoryController controller;
+  final RideHistoryModelData? his;
+  final int index;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Get.toNamed(Routes.RIDE_DETAILS,
+            arguments: controller.rideHistModel.value.data?[index]);
+      },
+      child: Container(
+        padding: EdgeInsets.all(16.kh),
+        decoration: BoxDecoration(
+            color: ColorUtil.kWhiteColor,
+            borderRadius: BorderRadius.circular(8.kh),
+            border: Border.all(width: 0.3.kh, color: ColorUtil.kNeutral10)),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            ListTile(
+              contentPadding: EdgeInsets.zero,
+              leading: SizedBox(
+                  height: 40.kh,
+                  width: 40.kw,
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.circular(100.kh),
+                      child: CommonImageView(
+                          url: Get.find<HomeController>()
+                              .userInfo
+                              .value
+                              .data
+                              ?.profilePic
+                              ?.url))),
+              title: Text(
+                  Get.find<HomeController>().userInfo.value.data?.fullName ??
+                      "",
+                  style: TextStyleUtil.k16Bold()),
+              subtitle: Text(
+                // GpUtil.getDateFormat(controller.rideHistModel.value.data?[index]?.date) ??
+                ((controller.rideHistModel.value.data?[index]?.time ?? "") == ""
+                    ? ""
+                    : "${controller.rideHistModel.value.data?[index]?.time}"),
+                style: TextStyleUtil.k12Regular(color: ColorUtil.kBlack03),
+              ),
+              trailing: SizedBox(
+                height: 24.kh,
+                width: 170.kw,
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: (controller.rideHistModel.value.data?[index]
+                                    ?.riders?.length ??
+                                0) ==
+                            0
+                        ? 4
+                        : controller
+                            .rideHistModel.value.data?[index]?.riders?.length,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index1) {
+                      return Container(
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                        ),
+                        child: ClipOval(
+                          child: SizedBox.fromSize(
+                            size: Size.fromRadius(12.kh),
+                            child: (controller.rideHistModel.value.data?[index]
+                                            ?.riders?.length ??
+                                        0) ==
+                                    0
+                                ? Image.asset(
+                                    ImageConstant.pngEmptyPassenger,
+                                  )
+                                : CommonImageView(
+                                    url:
+                                        "${controller.rideHistModel.value.data?[index]?.riders?[index1]?.profilePic?.url}"),
+                          ),
+                        ),
+                      ).paddingOnly(right: 4.kw);
+                    },
+                  ),
+                ),
+              ),
+            ),
+            // Text(controller.rideHistModel.value.data?[index]?.origin?.originDestinationFair??"0", style: TextStyleUtil.k12Regular(color: ColorUtil.kBlack03)),
+
+            12.kheightBox,
+            //-------------------- if rider has done "Find a Ride" and has not selected any time ----------------
+
+            controller.rideHistModel.value.data?[index]?.time == ""
+                ? const SizedBox()
+                : Row(
+                    children: [
+                      SvgPicture.asset(
+                        ImageConstant.svgIconCalendarTime,
+                        colorFilter: ColorFilter.mode(
+                            Get.find<HomeController>().isPinkModeOn.value
+                                ? ColorUtil.kPrimary3PinkMode
+                                : ColorUtil.kSecondary01,
+                            BlendMode.srcIn),
+                      ).paddingOnly(right: 4.kw),
+                      Text(
+                        GpUtil.getDateFormat(controller
+                                .rideHistModel.value.data?[index]?.date) ??
+                            "",
+                        style:
+                            TextStyleUtil.k12Regular(color: ColorUtil.kBlack03),
+                      ),
+                    ],
+                  ).paddingOnly(bottom: 8.kh),
+            const GreenPoolDivider().paddingOnly(bottom: 16.kh),
+            OriginToDestination(
+              needPickupText: false,
+              origin:
+                  controller.rideHistModel.value.data?[index]?.origin?.name ??
+                      Strings.pickup,
+              destination: controller
+                      .rideHistModel.value.data?[index]?.destination?.name ??
+                  Strings.destination,
+            ).paddingOnly(bottom: 8.kh),
+            const GreenPoolDivider().paddingOnly(bottom: 16.kh),
+          ],
+        ),
+      ).paddingOnly(bottom: 16.kh),
     );
   }
 }

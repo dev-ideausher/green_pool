@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/auth.dart';
+import 'package:green_pool/app/services/storage.dart';
 
 import '../../../data/find_ride_model.dart';
 import '../../../data/post_ride_model.dart';
@@ -139,16 +140,6 @@ class LoginController extends GetxController {
     return null; // Return null if the value is valid
   }
 
-  void googleAuth() async {
-    try {
-      Get.lazyPut(() => VerifyController());
-      await Get.find<AuthService>().google();
-      await Get.find<VerifyController>().loginAPI();
-    } catch (error) {
-      log("$error");
-    }
-  }
-
   moveToCreateAcc() {
     if (Get.find<HomeController>().findingRide.value) {
       Get.offNamed(Routes.CREATE_ACCOUNT, arguments: {
@@ -165,9 +156,23 @@ class LoginController extends GetxController {
     }
   }
 
+  void googleAuth() async {
+    try {
+      Get.lazyPut(() => VerifyController());
+      await Get.find<AuthService>().google();
+      await Get.find<VerifyController>().loginAPI();
+    } catch (error) {
+      log("$error");
+    }
+  }
+
   Future<void> appleAuth() async {
-    Get.lazyPut(() => VerifyController());
-    await Get.find<AuthService>().apple();
-    await Get.find<VerifyController>().loginAPI();
+    try {
+      Get.lazyPut(() => VerifyController());
+      await Get.find<AuthService>().apple();
+      await Get.find<VerifyController>().loginAPI();
+    } catch (error) {
+      log("$error");
+    }
   }
 }

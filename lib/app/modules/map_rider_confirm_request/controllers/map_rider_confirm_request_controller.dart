@@ -50,10 +50,12 @@ class MapRiderConfirmRequestController extends GetxController {
     try {
       markers.clear();
       PolylineResult result = await PolylinePoints().getRouteBetweenCoordinates(
-          Endpoints.googleApiKey,
-          PointLatLng(latitude, longitude),
-          PointLatLng(destinationLat.value, destinationLong.value),
-          travelMode: TravelMode.driving);
+          googleApiKey: Endpoints.googleApiKey,
+          request: PolylineRequest(
+              origin: PointLatLng(latitude, longitude),
+              destination:
+                  PointLatLng(destinationLat.value, destinationLong.value),
+              mode: TravelMode.driving));
       if (result.points.isNotEmpty) {
         polylineCoordinates.assignAll(result.points
             .map((PointLatLng point) => LatLng(point.latitude, point.longitude))
@@ -90,13 +92,9 @@ class MapRiderConfirmRequestController extends GetxController {
     isLoading.value = true;
     riderConfirmRequestModel.value.data?.forEach((element) async {
       await addMarkers(
-          LatLng(
-              element?.driverRideDetails?.origin?.coordinates?.last ??
-                  0.0,
-              element?.driverRideDetails?.origin?.coordinates?.first ??
-                  0.0),
-          element
-              ?.driverRideDetails?.driverDetails?[0]?.profilePic?.url);
+          LatLng(element?.driverRideDetails?.origin?.coordinates?.last ?? 0.0,
+              element?.driverRideDetails?.origin?.coordinates?.first ?? 0.0),
+          element?.driverRideDetails?.driverDetails?[0]?.profilePic?.url);
     });
     destinationLat.value = riderConfirmRequestModel.value.data?[0]
             ?.driverRideDetails?.destination?.coordinates?.last ??

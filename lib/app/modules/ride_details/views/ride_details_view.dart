@@ -1,7 +1,5 @@
 //! ride details after ride history in profile
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
@@ -18,13 +16,13 @@ import '../../../constants/image_constant.dart';
 import '../../../res/strings.dart';
 import '../../home/controllers/home_controller.dart';
 import '../controllers/ride_details_controller.dart';
-import 'copassenger_list.dart';
 
 class RideDetailsView extends GetView<RideDetailsController> {
   const RideDetailsView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final isRideCancelled = controller.rideHistory.value.rideStatus == "Cancel";
     return Scaffold(
       appBar: GreenPoolAppBar(
         title: Text(Strings.rideDetails),
@@ -36,21 +34,20 @@ class RideDetailsView extends GetView<RideDetailsController> {
           Container(
             padding: EdgeInsets.all(16.kh),
             decoration: BoxDecoration(
-                color: Get.find<HomeController>().isPinkModeOn.value
-                    ? ColorUtil.kSecondaryPinkMode
-                    : ColorUtil.kSecondary07,
+                color:
+                    isRideCancelled ? ColorUtil.kError2 : ColorUtil.kGreenColor,
                 borderRadius: BorderRadius.circular(8.kh)),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Icon(
-                  Icons.check,
+                  isRideCancelled ? Icons.block : Icons.check,
                   size: 20.kh,
-                  color: ColorUtil.kSecondary01,
+                  color: ColorUtil.kWhiteColor,
                 ).paddingOnly(right: 8.kw),
                 Text(
-                  'Completed Successfully',
-                  style: TextStyleUtil.k14Regular(),
+                  isRideCancelled ? "Ride Cancelled" : 'Completed Successfully',
+                  style: TextStyleUtil.k14Regular(color: ColorUtil.kWhiteColor),
                 ),
               ],
             ),
@@ -66,15 +63,19 @@ class RideDetailsView extends GetView<RideDetailsController> {
                   Stack(
                     children: [
                       Container(
-                              height: 64.kh,
-                              width: 64.kw,
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                              ),
-                              child: CommonImageView(
-                                  url:
-                                      "${controller.rideHistory.value.driver?.profilePic?.url}"))
-                          .paddingOnly(bottom: 8.kh),
+                        height: 64.kh,
+                        width: 64.kw,
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(8.kh),
+                          child: CommonImageView(
+                            url:
+                                "${controller.rideHistory.value.driver?.profilePic?.url}",
+                          ),
+                        ),
+                      ).paddingOnly(bottom: 8.kh),
                       Positioned(
                         top: 52.kh,
                         left: 8.kw,
@@ -255,7 +256,7 @@ class RideDetailsView extends GetView<RideDetailsController> {
             Strings.vehicleDetails,
             style: TextStyleUtil.k14Bold(),
           ).paddingOnly(bottom: 16.kh),
-          /*Row(
+          Row(
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(8.kh),
@@ -263,19 +264,19 @@ class RideDetailsView extends GetView<RideDetailsController> {
                     height: 64.kh,
                     width: 64.kw,
                     url:
-                        "${controller.rideHistory.value.driverDetails?[0]?.vechileDetails?[0]?.vehiclePic?.url}"),
+                        "${controller.rideHistory.value.driverVehicle?.vehiclePic?.url}"),
               ).paddingOnly(right: 8.kh),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '${controller.rideHistory.value.driverDetails?[0]?.vechileDetails?[0]?.model}',
+                    '${controller.rideHistory.value.driverVehicle?.model}',
                     style: TextStyleUtil.k16Bold(color: ColorUtil.kBlack02),
                   ).paddingOnly(bottom: 4.kh),
                   Row(
                     children: [
                       Text(
-                        '${controller.rideHistory.value.driverDetails?[0]?.vechileDetails?[0]?.type}',
+                        '${controller.rideHistory.value.driverVehicle?.type}',
                         style: TextStyleUtil.k14Semibold(
                             color: ColorUtil.kBlack03),
                       ),
@@ -285,7 +286,7 @@ class RideDetailsView extends GetView<RideDetailsController> {
                         color: ColorUtil.kBlack03,
                       ).paddingSymmetric(vertical: 2.5.kh, horizontal: 8.kw),
                       Text(
-                        '${controller.rideHistory.value.driverDetails?[0]?.vechileDetails?[0]?.licencePlate}',
+                        '${controller.rideHistory.value.driverVehicle?.licencePlate}',
                         style: TextStyleUtil.k14Semibold(
                             color: ColorUtil.kBlack03),
                       ),
@@ -294,7 +295,7 @@ class RideDetailsView extends GetView<RideDetailsController> {
                 ],
               ),
             ],
-          ),*/
+          ),
           const GreenPoolDivider().paddingSymmetric(vertical: 16.kh),
 
           //Bill details

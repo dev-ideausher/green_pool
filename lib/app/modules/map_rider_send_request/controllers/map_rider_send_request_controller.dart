@@ -60,10 +60,13 @@ class MapRiderSendRequestController extends GetxController {
     try {
       markers.clear();
       PolylineResult result = await PolylinePoints().getRouteBetweenCoordinates(
-          Endpoints.googleApiKey,
-          PointLatLng(latitude, longitude),
-          PointLatLng(destinationLat.value, destinationLong.value),
-          travelMode: TravelMode.driving);
+        request: PolylineRequest(
+            origin: PointLatLng(latitude, longitude),
+            destination:
+                PointLatLng(destinationLat.value, destinationLong.value),
+            mode: TravelMode.driving),
+        googleApiKey: Endpoints.googleApiKey,
+      );
       if (result.points.isNotEmpty) {
         polylineCoordinates.assignAll(result.points
             .map((PointLatLng point) => LatLng(point.latitude, point.longitude))

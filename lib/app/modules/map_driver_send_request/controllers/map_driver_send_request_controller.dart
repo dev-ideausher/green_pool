@@ -41,10 +41,11 @@ class MapDriverSendRequestController extends GetxController {
   drawPolyline(DriverSendRequestModelData element) async {
     try {
       PolylineResult result = await PolylinePoints().getRouteBetweenCoordinates(
-          Endpoints.googleApiKey,
-          PointLatLng(element.origin?.coordinates?.last ?? 0.0, element.origin?.coordinates?.first ?? 0.0),
-          PointLatLng(element.destination?.coordinates?.last ?? 0.0, element.destination?.coordinates?.first ?? 0.0),
-          travelMode: TravelMode.driving);
+        request: PolylineRequest(origin: PointLatLng(element.origin?.coordinates?.last ?? 0.0, element.origin?.coordinates?.first ?? 0.0), destination: PointLatLng(element.destination?.coordinates?.last ?? 0.0, element.destination?.coordinates?.first ?? 0.0), mode: TravelMode.driving) ,
+          googleApiKey:  Endpoints.googleApiKey,
+          
+          
+          );
       if (result.points.isNotEmpty) {
         polylineCoordinates.assignAll(result.points.map((PointLatLng point) => LatLng(point.latitude, point.longitude)).toList());
         mapController.animateCamera(CameraUpdate.newLatLngBounds(GpUtil.boundsFromLatLngList(polylineCoordinates), 70));
@@ -73,7 +74,7 @@ class MapDriverSendRequestController extends GetxController {
     markers.clear();
     sendRequestModel.value.data?.forEach((element) async {
       await addMarkers(
-          element!, LatLng(element.origin?.coordinates?.last ?? 0.0, element?.origin?.coordinates?.first ?? 0.0), element?.riderDetails?[0]?.profilePic?.url);
+          element!, LatLng(element.origin?.coordinates?.last ?? 0.0, element?.origin?.coordinates?.first ?? 0.0), element?.riderDetails?.profilePic?.url);
       drawPolyline(element);
     });
 

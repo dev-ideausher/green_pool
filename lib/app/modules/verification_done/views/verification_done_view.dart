@@ -66,11 +66,13 @@ class VerificationDoneView extends GetView<VerificationDoneController> {
                     controller.isDriver
                         ? Get.offNamed(Routes.PROFILE_SETUP, arguments: {
                             'fromNavBar': false,
-                            'postRideModel': controller.postRideModel.value
+                            'postRideModel': controller.postRideModel.value,
+                            'fullName': controller.fullName
                           })
                         : Get.offNamed(Routes.RIDER_PROFILE_SETUP, arguments: {
                             'fromNavBar': false,
-                            'findRideModel': controller.findRideModel.value
+                            'findRideModel': controller.findRideModel.value,
+                            'fullName': controller.fullName
                           });
                   }
                 : () {
@@ -102,8 +104,12 @@ class VerificationDoneView extends GetView<VerificationDoneController> {
                                 children: [
                                   GreenPoolButton(
                                     onPressed: () {
+                                      Get.back();
                                       Get.offNamed(Routes.RIDER_PROFILE_SETUP,
-                                          arguments: controller.fromNavBar);
+                                          arguments: {
+                                            'fromNavBar': controller.fromNavBar,
+                                            'fullName': controller.fullName
+                                          });
                                     },
                                     height: 40.kh,
                                     width: 130.kw,
@@ -113,8 +119,12 @@ class VerificationDoneView extends GetView<VerificationDoneController> {
                                   ),
                                   GreenPoolButton(
                                     onPressed: () {
+                                      Get.back();
                                       Get.offNamed(Routes.PROFILE_SETUP,
-                                          arguments: controller.fromNavBar);
+                                          arguments: {
+                                            'fromNavBar': controller.fromNavBar,
+                                            'fullName': controller.fullName
+                                          });
                                     },
                                     height: 40.kh,
                                     width: 130.kw,

@@ -7,6 +7,7 @@ import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 class VerificationDoneController extends GetxController {
   bool fromNavBar = false;
   bool isDriver = false;
+  String fullName = "";
   final confettiController = ConfettiController();
   final Rx<PostRideModel> postRideModel = PostRideModel().obs;
   final Rx<FindRideModel> findRideModel = FindRideModel().obs;
@@ -19,15 +20,19 @@ class VerificationDoneController extends GetxController {
         isDriver = Get.arguments['isDriver'];
         fromNavBar = Get.arguments['fromNavBar'];
         findRideModel.value = Get.arguments['findRideModel'];
+        fullName = Get.arguments['fullName'];
       } else {
         isDriver = Get.arguments['isDriver'];
         fromNavBar = Get.arguments['fromNavBar'];
         postRideModel.value = Get.arguments['postRideModel'];
+        fullName = Get.arguments['fullName'];
       }
     } catch (e) {
-      isDriver = Get.arguments['isDriver'];
       fromNavBar = Get.arguments['fromNavBar'];
+      isDriver = Get.arguments['isDriver'];
+      fullName = Get.arguments['fullName'];
     }
+
     final RxBool isPlaying = true.obs;
     if (isPlaying.value) {
       confettiController.play();

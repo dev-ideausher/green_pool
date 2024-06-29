@@ -19,9 +19,10 @@ class HelpSupportController extends GetxController {
   }
 
   navigateToChat() async {
-    final url = "https://wa.me/111111111?text=${Uri.encodeComponent(Strings.howCanWeHelpYou)}";
+    final url =
+        "https://wa.me/111111111?text=${Uri.encodeComponent(Strings.howCanWeHelpYou)}";
     if (await canLaunch(url)) {
-      await launch(url);
+      await launchUrl(Uri.parse(url));
     } else {
       throw 'Could not launch $url';
     }
@@ -36,7 +37,7 @@ class HelpSupportController extends GetxController {
     }
   }
 
-  showHide  (int index) {
-    selectedIndex.value=index;
+  showHide(int index) {
+    selectedIndex.value = index;
   }
 }

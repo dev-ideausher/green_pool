@@ -55,6 +55,10 @@ class APIManager {
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
           .post(Endpoints.rateAnyUser, data: jsonEncode(body));
 
+  static Future<Response> postWelcomeEmail({required dynamic emailId}) async =>
+      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false)
+          .post(Endpoints.welcomeEmail, data: jsonEncode(emailId));
+
   static Future<Response> postRateApplication({required dynamic body}) async =>
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
           .post(Endpoints.appRating, data: jsonEncode(body));
@@ -191,6 +195,10 @@ class APIManager {
   static Future<Response> getChatRoomId({required String receiverId}) async =>
       await DioClient(Dio(), showSnakbar: false, isOverlayLoader: false)
           .get("${Endpoints.getChatRoomId}$receiverId");
+
+  static Future<Response> getPromoCode() async =>
+      await DioClient(Dio(), showSnakbar: false, isOverlayLoader: false)
+          .get(Endpoints.promoCode);
 
   static Future<Response> getArrivalTime(
           {required String origin, required String destination}) async =>

@@ -2,20 +2,22 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:green_pool/app/modules/home/views/noti_bottomsheet.dart';
 import 'package:green_pool/app/modules/home/views/permissions_location.dart';
 import 'package:green_pool/app/res/strings.dart';
-import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/location_service.dart';
 import 'package:green_pool/app/services/push_notification_service.dart';
 import 'package:green_pool/app/services/storage.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../../../data/user_info_model.dart';
+import '../../../routes/app_pages.dart';
 import '../../../services/dio/api_service.dart';
+import '../../../services/snackbar.dart';
 
 class HomeController extends GetxController {
   final RxInt selectedIndex = 0.obs;
@@ -27,8 +29,6 @@ class HomeController extends GetxController {
   RxString welcomeText = Strings.welcome.obs;
   RxBool isPinkModeOn = false.obs;
   bool canPop = false;
-
-  // RxBool isPink = Get.find<HomeController>().isPinkModeOn.value.obs;
 
   void changeTabIndex(int index) {
     selectedIndex.value = index;
@@ -43,9 +43,9 @@ class HomeController extends GetxController {
   Future<void> onInit() async {
     super.onInit();
     try {
+      await userInfoAPI();
       latitude.value = await LocationService().getLatitude();
       longitude.value = await LocationService().getLongitude();
-      await userInfoAPI();
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -75,11 +75,6 @@ class HomeController extends GetxController {
     super.onReady();
   }
 
-  // @override
-  // void onClose() {
-  //   super.onClose();
-  // }
-
   userInfoAPI() async {
     final storageService = Get.find<GetStorageService>();
 
@@ -101,6 +96,7 @@ class HomeController extends GetxController {
 
         // Update the pink mode status from storage service
         isPinkModeOn.value = storageService.isPinkMode;
+        // storageService.setFirebaseUid = userInfo.value.data?.firebaseUid ?? "";
         print(storageService.encjwToken);
 
         //method to handle location changes
@@ -118,7 +114,11 @@ class HomeController extends GetxController {
               });
         }
         // Setup message notifications
-        await setupMessage();
+        Permission.notification.isDenied.then((value) async {
+          if (value) {
+            Get.bottomSheet(const NotificationBottomSheet());
+          }
+        });
       } catch (e) {
         debugPrint(e.toString());
       }
@@ -156,9 +156,13 @@ class HomeController extends GetxController {
           permission == LocationPermission.whileInUse) {
         // Get.until((route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
         Get.back();
+        await Permission.notification.isDenied.then((value) async {
+          if (value) {
+            Get.bottomSheet(const NotificationBottomSheet());
+          }
+        });
         latitude.value = await LocationService().getLatitude();
         longitude.value = await LocationService().getLongitude();
-        await setupMessage();
         return Future.error('Location permissions are granted');
       }
     }
@@ -169,5 +173,25 @@ class HomeController extends GetxController {
     }
 
     return await Geolocator.getCurrentPosition();
+  }
+
+  onTapBottomNavigation(index) {
+    if (Get.find<GetStorageService>().isLoggedIn) {
+      if (Get.find<GetStorageService>().profileStatus) {
+        changeTabIndex(index);
+      } else {
+        if (index != 0) {
+          Get.toNamed(Routes.RIDER_PROFILE_SETUP, arguments: true);
+          showMySnackbar(msg: Strings.pleaseCompleteProfileSetup);
+        }
+      }
+    } else {
+      if (index != 0) {
+        print(
+            "GET STORAGE IS LOGGED IN: ${Get.find<GetStorageService>().isLoggedIn.toString()}");
+        Get.toNamed(Routes.LOGIN,
+            arguments: {'isDriver': false, 'fromNavBar': true});
+      }
+    }
   }
 }

@@ -51,8 +51,11 @@ class MapDriverConfirmRequestController extends GetxController {
     try {
       markers.clear();
       PolylineResult result = await PolylinePoints().getRouteBetweenCoordinates(
-          Endpoints.googleApiKey, PointLatLng(latitude, longitude), PointLatLng(destinationLat.value, destinationLong.value),
-          travelMode: TravelMode.driving);
+        googleApiKey: 
+          Endpoints.googleApiKey,
+          request: PolylineRequest(origin: PointLatLng(latitude, longitude), destination: PointLatLng(destinationLat.value, destinationLong.value), mode: TravelMode.driving),
+            
+          );
       if (result.points.isNotEmpty) {
         polylineCoordinates.assignAll(result.points.map((PointLatLng point) => LatLng(point.latitude, point.longitude)).toList());
         mapController.animateCamera(CameraUpdate.newLatLngBounds(GpUtil.boundsFromLatLngList(polylineCoordinates), 70));

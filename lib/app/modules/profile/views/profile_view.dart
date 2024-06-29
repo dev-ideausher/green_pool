@@ -156,9 +156,10 @@ class ProfileView extends GetView<ProfileController> {
                 image: ImageConstant.svgProfileRefer,
                 text: "Refer a friend"),
             ProfileContainer(
-                    onTap: () => Get.bottomSheet(
-                          RatingBottomSheet(),
-                        ),
+                    onTap: () {
+                      Get.bottomSheet(RatingBottomSheet(),
+                          enableDrag: true, isScrollControlled: true);
+                    },
                     image: ImageConstant.svgProfileStar,
                     text: "Rate us")
                 .paddingOnly(bottom: 8.kh),

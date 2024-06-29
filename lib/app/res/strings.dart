@@ -111,7 +111,7 @@ class Strings {
 
   static String time = 'Time';
 
-  static String seatsAvailable = 'Seats available';
+  static String seatsNeeded = 'Seats needed';
 
   static String enterNumberOfSeats = 'Enter number of seats';
 
@@ -283,7 +283,9 @@ class Strings {
   static String giftCard = "Gift card";
 
   static var transactionHistory = "Transaction History";
+
   static var sendMoneyToBankAccount = "Send Money to Bank Account";
+
   static var addMoneyToWallet = "Add money to wallet";
 
   static String greenpoolCash = "Greenpool Cash";
@@ -367,4 +369,9 @@ class Strings {
   static var allowAccess = "Allow Access";
 
   static var openGoogleMaps = "Open Google Maps";
+
+  static String paymentUnsuccessful =
+      "Payment Unsuccessful!\nAdd money to your wallet to book your ride.";
+
+  static String insufficientBalance = "Insufficient Wallet Balance";
 }

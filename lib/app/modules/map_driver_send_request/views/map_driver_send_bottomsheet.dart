@@ -49,7 +49,7 @@ class MapDriverSendBottomsheet extends StatelessWidget {
                             size: Size.fromRadius(20.kh),
                             child: CommonImageView(
                               url: element
-                                  ?.riderDetails?.firstOrNull?.profilePic?.url,
+                                  ?.riderDetails?.profilePic?.url,
                             )),
                       ),
                     ).paddingOnly(right: 8.kw),
@@ -57,7 +57,7 @@ class MapDriverSendBottomsheet extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          element?.riderDetails?.firstOrNull?.fullName ?? "",
+                          element?.riderDetails?.fullName ?? "",
                           style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
                         ).paddingOnly(bottom: 8.kh),
                         Row(
@@ -162,7 +162,7 @@ class MapDriverSendBottomsheet extends StatelessWidget {
                               size: 12.kh,
                             ).paddingOnly(right: 4.kw),
                             Text(
-                              element?.riderDetails?.firstOrNull?.rating
+                              element?.riderDetails?.rating
                                       .toString() ??
                                   "0.0",
                               style: TextStyleUtil.k14Regular(),
@@ -179,7 +179,7 @@ class MapDriverSendBottomsheet extends StatelessWidget {
                           style: TextStyleUtil.k12Semibold(),
                         ).paddingOnly(bottom: 4.kh),
                         Text(
-                          element?.riderDetails?.firstOrNull?.totalRides
+                          element?.riderDetails?.totalRides
                                   .toString() ??
                               "0" + ' people',
                           style: TextStyleUtil.k14Regular(
@@ -195,7 +195,7 @@ class MapDriverSendBottomsheet extends StatelessWidget {
                           style: TextStyleUtil.k12Semibold(),
                         ).paddingOnly(bottom: 4.kh),
                         Text(
-                          'in ${element?.riderDetails?.firstOrNull?.createdAt?.substring(0, 4) ?? 2024}',
+                          'in ${element?.riderDetails?.createdAt?.substring(0, 4) ?? 2024}',
                           style: TextStyleUtil.k14Regular(
                               color: ColorUtil.kBlack03),
                         ),

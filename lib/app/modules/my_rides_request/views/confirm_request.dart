@@ -48,7 +48,8 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
                     ).paddingOnly(bottom: 16.kh),
                     Text(
                       Strings.pleaseTryAgain,
-                      style: TextStyleUtil.k18Regular(color: ColorUtil.kBlack04),
+                      style:
+                          TextStyleUtil.k18Regular(color: ColorUtil.kBlack04),
                       textAlign: TextAlign.center,
                     ),
                   ],
@@ -56,36 +57,41 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
               : controller.mapViewType.value
                   ? const MapDriverConfirmRequestView()
                   : ListView.builder(
-                      itemCount: controller.confirmRequestModel.value.data?.length,
+                      itemCount:
+                          controller.confirmRequestModel.value.data?.length,
                       itemBuilder: (context, index) {
                         return GestureDetector(
                           onTap: () {},
                           child: Container(
                             padding: EdgeInsets.all(16.kh),
                             decoration: BoxDecoration(
-                              color: ColorUtil.kWhiteColor,
-                              borderRadius: BorderRadius.circular(8.kh),
-                              border: Border(
-                                bottom: BorderSide(color: ColorUtil.kNeutral7, width: 2.kh),
-                              ),
-                            ),
+                                color: ColorUtil.kWhiteColor,
+                                borderRadius: BorderRadius.circular(8.kh),
+                                border: Border.all(
+                                    color: ColorUtil.kNeutral10,
+                                    width: 0.3.kh)),
                             child: Column(
                               children: [
                                 ListTile(
-                                    visualDensity: const VisualDensity(horizontal: -4),
+                                    visualDensity:
+                                        const VisualDensity(horizontal: -4),
                                     contentPadding: EdgeInsets.zero,
                                     leading: Container(
-                                      decoration: const BoxDecoration(shape: BoxShape.circle),
+                                      decoration: const BoxDecoration(
+                                          shape: BoxShape.circle),
                                       child: ClipOval(
                                         child: SizedBox.fromSize(
                                           size: Size.fromRadius(20.kh),
-                                          child: CommonImageView(url: "${controller.confirmRequestModel.value.data?[index]?.rideDetails?[0]?.riderDetails?[0]?.profilePic?.url}"),
+                                          child: CommonImageView(
+                                              url:
+                                                  "${controller.confirmRequestModel.value.data?[index]?.rideDetails?[0]?.riderDetails?[0]?.profilePic?.url}"),
                                         ),
                                       ),
                                     ).paddingOnly(right: 8.kw),
                                     title: Text(
                                       "${controller.confirmRequestModel.value.data?[index]?.rideDetails?[0]?.riderDetails?[0]?.fullName}",
-                                      style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
+                                      style: TextStyleUtil.k16Semibold(
+                                          fontSize: 16.kh),
                                     ),
                                     subtitle: Row(
                                       mainAxisSize: MainAxisSize.min,
@@ -96,12 +102,19 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
                                             SvgPicture.asset(
                                               ImageConstant.svgIconCalendarTime,
                                               colorFilter: ColorFilter.mode(
-                                                  Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01, BlendMode.srcIn),
+                                                  Get.find<HomeController>()
+                                                          .isPinkModeOn
+                                                          .value
+                                                      ? ColorUtil
+                                                          .kPrimary3PinkMode
+                                                      : ColorUtil.kSecondary01,
+                                                  BlendMode.srcIn),
                                             ).paddingOnly(right: 4.kw),
                                             Text(
                                               // '07 July 2023, 3:00pm',
                                               "${controller.confirmRequestModel.value.data?[index]?.rideDetails?[0]?.date.toString().split("T")[0] ?? ""}  ${controller.confirmRequestModel.value.data?[index]?.rideDetails?[0]?.time ?? ""}",
-                                              style: TextStyleUtil.k12Regular(color: ColorUtil.kBlack02),
+                                              style: TextStyleUtil.k12Regular(
+                                                  color: ColorUtil.kBlack02),
                                             ),
                                           ],
                                         ),
@@ -111,34 +124,78 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
                                             Icon(
                                               Icons.location_on,
                                               size: 16.kh,
-                                              color: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01,
+                                              color: Get.find<HomeController>()
+                                                      .isPinkModeOn
+                                                      .value
+                                                  ? ColorUtil.kPrimary3PinkMode
+                                                  : ColorUtil.kSecondary01,
                                             ),
                                             FutureBuilder<String>(
-                                              future:GpUtil.calculateDistance(startLat: controller.latitude, startLong: controller.longitude, endLat: controller.confirmRequestModel.value.data?[index]?.rideDetails?[0]?.origin?.coordinates?.last ?? controller.latitude, endLong: controller.confirmRequestModel.value.data?[index]?.rideDetails?[0]?.origin?.coordinates?.first ?? controller.longitude),
+                                              future: GpUtil.calculateDistance(
+                                                  startLat: controller.latitude,
+                                                  startLong:
+                                                      controller.longitude,
+                                                  endLat: controller
+                                                          .confirmRequestModel
+                                                          .value
+                                                          .data?[index]
+                                                          ?.rideDetails?[0]
+                                                          ?.origin
+                                                          ?.coordinates
+                                                          ?.last ??
+                                                      controller.latitude,
+                                                  endLong: controller
+                                                          .confirmRequestModel
+                                                          .value
+                                                          .data?[index]
+                                                          ?.rideDetails?[0]
+                                                          ?.origin
+                                                          ?.coordinates
+                                                          ?.first ??
+                                                      controller.longitude),
                                               builder: (context, snapshot) {
-                                                if (snapshot.connectionState == ConnectionState.waiting) {
-                                                  return const Text("..."); // Show a loading indicator while fetching data
+                                                if (snapshot.connectionState ==
+                                                    ConnectionState.waiting) {
+                                                  return const Text(
+                                                      "..."); // Show a loading indicator while fetching data
                                                 } else if (snapshot.hasError) {
                                                   // return Text('Error: ${snapshot.error}');
                                                   return Text(
                                                     Strings.na,
-                                                    style: TextStyleUtil.k12Regular(color: ColorUtil.kBlack02),
+                                                    style: TextStyleUtil
+                                                        .k12Regular(
+                                                            color: ColorUtil
+                                                                .kBlack02),
                                                   );
                                                 } else {
                                                   return Text(
                                                     snapshot.data.toString(),
-                                                    style: TextStyleUtil.k12Regular(color: ColorUtil.kBlack02),
+                                                    style: TextStyleUtil
+                                                        .k12Regular(
+                                                            color: ColorUtil
+                                                                .kBlack02),
                                                   );
                                                 }
                                               },
                                             ),
-
                                           ],
                                         ),
                                       ],
                                     ),
-                                    trailing: SizedBox(height: 24.kh,width: 24.kh,  child: InkWell(onTap: ()=>controller.openMessageConfirm(controller.confirmRequestModel.value.data![index] ),child: CommonImageView(svgPath: Assets.svgChat,)), )),
-                               /* Align(
+                                    trailing: SizedBox(
+                                      height: 24.kh,
+                                      width: 24.kh,
+                                      child: InkWell(
+                                          onTap: () => controller
+                                              .openMessageConfirm(controller
+                                                  .confirmRequestModel
+                                                  .value
+                                                  .data![index]),
+                                          child: CommonImageView(
+                                            svgPath: Assets.svgChat,
+                                          )),
+                                    )),
+                                /* Align(
                                   alignment: Alignment.centerRight,
                                   child: InkWell(
                                     onTap: () =>controller.openMessageConfirm(controller.confirmRequestModel.value.data![index] ),
@@ -151,15 +208,20 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
                                     ),
                                   ).paddingSymmetric(vertical: 8.kh),
                                 ),*/
-                                const GreenPoolDivider().paddingOnly(bottom: 16.kh),
+                                const GreenPoolDivider()
+                                    .paddingOnly(bottom: 16.kh),
                                 OriginToDestination(
                                         needPickupText: false,
-                                        origin: "${controller.confirmRequestModel.value.data?[index]?.rideDetails?[0]?.origin?.name}",
-                                        destination: "${controller.confirmRequestModel.value.data?[index]?.rideDetails?[0]?.destination?.name}")
+                                        origin:
+                                            "${controller.confirmRequestModel.value.data?[index]?.rideDetails?[0]?.origin?.name}",
+                                        destination:
+                                            "${controller.confirmRequestModel.value.data?[index]?.rideDetails?[0]?.destination?.name}")
                                     .paddingOnly(bottom: 8.kh),
-                                const GreenPoolDivider().paddingOnly(bottom: 16.kh),
+                                const GreenPoolDivider()
+                                    .paddingOnly(bottom: 16.kh),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     GreenPoolButton(
                                       width: 144.kw,
@@ -169,8 +231,11 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
                                       label: Strings.accept,
                                       onPressed: () async {
                                         try {
-                                          await controller.acceptRidersRequestAPI(controller.confirmRequestModel.value.data?[index]);
-
+                                          await controller
+                                              .acceptRidersRequestAPI(controller
+                                                  .confirmRequestModel
+                                                  .value
+                                                  .data?[index]);
                                         } catch (e) {
                                           debugPrint(e.toString());
                                         }
@@ -179,7 +244,8 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
                                     GreenPoolButton(
                                       onPressed: () async {
                                         try {
-                                          await controller.rejectRidersRequestAPI(index);
+                                          await controller
+                                              .rejectRidersRequestAPI(index);
                                         } catch (e) {
                                           throw Exception(e);
                                         }
@@ -189,8 +255,16 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
                                       padding: EdgeInsets.all(8.kh),
                                       fontSize: 14.kh,
                                       isBorder: true,
-                                      borderColor: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01,
-                                      labelColor: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01,
+                                      borderColor: Get.find<HomeController>()
+                                              .isPinkModeOn
+                                              .value
+                                          ? ColorUtil.kPrimary3PinkMode
+                                          : ColorUtil.kSecondary01,
+                                      labelColor: Get.find<HomeController>()
+                                              .isPinkModeOn
+                                              .value
+                                          ? ColorUtil.kPrimary3PinkMode
+                                          : ColorUtil.kSecondary01,
                                       label: Strings.reject,
                                     ),
                                   ],

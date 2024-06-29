@@ -4,10 +4,10 @@
 class DriverSendRequestModelDataMatchedDestinationLocation {
 /*
 {
-  "name": "Toronto Pearson International Airport (YYZ), Mississauga",
+  "name": "5120 Dixie Rd, Mississauga, ON L4W 4K2, Canada",
   "type": "Point",
   "coordinates": [
-    -79.6333674
+    -79.62353949999999
   ]
 } 
 */
@@ -21,17 +21,16 @@ class DriverSendRequestModelDataMatchedDestinationLocation {
     this.type,
     this.coordinates,
   });
-  DriverSendRequestModelDataMatchedDestinationLocation.fromJson(
-      Map<String, dynamic> json) {
+  DriverSendRequestModelDataMatchedDestinationLocation.fromJson(Map<String, dynamic> json) {
     name = json['name']?.toString();
     type = json['type']?.toString();
-    if (json['coordinates'] != null) {
-      final v = json['coordinates'];
-      final arr0 = <double>[];
-      v.forEach((v) {
-        arr0.add(v.toDouble());
-      });
-      coordinates = arr0;
+  if (json['coordinates'] != null) {
+  final v = json['coordinates'];
+  final arr0 = <double>[];
+  v.forEach((v) {
+  arr0.add(v.toDouble());
+  });
+    coordinates = arr0;
     }
   }
   Map<String, dynamic> toJson() {
@@ -41,9 +40,9 @@ class DriverSendRequestModelDataMatchedDestinationLocation {
     if (coordinates != null) {
       final v = coordinates;
       final arr0 = [];
-      v!.forEach((v) {
-        arr0.add(v);
-      });
+  v!.forEach((v) {
+  arr0.add(v);
+  });
       data['coordinates'] = arr0;
     }
     return data;
@@ -53,10 +52,10 @@ class DriverSendRequestModelDataMatchedDestinationLocation {
 class DriverSendRequestModelDataMatchedOriginLocation {
 /*
 {
-  "name": "349 Queen St W, Toronto",
+  "name": "6301 Silver Dart Dr, Mississauga, ON L5P 1B2, Canada",
   "type": "Point",
   "coordinates": [
-    -79.3924196
+    -79.6333674
   ],
   "originDestinationFair": null
 } 
@@ -73,17 +72,16 @@ class DriverSendRequestModelDataMatchedOriginLocation {
     this.coordinates,
     this.originDestinationFair,
   });
-  DriverSendRequestModelDataMatchedOriginLocation.fromJson(
-      Map<String, dynamic> json) {
+  DriverSendRequestModelDataMatchedOriginLocation.fromJson(Map<String, dynamic> json) {
     name = json['name']?.toString();
     type = json['type']?.toString();
-    if (json['coordinates'] != null) {
-      final v = json['coordinates'];
-      final arr0 = <double>[];
-      v.forEach((v) {
-        arr0.add(v.toDouble());
-      });
-      coordinates = arr0;
+  if (json['coordinates'] != null) {
+  final v = json['coordinates'];
+  final arr0 = <double>[];
+  v.forEach((v) {
+  arr0.add(v.toDouble());
+  });
+    coordinates = arr0;
     }
     originDestinationFair = json['originDestinationFair']?.toString();
   }
@@ -94,68 +92,12 @@ class DriverSendRequestModelDataMatchedOriginLocation {
     if (coordinates != null) {
       final v = coordinates;
       final arr0 = [];
-      v!.forEach((v) {
-        arr0.add(v);
-      });
+  v!.forEach((v) {
+  arr0.add(v);
+  });
       data['coordinates'] = arr0;
     }
     data['originDestinationFair'] = originDestinationFair;
-    return data;
-  }
-}
-
-class DriverSendRequestModelDataRiderDetailsProfilePic {
-/*
-{
-  "key": "usersProfile/455bece9-6a35-47bc-9650-0ea542382038-compressed_1000000034.jpg",
-  "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/455bece9-6a35-47bc-9650-0ea542382038-compressed_1000000034.jpg"
-} 
-*/
-
-  String? key;
-  String? url;
-
-  DriverSendRequestModelDataRiderDetailsProfilePic({
-    this.key,
-    this.url,
-  });
-  DriverSendRequestModelDataRiderDetailsProfilePic.fromJson(
-      Map<String, dynamic> json) {
-    key = json['key']?.toString();
-    url = json['url']?.toString();
-  }
-  Map<String, dynamic> toJson() {
-    final data = <String, dynamic>{};
-    data['key'] = key;
-    data['url'] = url;
-    return data;
-  }
-}
-
-class DriverSendRequestModelDataRiderDetailsIdPic {
-/*
-{
-  "key": "idPic/bf9018c7-ad37-47f0-b648-075e54474b8f-1000000034.jpg",
-  "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/idPic/bf9018c7-ad37-47f0-b648-075e54474b8f-1000000034.jpg"
-} 
-*/
-
-  String? key;
-  String? url;
-
-  DriverSendRequestModelDataRiderDetailsIdPic({
-    this.key,
-    this.url,
-  });
-  DriverSendRequestModelDataRiderDetailsIdPic.fromJson(
-      Map<String, dynamic> json) {
-    key = json['key']?.toString();
-    url = json['url']?.toString();
-  }
-  Map<String, dynamic> toJson() {
-    final data = <String, dynamic>{};
-    data['key'] = key;
-    data['url'] = url;
     return data;
   }
 }
@@ -167,7 +109,7 @@ class DriverSendRequestModelDataRiderDetailsNotificationPreferences {
   "alerts": true,
   "payments": true,
   "transactions": true,
-  "offers": true
+  "offers": false
 } 
 */
 
@@ -184,8 +126,7 @@ class DriverSendRequestModelDataRiderDetailsNotificationPreferences {
     this.transactions,
     this.offers,
   });
-  DriverSendRequestModelDataRiderDetailsNotificationPreferences.fromJson(
-      Map<String, dynamic> json) {
+  DriverSendRequestModelDataRiderDetailsNotificationPreferences.fromJson(Map<String, dynamic> json) {
     trip = json['trip'];
     alerts = json['alerts'];
     payments = json['payments'];
@@ -203,55 +144,127 @@ class DriverSendRequestModelDataRiderDetailsNotificationPreferences {
   }
 }
 
+class DriverSendRequestModelDataRiderDetailsIdPic {
+/*
+{
+  "key": "idPic/455407d5-17ac-4826-84d4-c594cec837fe-compressed_1000078131.jpg",
+  "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/idPic/455407d5-17ac-4826-84d4-c594cec837fe-compressed_1000078131.jpg",
+  "_id": "6656dd940f9924a2d7a0379c"
+} 
+*/
+
+  String? key;
+  String? url;
+  String? Id;
+
+  DriverSendRequestModelDataRiderDetailsIdPic({
+    this.key,
+    this.url,
+    this.Id,
+  });
+  DriverSendRequestModelDataRiderDetailsIdPic.fromJson(Map<String, dynamic> json) {
+    key = json['key']?.toString();
+    url = json['url']?.toString();
+    Id = json['_id']?.toString();
+  }
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+    data['key'] = key;
+    data['url'] = url;
+    data['_id'] = Id;
+    return data;
+  }
+}
+
+class DriverSendRequestModelDataRiderDetailsProfilePic {
+/*
+{
+  "key": "usersProfile/057a5720-a179-458b-9125-6d882fd3b75d-compressed_1000004890.jpg",
+  "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/057a5720-a179-458b-9125-6d882fd3b75d-compressed_1000004890.jpg",
+  "_id": "6656dd940f9924a2d7a0379b"
+} 
+*/
+
+  String? key;
+  String? url;
+  String? Id;
+
+  DriverSendRequestModelDataRiderDetailsProfilePic({
+    this.key,
+    this.url,
+    this.Id,
+  });
+  DriverSendRequestModelDataRiderDetailsProfilePic.fromJson(Map<String, dynamic> json) {
+    key = json['key']?.toString();
+    url = json['url']?.toString();
+    Id = json['_id']?.toString();
+  }
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+    data['key'] = key;
+    data['url'] = url;
+    data['_id'] = Id;
+    return data;
+  }
+}
+
 class DriverSendRequestModelDataRiderDetails {
 /*
 {
-  "_id": "661d10c3cea4346b0ee267d3",
+  "_id": "6656dd590f9924a2d7a03772",
+  "isRegister": true,
+  "role": "Admin",
   "pinkMode": false,
-  "fullName": "Ria",
+  "fullName": "Georgina",
   "phone": "+11212121212",
-  "email": "ria@test.com",
-  "city": "Rajkot",
-  "dob": "2000-04-20",
+  "email": "amod@yopmail.com",
+  "city": "Markham",
+  "profilePic": {
+    "key": "usersProfile/057a5720-a179-458b-9125-6d882fd3b75d-compressed_1000004890.jpg",
+    "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/057a5720-a179-458b-9125-6d882fd3b75d-compressed_1000004890.jpg",
+    "_id": "6656dd940f9924a2d7a0379b"
+  },
+  "idPic": {
+    "key": "idPic/455407d5-17ac-4826-84d4-c594cec837fe-compressed_1000078131.jpg",
+    "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/idPic/455407d5-17ac-4826-84d4-c594cec837fe-compressed_1000078131.jpg",
+    "_id": "6656dd940f9924a2d7a0379c"
+  },
+  "dob": "2006-06-03",
   "gender": "Female",
-  "isDriver": false,
-  "referralCode": "S0175P2893",
+  "isDriver": true,
+  "referralCode": "N2010P2676",
   "profileStatus": true,
-  "vehicleStatus": false,
+  "vehicleStatus": true,
   "status": "active",
   "wallet": 0,
+  "rating": 0.324156378600823,
+  "totalRides": 0,
+  "isRecurringTripEnabled": false,
   "notificationPreferences": {
     "trip": true,
     "alerts": true,
     "payments": true,
     "transactions": true,
-    "offers": true
+    "offers": false
   },
-  "firebaseUid": "YfTcEdNqhHPbYWY5bZzQxy5EwHG2",
+  "firebaseUid": "SYdl01R9gHgi4yZaxIrkOTmy4rg1",
   "firebaseSignInProvider": "phone",
-  "rating": 4,
-  "createdAt": "2024-04-15T11:34:27.422Z",
-  "updatedAt": "2024-05-09T07:52:05.819Z",
-  "idPic": {
-    "key": "idPic/bf9018c7-ad37-47f0-b648-075e54474b8f-1000000034.jpg",
-    "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/idPic/bf9018c7-ad37-47f0-b648-075e54474b8f-1000000034.jpg"
-  },
-  "profilePic": {
-    "key": "usersProfile/455bece9-6a35-47bc-9650-0ea542382038-compressed_1000000034.jpg",
-    "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/455bece9-6a35-47bc-9650-0ea542382038-compressed_1000000034.jpg"
-  },
-  "totalRides": 1,
-  "isRegister": true,
-  "role": "user"
+  "createdAt": "2024-05-29T07:46:33.594Z",
+  "updatedAt": "2024-06-27T10:32:15.239Z",
+  "rideCancellationCount": 1
 } 
 */
 
   String? Id;
+  bool? isRegister;
+  String? role;
   bool? pinkMode;
   String? fullName;
   String? phone;
   String? email;
   String? city;
+  DriverSendRequestModelDataRiderDetailsProfilePic? profilePic;
+  DriverSendRequestModelDataRiderDetailsIdPic? idPic;
   String? dob;
   String? gender;
   bool? isDriver;
@@ -260,26 +273,27 @@ class DriverSendRequestModelDataRiderDetails {
   bool? vehicleStatus;
   String? status;
   int? wallet;
-  DriverSendRequestModelDataRiderDetailsNotificationPreferences?
-      notificationPreferences;
+  double? rating;
+  int? totalRides;
+  bool? isRecurringTripEnabled;
+  DriverSendRequestModelDataRiderDetailsNotificationPreferences? notificationPreferences;
   String? firebaseUid;
   String? firebaseSignInProvider;
-  int? rating;
   String? createdAt;
   String? updatedAt;
-  DriverSendRequestModelDataRiderDetailsIdPic? idPic;
-  DriverSendRequestModelDataRiderDetailsProfilePic? profilePic;
-  int? totalRides;
-  bool? isRegister;
-  String? role;
+  int? rideCancellationCount;
 
   DriverSendRequestModelDataRiderDetails({
     this.Id,
+    this.isRegister,
+    this.role,
     this.pinkMode,
     this.fullName,
     this.phone,
     this.email,
     this.city,
+    this.profilePic,
+    this.idPic,
     this.dob,
     this.gender,
     this.isDriver,
@@ -288,25 +302,27 @@ class DriverSendRequestModelDataRiderDetails {
     this.vehicleStatus,
     this.status,
     this.wallet,
+    this.rating,
+    this.totalRides,
+    this.isRecurringTripEnabled,
     this.notificationPreferences,
     this.firebaseUid,
     this.firebaseSignInProvider,
-    this.rating,
     this.createdAt,
     this.updatedAt,
-    this.idPic,
-    this.profilePic,
-    this.totalRides,
-    this.isRegister,
-    this.role,
+    this.rideCancellationCount,
   });
   DriverSendRequestModelDataRiderDetails.fromJson(Map<String, dynamic> json) {
     Id = json['_id']?.toString();
+    isRegister = json['isRegister'];
+    role = json['role']?.toString();
     pinkMode = json['pinkMode'];
     fullName = json['fullName']?.toString();
     phone = json['phone']?.toString();
     email = json['email']?.toString();
     city = json['city']?.toString();
+    profilePic = (json['profilePic'] != null) ? DriverSendRequestModelDataRiderDetailsProfilePic.fromJson(json['profilePic']) : null;
+    idPic = (json['idPic'] != null) ? DriverSendRequestModelDataRiderDetailsIdPic.fromJson(json['idPic']) : null;
     dob = json['dob']?.toString();
     gender = json['gender']?.toString();
     isDriver = json['isDriver'];
@@ -315,34 +331,32 @@ class DriverSendRequestModelDataRiderDetails {
     vehicleStatus = json['vehicleStatus'];
     status = json['status']?.toString();
     wallet = json['wallet']?.toInt();
-    notificationPreferences = (json['notificationPreferences'] != null)
-        ? DriverSendRequestModelDataRiderDetailsNotificationPreferences
-            .fromJson(json['notificationPreferences'])
-        : null;
+    rating = json['rating']?.toDouble();
+    totalRides = json['totalRides']?.toInt();
+    isRecurringTripEnabled = json['isRecurringTripEnabled'];
+    notificationPreferences = (json['notificationPreferences'] != null) ? DriverSendRequestModelDataRiderDetailsNotificationPreferences.fromJson(json['notificationPreferences']) : null;
     firebaseUid = json['firebaseUid']?.toString();
     firebaseSignInProvider = json['firebaseSignInProvider']?.toString();
-    rating = json['rating']?.toInt();
     createdAt = json['createdAt']?.toString();
     updatedAt = json['updatedAt']?.toString();
-    idPic = (json['idPic'] != null)
-        ? DriverSendRequestModelDataRiderDetailsIdPic.fromJson(json['idPic'])
-        : null;
-    profilePic = (json['profilePic'] != null)
-        ? DriverSendRequestModelDataRiderDetailsProfilePic.fromJson(
-            json['profilePic'])
-        : null;
-    totalRides = json['totalRides']?.toInt();
-    isRegister = json['isRegister'];
-    role = json['role']?.toString();
+    rideCancellationCount = json['rideCancellationCount']?.toInt();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['_id'] = Id;
+    data['isRegister'] = isRegister;
+    data['role'] = role;
     data['pinkMode'] = pinkMode;
     data['fullName'] = fullName;
     data['phone'] = phone;
     data['email'] = email;
     data['city'] = city;
+    if (profilePic != null) {
+      data['profilePic'] = profilePic!.toJson();
+    }
+    if (idPic != null) {
+      data['idPic'] = idPic!.toJson();
+    }
     data['dob'] = dob;
     data['gender'] = gender;
     data['isDriver'] = isDriver;
@@ -351,23 +365,17 @@ class DriverSendRequestModelDataRiderDetails {
     data['vehicleStatus'] = vehicleStatus;
     data['status'] = status;
     data['wallet'] = wallet;
+    data['rating'] = rating;
+    data['totalRides'] = totalRides;
+    data['isRecurringTripEnabled'] = isRecurringTripEnabled;
     if (notificationPreferences != null) {
       data['notificationPreferences'] = notificationPreferences!.toJson();
     }
     data['firebaseUid'] = firebaseUid;
     data['firebaseSignInProvider'] = firebaseSignInProvider;
-    data['rating'] = rating;
     data['createdAt'] = createdAt;
     data['updatedAt'] = updatedAt;
-    if (idPic != null) {
-      data['idPic'] = idPic!.toJson();
-    }
-    if (profilePic != null) {
-      data['profilePic'] = profilePic!.toJson();
-    }
-    data['totalRides'] = totalRides;
-    data['isRegister'] = isRegister;
-    data['role'] = role;
+    data['rideCancellationCount'] = rideCancellationCount;
     return data;
   }
 }
@@ -405,8 +413,7 @@ class DriverSendRequestModelDataPreferencesOther {
     this.BabySeat,
     this.HeatedSeats,
   });
-  DriverSendRequestModelDataPreferencesOther.fromJson(
-      Map<String, dynamic> json) {
+  DriverSendRequestModelDataPreferencesOther.fromJson(Map<String, dynamic> json) {
     AppreciatesConversation = json['AppreciatesConversation'];
     EnjoysMusic = json['EnjoysMusic'];
     SmokeFree = json['SmokeFree'];
@@ -455,9 +462,7 @@ class DriverSendRequestModelDataPreferences {
     this.luggageType,
   });
   DriverSendRequestModelDataPreferences.fromJson(Map<String, dynamic> json) {
-    other = (json['other'] != null)
-        ? DriverSendRequestModelDataPreferencesOther.fromJson(json['other'])
-        : null;
+    other = (json['other'] != null) ? DriverSendRequestModelDataPreferencesOther.fromJson(json['other']) : null;
     luggageType = json['luggageType']?.toString();
   }
   Map<String, dynamic> toJson() {
@@ -511,7 +516,7 @@ class DriverSendRequestModelDataRecurringTrip {
 /*
 {
   "recurringTripIds": [
-    ""
+    "121212"
   ],
   "recurringTripDays": [
     1
@@ -530,21 +535,21 @@ class DriverSendRequestModelDataRecurringTrip {
     this.isRecurringTripEnabled,
   });
   DriverSendRequestModelDataRecurringTrip.fromJson(Map<String, dynamic> json) {
-    if (json['recurringTripIds'] != null) {
-      final v = json['recurringTripIds'];
-      final arr0 = <String>[];
-      v.forEach((v) {
-        arr0.add(v.toString());
-      });
-      recurringTripIds = arr0;
+  if (json['recurringTripIds'] != null) {
+  final v = json['recurringTripIds'];
+  final arr0 = <String>[];
+  v.forEach((v) {
+  arr0.add(v.toString());
+  });
+    recurringTripIds = arr0;
     }
-    if (json['recurringTripDays'] != null) {
-      final v = json['recurringTripDays'];
-      final arr0 = <int>[];
-      v.forEach((v) {
-        arr0.add(v.toInt());
-      });
-      recurringTripDays = arr0;
+  if (json['recurringTripDays'] != null) {
+  final v = json['recurringTripDays'];
+  final arr0 = <int>[];
+  v.forEach((v) {
+  arr0.add(v.toInt());
+  });
+    recurringTripDays = arr0;
     }
     isRecurringTripEnabled = json['isRecurringTripEnabled'];
   }
@@ -553,17 +558,17 @@ class DriverSendRequestModelDataRecurringTrip {
     if (recurringTripIds != null) {
       final v = recurringTripIds;
       final arr0 = [];
-      v!.forEach((v) {
-        arr0.add(v);
-      });
+  v!.forEach((v) {
+  arr0.add(v);
+  });
       data['recurringTripIds'] = arr0;
     }
     if (recurringTripDays != null) {
       final v = recurringTripDays;
       final arr0 = [];
-      v!.forEach((v) {
-        arr0.add(v);
-      });
+  v!.forEach((v) {
+  arr0.add(v);
+  });
       data['recurringTripDays'] = arr0;
     }
     data['isRecurringTripEnabled'] = isRecurringTripEnabled;
@@ -574,10 +579,10 @@ class DriverSendRequestModelDataRecurringTrip {
 class DriverSendRequestModelDataDestination {
 /*
 {
-  "name": "Toronto Pearson International Airport (YYZ), Mississauga",
+  "name": "5120 Dixie Rd, Mississauga, ON L4W 4K2, Canada",
   "type": "Point",
   "coordinates": [
-    -79.6333674
+    -79.62353949999999
   ]
 } 
 */
@@ -594,13 +599,13 @@ class DriverSendRequestModelDataDestination {
   DriverSendRequestModelDataDestination.fromJson(Map<String, dynamic> json) {
     name = json['name']?.toString();
     type = json['type']?.toString();
-    if (json['coordinates'] != null) {
-      final v = json['coordinates'];
-      final arr0 = <double>[];
-      v.forEach((v) {
-        arr0.add(v.toDouble());
-      });
-      coordinates = arr0;
+  if (json['coordinates'] != null) {
+  final v = json['coordinates'];
+  final arr0 = <double>[];
+  v.forEach((v) {
+  arr0.add(v.toDouble());
+  });
+    coordinates = arr0;
     }
   }
   Map<String, dynamic> toJson() {
@@ -610,9 +615,9 @@ class DriverSendRequestModelDataDestination {
     if (coordinates != null) {
       final v = coordinates;
       final arr0 = [];
-      v!.forEach((v) {
-        arr0.add(v);
-      });
+  v!.forEach((v) {
+  arr0.add(v);
+  });
       data['coordinates'] = arr0;
     }
     return data;
@@ -622,10 +627,10 @@ class DriverSendRequestModelDataDestination {
 class DriverSendRequestModelDataOrigin {
 /*
 {
-  "name": "349 Queen St W, Toronto",
+  "name": "6301 Silver Dart Dr, Mississauga, ON L5P 1B2, Canada",
   "type": "Point",
   "coordinates": [
-    -79.3924196
+    -79.6333674
   ],
   "originDestinationFair": null
 } 
@@ -645,13 +650,13 @@ class DriverSendRequestModelDataOrigin {
   DriverSendRequestModelDataOrigin.fromJson(Map<String, dynamic> json) {
     name = json['name']?.toString();
     type = json['type']?.toString();
-    if (json['coordinates'] != null) {
-      final v = json['coordinates'];
-      final arr0 = <double>[];
-      v.forEach((v) {
-        arr0.add(v.toDouble());
-      });
-      coordinates = arr0;
+  if (json['coordinates'] != null) {
+  final v = json['coordinates'];
+  final arr0 = <double>[];
+  v.forEach((v) {
+  arr0.add(v.toDouble());
+  });
+    coordinates = arr0;
     }
     originDestinationFair = json['originDestinationFair']?.toString();
   }
@@ -662,9 +667,9 @@ class DriverSendRequestModelDataOrigin {
     if (coordinates != null) {
       final v = coordinates;
       final arr0 = [];
-      v!.forEach((v) {
-        arr0.add(v);
-      });
+  v!.forEach((v) {
+  arr0.add(v);
+  });
       data['coordinates'] = arr0;
     }
     data['originDestinationFair'] = originDestinationFair;
@@ -675,36 +680,36 @@ class DriverSendRequestModelDataOrigin {
 class DriverSendRequestModelData {
 /*
 {
-  "_id": "663c7fa7c526bb5718e59c09",
-  "riderId": "661d10c3cea4346b0ee267d3",
+  "_id": "667d3f97a537574a2205bc9b",
+  "riderId": "6656dd590f9924a2d7a03772",
   "origin": {
-    "name": "349 Queen St W, Toronto",
+    "name": "6301 Silver Dart Dr, Mississauga, ON L5P 1B2, Canada",
     "type": "Point",
     "coordinates": [
-      -79.3924196
+      -79.6333674
     ],
     "originDestinationFair": null
   },
   "destination": {
-    "name": "Toronto Pearson International Airport (YYZ), Mississauga",
+    "name": "5120 Dixie Rd, Mississauga, ON L4W 4K2, Canada",
     "type": "Point",
     "coordinates": [
-      -79.6333674
+      -79.62353949999999
     ]
   },
-  "price": "5",
+  "price": "6",
   "tripType": null,
   "recurringTrip": {
     "recurringTripIds": [
-      ""
+      "121212"
     ],
     "recurringTripDays": [
       1
     ],
     "isRecurringTripEnabled": false
   },
-  "date": null,
-  "time": "",
+  "date": "2024-06-27T00:00:00.000Z",
+  "time": "6:00 PM",
   "returnTrip": {
     "returnTripId": null,
     "isReturnTrip": false,
@@ -730,73 +735,81 @@ class DriverSendRequestModelData {
   "isStarted": false,
   "isCompleted": false,
   "isCancelled": false,
-  "description": "",
-  "createdAt": "2024-05-09T07:47:51.608Z",
-  "updatedAt": "2024-05-09T07:47:51.608Z",
-  "riderDetails": [
-    {
-      "_id": "661d10c3cea4346b0ee267d3",
-      "pinkMode": false,
-      "fullName": "Ria",
-      "phone": "+11212121212",
-      "email": "ria@test.com",
-      "city": "Rajkot",
-      "dob": "2000-04-20",
-      "gender": "Female",
-      "isDriver": false,
-      "referralCode": "S0175P2893",
-      "profileStatus": true,
-      "vehicleStatus": false,
-      "status": "active",
-      "wallet": 0,
-      "notificationPreferences": {
-        "trip": true,
-        "alerts": true,
-        "payments": true,
-        "transactions": true,
-        "offers": true
-      },
-      "firebaseUid": "YfTcEdNqhHPbYWY5bZzQxy5EwHG2",
-      "firebaseSignInProvider": "phone",
-      "rating": 4,
-      "createdAt": "2024-04-15T11:34:27.422Z",
-      "updatedAt": "2024-05-09T07:52:05.819Z",
-      "idPic": {
-        "key": "idPic/bf9018c7-ad37-47f0-b648-075e54474b8f-1000000034.jpg",
-        "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/idPic/bf9018c7-ad37-47f0-b648-075e54474b8f-1000000034.jpg"
-      },
-      "profilePic": {
-        "key": "usersProfile/455bece9-6a35-47bc-9650-0ea542382038-compressed_1000000034.jpg",
-        "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/455bece9-6a35-47bc-9650-0ea542382038-compressed_1000000034.jpg"
-      },
-      "totalRides": 1,
-      "isRegister": true,
-      "role": "user"
-    }
+  "riders": [
+    ""
   ],
+  "drivers": [
+    ""
+  ],
+  "description": "",
+  "createdAt": "2024-06-27T10:31:51.025Z",
+  "updatedAt": "2024-06-27T10:31:51.025Z",
+  "riderDetails": {
+    "_id": "6656dd590f9924a2d7a03772",
+    "isRegister": true,
+    "role": "Admin",
+    "pinkMode": false,
+    "fullName": "Georgina",
+    "phone": "+11212121212",
+    "email": "amod@yopmail.com",
+    "city": "Markham",
+    "profilePic": {
+      "key": "usersProfile/057a5720-a179-458b-9125-6d882fd3b75d-compressed_1000004890.jpg",
+      "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/057a5720-a179-458b-9125-6d882fd3b75d-compressed_1000004890.jpg",
+      "_id": "6656dd940f9924a2d7a0379b"
+    },
+    "idPic": {
+      "key": "idPic/455407d5-17ac-4826-84d4-c594cec837fe-compressed_1000078131.jpg",
+      "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/idPic/455407d5-17ac-4826-84d4-c594cec837fe-compressed_1000078131.jpg",
+      "_id": "6656dd940f9924a2d7a0379c"
+    },
+    "dob": "2006-06-03",
+    "gender": "Female",
+    "isDriver": true,
+    "referralCode": "N2010P2676",
+    "profileStatus": true,
+    "vehicleStatus": true,
+    "status": "active",
+    "wallet": 0,
+    "rating": 0.324156378600823,
+    "totalRides": 0,
+    "isRecurringTripEnabled": false,
+    "notificationPreferences": {
+      "trip": true,
+      "alerts": true,
+      "payments": true,
+      "transactions": true,
+      "offers": false
+    },
+    "firebaseUid": "SYdl01R9gHgi4yZaxIrkOTmy4rg1",
+    "firebaseSignInProvider": "phone",
+    "createdAt": "2024-05-29T07:46:33.594Z",
+    "updatedAt": "2024-06-27T10:32:15.239Z",
+    "rideCancellationCount": 1
+  },
   "distanceFromOrigin": 0,
   "stopsDistances": [
-    90.60039536063941
+    90.82491880317619
   ],
-  "minStopDistance": 90.60039536063941,
+  "minStopDistance": 90.82491880317619,
   "matchedOriginLocation": {
-    "name": "349 Queen St W, Toronto",
+    "name": "6301 Silver Dart Dr, Mississauga, ON L5P 1B2, Canada",
     "type": "Point",
     "coordinates": [
-      -79.3924196
+      -79.6333674
     ],
     "originDestinationFair": null
   },
   "distanceFromDestination": 0,
   "stopsDestinationDistances": [
-    90.82491880317619
+    90.79657539539292
   ],
-  "minStopDestinationDistance": 90.82491880317619,
+  "minStopDestinationDistance": 90.79657539539292,
   "matchedDestinationLocation": {
-    "name": "Toronto Pearson International Airport (YYZ), Mississauga",
+    "name": "5120 Dixie Rd, Mississauga, ON L4W 4K2, Canada",
     "type": "Point",
     "coordinates": [
-      -79.6333674
+      -79.62353949999999
     ]
   }
 } 
@@ -819,10 +832,12 @@ class DriverSendRequestModelData {
   bool? isStarted;
   bool? isCompleted;
   bool? isCancelled;
+  List<String?>? riders;
+  List<String?>? drivers;
   String? description;
   String? createdAt;
   String? updatedAt;
-  List<DriverSendRequestModelDataRiderDetails?>? riderDetails;
+  DriverSendRequestModelDataRiderDetails? riderDetails;
   int? distanceFromOrigin;
   List<double?>? stopsDistances;
   double? minStopDistance;
@@ -830,8 +845,7 @@ class DriverSendRequestModelData {
   int? distanceFromDestination;
   List<double?>? stopsDestinationDistances;
   double? minStopDestinationDistance;
-  DriverSendRequestModelDataMatchedDestinationLocation?
-      matchedDestinationLocation;
+  DriverSendRequestModelDataMatchedDestinationLocation? matchedDestinationLocation;
 
   DriverSendRequestModelData({
     this.Id,
@@ -851,6 +865,8 @@ class DriverSendRequestModelData {
     this.isStarted,
     this.isCompleted,
     this.isCancelled,
+    this.riders,
+    this.drivers,
     this.description,
     this.createdAt,
     this.updatedAt,
@@ -867,71 +883,63 @@ class DriverSendRequestModelData {
   DriverSendRequestModelData.fromJson(Map<String, dynamic> json) {
     Id = json['_id']?.toString();
     riderId = json['riderId']?.toString();
-    origin = (json['origin'] != null)
-        ? DriverSendRequestModelDataOrigin.fromJson(json['origin'])
-        : null;
-    destination = (json['destination'] != null)
-        ? DriverSendRequestModelDataDestination.fromJson(json['destination'])
-        : null;
+    origin = (json['origin'] != null) ? DriverSendRequestModelDataOrigin.fromJson(json['origin']) : null;
+    destination = (json['destination'] != null) ? DriverSendRequestModelDataDestination.fromJson(json['destination']) : null;
     price = json['price']?.toString();
     tripType = json['tripType']?.toString();
-    recurringTrip = (json['recurringTrip'] != null)
-        ? DriverSendRequestModelDataRecurringTrip.fromJson(
-            json['recurringTrip'])
-        : null;
+    recurringTrip = (json['recurringTrip'] != null) ? DriverSendRequestModelDataRecurringTrip.fromJson(json['recurringTrip']) : null;
     date = json['date']?.toString();
     time = json['time']?.toString();
-    returnTrip = (json['returnTrip'] != null)
-        ? DriverSendRequestModelDataReturnTrip.fromJson(json['returnTrip'])
-        : null;
+    returnTrip = (json['returnTrip'] != null) ? DriverSendRequestModelDataReturnTrip.fromJson(json['returnTrip']) : null;
     arrivalDate = json['arrivalDate']?.toString();
     arrivalTime = json['arrivalTime']?.toString();
     seatAvailable = json['seatAvailable']?.toInt();
-    preferences = (json['preferences'] != null)
-        ? DriverSendRequestModelDataPreferences.fromJson(json['preferences'])
-        : null;
+    preferences = (json['preferences'] != null) ? DriverSendRequestModelDataPreferences.fromJson(json['preferences']) : null;
     isStarted = json['isStarted'];
     isCompleted = json['isCompleted'];
     isCancelled = json['isCancelled'];
+  if (json['riders'] != null) {
+  final v = json['riders'];
+  final arr0 = <String>[];
+  v.forEach((v) {
+  arr0.add(v.toString());
+  });
+    riders = arr0;
+    }
+  if (json['drivers'] != null) {
+  final v = json['drivers'];
+  final arr0 = <String>[];
+  v.forEach((v) {
+  arr0.add(v.toString());
+  });
+    drivers = arr0;
+    }
     description = json['description']?.toString();
     createdAt = json['createdAt']?.toString();
     updatedAt = json['updatedAt']?.toString();
-    if (json['riderDetails'] != null) {
-      final v = json['riderDetails'];
-      final arr0 = <DriverSendRequestModelDataRiderDetails>[];
-      v.forEach((v) {
-        arr0.add(DriverSendRequestModelDataRiderDetails.fromJson(v));
-      });
-      riderDetails = arr0;
-    }
+    riderDetails = (json['riderDetails'] != null) ? DriverSendRequestModelDataRiderDetails.fromJson(json['riderDetails']) : null;
     distanceFromOrigin = json['distanceFromOrigin']?.toInt();
-    if (json['stopsDistances'] != null) {
-      final v = json['stopsDistances'];
-      final arr0 = <double>[];
-      v.forEach((v) {
-        arr0.add(v.toDouble());
-      });
-      stopsDistances = arr0;
+  if (json['stopsDistances'] != null) {
+  final v = json['stopsDistances'];
+  final arr0 = <double>[];
+  v.forEach((v) {
+  arr0.add(v.toDouble());
+  });
+    stopsDistances = arr0;
     }
     minStopDistance = json['minStopDistance']?.toDouble();
-    matchedOriginLocation = (json['matchedOriginLocation'] != null)
-        ? DriverSendRequestModelDataMatchedOriginLocation.fromJson(
-            json['matchedOriginLocation'])
-        : null;
+    matchedOriginLocation = (json['matchedOriginLocation'] != null) ? DriverSendRequestModelDataMatchedOriginLocation.fromJson(json['matchedOriginLocation']) : null;
     distanceFromDestination = json['distanceFromDestination']?.toInt();
-    if (json['stopsDestinationDistances'] != null) {
-      final v = json['stopsDestinationDistances'];
-      final arr0 = <double>[];
-      v.forEach((v) {
-        arr0.add(v.toDouble());
-      });
-      stopsDestinationDistances = arr0;
+  if (json['stopsDestinationDistances'] != null) {
+  final v = json['stopsDestinationDistances'];
+  final arr0 = <double>[];
+  v.forEach((v) {
+  arr0.add(v.toDouble());
+  });
+    stopsDestinationDistances = arr0;
     }
     minStopDestinationDistance = json['minStopDestinationDistance']?.toDouble();
-    matchedDestinationLocation = (json['matchedDestinationLocation'] != null)
-        ? DriverSendRequestModelDataMatchedDestinationLocation.fromJson(
-            json['matchedDestinationLocation'])
-        : null;
+    matchedDestinationLocation = (json['matchedDestinationLocation'] != null) ? DriverSendRequestModelDataMatchedDestinationLocation.fromJson(json['matchedDestinationLocation']) : null;
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -962,24 +970,35 @@ class DriverSendRequestModelData {
     data['isStarted'] = isStarted;
     data['isCompleted'] = isCompleted;
     data['isCancelled'] = isCancelled;
+    if (riders != null) {
+      final v = riders;
+      final arr0 = [];
+  v!.forEach((v) {
+  arr0.add(v);
+  });
+      data['riders'] = arr0;
+    }
+    if (drivers != null) {
+      final v = drivers;
+      final arr0 = [];
+  v!.forEach((v) {
+  arr0.add(v);
+  });
+      data['drivers'] = arr0;
+    }
     data['description'] = description;
     data['createdAt'] = createdAt;
     data['updatedAt'] = updatedAt;
     if (riderDetails != null) {
-      final v = riderDetails;
-      final arr0 = [];
-      v!.forEach((v) {
-        arr0.add(v!.toJson());
-      });
-      data['riderDetails'] = arr0;
+      data['riderDetails'] = riderDetails!.toJson();
     }
     data['distanceFromOrigin'] = distanceFromOrigin;
     if (stopsDistances != null) {
       final v = stopsDistances;
       final arr0 = [];
-      v!.forEach((v) {
-        arr0.add(v);
-      });
+  v!.forEach((v) {
+  arr0.add(v);
+  });
       data['stopsDistances'] = arr0;
     }
     data['minStopDistance'] = minStopDistance;
@@ -990,9 +1009,9 @@ class DriverSendRequestModelData {
     if (stopsDestinationDistances != null) {
       final v = stopsDestinationDistances;
       final arr0 = [];
-      v!.forEach((v) {
-        arr0.add(v);
-      });
+  v!.forEach((v) {
+  arr0.add(v);
+  });
       data['stopsDestinationDistances'] = arr0;
     }
     data['minStopDestinationDistance'] = minStopDestinationDistance;
@@ -1010,36 +1029,36 @@ class DriverSendRequestModel {
   "message": "success",
   "data": [
     {
-      "_id": "663c7fa7c526bb5718e59c09",
-      "riderId": "661d10c3cea4346b0ee267d3",
+      "_id": "667d3f97a537574a2205bc9b",
+      "riderId": "6656dd590f9924a2d7a03772",
       "origin": {
-        "name": "349 Queen St W, Toronto",
+        "name": "6301 Silver Dart Dr, Mississauga, ON L5P 1B2, Canada",
         "type": "Point",
         "coordinates": [
-          -79.3924196
+          -79.6333674
         ],
         "originDestinationFair": null
       },
       "destination": {
-        "name": "Toronto Pearson International Airport (YYZ), Mississauga",
+        "name": "5120 Dixie Rd, Mississauga, ON L4W 4K2, Canada",
         "type": "Point",
         "coordinates": [
-          -79.6333674
+          -79.62353949999999
         ]
       },
-      "price": "5",
+      "price": "6",
       "tripType": null,
       "recurringTrip": {
         "recurringTripIds": [
-          ""
+          "121212"
         ],
         "recurringTripDays": [
           1
         ],
         "isRecurringTripEnabled": false
       },
-      "date": null,
-      "time": "",
+      "date": "2024-06-27T00:00:00.000Z",
+      "time": "6:00 PM",
       "returnTrip": {
         "returnTripId": null,
         "isReturnTrip": false,
@@ -1065,73 +1084,81 @@ class DriverSendRequestModel {
       "isStarted": false,
       "isCompleted": false,
       "isCancelled": false,
-      "description": "",
-      "createdAt": "2024-05-09T07:47:51.608Z",
-      "updatedAt": "2024-05-09T07:47:51.608Z",
-      "riderDetails": [
-        {
-          "_id": "661d10c3cea4346b0ee267d3",
-          "pinkMode": false,
-          "fullName": "Ria",
-          "phone": "+11212121212",
-          "email": "ria@test.com",
-          "city": "Rajkot",
-          "dob": "2000-04-20",
-          "gender": "Female",
-          "isDriver": false,
-          "referralCode": "S0175P2893",
-          "profileStatus": true,
-          "vehicleStatus": false,
-          "status": "active",
-          "wallet": 0,
-          "notificationPreferences": {
-            "trip": true,
-            "alerts": true,
-            "payments": true,
-            "transactions": true,
-            "offers": true
-          },
-          "firebaseUid": "YfTcEdNqhHPbYWY5bZzQxy5EwHG2",
-          "firebaseSignInProvider": "phone",
-          "rating": 4,
-          "createdAt": "2024-04-15T11:34:27.422Z",
-          "updatedAt": "2024-05-09T07:52:05.819Z",
-          "idPic": {
-            "key": "idPic/bf9018c7-ad37-47f0-b648-075e54474b8f-1000000034.jpg",
-            "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/idPic/bf9018c7-ad37-47f0-b648-075e54474b8f-1000000034.jpg"
-          },
-          "profilePic": {
-            "key": "usersProfile/455bece9-6a35-47bc-9650-0ea542382038-compressed_1000000034.jpg",
-            "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/455bece9-6a35-47bc-9650-0ea542382038-compressed_1000000034.jpg"
-          },
-          "totalRides": 1,
-          "isRegister": true,
-          "role": "user"
-        }
+      "riders": [
+        ""
       ],
+      "drivers": [
+        ""
+      ],
+      "description": "",
+      "createdAt": "2024-06-27T10:31:51.025Z",
+      "updatedAt": "2024-06-27T10:31:51.025Z",
+      "riderDetails": {
+        "_id": "6656dd590f9924a2d7a03772",
+        "isRegister": true,
+        "role": "Admin",
+        "pinkMode": false,
+        "fullName": "Georgina",
+        "phone": "+11212121212",
+        "email": "amod@yopmail.com",
+        "city": "Markham",
+        "profilePic": {
+          "key": "usersProfile/057a5720-a179-458b-9125-6d882fd3b75d-compressed_1000004890.jpg",
+          "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/057a5720-a179-458b-9125-6d882fd3b75d-compressed_1000004890.jpg",
+          "_id": "6656dd940f9924a2d7a0379b"
+        },
+        "idPic": {
+          "key": "idPic/455407d5-17ac-4826-84d4-c594cec837fe-compressed_1000078131.jpg",
+          "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/idPic/455407d5-17ac-4826-84d4-c594cec837fe-compressed_1000078131.jpg",
+          "_id": "6656dd940f9924a2d7a0379c"
+        },
+        "dob": "2006-06-03",
+        "gender": "Female",
+        "isDriver": true,
+        "referralCode": "N2010P2676",
+        "profileStatus": true,
+        "vehicleStatus": true,
+        "status": "active",
+        "wallet": 0,
+        "rating": 0.324156378600823,
+        "totalRides": 0,
+        "isRecurringTripEnabled": false,
+        "notificationPreferences": {
+          "trip": true,
+          "alerts": true,
+          "payments": true,
+          "transactions": true,
+          "offers": false
+        },
+        "firebaseUid": "SYdl01R9gHgi4yZaxIrkOTmy4rg1",
+        "firebaseSignInProvider": "phone",
+        "createdAt": "2024-05-29T07:46:33.594Z",
+        "updatedAt": "2024-06-27T10:32:15.239Z",
+        "rideCancellationCount": 1
+      },
       "distanceFromOrigin": 0,
       "stopsDistances": [
-        90.60039536063941
+        90.82491880317619
       ],
-      "minStopDistance": 90.60039536063941,
+      "minStopDistance": 90.82491880317619,
       "matchedOriginLocation": {
-        "name": "349 Queen St W, Toronto",
+        "name": "6301 Silver Dart Dr, Mississauga, ON L5P 1B2, Canada",
         "type": "Point",
         "coordinates": [
-          -79.3924196
+          -79.6333674
         ],
         "originDestinationFair": null
       },
       "distanceFromDestination": 0,
       "stopsDestinationDistances": [
-        90.82491880317619
+        90.79657539539292
       ],
-      "minStopDestinationDistance": 90.82491880317619,
+      "minStopDestinationDistance": 90.79657539539292,
       "matchedDestinationLocation": {
-        "name": "Toronto Pearson International Airport (YYZ), Mississauga",
+        "name": "5120 Dixie Rd, Mississauga, ON L4W 4K2, Canada",
         "type": "Point",
         "coordinates": [
-          -79.6333674
+          -79.62353949999999
         ]
       }
     }
@@ -1151,13 +1178,13 @@ class DriverSendRequestModel {
   DriverSendRequestModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message']?.toString();
-    if (json['data'] != null) {
-      final v = json['data'];
-      final arr0 = <DriverSendRequestModelData>[];
-      v.forEach((v) {
-        arr0.add(DriverSendRequestModelData.fromJson(v));
-      });
-      this.data = arr0;
+  if (json['data'] != null) {
+  final v = json['data'];
+  final arr0 = <DriverSendRequestModelData>[];
+  v.forEach((v) {
+  arr0.add(DriverSendRequestModelData.fromJson(v));
+  });
+    this.data = arr0;
     }
   }
   Map<String, dynamic> toJson() {
@@ -1167,9 +1194,9 @@ class DriverSendRequestModel {
     if (this.data != null) {
       final v = this.data;
       final arr0 = [];
-      v!.forEach((v) {
-        arr0.add(v!.toJson());
-      });
+  v!.forEach((v) {
+  arr0.add(v!.toJson());
+  });
       data['data'] = arr0;
     }
     return data;

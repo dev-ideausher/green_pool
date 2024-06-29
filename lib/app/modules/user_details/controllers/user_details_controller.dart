@@ -278,26 +278,6 @@ class UserDetailsController extends GetxController {
           ),
         ),
       );
-
-      // Get.defaultDialog(
-      //   title: "Delete Account",
-      //   middleText: "Are you sure you want to delete your account?",
-      //   textCancel: "Cancel",
-      //   textConfirm: "Delete",
-      //   confirmTextColor: Colors.white,
-      //   onConfirm: () async {
-      //     final res = await APIManager.deleteAccount();
-      //     PushNotificationService.unsubFcm(
-      //         "${Get.find<HomeController>().userInfo.value.data?.Id}");
-      //     Get.find<AuthService>().logOutUser();
-      //     Get.find<HomeController>().userInfoAPI();
-      //     Get.find<HomeController>().changeTabIndex(0);
-      //     Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
-      //   },
-      //   onCancel: () {
-      //     Get.back(); // Close the dialog
-      //   },
-      // );
     } catch (e) {
       debugPrint(e.toString());
     }

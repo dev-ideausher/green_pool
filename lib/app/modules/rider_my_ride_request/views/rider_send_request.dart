@@ -5,7 +5,6 @@ import 'package:green_pool/app/modules/map_rider_send_request/views/map_rider_se
 import 'package:green_pool/app/modules/rider_my_ride_request/controllers/rider_my_ride_request_controller.dart';
 import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 import '../../../components/common_image_view.dart';
 import '../../../components/gp_progress.dart';
@@ -67,10 +66,9 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                             decoration: BoxDecoration(
                                 color: ColorUtil.kWhiteColor,
                                 borderRadius: BorderRadius.circular(8.kh),
-                                border: Border(
-                                    bottom: BorderSide(
-                                        color: ColorUtil.kNeutral7,
-                                        width: 2.kh))),
+                                border: Border.all(
+                                    color: ColorUtil.kNeutral10,
+                                    width: 0.3.kh)),
                             child: Column(
                               children: [
                                 Row(
@@ -272,25 +270,39 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    InkWell(
-                                      onTap: () => controller.openMessage(
-                                          controller.riderSendRequestModel.value
-                                              .data![index]!),
-                                      child: Container(
-                                        height: 38.kh,
-                                        width: 134.kw,
-                                        alignment: Alignment.center,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(40.kh),
-                                            border: Border.all(
-                                                color: ColorUtil.kSecondary01)),
-                                        child: Text(
-                                          Strings.message,
-                                          style: TextStyleUtil.k12Semibold(),
-                                        ),
-                                      ),
-                                    ).paddingAll(8.kh),
+                                    // InkWell(
+                                    //   onTap: () => controller.openMessage(
+                                    //       controller.riderSendRequestModel.value
+                                    //           .data![index]!),
+                                    //   child: Container(
+                                    //     height: 38.kh,
+                                    //     width: 134.kw,
+                                    //     alignment: Alignment.center,
+                                    //     decoration: BoxDecoration(
+                                    //         borderRadius:
+                                    //             BorderRadius.circular(40.kh),
+                                    //         border: Border.all(
+                                    //             color: ColorUtil.kSecondary01)),
+                                    //     child: Text(
+                                    //       Strings.message,
+                                    //       style: TextStyleUtil.k12Semibold(),
+                                    //     ),
+                                    //   ),
+                                    // ).paddingAll(8.kh),
+                                    GreenPoolButton(
+                                      onPressed: () {
+                                        controller.openMessage(controller
+                                            .riderSendRequestModel
+                                            .value
+                                            .data![index]!);
+                                      },
+                                      label: Strings.message,
+                                      isBorder: true,
+                                      fontSize: 14.kh,
+                                      height: 38.kh,
+                                      width: 134.kw,
+                                      padding: EdgeInsets.all(0.kh),
+                                    ),
                                     GreenPoolButton(
                                       width: 144.kw,
                                       height: 40.kh,
@@ -302,10 +314,9 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                         //     .sendRideRequestToDriverAPI(
                                         //         controller.riderSendRequestModel
                                         //             .value.data![index]);
-                                        controller.moveToPaymentFromSendRequest(controller
-                                            .riderSendRequestModel
-                                            .value
-                                            .data![index]);
+                                        controller.moveToPaymentFromSendRequest(
+                                            controller.riderSendRequestModel
+                                                .value.data![index]);
                                       },
                                     ),
                                   ],

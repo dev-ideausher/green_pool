@@ -5,7 +5,6 @@ import 'package:green_pool/app/components/green_pool_divider.dart';
 import 'package:green_pool/app/data/my_rides_model.dart';
 import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
-import 'package:green_pool/app/services/storage.dart';
 import 'package:intl/intl.dart';
 
 import '../../../components/common_image_view.dart';
@@ -35,8 +34,7 @@ class DriverTile extends StatelessWidget {
           decoration: BoxDecoration(
               color: ColorUtil.kWhiteColor,
               borderRadius: BorderRadius.circular(8.kh),
-              border: Border(
-                  bottom: BorderSide(color: ColorUtil.kNeutral7, width: 2.kh))),
+              border: Border.all(width: 0.3.kh, color: ColorUtil.kNeutral10)),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -60,11 +58,10 @@ class DriverTile extends StatelessWidget {
                         "",
                     style: TextStyleUtil.k16Bold()),
                 subtitle: Text(
-                  // '07 November 2023',
-                  GpUtil.getDateFormat(myRidesModelData.date) ??
-                      ((myRidesModelData.time ?? "") == ""
-                          ? ""
-                          : "${myRidesModelData.time}"),
+                  // GpUtil.getDateFormat(myRidesModelData.date) ??
+                  ((myRidesModelData.time ?? "") == ""
+                      ? ""
+                      : "${myRidesModelData.time}"),
                   style: TextStyleUtil.k12Regular(color: ColorUtil.kBlack03),
                 ),
                 trailing: SizedBox(
@@ -250,7 +247,7 @@ class DriverTile extends StatelessWidget {
                               children: [
                                 GreenPoolButton(
                                   onPressed: () {
-                                    controller.viewDetails(myRidesModelData);
+                                    controller.moveToRequests(myRidesModelData);
                                   },
                                   width: 144.kw,
                                   height: 40.kh,
@@ -266,7 +263,7 @@ class DriverTile extends StatelessWidget {
                                           .value
                                       ? ColorUtil.kPrimary3PinkMode
                                       : ColorUtil.kSecondary01,
-                                  label: Strings.viewDetails,
+                                  label: Strings.request,
                                 ),
                                 GreenPoolButton(
                                   onPressed: () {

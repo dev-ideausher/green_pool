@@ -6,9 +6,7 @@ import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/components/greenpool_textfield.dart';
 import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
-import 'package:green_pool/app/services/storage.dart';
 
-import '../../../routes/app_pages.dart';
 import '../../../services/colors.dart';
 import '../../../services/text_style_util.dart';
 import '../../home/controllers/home_controller.dart';
@@ -88,7 +86,9 @@ class WalletAddMoneyView extends GetView<WalletAddMoneyController> {
                   controller: controller.amountTextController,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   keyboardType: const TextInputType.numberWithOptions(),
-                  onchanged: (value) => controller.setButtonState(value ?? ""),
+                  onchanged: (value) {
+                    controller.setButtonState(value ?? "");
+                  },
                 ),
               ],
             ),

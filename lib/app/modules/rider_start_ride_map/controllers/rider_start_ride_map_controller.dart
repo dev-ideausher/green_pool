@@ -203,10 +203,12 @@ class RiderStartRideMapController extends GetxController {
       markers.clear();
 
       PolylineResult result = await PolylinePoints().getRouteBetweenCoordinates(
-          Endpoints.googleApiKey,
-          PointLatLng(currentLat.value, currentLong.value),
-          PointLatLng(destinationLat.value, destinationLong.value),
-          travelMode: TravelMode.driving);
+          googleApiKey: Endpoints.googleApiKey,
+          request: PolylineRequest(
+              origin: PointLatLng(currentLat.value, currentLong.value),
+              destination:
+                  PointLatLng(destinationLat.value, destinationLong.value),
+              mode: TravelMode.driving));
       if (result.points.isNotEmpty) {
         polylineCoordinates.assignAll(result.points
             .map((PointLatLng point) => LatLng(point.latitude, point.longitude))
@@ -332,19 +334,14 @@ class RiderStartRideMapController extends GetxController {
   chatWithDriver() async {
     try {
       final res = await APIManager.getChatRoomId(
-          receiverId: bookingDetail.value.driverId ?? "");
+          receiverId: bookingDetail.value.driverDetails?.Id ?? "");
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
               chatRoomId: res.data["chatChannelId"] ?? "",
-              id: bookingDetail.value.driverId,
+              id: bookingDetail.value.driverDetails?.Id,
               name: bookingDetail.value.driverDetails?.fullName,
               image: bookingDetail.value.driverDetails?.profilePic?.url));
     } catch (e) {
-      Get.toNamed(Routes.CHAT_PAGE,
-          arguments: ChatArg(
-              id: bookingDetail.value.driverId,
-              name: bookingDetail.value.driverDetails?.fullName,
-              image: bookingDetail.value.driverDetails?.profilePic?.url));
       debugPrint(e.toString());
     }
   }

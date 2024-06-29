@@ -29,21 +29,21 @@ class ProfileSetupController extends GetxController
   RxList<String> cityNames = <String>[].obs;
   final debouncer = Debouncer(delay: const Duration(milliseconds: 50));
   final pageIndex = 0.obs;
-  String name = '';
   Rx<File?> selectedProfileImagePath = Rx<File?>(null);
   Rx<File?> selectedIDImagePath = Rx<File?>(null);
   RxBool isProfileImagePicked = false.obs;
   RxBool isIDPicked = false.obs;
   RxBool expandList = false.obs;
   RxBool imageNotUploaded = false.obs;
-  TextEditingController fullName = TextEditingController();
-  TextEditingController email = TextEditingController();
+  TextEditingController fullName = TextEditingController(
+      text: Get.find<GetStorageService>().getUserName ?? "");
+  TextEditingController email =
+      TextEditingController(text: Get.find<GetStorageService>().emailId ?? "");
   TextEditingController phoneNumber = TextEditingController(
       text: Get.find<AuthService>().auth.currentUser?.phoneNumber);
 
   // TextEditingController gender = TextEditingController();
   RxString gender = 'Prefer not to say'.obs;
-  RxString selectedCity = 'Brampton'.obs;
   TextEditingController city = TextEditingController();
   TextEditingController dateOfBirth = TextEditingController();
   TextEditingController formattedDateOfBirth = TextEditingController();
@@ -52,7 +52,6 @@ class ProfileSetupController extends GetxController
   //for vehicle
   Rx<File?> selectedVehicleImagePath = Rx<File?>(null);
   TextEditingController model = TextEditingController();
-
   // TextEditingController color = TextEditingController();
   // TextEditingController type = TextEditingController();
   RxBool isVehicleImagePicked = false.obs;
@@ -73,16 +72,14 @@ class ProfileSetupController extends GetxController
     try {
       fromNavBar = Get.arguments['fromNavBar'];
       postRideModel.value = Get.arguments['postRideModel'];
+      fullName.text = Get.arguments['fullName'];
     } catch (e) {
-      fromNavBar = Get.arguments;
+      fromNavBar = Get.arguments['fromNavBar'];
+      fullName.text = Get.arguments['fullName'];
     }
 
     Get.lazyPut(() => PostRideController());
     tabBarController = TabController(length: 2, vsync: this);
-  }
-
-  void updateSelectedCity(String city) {
-    selectedCity.value = city;
   }
 
   Future<void> setDate(BuildContext context) async {
@@ -199,7 +196,7 @@ class ProfileSetupController extends GetxController
       'email': email.text,
       'phone': phoneNumber.text,
       'gender': gender.value,
-      'city': selectedCity.value,
+      'city': city.value.text,
       'dob': dateOfBirth.text,
       'profilePic': await dio.MultipartFile.fromFile(
         pickedImageFile.path,
@@ -216,6 +213,7 @@ class ProfileSetupController extends GetxController
       final responses = await APIManager.userDetails(body: userData);
       showMySnackbar(msg: responses.data['message']);
       storageService.setUserName = fullName.text;
+      storageService.emailId = email.text;
       storageService.profileStatus = true;
       tabBarController.index = 1;
     } catch (e) {
@@ -239,7 +237,6 @@ class ProfileSetupController extends GetxController
     }
 
     final vehicleData = dio.FormData.fromMap({
-      'driverId': storageService.getUserAppId,
       'model': model.text,
       'type': type.value,
       'color': color.value,
@@ -254,18 +251,18 @@ class ProfileSetupController extends GetxController
 
     if (storageService.profileStatus == true) {
       try {
+        await APIManager.postWelcomeEmail(emailId: {"email": email.text});
         await APIManager.postVehicleDetails(body: vehicleData);
         showMySnackbar(msg: "Data filled successfully");
-        homeController.userInfoAPI();
         storageService.isLoggedIn = true;
         storageService.setDriver = true;
-
         Get.offNamed(Routes.EMERGENCY_CONTACTS, arguments: {
-          'fromNavBar': false,
+          'fromNavBar': fromNavBar,
           'postRideModel': postRideModel.value
         }, parameters: {
           "profileType": "driver"
         });
+        homeController.userInfoAPI();
       } catch (e) {
         throw Exception(e);
       }

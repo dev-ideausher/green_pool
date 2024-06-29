@@ -92,10 +92,14 @@ class StartRideController extends GetxController {
           myRidesModel.value.driverBookingDetails?.destination?.coordinates ??
               [0.0, 0.0];
       PolylineResult result = await PolylinePoints().getRouteBetweenCoordinates(
-          Endpoints.googleApiKey,
-          PointLatLng(originCoordinates.last!, originCoordinates.first!),
-          PointLatLng(
-              destinationCoordinates.last!, destinationCoordinates.first!));
+        googleApiKey: Endpoints.googleApiKey,
+        request: PolylineRequest(
+            origin:
+                PointLatLng(originCoordinates.last!, originCoordinates.first!),
+            destination: PointLatLng(
+                destinationCoordinates.last!, destinationCoordinates.first!),
+            mode: TravelMode.driving),
+      );
       if (result.points.isNotEmpty) {
         polylineCoordinates.assignAll(result.points
             .map((point) => LatLng(point.latitude, point.longitude))
@@ -315,43 +319,34 @@ class StartRideController extends GetxController {
   showChatBottomSheet() async {
     try {
       final res = await APIManager.getChatRoomId(
-          receiverId: myRidesModel.value.driverBookingDetails
-                  ?.riderBookingDetails?[selectedRider.value]?.Id ??
+          receiverId: myRidesModel
+                  .value
+                  .driverBookingDetails
+                  ?.riderBookingDetails?[selectedRider.value]
+                  ?.riderDetails
+                  ?.Id ??
               "");
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
               chatRoomId: res.data["chatChannelId"] ?? "",
               id: myRidesModel.value.driverBookingDetails
-                  ?.riderBookingDetails?[selectedRider.value]?.Id,
-              name: myRidesModel.value.driverBookingDetails?.riderBookingDetails
-                      ?.firstOrNull?.riderDetails?.fullName ??
+                  ?.riderBookingDetails?[selectedRider.value]?.riderDetails?.Id,
+              name: myRidesModel
+                      .value
+                      .driverBookingDetails
+                      ?.riderBookingDetails?[selectedRider.value]
+                      ?.riderDetails
+                      ?.fullName ??
                   "",
               image: myRidesModel
                       .value
                       .driverBookingDetails
-                      ?.riderBookingDetails
-                      ?.firstOrNull
+                      ?.riderBookingDetails?[selectedRider.value]
                       ?.riderDetails
                       ?.profilePic
                       ?.url ??
                   ""));
     } catch (e) {
-      Get.toNamed(Routes.CHAT_PAGE,
-          arguments: ChatArg(
-              id: myRidesModel.value.driverBookingDetails
-                  ?.riderBookingDetails?[selectedRider.value]?.Id,
-              name: myRidesModel.value.driverBookingDetails?.riderBookingDetails
-                      ?.firstOrNull?.riderDetails?.fullName ??
-                  "",
-              image: myRidesModel
-                      .value
-                      .driverBookingDetails
-                      ?.riderBookingDetails
-                      ?.firstOrNull
-                      ?.riderDetails
-                      ?.profilePic
-                      ?.url ??
-                  ""));
       debugPrint(e.toString());
     }
   }

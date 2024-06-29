@@ -48,31 +48,36 @@ class BottomNavigationView extends GetView<HomeController> {
               selectedItemColor: isPinkModeOn
                   ? ColorUtil.kPrimary3PinkMode
                   : ColorUtil.kSecondary01,
-              onTap: Get.find<GetStorageService>().isLoggedIn
-                  ? Get.find<GetStorageService>().profileStatus
-                      ? (index) {
-                          controller.changeTabIndex(index);
-                          // controller.pageController?.animateToPage(
-                          //   index,
-                          //   duration: const Duration(milliseconds: 1),
-                          //   curve: Curves.easeIn,
-                          // );
-                        }
-                      : (index) {
-                          if (index != 0) {
-                            Get.toNamed(Routes.RIDER_PROFILE_SETUP,
-                                arguments: true);
-                            showMySnackbar(
-                                msg:
-                                    Strings.pleaseCompleteProfileSetup);
-                          }
-                        }
-                  : (index) {
-                      if (index != 0) {
-                        Get.toNamed(Routes.LOGIN,
-                            arguments: {'isDriver': false, 'fromNavBar': true});
-                      }
-                    },
+              onTap: (index) {
+                controller.onTapBottomNavigation(index);
+              },
+
+              // Get.find<GetStorageService>().isLoggedIn
+              //     ? Get.find<GetStorageService>().profileStatus
+              //         ? (index) {
+              //             controller.changeTabIndex(index);
+              //             // controller.pageController?.animateToPage(
+              //             //   index,
+              //             //   duration: const Duration(milliseconds: 1),
+              //             //   curve: Curves.easeIn,
+              //             // );
+              //           }
+              //         : (index) {
+              //             if (index != 0) {
+              //               Get.toNamed(Routes.RIDER_PROFILE_SETUP,
+              //                   arguments: true);
+              //               showMySnackbar(
+              //                   msg: Strings.pleaseCompleteProfileSetup);
+              //             }
+              //           }
+              //     : (index) {
+              //         if (index != 0) {
+              //           print(
+              //               "GET STORAGE IS LOGGED IN: ${Get.find<GetStorageService>().isLoggedIn.toString()}");
+              //           Get.toNamed(Routes.LOGIN,
+              //               arguments: {'isDriver': false, 'fromNavBar': true});
+              //         }
+              //       },
               items: [
                 BottomNavigationBarItem(
                   activeIcon: SvgPicture.asset(

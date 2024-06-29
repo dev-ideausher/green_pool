@@ -136,12 +136,7 @@ class MyRidesOneTimeController extends GetxController {
   Future<void> startRide(MyRidesModelData value) async {
     if (value.postsInfo?.isEmpty ?? false) {
       // openMyRideDetail(value);
-      await Get.toNamed(Routes.MY_RIDES_REQUEST,
-              arguments: RideDetailId(
-                  driverRidId: value?.Id ?? "",
-                  // riderRidId: myRidesModelData.value.riderRideId ?? ""
-                  riderRidId: ""))
-          ?.then((v) => myRidesAPI);
+      moveToRequests(value);
     } else {
       if (value.postsInfo!.isNotEmpty) {
         Get.toNamed(Routes.START_RIDE,
@@ -227,5 +222,14 @@ class MyRidesOneTimeController extends GetxController {
     } catch (e) {
       throw Exception(e);
     }
+  }
+
+  Future<void> moveToRequests(MyRidesModelData value) async {
+    await Get.toNamed(Routes.MY_RIDES_REQUEST,
+            arguments: RideDetailId(
+                driverRidId: value?.Id ?? "",
+                // riderRidId: myRidesModelData.value.riderRideId ?? ""
+                riderRidId: ""))
+        ?.then((v) => myRidesAPI);
   }
 }

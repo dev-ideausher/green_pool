@@ -111,7 +111,7 @@ class SetupUser extends GetView<ProfileSetupController> {
             const RichTextHeading(text: 'Gender').paddingOnly(bottom: 8.kh),
             GreenPoolDropDown(
               hintText: 'Select your Gender',
-              // value: controller.gender.value,
+              value: controller.gender.value,
               items: [
                 DropdownMenuItem(
                     value: "Male",

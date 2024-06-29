@@ -42,7 +42,6 @@ class RiderProfileSetupController extends GetxController {
 
   TextEditingController dateOfBirth = TextEditingController();
   TextEditingController formattedDateOfBirth = TextEditingController();
-  RxString selectedCity = 'Brampton'.obs;
   TextEditingController city = TextEditingController();
   RxBool isCityListExpanded = false.obs;
 
@@ -56,14 +55,16 @@ class RiderProfileSetupController extends GetxController {
     try {
       fromNavBar = Get.arguments['fromNavBar'];
       findRideModel.value = Get.arguments['findRideModel'];
+      fullName.text = Get.arguments['fullName'];
     } catch (e) {
-      fromNavBar = Get.arguments;
+      fromNavBar = Get.arguments['fromNavBar'];
+      fullName.text = Get.arguments['fullName'];
     }
   }
 
-  void updateSelectedCity(String city) {
-    selectedCity.value = city;
-  }
+  // void updateSelectedCity(String city) {
+  //   selectedCity.value = city;
+  // }
 
   Future<void> setDate(BuildContext context) async {
     DateTime lastDate = DateTime.now()
@@ -161,7 +162,7 @@ class RiderProfileSetupController extends GetxController {
       'email': email.text,
       'phone': phoneNumber.text,
       'gender': gender.text,
-      'city': selectedCity.value,
+      'city': city.value.text,
       'dob': dateOfBirth.text,
       'profilePic': await dio.MultipartFile.fromFile(
         pickedImageFile.path,
@@ -177,16 +178,17 @@ class RiderProfileSetupController extends GetxController {
     log("profile setup user data: $userData");
 
     try {
+      await APIManager.postWelcomeEmail(emailId: {"email": email.text});
       final responses = await APIManager.userDetails(body: userData);
-
       showMySnackbar(msg: responses.data['message']);
       storageService.setUserName = fullName.text;
       storageService.isLoggedIn = true;
       storageService.profileStatus = true;
-      Get.find<HomeController>().userInfoAPI();
       Get.offNamed(Routes.EMERGENCY_CONTACTS,
           arguments: {'fromNavBar': fromNavBar, 'isDriver': false},
           parameters: {"profileType": "user"});
+      showMySnackbar(msg: "Data saved succesfully.");
+      Get.find<HomeController>().userInfoAPI();
     } catch (e) {
       throw Exception(e);
     }

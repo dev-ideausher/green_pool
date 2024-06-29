@@ -32,7 +32,7 @@ class AuthService extends GetxService {
     bool status = false;
     await auth.signInWithGoogle().then((value) async {
       if (!value.hasError) {
-        await Get.find<AuthService>().handleGetContact();
+        await handleGetContact();
 
         print("display name: ${_firebaseAuth.currentUser?.displayName}");
         print("user phone number: ${_firebaseAuth.currentUser?.phoneNumber}");
@@ -58,6 +58,7 @@ class AuthService extends GetxService {
         .then((value) async {
       await handleGetContact();
     });
+    Get.find<GetStorageService>().setUserName = result.user?.fullName;
     print('Apple : ${await result.user?.getIdToken()}');
   }
 
@@ -149,12 +150,13 @@ class AuthService extends GetxService {
     final fireUid = _firebaseAuth.currentUser!.uid;
     final userName = _firebaseAuth.currentUser?.displayName;
     // final userPhoneNumber = _firebaseAuth.currentUser?.phoneNumber;
-    // final userEmail = _firebaseAuth.currentUser?.email;
+    final userEmail = _firebaseAuth.currentUser?.email;
 
-    Get.find<GetStorageService>().isLoggedIn = true;
+    // Get.find<GetStorageService>().isLoggedIn = true;
     Get.find<GetStorageService>().encjwToken = mytoken!;
     Get.find<GetStorageService>().setFirebaseUid = fireUid;
-    Get.find<GetStorageService>().setUserName = userName;
+    Get.find<GetStorageService>().setUserName = userName ?? "";
+    Get.find<GetStorageService>().emailId = userEmail ?? "";
     log(Get.find<GetStorageService>().encjwToken);
     debugPrint('i am user id${Get.find<GetStorageService>().getFirebaseUid}');
   }

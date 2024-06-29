@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:green_pool/app/components/green_pool_divider.dart';
-import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/components/origin_to_destination.dart';
+import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/services/custom_button.dart';
-import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -65,31 +61,30 @@ class StartRideView extends GetView<StartRideController> {
             children: [
               FloatingActionButton(
                 shape: const CircleBorder(),
-                backgroundColor: ColorUtil.kWhiteColor,
+                backgroundColor: Get.find<HomeController>().isPinkModeOn.value
+                    ? ColorUtil.kPrimary3PinkMode
+                    : ColorUtil.kWhiteColor,
                 onPressed: () {
                   Get.back();
                 },
                 child: Icon(
                   Icons.arrow_back_rounded,
-                  color: ColorUtil.kBlack01,
+                  color: ColorUtil.kWhiteColor,
                   size: 24.kh,
                 ),
               ).paddingOnly(bottom: 4.kh, left: 24.kw),
               FloatingActionButton(
-                shape: const CircleBorder(),
-                backgroundColor: ColorUtil.kBlueColor,
-                tooltip: Strings.openGoogleMaps,
-                onPressed: () {
-                  controller.openGoogleMaps();
-                },
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(Icons.directions_outlined,
-                        color: ColorUtil.kWhiteColor, size: 28.kh),
-                  ],
-                ),
-              ).paddingOnly(bottom: 4.kh),
+                  shape: const CircleBorder(),
+                  backgroundColor: Get.find<HomeController>().isPinkModeOn.value
+                      ? ColorUtil.kSecondaryPinkMode
+                      : ColorUtil.kPrimary01,
+                  tooltip: Strings.openGoogleMaps,
+                  onPressed: () {
+                    controller.openGoogleMaps();
+                  },
+                  child: CommonImageView(
+                    svgPath: ImageConstant.svgGooleMaps,
+                  )).paddingOnly(bottom: 4.kh),
             ],
           ),
           Text(Strings.openGoogleMaps,

@@ -17,7 +17,6 @@ import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
 import '../../../services/text_style_util.dart';
 import '../../home/controllers/home_controller.dart';
-import '../../profile/controllers/profile_controller.dart';
 
 class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
   const RiderConfirmRequest({super.key});
@@ -65,13 +64,11 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                           child: Container(
                             padding: EdgeInsets.all(16.kh),
                             decoration: BoxDecoration(
-                              color: ColorUtil.kWhiteColor,
-                              borderRadius: BorderRadius.circular(8.kh),
-                              border: Border(
-                                bottom: BorderSide(
-                                    color: ColorUtil.kNeutral7, width: 2.kh),
-                              ),
-                            ),
+                                color: ColorUtil.kWhiteColor,
+                                borderRadius: BorderRadius.circular(8.kh),
+                                border: Border.all(
+                                    color: ColorUtil.kNeutral10,
+                                    width: 0.3.kh)),
                             child: Column(
                               children: [
                                 Row(

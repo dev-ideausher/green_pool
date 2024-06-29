@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 
 import '../../../data/ride_history_model.dart';
+import '../../../services/colors.dart';
+import '../../home/controllers/home_controller.dart';
 
 class RideDetailsController extends GetxController {
   final Rx<RideHistoryModelData> rideHistory = RideHistoryModelData().obs;
@@ -11,6 +13,8 @@ class RideDetailsController extends GetxController {
     super.onInit();
     rideHistory.value = Get.arguments;
   }
+
+  
 
   // @override
   // void onReady() {

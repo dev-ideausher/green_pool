@@ -110,7 +110,7 @@ class MyRidesRequestController extends GetxController {
 
   sendRequestToRiderAPI(DriverSendRequestModelData driverSendModelData) async {
     final dynamic riderNotificationPref =
-        driverSendModelData.riderDetails?[0]?.notificationPreferences!.toJson();
+        driverSendModelData.riderDetails?.notificationPreferences!.toJson();
 
     try {
       // driver will send request to the customer (from send request view)
@@ -118,7 +118,7 @@ class MyRidesRequestController extends GetxController {
           await APIManager.postSendRequestToRider(body: {
         "riderRideId": driverSendModelData.Id,
         "driverRideId": rideDetailId.value.driverRidId,
-        "riderName": driverSendModelData.riderDetails?[0]?.fullName,
+        "riderName": driverSendModelData.riderDetails?.fullName,
         "riderNotificationPreferences": riderNotificationPref,
         "price": driverSendModelData.price
       });
@@ -138,19 +138,14 @@ class MyRidesRequestController extends GetxController {
   openMessage(DriverSendRequestModelData data) async {
     try {
       final res = await APIManager.getChatRoomId(
-          receiverId: data.riderDetails?[0]?.Id ?? "");
+          receiverId: data.riderDetails?.Id ?? "");
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
               chatRoomId: res.data["chatChannelId"] ?? "",
-              id: data.riderDetails?[0]?.Id,
-              name: data.riderDetails?[0]?.fullName,
-              image: data.riderDetails?[0]?.profilePic?.url));
+              id: data.riderDetails?.Id,
+              name: data.riderDetails?.fullName,
+              image: data.riderDetails?.profilePic?.url));
     } catch (e) {
-      Get.toNamed(Routes.CHAT_PAGE,
-          arguments: ChatArg(
-              id: data.riderDetails?[0]?.Id,
-              name: data.riderDetails?[0]?.fullName,
-              image: data.riderDetails?[0]?.profilePic?.url));
       debugPrint(e.toString());
     }
   }
@@ -158,21 +153,15 @@ class MyRidesRequestController extends GetxController {
   openMessageConfirm(DriverConfirmRequestModelData data) async {
     try {
       final res = await APIManager.getChatRoomId(
-          receiverId: data.rideDetails?[0]?.Id ?? "");
+          receiverId: data.rideDetails?[0]?.riderDetails?.first?.Id ?? "");
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
               chatRoomId: res.data["chatChannelId"] ?? "",
-              id: data.rideDetails?[0]?.Id,
+              id: data.rideDetails?[0]?.riderDetails?.first?.Id,
               name: data.rideDetails?[0]?.riderDetails?.first?.fullName ?? "",
               image:
                   data.rideDetails?[0]?.riderDetails?.first?.profilePic?.url));
     } catch (e) {
-      Get.toNamed(Routes.CHAT_PAGE,
-          arguments: ChatArg(
-              id: data.rideDetails?[0]?.Id,
-              name: data.rideDetails?[0]?.riderDetails?.first?.fullName,
-              image:
-                  data.rideDetails?[0]?.riderDetails?.first?.profilePic?.url));
       debugPrint(e.toString());
     }
   }

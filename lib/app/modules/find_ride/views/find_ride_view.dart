@@ -26,10 +26,10 @@ class FindRideView extends GetView<FindRideController> {
   @override
   Widget build(BuildContext context) {
     final isPinkModeOn = Get.find<HomeController>().isPinkModeOn.value;
-    final pickedDate = DateTime.now();
-    controller.date.text = pickedDate.toIso8601String();
-    controller.departureDate.text =
-        "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
+    // final pickedDate = DateTime.now();
+    // controller.date.text = pickedDate.toIso8601String();
+    // controller.departureDate.text =
+    //     "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
     return Scaffold(
       appBar: GreenPoolAppBar(
         title: Text(Strings.findRide),
@@ -143,12 +143,14 @@ class FindRideView extends GetView<FindRideController> {
                 ),
               ],
             ).paddingOnly(bottom: 16.kh),
-            RichTextHeading(text: Strings.seatsAvailable)
+            RichTextHeading(text: Strings.seatsNeeded)
                 .paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
               hintText: Strings.enterNumberOfSeats,
               controller: controller.seatAvailable,
               keyboardType: TextInputType.number,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              validator: (value) => controller.seatsValidator(value),
               onchanged: (v) {
                 controller.setActiveState();
               },
@@ -172,7 +174,7 @@ class FindRideView extends GetView<FindRideController> {
               () => Visibility(
                   visible: controller.locationModelNames.isNotEmpty,
                   child: SizedBox(
-                    height: 180.kh,
+                    height: 155.kh,
                     child: ListView.builder(
                         itemCount: controller.locationModelNames.length,
                         itemBuilder: (context, index) {
@@ -192,8 +194,10 @@ class FindRideView extends GetView<FindRideController> {
                                 color: ColorUtil.kNeutral4,
                               ),
                               title: Text(
-                                  "${controller.locationModelNames?[index]?.originLocation?.nameOfLocation ?? ""} to ${controller.locationModelNames?[index]?.destinationLocation?.nameOfLocation}" ??
-                                      ""),
+                                "${controller.locationModelNames?[index]?.originLocation?.nameOfLocation.toString().split(",").first} to ${controller.locationModelNames?[index]?.destinationLocation?.nameOfLocation.toString().split(",").first}" ??
+                                    "",
+                                style: TextStyleUtil.k12Bold(),
+                              ),
                               onTap: () {
                                 controller.setLocation(index);
                               },

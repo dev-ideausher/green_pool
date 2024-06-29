@@ -30,9 +30,9 @@ class RiderTile extends StatelessWidget {
         child: Container(
           padding: EdgeInsets.all(16.kh),
           decoration: BoxDecoration(
-            color: ColorUtil.kWhiteColor,
-            borderRadius: BorderRadius.circular(8.kh),
-          ),
+              color: ColorUtil.kWhiteColor,
+              borderRadius: BorderRadius.circular(8.kh),
+              border: Border.all(width: 0.3.kh, color: ColorUtil.kNeutral10)),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

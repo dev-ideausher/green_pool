@@ -4,7 +4,9 @@ import 'package:green_pool/app/components/gp_progress.dart';
 import 'package:green_pool/app/components/green_pool_divider.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/components/origin_to_destination.dart';
+import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/modules/payment/controllers/payment_controller.dart';
+import 'package:green_pool/app/modules/payment/views/promo_code.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/custom_button.dart';
@@ -72,30 +74,19 @@ class PaymentView extends GetView<PaymentController> {
                   ).paddingOnly(bottom: 16.kh),
                   ListTile(
                     tileColor: ColorUtil.kWhiteColor,
-                    onTap: () {},
-                    title: Text(
-                      "Promotions available",
-                      style: TextStyleUtil.k14Semibold(),
-                    ),
-                    leading: Icon(
-                      Icons.discount,
-                      color: ColorUtil.kPrimary01,
-                    ),
-                    trailing: Text(
-                      "4",
-                      style: TextStyleUtil.k14Bold(),
-                    ),
-                  ).paddingOnly(bottom: 4.kh),
-                  ListTile(
-                    tileColor: ColorUtil.kWhiteColor,
-                    onTap: () {},
+                    onTap: () {
+                      controller.promoCodeAPI();
+                      Get.to(() => const PromoCode());
+                    },
                     title: Text(
                       "Add promo code",
                       style: TextStyleUtil.k14Semibold(),
                     ),
                     leading: Icon(
                       Icons.add,
-                      color: ColorUtil.kPrimary01,
+                      color: Get.find<HomeController>().isPinkModeOn.value
+                          ? ColorUtil.kPrimary2PinkMode
+                          : ColorUtil.kPrimary01,
                       size: 24.kh,
                     ),
                   ),
@@ -119,7 +110,9 @@ class PaymentView extends GetView<PaymentController> {
                           color: ColorUtil.kBlack07),
                       child: Icon(
                         Icons.account_balance_wallet,
-                        color: ColorUtil.kPrimary01,
+                        color: Get.find<HomeController>().isPinkModeOn.value
+                            ? ColorUtil.kPrimary2PinkMode
+                            : ColorUtil.kPrimary01,
                         size: 24.kh,
                       ),
                     ),
@@ -145,22 +138,27 @@ class PaymentView extends GetView<PaymentController> {
                               style: TextStyleUtil.k14Regular(
                                   color: ColorUtil.kBlack03),
                             ),
-                            Obx(() => controller.fromDriverDetails.value
-                                ? Text(
-                                    "\$${controller.rideData['ridesDetails']['price'].toString()}",
-                                    style: TextStyleUtil.k14Regular(
-                                        color: ColorUtil.kBlack03),
-                                  )
-                                : controller.fromConfirmRequestSection.value
-                                    ? Text("\$${controller.price}",
-                                        style: TextStyleUtil.k14Regular(
-                                            color: ColorUtil.kBlack03))
-                                    : Text(
-                                        "\$${controller.rideData['price'].toString()}",
-                                        style: TextStyleUtil.k14Regular(
-                                            color: ColorUtil.kBlack03)))
+                            Text("\$${controller.price}",
+                                style: TextStyleUtil.k14Regular(
+                                    color: ColorUtil.kBlack03))
                           ],
                         ),
+                        Visibility(
+                          visible: controller.discountAvailed.value,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Discount",
+                                style: TextStyleUtil.k14Regular(
+                                    color: ColorUtil.kBlack03),
+                              ),
+                              Text("-\$${controller.discountProvided}",
+                                  style: TextStyleUtil.k14Regular(
+                                      color: ColorUtil.kError2))
+                            ],
+                          ),
+                        ).paddingOnly(top: 4.kh),
                         const GreenPoolDivider()
                             .paddingSymmetric(vertical: 8.kh),
                         Row(
@@ -171,20 +169,9 @@ class PaymentView extends GetView<PaymentController> {
                               style: TextStyleUtil.k14Bold(
                                   color: ColorUtil.kBlack02),
                             ),
-                            Obx(() => controller.fromDriverDetails.value
-                                ? Text(
-                                    "\$${controller.rideData['ridesDetails']['price'].toString()}",
-                                    style: TextStyleUtil.k14Bold(
-                                        color: ColorUtil.kBlack02),
-                                  )
-                                : controller.fromConfirmRequestSection.value
-                                    ? Text("\$${controller.price}",
-                                        style: TextStyleUtil.k14Bold(
-                                            color: ColorUtil.kBlack02))
-                                    : Text(
-                                        "\$${controller.rideData['price'].toString()}",
-                                        style: TextStyleUtil.k14Bold(
-                                            color: ColorUtil.kBlack02)))
+                            Text("\$${controller.totalAmount}",
+                                style: TextStyleUtil.k14Bold(
+                                    color: ColorUtil.kBlack02))
                           ],
                         ),
                       ],
@@ -196,6 +183,7 @@ class PaymentView extends GetView<PaymentController> {
                       controller.decideAPI();
                     },
                     label: "Pay now",
+                    // isActive: controller.buttonState.value,
                   ).paddingSymmetric(vertical: 40.kh),
                 ],
               ).paddingOnly(top: 24.kh, left: 16.kw, right: 16.kw),

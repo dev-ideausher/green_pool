@@ -160,11 +160,6 @@ class RiderMyRideRequestController extends GetxController {
               name: data.driverDetails?[0]?.fullName,
               image: data.driverDetails?[0]?.profilePic?.url));
     } catch (e) {
-      Get.toNamed(Routes.CHAT_PAGE,
-          arguments: ChatArg(
-              id: data.driverDetails?[0]?.Id,
-              name: data.driverDetails?[0]?.fullName,
-              image: data.driverDetails?[0]?.profilePic?.url));
       debugPrint(e.toString());
     }
   }
@@ -173,19 +168,14 @@ class RiderMyRideRequestController extends GetxController {
       RiderConfirmRequestModelDataDriverRideDetails? data) async {
     try {
       final res =
-          await APIManager.getChatRoomId(receiverId: data?.driverId ?? "");
+          await APIManager.getChatRoomId(receiverId: data?.driverDetails?.firstOrNull?.Id ?? "");
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
               chatRoomId: res.data["chatChannelId"] ?? "",
-              id: data?.driverId,
+              id: data?.driverDetails?.firstOrNull?.Id,
               name: data?.driverDetails?.firstOrNull?.fullName ?? "",
               image: data?.driverDetails?.firstOrNull?.profilePic?.url));
     } catch (e) {
-      Get.toNamed(Routes.CHAT_PAGE,
-          arguments: ChatArg(
-              id: data?.driverId,
-              name: data?.driverDetails?.firstOrNull?.fullName ?? "",
-              image: data?.driverDetails?.firstOrNull?.profilePic?.url));
       debugPrint(e.toString());
     }
   }

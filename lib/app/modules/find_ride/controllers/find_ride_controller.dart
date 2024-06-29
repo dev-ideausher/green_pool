@@ -12,7 +12,6 @@ import 'package:green_pool/app/services/snackbar.dart';
 import '../../../data/find_ride_response_model.dart';
 import '../../../data/matching_rides_model.dart';
 import '../../../routes/app_pages.dart';
-import '../../../services/dialog_helper.dart';
 import '../../../services/dio/api_service.dart';
 import '../../../services/storage.dart';
 
@@ -37,27 +36,25 @@ class FindRideController extends GetxController {
       TextEditingController();
   RxList<LocationModel> locationModelNames = <LocationModel>[].obs;
 
-  // GlobalKey<FormState> validationKey = GlobalKey<FormState>();
   final Rx<MatchingRidesModel> matchingRidesModel = MatchingRidesModel().obs;
 
   @override
   void onInit() {
     super.onInit();
-    final now = TimeOfDay.now();
-    seatAvailable.text = numberOfSeatAvailable.toString();
-    final pickedDate = DateTime.now();
-    date.text = pickedDate.toIso8601String();
-    departureDate.text =
-        "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
-    selectedTime.text = TimeOfDay(hour: now.hour + 1, minute: 0)
-        .format(Get.context!)
-        .toString();
-    isDriver = Get.arguments;
+    // final now = TimeOfDay.now();
+    // final pickedDate = DateTime.now();
+    // date.text = pickedDate.toIso8601String();
+    // departureDate.text =
+    //     "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
+    // selectedTime.text = TimeOfDay(hour: now.hour + 1, minute: 0)
+    //     .format(Get.context!)
+    //     .toString();
     // Get.find<GetStorageService>().locationsName = "";
+    isDriver = Get.arguments;
+    seatAvailable.text = numberOfSeatAvailable.toString();
     try {
       if (Get.find<GetStorageService>().locationsName.toString().isNotEmpty) {
-        print("location Names" +
-            Get.find<GetStorageService>().locationsName.toString());
+        print("location Names  ${Get.find<GetStorageService>().locationsName}");
         List<dynamic> locationListMap =
             jsonDecode(Get.find<GetStorageService>().locationsName);
 
@@ -84,22 +81,28 @@ class FindRideController extends GetxController {
     if (Get.find<GetStorageService>().isLoggedIn) {
       if (Get.find<HomeController>().userInfo.value.data?.profileStatus ==
           true) {
-        LocationModel locationModel = LocationModel(
-            originLocation: LocationModelOriginLocation(
-              lat: riderOriginLat,
-              long: riderOriginLong,
-              nameOfLocation: riderOriginTextController.value.text,
-            ),
-            destinationLocation: LocationModelDestinationLocation(
-              lat: riderDestinationLat,
-              long: riderDestinationLong,
-              nameOfLocation: riderDestinationTextController.value.text,
-            ));
+        //to store previous locations
+        addLocationModel(
+            riderOriginLat: riderOriginLat,
+            riderOriginLong: riderOriginLong,
+            riderOriginTextController: riderOriginTextController,
+            riderDestinationLat: riderDestinationLat,
+            riderDestinationLong: riderDestinationLong,
+            riderDestinationTextController: riderDestinationTextController);
+        /*LocationModel locationModel = LocationModel(
+        originLocation: LocationModelOriginLocation(
+          lat: riderOriginLat,
+          long: riderOriginLong,
+          nameOfLocation: riderOriginTextController.value.text,
+        ),
+        destinationLocation: LocationModelDestinationLocation(
+          lat: riderDestinationLat,
+          long: riderDestinationLong,
+          nameOfLocation: riderDestinationTextController.value.text,
+        ));
 
-        locationModelNames.add(locationModel);
-        String pickUpDropoffData = jsonEncode(locationModelNames);
-
-        Get.find<GetStorageService>().locationsName = pickUpDropoffData;
+      locationModelNames.add(locationModel);
+      String pickUpDropoffData = jsonEncode(locationModelNames);*/
 
         await getMatchingRidesAPI();
       } else {
@@ -259,28 +262,21 @@ class FindRideController extends GetxController {
       context: context,
       builder: (BuildContext context, Widget? child) {
         return Theme(
-          // Define the custom theme for the date picker
           data: ThemeData(
-            // Define the primary color
             primaryColor: Get.find<HomeController>().isPinkModeOn.value
                 ? ColorUtil.kPrimaryPinkMode
                 : ColorUtil.kPrimary01,
-            // Define the color scheme for the date picker
             colorScheme: ColorScheme.light(
-              // Define the primary color for the date picker
               primary: Get.find<HomeController>().isPinkModeOn.value
                   ? ColorUtil.kPrimaryPinkMode
                   : ColorUtil.kPrimary01,
-              // Define the background color for the date picker
               surface: Colors.white,
-              // Define the on-primary color for the date picker
               onPrimary: Colors.white,
               secondary: Get.find<HomeController>().isPinkModeOn.value
                   ? ColorUtil.kPrimaryPinkMode
                   : ColorUtil.kPrimary01,
             ),
           ),
-          // Apply the custom theme to the child widget
           child: child!,
         );
       },
@@ -303,19 +299,76 @@ class FindRideController extends GetxController {
     }
   }
 
-  String? seatsValidator(int? value) {
-    // Check if the value is null
-    if (value == null) {
+  String? seatsValidator(String? value) {
+    // Check if the value is null or empty
+    if (value == null || value.isEmpty) {
       return 'Please enter a value';
     }
 
+    int? parsedValue;
+    try {
+      parsedValue = int.parse(value);
+    } catch (e) {
+      return 'Please enter a valid number';
+    }
+
     // Check if the integer value is between 1 and 6
-    if (value < 1 || value > 6) {
+    if (parsedValue < 1 || parsedValue > 6) {
       return 'Please enter an integer between 1 and 6';
     }
 
     // If all validations pass, return null (indicating no error)
     return null;
+  }
+
+  bool isDuplicate(LocationModel newLocationModel) {
+    for (var location in locationModelNames) {
+      if (location.originLocation!.lat ==
+              newLocationModel.originLocation!.lat &&
+          location.originLocation!.long ==
+              newLocationModel.originLocation!.long &&
+          location.originLocation!.nameOfLocation ==
+              newLocationModel.originLocation!.nameOfLocation &&
+          location.destinationLocation!.lat ==
+              newLocationModel.destinationLocation!.lat &&
+          location.destinationLocation!.long ==
+              newLocationModel.destinationLocation!.long &&
+          location.destinationLocation!.nameOfLocation ==
+              newLocationModel.destinationLocation!.nameOfLocation) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  void addLocationModel({
+    required double riderOriginLat,
+    required double riderOriginLong,
+    required TextEditingController riderOriginTextController,
+    required double riderDestinationLat,
+    required double riderDestinationLong,
+    required TextEditingController riderDestinationTextController,
+  }) {
+    LocationModel newLocationModel = LocationModel(
+      originLocation: LocationModelOriginLocation(
+        lat: riderOriginLat,
+        long: riderOriginLong,
+        nameOfLocation: riderOriginTextController.text,
+      ),
+      destinationLocation: LocationModelDestinationLocation(
+        lat: riderDestinationLat,
+        long: riderDestinationLong,
+        nameOfLocation: riderDestinationTextController.text,
+      ),
+    );
+
+    if (!isDuplicate(newLocationModel)) {
+      locationModelNames.add(newLocationModel);
+      String pickUpDropoffData = jsonEncode(locationModelNames);
+      Get.find<GetStorageService>().locationsName = pickUpDropoffData;
+    } else {
+      print("This location model already exists in the list.");
+    }
   }
 
   void setLocation(int index) {
@@ -330,23 +383,7 @@ class FindRideController extends GetxController {
         locationModelNames?[index]?.destinationLocation?.long ?? 0.0;
     riderDestinationTextController.text =
         locationModelNames?[index]?.destinationLocation?.nameOfLocation ?? "";
-  }
 
-  // void selectLocation(index) {
-  //   final storageService = Get.find<GetStorageService>();
-  //   DialogHelper.selectOriginOrDestination(() {
-  //     //on pressed pickup
-  //     riderOriginLat = storageService.locations[index][0];
-  //     riderOriginLong = storageService.locations[index][1];
-  //     riderOriginTextController.text = storageService.locations[index][2];
-  //     Get.back();
-  //     setActiveState();
-  //   }, () {
-  //     //on pressed drop off
-  //     riderDestinationLat = storageService.locations[index][0];
-  //     riderDestinationLong = storageService.locations[index][1];
-  //     riderDestinationTextController.text = storageService.locations[index][2];
-  //     Get.back();
-  //     setActiveState();
-  //   });
+    setActiveState();
+  }
 }

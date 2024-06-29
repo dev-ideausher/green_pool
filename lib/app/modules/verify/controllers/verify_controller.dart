@@ -67,6 +67,7 @@ class VerifyController extends GetxController {
 
   verifyOTP() async {
     try {
+      await Future.delayed(const Duration(seconds: 2));
       bool isStatus = await Get.find<AuthService>()
           .verifyMobileOtp(otp: otpController.text);
       if (isStatus) {
@@ -171,21 +172,26 @@ class VerifyController extends GetxController {
         Get.offNamed(Routes.VERIFICATION_DONE, arguments: {
           'fromNavBar': fromNavBar,
           'isDriver': false,
+          'fullName': fullName
         });
       } else {
         //user will have post/find ride data which needs to be transferred
         //check if driver or rider
         if (homeController.findingRide.value) {
           //rider
-          Get.offNamed(Routes.RIDER_PROFILE_SETUP, arguments: {
+          Get.offNamed(Routes.VERIFICATION_DONE, arguments: {
             'fromNavBar': false,
             'findRideModel': findRideModel.value,
+            'isDriver': false,
+            'fullName': fullName
           });
         } else {
           //driver
-          Get.offNamed(Routes.PROFILE_SETUP, arguments: {
+          Get.offNamed(Routes.VERIFICATION_DONE, arguments: {
             'fromNavBar': false,
             'postRideModel': postRideModel.value,
+            'isDriver': true,
+            'fullName': fullName
           });
         }
       }
@@ -198,7 +204,7 @@ class VerifyController extends GetxController {
     if (userInfo.data!.profileStatus!) {
       // Set user information in storage service
       storageService.setUserAppId = userInfo.data?.Id;
-      storageService.setUserName = userInfo.data?.fullName;
+      storageService.setUserName = userInfo.data?.fullName ?? "";
       storageService.profilePicUrl = userInfo.data?.profilePic?.url ?? "";
       storageService.isPinkMode = userInfo.data?.pinkMode ?? false;
 
@@ -207,31 +213,31 @@ class VerifyController extends GetxController {
 
       //if the user is trying to login from nav bar
       if (fromNavBar) {
-        Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
-        showMySnackbar(msg: 'Login Successful');
         storageService.profileStatus = true;
         storageService.isLoggedIn = true;
+        Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
+        showMySnackbar(msg: 'Login Successful');
         await homeController.userInfoAPI();
       } else {
         //check if the user is driver
         if (homeController.findingRide.value) {
           //user is rider
-          Get.back();
-          showMySnackbar(msg: "Successfully logged in");
           storageService.isLoggedIn = true;
           storageService.profileStatus = true;
+          Get.back();
+          showMySnackbar(msg: "Successfully logged in");
           await homeController.userInfoAPI();
         } else {
           //user is driver
           //if the user is driver then check if previously they have filled vehicle details
           if (userInfo.data!.vehicleStatus!) {
             //if they have filled then proceed to post ride step 2
-            Get.offNamed(Routes.POST_RIDE_STEP_TWO,
-                arguments: postRideModel.value);
-            showMySnackbar(msg: "Successfully logged in");
             storageService.isLoggedIn = true;
             storageService.profileStatus = true;
             storageService.setDriver = true;
+            Get.offNamed(Routes.POST_RIDE_STEP_TWO,
+                arguments: postRideModel.value);
+            showMySnackbar(msg: "Successfully logged in");
             await homeController.userInfoAPI();
           } else {
             //if not then redirect to vehicle details page
@@ -297,7 +303,7 @@ class VerifyController extends GetxController {
 
   Future<void> _navigateToProfileSetup() async {
     if (fromNavBar) {
-      Get.toNamed(Routes.PROFILE_SETUP, arguments: false);
+      Get.toNamed(Routes.RIDER_PROFILE_SETUP, arguments: false);
     } else {
       if (Get.find<HomeController>().findingRide.value) {
         Get.toNamed(Routes.RIDER_PROFILE_SETUP, arguments: {

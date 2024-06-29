@@ -25,10 +25,13 @@ class RiderRequestBottomsheet extends StatelessWidget {
         padding: EdgeInsets.all(24.kh),
         // height: 317.kh,
         width: 100.w,
-        decoration:
-            BoxDecoration(color: ColorUtil.kWhiteColor, borderRadius: BorderRadius.only(topLeft: Radius.circular(40.kh), topRight: Radius.circular(40.kh))),
+        decoration: BoxDecoration(
+            color: ColorUtil.kWhiteColor,
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(40.kh),
+                topRight: Radius.circular(40.kh))),
         child: SingleChildScrollView(
-          child: Column( children: [
+          child: Column(children: [
             Text(
               Strings.rideRequest,
               style: TextStyleUtil.k18Heading600(),
@@ -44,7 +47,7 @@ class RiderRequestBottomsheet extends StatelessWidget {
                 ),
               ),
               title: Text(
-                element?.riderDetails?.firstOrNull?.fullName ?? "",
+                element?.riderDetails?.fullName ?? "",
                 style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
               ),
               subtitle: Row(
@@ -53,27 +56,39 @@ class RiderRequestBottomsheet extends StatelessWidget {
                   SvgPicture.asset(
                     ImageConstant.svgIconCalendarTime,
                     colorFilter: ColorFilter.mode(
-                        Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01, BlendMode.srcIn),
+                        Get.find<HomeController>().isPinkModeOn.value
+                            ? ColorUtil.kPrimary3PinkMode
+                            : ColorUtil.kSecondary01,
+                        BlendMode.srcIn),
                   ).paddingOnly(right: 4.kw),
                   Text(
-                    (GpUtil.getDateFormat(element?.date) + GpUtil.getTime(element?.time)),
+                    (GpUtil.getDateFormat(element?.date) +
+                        GpUtil.getTime(element?.time)),
                     style: TextStyleUtil.k12Regular(color: ColorUtil.kBlack02),
                   ),
                   4.kwidthBox,
                   Icon(
                     Icons.location_on,
                     size: 16.kh,
-                    color: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01,
+                    color: Get.find<HomeController>().isPinkModeOn.value
+                        ? ColorUtil.kPrimary3PinkMode
+                        : ColorUtil.kSecondary01,
                   ),
                   FutureBuilder<String>(
                     future: GpUtil.calculateDistance(
-                        startLat: (element.origin?.coordinates?.lastOrNull ?? 0.0),
-                        startLong: (element.origin?.coordinates?.firstOrNull ?? 0.0),
-                        endLat: (element.destination?.coordinates?.lastOrNull ?? 0.0),
-                        endLong: (element.destination?.coordinates?.firstOrNull ?? 0.0)),
+                        startLat:
+                            (element.origin?.coordinates?.lastOrNull ?? 0.0),
+                        startLong:
+                            (element.origin?.coordinates?.firstOrNull ?? 0.0),
+                        endLat: (element.destination?.coordinates?.lastOrNull ??
+                            0.0),
+                        endLong:
+                            (element.destination?.coordinates?.firstOrNull ??
+                                0.0)),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Text("..."); // Show a loading indicator while fetching data
+                        return const Text(
+                            "..."); // Show a loading indicator while fetching data
                       } else if (snapshot.hasError) {
                         // return Text('Error: ${snapshot.error}');
                         return text("NA");
@@ -86,12 +101,15 @@ class RiderRequestBottomsheet extends StatelessWidget {
               ),
               contentPadding: EdgeInsets.zero,
               trailing: InkWell(
-                onTap: () =>  Get.find<MyRidesRequestController>().openMessage(element),
+                onTap: () =>
+                    Get.find<MyRidesRequestController>().openMessage(element),
                 child: Container(
                   height: 24.kh,
                   width: 84.kw,
                   alignment: Alignment.center,
-                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(40.kh), border: Border.all(color: ColorUtil.kSecondary01)),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(40.kh),
+                      border: Border.all(color: ColorUtil.kSecondary01)),
                   child: Text(
                     Strings.message,
                     style: TextStyleUtil.k12Semibold(),
@@ -107,11 +125,13 @@ class RiderRequestBottomsheet extends StatelessWidget {
                     Container(
                       height: 10.kh,
                       width: 10.kw,
-                      decoration: const BoxDecoration(shape: BoxShape.circle, color: ColorUtil.kGreenColor),
+                      decoration: const BoxDecoration(
+                          shape: BoxShape.circle, color: ColorUtil.kGreenColor),
                     ).paddingOnly(right: 8.kw),
                     Text(
                       (element?.origin?.name ?? ""),
-                      style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack02),
+                      style:
+                          TextStyleUtil.k14Regular(color: ColorUtil.kBlack02),
                     ),
                   ],
                 ).paddingOnly(bottom: 30.kh),
@@ -122,11 +142,13 @@ class RiderRequestBottomsheet extends StatelessWidget {
                       Container(
                         height: 10.kh,
                         width: 10.kw,
-                        decoration: const BoxDecoration(shape: BoxShape.circle, color: ColorUtil.kError4),
+                        decoration: const BoxDecoration(
+                            shape: BoxShape.circle, color: ColorUtil.kError4),
                       ).paddingOnly(right: 8.kw),
                       Text(
                         (element?.destination?.name ?? ""),
-                        style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack02),
+                        style:
+                            TextStyleUtil.k14Regular(color: ColorUtil.kBlack02),
                       ),
                     ],
                   ),
@@ -154,9 +176,12 @@ class RiderRequestBottomsheet extends StatelessWidget {
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 12.kw, vertical: 2.kh),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 12.kw, vertical: 2.kh),
                       decoration: BoxDecoration(
-                        color: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kPrimary01,
+                        color: Get.find<HomeController>().isPinkModeOn.value
+                            ? ColorUtil.kPrimary3PinkMode
+                            : ColorUtil.kPrimary01,
                         borderRadius: BorderRadius.circular(16.kh),
                       ),
                       child: Row(children: [
@@ -166,7 +191,7 @@ class RiderRequestBottomsheet extends StatelessWidget {
                           size: 12.kh,
                         ).paddingOnly(right: 4.kw),
                         Text(
-                          element?.riderDetails?.firstOrNull?.rating.toString() ?? "0.0",
+                          element?.riderDetails?.rating.toString() ?? "0.0",
                           style: TextStyleUtil.k14Regular(),
                         ),
                       ]),
@@ -181,8 +206,10 @@ class RiderRequestBottomsheet extends StatelessWidget {
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Text(
-                      element?.riderDetails?.firstOrNull?.totalRides.toString() ?? "0" + ' people',
-                      style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
+                      element?.riderDetails?.totalRides.toString() ??
+                          "0" + ' people',
+                      style:
+                          TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                     ),
                   ],
                 ),
@@ -194,8 +221,9 @@ class RiderRequestBottomsheet extends StatelessWidget {
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Text(
-                      'in ${element?.riderDetails?.firstOrNull?.createdAt?.substring(0, 4) ?? 2024}',
-                      style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
+                      'in ${element?.riderDetails?.createdAt?.substring(0, 4) ?? 2024}',
+                      style:
+                          TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                     ),
                   ],
                 ),
@@ -203,7 +231,8 @@ class RiderRequestBottomsheet extends StatelessWidget {
             ),
             const GreenPoolDivider().paddingOnly(bottom: 16.kh, top: 8.kh),
             GreenPoolButton(
-              onPressed: () => Get.find<MyRidesRequestController>().sendRequestToRiderAPI(element!),
+              onPressed: () => Get.find<MyRidesRequestController>()
+                  .sendRequestToRiderAPI(element!),
               label: Strings.requestRider,
               fontSize: 14.kh,
               height: 40.kh,

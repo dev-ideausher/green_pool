@@ -51,6 +51,7 @@ extension ColorUtil on BuildContext {
   static const Color kNeutral7 = Color(0xFFEBEBEB);
   static const Color kNeutral8 = Color(0xFFE7E5E4);
   static const Color kNeutral9 = Color(0xFFDEDEDE);
+  static const Color kNeutral10 = Color(0xFF454745);
 
   //secondary
   static const Color kSecondary07 = Color(0xffe4f9d5);
