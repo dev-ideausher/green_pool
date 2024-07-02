@@ -285,8 +285,12 @@ class FindRideController extends GetxController {
     );
 
     if (pickedTime != null) {
-      String formattedTime = pickedTime.format(context);
-      selectedTime.text = formattedTime.toString();
+      // Use MaterialLocalizations to format the time in 24-hour format
+      final MaterialLocalizations localizations =
+          MaterialLocalizations.of(context);
+      String formattedTime = localizations.formatTimeOfDay(pickedTime,
+          alwaysUse24HourFormat: true);
+      selectedTime.text = formattedTime;
     }
   }
 

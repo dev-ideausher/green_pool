@@ -124,7 +124,7 @@ class DriverTile extends StatelessWidget {
                         ),
                       ],
                     ).paddingOnly(bottom: 8.kh),
-              const GreenPoolDivider().paddingOnly(bottom: 16.kh),
+              const GreenPoolDivider().paddingOnly(bottom: 8.kh),
               OriginToDestination(
                 needPickupText: false,
                 origin: myRidesModelData.origin?.name ?? Strings.pickup,
@@ -132,15 +132,8 @@ class DriverTile extends StatelessWidget {
                     myRidesModelData.destination?.name ?? Strings.destination,
               ).paddingOnly(bottom: 8.kh),
               const GreenPoolDivider().paddingOnly(bottom: 16.kh),
-              // Obx(
-              //   () =>
               myRidesModelData.isStarted == true
-                  ?
-                  // Text(
-                  //     Strings.rideIsCancelled,
-                  //     style: TextStyleUtil.k16Bold(color: ColorUtil.kError2),
-                  //   )
-                  GreenPoolButton(
+                  ? GreenPoolButton(
                       //this button is when the ride is started so the user cannot cancel the ride
                       onPressed: myRidesModelData.isCompleted!
                           ? () {}
@@ -306,14 +299,10 @@ class DriverTile extends StatelessWidget {
 
   bool isWithinTimeRange(String timeString) {
     try {
-      // Parse the input time string
-      DateFormat format = DateFormat.jm(); // e.g., "5:00 PM"
+      DateFormat format = DateFormat.Hm();
       DateTime parsedTime = format.parse(timeString);
-
-      // Get the current time
       DateTime now = DateTime.now();
 
-      // Create DateTime objects with the same date but the input time
       DateTime inputTimeWithCurrentDate = DateTime(
         now.year,
         now.month,
@@ -322,15 +311,12 @@ class DriverTile extends StatelessWidget {
         parsedTime.minute,
       );
 
-      // Calculate the time range: 30 minutes before the current hour and 2 hours after the current hour
-      DateTime startTime = DateTime(now.year, now.month, now.day, now.hour)
-          .subtract(const Duration(minutes: 30));
-      DateTime endTime = DateTime(now.year, now.month, now.day, now.hour)
-          .add(const Duration(hours: 2));
+      DateTime startTime =
+          inputTimeWithCurrentDate.subtract(const Duration(minutes: 30));
+      DateTime endTime =
+          inputTimeWithCurrentDate.add(const Duration(minutes: 30));
 
-      // Check if the input time falls within this range
-      return inputTimeWithCurrentDate.isAfter(startTime) &&
-          inputTimeWithCurrentDate.isBefore(endTime);
+      return now.isAfter(startTime) && now.isBefore(endTime);
     } catch (e) {
       debugPrint('Error parsing time string: $e');
       return false;

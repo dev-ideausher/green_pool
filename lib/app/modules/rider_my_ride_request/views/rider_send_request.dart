@@ -78,13 +78,14 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                       children: [
                                         Center(
                                           child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(8.kh),
-                                              child: CommonImageView(
-                                                  height: 64.kh,
-                                                  width: 64.kw,
-                                                  url:
-                                                      "${controller.riderSendRequestModel.value.data![index]?.driverDetails![0]?.profilePic?.url}")),
+                                            borderRadius:
+                                                BorderRadius.circular(8.kh),
+                                            child: CommonImageView(
+                                                height: 64.kh,
+                                                width: 64.kw,
+                                                url:
+                                                    "${controller.riderSendRequestModel.value.data![index]?.driverDetails![0]?.profilePic?.url}"),
+                                          ),
                                         ).paddingOnly(bottom: 8.kh),
                                         Positioned(
                                           top: 52.kh,
@@ -121,7 +122,6 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                                   size: 12.kh,
                                                 ).paddingOnly(right: 2.kw),
                                                 Text(
-                                                  // '0.0',
                                                   controller
                                                           .riderSendRequestModel
                                                           .value
@@ -146,109 +146,106 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                         ),
                                       ],
                                     ).paddingOnly(right: 16.kw, bottom: 16.kh),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          //TODO: space between
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              // 'Esther Howard',
-                                              "${controller.riderSendRequestModel.value.data![index]!.driverDetails![0]!.fullName}  ",
-                                              style: TextStyleUtil.k16Semibold(
-                                                  fontSize: 16.kh),
-                                            ),
-                                            Text.rich(
-                                              TextSpan(
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Expanded(
+                                                child: Text(
+                                                  "${controller.riderSendRequestModel.value.data![index]!.driverDetails![0]!.fullName}  ",
+                                                  style:
+                                                      TextStyleUtil.k16Semibold(
+                                                          fontSize: 16.kh),
+                                                ),
+                                              ),
+                                              Text.rich(
+                                                TextSpan(
+                                                  children: [
+                                                    TextSpan(
+                                                      text:
+                                                          "\$ ${controller.riderSendRequestModel.value.data![index]?.price ?? "0"}",
+                                                      style:
+                                                          TextStyleUtil.k16Bold(
+                                                              color: ColorUtil
+                                                                  .kSecondary01),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Row(
                                                 children: [
-                                                  TextSpan(
-                                                    // text: '\$3.50',
-                                                    text:
-                                                        "\$ ${controller.riderSendRequestModel.value.data![index]?.price ?? "0"}",
-                                                    style:
-                                                        TextStyleUtil.k16Bold(
+                                                  if (controller
+                                                          .riderSendRequestModel
+                                                          .value
+                                                          .data![index]
+                                                          ?.date !=
+                                                      null)
+                                                    SvgPicture.asset(
+                                                      ImageConstant
+                                                          .svgIconCalendarTime,
+                                                      colorFilter: ColorFilter.mode(
+                                                          Get.find<HomeController>()
+                                                                  .isPinkModeOn
+                                                                  .value
+                                                              ? ColorUtil
+                                                                  .kPrimary3PinkMode
+                                                              : ColorUtil
+                                                                  .kSecondary01,
+                                                          BlendMode.srcIn),
+                                                    ).paddingOnly(right: 4.kw),
+                                                  if (controller
+                                                          .riderSendRequestModel
+                                                          .value
+                                                          .data![index]
+                                                          ?.date !=
+                                                      null)
+                                                    Text(
+                                                      "${GpUtil.getDateFormat(controller.riderSendRequestModel.value.data![index]?.date)}  ${controller.riderSendRequestModel.value.data![index]?.time ?? ""}",
+                                                      style: TextStyleUtil
+                                                          .k12Regular(
+                                                              color: ColorUtil
+                                                                  .kBlack02),
+                                                    ),
+                                                ],
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Icon(
+                                                    Icons.time_to_leave,
+                                                    size: 18.kh,
+                                                    color: Get.find<
+                                                                HomeController>()
+                                                            .isPinkModeOn
+                                                            .value
+                                                        ? ColorUtil
+                                                            .kPrimary3PinkMode
+                                                        : ColorUtil
+                                                            .kSecondary01,
+                                                  ).paddingOnly(right: 8.kw),
+                                                  Text(
+                                                    '${controller.riderSendRequestModel.value.data![index]?.seatAvailable ?? "0"} seats',
+                                                    style: TextStyleUtil
+                                                        .k14Regular(
                                                             color: ColorUtil
-                                                                .kSecondary01),
+                                                                .kBlack03),
                                                   ),
                                                 ],
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Row(
-                                              children: [
-                                                controller
-                                                            .riderSendRequestModel
-                                                            .value
-                                                            .data![index]
-                                                            ?.date ==
-                                                        null
-                                                    ? const SizedBox()
-                                                    : SvgPicture.asset(
-                                                        ImageConstant
-                                                            .svgIconCalendarTime,
-                                                        colorFilter: ColorFilter.mode(
-                                                            Get.find<HomeController>()
-                                                                    .isPinkModeOn
-                                                                    .value
-                                                                ? ColorUtil
-                                                                    .kPrimary3PinkMode
-                                                                : ColorUtil
-                                                                    .kSecondary01,
-                                                            BlendMode.srcIn),
-                                                      ).paddingOnly(
-                                                        right: 4.kw),
-                                                controller
-                                                            .riderSendRequestModel
-                                                            .value
-                                                            .data![index]
-                                                            ?.date ==
-                                                        null
-                                                    ? const SizedBox()
-                                                    : Text(
-                                                        // '07 July 2023, 3:00pm',
-                                                        "${GpUtil.getDateFormat(controller.riderSendRequestModel.value.data![index]?.date)}  ${controller.riderSendRequestModel.value.data![index]?.time ?? ""}",
-                                                        style: TextStyleUtil
-                                                            .k12Regular(
-                                                                color: ColorUtil
-                                                                    .kBlack02),
-                                                      ),
-                                              ],
-                                            ),
-                                            //TODO: space between
-                                            Row(
-                                              children: [
-                                                Icon(
-                                                  Icons.time_to_leave,
-                                                  size: 18.kh,
-                                                  color:
-                                                      Get.find<HomeController>()
-                                                              .isPinkModeOn
-                                                              .value
-                                                          ? ColorUtil
-                                                              .kPrimary3PinkMode
-                                                          : ColorUtil
-                                                              .kSecondary01,
-                                                ).paddingOnly(right: 8.kw),
-                                                Text(
-                                                  '${controller.riderSendRequestModel.value.data![index]?.seatAvailable ?? "0"} seats',
-                                                  style:
-                                                      TextStyleUtil.k14Regular(
-                                                          color: ColorUtil
-                                                              .kBlack03),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ).paddingOnly(top: 8.kh),
-                                      ],
+                                            ],
+                                          ).paddingOnly(top: 8.kh),
+                                        ],
+                                      ),
                                     ),
                                   ],
                                 ),

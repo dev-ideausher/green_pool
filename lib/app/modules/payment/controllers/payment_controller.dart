@@ -95,23 +95,26 @@ class PaymentController extends GetxController {
 
   createRideAlert() async {
     rideData!['ridesDetails']!['price'] = totalAmount;
-    print("CHECK PRICE: ${rideData['ridesDetails'].toString()}");
 
-    try {
-      final response = await APIManager.postCreateAlert(body: {
-        "ridesDetails": rideData['ridesDetails'],
-        "driverRideId": rideData['driverRideId'],
-        "distance": rideData['distance']
-      });
-      requestRideModel.value = RequestRideByRiderModel.fromJson(response.data);
-      if (requestRideModel.value.status ?? false) {
-        DialogHelper.paymentSuccessfull();
-      } else {
-        // showMySnackbar(msg: response.data['message'].toString() ?? "");
-        Get.bottomSheet(const InsufficientBalanceSheet());
+    if (walletBalance.value >= totalAmount) {
+      try {
+        final response = await APIManager.postCreateAlert(body: {
+          "ridesDetails": rideData['ridesDetails'],
+          "driverRideId": rideData['driverRideId'],
+          "distance": rideData['distance']
+        });
+        requestRideModel.value =
+            RequestRideByRiderModel.fromJson(response.data);
+        if (requestRideModel.value.status ?? false) {
+          DialogHelper.paymentSuccessfull();
+        } else {
+          showMySnackbar(msg: response.data['message'].toString() ?? "");
+        }
+      } catch (e) {
+        debugPrint(e.toString());
       }
-    } catch (e) {
-      debugPrint(e.toString());
+    } else {
+      Get.bottomSheet(const InsufficientBalanceSheet());
     }
   }
 

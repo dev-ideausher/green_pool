@@ -55,10 +55,11 @@ class OriginController extends GetxController {
       isLoading.value = true;
       String baseURL =
           'https://maps.googleapis.com/maps/api/place/autocomplete/json';
-      // String components = 'country:ca';
-      // String request = '$baseURL?input=$input&location=$lat%$long&radius=500&key=$apiKey&sessiontoken=$_sessionToken&components=$components';
+      String components = 'country:ca';
       String request =
-          '$baseURL?input=$input&location=$lat%$long&radius=500&key=$apiKey&sessiontoken=$_sessionToken';
+          '$baseURL?input=$input&location=$lat%$long&radius=500&key=$apiKey&sessiontoken=$_sessionToken&components=$components';
+      // String request =
+      //     '$baseURL?input=$input&location=$lat%$long&radius=500&key=$apiKey&sessiontoken=$_sessionToken';
 
       var response = await http.get(Uri.parse(request));
 

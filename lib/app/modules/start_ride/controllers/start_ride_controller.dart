@@ -42,12 +42,8 @@ class StartRideController extends GetxController {
     super.onInit();
 
     await myRidesDetailsAPI(Get.arguments);
-
-    //  myRidesModel.value.riderBookingDetails?.origin?.coordinates = [74.9454334456202, 30.211063461596073];
-    //  myRidesModel.value.riderBookingDetails?.destination?.coordinates = [74.91410641185684, 30.321220704270132];
     await getPolyPoints();
     getButtonLabel();
-    //myRidesModel.value.isStarted! ? null :
     isLoad.value = false;
   }
 
@@ -252,7 +248,7 @@ class StartRideController extends GetxController {
     }
   }
 
-  pickUpAPI(String riderId) async {
+  /*pickUpAPI(String riderId) async {
     try {
       final response = await APIManager.pickUpRider(body: {
         "riderId": riderId,
@@ -308,7 +304,7 @@ class StartRideController extends GetxController {
     } catch (e) {
       debugPrint(e.toString());
     }
-  }
+  }*/
 
   @override
   void onClose() {
@@ -442,33 +438,7 @@ class StartRideController extends GetxController {
 
   actionTap() async {
     if (myRidesModel.value.driverBookingDetails?.isStarted ?? false) {
-      if (myRidesModel.value.driverBookingDetails
-              ?.riderBookingDetails?[selectedRider.value].isStarted ??
-          false) {
-        bool? allTrue = myRidesModel
-            .value.driverBookingDetails?.riderBookingDetails
-            ?.every((element) => element.isStarted ?? false);
-        if (allTrue ?? false) {
-          bool? allisCompleted = myRidesModel
-              .value.driverBookingDetails?.riderBookingDetails
-              ?.every((element) => element.isCompleted ?? false);
-          if (allisCompleted ?? false) {
-            await endRideAPI();
-          } else {
-            await dropOffAPI(myRidesModel.value.driverBookingDetails
-                    ?.riderBookingDetails?[selectedRider.value].riderId ??
-                "");
-          }
-        } else {
-          await dropOffAPI(myRidesModel.value.driverBookingDetails
-                  ?.riderBookingDetails?[selectedRider.value].riderId ??
-              "");
-        }
-      } else {
-        await pickUpAPI(myRidesModel.value.driverBookingDetails
-                ?.riderBookingDetails?[selectedRider.value].riderId ??
-            "");
-      }
+      await endRideAPI();
     } else {
       await startRideAPI();
     }
@@ -477,28 +447,7 @@ class StartRideController extends GetxController {
 
   getButtonLabel() {
     if (myRidesModel.value.driverBookingDetails?.isStarted ?? false) {
-      if (myRidesModel.value.driverBookingDetails
-              ?.riderBookingDetails?[selectedRider.value].isStarted ??
-          false) {
-        bool? allTrue = myRidesModel
-            .value.driverBookingDetails?.riderBookingDetails
-            ?.every((element) => element.isStarted ?? false);
-        if (allTrue ?? false) {
-          bool? allisCompleted = myRidesModel
-              .value.driverBookingDetails?.riderBookingDetails
-              ?.every((element) => element.isCompleted ?? false);
-          if (allisCompleted ?? false) {
-            isEndRide.value = true;
-            btnText.value = Strings.endRide;
-          } else {
-            btnText.value = Strings.riderDroppedOffSuccessfully;
-          }
-        } else {
-          btnText.value = Strings.riderDroppedOffSuccessfully;
-        }
-      } else {
-        btnText.value = Strings.riderPickedUpSuccessfully;
-      }
+      btnText.value = Strings.endRide;
     } else {
       btnText.value = Strings.startRide;
     }

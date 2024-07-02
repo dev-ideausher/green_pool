@@ -171,14 +171,14 @@ class FileDisputeView extends GetView<FileDisputeController> {
                                       ),
                                     ],
                                   ).paddingOnly(bottom: 8.kh),
-                                  const GreenPoolDivider()
-                                      .paddingOnly(bottom: 16.kh),
+                                  const GreenPoolDivider(),
                                   OriginToDestination(
-                                      needPickupText: false,
-                                      origin:
-                                          "${controller.rideHistModel.value.data?[index]?.origin?.name}",
-                                      destination:
-                                          "${controller.rideHistModel.value.data?[index]?.destination?.name}"),
+                                          needPickupText: false,
+                                          origin:
+                                              "${controller.rideHistModel.value.data?[index]?.origin?.name}",
+                                          destination:
+                                              "${controller.rideHistModel.value.data?[index]?.destination?.name}")
+                                      .paddingSymmetric(vertical: 8.kh),
                                   const GreenPoolDivider()
                                       .paddingOnly(bottom: 16.kh),
                                   GreenPoolButton(

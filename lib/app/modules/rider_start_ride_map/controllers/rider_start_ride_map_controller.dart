@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
@@ -21,7 +20,6 @@ import '../../../data/live_location_model.dart';
 import '../../../data/my_rides_model.dart';
 import '../../../res/strings.dart';
 import '../../../services/dio/endpoints.dart';
-import '../../home/controllers/home_controller.dart';
 import '../views/sos_dialog.dart';
 
 class RiderStartRideMapController extends GetxController {
@@ -231,7 +229,7 @@ class RiderStartRideMapController extends GetxController {
                 LatLng(element.origin?.coordinates?.lastOrNull ?? 0.0,
                     element.origin?.coordinates?.firstOrNull ?? 0.0),
                 ImageConstant.pngCarPointer,
-                "Origin",
+                "",
                 0.0);
             addMarkers(
                 LatLng(element.destination?.coordinates?.lastOrNull ?? 0.0,
@@ -270,6 +268,7 @@ class RiderStartRideMapController extends GetxController {
         snippet: '',
       ),
       rotation: rotation ?? 0.0,
+      anchor: const Offset(0.5, 0),
       icon: image == ""
           ? BitmapDescriptor.defaultMarker
           : await BitmapDescriptor.fromAssetImage(

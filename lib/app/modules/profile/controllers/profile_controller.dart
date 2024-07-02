@@ -13,7 +13,8 @@ class ProfileController extends GetxController {
   RxBool pinkMode = Get.find<HomeController>().isPinkModeOn;
   var userInfo = Get.find<HomeController>().userInfo;
   TextEditingController ratingTextController = TextEditingController();
-  RxDouble rating = 4.5.obs;
+  RxDouble rating = 4.0.obs;
+  ScrollController scrollController = ScrollController();
 
   // @override
   // void onInit() {

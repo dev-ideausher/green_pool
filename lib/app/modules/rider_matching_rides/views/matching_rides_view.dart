@@ -129,7 +129,10 @@ class MatchingRidesView extends GetView<MatchingRidesController> {
                                         decoration: BoxDecoration(
                                             color: ColorUtil.kWhiteColor,
                                             borderRadius:
-                                                BorderRadius.circular(8.kh)),
+                                                BorderRadius.circular(8.kh),
+                                            border: Border.all(
+                                                width: 0.3.kh,
+                                                color: ColorUtil.kNeutral10)),
                                         child: Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
@@ -320,7 +323,7 @@ class MatchingRidesView extends GetView<MatchingRidesController> {
                                             ),
                                             //middle divider
                                             const GreenPoolDivider()
-                                                .paddingOnly(bottom: 16.kh),
+                                                .paddingOnly(bottom: 8.kh),
                                             OriginToDestination(
                                               origin:
                                                   "${controller.matchingRidesModel.value.data![index]?.origin?.name}",

@@ -48,8 +48,7 @@ class MapDriverSendBottomsheet extends StatelessWidget {
                         child: SizedBox.fromSize(
                             size: Size.fromRadius(20.kh),
                             child: CommonImageView(
-                              url: element
-                                  ?.riderDetails?.profilePic?.url,
+                              url: element?.riderDetails?.profilePic?.url,
                             )),
                       ),
                     ).paddingOnly(right: 8.kw),
@@ -129,12 +128,12 @@ class MapDriverSendBottomsheet extends StatelessWidget {
                     ),
                   ],
                 ),
-                const GreenPoolDivider().paddingOnly(bottom: 16.kh),
+                const GreenPoolDivider(),
                 OriginToDestination(
                   needPickupText: false,
                   origin: element?.origin?.name ?? "",
                   destination: element?.destination?.name ?? "",
-                ),
+                ).paddingSymmetric(vertical: 8.kh),
                 const GreenPoolDivider().paddingOnly(bottom: 16.kh),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -162,9 +161,7 @@ class MapDriverSendBottomsheet extends StatelessWidget {
                               size: 12.kh,
                             ).paddingOnly(right: 4.kw),
                             Text(
-                              element?.riderDetails?.rating
-                                      .toString() ??
-                                  "0.0",
+                              element?.riderDetails?.rating.toString() ?? "0.0",
                               style: TextStyleUtil.k14Regular(),
                             ),
                           ]),
@@ -179,8 +176,7 @@ class MapDriverSendBottomsheet extends StatelessWidget {
                           style: TextStyleUtil.k12Semibold(),
                         ).paddingOnly(bottom: 4.kh),
                         Text(
-                          element?.riderDetails?.totalRides
-                                  .toString() ??
+                          element?.riderDetails?.totalRides.toString() ??
                               "0" + ' people',
                           style: TextStyleUtil.k14Regular(
                               color: ColorUtil.kBlack03),

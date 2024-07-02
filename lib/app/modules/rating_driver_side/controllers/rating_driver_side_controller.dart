@@ -9,7 +9,7 @@ import '../../home/controllers/home_controller.dart';
 
 class RatingDriverSideController extends GetxController {
   final Rx<BookingDetailModelData> myRidesModel = BookingDetailModelData().obs;
-  RxDouble rating = 4.5.obs;
+  RxDouble rating = 3.0.obs;
   final debouncer = Debouncer(delay: const Duration(milliseconds: 50));
 
   @override

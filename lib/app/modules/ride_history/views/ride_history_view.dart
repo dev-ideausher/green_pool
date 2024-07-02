@@ -230,7 +230,7 @@ class RideHistoryView extends GetView<RideHistoryController> {
 
                                             //middle divider
                                             const GreenPoolDivider()
-                                                .paddingOnly(bottom: 16.kh),
+                                                .paddingOnly(bottom: 8.kh),
                                             OriginToDestination(
                                                     needPickupText: false,
                                                     origin:
@@ -238,8 +238,37 @@ class RideHistoryView extends GetView<RideHistoryController> {
                                                     destination:
                                                         "${his?.destination?.name}")
                                                 .paddingOnly(bottom: 8.kh),
+                                            const GreenPoolDivider()
+                                                .paddingOnly(bottom: 16.kh),
+                                            Visibility(
+                                                visible: controller
+                                                        .rideHistModel
+                                                        .value
+                                                        .data?[index]
+                                                        ?.rideStatus ==
+                                                    "Cancel",
+                                                child: Container(
+                                                  width: 100.w,
+                                                  alignment: Alignment.center,
+                                                  decoration: BoxDecoration(
+                                                      color:
+                                                          ColorUtil.kNeutral1,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8.kh)),
+                                                  padding: EdgeInsets.symmetric(
+                                                      vertical: 4.kh,
+                                                      horizontal: 24.kw),
+                                                  child: Text(
+                                                    "Cancelled Ride",
+                                                    style: TextStyleUtil
+                                                        .k14Semibold(
+                                                            color: ColorUtil
+                                                                .kError2),
+                                                  ),
+                                                ))
                                           ],
-                                        ).paddingOnly(bottom: 16.kh),
+                                        ),
                                       ).paddingOnly(bottom: 16.kh),
                                     );
                             }).paddingOnly(top: 32.kh),
@@ -372,7 +401,7 @@ class DriverRideHistTile extends StatelessWidget {
                       ),
                     ],
                   ).paddingOnly(bottom: 8.kh),
-            const GreenPoolDivider().paddingOnly(bottom: 16.kh),
+            const GreenPoolDivider().paddingOnly(bottom: 8.kh),
             OriginToDestination(
               needPickupText: false,
               origin:
@@ -383,6 +412,23 @@ class DriverRideHistTile extends StatelessWidget {
                   Strings.destination,
             ).paddingOnly(bottom: 8.kh),
             const GreenPoolDivider().paddingOnly(bottom: 16.kh),
+            Visibility(
+                visible:
+                    controller.rideHistModel.value.data?[index]?.rideStatus ==
+                        "Cancel",
+                child: Container(
+                  width: 100.w,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      color: ColorUtil.kNeutral1,
+                      borderRadius: BorderRadius.circular(8.kh)),
+                  padding:
+                      EdgeInsets.symmetric(vertical: 4.kh, horizontal: 24.kw),
+                  child: Text(
+                    "Cancelled Ride",
+                    style: TextStyleUtil.k14Semibold(color: ColorUtil.kError2),
+                  ),
+                ))
           ],
         ),
       ).paddingOnly(bottom: 16.kh),

@@ -58,7 +58,7 @@ class RatingRiderSideView extends GetView<RatingRiderSideController> {
                       SizedBox(
                         height: 28.kh,
                         child: RatingBar(
-                          allowHalfRating: true,
+                          allowHalfRating: false,
                           glow: false,
                           ratingWidget: RatingWidget(
                             full: const Icon(
@@ -76,8 +76,7 @@ class RatingRiderSideView extends GetView<RatingRiderSideController> {
                           ),
                           onRatingUpdate: (double value) {
                             controller.driverRating.value = value;
-                            controller.rateDriverAPI(
-                                "${controller.myRidesModel.value.data?.driverBookingDetails?.driverId}");
+                            
                           },
                         ),
                       ),
@@ -137,7 +136,7 @@ class RatingRiderSideView extends GetView<RatingRiderSideController> {
                                   SizedBox(
                                     height: 28.kh,
                                     child: RatingBar(
-                                      allowHalfRating: true,
+                                      allowHalfRating: false,
                                       glow: false,
                                       ratingWidget: RatingWidget(
                                         full: const Icon(
@@ -168,6 +167,8 @@ class RatingRiderSideView extends GetView<RatingRiderSideController> {
                       ),
                       GreenPoolButton(
                         onPressed: () {
+                          controller.rateDriverAPI(
+                                "${controller.myRidesModel.value.data?.driverBookingDetails?.driverId}");
                           Get.find<HomeController>().changeTabIndex(0);
                           Get.until((route) =>
                               Get.currentRoute == Routes.BOTTOM_NAVIGATION);

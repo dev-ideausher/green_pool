@@ -44,7 +44,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Center(
-                                  child: Get.find<HomeController>()
+                                  child:  Get.find<HomeController>()
                                           .isPinkModeOn
                                           .value
                                       ? CommonImageView(

@@ -296,7 +296,7 @@ class RiderTile extends StatelessWidget {
                       ],
                     ),
             ],
-          ).paddingOnly(bottom: 16.kh),
+          ),
         ).paddingOnly(bottom: 16.kh),
       );
     });

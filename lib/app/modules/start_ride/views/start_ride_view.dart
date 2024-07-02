@@ -63,7 +63,7 @@ class StartRideView extends GetView<StartRideController> {
                 shape: const CircleBorder(),
                 backgroundColor: Get.find<HomeController>().isPinkModeOn.value
                     ? ColorUtil.kPrimary3PinkMode
-                    : ColorUtil.kWhiteColor,
+                    : ColorUtil.kSecondary01,
                 onPressed: () {
                   Get.back();
                 },
@@ -77,7 +77,7 @@ class StartRideView extends GetView<StartRideController> {
                   shape: const CircleBorder(),
                   backgroundColor: Get.find<HomeController>().isPinkModeOn.value
                       ? ColorUtil.kSecondaryPinkMode
-                      : ColorUtil.kPrimary01,
+                      : ColorUtil.kPrimary05,
                   tooltip: Strings.openGoogleMaps,
                   onPressed: () {
                     controller.openGoogleMaps();

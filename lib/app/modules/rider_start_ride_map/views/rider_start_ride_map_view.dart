@@ -71,7 +71,7 @@ class RiderStartRideMapView extends GetView<RiderStartRideMapController> {
                       backgroundColor:
                           Get.find<HomeController>().isPinkModeOn.value
                               ? ColorUtil.kSecondaryPinkMode
-                              : ColorUtil.kPrimary01,
+                              : ColorUtil.kPrimary05,
                       tooltip: Strings.openGoogleMaps,
                       onPressed: () {
                         controller.openGoogleMaps();

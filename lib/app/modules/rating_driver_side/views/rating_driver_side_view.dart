@@ -95,7 +95,7 @@ class RatingDriverSideView extends GetView<RatingDriverSideController> {
                                 ),
                                 RatingBar(
                                   initialRating: controller.rating.value,
-                                  allowHalfRating: true,
+                                  allowHalfRating: false,
                                   itemSize: 28.kh,
                                   glow: false,
                                   ratingWidget: RatingWidget(
@@ -113,7 +113,7 @@ class RatingDriverSideView extends GetView<RatingDriverSideController> {
                                     ),
                                   ),
                                   onRatingUpdate: (double? value) {
-                                    controller.rating.value = value ?? 4.5;
+                                    controller.rating.value = value ?? 4;
                                     controller.debouncer(() => controller
                                         .rateUserAPI("${riderDetails?.Id}"));
                                   },

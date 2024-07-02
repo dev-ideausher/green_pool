@@ -311,106 +311,111 @@ class PostRideController extends GetxController {
   }
 
   Future<void> setTime(BuildContext context) async {
-    TimeOfDay? pickedTime = await showTimePicker(
-      context: context,
-      builder: (BuildContext context, Widget? child) {
-        return Theme(
-          // Define the custom theme for the date picker
-          data: ThemeData(
-            // Define the primary color
-            primaryColor: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimaryPinkMode : ColorUtil.kPrimary01,
-            // Define the color scheme for the date picker
-            colorScheme: ColorScheme.light(
-              // Define the primary color for the date picker
-              primary: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimaryPinkMode : ColorUtil.kPrimary01,
-              // Define the background color for the date picker
-              surface: Colors.white,
-              // Define the on-primary color for the date picker
-              onPrimary: Colors.white,
-              secondary: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimaryPinkMode : ColorUtil.kPrimary01,
-            ),
+  TimeOfDay? pickedTime = await showTimePicker(
+    context: context,
+    builder: (BuildContext context, Widget? child) {
+      return Theme(
+        data: ThemeData(
+          primaryColor: Get.find<HomeController>().isPinkModeOn.value
+              ? ColorUtil.kPrimaryPinkMode
+              : ColorUtil.kPrimary01,
+          colorScheme: ColorScheme.light(
+            primary: Get.find<HomeController>().isPinkModeOn.value
+                ? ColorUtil.kPrimaryPinkMode
+                : ColorUtil.kPrimary01,
+            surface: Colors.white,
+            onPrimary: Colors.white,
+            secondary: Get.find<HomeController>().isPinkModeOn.value
+                ? ColorUtil.kPrimaryPinkMode
+                : ColorUtil.kPrimary01,
           ),
-          // Apply the custom theme to the child widget
-          child: child!,
-        );
-      },
-      initialTime: TimeOfDay.now(),
-      initialEntryMode: TimePickerEntryMode.input,
-    );
+        ),
+        child: child!,
+      );
+    },
+    initialTime: TimeOfDay.now(),
+    initialEntryMode: TimePickerEntryMode.input,
+  );
 
-    if (pickedTime != null) {
-      String formattedTime = pickedTime.format(context);
-      selectedTimeOneTime.text = formattedTime.toString();
-    }
+  if (pickedTime != null) {
+    // Use MaterialLocalizations to format the time in 24-hour format
+    final MaterialLocalizations localizations = MaterialLocalizations.of(context);
+    String formattedTime = localizations.formatTimeOfDay(pickedTime, alwaysUse24HourFormat: true);
+    selectedTimeOneTime.text = formattedTime;
   }
+}
+
 
   Future<void> setReturnTime(BuildContext context) async {
-    TimeOfDay? pickedTime = await showTimePicker(
-      context: context,
-      builder: (BuildContext context, Widget? child) {
-        return Theme(
-          // Define the custom theme for the date picker
-          data: ThemeData(
-            // Define the primary color
-            primaryColor: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimaryPinkMode : ColorUtil.kPrimary01,
-            // Define the color scheme for the date picker
-            colorScheme: ColorScheme.light(
-              // Define the primary color for the date picker
-              primary: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimaryPinkMode : ColorUtil.kPrimary01,
-              // Define the background color for the date picker
-              surface: Colors.white,
-              // Define the on-primary color for the date picker
-              onPrimary: Colors.white,
-              secondary: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimaryPinkMode : ColorUtil.kPrimary01,
-            ),
+  TimeOfDay? pickedTime = await showTimePicker(
+    context: context,
+    builder: (BuildContext context, Widget? child) {
+      return Theme(
+        data: ThemeData(
+          primaryColor: Get.find<HomeController>().isPinkModeOn.value
+              ? ColorUtil.kPrimaryPinkMode
+              : ColorUtil.kPrimary01,
+          colorScheme: ColorScheme.light(
+            primary: Get.find<HomeController>().isPinkModeOn.value
+                ? ColorUtil.kPrimaryPinkMode
+                : ColorUtil.kPrimary01,
+            surface: Colors.white,
+            onPrimary: Colors.white,
+            secondary: Get.find<HomeController>().isPinkModeOn.value
+                ? ColorUtil.kPrimaryPinkMode
+                : ColorUtil.kPrimary01,
           ),
-          // Apply the custom theme to the child widget
-          child: child!,
-        );
-      },
-      initialTime: TimeOfDay.now(),
-      initialEntryMode: TimePickerEntryMode.input,
-    );
+        ),
+        child: child!,
+      );
+    },
+    initialTime: TimeOfDay.now(),
+    initialEntryMode: TimePickerEntryMode.input,
+  );
 
-    if (pickedTime != null) {
-      String formattedTime = pickedTime.format(context);
-      selectedTimeReturnTrip.text = formattedTime.toString();
-    }
+  if (pickedTime != null) {
+    // Use MaterialLocalizations to format the time in 24-hour format
+    final MaterialLocalizations localizations = MaterialLocalizations.of(context);
+    String formattedTime = localizations.formatTimeOfDay(pickedTime, alwaysUse24HourFormat: true);
+    selectedTimeReturnTrip.text = formattedTime;
   }
+}
 
   Future<void> setRecurringTime(BuildContext context) async {
-    TimeOfDay? pickedTime = await showTimePicker(
-      context: context,
-      builder: (BuildContext context, Widget? child) {
-        return Theme(
-          // Define the custom theme for the date picker
-          data: ThemeData(
-            // Define the primary color
-            primaryColor: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimaryPinkMode : ColorUtil.kPrimary01,
-            // Define the color scheme for the date picker
-            colorScheme: ColorScheme.light(
-              // Define the primary color for the date picker
-              primary: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimaryPinkMode : ColorUtil.kPrimary01,
-              // Define the background color for the date picker
-              surface: Colors.white,
-              // Define the on-primary color for the date picker
-              onPrimary: Colors.white,
-              secondary: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimaryPinkMode : ColorUtil.kPrimary01,
-            ),
+  TimeOfDay? pickedTime = await showTimePicker(
+    context: context,
+    builder: (BuildContext context, Widget? child) {
+      return Theme(
+        data: ThemeData(
+          primaryColor: Get.find<HomeController>().isPinkModeOn.value
+              ? ColorUtil.kPrimaryPinkMode
+              : ColorUtil.kPrimary01,
+          colorScheme: ColorScheme.light(
+            primary: Get.find<HomeController>().isPinkModeOn.value
+                ? ColorUtil.kPrimaryPinkMode
+                : ColorUtil.kPrimary01,
+            surface: Colors.white,
+            onPrimary: Colors.white,
+            secondary: Get.find<HomeController>().isPinkModeOn.value
+                ? ColorUtil.kPrimaryPinkMode
+                : ColorUtil.kPrimary01,
           ),
-          // Apply the custom theme to the child widget
-          child: child!,
-        );
-      },
-      initialTime: TimeOfDay.now(),
-      initialEntryMode: TimePickerEntryMode.input,
-    );
+        ),
+        child: child!,
+      );
+    },
+    initialTime: TimeOfDay.now(),
+    initialEntryMode: TimePickerEntryMode.input,
+  );
 
-    if (pickedTime != null) {
-      String formattedTime = pickedTime.format(context);
-      selectedRecurringTime.text = formattedTime.toString();
-    }
+  if (pickedTime != null) {
+    // Use MaterialLocalizations to format the time in 24-hour format
+    final MaterialLocalizations localizations = MaterialLocalizations.of(context);
+    String formattedTime = localizations.formatTimeOfDay(pickedTime, alwaysUse24HourFormat: true);
+    selectedRecurringTime.text = formattedTime;
   }
+}
+
 
   bool setReturn() {
     //handles Return Trip section in carpool scheduling

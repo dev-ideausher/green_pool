@@ -76,38 +76,41 @@ class SendRequest extends GetView<MyRidesRequestController> {
                                     decoration: const BoxDecoration(
                                         shape: BoxShape.circle),
                                     child: ClipOval(
-                                        child: SizedBox.fromSize(
-                                            size: Size.fromRadius(20.kh),
-                                            child: CommonImageView(
-                                                url:
-                                                    "${controller.sendRequestModel.value.data![index]!.riderDetails?.profilePic?.url}"))),
+                                      child: SizedBox.fromSize(
+                                        size: Size.fromRadius(20.kh),
+                                        child: CommonImageView(
+                                          url:
+                                              "${controller.sendRequestModel.value.data![index]!.riderDetails?.profilePic?.url}",
+                                        ),
+                                      ),
+                                    ),
                                   ).paddingOnly(right: 8.kw),
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        // 'full name',
-                                        controller
-                                            .sendRequestModel
-                                            .value
-                                            .data![index]!
-                                            .riderDetails!
-                                            .fullName
-                                            .toString(),
-                                        style: TextStyleUtil.k16Semibold(
-                                            fontSize: 16.kh),
-                                      ).paddingOnly(bottom: 8.kh),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              SvgPicture.asset(
-                                                ImageConstant
-                                                    .svgIconCalendarTime,
-                                                colorFilter: ColorFilter.mode(
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          controller
+                                              .sendRequestModel
+                                              .value
+                                              .data![index]!
+                                              .riderDetails!
+                                              .fullName
+                                              .toString(),
+                                          style: TextStyleUtil.k16Semibold(
+                                              fontSize: 16.kh),
+                                        ).paddingOnly(bottom: 8.kh),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                SvgPicture.asset(
+                                                  ImageConstant
+                                                      .svgIconCalendarTime,
+                                                  colorFilter: ColorFilter.mode(
                                                     Get.find<HomeController>()
                                                             .isPinkModeOn
                                                             .value
@@ -115,33 +118,35 @@ class SendRequest extends GetView<MyRidesRequestController> {
                                                             .kPrimary3PinkMode
                                                         : ColorUtil
                                                             .kSecondary01,
-                                                    BlendMode.srcIn),
-                                              ).paddingOnly(right: 4.kw),
-                                              Text(
-                                                // '07 July 2023, 3:00pm',
-                                                "${controller.sendRequestModel.value.data![index]?.date?.split('T')[0] ?? ""}  ${controller.sendRequestModel.value.data![index]?.time ?? ""}",
-                                                style: TextStyleUtil.k12Regular(
-                                                    color: ColorUtil.kBlack02),
-                                              ),
-                                            ],
-                                          ),
-                                          //TODO: spacing
-                                          Row(
-                                            children: [
-                                              Icon(
-                                                Icons.location_on,
-                                                size: 16.kh,
-                                                color:
-                                                    Get.find<HomeController>()
-                                                            .isPinkModeOn
-                                                            .value
-                                                        ? ColorUtil
-                                                            .kPrimary3PinkMode
-                                                        : ColorUtil
-                                                            .kSecondary01,
-                                              ),
-                                              FutureBuilder<String>(
-                                                future: GpUtil.calculateDistance(
+                                                    BlendMode.srcIn,
+                                                  ),
+                                                ).paddingOnly(right: 4.kw),
+                                                Text(
+                                                  "${controller.sendRequestModel.value.data![index]?.date?.split('T')[0] ?? ""}  ${controller.sendRequestModel.value.data![index]?.time ?? ""}",
+                                                  style:
+                                                      TextStyleUtil.k12Regular(
+                                                          color: ColorUtil
+                                                              .kBlack02),
+                                                ),
+                                              ],
+                                            ),
+                                            Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.location_on,
+                                                  size: 16.kh,
+                                                  color:
+                                                      Get.find<HomeController>()
+                                                              .isPinkModeOn
+                                                              .value
+                                                          ? ColorUtil
+                                                              .kPrimary3PinkMode
+                                                          : ColorUtil
+                                                              .kSecondary01,
+                                                ).paddingOnly(right: 4.kw),
+                                                FutureBuilder<String>(
+                                                  future:
+                                                      GpUtil.calculateDistance(
                                                     startLat:
                                                         controller.latitude,
                                                     startLong:
@@ -161,42 +166,46 @@ class SendRequest extends GetView<MyRidesRequestController> {
                                                             ?.origin
                                                             ?.coordinates
                                                             ?.first ??
-                                                        controller.longitude),
-                                                builder: (context, snapshot) {
-                                                  if (snapshot
-                                                          .connectionState ==
-                                                      ConnectionState.waiting) {
-                                                    return const Text(
-                                                        "..."); // Show a loading indicator while fetching data
-                                                  } else if (snapshot
-                                                      .hasError) {
-                                                    // return Text('Error: ${snapshot.error}');
-                                                    return Text(
-                                                      Strings.na,
-                                                      style: TextStyleUtil
-                                                          .k12Regular(
-                                                              color: ColorUtil
-                                                                  .kBlack02),
-                                                    );
-                                                  } else {
-                                                    return Text(
-                                                      snapshot.data.toString(),
-                                                      style: TextStyleUtil
-                                                          .k12Regular(
-                                                              color: ColorUtil
-                                                                  .kBlack02),
-                                                    );
-                                                  }
-                                                },
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ],
+                                                        controller.longitude,
+                                                  ),
+                                                  builder: (context, snapshot) {
+                                                    if (snapshot
+                                                            .connectionState ==
+                                                        ConnectionState
+                                                            .waiting) {
+                                                      return const Text(
+                                                          "..."); // Show a loading indicator while fetching data
+                                                    } else if (snapshot
+                                                        .hasError) {
+                                                      return Text(
+                                                        Strings.na,
+                                                        style: TextStyleUtil
+                                                            .k12Regular(
+                                                                color: ColorUtil
+                                                                    .kBlack02),
+                                                      );
+                                                    } else {
+                                                      return Text(
+                                                        snapshot.data
+                                                            .toString(),
+                                                        style: TextStyleUtil
+                                                            .k12Regular(
+                                                                color: ColorUtil
+                                                                    .kBlack02),
+                                                      );
+                                                    }
+                                                  },
+                                                ),
+                                              ],
+                                            ).paddingOnly(right: 4.kw),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),
+
                               const GreenPoolDivider()
                                   .paddingOnly(bottom: 16.kh),
                               OriginToDestination(

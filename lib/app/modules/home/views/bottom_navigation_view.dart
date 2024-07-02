@@ -9,9 +9,6 @@ import 'package:green_pool/app/modules/messages/views/messages_view.dart';
 import 'package:green_pool/app/modules/my_rides_page/views/my_rides_page_view.dart';
 import 'package:green_pool/app/modules/profile/views/profile_view.dart';
 import 'package:green_pool/app/res/strings.dart';
-import 'package:green_pool/app/routes/app_pages.dart';
-import 'package:green_pool/app/services/snackbar.dart';
-import 'package:green_pool/app/services/storage.dart';
 
 import '../../../services/colors.dart';
 import '../../../services/text_style_util.dart';
@@ -51,33 +48,6 @@ class BottomNavigationView extends GetView<HomeController> {
               onTap: (index) {
                 controller.onTapBottomNavigation(index);
               },
-
-              // Get.find<GetStorageService>().isLoggedIn
-              //     ? Get.find<GetStorageService>().profileStatus
-              //         ? (index) {
-              //             controller.changeTabIndex(index);
-              //             // controller.pageController?.animateToPage(
-              //             //   index,
-              //             //   duration: const Duration(milliseconds: 1),
-              //             //   curve: Curves.easeIn,
-              //             // );
-              //           }
-              //         : (index) {
-              //             if (index != 0) {
-              //               Get.toNamed(Routes.RIDER_PROFILE_SETUP,
-              //                   arguments: true);
-              //               showMySnackbar(
-              //                   msg: Strings.pleaseCompleteProfileSetup);
-              //             }
-              //           }
-              //     : (index) {
-              //         if (index != 0) {
-              //           print(
-              //               "GET STORAGE IS LOGGED IN: ${Get.find<GetStorageService>().isLoggedIn.toString()}");
-              //           Get.toNamed(Routes.LOGIN,
-              //               arguments: {'isDriver': false, 'fromNavBar': true});
-              //         }
-              //       },
               items: [
                 BottomNavigationBarItem(
                   activeIcon: SvgPicture.asset(

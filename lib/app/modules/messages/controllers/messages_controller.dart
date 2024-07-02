@@ -12,6 +12,7 @@ class MessagesController extends GetxController {
   RxBool refreshPage = true.obs;
   RxBool isLoading = false.obs;
   final Rx<MessageListModel> messagesModel = MessageListModel().obs;
+  var chatRoomIds;
 
   @override
   void onInit() {
@@ -25,6 +26,9 @@ class MessagesController extends GetxController {
       final resp = await APIManager.getChatList();
       var data = jsonDecode(resp.toString());
       messagesModel.value = MessageListModel.fromJson(data);
+      // chatRoomIds = messagesModel.value.chatRoomIds;
+      // chatRoomIds?.sort(
+      //     (a, b) => b.lastMessage.dateTime.compareTo(a.lastMessage.dateTime));
       isLoading.value = false;
     } catch (e) {
       debugPrint(e.toString());

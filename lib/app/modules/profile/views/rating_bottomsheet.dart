@@ -18,7 +18,7 @@ class RatingBottomSheet extends GetView<ProfileController> {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(24.kh),
-      height: 70.h,
+      height: 75.h,
       width: 100.w,
       decoration: BoxDecoration(
           color: ColorUtil.kWhiteColor,
@@ -59,7 +59,7 @@ class RatingBottomSheet extends GetView<ProfileController> {
               ),
             ),
             onRatingUpdate: (double? value) {
-              controller.rating.value = value ?? 4.5;
+              controller.rating.value = value ?? 4;
             },
           ).paddingOnly(bottom: 16.kh),
           GreenPoolTextField(

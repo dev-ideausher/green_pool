@@ -1,10 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_workers/utils/debouncer.dart';
-import 'package:green_pool/app/services/storage.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../data/google_location_model.dart';
