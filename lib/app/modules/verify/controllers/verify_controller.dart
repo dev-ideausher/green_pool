@@ -128,39 +128,59 @@ class VerifyController extends GetxController {
     }
   }
 
-  void _handleNewUser(UserInfoModel userInfo, AuthService authService,
-      HomeController homeController, GetStorageService storageService) {
+  Future<void> _handleNewUser(UserInfoModel userInfo, AuthService authService,
+      HomeController homeController, GetStorageService storageService) async {
     //if profile status is true then the user had previously logged in and already has an acc
     if (userInfo.data!.profileStatus!) {
-      if (fromNavBar) {
-        //if user is coming from nav bar then they should logout and should not transfer post/find ride data
+      // Set user information in storage service
+      storageService.setUserAppId = userInfo.data?.Id;
+      storageService.setUserName = userInfo.data?.fullName ?? "";
+      storageService.profilePicUrl = userInfo.data?.profilePic?.url ?? "";
+      storageService.isPinkMode = userInfo.data?.pinkMode ?? false;
 
-        Get.offNamed(Routes.LOGIN,
-            arguments: {'isDriver': isDriver, 'fromNavBar': fromNavBar});
-        authService.logOutUser();
-        // PushNotificationService.unsubFcm("${userInfo.data?.Id}");
-        showMySnackbar(msg: "This account already exists. Please Login");
+      // Update UI elements
+      homeController.isPinkModeOn.value = userInfo.data?.pinkMode ?? false;
+
+      if (fromNavBar) {
+        //if user is coming from nav bar then they should go back to bottom nav page
+        storageService.profileStatus = true;
+        storageService.isLoggedIn = true;
+        // Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
+        Get.until((route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
+        showMySnackbar(
+            msg: "You are now logged in! This account already exists.");
+        await homeController.userInfoAPI();
       } else {
-        //if the user is trying to post or find a ride then they should be logged out and redirected to Login page with the current data that they have entered
+        //if the user is trying to post or find a ride then they should be logged in and redirected to respective pages with data
         try {
           if (homeController.findingRide.value) {
             //if the user was finding
-            Get.offNamed(Routes.LOGIN, arguments: {
-              'isDriver': isDriver,
-              'fromNavBar': fromNavBar,
-              'findRideModel': findRideModel.value
-            });
+            storageService.isLoggedIn = true;
+            storageService.profileStatus = true;
+            Get.back();
+            showMySnackbar(
+                msg: "You are now logged in! This account already exists.");
+            await homeController.userInfoAPI();
           } else {
             //if the user was posting
-            Get.offNamed(Routes.LOGIN, arguments: {
-              'isDriver': isDriver,
-              'fromNavBar': fromNavBar,
-              'postRideModel': postRideModel.value
-            });
+            if (userInfo.data!.vehicleStatus!) {
+              //if they have filled then proceed to post ride step 2
+              storageService.isLoggedIn = true;
+              storageService.profileStatus = true;
+              storageService.setDriver = true;
+              Get.offNamed(Routes.POST_RIDE_STEP_TWO,
+                  arguments: postRideModel.value);
+              showMySnackbar(
+                  msg: "You are now logged in! This account already exists.");
+              await homeController.userInfoAPI();
+            } else {
+              //if not then redirect to vehicle details page
+              storageService.isLoggedIn = true;
+              storageService.profileStatus = true;
+              Get.toNamed(Routes.VEHICLE_SETUP, arguments: postRideModel.value);
+              showMySnackbar(msg: "To proceed please fill in vehicle details");
+            }
           }
-          authService.logOutUser();
-          // PushNotificationService.unsubFcm("${userInfo.data?.Id}");
-          showMySnackbar(msg: "This account already exists. Please Login");
         } catch (e) {
           throw Exception(e.toString());
         }
@@ -215,11 +235,12 @@ class VerifyController extends GetxController {
       if (fromNavBar) {
         storageService.profileStatus = true;
         storageService.isLoggedIn = true;
-        Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
+        // Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
+        Get.until((route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
         showMySnackbar(msg: 'Login Successful');
         await homeController.userInfoAPI();
       } else {
-        //check if the user is driver
+        //check if the user is driver or rider
         if (homeController.findingRide.value) {
           //user is rider
           storageService.isLoggedIn = true;
@@ -241,47 +262,50 @@ class VerifyController extends GetxController {
             await homeController.userInfoAPI();
           } else {
             //if not then redirect to vehicle details page
+            storageService.isLoggedIn = true;
+            storageService.profileStatus = true;
             Get.toNamed(Routes.VEHICLE_SETUP, arguments: postRideModel.value);
             showMySnackbar(msg: "To proceed please fill in vehicle details");
           }
         }
       }
     } else {
-      //redirecting to create acc page
+      //redirecting to Profile details page
       if (fromNavBar) {
-        //if user is coming from nav bar then they should logout and should not transfer post/find ride data
-
-        Get.offNamed(Routes.CREATE_ACCOUNT,
-            arguments: {'isDriver': isDriver, 'fromNavBar': fromNavBar});
-        authService.logOutUser();
-        // PushNotificationService.unsubFcm("${userInfo.data?.Id}");
+        //user wont have post/find ride data
+        Get.offNamed(Routes.VERIFICATION_DONE, arguments: {
+          'fromNavBar': fromNavBar,
+          'isDriver': false,
+          'fullName': fullName
+        });
         showMySnackbar(
-            msg: "This account does not exists. Please create a new acc");
+            msg:
+                "Account not found. A new account has been successfully created.");
       } else {
-        //if the user is trying to post or find a ride then they should be logged out and redirected to Login page with the current data that they have entered
-        try {
-          if (homeController.findingRide.value) {
-            //if the user was finding
-            Get.offNamed(Routes.CREATE_ACCOUNT, arguments: {
-              'isDriver': isDriver,
-              'fromNavBar': fromNavBar,
-              'findRideModel': findRideModel.value
-            });
-          } else {
-            //if the user was posting
-            Get.offNamed(Routes.CREATE_ACCOUNT, arguments: {
-              'isDriver': isDriver,
-              'fromNavBar': fromNavBar,
-              'postRideModel': postRideModel.value
-            });
-          }
-
-          authService.logOutUser();
-          // PushNotificationService.unsubFcm("${userInfo.data?.Id}");
+        //user will have post/find ride data which needs to be transferred
+        //check if driver or rider
+        if (homeController.findingRide.value) {
+          //rider
+          Get.offNamed(Routes.VERIFICATION_DONE, arguments: {
+            'fromNavBar': false,
+            'findRideModel': findRideModel.value,
+            'isDriver': false,
+            'fullName': fullName
+          });
           showMySnackbar(
-              msg: "This account does not exists. Please create a new acc");
-        } catch (e) {
-          throw Exception(e.toString());
+              msg:
+                  "Account not found. A new account has been successfully created.");
+        } else {
+          //driver
+          Get.offNamed(Routes.VERIFICATION_DONE, arguments: {
+            'fromNavBar': false,
+            'postRideModel': postRideModel.value,
+            'isDriver': true,
+            'fullName': fullName
+          });
+          showMySnackbar(
+              msg:
+                  "Account not found. A new account has been successfully created.");
         }
       }
     }

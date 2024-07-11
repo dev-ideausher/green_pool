@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:green_pool/app/data/recurring_rides_model.dart';
+import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../components/green_pool_divider.dart';
@@ -25,12 +25,15 @@ class RecurringTile extends StatelessWidget {
       return GestureDetector(
         onTap: recurringResp?.recurringTrip?.isRecurringTripEnabled ?? false
             ? () {
-                Get.toNamed(Routes.MY_RIDES_RECURRING_DETAILS, arguments: recurringResp?.Id);
+                Get.toNamed(Routes.MY_RIDES_RECURRING_DETAILS,
+                    arguments: recurringResp?.Id);
               }
             : () {},
         child: Container(
           padding: EdgeInsets.all(16.kh),
-          decoration: BoxDecoration(color: ColorUtil.kWhiteColor, borderRadius: BorderRadius.circular(8.kh)),
+          decoration: BoxDecoration(
+              color: ColorUtil.kWhiteColor,
+              borderRadius: BorderRadius.circular(8.kh)),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -39,7 +42,7 @@ class RecurringTile extends StatelessWidget {
                 children: [
                   //TODO: toggle switch
                   Text(
-                    recurringResp?.time ?? "00:00",
+                    GpUtil.convertUtcToLocal(recurringResp?.time ?? ""),
                     style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
                   ),
                   Obx(
@@ -48,16 +51,26 @@ class RecurringTile extends StatelessWidget {
                       child: Switch(
                         // value: controller
                         //     .isScheduled[index].value,
-                        value: recurringResp?.recurringTrip?.isRecurringTripEnabled ?? false,
+                        value: recurringResp
+                                ?.recurringTrip?.isRecurringTripEnabled ??
+                            false,
                         onChanged: (value) {
                           controller.enableRecurringAPI(recurringResp?.Id);
                         },
                         inactiveThumbColor: ColorUtil.kNeutral1,
-                        inactiveTrackColor: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kSecondaryPinkMode : ColorUtil.kPrimary05,
-                        activeTrackColor: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01,
+                        inactiveTrackColor:
+                            Get.find<HomeController>().isPinkModeOn.value
+                                ? ColorUtil.kSecondaryPinkMode
+                                : ColorUtil.kPrimary05,
+                        activeTrackColor:
+                            Get.find<HomeController>().isPinkModeOn.value
+                                ? ColorUtil.kPrimary3PinkMode
+                                : ColorUtil.kSecondary01,
                         trackOutlineWidth: const MaterialStatePropertyAll(0),
-                        thumbColor: const MaterialStatePropertyAll(ColorUtil.kWhiteColor),
-                        trackOutlineColor: const MaterialStatePropertyAll(ColorUtil.kNeutral1),
+                        thumbColor: const MaterialStatePropertyAll(
+                            ColorUtil.kWhiteColor),
+                        trackOutlineColor:
+                            const MaterialStatePropertyAll(ColorUtil.kNeutral1),
                       ),
                     ),
                   ),
@@ -75,7 +88,7 @@ class RecurringTile extends StatelessWidget {
                 style: TextStyleUtil.k14Bold(),
               ).paddingOnly(bottom: 16.kh),
               SizedBox(
-                height:( recurringResp?.ridesDetails?.length??0) * 36.kh,
+                height: (recurringResp?.ridesDetails?.length ?? 0) * 36.kh,
                 child: ListView.builder(
                     itemCount: recurringResp?.ridesDetails?.length,
                     physics: const NeverScrollableScrollPhysics(),
@@ -85,15 +98,19 @@ class RecurringTile extends StatelessWidget {
                         children: [
                           Text(
                             "${recurringResp?.ridesDetails?[index1]?.day}",
-                            style: TextStyleUtil.k14Semibold(color: ColorUtil.kBlack02),
+                            style: TextStyleUtil.k14Semibold(
+                                color: ColorUtil.kBlack02),
                           ),
                           SizedBox(
                             height: 24.kh,
                             width: 170.kw,
                             child: ListView.builder(
-                              itemCount: recurringResp?.ridesDetails?[index1]?.ridersDetails?.length == 0
+                              itemCount: recurringResp?.ridesDetails?[index1]
+                                          ?.ridersDetails?.length ==
+                                      0
                                   ? 4
-                                  : (recurringResp?.ridesDetails?[index1]?.ridersDetails?.length),
+                                  : (recurringResp?.ridesDetails?[index1]
+                                      ?.ridersDetails?.length),
                               reverse: true,
                               scrollDirection: Axis.horizontal,
                               itemBuilder: (context, index1) {

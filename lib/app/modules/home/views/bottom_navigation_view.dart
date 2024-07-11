@@ -115,3 +115,16 @@ class BottomNavigationView extends GetView<HomeController> {
     );
   }
 }
+/*
+Obx(
+          () => IndexedStack(
+            index: controller.selectedIndex.value,
+            children: const [
+              HomeView(),
+              MyRidesPageView(),
+              MessagesView(),
+              ProfileView(),
+            ],
+          ),
+        ),
+*/

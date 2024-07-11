@@ -56,6 +56,8 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                       itemCount:
                           controller.riderSendRequestModel.value.data?.length,
                       itemBuilder: (context, index) {
+                        final rideDetails =
+                            controller.riderSendRequestModel.value.data![index];
                         return GestureDetector(
                           onTap: () {
                             Get.toNamed(Routes.RIDER_MY_RIDES_SEND_DETAILS,
@@ -84,7 +86,7 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                                 height: 64.kh,
                                                 width: 64.kw,
                                                 url:
-                                                    "${controller.riderSendRequestModel.value.data![index]?.driverDetails![0]?.profilePic?.url}"),
+                                                    "${rideDetails?.driverDetails![0]?.profilePic?.url}"),
                                           ),
                                         ).paddingOnly(bottom: 8.kh),
                                         Positioned(
@@ -122,10 +124,7 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                                   size: 12.kh,
                                                 ).paddingOnly(right: 2.kw),
                                                 Text(
-                                                  controller
-                                                          .riderSendRequestModel
-                                                          .value
-                                                          .data?[index]
+                                                  rideDetails
                                                           ?.driverDetails?[0]!
                                                           .rating
                                                           ?.toStringAsFixed(
@@ -157,7 +156,7 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                             children: [
                                               Expanded(
                                                 child: Text(
-                                                  "${controller.riderSendRequestModel.value.data![index]!.driverDetails![0]!.fullName}  ",
+                                                  "${rideDetails!.driverDetails![0]!.fullName}  ",
                                                   style:
                                                       TextStyleUtil.k16Semibold(
                                                           fontSize: 16.kh),
@@ -168,7 +167,7 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                                   children: [
                                                     TextSpan(
                                                       text:
-                                                          "\$ ${controller.riderSendRequestModel.value.data![index]?.price ?? "0"}",
+                                                          "\$ ${rideDetails?.price ?? "0"}",
                                                       style:
                                                           TextStyleUtil.k16Bold(
                                                               color: ColorUtil
@@ -185,12 +184,7 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                             children: [
                                               Row(
                                                 children: [
-                                                  if (controller
-                                                          .riderSendRequestModel
-                                                          .value
-                                                          .data![index]
-                                                          ?.date !=
-                                                      null)
+                                                  if (rideDetails?.date != null)
                                                     SvgPicture.asset(
                                                       ImageConstant
                                                           .svgIconCalendarTime,
@@ -204,14 +198,9 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                                                   .kSecondary01,
                                                           BlendMode.srcIn),
                                                     ).paddingOnly(right: 4.kw),
-                                                  if (controller
-                                                          .riderSendRequestModel
-                                                          .value
-                                                          .data![index]
-                                                          ?.date !=
-                                                      null)
+                                                  if (rideDetails?.date != null)
                                                     Text(
-                                                      "${GpUtil.getDateFormat(controller.riderSendRequestModel.value.data![index]?.date)}  ${controller.riderSendRequestModel.value.data![index]?.time ?? ""}",
+                                                      "${GpUtil.getDateFormat(rideDetails?.time ?? "")}  ${GpUtil.convertUtcToLocal(rideDetails?.time ?? "")}",
                                                       style: TextStyleUtil
                                                           .k12Regular(
                                                               color: ColorUtil
@@ -234,7 +223,7 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                                             .kSecondary01,
                                                   ).paddingOnly(right: 8.kw),
                                                   Text(
-                                                    '${controller.riderSendRequestModel.value.data![index]?.seatAvailable ?? "0"} seats',
+                                                    '${rideDetails?.seatAvailable ?? "0"} seats',
                                                     style: TextStyleUtil
                                                         .k14Regular(
                                                             color: ColorUtil
@@ -253,10 +242,9 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                     .paddingOnly(bottom: 16.kh),
                                 OriginToDestination(
                                         needPickupText: false,
-                                        origin:
-                                            "${controller.riderSendRequestModel.value.data![index]?.origin?.name}",
+                                        origin: "${rideDetails?.origin?.name}",
                                         destination:
-                                            "${controller.riderSendRequestModel.value.data![index]?.destination?.name}")
+                                            "${rideDetails?.destination?.name}")
                                     .paddingOnly(bottom: 8.kh),
                                 const GreenPoolDivider()
                                     .paddingOnly(bottom: 16.kh),
@@ -288,10 +276,7 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                     // ).paddingAll(8.kh),
                                     GreenPoolButton(
                                       onPressed: () {
-                                        controller.openMessage(controller
-                                            .riderSendRequestModel
-                                            .value
-                                            .data![index]!);
+                                        controller.openMessage(rideDetails!);
                                       },
                                       label: Strings.message,
                                       isBorder: true,
@@ -312,8 +297,7 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                         //         controller.riderSendRequestModel
                                         //             .value.data![index]);
                                         controller.moveToPaymentFromSendRequest(
-                                            controller.riderSendRequestModel
-                                                .value.data![index]);
+                                            rideDetails);
                                       },
                                     ),
                                   ],
@@ -323,7 +307,7 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                           ).paddingOnly(bottom: 16.kh),
                         );
                       },
-                    ).paddingOnly(top: 32.kh, left: 16.kw, right: 16.kw),
+                    ).paddingOnly(top: 12.kh, left: 16.kw, right: 16.kw),
     );
   }
 }

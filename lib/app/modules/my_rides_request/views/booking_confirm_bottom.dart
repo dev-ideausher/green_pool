@@ -103,7 +103,7 @@ class BookingConfirmBottom extends StatelessWidget {
                               ).paddingOnly(right: 4.kw),
                               Text(
                                 // '07 July 2023, 3:00pm',
-                                "${driverRideData?.rideDetails?[0]?.date.toString().split("T")[0]}  ${driverRideData?.rideDetails?[0]?.time}",
+                                "${GpUtil.getDateFormat(driverRideData?.rideDetails?[0]?.time ?? "")}  ${GpUtil.convertUtcToLocal(driverRideData?.rideDetails?[0]?.time ?? "")}",
                                 style: TextStyleUtil.k12Regular(
                                     color: ColorUtil.kBlack02),
                               ),

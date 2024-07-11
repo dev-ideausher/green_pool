@@ -1,20 +1,13 @@
 import 'dart:convert';
-import 'dart:developer';
-import 'dart:ffi';
 
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/data/rider_confirm_request_model.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
-import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/snackbar.dart';
 import '../../../data/chat_arg.dart';
 import '../../../data/confirm_ride_by_rider_model.dart';
 import '../../../data/rider_send_request_model.dart';
-import '../../../services/colors.dart';
 import '../../../services/dio/api_service.dart';
-import '../../../services/text_style_util.dart';
-import '../views/request_accepted_bottom.dart';
 import '../views/request_sent_bottom.dart';
 
 class RiderMyRideRequestController extends GetxController {
@@ -82,7 +75,7 @@ class RiderMyRideRequestController extends GetxController {
     }
   }
 
-  sendRideRequestToDriverAPI(
+  /*sendRideRequestToDriverAPI(
       RiderSendRequestModelData riderSendRequestModelData) async {
     final String driverRideId = "${riderSendRequestModelData.Id}";
     final String driverId = "${riderSendRequestModelData.driverId}";
@@ -111,30 +104,30 @@ class RiderMyRideRequestController extends GetxController {
     } catch (e) {
       throw Exception(e);
     }
-  }
+  }*/
 
-  acceptDriversRequestAPI(int index, {bool showAcceptBottom = false}) async {
-    try {
-      final response = await APIManager.acceptDriversRequest(body: {
-        "ridePostId": riderConfirmRequestModel.value.data?[index]?.Id,
-        "price":
-            (riderConfirmRequestModel.value.data?[index]?.price ?? 0).toString()
-      });
-      if (response.data['status']) {
-        allRiderConfirmRequestAPI();
-        if (showAcceptBottom) {
-          Get.bottomSheet(RequestAcceptedBottom());
-        } else {
-          showMySnackbar(msg: "Request accepted!");
-          Get.until((route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
-        }
-      } else {
-        showMySnackbar(msg: response.data['message']);
-      }
-    } catch (e) {
-      throw Exception(e);
-    }
-  }
+  // acceptDriversRequestAPI(int index, {bool showAcceptBottom = false}) async {
+  //   try {
+  //     final response = await APIManager.acceptDriversRequest(body: {
+  //       "ridePostId": riderConfirmRequestModel.value.data?[index]?.Id,
+  //       "price":
+  //           (riderConfirmRequestModel.value.data?[index]?.price ?? 0).toString()
+  //     });
+  //     if (response.data['status']) {
+  //       allRiderConfirmRequestAPI();
+  //       if (showAcceptBottom) {
+  //         Get.bottomSheet(RequestAcceptedBottom());
+  //       } else {
+  //         showMySnackbar(msg: "Request accepted!");
+  //         Get.until((route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
+  //       }
+  //     } else {
+  //       showMySnackbar(msg: response.data['message']);
+  //     }
+  //   } catch (e) {
+  //     throw Exception(e);
+  //   }
+  // }
 
   rejectDriversRequestAPI(int index) async {
     try {
@@ -155,28 +148,42 @@ class RiderMyRideRequestController extends GetxController {
           receiverId: data.driverDetails?[0]?.Id ?? "");
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
-              chatRoomId: res.data["chatChannelId"] ?? "",
+              chatRoomId: res.data["data"]["chatRoomId"] ?? "",
+              deleteUpdateTime: res.data["data"]["deleteUpdateTime"] ?? "",
               id: data.driverDetails?[0]?.Id,
               name: data.driverDetails?[0]?.fullName,
               image: data.driverDetails?[0]?.profilePic?.url));
     } catch (e) {
-      debugPrint(e.toString());
+      Get.toNamed(Routes.CHAT_PAGE,
+          arguments: ChatArg(
+              chatRoomId: "",
+              deleteUpdateTime: "",
+              id: data.driverDetails?[0]?.Id,
+              name: data.driverDetails?[0]?.fullName,
+              image: data.driverDetails?[0]?.profilePic?.url));
     }
   }
 
   openMessageFromConfirm(
       RiderConfirmRequestModelDataDriverRideDetails? data) async {
     try {
-      final res =
-          await APIManager.getChatRoomId(receiverId: data?.driverDetails?.firstOrNull?.Id ?? "");
+      final res = await APIManager.getChatRoomId(
+          receiverId: data?.driverDetails?.firstOrNull?.Id ?? "");
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
-              chatRoomId: res.data["chatChannelId"] ?? "",
+              chatRoomId: res.data["data"]["chatRoomId"] ?? "",
+              deleteUpdateTime: res.data["data"]["deleteUpdateTime"] ?? "",
               id: data?.driverDetails?.firstOrNull?.Id,
               name: data?.driverDetails?.firstOrNull?.fullName ?? "",
               image: data?.driverDetails?.firstOrNull?.profilePic?.url));
     } catch (e) {
-      debugPrint(e.toString());
+      Get.toNamed(Routes.CHAT_PAGE,
+          arguments: ChatArg(
+              chatRoomId: "",
+              deleteUpdateTime: "",
+              id: data?.driverDetails?.firstOrNull?.Id,
+              name: data?.driverDetails?.firstOrNull?.fullName ?? "",
+              image: data?.driverDetails?.firstOrNull?.profilePic?.url));
     }
   }
 
@@ -184,14 +191,15 @@ class RiderMyRideRequestController extends GetxController {
     Get.bottomSheet(RequestSentBottom());
   }
 
-  void moveToPaymentFromConfirmSection(
+  moveToPaymentFromConfirmSection(
       int index, RiderConfirmRequestModelData riderConfirmRequestModelData) {
     Get.toNamed(Routes.PAYMENT, arguments: {
       "ridePostId": riderConfirmRequestModel.value.data?[index]?.Id,
       "price": ((riderConfirmRequestModel.value.data?[index]?.price)! *
               (riderConfirmRequestModelData.riderRideDetails!.seatAvailable!))
           .toString(),
-      'riderConfirmRequestModelData': riderConfirmRequestModelData
+      'riderConfirmRequestModelData': riderConfirmRequestModelData,
+      'pricePerSeat': riderConfirmRequestModel.value.data?[index]?.price
     });
   }
 
@@ -212,7 +220,7 @@ class RiderMyRideRequestController extends GetxController {
       "driverId": driverId,
       "driverName": driverName,
       "driverNotificationPreferences": driverNotificationPref,
-      "price": riderSendRequestModelData.price! *
+      "price": int.parse(riderSendRequestModelData.price!) *
           (riderSendRequestModel.value.riderRideDetails!.seatAvailable!)
     };
 
@@ -221,7 +229,8 @@ class RiderMyRideRequestController extends GetxController {
 
     Get.toNamed(Routes.PAYMENT, arguments: {
       'rideData': rideData,
-      'riderSendRequestModelData': riderSendRequestModelData
+      'riderSendRequestModelData': riderSendRequestModelData,
+      'pricePerSeat': riderSendRequestModelData.price
     });
   }
 }

@@ -7,7 +7,6 @@ import 'package:get/get_rx/src/rx_workers/utils/debouncer.dart';
 import 'package:green_pool/app/data/post_ride_model.dart';
 import 'package:green_pool/app/modules/find_ride/controllers/find_ride_controller.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
-import 'package:green_pool/app/modules/post_ride/controllers/post_ride_controller.dart';
 import 'package:green_pool/app/services/dio/endpoints.dart';
 import 'package:uuid/uuid.dart';
 import 'package:http/http.dart' as http;
@@ -103,31 +102,7 @@ class OriginController extends GetxController {
     try {
       //? how to place this in getLatLong directly
       List<dynamic> fetchLatLong = await getLatLong(placeId);
-
-      if (locationValues.name == LocationValues.origin.name) {
-        Get.find<PostRideController>().originLatitude.value = fetchLatLong[0];
-        Get.find<PostRideController>().originLongitude.value = fetchLatLong[1];
-        Get.find<PostRideController>().originTextController.text =
-            fetchLatLong[2];
-        // postRideModel.value.ridesDetails?.origin?.latitude = fetchLatLong[0];
-        // postRideModel.value.ridesDetails?.origin?.longitude = fetchLatLong[1];
-        // postRideModel.value.ridesDetails?.origin?.name = fetchLatLong[2];
-      } else if (locationValues.name == LocationValues.destination.name) {
-        Get.find<PostRideController>().destLatitude.value = fetchLatLong[0];
-        Get.find<PostRideController>().destLongitude.value = fetchLatLong[1];
-        Get.find<PostRideController>().destinationTextController.text =
-            fetchLatLong[2];
-      } else if (locationValues.name == LocationValues.addStop1.name) {
-        Get.find<PostRideController>().stop1Lat.value = fetchLatLong[0];
-        Get.find<PostRideController>().stop1Long.value = fetchLatLong[1];
-        Get.find<PostRideController>().stop1TextController.text =
-            fetchLatLong[2];
-      } else if (locationValues.name == LocationValues.addStop2.name) {
-        Get.find<PostRideController>().stop2Lat.value = fetchLatLong[0];
-        Get.find<PostRideController>().stop2Long.value = fetchLatLong[1];
-        Get.find<PostRideController>().stop2TextController.text =
-            fetchLatLong[2];
-      } else if (locationValues.name == LocationValues.findRideOrigin.name) {
+      if (locationValues.name == LocationValues.findRideOrigin.name) {
         Get.find<FindRideController>().riderOriginLat = fetchLatLong[0];
         Get.find<FindRideController>().riderOriginLong = fetchLatLong[1];
         Get.find<FindRideController>().riderOriginTextController.text =

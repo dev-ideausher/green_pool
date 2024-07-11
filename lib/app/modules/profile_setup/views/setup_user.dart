@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/components/greenpool_textfield.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
 import 'package:green_pool/app/components/upload_id.dart';
-import 'package:green_pool/app/modules/rider_profile_setup/controllers/city_list.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
@@ -111,7 +110,6 @@ class SetupUser extends GetView<ProfileSetupController> {
             const RichTextHeading(text: 'Gender').paddingOnly(bottom: 8.kh),
             GreenPoolDropDown(
               hintText: 'Select your Gender',
-              value: controller.gender.value,
               items: [
                 DropdownMenuItem(
                     value: "Male",
@@ -133,7 +131,7 @@ class SetupUser extends GetView<ProfileSetupController> {
                     )),
               ],
               onChanged: (value) {
-                controller.gender.value = value.toString();
+                controller.gender.text = value.toString();
               },
               validator: (value) => controller.validateGender(value),
               autovalidateMode: AutovalidateMode.onUserInteraction,

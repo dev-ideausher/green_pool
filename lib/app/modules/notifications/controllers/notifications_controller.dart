@@ -6,12 +6,16 @@ import '../../../data/notification_model.dart';
 
 class NotificationsController extends GetxController {
   final RxBool isLoad = true.obs;
-  final RxList<NotificationModelData> notifications = RxList<NotificationModelData>([]);
+  final RxList<NotificationModelData> notifications =
+      RxList<NotificationModelData>([]);
+
+  var isExpandedList = <RxBool>[].obs;
 
   @override
   Future<void> onInit() async {
     super.onInit();
     await getNotifications();
+    isExpandedList.value = List<RxBool>.generate(notifications.length, (index) => false.obs);
     isLoad.value = false;
   }
 
@@ -23,5 +27,9 @@ class NotificationsController extends GetxController {
     } catch (e) {
       debugPrint(e.toString());
     }
+  }
+
+  void toggleExpanded(int index) {
+    isExpandedList[index].value = !isExpandedList[index].value;
   }
 }

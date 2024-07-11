@@ -14,9 +14,10 @@ import '../../../constants/image_constant.dart';
 import '../../../res/strings.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
+import '../../../services/gp_util.dart';
 import '../../../services/text_style_util.dart';
 import '../../home/controllers/home_controller.dart';
-import '../../post_ride/views/amenities.dart';
+import '../../post_ride_step_one/views/amenities.dart';
 import '../controllers/rider_confirmed_ride_details_controller.dart';
 
 class RiderConfirmedRideDetailsView
@@ -90,8 +91,7 @@ class RiderConfirmedRideDetailsView
                                 BlendMode.srcIn),
                           ).paddingOnly(right: 4.kw),
                           Text(
-                            // '07 Nov 2023, 3:00pm',
-                            "${controller.myRidesModel.value.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.date.toString().split("T")[0] ?? ""}  ${controller.myRidesModel.value.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.time ?? ""}",
+                            "${GpUtil.getDateFormat(controller.myRidesModel.value.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.time ?? "")}  ${GpUtil.convertUtcToLocal(controller.myRidesModel.value.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.time ?? "")}",
                             style: TextStyleUtil.k12Regular(
                                 color: ColorUtil.kBlack03),
                           ),

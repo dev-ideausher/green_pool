@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/data/post_ride_model.dart';
+import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/snackbar.dart';
 import 'package:intl/intl.dart';
 
@@ -12,17 +13,20 @@ class PostRideStepTwoController extends GetxController {
   final Rx<PostRideModel> postRideModel = PostRideModel().obs;
   RxBool isPinkMode = Get.find<HomeController>().isPinkModeOn;
   RxInt tabIndex = 0.obs;
-  TextEditingController selectedDateOneTime = TextEditingController();
+  TextEditingController selectedDate = TextEditingController();
   TextEditingController formattedOneTimeDate = TextEditingController();
-  TextEditingController selectedTimeOneTime = TextEditingController();
-  TextEditingController selectedDateReturnTrip = TextEditingController();
+  TextEditingController selectedTime = TextEditingController();
+  TextEditingController selectedReturnDate = TextEditingController();
   TextEditingController formattedReturnDate = TextEditingController();
-  TextEditingController selectedTimeReturnTrip = TextEditingController();
+  TextEditingController selectedReturnTime = TextEditingController();
   TextEditingController selectedRecurringTime = TextEditingController();
 
   RxBool isReturn = false.obs;
   RxBool isActiveCarpoolButton = false.obs;
   final RxInt count = 1.obs;
+  final pickerColor = Get.find<HomeController>().isPinkModeOn.value
+      ? ColorUtil.kPrimaryPinkMode
+      : ColorUtil.kPrimary01;
 
   //for Days of week
   RxBool isMonday = false.obs;
@@ -55,15 +59,7 @@ class PostRideStepTwoController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    final now = TimeOfDay.now();
-    selectedTimeOneTime.text = TimeOfDay(hour: now.hour + 1, minute: 0)
-        .format(Get.context!)
-        .toString();
-    final pickedDate = DateTime.now();
-    selectedDateOneTime.text = pickedDate.toIso8601String();
-    formattedOneTimeDate.text =
-        "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
-    postRideModel.value = Get.arguments;
+    _setInitialTimeAndDate();
     setActiveStateCarpoolSchedule();
   }
 
@@ -75,36 +71,31 @@ class PostRideStepTwoController extends GetxController {
     daysOfWeek?.remove(heading);
   }
 
+  void _setInitialTimeAndDate() {
+    final now = DateTime.now();
+    final nextHour = now.add(const Duration(hours: 1));
+
+    final timeOfDay = TimeOfDay(hour: nextHour.hour, minute: 0);
+    final formattedTime = DateFormat('hh:mm a').format(DateTime(
+      now.year,
+      now.month,
+      now.day,
+      timeOfDay.hour,
+      timeOfDay.minute,
+    ));
+
+    selectedTime.text = formattedTime;
+    final pickedDate = DateTime.now();
+    selectedDate.text = pickedDate.toIso8601String();
+    formattedOneTimeDate.text =
+        "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
+    postRideModel.value = Get.arguments;
+  }
+
   Future<void> setDate(BuildContext context) async {
     DateTime? pickedDate = await showDatePicker(
       context: context,
-      builder: (BuildContext context, Widget? child) {
-        return Theme(
-          // Define the custom theme for the date picker
-          data: ThemeData(
-            // Define the primary color
-            primaryColor: Get.find<HomeController>().isPinkModeOn.value
-                ? ColorUtil.kPrimaryPinkMode
-                : ColorUtil.kPrimary01,
-            // Define the color scheme for the date picker
-            colorScheme: ColorScheme.light(
-              // Define the primary color for the date picker
-              primary: Get.find<HomeController>().isPinkModeOn.value
-                  ? ColorUtil.kPrimaryPinkMode
-                  : ColorUtil.kPrimary01,
-              // Define the background color for the date picker
-              surface: Colors.white,
-              // Define the on-primary color for the date picker
-              onPrimary: Colors.white,
-              secondary: Get.find<HomeController>().isPinkModeOn.value
-                  ? ColorUtil.kPrimaryPinkMode
-                  : ColorUtil.kPrimary01,
-            ),
-          ),
-          // Apply the custom theme to the child widget
-          child: child!,
-        );
-      },
+      builder: _pickerTheme,
       firstDate: DateTime.now(),
       lastDate: DateTime.now().add(const Duration(days: 3 * 30)),
       initialDate: DateTime.now(),
@@ -112,86 +103,44 @@ class PostRideStepTwoController extends GetxController {
 
     if (pickedDate != null) {
       String formattedDate = pickedDate.toIso8601String();
-      selectedDateOneTime.text = formattedDate;
+      selectedDate.text = formattedDate;
+      selectedTime.clear();
       formattedOneTimeDate.text =
           "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
+      setActiveStateCarpoolSchedule();
     }
   }
 
   Future<void> setTime(BuildContext context) async {
     TimeOfDay? pickedTime = await showTimePicker(
       context: context,
-      builder: (BuildContext context, Widget? child) {
-        return Theme(
-          data: ThemeData(
-            primaryColor: Get.find<HomeController>().isPinkModeOn.value
-                ? ColorUtil.kPrimaryPinkMode
-                : ColorUtil.kPrimary01,
-            colorScheme: ColorScheme.light(
-              primary: Get.find<HomeController>().isPinkModeOn.value
-                  ? ColorUtil.kPrimaryPinkMode
-                  : ColorUtil.kPrimary01,
-              surface: Colors.white,
-              onPrimary: Colors.white,
-              secondary: Get.find<HomeController>().isPinkModeOn.value
-                  ? ColorUtil.kPrimaryPinkMode
-                  : ColorUtil.kPrimary01,
-            ),
-          ),
-          child: child!,
-        );
-      },
+      builder: _pickerTheme,
       initialTime: TimeOfDay.now(),
-      initialEntryMode: TimePickerEntryMode.input,
+      initialEntryMode: TimePickerEntryMode.dial,
     );
-
     if (pickedTime != null) {
       // Use MaterialLocalizations to format the time in 24-hour format
       final MaterialLocalizations localizations =
           MaterialLocalizations.of(context);
       String formattedTime = localizations.formatTimeOfDay(pickedTime,
-          alwaysUse24HourFormat: true);
-      selectedTimeOneTime.text = formattedTime;
+          alwaysUse24HourFormat: false);
+      selectedTime.text = formattedTime;
+      setActiveStateCarpoolSchedule();
     }
   }
 
   Future<void> setReturnDate(BuildContext context) async {
     DateTime? pickedDate = await showDatePicker(
         context: context,
-        builder: (BuildContext context, Widget? child) {
-          return Theme(
-            // Define the custom theme for the date picker
-            data: ThemeData(
-              // Define the primary color
-              primaryColor: Get.find<HomeController>().isPinkModeOn.value
-                  ? ColorUtil.kPrimaryPinkMode
-                  : ColorUtil.kPrimary01,
-              // Define the color scheme for the date picker
-              colorScheme: ColorScheme.light(
-                // Define the primary color for the date picker
-                primary: Get.find<HomeController>().isPinkModeOn.value
-                    ? ColorUtil.kPrimaryPinkMode
-                    : ColorUtil.kPrimary01,
-                // Define the background color for the date picker
-                surface: Colors.white,
-                // Define the on-primary color for the date picker
-                onPrimary: Colors.white,
-                secondary: Get.find<HomeController>().isPinkModeOn.value
-                    ? ColorUtil.kPrimaryPinkMode
-                    : ColorUtil.kPrimary01,
-              ),
-            ),
-            // Apply the custom theme to the child widget
-            child: child!,
-          );
-        },
+        builder: _pickerTheme,
         firstDate: DateTime.now(),
         lastDate: DateTime.now().add(const Duration(days: 3 * 30)),
         initialDate: DateTime.now());
 
     if (pickedDate != null) {
       String formattedDate = pickedDate.toIso8601String();
-      selectedDateReturnTrip.text = formattedDate;
+      selectedReturnDate.text = formattedDate;
+      selectedReturnTime.clear();
       formattedReturnDate.text =
           "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
       setActiveStateCarpoolSchedule();
@@ -201,43 +150,29 @@ class PostRideStepTwoController extends GetxController {
   Future<void> setReturnTime(BuildContext context) async {
     TimeOfDay? pickedTime = await showTimePicker(
       context: context,
-      builder: (BuildContext context, Widget? child) {
-        return Theme(
-          data: ThemeData(
-            primaryColor: Get.find<HomeController>().isPinkModeOn.value
-                ? ColorUtil.kPrimaryPinkMode
-                : ColorUtil.kPrimary01,
-            colorScheme: ColorScheme.light(
-              primary: Get.find<HomeController>().isPinkModeOn.value
-                  ? ColorUtil.kPrimaryPinkMode
-                  : ColorUtil.kPrimary01,
-              surface: Colors.white,
-              onPrimary: Colors.white,
-              secondary: Get.find<HomeController>().isPinkModeOn.value
-                  ? ColorUtil.kPrimaryPinkMode
-                  : ColorUtil.kPrimary01,
-            ),
-          ),
-          child: child!,
-        );
-      },
+      builder: _pickerTheme,
       initialTime: TimeOfDay.now(),
-      initialEntryMode: TimePickerEntryMode.input,
+      initialEntryMode: TimePickerEntryMode.dial,
     );
 
     if (pickedTime != null) {
-      // Use MaterialLocalizations to format the time in 24-hour format
       final MaterialLocalizations localizations =
           MaterialLocalizations.of(context);
       String formattedTime = localizations.formatTimeOfDay(pickedTime,
-          alwaysUse24HourFormat: true);
-      if (validateReturnTime(formattedTime)) {
-        selectedTimeReturnTrip.text = formattedTime.toString();
-        setActiveStateCarpoolSchedule();
+          alwaysUse24HourFormat: false);
+      if (GpUtil.isToday(DateTime.parse(selectedReturnDate.value.text))) {
+        // If the date is today, validate the return time
+        if (validateReturnTime(formattedTime)) {
+          selectedReturnTime.text = formattedTime.toString();
+          setActiveStateCarpoolSchedule();
+        } else {
+          showMySnackbar(
+              msg:
+                  "Please ensure that the return time is a minimum of 2 hours later than the scheduled time.");
+        }
       } else {
-        showMySnackbar(
-            msg:
-                "Please ensure that the return time is a minimum of 2 hours later than the scheduled time.");
+        selectedReturnTime.text = formattedTime.toString();
+        setActiveStateCarpoolSchedule();
       }
     }
   }
@@ -245,28 +180,9 @@ class PostRideStepTwoController extends GetxController {
   Future<void> setRecurringTime(BuildContext context) async {
     TimeOfDay? pickedTime = await showTimePicker(
       context: context,
-      builder: (BuildContext context, Widget? child) {
-        return Theme(
-          data: ThemeData(
-            primaryColor: Get.find<HomeController>().isPinkModeOn.value
-                ? ColorUtil.kPrimaryPinkMode
-                : ColorUtil.kPrimary01,
-            colorScheme: ColorScheme.light(
-              primary: Get.find<HomeController>().isPinkModeOn.value
-                  ? ColorUtil.kPrimaryPinkMode
-                  : ColorUtil.kPrimary01,
-              surface: Colors.white,
-              onPrimary: Colors.white,
-              secondary: Get.find<HomeController>().isPinkModeOn.value
-                  ? ColorUtil.kPrimaryPinkMode
-                  : ColorUtil.kPrimary01,
-            ),
-          ),
-          child: child!,
-        );
-      },
+      builder: _pickerTheme,
       initialTime: TimeOfDay.now(),
-      initialEntryMode: TimePickerEntryMode.input,
+      initialEntryMode: TimePickerEntryMode.dial,
     );
 
     if (pickedTime != null) {
@@ -274,7 +190,7 @@ class PostRideStepTwoController extends GetxController {
       final MaterialLocalizations localizations =
           MaterialLocalizations.of(context);
       String formattedTime = localizations.formatTimeOfDay(pickedTime,
-          alwaysUse24HourFormat: true);
+          alwaysUse24HourFormat: false);
       selectedRecurringTime.text = formattedTime;
     }
   }
@@ -283,11 +199,11 @@ class PostRideStepTwoController extends GetxController {
     if (tabIndex.value == 0
         ? isReturn.value
             ? (formattedOneTimeDate.value.text.isNotEmpty &&
-                selectedTimeOneTime.value.text.isNotEmpty &&
-                selectedDateReturnTrip.value.text.isNotEmpty &&
-                selectedTimeReturnTrip.value.text.isNotEmpty)
+                selectedTime.value.text.isNotEmpty &&
+                selectedReturnDate.value.text.isNotEmpty &&
+                selectedReturnTime.value.text.isNotEmpty)
             : (formattedOneTimeDate.value.text.isNotEmpty &&
-                selectedTimeOneTime.value.text.isNotEmpty)
+                selectedTime.value.text.isNotEmpty)
         : daysOfWeek!.isNotEmpty) {
       isActiveCarpoolButton.value = true;
     } else {
@@ -310,6 +226,23 @@ class PostRideStepTwoController extends GetxController {
   }
 
   moveToPricingView() {
+    final combinedDateTime =
+        "${selectedDate.text.toString().split("T").first}T${selectedTime.text}";
+
+    final combinedDateTimeUTC = GpUtil.convertCombinedToGmt(combinedDateTime);
+
+    final date = combinedDateTimeUTC.split("T").first;
+    final time = combinedDateTimeUTC;
+
+    final combinedReturnDateTime =
+        "${selectedReturnDate.text.toString().split("T").first}T${selectedReturnTime.text}";
+
+    final combinedReturnDateTimeUTC =
+        GpUtil.convertCombinedToGmt(combinedReturnDateTime);
+
+    final returnDate = combinedReturnDateTimeUTC.split("T").first;
+    final returnTime = combinedReturnDateTimeUTC;
+
     Get.toNamed(Routes.POST_RIDE_STEP_THREE,
         arguments: PostRideModel(
           ridesDetails: PostRideModelRidesDetails(
@@ -338,10 +271,10 @@ class PostRideStepTwoController extends GetxController {
                       postRideModel.value.ridesDetails?.stops?[1]?.longitude),
             ],
             tripType: tabIndex.value == 0 ? "oneTime" : "recurring",
-            date: tabIndex.value == 1 ? "" : selectedDateOneTime.text,
+            date: tabIndex.value == 1 ? "" : date,
             time: tabIndex.value == 1
-                ? selectedRecurringTime.text
-                : selectedTimeOneTime.text,
+                ? GpUtil.convertLocalTimeToGmt(selectedRecurringTime.text)
+                : time,
             recurringTrip: PostRideModelRidesDetailsRecurringTrip(
                 recurringTripDays: tabIndex.value == 1 ? daysOfWeek : []),
             seatAvailable: count.value,
@@ -359,10 +292,8 @@ class PostRideStepTwoController extends GetxController {
                 )),
             returnTrip: PostRideModelRidesDetailsReturnTrip(
               isReturnTrip: tabIndex.value != 1 ? isReturn.value : false,
-              returnDate:
-                  tabIndex.value != 1 ? selectedDateReturnTrip.text : "",
-              returnTime:
-                  tabIndex.value != 1 ? selectedTimeReturnTrip.text : "",
+              returnDate: tabIndex.value != 1 ? returnDate : "",
+              returnTime: tabIndex.value != 1 ? returnTime : "",
             ),
           ),
         ));
@@ -370,31 +301,59 @@ class PostRideStepTwoController extends GetxController {
 
   bool validateReturnTime(String returnTime) {
     try {
-      // Parse the input time string
-      DateFormat format = DateFormat.jm(); // e.g., "5:00 PM"
-      DateTime parsedTime = format.parse(returnTime);
-      DateTime scheduledTime = format.parse(selectedTimeOneTime.value.text);
+      // Parse the input time strings
+      DateFormat format = DateFormat("hh:mm a");
+      DateTime parsedReturnTime = format.parse(returnTime);
+      DateTime scheduledTime = format.parse(selectedTime.value.text);
 
-      // Get the current time
-      DateTime now = scheduledTime.subtract(const Duration(seconds: 5));
-
-      // Create DateTime object for the return time with the current date
+      // Combine the date parts from current date and the time parts from parsed times
+      DateTime now = DateTime.now();
+      DateTime scheduledDateTime = DateTime(
+        now.year,
+        now.month,
+        now.day,
+        scheduledTime.hour,
+        scheduledTime.minute,
+      );
       DateTime returnDateTime = DateTime(
         now.year,
         now.month,
         now.day,
-        parsedTime.hour,
-        parsedTime.minute,
+        parsedReturnTime.hour,
+        parsedReturnTime.minute,
       );
 
-      // Add 2 hours to the current time
-      DateTime validTime = now.add(const Duration(hours: 2));
+      // Add 2 hours to the scheduled time
+      DateTime validTime =
+          scheduledDateTime.add(const Duration(hours: 1, minutes: 59));
 
-      // Check if the return time is at least 2 hours more than the current time
+      // Check if the return time is at least 2 hours more than the scheduled time
       return returnDateTime.isAfter(validTime);
     } catch (e) {
       print("Error parsing time string: $e");
       return false;
     }
+  }
+
+  Widget _pickerTheme(BuildContext context, Widget? child) {
+    return Theme(
+      data: ThemeData(
+        primaryColor: Get.find<HomeController>().isPinkModeOn.value
+            ? ColorUtil.kPrimaryPinkMode
+            : ColorUtil.kPrimary01,
+        colorScheme: ColorScheme.light(
+          primary: Get.find<HomeController>().isPinkModeOn.value
+              ? ColorUtil.kPrimaryPinkMode
+              : ColorUtil.kPrimary01,
+          surface: Colors.white,
+          onPrimary: Colors.white,
+          secondary: Get.find<HomeController>().isPinkModeOn.value
+              ? ColorUtil.kPrimaryPinkMode
+              : ColorUtil.kPrimary01,
+        ),
+        dialogBackgroundColor: Colors.white,
+      ),
+      child: child!,
+    );
   }
 }

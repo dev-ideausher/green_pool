@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/common_image_view.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
+import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
@@ -24,14 +25,14 @@ class NotificationBottomSheet extends GetView<HomeController> {
       child: Column(
         children: [
           Text(
-            "Enable Notifications",
+            Strings.enableNotification,
             style: TextStyleUtil.k18Heading600(),
           ),
           CommonImageView(
             svgPath: ImageConstant.svgEnableNotification,
           ).paddingSymmetric(vertical: 64.kh),
           Text(
-            "Don’t let any ride slip away.\nEnable notifications for interactive experiences\nand real-time engagement.",
+            Strings.dontLetAnyRideSlip,
             style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack04),
             textAlign: TextAlign.center,
           ),
@@ -41,7 +42,7 @@ class NotificationBottomSheet extends GetView<HomeController> {
               await controller.setupMessage();
               Get.back();
             },
-            label: "Enable Notifications",
+            label: Strings.enableNotifications,
           ).paddingOnly(bottom: 16.kh),
         ],
       ),

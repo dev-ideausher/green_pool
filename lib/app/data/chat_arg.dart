@@ -3,6 +3,8 @@ class ChatArg {
   String? id;
   String? chatRoomId;
   String? image;
+  String? deleteUpdateTime;
 
-  ChatArg({this.name, this.id, this.image,  this.chatRoomId});
+  ChatArg(
+      {this.name, this.id, this.image, this.chatRoomId, this.deleteUpdateTime});
 }

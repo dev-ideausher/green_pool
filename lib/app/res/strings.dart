@@ -374,4 +374,122 @@ class Strings {
       "Payment Unsuccessful!\nAdd money to your wallet to book your ride.";
 
   static String insufficientBalance = "Insufficient Wallet Balance";
+
+  static var sendRequest = "Send Request";
+
+  static var requestDriver = "Request Driver";
+
+  static String payment = "Payment";
+
+  static String promotions = "Promotions";
+
+  static String addPromoCode = "Add promo code";
+
+  static String walletBalance = "Wallet  Balance";
+
+  static String subtotal = "Subtotal";
+
+  static String discount = "Discount";
+
+  static String toPay = "To Pay";
+
+  static var payNow = "Pay now";
+
+  static String enableNotification = "Enable Notifications";
+
+  static String dontLetAnyRideSlip =
+      "Don’t let any ride slip away.\nEnable notifications for interactive experiences\nand real-time engagement.";
+
+  static var enableNotifications = "Enable Notifications";
+
+  static String oneTimeTrip = 'One-Time Trip';
+
+  static String recurringTrip = 'Recurring Trip';
+
+  static String carpoolSchedule = 'Carpool Schedule';
+
+  static String preferences = 'Preferences';
+
+  static var numberOfSeatsAvailable = 'Number of Seats Available';
+
+  static String qualityRides =
+      "Quality rides: Only 2 in the back for glowing\nreviews!";
+
+  static var luggageAllowance = 'Luggage Allowance';
+
+  static var luggageWeight = "Luggage Weight :";
+
+  static String other = 'Other';
+
+  static var inA = "in";
+
+  static String riderRequest = "Rider Request";
+
+  static String loremText =
+      "Lorem ipsum dolor sit amet consectetur. Lorem viverra rutrum amet pulvinar dictum aliquam vulputate amet lacus. Dui sit ut tortor egestas nibh nullam egestas. Sed bibendum habitasse eget id. Eu malesuada nulla ac vel sollicitudin proin ut. Lacus faucibus morbi placerat nisi curabitur id donec.\n\n\nNetus vitae nunc mauris fringilla. Nibh nisi pellentesque leo diam gravida. Semper massa laoreet tortor at amet lacus lacus turpis tellus. Arcu eu senectus a pellentesque quisque pretium. Sit nisi in tempor posuere urna aliquam. Pulvinar feugiat ac cursus aliquet convallis imperdiet eget natoque. Tellus leo elementum tristique ut mi venenatis dolor lorem. Morbi morbi vel leo donec erat at mi tristique. Ullamcorper nisi ut tellus nibh ornare velit vulputate ipsum id.\n\n\nArcu eu senectus a pellentesque quisque pretium. Sit nisi in tempor posuere urna aliquam. Pulvinar feugiat ac cursus aliquet convallis imperdiet eget natoque. Tellus leo elementum tristique ut mi venenatis dolor lorem. Morbi morbi vel leo donec erat at mi tristique. Ullamcorper nisi ut tellus nibh ornare velit vulputate ipsum id.";
+
+  static String enterAccDetails = "Enter Account Details";
+
+  static String accHolderName = "Account Holder's Name";
+
+  static var enterName = "Enter name";
+
+  static var enterNumber = "Enter number";
+
+  static String accNumber = "Account number";
+
+  static String transitNumber = "Transit Number";
+
+  static String institutionNumber = "Institution Number";
+
+  static var send = "Send";
+
+  static String addNewcard = "Add New Card";
+
+  static String cardHolderName = "Card Holder Name";
+
+  static String cardNumber = "Card Number";
+
+  static var enterCardNumber = "Enter card number";
+
+  static String expiryDate = "Expiry Date";
+
+  static var mmYY = 'MM/YY';
+
+  static String cvv = "CVV";
+
+  static String selectDateAndTimeOfArrival = 'Select Date and Time of Arrival';
+
+  static var date = "Date";
+
+  static var selectDate = 'Select Date';
+
+  static var selectTime = 'Select Time';
+
+  static String enterSpecificDateAndTime =
+      'Enter the specific date and time, specifying  am (morning) or pm (afternoon)';
+
+  static String returnTrip = 'Return trip';
+
+  static String enterDetails = 'Enter your details';
+
+  static var readAndAgree = 'I have read and I agree to Green Pool\'s ';
+
+  static var termsCondition = 'Terms and \nConditions';
+
+  static var and = ' and ';
+
+  static var createRideAlert = "Create a ride alert";
+
+  static var signUp = 'Sign Up';
+
+  static var alreadyHaveAcc = 'Already have an account ?';
+
+  static var spaceLogin = ' Login';
+
+  static String orSignUpWith = 'Or  sign up  with';
+
+  static String contactNumberOne = 'Contact number 1';
+
+  static String contactNumberTwo = 'Contact number 2';
 }

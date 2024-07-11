@@ -228,7 +228,7 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                                       BlendMode.srcIn),
                                                 ).paddingOnly(right: 4.kw),
                                                 Text(
-                                                  "${GpUtil.getDateFormat(controller.riderConfirmRequestModel.value.data?[index]?.driverRideDetails?.date)}  ${controller.riderConfirmRequestModel.value.data?[index]?.driverRideDetails?.time}",
+                                                  "${GpUtil.getDateFormat(controller.riderConfirmRequestModel.value.data?[index]?.driverRideDetails?.time ?? "" )}  ${GpUtil.convertUtcToLocal(controller.riderConfirmRequestModel.value.data?[index]?.driverRideDetails?.time ?? "")}",
                                                   style:
                                                       TextStyleUtil.k12Regular(
                                                           color: ColorUtil
@@ -266,7 +266,7 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                   ],
                                 ),
                                 const GreenPoolDivider()
-                                    .paddingOnly(bottom: 16.kh),
+                                    .paddingOnly(bottom: 8.kh),
                                 OriginToDestination(
                                   origin:
                                       "${controller.riderConfirmRequestModel.value.data?[index]?.driverRideDetails?.origin?.name}",
@@ -326,7 +326,7 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                           ).paddingOnly(bottom: 16.kh),
                         );
                       },
-                    ).paddingOnly(top: 32.kh, left: 16.kw, right: 16.kw),
+                    ).paddingOnly(top: 12.kh, left: 16.kw, right: 16.kw),
     );
   }
 }

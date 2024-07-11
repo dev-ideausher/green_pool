@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../components/greenpool_textfield.dart';
 import '../../../components/richtext_heading.dart';
 import '../../../constants/image_constant.dart';
+import '../../../res/strings.dart';
 import '../../../services/text_style_util.dart';
 import '../controllers/post_ride_step_two_controller.dart';
 
@@ -17,22 +17,22 @@ class OneTimeTripView extends GetView<PostRideStepTwoController> {
   @override
   Widget build(BuildContext context) {
     final pickedDate = DateTime.now();
-    controller.selectedDateOneTime.text = pickedDate.toIso8601String();
+    controller.selectedDate.text = pickedDate.toIso8601String();
     controller.formattedOneTimeDate.text =
         "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Enter the specific date and time, specifying  am (morning) or pm (afternoon)',
+          Strings.enterSpecificDateAndTime,
           style: TextStyleUtil.k16Semibold(
               fontSize: 16.kh, color: ColorUtil.kBlack02),
         ).paddingOnly(top: 24.kh, bottom: 16.kh),
 
-        const RichTextHeading(text: "Date"),
+        RichTextHeading(text: Strings.date),
         GreenPoolTextField(
             controller: controller.formattedOneTimeDate,
-            hintText: 'Select Date',
+            hintText: Strings.selectDate,
             readOnly: true,
             suffix: SizedBox(
               child: SvgPicture.asset(
@@ -51,10 +51,10 @@ class OneTimeTripView extends GetView<PostRideStepTwoController> {
                   .setDate(context)
                   .then((value) => controller.setActiveStateCarpoolSchedule());
             }).paddingOnly(top: 8.kh, bottom: 16.kh),
-        const RichTextHeading(text: "Time"),
+        RichTextHeading(text: Strings.time),
         GreenPoolTextField(
-          hintText: 'Select Time',
-          controller: controller.selectedTimeOneTime,
+          hintText: Strings.selectTime,
+          controller: controller.selectedTime,
           onTap: () {
             controller.setTime(context);
           },
@@ -66,7 +66,7 @@ class OneTimeTripView extends GetView<PostRideStepTwoController> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Return trip',
+              Strings.returnTrip,
               style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
             ),
             Obx(
@@ -107,7 +107,7 @@ class OneTimeTripView extends GetView<PostRideStepTwoController> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Select Date and Time of Arrival',
+                          Strings.selectDateAndTimeOfArrival,
                           style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
                         ),
                         Expanded(
@@ -118,9 +118,9 @@ class OneTimeTripView extends GetView<PostRideStepTwoController> {
                         ),
                       ],
                     ).paddingSymmetric(vertical: 16.kh),
-                    const RichTextHeading(text: "Date"),
+                    RichTextHeading(text: Strings.date),
                     GreenPoolTextField(
-                      hintText: 'Select Date',
+                      hintText: Strings.selectDate,
                       controller: controller.formattedReturnDate,
                       onTap: () {
                         controller.setReturnDate(context);
@@ -139,21 +139,15 @@ class OneTimeTripView extends GetView<PostRideStepTwoController> {
                         ).paddingOnly(right: 16.kw),
                       ),
                     ).paddingOnly(top: 8.kh, bottom: 16.kh),
-                    const RichTextHeading(text: "Time"),
+                    RichTextHeading(text: Strings.time),
                     GreenPoolTextField(
-                      hintText: 'Select Time',
+                      hintText: Strings.selectTime,
                       onTap: () {
                         controller.setReturnTime(context);
                       },
-                      // validator: (value) {
-                      //   controller.validateReturnTime(value ?? "");
-                      // },
-                      // onchanged: (value) {
-                      //   controller.validateReturnTime(value ?? "");
-                      // },
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       readOnly: true,
-                      controller: controller.selectedTimeReturnTrip,
+                      controller: controller.selectedReturnTime,
                     ).paddingOnly(top: 8.kh),
                   ],
                 )

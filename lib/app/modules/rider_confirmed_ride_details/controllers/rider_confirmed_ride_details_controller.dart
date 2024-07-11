@@ -28,7 +28,8 @@ class RiderConfirmedRideDetailsController extends GetxController {
               "");
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
-              chatRoomId: res.data["chatChannelId"] ?? "",
+              chatRoomId: res.data["data"]["chatRoomId"] ?? "",
+              deleteUpdateTime: res.data["data"]["deleteUpdateTime"] ?? "",
               id: data.confirmDriverDetails?[0]?.driverPostsDetails?[0]
                   ?.driverDetails?[0]?.Id,
               name: data.confirmDriverDetails?[0]?.driverPostsDetails?[0]
@@ -36,7 +37,16 @@ class RiderConfirmedRideDetailsController extends GetxController {
               image: data.confirmDriverDetails?[0]?.driverPostsDetails?[0]
                   ?.driverDetails?[0]?.profilePic?.url));
     } catch (e) {
-      debugPrint(e.toString());
+      Get.toNamed(Routes.CHAT_PAGE,
+          arguments: ChatArg(
+              chatRoomId: "",
+              deleteUpdateTime: "",
+              id: data.confirmDriverDetails?[0]?.driverPostsDetails?[0]
+                  ?.driverDetails?[0]?.Id,
+              name: data.confirmDriverDetails?[0]?.driverPostsDetails?[0]
+                  ?.driverDetails?[0]?.fullName,
+              image: data.confirmDriverDetails?[0]?.driverPostsDetails?[0]
+                  ?.driverDetails?[0]?.profilePic?.url));
     }
   }
 

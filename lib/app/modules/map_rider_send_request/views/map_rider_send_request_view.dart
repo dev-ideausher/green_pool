@@ -18,21 +18,23 @@ class MapRiderSendRequestView extends GetView<MapRiderSendRequestController> {
             : GoogleMap(
                 onMapCreated: controller.onMapCreated,
                 myLocationEnabled: true,
-                initialCameraPosition: CameraPosition(target: LatLng(controller.latitude, controller.longitude), zoom: 14),
+                initialCameraPosition: CameraPosition(
+                    target: LatLng(controller.latitude, controller.longitude),
+                    zoom: 14),
                 mapType: MapType.terrain,
                 markers: Set<Marker>.of(controller.markers),
                 // onCameraMove: (position) {
                 //   GpUtil.moveCamera(controller.mapController, position.target);
                 // },
-                polylines: {
-                  Polyline(
-                    visible: true,
-                    width: 4,
-                    polylineId: const PolylineId('polyline'),
-                    points: controller.polylineCoordinates,
-                    patterns: [PatternItem.dash(10), PatternItem.gap(10)],
-                  ),
-                },
+                // polylines: {
+                //   Polyline(
+                //     visible: true,
+                //     width: 4,
+                //     polylineId: const PolylineId('polyline'),
+                //     points: controller.polylineCoordinates,
+                //     patterns: [PatternItem.dash(10), PatternItem.gap(10)],
+                // ),
+                // },
               ),
       ),
     );

@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -6,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_workers/utils/debouncer.dart';
 import 'package:green_pool/app/data/post_ride_model.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
-import 'package:green_pool/app/modules/post_ride/controllers/post_ride_controller.dart';
 import 'package:green_pool/app/modules/profile_setup/views/review_picture.dart';
 import 'package:green_pool/app/modules/rider_profile_setup/controllers/city_list.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
@@ -20,7 +18,6 @@ import '../../../services/auth.dart';
 import '../../../services/colors.dart';
 import '../../../services/dio/api_service.dart';
 import '../../../services/gp_util.dart';
-import '../../../services/text_style_util.dart';
 
 class ProfileSetupController extends GetxController
     with GetSingleTickerProviderStateMixin {
@@ -41,9 +38,7 @@ class ProfileSetupController extends GetxController
       TextEditingController(text: Get.find<GetStorageService>().emailId ?? "");
   TextEditingController phoneNumber = TextEditingController(
       text: Get.find<AuthService>().auth.currentUser?.phoneNumber);
-
-  // TextEditingController gender = TextEditingController();
-  RxString gender = 'Prefer not to say'.obs;
+  TextEditingController gender = TextEditingController();
   TextEditingController city = TextEditingController();
   TextEditingController dateOfBirth = TextEditingController();
   TextEditingController formattedDateOfBirth = TextEditingController();
@@ -77,8 +72,6 @@ class ProfileSetupController extends GetxController
       fromNavBar = Get.arguments['fromNavBar'];
       fullName.text = Get.arguments['fullName'];
     }
-
-    Get.lazyPut(() => PostRideController());
     tabBarController = TabController(length: 2, vsync: this);
   }
 

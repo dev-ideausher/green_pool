@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/data/chat_arg.dart';
@@ -8,19 +6,20 @@ import 'package:green_pool/app/data/request_ride_by_rider_model.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 
 import '../../../services/dio/api_service.dart';
-import '../../../services/snackbar.dart';
 
 class DriverDetailsController extends GetxController {
   var matchingRidesModelData = MatchingRidesModelData().obs;
   Map<String, dynamic>? rideDetails;
   String driverRideId = '';
   String minStopDistance = '';
+  int pricePerSeat = 0;
 
   var requestRideModel = RequestRideByRiderModel().obs;
 
   @override
   void onInit() {
     super.onInit();
+    pricePerSeat = Get.arguments['pricePerSeat'];
     rideDetails = Get.arguments['rideDetails'];
     rideDetails!['ridesDetails']!['price'] = Get.arguments["price"];
     driverRideId = Get.arguments['driverRideId'];
@@ -44,7 +43,8 @@ class DriverDetailsController extends GetxController {
       "driverRideId": driverRideId,
       "distance": minStopDistance,
     };
-    Get.toNamed(Routes.PAYMENT, arguments: rideData);
+    Get.toNamed(Routes.PAYMENT,
+        arguments: {"rideData": rideData, "pricePerSeat": pricePerSeat});
   }
 
   Future<void> chatWithDriver() async {
@@ -54,13 +54,25 @@ class DriverDetailsController extends GetxController {
               matchingRidesModelData.value.driverDetails?.first?.Id ?? "");
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
-              chatRoomId: res.data["chatChannelId"] ?? "",
+              chatRoomId: res.data["data"]["chatRoomId"] ?? "",
+              deleteUpdateTime: res.data["data"]["deleteUpdateTime"] ?? "",
               id: matchingRidesModelData.value.driverDetails?.first?.Id,
               name: matchingRidesModelData.value.driverDetails?.first?.fullName,
               image: matchingRidesModelData
                   .value.driverDetails?.first?.profilePic?.url));
     } catch (e) {
-      debugPrint(e.toString());
+      try {
+        Get.toNamed(Routes.CHAT_PAGE,
+            arguments: ChatArg(
+                chatRoomId: "",
+                id: matchingRidesModelData.value.driverDetails?.first?.Id,
+                name:
+                    matchingRidesModelData.value.driverDetails?.first?.fullName,
+                image: matchingRidesModelData
+                    .value.driverDetails?.first?.profilePic?.url));
+      } catch (e) {
+        debugPrint(e.toString());
+      }
     }
   }
 }

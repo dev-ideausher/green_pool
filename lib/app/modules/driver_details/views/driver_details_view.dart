@@ -5,7 +5,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/common_image_view.dart';
 import 'package:green_pool/app/components/origin_to_destination.dart';
-import 'package:green_pool/app/modules/profile/controllers/profile_controller.dart';
 import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
@@ -17,7 +16,7 @@ import '../../../services/colors.dart';
 import '../../../services/gp_util.dart';
 import '../../../services/text_style_util.dart';
 import '../../home/controllers/home_controller.dart';
-import '../../post_ride/views/amenities.dart';
+import '../../post_ride_step_one/views/amenities.dart';
 import '../../ride_details/views/copassenger_list.dart';
 import '../controllers/driver_details_controller.dart';
 
@@ -102,7 +101,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                                         BlendMode.srcIn),
                                   ).paddingOnly(right: 4.kw),
                                   Text(
-                                    "${GpUtil.getDateFormat(controller.matchingRidesModelData.value.date)} ${controller.matchingRidesModelData.value.time ?? ""}",
+                                    "${GpUtil.getDateFormat(controller.matchingRidesModelData.value.time ?? "")}  ${GpUtil.convertUtcToLocal(controller.matchingRidesModelData.value.time ?? "")}",
                                     style: TextStyleUtil.k12Regular(
                                         color: ColorUtil.kBlack03),
                                   ),
@@ -204,7 +203,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Text(
-                      'in ${controller.matchingRidesModelData.value.driverDetails?[0]?.createdAt.toString().split("-")[0]}',
+                      '${Strings.inA} ${controller.matchingRidesModelData.value.driverDetails?[0]?.createdAt.toString().split("-")[0]}',
                       style:
                           TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                     ),
@@ -380,7 +379,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                 .paddingOnly(top: 8.kh),
             GreenPoolButton(
                     onPressed: () => controller.moveToPayment(),
-                    label: 'Request Ride')
+                    label: Strings.requestRide)
                 .paddingOnly(bottom: 40.kh, top: 16.kh),
           ],
         ).paddingSymmetric(horizontal: 16.kw),

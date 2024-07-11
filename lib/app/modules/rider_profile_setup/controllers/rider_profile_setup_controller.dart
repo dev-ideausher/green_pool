@@ -2,7 +2,6 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/data/find_ride_model.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';

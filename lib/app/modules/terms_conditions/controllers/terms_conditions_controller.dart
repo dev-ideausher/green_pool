@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:ffi';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/services/dio/api_service.dart';
 
@@ -25,9 +26,13 @@ class TermsConditionsController extends GetxController {
   // }
 
   termsConditionsAPI() async {
-    isLoading.value = true;
-    final response = await APIManager.getCompanyDetails();
-    termsText = response.data['data'][0]['termsAndContions'].toString();
-    isLoading.value = false;
+    try {
+      isLoading.value = true;
+      final response = await APIManager.getCompanyDetails();
+      termsText = response.data['data'][0]['termsAndContions'].toString();
+      isLoading.value = false;
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 }

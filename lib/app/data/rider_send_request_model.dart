@@ -143,17 +143,17 @@ class RiderSendRequestModelRiderRideDetailsRecurringTrip {
 /*
 {
   "recurringTripIds": [
-    "123"
+    1
   ],
   "recurringTripDays": [
-    1
+    ""
   ],
   "isRecurringTripEnabled": false
 } 
 */
 
-  List<String?>? recurringTripIds;
-  List<int?>? recurringTripDays;
+  List<int?>? recurringTripIds;
+  List<String?>? recurringTripDays;
   bool? isRecurringTripEnabled;
 
   RiderSendRequestModelRiderRideDetailsRecurringTrip({
@@ -165,17 +165,17 @@ class RiderSendRequestModelRiderRideDetailsRecurringTrip {
       Map<String, dynamic> json) {
     if (json['recurringTripIds'] != null) {
       final v = json['recurringTripIds'];
-      final arr0 = <String>[];
+      final arr0 = <int>[];
       v.forEach((v) {
-        arr0.add(v.toString());
+        arr0.add(v.toInt());
       });
       recurringTripIds = arr0;
     }
     if (json['recurringTripDays'] != null) {
       final v = json['recurringTripDays'];
-      final arr0 = <int>[];
+      final arr0 = <String>[];
       v.forEach((v) {
-        arr0.add(v.toInt());
+        arr0.add(v.toString());
       });
       recurringTripDays = arr0;
     }
@@ -207,10 +207,10 @@ class RiderSendRequestModelRiderRideDetailsRecurringTrip {
 class RiderSendRequestModelRiderRideDetailsDestination {
 /*
 {
-  "name": "6301 Silver Dart Dr, Mississauga, ON L5P 1B2, Canada",
+  "name": "70 Main St N, Brampton, ON L6V 1N7, Canada",
   "type": "Point",
   "coordinates": [
-    -79.6333674
+    -79.7610302
   ]
 } 
 */
@@ -256,10 +256,10 @@ class RiderSendRequestModelRiderRideDetailsDestination {
 class RiderSendRequestModelRiderRideDetailsOrigin {
 /*
 {
-  "name": "5120 Dixie Rd, Mississauga, ON L4W 4K2, Canada",
+  "name": "Brampton, ON, Canada",
   "type": "Point",
   "coordinates": [
-    -79.62353949999999
+    -79.7624177
   ],
   "originDestinationFair": null
 } 
@@ -311,26 +311,26 @@ class RiderSendRequestModelRiderRideDetails {
 /*
 {
   "origin": {
-    "name": "5120 Dixie Rd, Mississauga, ON L4W 4K2, Canada",
+    "name": "Brampton, ON, Canada",
     "type": "Point",
     "coordinates": [
-      -79.62353949999999
+      -79.7624177
     ],
     "originDestinationFair": null
   },
   "destination": {
-    "name": "6301 Silver Dart Dr, Mississauga, ON L5P 1B2, Canada",
+    "name": "70 Main St N, Brampton, ON L6V 1N7, Canada",
     "type": "Point",
     "coordinates": [
-      -79.6333674
+      -79.7610302
     ]
   },
   "recurringTrip": {
     "recurringTripIds": [
-      "123"
+      1
     ],
     "recurringTripDays": [
-      1
+      ""
     ],
     "isRecurringTripEnabled": false
   },
@@ -353,21 +353,21 @@ class RiderSendRequestModelRiderRideDetails {
     },
     "luggageType": null
   },
-  "_id": "66717f9bc14f36f4d2340ee9",
-  "riderId": "6656cd6257d5d927883798e1",
+  "_id": "668bb4946195920124c26688",
+  "riderId": "6656dd590f9924a2d7a03772",
   "price": 0,
   "tripType": null,
-  "date": "2024-06-18T18:02:38.578Z",
-  "time": "7:00 PM",
+  "date": "2024-07-08T00:00:00.000Z",
+  "time": "10:30",
   "arrivalDate": null,
   "arrivalTime": null,
-  "seatAvailable": 2,
+  "seatAvailable": 1,
   "isStarted": false,
   "isCompleted": false,
   "isCancelled": false,
   "description": "",
-  "createdAt": "2024-06-18T12:37:47.971Z",
-  "updatedAt": "2024-06-18T12:37:47.971Z"
+  "createdAt": "2024-07-08T09:42:44.347Z",
+  "updatedAt": "2024-07-08T09:42:44.347Z"
 } 
 */
 
@@ -596,6 +596,39 @@ class RiderSendRequestModelDataDriverDetailsVehicleDetails {
   }
 }
 
+class RiderSendRequestModelDataDriverDetailsSuspensionDetails {
+/*
+{
+  "dateFrom": "2024-07-02T07:06:39.626Z",
+  "dateTo": "2024-07-02T07:06:39.626Z",
+  "cancelPolicy": "665d7b1bd2ce0392ad50be4c"
+} 
+*/
+
+  String? dateFrom;
+  String? dateTo;
+  String? cancelPolicy;
+
+  RiderSendRequestModelDataDriverDetailsSuspensionDetails({
+    this.dateFrom,
+    this.dateTo,
+    this.cancelPolicy,
+  });
+  RiderSendRequestModelDataDriverDetailsSuspensionDetails.fromJson(
+      Map<String, dynamic> json) {
+    dateFrom = json['dateFrom']?.toString();
+    dateTo = json['dateTo']?.toString();
+    cancelPolicy = json['cancelPolicy']?.toString();
+  }
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+    data['dateFrom'] = dateFrom;
+    data['dateTo'] = dateTo;
+    data['cancelPolicy'] = cancelPolicy;
+    return data;
+  }
+}
+
 class RiderSendRequestModelDataDriverDetailsNotificationPreferences {
 /*
 {
@@ -721,7 +754,7 @@ class RiderSendRequestModelDataDriverDetails {
   "firebaseUid": "foYFX1qnSaPETdXnF1IFVT0xpkZ2",
   "firebaseSignInProvider": "phone",
   "createdAt": "2024-02-06T12:41:33.824Z",
-  "updatedAt": "2024-06-18T13:12:32.796Z",
+  "updatedAt": "2024-07-08T09:41:18.245Z",
   "idPic": {
     "key": "idPic/14a1f67c-67d3-417a-88ab-de80318076ce-compressed_image_picker_27017447-33A6-4FD5-9E68-9E333A4519E7-80244-000007220A59499C.jpg",
     "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/idPic/14a1f67c-67d3-417a-88ab-de80318076ce-compressed_image_picker_27017447-33A6-4FD5-9E68-9E333A4519E7-80244-000007220A59499C.jpg",
@@ -733,7 +766,7 @@ class RiderSendRequestModelDataDriverDetails {
     "_id": "664af3b5cd651d9acab11363"
   },
   "status": "active",
-  "city": "Brampton",
+  "city": "Zurich, Ontario",
   "pinkMode": false,
   "notificationPreferences": {
     "trip": true,
@@ -742,12 +775,17 @@ class RiderSendRequestModelDataDriverDetails {
     "transactions": true,
     "offers": true
   },
-  "rating": 2.8055555555555554,
+  "rating": 0,
   "totalRides": 0,
   "isRegister": true,
   "role": "user",
   "rideCancellationCount": 1,
   "connected_account_id": "acct_1POa6QSBsf3jz2sG",
+  "suspensionDetails": {
+    "dateFrom": "2024-07-02T07:06:39.626Z",
+    "dateTo": "2024-07-02T07:06:39.626Z",
+    "cancelPolicy": "665d7b1bd2ce0392ad50be4c"
+  },
   "vehicleDetails": [
     {
       "_id": "65c23bef32f497dc57fdf002",
@@ -790,12 +828,13 @@ class RiderSendRequestModelDataDriverDetails {
   bool? pinkMode;
   RiderSendRequestModelDataDriverDetailsNotificationPreferences?
       notificationPreferences;
-  double? rating;
+  int? rating;
   int? totalRides;
   bool? isRegister;
   String? role;
   int? rideCancellationCount;
   String? connectedAccountId;
+  RiderSendRequestModelDataDriverDetailsSuspensionDetails? suspensionDetails;
   List<RiderSendRequestModelDataDriverDetailsVehicleDetails?>? vehicleDetails;
 
   RiderSendRequestModelDataDriverDetails({
@@ -825,6 +864,7 @@ class RiderSendRequestModelDataDriverDetails {
     this.role,
     this.rideCancellationCount,
     this.connectedAccountId,
+    this.suspensionDetails,
     this.vehicleDetails,
   });
   RiderSendRequestModelDataDriverDetails.fromJson(Map<String, dynamic> json) {
@@ -856,12 +896,16 @@ class RiderSendRequestModelDataDriverDetails {
         ? RiderSendRequestModelDataDriverDetailsNotificationPreferences
             .fromJson(json['notificationPreferences'])
         : null;
-    rating = json['rating']?.toDouble();
+    rating = json['rating']?.toInt();
     totalRides = json['totalRides']?.toInt();
     isRegister = json['isRegister'];
     role = json['role']?.toString();
     rideCancellationCount = json['rideCancellationCount']?.toInt();
     connectedAccountId = json['connected_account_id']?.toString();
+    suspensionDetails = (json['suspensionDetails'] != null)
+        ? RiderSendRequestModelDataDriverDetailsSuspensionDetails.fromJson(
+            json['suspensionDetails'])
+        : null;
     if (json['vehicleDetails'] != null) {
       final v = json['vehicleDetails'];
       final arr0 = <RiderSendRequestModelDataDriverDetailsVehicleDetails>[];
@@ -906,6 +950,9 @@ class RiderSendRequestModelDataDriverDetails {
     data['role'] = role;
     data['rideCancellationCount'] = rideCancellationCount;
     data['connected_account_id'] = connectedAccountId;
+    if (suspensionDetails != null) {
+      data['suspensionDetails'] = suspensionDetails!.toJson();
+    }
     if (vehicleDetails != null) {
       final v = vehicleDetails;
       final arr0 = [];
@@ -1104,27 +1151,35 @@ class RiderSendRequestModelDataRidersDetatils {
 class RiderSendRequestModelDataMatchedDestinationLocation {
 /*
 {
-  "name": "6301 Silver Dart Dr, Mississauga, ON L5P 1B2, Canada",
-  "type": "Point",
+  "name": "",
   "coordinates": [
     -79.6333674
-  ]
+  ],
+  "originToStopFair": "",
+  "stopToStopFair": "",
+  "stopTodestinationFair": "",
+  "_id": "668b8f0b6195920124c264e9"
 } 
 */
 
   String? name;
-  String? type;
   List<double?>? coordinates;
+  String? originToStopFair;
+  String? stopToStopFair;
+  String? stopTodestinationFair;
+  String? Id;
 
   RiderSendRequestModelDataMatchedDestinationLocation({
     this.name,
-    this.type,
     this.coordinates,
+    this.originToStopFair,
+    this.stopToStopFair,
+    this.stopTodestinationFair,
+    this.Id,
   });
   RiderSendRequestModelDataMatchedDestinationLocation.fromJson(
       Map<String, dynamic> json) {
     name = json['name']?.toString();
-    type = json['type']?.toString();
     if (json['coordinates'] != null) {
       final v = json['coordinates'];
       final arr0 = <double>[];
@@ -1133,11 +1188,14 @@ class RiderSendRequestModelDataMatchedDestinationLocation {
       });
       coordinates = arr0;
     }
+    originToStopFair = json['originToStopFair']?.toString();
+    stopToStopFair = json['stopToStopFair']?.toString();
+    stopTodestinationFair = json['stopTodestinationFair']?.toString();
+    Id = json['_id']?.toString();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['name'] = name;
-    data['type'] = type;
     if (coordinates != null) {
       final v = coordinates;
       final arr0 = [];
@@ -1146,6 +1204,10 @@ class RiderSendRequestModelDataMatchedDestinationLocation {
       });
       data['coordinates'] = arr0;
     }
+    data['originToStopFair'] = originToStopFair;
+    data['stopToStopFair'] = stopToStopFair;
+    data['stopTodestinationFair'] = stopTodestinationFair;
+    data['_id'] = Id;
     return data;
   }
 }
@@ -1153,30 +1215,35 @@ class RiderSendRequestModelDataMatchedDestinationLocation {
 class RiderSendRequestModelDataMatchedOriginLocation {
 /*
 {
-  "name": "5120 Dixie Rd, Mississauga, ON L4W 4K2, Canada",
-  "type": "Point",
+  "name": "",
   "coordinates": [
-    -79.62353949999999
+    -79.6333674
   ],
-  "originDestinationFair": "5"
+  "originToStopFair": "",
+  "stopToStopFair": "",
+  "stopTodestinationFair": "",
+  "_id": "668b8f0b6195920124c264e9"
 } 
 */
 
   String? name;
-  String? type;
   List<double?>? coordinates;
-  String? originDestinationFair;
+  String? originToStopFair;
+  String? stopToStopFair;
+  String? stopTodestinationFair;
+  String? Id;
 
   RiderSendRequestModelDataMatchedOriginLocation({
     this.name,
-    this.type,
     this.coordinates,
-    this.originDestinationFair,
+    this.originToStopFair,
+    this.stopToStopFair,
+    this.stopTodestinationFair,
+    this.Id,
   });
   RiderSendRequestModelDataMatchedOriginLocation.fromJson(
       Map<String, dynamic> json) {
     name = json['name']?.toString();
-    type = json['type']?.toString();
     if (json['coordinates'] != null) {
       final v = json['coordinates'];
       final arr0 = <double>[];
@@ -1185,12 +1252,14 @@ class RiderSendRequestModelDataMatchedOriginLocation {
       });
       coordinates = arr0;
     }
-    originDestinationFair = json['originDestinationFair']?.toString();
+    originToStopFair = json['originToStopFair']?.toString();
+    stopToStopFair = json['stopToStopFair']?.toString();
+    stopTodestinationFair = json['stopTodestinationFair']?.toString();
+    Id = json['_id']?.toString();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['name'] = name;
-    data['type'] = type;
     if (coordinates != null) {
       final v = coordinates;
       final arr0 = [];
@@ -1199,7 +1268,10 @@ class RiderSendRequestModelDataMatchedOriginLocation {
       });
       data['coordinates'] = arr0;
     }
-    data['originDestinationFair'] = originDestinationFair;
+    data['originToStopFair'] = originToStopFair;
+    data['stopToStopFair'] = stopToStopFair;
+    data['stopTodestinationFair'] = stopTodestinationFair;
+    data['_id'] = Id;
     return data;
   }
 }
@@ -1208,12 +1280,12 @@ class RiderSendRequestModelDataPreferencesOther {
 /*
 {
   "AppreciatesConversation": true,
-  "EnjoysMusic": false,
-  "SmokeFree": false,
-  "PetFriendly": false,
-  "WinterTires": false,
-  "CoolingOrHeating": false,
-  "BabySeat": false,
+  "EnjoysMusic": true,
+  "SmokeFree": true,
+  "PetFriendly": true,
+  "WinterTires": true,
+  "CoolingOrHeating": true,
+  "BabySeat": true,
   "HeatedSeats": true
 } 
 */
@@ -1265,15 +1337,15 @@ class RiderSendRequestModelDataPreferencesOther {
 class RiderSendRequestModelDataPreferences {
 /*
 {
-  "luggageType": "M",
+  "luggageType": "S",
   "other": {
     "AppreciatesConversation": true,
-    "EnjoysMusic": false,
-    "SmokeFree": false,
-    "PetFriendly": false,
-    "WinterTires": false,
-    "CoolingOrHeating": false,
-    "BabySeat": false,
+    "EnjoysMusic": true,
+    "SmokeFree": true,
+    "PetFriendly": true,
+    "WinterTires": true,
+    "CoolingOrHeating": true,
+    "BabySeat": true,
     "HeatedSeats": true
   }
 } 
@@ -1307,7 +1379,7 @@ class RiderSendRequestModelDataReturnTrip {
 {
   "isReturnTrip": false,
   "returnDate": null,
-  "returnTime": ""
+  "returnTime": null
 } 
 */
 
@@ -1338,17 +1410,17 @@ class RiderSendRequestModelDataRecurringTrip {
 /*
 {
   "recurringTripDays": [
-    "123"
+    1
   ],
   "recurringTripIds": [
-    1
+    ""
   ],
   "isRecurringTripEnabled": false
 } 
 */
 
-  List<String?>? recurringTripDays;
-  List<int?>? recurringTripIds;
+  List<int?>? recurringTripDays;
+  List<String?>? recurringTripIds;
   bool? isRecurringTripEnabled;
 
   RiderSendRequestModelDataRecurringTrip({
@@ -1359,17 +1431,17 @@ class RiderSendRequestModelDataRecurringTrip {
   RiderSendRequestModelDataRecurringTrip.fromJson(Map<String, dynamic> json) {
     if (json['recurringTripDays'] != null) {
       final v = json['recurringTripDays'];
-      final arr0 = <String>[];
+      final arr0 = <int>[];
       v.forEach((v) {
-        arr0.add(v.toString());
+        arr0.add(v.toInt());
       });
       recurringTripDays = arr0;
     }
     if (json['recurringTripIds'] != null) {
       final v = json['recurringTripIds'];
-      final arr0 = <int>[];
+      final arr0 = <String>[];
       v.forEach((v) {
-        arr0.add(v.toInt());
+        arr0.add(v.toString());
       });
       recurringTripIds = arr0;
     }
@@ -1402,20 +1474,18 @@ class RiderSendRequestModelDataStops {
 /*
 {
   "name": "",
-  "type": "Point",
   "coordinates": [
-    0
+    -79.6333674
   ],
   "originToStopFair": "",
   "stopToStopFair": "",
   "stopTodestinationFair": "",
-  "_id": "66717d8bc14f36f4d2340e93"
+  "_id": "668b8f0b6195920124c264e9"
 } 
 */
 
   String? name;
-  String? type;
-  List<int?>? coordinates;
+  List<double?>? coordinates;
   String? originToStopFair;
   String? stopToStopFair;
   String? stopTodestinationFair;
@@ -1423,7 +1493,6 @@ class RiderSendRequestModelDataStops {
 
   RiderSendRequestModelDataStops({
     this.name,
-    this.type,
     this.coordinates,
     this.originToStopFair,
     this.stopToStopFair,
@@ -1432,12 +1501,11 @@ class RiderSendRequestModelDataStops {
   });
   RiderSendRequestModelDataStops.fromJson(Map<String, dynamic> json) {
     name = json['name']?.toString();
-    type = json['type']?.toString();
     if (json['coordinates'] != null) {
       final v = json['coordinates'];
-      final arr0 = <int>[];
+      final arr0 = <double>[];
       v.forEach((v) {
-        arr0.add(v.toInt());
+        arr0.add(v.toDouble());
       });
       coordinates = arr0;
     }
@@ -1449,7 +1517,6 @@ class RiderSendRequestModelDataStops {
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['name'] = name;
-    data['type'] = type;
     if (coordinates != null) {
       final v = coordinates;
       final arr0 = [];
@@ -1469,10 +1536,10 @@ class RiderSendRequestModelDataStops {
 class RiderSendRequestModelDataDestination {
 /*
 {
-  "name": "6301 Silver Dart Dr, Mississauga, ON L5P 1B2, Canada",
+  "name": "Brampton, ON, Canada",
   "type": "Point",
   "coordinates": [
-    -79.6333674
+    -79.7624177
   ]
 } 
 */
@@ -1517,12 +1584,12 @@ class RiderSendRequestModelDataDestination {
 class RiderSendRequestModelDataOrigin {
 /*
 {
-  "name": "5120 Dixie Rd, Mississauga, ON L4W 4K2, Canada",
+  "name": "2100 Bovaird Dr E, Brampton, ON L6R 3J7, Canada",
   "type": "Point",
   "coordinates": [
-    -79.62353949999999
+    -79.7448005
   ],
-  "originDestinationFair": "5"
+  "originDestinationFair": "15"
 } 
 */
 
@@ -1570,67 +1637,66 @@ class RiderSendRequestModelDataOrigin {
 class RiderSendRequestModelData {
 /*
 {
-  "_id": "66717d8bc14f36f4d2340e92",
+  "_id": "668b8f0b6195920124c264e8",
   "driverId": "65c228fd32f497dc57fdeff8",
   "origin": {
-    "name": "5120 Dixie Rd, Mississauga, ON L4W 4K2, Canada",
+    "name": "2100 Bovaird Dr E, Brampton, ON L6R 3J7, Canada",
     "type": "Point",
     "coordinates": [
-      -79.62353949999999
+      -79.7448005
     ],
-    "originDestinationFair": "5"
+    "originDestinationFair": "15"
   },
   "destination": {
-    "name": "6301 Silver Dart Dr, Mississauga, ON L5P 1B2, Canada",
+    "name": "Brampton, ON, Canada",
     "type": "Point",
     "coordinates": [
-      -79.6333674
+      -79.7624177
     ]
   },
   "stops": [
     {
       "name": "",
-      "type": "Point",
       "coordinates": [
-        0
+        -79.6333674
       ],
       "originToStopFair": "",
       "stopToStopFair": "",
       "stopTodestinationFair": "",
-      "_id": "66717d8bc14f36f4d2340e93"
+      "_id": "668b8f0b6195920124c264e9"
     }
   ],
   "tripType": "oneTime",
   "recurringTrip": {
     "recurringTripDays": [
-      "123"
+      1
     ],
     "recurringTripIds": [
-      1
+      ""
     ],
     "isRecurringTripEnabled": false
   },
-  "date": "2024-06-18T17:58:13.871Z",
-  "time": "6:30 PM",
+  "date": "2024-07-08T00:00:00.000Z",
+  "time": "19:30",
   "returnTrip": {
     "isReturnTrip": false,
     "returnDate": null,
-    "returnTime": ""
+    "returnTime": null
   },
   "arrivalDate": null,
   "arrivalTime": null,
-  "totalSeatAvailable": 4,
-  "seatAvailable": 4,
+  "totalSeatAvailable": 3,
+  "seatAvailable": 3,
   "preferences": {
-    "luggageType": "M",
+    "luggageType": "S",
     "other": {
       "AppreciatesConversation": true,
-      "EnjoysMusic": false,
-      "SmokeFree": false,
-      "PetFriendly": false,
-      "WinterTires": false,
-      "CoolingOrHeating": false,
-      "BabySeat": false,
+      "EnjoysMusic": true,
+      "SmokeFree": true,
+      "PetFriendly": true,
+      "WinterTires": true,
+      "CoolingOrHeating": true,
+      "BabySeat": true,
       "HeatedSeats": true
     }
   },
@@ -1638,30 +1704,36 @@ class RiderSendRequestModelData {
   "isCompleted": false,
   "isCancelled": false,
   "riders": [
-    "12"
+    ""
   ],
   "drivers": [
-    "12"
+    ""
   ],
-  "description": null,
-  "createdAt": "2024-06-18T12:28:59.519Z",
-  "updatedAt": "2024-06-18T12:28:59.519Z",
+  "description": "ride - 8th july 01:30 PM; return ride: 9th july 01:00 AM",
+  "endDateTime": "2024-07-08T07:02:35.862Z",
+  "createdAt": "2024-07-08T07:02:35.866Z",
+  "updatedAt": "2024-07-08T07:02:35.866Z",
   "matchedOriginLocation": {
-    "name": "5120 Dixie Rd, Mississauga, ON L4W 4K2, Canada",
-    "type": "Point",
-    "coordinates": [
-      -79.62353949999999
-    ],
-    "originDestinationFair": "5"
-  },
-  "matchedDestinationLocation": {
-    "name": "6301 Silver Dart Dr, Mississauga, ON L5P 1B2, Canada",
-    "type": "Point",
+    "name": "",
     "coordinates": [
       -79.6333674
-    ]
+    ],
+    "originToStopFair": "",
+    "stopToStopFair": "",
+    "stopTodestinationFair": "",
+    "_id": "668b8f0b6195920124c264e9"
   },
-  "price": 5,
+  "matchedDestinationLocation": {
+    "name": "",
+    "coordinates": [
+      -79.6333674
+    ],
+    "originToStopFair": "",
+    "stopToStopFair": "",
+    "stopTodestinationFair": "",
+    "_id": "668b8f0b6195920124c264e9"
+  },
+  "price": "",
   "ridersDetatils": [
     {
       "_id": "65c22d5672eca065a18fa015",
@@ -1706,7 +1778,7 @@ class RiderSendRequestModelData {
       "firebaseUid": "foYFX1qnSaPETdXnF1IFVT0xpkZ2",
       "firebaseSignInProvider": "phone",
       "createdAt": "2024-02-06T12:41:33.824Z",
-      "updatedAt": "2024-06-18T13:12:32.796Z",
+      "updatedAt": "2024-07-08T09:41:18.245Z",
       "idPic": {
         "key": "idPic/14a1f67c-67d3-417a-88ab-de80318076ce-compressed_image_picker_27017447-33A6-4FD5-9E68-9E333A4519E7-80244-000007220A59499C.jpg",
         "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/idPic/14a1f67c-67d3-417a-88ab-de80318076ce-compressed_image_picker_27017447-33A6-4FD5-9E68-9E333A4519E7-80244-000007220A59499C.jpg",
@@ -1718,7 +1790,7 @@ class RiderSendRequestModelData {
         "_id": "664af3b5cd651d9acab11363"
       },
       "status": "active",
-      "city": "Brampton",
+      "city": "Zurich, Ontario",
       "pinkMode": false,
       "notificationPreferences": {
         "trip": true,
@@ -1727,12 +1799,17 @@ class RiderSendRequestModelData {
         "transactions": true,
         "offers": true
       },
-      "rating": 2.8055555555555554,
+      "rating": 0,
       "totalRides": 0,
       "isRegister": true,
       "role": "user",
       "rideCancellationCount": 1,
       "connected_account_id": "acct_1POa6QSBsf3jz2sG",
+      "suspensionDetails": {
+        "dateFrom": "2024-07-02T07:06:39.626Z",
+        "dateTo": "2024-07-02T07:06:39.626Z",
+        "cancelPolicy": "665d7b1bd2ce0392ad50be4c"
+      },
       "vehicleDetails": [
         {
           "_id": "65c23bef32f497dc57fdf002",
@@ -1777,12 +1854,13 @@ class RiderSendRequestModelData {
   List<String?>? riders;
   List<String?>? drivers;
   String? description;
+  String? endDateTime;
   String? createdAt;
   String? updatedAt;
   RiderSendRequestModelDataMatchedOriginLocation? matchedOriginLocation;
   RiderSendRequestModelDataMatchedDestinationLocation?
       matchedDestinationLocation;
-  int? price;
+  String? price;
   List<RiderSendRequestModelDataRidersDetatils?>? ridersDetatils;
   List<RiderSendRequestModelDataDriverDetails?>? driverDetails;
 
@@ -1808,6 +1886,7 @@ class RiderSendRequestModelData {
     this.riders,
     this.drivers,
     this.description,
+    this.endDateTime,
     this.createdAt,
     this.updatedAt,
     this.matchedOriginLocation,
@@ -1869,6 +1948,7 @@ class RiderSendRequestModelData {
       drivers = arr0;
     }
     description = json['description']?.toString();
+    endDateTime = json['endDateTime']?.toString();
     createdAt = json['createdAt']?.toString();
     updatedAt = json['updatedAt']?.toString();
     matchedOriginLocation = (json['matchedOriginLocation'] != null)
@@ -1879,7 +1959,7 @@ class RiderSendRequestModelData {
         ? RiderSendRequestModelDataMatchedDestinationLocation.fromJson(
             json['matchedDestinationLocation'])
         : null;
-    price = json['price']?.toInt();
+    price = json['price']?.toString();
     if (json['ridersDetatils'] != null) {
       final v = json['ridersDetatils'];
       final arr0 = <RiderSendRequestModelDataRidersDetatils>[];
@@ -1951,6 +2031,7 @@ class RiderSendRequestModelData {
       data['drivers'] = arr0;
     }
     data['description'] = description;
+    data['endDateTime'] = endDateTime;
     data['createdAt'] = createdAt;
     data['updatedAt'] = updatedAt;
     if (matchedOriginLocation != null) {
@@ -1986,67 +2067,66 @@ class RiderSendRequestModel {
   "status": true,
   "data": [
     {
-      "_id": "66717d8bc14f36f4d2340e92",
+      "_id": "668b8f0b6195920124c264e8",
       "driverId": "65c228fd32f497dc57fdeff8",
       "origin": {
-        "name": "5120 Dixie Rd, Mississauga, ON L4W 4K2, Canada",
+        "name": "2100 Bovaird Dr E, Brampton, ON L6R 3J7, Canada",
         "type": "Point",
         "coordinates": [
-          -79.62353949999999
+          -79.7448005
         ],
-        "originDestinationFair": "5"
+        "originDestinationFair": "15"
       },
       "destination": {
-        "name": "6301 Silver Dart Dr, Mississauga, ON L5P 1B2, Canada",
+        "name": "Brampton, ON, Canada",
         "type": "Point",
         "coordinates": [
-          -79.6333674
+          -79.7624177
         ]
       },
       "stops": [
         {
           "name": "",
-          "type": "Point",
           "coordinates": [
-            0
+            -79.6333674
           ],
           "originToStopFair": "",
           "stopToStopFair": "",
           "stopTodestinationFair": "",
-          "_id": "66717d8bc14f36f4d2340e93"
+          "_id": "668b8f0b6195920124c264e9"
         }
       ],
       "tripType": "oneTime",
       "recurringTrip": {
         "recurringTripDays": [
-          "123"
+          1
         ],
         "recurringTripIds": [
-          1
+          ""
         ],
         "isRecurringTripEnabled": false
       },
-      "date": "2024-06-18T17:58:13.871Z",
-      "time": "6:30 PM",
+      "date": "2024-07-08T00:00:00.000Z",
+      "time": "19:30",
       "returnTrip": {
         "isReturnTrip": false,
         "returnDate": null,
-        "returnTime": ""
+        "returnTime": null
       },
       "arrivalDate": null,
       "arrivalTime": null,
-      "totalSeatAvailable": 4,
-      "seatAvailable": 4,
+      "totalSeatAvailable": 3,
+      "seatAvailable": 3,
       "preferences": {
-        "luggageType": "M",
+        "luggageType": "S",
         "other": {
           "AppreciatesConversation": true,
-          "EnjoysMusic": false,
-          "SmokeFree": false,
-          "PetFriendly": false,
-          "WinterTires": false,
-          "CoolingOrHeating": false,
-          "BabySeat": false,
+          "EnjoysMusic": true,
+          "SmokeFree": true,
+          "PetFriendly": true,
+          "WinterTires": true,
+          "CoolingOrHeating": true,
+          "BabySeat": true,
           "HeatedSeats": true
         }
       },
@@ -2054,30 +2134,36 @@ class RiderSendRequestModel {
       "isCompleted": false,
       "isCancelled": false,
       "riders": [
-        "12"
+        ""
       ],
       "drivers": [
-        "12"
+        ""
       ],
-      "description": null,
-      "createdAt": "2024-06-18T12:28:59.519Z",
-      "updatedAt": "2024-06-18T12:28:59.519Z",
+      "description": "ride - 8th july 01:30 PM; return ride: 9th july 01:00 AM",
+      "endDateTime": "2024-07-08T07:02:35.862Z",
+      "createdAt": "2024-07-08T07:02:35.866Z",
+      "updatedAt": "2024-07-08T07:02:35.866Z",
       "matchedOriginLocation": {
-        "name": "5120 Dixie Rd, Mississauga, ON L4W 4K2, Canada",
-        "type": "Point",
-        "coordinates": [
-          -79.62353949999999
-        ],
-        "originDestinationFair": "5"
-      },
-      "matchedDestinationLocation": {
-        "name": "6301 Silver Dart Dr, Mississauga, ON L5P 1B2, Canada",
-        "type": "Point",
+        "name": "",
         "coordinates": [
           -79.6333674
-        ]
+        ],
+        "originToStopFair": "",
+        "stopToStopFair": "",
+        "stopTodestinationFair": "",
+        "_id": "668b8f0b6195920124c264e9"
       },
-      "price": 5,
+      "matchedDestinationLocation": {
+        "name": "",
+        "coordinates": [
+          -79.6333674
+        ],
+        "originToStopFair": "",
+        "stopToStopFair": "",
+        "stopTodestinationFair": "",
+        "_id": "668b8f0b6195920124c264e9"
+      },
+      "price": "",
       "ridersDetatils": [
         {
           "_id": "65c22d5672eca065a18fa015",
@@ -2122,7 +2208,7 @@ class RiderSendRequestModel {
           "firebaseUid": "foYFX1qnSaPETdXnF1IFVT0xpkZ2",
           "firebaseSignInProvider": "phone",
           "createdAt": "2024-02-06T12:41:33.824Z",
-          "updatedAt": "2024-06-18T13:12:32.796Z",
+          "updatedAt": "2024-07-08T09:41:18.245Z",
           "idPic": {
             "key": "idPic/14a1f67c-67d3-417a-88ab-de80318076ce-compressed_image_picker_27017447-33A6-4FD5-9E68-9E333A4519E7-80244-000007220A59499C.jpg",
             "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/idPic/14a1f67c-67d3-417a-88ab-de80318076ce-compressed_image_picker_27017447-33A6-4FD5-9E68-9E333A4519E7-80244-000007220A59499C.jpg",
@@ -2134,7 +2220,7 @@ class RiderSendRequestModel {
             "_id": "664af3b5cd651d9acab11363"
           },
           "status": "active",
-          "city": "Brampton",
+          "city": "Zurich, Ontario",
           "pinkMode": false,
           "notificationPreferences": {
             "trip": true,
@@ -2143,12 +2229,17 @@ class RiderSendRequestModel {
             "transactions": true,
             "offers": true
           },
-          "rating": 2.8055555555555554,
+          "rating": 0,
           "totalRides": 0,
           "isRegister": true,
           "role": "user",
           "rideCancellationCount": 1,
           "connected_account_id": "acct_1POa6QSBsf3jz2sG",
+          "suspensionDetails": {
+            "dateFrom": "2024-07-02T07:06:39.626Z",
+            "dateTo": "2024-07-02T07:06:39.626Z",
+            "cancelPolicy": "665d7b1bd2ce0392ad50be4c"
+          },
           "vehicleDetails": [
             {
               "_id": "65c23bef32f497dc57fdf002",
@@ -2173,26 +2264,26 @@ class RiderSendRequestModel {
   ],
   "riderRideDetails": {
     "origin": {
-      "name": "5120 Dixie Rd, Mississauga, ON L4W 4K2, Canada",
+      "name": "Brampton, ON, Canada",
       "type": "Point",
       "coordinates": [
-        -79.62353949999999
+        -79.7624177
       ],
       "originDestinationFair": null
     },
     "destination": {
-      "name": "6301 Silver Dart Dr, Mississauga, ON L5P 1B2, Canada",
+      "name": "70 Main St N, Brampton, ON L6V 1N7, Canada",
       "type": "Point",
       "coordinates": [
-        -79.6333674
+        -79.7610302
       ]
     },
     "recurringTrip": {
       "recurringTripIds": [
-        "123"
+        1
       ],
       "recurringTripDays": [
-        1
+        ""
       ],
       "isRecurringTripEnabled": false
     },
@@ -2215,21 +2306,21 @@ class RiderSendRequestModel {
       },
       "luggageType": null
     },
-    "_id": "66717f9bc14f36f4d2340ee9",
-    "riderId": "6656cd6257d5d927883798e1",
+    "_id": "668bb4946195920124c26688",
+    "riderId": "6656dd590f9924a2d7a03772",
     "price": 0,
     "tripType": null,
-    "date": "2024-06-18T18:02:38.578Z",
-    "time": "7:00 PM",
+    "date": "2024-07-08T00:00:00.000Z",
+    "time": "10:30",
     "arrivalDate": null,
     "arrivalTime": null,
-    "seatAvailable": 2,
+    "seatAvailable": 1,
     "isStarted": false,
     "isCompleted": false,
     "isCancelled": false,
     "description": "",
-    "createdAt": "2024-06-18T12:37:47.971Z",
-    "updatedAt": "2024-06-18T12:37:47.971Z"
+    "createdAt": "2024-07-08T09:42:44.347Z",
+    "updatedAt": "2024-07-08T09:42:44.347Z"
   },
   "message": "success."
 } 

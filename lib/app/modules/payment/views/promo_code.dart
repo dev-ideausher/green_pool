@@ -31,12 +31,41 @@ class PromoCode extends GetView<PaymentController> {
                     shape: BeveledRectangleBorder(
                         borderRadius: BorderRadius.circular(8.kh)),
                     tileColor: ColorUtil.kWhiteColor,
-                    title: Text(
-                      "${promoCode?.promoTitle}",
-                      style: TextStyleUtil.k16Bold(),
+                    title: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          "${promoCode?.promoTitle}",
+                          style: TextStyleUtil.k16Bold(),
+                        ),
+                        2.kwidthBox,
+                        GestureDetector(
+                          onTap: () => Get.dialog(
+                            useSafeArea: true,
+                            Center(
+                              child: Container(
+                                  padding: EdgeInsets.all(16.kh),
+                                  width: 80.w,
+                                  decoration: BoxDecoration(
+                                    color: ColorUtil.kWhiteColor,
+                                    borderRadius: BorderRadius.circular(8.kh),
+                                  ),
+                                  child: Text(
+                                    "Description: ${promoCode?.description ?? "NA"}",
+                                    style: TextStyleUtil.k14Regular(
+                                        color: ColorUtil.kBlack03),
+                                  )),
+                            ),
+                          ),
+                          child: Icon(
+                            Icons.info_outlined,
+                            size: 18.kh,
+                          ),
+                        )
+                      ],
                     ),
                     subtitle: Text(
-                      "Expires: ${GpUtil.getDateFormat(promoCode?.expireDate)}",
+                      "Expires: ${GpUtil.formatDate(DateTime.parse(promoCode?.expireDate ?? ""))}",
                       style:
                           TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                     ),

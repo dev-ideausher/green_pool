@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:green_pool/app/data/my_rides_model.dart';
 import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
@@ -155,7 +154,7 @@ class RiderTile extends StatelessWidget {
                                             BlendMode.srcIn),
                                       ).paddingOnly(right: 4.kw),
                                       Text(
-                                        '${GpUtil.getDateFormat(myRidesModelData?.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.date)}  ${myRidesModelData?.time ?? " "}',
+                                        '${GpUtil.getDateFormat(myRidesModelData?.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.time ?? "")}  ${GpUtil.convertUtcToLocal(myRidesModelData?.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.time ?? "")}',
                                         style: TextStyleUtil.k12Regular(
                                             color: ColorUtil.kBlack03),
                                       ),
@@ -210,7 +209,7 @@ class RiderTile extends StatelessWidget {
                             ? const SizedBox()
                             : Text(
                                 // '07 Nov 2023, 3:00pm',
-                                '${GpUtil.getDateFormat(myRidesModelData?.date)}  ${myRidesModelData?.time ?? " "}',
+                                '${GpUtil.getDateFormat(myRidesModelData?.time ?? "")}  ${GpUtil.convertUtcToLocal(myRidesModelData?.time ?? "")}',
                                 style: TextStyleUtil.k16Bold(),
                               ),
                       ],

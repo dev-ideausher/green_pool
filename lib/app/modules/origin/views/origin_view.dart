@@ -10,7 +10,6 @@ import '../../../components/greenpool_textfield.dart';
 import '../../../res/strings.dart';
 import '../../../services/colors.dart';
 import '../../home/controllers/home_controller.dart';
-import '../../profile/controllers/profile_controller.dart';
 import '../controllers/origin_controller.dart';
 
 class OriginView extends GetView<OriginController> {

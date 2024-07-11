@@ -6,7 +6,6 @@ import 'package:green_pool/app/services/responsive_size.dart';
 import '../../../../generated/assets.dart';
 import '../../../components/common_image_view.dart';
 import '../../../components/origin_to_destination.dart';
-import '../../../res/strings.dart';
 import '../../../services/colors.dart';
 import '../../../services/text_style_util.dart';
 import '../controllers/rider_start_ride_map_controller.dart';

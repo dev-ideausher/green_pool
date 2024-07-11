@@ -15,6 +15,7 @@ import 'package:green_pool/app/services/responsive_size.dart';
 import '../../../components/gp_progress.dart';
 import '../../../components/green_pool_divider.dart';
 import '../../../components/origin_to_destination.dart';
+import '../../../res/strings.dart';
 import '../../../services/colors.dart';
 import '../../../services/text_style_util.dart';
 import '../../home/controllers/home_controller.dart';
@@ -42,57 +43,9 @@ class MatchingRidesView extends GetView<MatchingRidesController> {
         color: ColorUtil.kBackgroundColor,
         child: GreenPoolButton(
           onPressed: () async {
-            try {
-              await Get.find<FindRideController>().riderPostRideAPI();
-
-              await Get.bottomSheet(
-                isDismissible: false,
-                persistent: true,
-                Container(
-                    padding: EdgeInsets.all(24.kh),
-                    height: 390.kh,
-                    width: 100.w,
-                    decoration: BoxDecoration(
-                        color: ColorUtil.kWhiteColor,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(40.kh),
-                            topRight: Radius.circular(40.kh))),
-                    child: Column(
-                      children: [
-                        Text(
-                          'Request Alert Created\nSuccessfully!',
-                          style: TextStyleUtil.k18Heading600(),
-                          textAlign: TextAlign.center,
-                        ).paddingOnly(bottom: 24.kh),
-                        SvgPicture.asset(
-                          ImageConstant.svgCompleteTick,
-                          height: 64.kh,
-                          width: 64.kw,
-                        ).paddingOnly(bottom: 16.kh),
-                        Text(
-                          "Ride alert created succesfully!",
-                          textAlign: TextAlign.center,
-                          style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
-                        ).paddingOnly(bottom: 4.kh),
-                        Text(
-                          "The matching ride alert will be sent to you shortly.",
-                          textAlign: TextAlign.center,
-                          style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
-                        ).paddingOnly(bottom: 40.kh),
-                        GreenPoolButton(
-                            label: 'Continue',
-                            onPressed: () {
-                              Get.until((route) =>
-                                  Get.currentRoute == Routes.BOTTOM_NAVIGATION);
-                            }),
-                      ],
-                    )),
-              );
-            } catch (e) {
-              throw Exception(e);
-            }
+            controller.createRideAlert();
           },
-          label: "Create a ride alert",
+          label: Strings.createRideAlert,
         ).paddingOnly(bottom: 24.kh),
       ),
       body: Obx(
@@ -281,7 +234,7 @@ class MatchingRidesView extends GetView<MatchingRidesController> {
                                                               ).paddingOnly(
                                                                   right: 4.kw),
                                                               Text(
-                                                                "${GpUtil.getDateFormat(controller.matchingRidesModel.value.data![index]?.date)} ${controller.matchingRidesModel.value.data![index]?.time}",
+                                                                "${GpUtil.getDateFormat(controller.matchingRidesModel.value.data![index]?.time ?? "")} ${GpUtil.convertUtcToLocal(controller.matchingRidesModel.value.data![index]?.time ?? "")}",
                                                                 style: TextStyleUtil
                                                                     .k12Regular(
                                                                         color: ColorUtil
@@ -326,9 +279,9 @@ class MatchingRidesView extends GetView<MatchingRidesController> {
                                                 .paddingOnly(bottom: 8.kh),
                                             OriginToDestination(
                                               origin:
-                                                  "${controller.matchingRidesModel.value.data![index]?.origin?.name}",
+                                                  "${controller.matchingRidesModel.value.data![index]?.matchedOriginLocation?.name}",
                                               destination:
-                                                  "${controller.matchingRidesModel.value.data![index]?.destination?.name}",
+                                                  "${controller.matchingRidesModel.value.data![index]?.matchedDestinationLocation?.name}",
                                               needPickupText: false,
                                             ).paddingOnly(bottom: 8.kh),
                                             //bottom line

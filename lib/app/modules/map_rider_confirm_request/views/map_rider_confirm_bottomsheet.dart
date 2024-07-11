@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:green_pool/app/components/common_image_view.dart';
-import 'package:green_pool/app/services/gp_util.dart';
+import 'package:green_pool/app/components/origin_to_destination.dart';
+import 'package:green_pool/app/modules/rider_my_ride_request/controllers/rider_my_ride_request_controller.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
+import '../../../components/common_image_view.dart';
 import '../../../components/green_pool_divider.dart';
 import '../../../constants/image_constant.dart';
-import '../../../data/rider_send_request_model.dart';
+import '../../../data/rider_confirm_request_model.dart';
 import '../../../res/strings.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
+import '../../../services/gp_util.dart';
 import '../../../services/text_style_util.dart';
 import '../../home/controllers/home_controller.dart';
-import '../../rider_my_ride_request/controllers/rider_my_ride_request_controller.dart';
 
-class RiderRequestSendDriverBottomsheet extends StatelessWidget {
-  RiderSendRequestModelData element;
+class MapRiderConfirmBottomsheet extends StatelessWidget {
+  RiderConfirmRequestModelData element;
 
-  RiderRequestSendDriverBottomsheet({super.key, required this.element});
+  MapRiderConfirmBottomsheet({required this.element});
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +37,7 @@ class RiderRequestSendDriverBottomsheet extends StatelessWidget {
             Text(
               Strings.driverRequest,
               style: TextStyleUtil.k18Heading600(),
-            ).paddingOnly(bottom: 12.kh),
+            ).paddingOnly(bottom: 4.kh),
             const GreenPoolDivider().paddingSymmetric(vertical: 8.kh),
             Row(
               children: [
@@ -47,7 +48,7 @@ class RiderRequestSendDriverBottomsheet extends StatelessWidget {
                             height: 64.kh,
                             width: 64.kw,
                             url:
-                                "${element?.driverDetails?.firstOrNull?.profilePic?.url}"))
+                                "${element?.driverRideDetails?.driverDetails?.firstOrNull?.profilePic?.url}"))
                     .paddingOnly(right: 16.kw, bottom: 8.kh),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -56,7 +57,7 @@ class RiderRequestSendDriverBottomsheet extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "${element?.driverDetails?.firstOrNull?.fullName}",
+                          "${element?.driverRideDetails?.driverDetails?.firstOrNull?.fullName}",
                           style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
                         ),
                         8.kwidthBox,
@@ -65,7 +66,7 @@ class RiderRequestSendDriverBottomsheet extends StatelessWidget {
                             children: [
                               TextSpan(
                                 text:
-                                    "\$ ${(element?.origin?.originDestinationFair ?? 0)}",
+                                    "\$ ${(element?.driverRideDetails?.origin?.originDestinationFair ?? 0)}",
                                 style: TextStyleUtil.k16Bold(
                                     color: ColorUtil.kSecondary01),
                               ),
@@ -75,7 +76,8 @@ class RiderRequestSendDriverBottomsheet extends StatelessWidget {
                         8.kwidthBox,
                         InkWell(
                           onTap: () => Get.find<RiderMyRideRequestController>()
-                              .openMessage(element),
+                              .openMessageFromConfirm(
+                                  element.driverRideDetails),
                           child: Container(
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(40.kh),
@@ -105,7 +107,7 @@ class RiderRequestSendDriverBottomsheet extends StatelessWidget {
                                   BlendMode.srcIn),
                             ).paddingOnly(right: 4.kw),
                             Text(
-                              "${GpUtil.getDateFormat(element.time ?? "")}  ${GpUtil.convertUtcToLocal(element.time ?? "")}",
+                              "${GpUtil.getDateFormat(element.driverRideDetails?.time ?? "" )}  ${GpUtil.convertUtcToLocal(element.driverRideDetails?.time ?? "")}",
                               style: TextStyleUtil.k12Regular(
                                   color: ColorUtil.kBlack02),
                             ),
@@ -122,7 +124,7 @@ class RiderRequestSendDriverBottomsheet extends StatelessWidget {
                                       : ColorUtil.kSecondary01,
                             ).paddingOnly(right: 5.kw),
                             Text(
-                              '${element.seatAvailable} seats',
+                              '${element.driverRideDetails?.seatAvailable} seats',
                               style: TextStyleUtil.k14Regular(
                                   color: ColorUtil.kBlack03),
                             ),
@@ -135,52 +137,12 @@ class RiderRequestSendDriverBottomsheet extends StatelessWidget {
               ],
             ),
             const GreenPoolDivider().paddingOnly(bottom: 8.kh),
-            Stack(
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      height: 10.kh,
-                      width: 10.kw,
-                      decoration: const BoxDecoration(
-                          shape: BoxShape.circle, color: ColorUtil.kGreenColor),
-                    ).paddingOnly(right: 8.kw),
-                    Text(
-                      (element?.origin?.name ?? ""),
-                      style:
-                          TextStyleUtil.k14Regular(color: ColorUtil.kBlack02),
-                    ),
-                  ],
-                ).paddingOnly(bottom: 30.kh),
-                Positioned(
-                  top: 27.kh,
-                  child: Row(
-                    children: [
-                      Container(
-                        height: 10.kh,
-                        width: 10.kw,
-                        decoration: const BoxDecoration(
-                            shape: BoxShape.circle, color: ColorUtil.kError4),
-                      ).paddingOnly(right: 8.kw),
-                      Text(
-                        (element?.destination?.name ?? ""),
-                        style:
-                            TextStyleUtil.k14Regular(color: ColorUtil.kBlack02),
-                      ),
-                    ],
-                  ),
-                ),
-                Positioned(
-                  top: 10.kh,
-                  left: 4.5.kw,
-                  child: Container(
-                    height: 28.kh,
-                    width: 1.kw,
-                    color: ColorUtil.kBlack04,
-                  ),
-                ),
-              ],
-            ).paddingOnly(bottom: 8.kh),
+            OriginToDestination(
+                    origin: element.driverRideDetails?.origin?.name ?? "",
+                    destination:
+                        element.driverRideDetails?.destination?.name ?? "",
+                    needPickupText: false)
+                .paddingOnly(bottom: 8.kh),
             const GreenPoolDivider().paddingOnly(bottom: 16.kh),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -208,7 +170,8 @@ class RiderRequestSendDriverBottomsheet extends StatelessWidget {
                           size: 12.kh,
                         ).paddingOnly(right: 4.kw),
                         Text(
-                          element?.driverDetails?.firstOrNull?.rating
+                          element.driverRideDetails?.driverDetails?.firstOrNull
+                                  ?.rating
                                   .toString() ??
                               "0.0",
                           style: TextStyleUtil.k14Regular(),
@@ -225,7 +188,8 @@ class RiderRequestSendDriverBottomsheet extends StatelessWidget {
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Text(
-                      element?.driverDetails?.firstOrNull?.totalRides
+                      element?.driverRideDetails?.driverDetails?.firstOrNull
+                              ?.totalRides
                               .toString() ??
                           "0" + ' people',
                       style:
@@ -241,7 +205,7 @@ class RiderRequestSendDriverBottomsheet extends StatelessWidget {
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Text(
-                      '${Strings.inA} ${element?.driverDetails?.firstOrNull?.createdAt?.substring(0, 4) ?? 2024}',
+                      '${Strings.inA} ${element?.driverRideDetails?.driverDetails?.firstOrNull?.createdAt?.substring(0, 4) ?? 2024}',
                       style:
                           TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                     ),
@@ -250,29 +214,41 @@ class RiderRequestSendDriverBottomsheet extends StatelessWidget {
               ],
             ),
             const GreenPoolDivider().paddingOnly(bottom: 16.kh, top: 8.kh),
-            /*ListTile(
-              title: Text(Strings.coPassengers),
-              contentPadding: EdgeInsets.zero,
-            ),
-            SizedBox(
-                height: 40.kh,
-                child: ListView.builder(
-                  itemCount: element.ridersDetatils?.length ?? 0,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) => CircleAvatar(
-                    backgroundImage: NetworkImage(
-                        element.ridersDetatils?[index]?.profilePic?.url ?? ""),
+            GetBuilder<RiderMyRideRequestController>(builder: (controller) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  GreenPoolButton(
+                    onPressed: () async {
+                      await controller.moveToPaymentFromConfirmSection(
+                          0, element);
+                    },
+                    label: Strings.accept,
+                    fontSize: 14.kh,
+                    height: 40.kh,
+                    width: 144.kw,
+                    padding: EdgeInsets.all(8.kh),
                   ),
-                )),*/
-            GreenPoolButton(
-              onPressed: () => Get.find<RiderMyRideRequestController>()
-                  .moveToPaymentFromSendRequest(element!),
-              label: Strings.sendRequest,
-              fontSize: 14.kh,
-              height: 40.kh,
-              width: 144.kw,
-              padding: EdgeInsets.all(8.kh),
-            ),
+                  GreenPoolButton(
+                    onPressed: () async {
+                      await controller.rejectDriversRequestAPI(0);
+                    },
+                    isBorder: true,
+                    label: Strings.reject,
+                    fontSize: 14.kh,
+                    height: 40.kh,
+                    width: 144.kw,
+                    borderColor: Get.find<HomeController>().isPinkModeOn.value
+                        ? ColorUtil.kPrimary3PinkMode
+                        : ColorUtil.kSecondary01,
+                    labelColor: Get.find<HomeController>().isPinkModeOn.value
+                        ? ColorUtil.kPrimary3PinkMode
+                        : ColorUtil.kSecondary01,
+                    padding: EdgeInsets.all(8.kh),
+                  ),
+                ],
+              );
+            }),
           ]),
         ));
   }
@@ -283,4 +259,4 @@ class RiderRequestSendDriverBottomsheet extends StatelessWidget {
       style: TextStyleUtil.k12Regular(color: ColorUtil.kBlack02),
     );
   }
-}
+}          

@@ -6,7 +6,7 @@ import '../../../components/greenpool_textfield.dart';
 import '../../../components/richtext_heading.dart';
 import '../../../services/colors.dart';
 import '../../../services/text_style_util.dart';
-import '../../post_ride/views/green_pool_chip.dart';
+import '../../post_ride_step_one/views/greenpool_chip.dart';
 import '../controllers/post_ride_step_two_controller.dart';
 
 class RecurringTripView extends GetView<PostRideStepTwoController> {

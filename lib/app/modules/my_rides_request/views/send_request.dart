@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:green_pool/app/modules/map_driver_send_request/controllers/map_driver_send_request_controller.dart';
 import 'package:green_pool/app/modules/map_driver_send_request/views/map_driver_send_request_view.dart';
 import 'package:green_pool/app/res/strings.dart';
@@ -11,7 +10,6 @@ import '../../../components/gp_progress.dart';
 import '../../../components/green_pool_divider.dart';
 import '../../../components/origin_to_destination.dart';
 import '../../../constants/image_constant.dart';
-import '../../../routes/app_pages.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
 import '../../../services/gp_util.dart';
@@ -122,7 +120,7 @@ class SendRequest extends GetView<MyRidesRequestController> {
                                                   ),
                                                 ).paddingOnly(right: 4.kw),
                                                 Text(
-                                                  "${controller.sendRequestModel.value.data![index]?.date?.split('T')[0] ?? ""}  ${controller.sendRequestModel.value.data![index]?.time ?? ""}",
+                                                  "${GpUtil.getDateFormat(controller.sendRequestModel.value.data![index]?.time ?? "")}  ${GpUtil.convertUtcToLocal(controller.sendRequestModel.value.data![index]?.time ?? "")}",
                                                   style:
                                                       TextStyleUtil.k12Regular(
                                                           color: ColorUtil

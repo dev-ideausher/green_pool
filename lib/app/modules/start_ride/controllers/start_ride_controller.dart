@@ -324,7 +324,8 @@ class StartRideController extends GetxController {
               "");
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
-              chatRoomId: res.data["chatChannelId"] ?? "",
+              chatRoomId: res.data["data"]["chatRoomId"] ?? "",
+              deleteUpdateTime: res.data["data"]["deleteUpdateTime"] ?? "",
               id: myRidesModel.value.driverBookingDetails
                   ?.riderBookingDetails?[selectedRider.value]?.riderDetails?.Id,
               name: myRidesModel
@@ -343,7 +344,27 @@ class StartRideController extends GetxController {
                       ?.url ??
                   ""));
     } catch (e) {
-      debugPrint(e.toString());
+      Get.toNamed(Routes.CHAT_PAGE,
+          arguments: ChatArg(
+              chatRoomId: "",
+              deleteUpdateTime: "",
+              id: myRidesModel.value.driverBookingDetails
+                  ?.riderBookingDetails?[selectedRider.value]?.riderDetails?.Id,
+              name: myRidesModel
+                      .value
+                      .driverBookingDetails
+                      ?.riderBookingDetails?[selectedRider.value]
+                      ?.riderDetails
+                      ?.fullName ??
+                  "",
+              image: myRidesModel
+                      .value
+                      .driverBookingDetails
+                      ?.riderBookingDetails?[selectedRider.value]
+                      ?.riderDetails
+                      ?.profilePic
+                      ?.url ??
+                  ""));
     }
   }
 

@@ -3,16 +3,16 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:get/get.dart';
 import 'package:green_pool/app/modules/post_ride_step_two/views/amenities_list.dart';
+import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../components/greenpool_appbar.dart';
 import '../../../components/richtext_heading.dart';
 import '../../../constants/image_constant.dart';
-import '../../../routes/app_pages.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
 import '../../../services/text_style_util.dart';
-import '../../post_ride/views/green_pool_chip.dart';
+import '../../post_ride_step_one/views/greenpool_chip.dart';
 import '../controllers/post_ride_step_two_controller.dart';
 import 'one_time_trip_view.dart';
 import 'recurring_trip_view.dart';
@@ -36,7 +36,7 @@ class PostRideStepTwoView extends GetView<PostRideStepTwoController> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Carpool Schedule',
+                    Strings.carpoolSchedule,
                     style: TextStyleUtil.k18Bold(),
                   ),
                   Expanded(
@@ -78,15 +78,15 @@ class PostRideStepTwoView extends GetView<PostRideStepTwoController> {
                         color: controller.isPinkMode.value
                             ? ColorUtil.kBlack01
                             : ColorUtil.kSecondary01),
-                    tabs: const [
+                    tabs: [
                       Tab(
                         child: Text(
-                          'One-Time Trip',
+                          Strings.oneTimeTrip,
                         ),
                       ),
                       Tab(
                         child: Text(
-                          'Recurring Trip',
+                          Strings.recurringTrip,
                         ),
                       ),
                     ]),
@@ -101,7 +101,7 @@ class PostRideStepTwoView extends GetView<PostRideStepTwoController> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Preferences',
+                    Strings.preferences,
                     style: TextStyleUtil.k18Bold(),
                   ),
                   Expanded(
@@ -113,11 +113,11 @@ class PostRideStepTwoView extends GetView<PostRideStepTwoController> {
                 ],
               ).paddingSymmetric(vertical: 32.kh),
               RichTextHeading(
-                text: 'Number of Seats Available',
+                text: Strings.numberOfSeatsAvailable,
                 style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
               ).paddingOnly(bottom: 4.kh),
               Text(
-                "Quality rides: Only 2 in the back for glowing\nreviews!",
+                Strings.qualityRides,
                 style: TextStyleUtil.k14Semibold(color: ColorUtil.kBlack04),
               ).paddingOnly(bottom: 16.kh),
               Row(
@@ -175,7 +175,7 @@ class PostRideStepTwoView extends GetView<PostRideStepTwoController> {
                 ],
               ).paddingOnly(bottom: 24.kh),
               RichTextHeading(
-                text: 'Luggage Allowance',
+                text: Strings.luggageAllowance,
                 style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
               ),
               Row(
@@ -183,7 +183,7 @@ class PostRideStepTwoView extends GetView<PostRideStepTwoController> {
                 children: [
                   Obx(
                     () => Text(
-                      'Luggage Weight : ${" ${controller.luggageWeight.value}"}',
+                      '${Strings.luggageWeight} ${" ${controller.luggageWeight.value}"}',
                       style:
                           TextStyleUtil.k14Semibold(color: ColorUtil.kBlack04),
                     ).paddingOnly(top: 4.kh, bottom: 16.kh),
@@ -239,7 +239,7 @@ class PostRideStepTwoView extends GetView<PostRideStepTwoController> {
                 ),
               ),
               Text(
-                'Other',
+                Strings.other,
                 style: TextStyleUtil.k16Bold(color: ColorUtil.kNeutral5),
               ).paddingOnly(top: 24.kh, bottom: 16.kh),
               const AmenitiesList(),
@@ -251,7 +251,7 @@ class PostRideStepTwoView extends GetView<PostRideStepTwoController> {
                       onPressed: () => controller.moveToPricingView(),
                       padding: const EdgeInsets.all(0),
                       isActive: controller.isActiveCarpoolButton.value,
-                      label: 'Next',
+                      label: Strings.next,
                       fontSize: 14.kh,
                       width: 120.kw,
                       height: 40.kh,

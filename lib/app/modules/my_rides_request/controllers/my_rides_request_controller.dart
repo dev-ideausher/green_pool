@@ -126,7 +126,8 @@ class MyRidesRequestController extends GetxController {
       sendRiderRequestModel.value = SendRiderRequestModel.fromJson(data);
       if (sendRiderRequestModel.value.status ?? false) {
         allSendRequestAPI();
-        Get.bottomSheet(const RequestBottom());
+        Get.bottomSheet(
+            isDismissible: false, persistent: true, const RequestBottom());
       } else {
         showMySnackbar(msg: sendRiderRequestModel.value.message ?? "");
       }
@@ -141,12 +142,19 @@ class MyRidesRequestController extends GetxController {
           receiverId: data.riderDetails?.Id ?? "");
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
-              chatRoomId: res.data["chatChannelId"] ?? "",
+              chatRoomId: res.data["data"]["chatRoomId"] ?? "",
+              deleteUpdateTime: res.data["data"]["deleteUpdateTime"] ?? "",
               id: data.riderDetails?.Id,
               name: data.riderDetails?.fullName,
               image: data.riderDetails?.profilePic?.url));
     } catch (e) {
-      debugPrint(e.toString());
+      Get.toNamed(Routes.CHAT_PAGE,
+          arguments: ChatArg(
+              chatRoomId: "",
+              deleteUpdateTime: "",
+              id: data.riderDetails?.Id,
+              name: data.riderDetails?.fullName,
+              image: data.riderDetails?.profilePic?.url));
     }
   }
 
@@ -156,13 +164,21 @@ class MyRidesRequestController extends GetxController {
           receiverId: data.rideDetails?[0]?.riderDetails?.first?.Id ?? "");
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
-              chatRoomId: res.data["chatChannelId"] ?? "",
+              chatRoomId: res.data["data"]["chatRoomId"] ?? "",
+              deleteUpdateTime: res.data["data"]["deleteUpdateTime"] ?? "",
               id: data.rideDetails?[0]?.riderDetails?.first?.Id,
               name: data.rideDetails?[0]?.riderDetails?.first?.fullName ?? "",
               image:
                   data.rideDetails?[0]?.riderDetails?.first?.profilePic?.url));
     } catch (e) {
-      debugPrint(e.toString());
+      Get.toNamed(Routes.CHAT_PAGE,
+          arguments: ChatArg(
+              chatRoomId: "",
+              deleteUpdateTime: "",
+              id: data.rideDetails?[0]?.riderDetails?.first?.Id,
+              name: data.rideDetails?[0]?.riderDetails?.first?.fullName ?? "",
+              image:
+                  data.rideDetails?[0]?.riderDetails?.first?.profilePic?.url));
     }
   }
 }

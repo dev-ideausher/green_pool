@@ -12,7 +12,7 @@ class MessagesController extends GetxController {
   RxBool refreshPage = true.obs;
   RxBool isLoading = false.obs;
   final Rx<MessageListModel> messagesModel = MessageListModel().obs;
-  var chatRoomIds;
+  // var chatRoomIds;
 
   @override
   void onInit() {
@@ -41,6 +41,7 @@ class MessagesController extends GetxController {
                 chatRoomId: message?.chatRoomId ?? "",
                 id: message?.user2?.Id ?? "",
                 image: message?.user2?.profilePic?.url,
+                deleteUpdateTime: message?.deleteUpdateTime ?? "",
                 name: message?.user2?.fullName))!
         .then((value) => getMessageListAPI());
   }

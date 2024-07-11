@@ -164,7 +164,7 @@ class RideDetailsView extends GetView<RideDetailsController> {
                                 ).paddingOnly(right: 4.kw),
                                 Text(
                                   // '07 Nov 2023, 3:00pm',
-                                  "${GpUtil.getDateFormat(controller.rideHistory.value.date)} ${controller.rideHistory.value.time ?? ""}",
+                                  "${GpUtil.getDateFormat(controller.rideHistory.value.time ?? "")} ${GpUtil.convertUtcToLocal(controller.rideHistory.value.time ?? "")}",
                                   style: TextStyleUtil.k12Regular(
                                       color: ColorUtil.kBlack03),
                                 ),

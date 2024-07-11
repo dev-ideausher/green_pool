@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/modules/wallet/controllers/wallet_controller.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/dio/api_service.dart';
-import 'package:green_pool/app/services/snackbar.dart';
 
 import '../../../data/add_amount_model.dart';
 

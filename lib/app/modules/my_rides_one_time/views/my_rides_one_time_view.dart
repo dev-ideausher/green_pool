@@ -5,7 +5,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/common_image_view.dart';
-import 'package:green_pool/app/components/origin_to_destination.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
 import 'package:green_pool/app/modules/my_rides_one_time/views/driver_tile.dart';
 import 'package:green_pool/app/modules/my_rides_one_time/views/recurring_tile.dart';
@@ -17,9 +16,6 @@ import 'package:green_pool/app/services/storage.dart';
 
 import '../../../../generated/assets.dart';
 import '../../../components/gp_progress.dart';
-import '../../../components/green_pool_divider.dart';
-import '../../../services/colors.dart';
-import '../../../services/custom_button.dart';
 import '../../../services/text_style_util.dart';
 import '../../home/controllers/home_controller.dart';
 import '../controllers/my_rides_one_time_controller.dart';
@@ -40,24 +36,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                 () => controller.isLoad.value
                     ? const GpProgress()
                     : controller.myRidesModelData.isEmpty
-                        ? Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Center(
-                                  child:  Get.find<HomeController>()
-                                          .isPinkModeOn
-                                          .value
-                                      ? CommonImageView(
-                                          svgPath: Assets.svgPinkModegirl)
-                                      : SvgPicture.asset(
-                                          ImageConstant.svgNoRides)),
-                              Text(
-                                Strings.youHavePostedNoRides,
-                                style: TextStyleUtil.k24Heading600(),
-                                textAlign: TextAlign.center,
-                              )
-                            ],
-                          )
+                        ? const NoRidesWidget()
                         : SingleChildScrollView(
                             child: Column(
                               children: [
@@ -139,6 +118,30 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                 ),
               ),
       ),
+    );
+  }
+}
+
+class NoRidesWidget extends StatelessWidget {
+  const NoRidesWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Center(
+            child: Get.find<HomeController>().isPinkModeOn.value
+                ? CommonImageView(svgPath: Assets.svgPinkModegirl)
+                : SvgPicture.asset(ImageConstant.svgNoRides)),
+        Text(
+          Strings.youHavePostedNoRides,
+          style: TextStyleUtil.k24Heading600(),
+          textAlign: TextAlign.center,
+        )
+      ],
     );
   }
 }

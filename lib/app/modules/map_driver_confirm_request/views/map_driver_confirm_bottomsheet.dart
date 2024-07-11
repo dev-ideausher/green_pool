@@ -5,8 +5,11 @@ import 'package:green_pool/app/data/driver_cofirm_request_model.dart';
 import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
+import '../../../components/common_image_view.dart';
 import '../../../components/green_pool_divider.dart';
+import '../../../components/origin_to_destination.dart';
 import '../../../constants/image_constant.dart';
+import '../../../res/strings.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
 import '../../../services/text_style_util.dart';
@@ -14,9 +17,9 @@ import '../../home/controllers/home_controller.dart';
 import '../../my_rides_request/controllers/my_rides_request_controller.dart';
 
 class MapDriverConfirmBottomsheet extends StatelessWidget {
-  DriverConfirmRequestModelDataRideDetails rider;
+  DriverConfirmRequestModelData element;
 
-  MapDriverConfirmBottomsheet({required this.rider});
+  MapDriverConfirmBottomsheet({required this.element});
 
   @override
   Widget build(BuildContext context) {
@@ -24,219 +27,234 @@ class MapDriverConfirmBottomsheet extends StatelessWidget {
         padding: EdgeInsets.all(24.kh),
         // height: 317.kh,
         width: 100.w,
-        decoration:
-            BoxDecoration(color: ColorUtil.kWhiteColor, borderRadius: BorderRadius.only(topLeft: Radius.circular(40.kh), topRight: Radius.circular(40.kh))),
+        decoration: BoxDecoration(
+            color: ColorUtil.kWhiteColor,
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(40.kh),
+                topRight: Radius.circular(40.kh))),
         child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Text(
-                'Booking Confirmed',
-                style: TextStyleUtil.k18Heading600(),
-              ).paddingOnly(bottom: 32.kh),
-              SvgPicture.asset(
-                ImageConstant.svgCompleteTick,
-                height: 64.kh,
-                width: 64.kw,
-              ).paddingOnly(bottom: 8.kh),
-              Text(
-                "Booking Id : ${rider.Id}",
+          child: Column(children: [
+            Text(
+              Strings.riderRequest,
+              style: TextStyleUtil.k18Heading600(),
+            ).paddingOnly(bottom: 4.kh),
+            const GreenPoolDivider().paddingSymmetric(vertical: 8.kh),
+            ListTile(
+              leading: ClipOval(
+                child: SizedBox.fromSize(
+                    size: Size.fromRadius(20.kh),
+                    child: CommonImageView(
+                      url: element?.rideDetails?.first?.riderDetails?.first
+                          ?.profilePic?.url,
+                    )),
+              ),
+              title: Text(
+                element?.rideDetails?.first?.riderDetails?.first?.fullName ??
+                    "",
                 style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
               ),
-              const GreenPoolDivider().paddingSymmetric(vertical: 16.kh),
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Text(
-                  "Rider Details",
-                  style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
-                ).paddingOnly(bottom: 16.kh),
-                Row(
+              subtitle: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  SvgPicture.asset(
+                    ImageConstant.svgIconCalendarTime,
+                    colorFilter: ColorFilter.mode(
+                        Get.find<HomeController>().isPinkModeOn.value
+                            ? ColorUtil.kPrimary3PinkMode
+                            : ColorUtil.kSecondary01,
+                        BlendMode.srcIn),
+                  ).paddingOnly(right: 4.kw),
+                  Text(
+                    ("${GpUtil.getDateFormat(element?.rideDetails?.first?.time ?? "" )}, ${GpUtil.convertUtcToLocal(element?.rideDetails?.first?.time ?? "")}"),
+                    style: TextStyleUtil.k12Regular(color: ColorUtil.kBlack02),
+                  ),
+                ],
+              ).paddingOnly(top: 4.kh),
+              contentPadding: EdgeInsets.zero,
+              trailing: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      Get.find<MyRidesRequestController>()
+                          .openMessageConfirm(element);
+                    },
+                    child: Container(
+                      height: 24.kh,
+                      width: 84.kw,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(40.kh),
+                          border: Border.all(color: ColorUtil.kSecondary01)),
+                      child: Text(
+                        Strings.message,
+                        style: TextStyleUtil.k12Semibold(),
+                      ),
+                    ),
+                  ),
+                  4.kheightBox,
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(
+                        Icons.location_on,
+                        size: 16.kh,
+                        color: Get.find<HomeController>().isPinkModeOn.value
+                            ? ColorUtil.kPrimary3PinkMode
+                            : ColorUtil.kSecondary01,
+                      ),
+                      FutureBuilder<String>(
+                        future: GpUtil.calculateDistance(
+                            startLat: (element.rideDetails?.first?.origin
+                                    ?.coordinates?.lastOrNull ??
+                                0.0),
+                            startLong: (element.rideDetails?.first?.origin
+                                    ?.coordinates?.firstOrNull ??
+                                0.0),
+                            endLat: (element.rideDetails?.first?.destination
+                                    ?.coordinates?.lastOrNull ??
+                                0.0),
+                            endLong: (element.rideDetails?.first?.destination
+                                    ?.coordinates?.firstOrNull ??
+                                0.0)),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Text(
+                                "..."); // Show a loading indicator while fetching data
+                          } else if (snapshot.hasError) {
+                            // return Text('Error: ${snapshot.error}');
+                            return text("NA");
+                          } else {
+                            return text(snapshot.data.toString());
+                          }
+                        },
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            const GreenPoolDivider().paddingOnly(bottom: 8.kh),
+            OriginToDestination(
+                    origin: element?.rideDetails?.first?.origin?.name ?? "",
+                    destination:
+                        element?.rideDetails?.first?.destination?.name ?? "",
+                    needPickupText: false)
+                .paddingOnly(bottom: 8.kh),
+            const GreenPoolDivider().paddingOnly(bottom: 8.kh),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  //rating column
                   children: [
+                    Text(
+                      Strings.rating,
+                      style: TextStyleUtil.k12Semibold(),
+                    ).paddingOnly(bottom: 4.kh),
                     Container(
-                      decoration: const BoxDecoration(shape: BoxShape.circle),
-                      child: ClipOval(
-                        child: SizedBox.fromSize(
-                          size: Size.fromRadius(20.kh),
-                          child: Image.asset(
-                            ImageConstant.pngPassenger2,
-                          ),
-                        ),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 12.kw, vertical: 2.kh),
+                      decoration: BoxDecoration(
+                        color: Get.find<HomeController>().isPinkModeOn.value
+                            ? ColorUtil.kPrimary3PinkMode
+                            : ColorUtil.kPrimary01,
+                        borderRadius: BorderRadius.circular(16.kh),
                       ),
-                    ).paddingOnly(right: 8.kw),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+                      child: Row(children: [
+                        Icon(
+                          Icons.star,
+                          color: ColorUtil.kWhiteColor,
+                          size: 12.kh,
+                        ).paddingOnly(right: 4.kw),
                         Text(
-                          rider.riderDetails?.first?.fullName ?? "",
-                          style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
-                        ).paddingOnly(bottom: 8.kh),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                SvgPicture.asset(
-                                  ImageConstant.svgIconCalendarTime,
-                                  colorFilter: ColorFilter.mode(
-                                      Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01, BlendMode.srcIn),
-                                ).paddingOnly(right: 4.kw),
-                                Text(
-                                  GpUtil.getDateFormat(rider.date),
-                                  style: TextStyleUtil.k12Regular(color: ColorUtil.kBlack02),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.location_on,
-                                  size: 16.kh,
-                                  color: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01,
-                                ),
-                                Text(
-                                  '2.1 km away',
-                                  style: TextStyleUtil.k12Regular(color: ColorUtil.kBlack02),
-                                ),
-                              ],
-                            ),
-                          ],
+                          element?.rideDetails?.first?.riderDetails?.first
+                                  ?.rating
+                                  .toString() ??
+                              "0.0",
+                          style: TextStyleUtil.k14Regular(),
                         ),
-                      ],
+                      ]),
                     ),
                   ],
                 ),
-                const GreenPoolDivider().paddingOnly(bottom: 16.kh),
-                Stack(
+                Column(
+                  //ride with column
                   children: [
-                    Row(
-                      children: [
-                        Container(
-                          height: 10.kh,
-                          width: 10.kw,
-                          decoration: const BoxDecoration(shape: BoxShape.circle, color: ColorUtil.kGreenColor),
-                        ).paddingOnly(right: 8.kw),
-                        Text(
-                          rider.origin?.name ?? "",
-                          style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack02),
-                        ),
-                      ],
-                    ).paddingOnly(bottom: 30.kh),
-                    Positioned(
-                      top: 27.kh,
-                      child: Row(
-                        children: [
-                          Container(
-                            height: 10.kh,
-                            width: 10.kw,
-                            decoration: const BoxDecoration(shape: BoxShape.circle, color: ColorUtil.kError4),
-                          ).paddingOnly(right: 8.kw),
-                          Text(
-                            rider.destination?.name ?? "",
-                            style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack02),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Positioned(
-                      top: 10.kh,
-                      left: 4.5.kw,
-                      child: Container(
-                        height: 28.kh,
-                        width: 1.kw,
-                        color: ColorUtil.kBlack04,
-                      ),
+                    Text(
+                      Strings.rideWith,
+                      style: TextStyleUtil.k12Semibold(),
+                    ).paddingOnly(bottom: 4.kh),
+                    Text(
+                      element?.rideDetails?.first?.riderDetails?.first
+                              ?.totalRides
+                              .toString() ??
+                          "0" + ' people',
+                      style:
+                          TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                     ),
                   ],
-                ).paddingOnly(bottom: 8.kh),
-                const GreenPoolDivider().paddingOnly(bottom: 16.kh),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                ),
+                Column(
+                  //joined in column
                   children: [
-                    Column(
-                      //rating column
-                      children: [
-                        Text(
-                          'Rating',
-                          style: TextStyleUtil.k12Semibold(),
-                        ).paddingOnly(bottom: 4.kh),
-                        Container(
-                          padding: EdgeInsets.symmetric(horizontal: 12.kw, vertical: 2.kh),
-                          decoration: BoxDecoration(
-                            color: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kPrimary01,
-                            borderRadius: BorderRadius.circular(16.kh),
-                          ),
-                          child: Row(children: [
-                            Icon(
-                              Icons.star,
-                              color: ColorUtil.kWhiteColor,
-                              size: 12.kh,
-                            ).paddingOnly(right: 4.kw),
-                            Text(
-                              (rider.riderDetails?.first?.rating ?? 0.0).round().toString(),
-                              style: TextStyleUtil.k14Regular(),
-                            ),
-                          ]),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      //ride with column
-                      children: [
-                        Text(
-                          'Ride With',
-                          style: TextStyleUtil.k12Semibold(),
-                        ).paddingOnly(bottom: 4.kh),
-                        Text(
-                          '${(rider.riderDetails?.length ?? 0)} people',
-                          style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      //joined in column
-                      children: [
-                        Text(
-                          'Joined',
-                          style: TextStyleUtil.k12Semibold(),
-                        ).paddingOnly(bottom: 4.kh),
-                        Text(
-                          'in ${rider.riderDetails?.first?.createdAt?.substring(0, 4)}',
-                          style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
-                        ),
-                      ],
+                    Text(
+                      Strings.joined,
+                      style: TextStyleUtil.k12Semibold(),
+                    ).paddingOnly(bottom: 4.kh),
+                    Text(
+                      '${Strings.inA} ${element?.rideDetails?.first?.riderDetails?.first?.createdAt?.substring(0, 4) ?? 2024}',
+                      style:
+                          TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                     ),
                   ],
                 ),
-                const GreenPoolDivider().paddingOnly(bottom: 16.kh, top: 8.kh),
-                GetBuilder<MyRidesRequestController>(
-                  builder: (controller) {
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        GreenPoolButton(
-                          onPressed: () async => await controller.acceptRidersRequestAPI(controller.confirmRequestModel.value.data?.first),
-                          label: 'Accept',
-                          fontSize: 14.kh,
-                          height: 40.kh,
-                          width: 144.kw,
-                          padding: EdgeInsets.all(8.kh),
-                        ),
-                        GreenPoolButton(
-                          onPressed: () {},//await controller.rejectRidersRequestAPI(controller.confirmRequestModel),
-                          isBorder: true,
-                          label: 'Reject',
-                          fontSize: 14.kh,
-                          height: 40.kh,
-                          width: 144.kw,
-                          borderColor: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01,
-                          labelColor: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01,
-                          padding: EdgeInsets.all(8.kh),
-                        ),
-                      ],
-                    );
-                  }
-                ),
-              ]),
-            ],
-          ),
+              ],
+            ),
+            const GreenPoolDivider().paddingOnly(bottom: 16.kh, top: 8.kh),
+            GetBuilder<MyRidesRequestController>(builder: (controller) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  GreenPoolButton(
+                    onPressed: () async {
+                      await controller.acceptRidersRequestAPI(element);
+                    },
+                    label: Strings.accept,
+                    fontSize: 14.kh,
+                    height: 40.kh,
+                    width: 144.kw,
+                    padding: EdgeInsets.all(8.kh),
+                  ),
+                  GreenPoolButton(
+                    onPressed: () async {
+                      await controller.rejectRidersRequestAPI(0);
+                    },
+                    isBorder: true,
+                    label: Strings.reject,
+                    fontSize: 14.kh,
+                    height: 40.kh,
+                    width: 144.kw,
+                    borderColor: Get.find<HomeController>().isPinkModeOn.value
+                        ? ColorUtil.kPrimary3PinkMode
+                        : ColorUtil.kSecondary01,
+                    labelColor: Get.find<HomeController>().isPinkModeOn.value
+                        ? ColorUtil.kPrimary3PinkMode
+                        : ColorUtil.kSecondary01,
+                    padding: EdgeInsets.all(8.kh),
+                  ),
+                ],
+              );
+            }),
+          ]),
         ));
+  }
+
+  Widget text(String s) {
+    return Text(
+      s,
+      style: TextStyleUtil.k12Regular(color: ColorUtil.kBlack02),
+    );
   }
 }

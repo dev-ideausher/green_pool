@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/greenpool_textfield.dart';
+import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../components/greenpool_appbar.dart';
@@ -14,27 +15,27 @@ class AddCardView extends GetView<AddCardController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const GreenPoolAppBar(
-          title: Text("Payment"),
+        appBar: GreenPoolAppBar(
+          title: Text(Strings.payment),
         ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Add New Card",
+              Strings.addNewcard,
               style: TextStyleUtil.k16Bold(),
             ).paddingOnly(top: 32.kh, bottom: 16.kh),
             Text(
-              "Card Holder Name",
+              Strings.cardHolderName,
               style: TextStyleUtil.k14Semibold(),
             ).paddingOnly(bottom: 8.kh),
-            GreenPoolTextField(hintText: "Enter name")
+            GreenPoolTextField(hintText: Strings.enterName)
                 .paddingOnly(bottom: 16.kh),
             Text(
-              "Card Number",
+              Strings.cardNumber,
               style: TextStyleUtil.k14Semibold(),
             ).paddingOnly(bottom: 8.kh),
-            GreenPoolTextField(hintText: "Enter card number")
+            GreenPoolTextField(hintText: Strings.enterCardNumber)
                 .paddingOnly(bottom: 16.kh),
             Row(
               children: [
@@ -44,11 +45,11 @@ class AddCardView extends GetView<AddCardController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Expiry Date",
+                        Strings.expiryDate,
                         style: TextStyleUtil.k14Semibold(),
                       ).paddingOnly(bottom: 8.kh),
                       GreenPoolTextField(
-                        hintText: 'MM/YY',
+                        hintText: Strings.mmYY,
                         isSuffixNeeded: false,
                         onTap: () {},
                       ).paddingOnly(top: 8.kh, bottom: 16.kh, right: 8.kw),
@@ -60,7 +61,7 @@ class AddCardView extends GetView<AddCardController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "CVV",
+                        Strings.cvv,
                         style: TextStyleUtil.k14Semibold(),
                       ).paddingOnly(bottom: 8.kh),
                       GreenPoolTextField(
@@ -76,7 +77,7 @@ class AddCardView extends GetView<AddCardController> {
             const Expanded(child: SizedBox()),
             GreenPoolButton(
               onPressed: () {},
-              label: "Proceed",
+              label: Strings.proceed,
             ).paddingSymmetric(vertical: 40.kh),
           ],
         ).paddingSymmetric(horizontal: 16.kw));

@@ -2,14 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:get/get.dart';
-import 'package:green_pool/app/components/gp_progress.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
-import 'package:green_pool/app/data/chat_arg.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
-import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
-import 'package:green_pool/app/services/storage.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
 import '../../../components/common_image_view.dart';
@@ -39,17 +35,17 @@ class MessagesView extends GetView<MessagesController> {
                         onTap: () {},
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8.kh)),
-                        title: Container(
+                        title: SizedBox(
                           height: 10.kh,
                           width: 100.w,
-                          child: LinearProgressIndicator(
+                          child: const LinearProgressIndicator(
                             color: ColorUtil.kGreyColor,
                           ),
                         ),
-                        subtitle: Container(
+                        subtitle: SizedBox(
                           height: 10.kh,
                           width: 100.w,
-                          child: LinearProgressIndicator(
+                          child: const LinearProgressIndicator(
                             color: ColorUtil.kGreyColor,
                           ),
                         ),
@@ -60,7 +56,7 @@ class MessagesView extends GetView<MessagesController> {
                           width: 40.kw,
                           child: ClipRRect(
                               borderRadius: BorderRadius.circular(8.kh),
-                              child: LinearProgressIndicator(
+                              child: const LinearProgressIndicator(
                                 color: ColorUtil.kGreyColor,
                               )),
                         ),

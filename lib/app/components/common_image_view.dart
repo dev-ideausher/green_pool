@@ -29,7 +29,7 @@ class CommonImageView extends StatelessWidget {
     this.height,
     this.width,
     this.fit = BoxFit.cover,
-    this.placeHolder = Assets.splashSplashLogo,
+    this.placeHolder = Assets.myridesEmptyPassenger,
   });
 
   @override

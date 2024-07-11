@@ -7,6 +7,7 @@ import 'package:green_pool/app/components/origin_to_destination.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/modules/payment/controllers/payment_controller.dart';
 import 'package:green_pool/app/modules/payment/views/promo_code.dart';
+import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/custom_button.dart';
@@ -18,9 +19,10 @@ class PaymentView extends GetView<PaymentController> {
 
   @override
   Widget build(BuildContext context) {
+    controller.getWallet();
     return Scaffold(
-      appBar: const GreenPoolAppBar(
-        title: Text("Payment"),
+      appBar: GreenPoolAppBar(
+        title: Text(Strings.payment),
       ),
       body: Obx(
         () => controller.isLoading.value
@@ -69,7 +71,7 @@ class PaymentView extends GetView<PaymentController> {
                   ),
                   24.kheightBox,
                   Text(
-                    "Promotions",
+                    Strings.promotions,
                     style: TextStyleUtil.k16Bold(),
                   ).paddingOnly(bottom: 16.kh),
                   ListTile(
@@ -79,7 +81,7 @@ class PaymentView extends GetView<PaymentController> {
                       Get.to(() => const PromoCode());
                     },
                     title: Text(
-                      "Add promo code",
+                      Strings.addPromoCode,
                       style: TextStyleUtil.k14Semibold(),
                     ),
                     leading: Icon(
@@ -98,7 +100,7 @@ class PaymentView extends GetView<PaymentController> {
                       Get.toNamed(Routes.WALLET);
                     },
                     title: Text(
-                      "Wallet  Balance",
+                      Strings.walletBalance,
                       style: TextStyleUtil.k14Semibold(),
                     ),
                     leading: Container(
@@ -134,7 +136,7 @@ class PaymentView extends GetView<PaymentController> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "Subtotal",
+                              Strings.subtotal,
                               style: TextStyleUtil.k14Regular(
                                   color: ColorUtil.kBlack03),
                             ),
@@ -149,7 +151,7 @@ class PaymentView extends GetView<PaymentController> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "Discount",
+                                Strings.discount,
                                 style: TextStyleUtil.k14Regular(
                                     color: ColorUtil.kBlack03),
                               ),
@@ -165,7 +167,7 @@ class PaymentView extends GetView<PaymentController> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              "To Pay",
+                              Strings.toPay,
                               style: TextStyleUtil.k14Bold(
                                   color: ColorUtil.kBlack02),
                             ),
@@ -182,7 +184,7 @@ class PaymentView extends GetView<PaymentController> {
                     onPressed: () {
                       controller.decideAPI();
                     },
-                    label: "Pay now",
+                    label: Strings.payNow,
                     // isActive: controller.buttonState.value,
                   ).paddingSymmetric(vertical: 40.kh),
                 ],

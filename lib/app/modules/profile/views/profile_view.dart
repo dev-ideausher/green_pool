@@ -1,7 +1,4 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
@@ -18,7 +15,6 @@ import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../services/storage.dart';
 import '../../../services/text_style_util.dart';
 import '../controllers/profile_controller.dart';
 import 'profile_container.dart';
@@ -182,8 +178,8 @@ class ProfileView extends GetView<ProfileController> {
                 text: "Terms & Conditions"),
             ProfileContainer(
                 onTap: () async {
-                  await launchUrl(Uri.parse(
-                      "https://greenpool-admin-2-c3d6.vercel.app/login"));
+                  await launchUrl(
+                      Uri.parse("https://green-pool-front-end.vercel.app/"));
                 },
                 image: ImageConstant.svgProfileFollow,
                 text: "Follow us on Social Media"),

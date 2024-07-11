@@ -61,7 +61,7 @@ class DriverTile extends StatelessWidget {
                   // GpUtil.getDateFormat(myRidesModelData.date) ??
                   ((myRidesModelData.time ?? "") == ""
                       ? ""
-                      : "${myRidesModelData.time}"),
+                      : GpUtil.convertUtcToLocal(myRidesModelData.time ?? "")),
                   style: TextStyleUtil.k12Regular(color: ColorUtil.kBlack03),
                 ),
                 trailing: SizedBox(
@@ -118,7 +118,8 @@ class DriverTile extends StatelessWidget {
                               BlendMode.srcIn),
                         ).paddingOnly(right: 4.kw),
                         Text(
-                          GpUtil.getDateFormat(myRidesModelData.date) ?? "",
+                          GpUtil.getDateFormat(myRidesModelData.time ?? "") ??
+                              "",
                           style: TextStyleUtil.k12Regular(
                               color: ColorUtil.kBlack03),
                         ),
@@ -235,53 +236,10 @@ class DriverTile extends StatelessWidget {
                                 ),
                               ],
                             )
-                          : Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                GreenPoolButton(
-                                  onPressed: () {
-                                    controller.moveToRequests(myRidesModelData);
-                                  },
-                                  width: 144.kw,
-                                  height: 40.kh,
-                                  padding: EdgeInsets.all(8.kh),
-                                  fontSize: 14.kh,
-                                  borderColor: Get.find<HomeController>()
-                                          .isPinkModeOn
-                                          .value
-                                      ? ColorUtil.kPrimary3PinkMode
-                                      : ColorUtil.kSecondary01,
-                                  labelColor: Get.find<HomeController>()
-                                          .isPinkModeOn
-                                          .value
-                                      ? ColorUtil.kPrimary3PinkMode
-                                      : ColorUtil.kSecondary01,
-                                  label: Strings.request,
-                                ),
-                                GreenPoolButton(
-                                  onPressed: () {
-                                    controller.cancelRideAPI(myRidesModelData);
-                                  },
-                                  width: 144.kw,
-                                  height: 40.kh,
-                                  padding: EdgeInsets.all(8.kh),
-                                  fontSize: 14.kh,
-                                  isBorder: true,
-                                  borderColor: Get.find<HomeController>()
-                                          .isPinkModeOn
-                                          .value
-                                      ? ColorUtil.kPrimary3PinkMode
-                                      : ColorUtil.kSecondary01,
-                                  labelColor: Get.find<HomeController>()
-                                          .isPinkModeOn
-                                          .value
-                                      ? ColorUtil.kPrimary3PinkMode
-                                      : ColorUtil.kSecondary01,
-                                  label: Strings.cancelRide,
-                                ),
-                              ],
+                          : RequestAndCancelButtons(
+                              myRidesModelData: myRidesModelData,
+                              controller: controller,
                             ),
-              // ),
             ],
           ),
         ).paddingOnly(bottom: 16.kh),
@@ -299,27 +257,83 @@ class DriverTile extends StatelessWidget {
 
   bool isWithinTimeRange(String timeString) {
     try {
-      DateFormat format = DateFormat.Hm();
-      DateTime parsedTime = format.parse(timeString);
+      // Parse the timeString as a UTC DateTime
+      DateTime parsedTimeUTC = DateTime.parse(timeString);
+      // Convert the parsed time to local time
+      DateTime parsedTimeLocal = parsedTimeUTC.toLocal();
       DateTime now = DateTime.now();
 
+      // Adjust the parsed time to today's date
       DateTime inputTimeWithCurrentDate = DateTime(
         now.year,
         now.month,
         now.day,
-        parsedTime.hour,
-        parsedTime.minute,
+        parsedTimeLocal.hour,
+        parsedTimeLocal.minute,
       );
 
       DateTime startTime =
-          inputTimeWithCurrentDate.subtract(const Duration(minutes: 30));
+          inputTimeWithCurrentDate.subtract(const Duration(minutes: 15));
       DateTime endTime =
           inputTimeWithCurrentDate.add(const Duration(minutes: 30));
 
       return now.isAfter(startTime) && now.isBefore(endTime);
     } catch (e) {
-      debugPrint('Error parsing time string: $e');
+      print('Error parsing time string: $e');
       return false;
     }
+  }
+}
+
+class RequestAndCancelButtons extends StatelessWidget {
+  const RequestAndCancelButtons({
+    super.key,
+    required this.myRidesModelData,
+    required this.controller,
+  });
+
+  final MyRidesModelData myRidesModelData;
+  final MyRidesOneTimeController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        GreenPoolButton(
+          onPressed: () {
+            controller.moveToRequests(myRidesModelData);
+          },
+          width: 144.kw,
+          height: 40.kh,
+          padding: EdgeInsets.all(8.kh),
+          fontSize: 14.kh,
+          borderColor: Get.find<HomeController>().isPinkModeOn.value
+              ? ColorUtil.kPrimary3PinkMode
+              : ColorUtil.kSecondary01,
+          labelColor: Get.find<HomeController>().isPinkModeOn.value
+              ? ColorUtil.kPrimary3PinkMode
+              : ColorUtil.kSecondary01,
+          label: Strings.request,
+        ),
+        GreenPoolButton(
+          onPressed: () {
+            controller.cancelRideAPI(myRidesModelData);
+          },
+          width: 144.kw,
+          height: 40.kh,
+          padding: EdgeInsets.all(8.kh),
+          fontSize: 14.kh,
+          isBorder: true,
+          borderColor: Get.find<HomeController>().isPinkModeOn.value
+              ? ColorUtil.kPrimary3PinkMode
+              : ColorUtil.kSecondary01,
+          labelColor: Get.find<HomeController>().isPinkModeOn.value
+              ? ColorUtil.kPrimary3PinkMode
+              : ColorUtil.kSecondary01,
+          label: Strings.cancelRide,
+        ),
+      ],
+    );
   }
 }

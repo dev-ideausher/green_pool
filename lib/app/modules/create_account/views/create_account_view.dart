@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/components/greenpool_textfield.dart';
 import 'package:green_pool/app/components/socials.dart';
 import 'package:green_pool/app/modules/create_account/views/terms_view.dart';
+import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
@@ -26,21 +27,21 @@ class CreateAccountView extends GetView<CreateAccountController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Create an account',
+                Strings.createAccount,
                 style: TextStyleUtil.k32Heading700(),
               ).paddingOnly(top: 48.kh),
               Text(
-                'Enter your details ',
+                Strings.enterDetails,
                 style: TextStyleUtil.k16Regular(color: ColorUtil.kBlack04),
               ).paddingOnly(bottom: 32.kh),
 
               //
               Text(
-                'Full Name',
+                Strings.fullName,
                 style: TextStyleUtil.k14Semibold(),
               ).paddingOnly(bottom: 8.kh),
               GreenPoolTextField(
-                hintText: 'Enter name',
+                hintText: Strings.enterName,
                 controller: controller.fullNameController,
                 keyboardType: TextInputType.name,
                 validator: (value) => controller.nameValidator(value),
@@ -49,11 +50,11 @@ class CreateAccountView extends GetView<CreateAccountController> {
               //
 
               Text(
-                'Phone Number',
+                Strings.phoneNumber,
                 style: TextStyleUtil.k14Semibold(),
               ).paddingOnly(bottom: 8.kh),
               GreenPoolTextField(
-                hintText: 'Enter here',
+                hintText: Strings.enterHere,
                 keyboardType: TextInputType.phone,
                 controller: controller.phoneNumberController,
                 validator: (value) => controller.phoneNumberValidator(value),
@@ -77,7 +78,6 @@ class CreateAccountView extends GetView<CreateAccountController> {
                 onchanged: (String? value) =>
                     controller.phoneNumberController.text = value!,
               ).paddingOnly(bottom: 12.kh),
-              //
 
               //
               // Text(
@@ -115,25 +115,27 @@ class CreateAccountView extends GetView<CreateAccountController> {
                       TextSpan(
                         children: [
                           TextSpan(
-                            text: 'I have read and I agree to Green Pool\'s ',
+                            text: Strings.readAndAgree,
                             style: TextStyleUtil.k12Regular(),
                           ),
                           TextSpan(
-                              text: 'Terms and \nconditions',
+                              text: Strings.termsCondition,
                               style: TextStyleUtil.k12Semibold(
                                   color: ColorUtil.kSecondary03),
                               recognizer: TapGestureRecognizer()
-                                ..onTap = () => Get.to(const TermsView())),
+                                ..onTap =
+                                    () => Get.to(() => const TermsView())),
                           TextSpan(
-                            text: ' and ',
+                            text: Strings.and,
                             style: TextStyleUtil.k12Regular(),
                           ),
                           TextSpan(
-                              text: 'Privacy policy',
+                              text: Strings.privacyPolicy,
                               style: TextStyleUtil.k12Semibold(
                                   color: ColorUtil.kSecondary03),
                               recognizer: TapGestureRecognizer()
-                                ..onTap = () => Get.to(const TermsView())),
+                                ..onTap =
+                                    () => Get.to(() => const TermsView())),
                         ],
                       ),
                     ),
@@ -146,7 +148,7 @@ class CreateAccountView extends GetView<CreateAccountController> {
                     await controller.checkValidation();
                   },
                   isActive: controller.isTermsAccepted.value,
-                  label: 'Sign Up',
+                  label: Strings.signUp,
                 ).paddingOnly(bottom: 16.kh),
               ),
               Center(
@@ -154,11 +156,11 @@ class CreateAccountView extends GetView<CreateAccountController> {
                   TextSpan(
                     children: [
                       TextSpan(
-                          text: 'Already have an account ?',
+                          text: Strings.alreadyHaveAcc,
                           style: TextStyleUtil.k14Semibold(
                               color: ColorUtil.kBlack04)),
                       TextSpan(
-                          text: ' Login',
+                          text: Strings.spaceLogin,
                           style: TextStyleUtil.k14Semibold(
                               color: ColorUtil.kSecondary01),
                           recognizer: TapGestureRecognizer()
@@ -178,7 +180,7 @@ class CreateAccountView extends GetView<CreateAccountController> {
                     ).paddingOnly(right: 8.kw),
                   ),
                   Text(
-                    'Or  sign up  with',
+                    Strings.orSignUpWith,
                     style:
                         TextStyleUtil.k12Semibold(color: ColorUtil.kNeutral3),
                   ),

@@ -4,71 +4,81 @@
 class PromoCodeModelData {
 /*
 {
-  "_id": "662f8b75eb23ff7d59c3c561",
-  "promoCode": "PROMO_1",
-  "promoTitle": "Get 10% discount",
-  "discountAmount": 10,
-  "usageLimit": 1,
-  "expireDate": "2024-05-30T02:04:14.886Z",
+  "_id": "6684148ee3ffbf0e8352cc45",
+  "promoCode": "PROMO123",
+  "promoTitle": "Get 12% discount ",
+  "discountCodeType": "%",
+  "discountAmount": 12,
+  "usageLimit": 2,
+  "expireDate": "2024-07-03T00:00:00.000Z",
   "status": true,
-  "createdAt": "2024-04-29T11:58:45.511Z",
-  "updatedAt": "2024-06-26T08:10:37.042Z",
-  "minAmount": 40,
-  "discountCodeType": "%"
+  "description": "12",
+  "scheduleDate": "2024-07-04T00:00:00.000Z",
+  "createdAt": "2024-07-02T14:54:06.994Z",
+  "updatedAt": "2024-07-03T05:58:30.428Z",
+  "minAmount": 20
 } 
 */
 
   String? Id;
   String? promoCode;
   String? promoTitle;
+  String? discountCodeType;
   int? discountAmount;
   int? usageLimit;
   String? expireDate;
   bool? status;
+  String? description;
+  String? scheduleDate;
   String? createdAt;
   String? updatedAt;
   int? minAmount;
-  String? discountCodeType;
 
   PromoCodeModelData({
     this.Id,
     this.promoCode,
     this.promoTitle,
+    this.discountCodeType,
     this.discountAmount,
     this.usageLimit,
     this.expireDate,
     this.status,
+    this.description,
+    this.scheduleDate,
     this.createdAt,
     this.updatedAt,
     this.minAmount,
-    this.discountCodeType,
   });
   PromoCodeModelData.fromJson(Map<String, dynamic> json) {
     Id = json['_id']?.toString();
     promoCode = json['promoCode']?.toString();
     promoTitle = json['promoTitle']?.toString();
+    discountCodeType = json['discountCodeType']?.toString();
     discountAmount = json['discountAmount']?.toInt();
     usageLimit = json['usageLimit']?.toInt();
     expireDate = json['expireDate']?.toString();
     status = json['status'];
+    description = json['description']?.toString();
+    scheduleDate = json['scheduleDate']?.toString();
     createdAt = json['createdAt']?.toString();
     updatedAt = json['updatedAt']?.toString();
     minAmount = json['minAmount']?.toInt();
-    discountCodeType = json['discountCodeType']?.toString();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['_id'] = Id;
     data['promoCode'] = promoCode;
     data['promoTitle'] = promoTitle;
+    data['discountCodeType'] = discountCodeType;
     data['discountAmount'] = discountAmount;
     data['usageLimit'] = usageLimit;
     data['expireDate'] = expireDate;
     data['status'] = status;
+    data['description'] = description;
+    data['scheduleDate'] = scheduleDate;
     data['createdAt'] = createdAt;
     data['updatedAt'] = updatedAt;
     data['minAmount'] = minAmount;
-    data['discountCodeType'] = discountCodeType;
     return data;
   }
 }
@@ -80,17 +90,19 @@ class PromoCodeModel {
   "message": "success",
   "data": [
     {
-      "_id": "662f8b75eb23ff7d59c3c561",
-      "promoCode": "PROMO_1",
-      "promoTitle": "Get 10% discount",
-      "discountAmount": 10,
-      "usageLimit": 1,
-      "expireDate": "2024-05-30T02:04:14.886Z",
+      "_id": "6684148ee3ffbf0e8352cc45",
+      "promoCode": "PROMO123",
+      "promoTitle": "Get 12% discount ",
+      "discountCodeType": "%",
+      "discountAmount": 12,
+      "usageLimit": 2,
+      "expireDate": "2024-07-03T00:00:00.000Z",
       "status": true,
-      "createdAt": "2024-04-29T11:58:45.511Z",
-      "updatedAt": "2024-06-26T08:10:37.042Z",
-      "minAmount": 40,
-      "discountCodeType": "%"
+      "description": "12",
+      "scheduleDate": "2024-07-04T00:00:00.000Z",
+      "createdAt": "2024-07-02T14:54:06.994Z",
+      "updatedAt": "2024-07-03T05:58:30.428Z",
+      "minAmount": 20
     }
   ]
 } 
@@ -108,13 +120,13 @@ class PromoCodeModel {
   PromoCodeModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message']?.toString();
-    if (json['data'] != null) {
-      final v = json['data'];
-      final arr0 = <PromoCodeModelData>[];
-      v.forEach((v) {
-        arr0.add(PromoCodeModelData.fromJson(v));
-      });
-      this.data = arr0;
+  if (json['data'] != null) {
+  final v = json['data'];
+  final arr0 = <PromoCodeModelData>[];
+  v.forEach((v) {
+  arr0.add(PromoCodeModelData.fromJson(v));
+  });
+    this.data = arr0;
     }
   }
   Map<String, dynamic> toJson() {
@@ -124,9 +136,9 @@ class PromoCodeModel {
     if (this.data != null) {
       final v = this.data;
       final arr0 = [];
-      v!.forEach((v) {
-        arr0.add(v!.toJson());
-      });
+  v!.forEach((v) {
+  arr0.add(v!.toJson());
+  });
       data['data'] = arr0;
     }
     return data;

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../services/dio/api_service.dart';
@@ -13,9 +14,13 @@ class PolicyCancellationController extends GetxController {
   }
 
   driverCancellationPolicyAPI() async {
-    isLoading.value = true;
-    final response = await APIManager.getCancelRefundPolicy();
-    policyText = response.data['data'][0]['description'].toString();
-    isLoading.value = false;
+    try {
+      isLoading.value = true;
+      final response = await APIManager.getCancelRefundPolicy();
+      policyText = response.data['data'][0]['description'].toString();
+      isLoading.value = false;
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 }

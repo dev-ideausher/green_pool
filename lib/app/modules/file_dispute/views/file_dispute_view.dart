@@ -94,11 +94,13 @@ class FileDisputeView extends GetView<FileDisputeController> {
                                                     BlendMode.srcIn),
                                               ).paddingOnly(right: 4.kw),
                                               Text(
-                                                GpUtil.getDateFormat(controller
-                                                    .rideHistModel
-                                                    .value
-                                                    .data?[index]
-                                                    ?.date),
+                                                GpUtil.getDateFormat(
+                                                    controller
+                                                            .rideHistModel
+                                                            .value
+                                                            .data?[index]
+                                                            ?.time ??
+                                                        ""),
                                                 style: TextStyleUtil.k12Regular(
                                                     color: ColorUtil.kBlack03),
                                               ),

@@ -112,7 +112,7 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
                                             ).paddingOnly(right: 4.kw),
                                             Text(
                                               // '07 July 2023, 3:00pm',
-                                              "${controller.confirmRequestModel.value.data?[index]?.rideDetails?[0]?.date.toString().split("T")[0] ?? ""}  ${controller.confirmRequestModel.value.data?[index]?.rideDetails?[0]?.time ?? ""}",
+                                              "${GpUtil.getDateFormat( controller.confirmRequestModel.value.data?[index]?.rideDetails?[0]?.time ?? "")}  ${GpUtil.convertUtcToLocal(controller.confirmRequestModel.value.data?[index]?.rideDetails?[0]?.time ?? "")}",
                                               style: TextStyleUtil.k12Regular(
                                                   color: ColorUtil.kBlack02),
                                             ),

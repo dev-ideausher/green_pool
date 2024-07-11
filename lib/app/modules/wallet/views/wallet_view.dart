@@ -6,7 +6,6 @@ import 'package:green_pool/app/components/common_image_view.dart';
 import 'package:green_pool/app/components/gp_progress.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
-import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
@@ -37,11 +36,11 @@ class WalletView extends GetView<WalletController> {
                           borderRadius: BorderRadius.circular(16.kh),
                           gradient:
                               Get.find<HomeController>().isPinkModeOn.value
-                                  ? LinearGradient(colors: [
+                                  ? const LinearGradient(colors: [
                                       ColorUtil.kSecondaryPinkMode,
                                       ColorUtil.kPrimaryPinkMode
                                     ])
-                                  : LinearGradient(colors: [
+                                  : const LinearGradient(colors: [
                                       ColorUtil.kPrimary04,
                                       ColorUtil.kPrimary01
                                     ])),

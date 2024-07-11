@@ -8,6 +8,7 @@ import 'package:green_pool/app/components/green_pool_divider.dart';
 import 'package:green_pool/app/components/origin_to_destination.dart';
 import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
+import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../../generated/assets.dart';
@@ -31,7 +32,10 @@ class MyRidesRecurringView extends GetView<MyRidesRecurringController> {
                 ? Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Center(child: Get.find<HomeController>().isPinkModeOn.value ? CommonImageView(svgPath: Assets.svgPinkModegirl) : SvgPicture.asset(ImageConstant.svgNoRides)),
+                      Center(
+                          child: Get.find<HomeController>().isPinkModeOn.value
+                              ? CommonImageView(svgPath: Assets.svgPinkModegirl)
+                              : SvgPicture.asset(ImageConstant.svgNoRides)),
                       Text(
                         Strings.youHavePostedNoRides,
                         style: TextStyleUtil.k24Heading600(),
@@ -43,27 +47,48 @@ class MyRidesRecurringView extends GetView<MyRidesRecurringController> {
                     children: [
                       Expanded(
                         child: ListView.builder(
-                            itemCount: controller.recurringResp.value.data?.length,
+                            itemCount:
+                                controller.recurringResp.value.data?.length,
                             itemBuilder: (context, index) {
                               return GestureDetector(
-                                onTap: controller.recurringResp.value.data?[index]?.recurringTrip?.isRecurringTripEnabled ?? false
+                                onTap: controller
+                                            .recurringResp
+                                            .value
+                                            .data?[index]
+                                            ?.recurringTrip
+                                            ?.isRecurringTripEnabled ??
+                                        false
                                     ? () {
-                                        Get.toNamed(Routes.MY_RIDES_RECURRING_DETAILS, arguments: controller.recurringResp.value.data?[index]?.Id);
+                                        Get.toNamed(
+                                            Routes.MY_RIDES_RECURRING_DETAILS,
+                                            arguments: controller.recurringResp
+                                                .value.data?[index]?.Id);
                                       }
                                     : () {},
                                 child: Container(
                                   padding: EdgeInsets.all(16.kh),
-                                  decoration: BoxDecoration(color: ColorUtil.kWhiteColor, borderRadius: BorderRadius.circular(8.kh)),
+                                  decoration: BoxDecoration(
+                                      color: ColorUtil.kWhiteColor,
+                                      borderRadius:
+                                          BorderRadius.circular(8.kh)),
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
                                           //TODO: toggle switch
                                           Text(
-                                            controller.recurringResp.value.data?[index]?.time ?? "00:00",
-                                            style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
+                                            GpUtil.convertUtcToLocal(controller
+                                                    .recurringResp
+                                                    .value
+                                                    .data?[index]
+                                                    ?.time ??
+                                                ""),
+                                            style: TextStyleUtil.k16Semibold(
+                                                fontSize: 16.kh),
                                           ),
                                           Obx(
                                             () => Transform.scale(
@@ -71,69 +96,147 @@ class MyRidesRecurringView extends GetView<MyRidesRecurringController> {
                                               child: Switch(
                                                 // value: controller
                                                 //     .isScheduled[index].value,
-                                                value: controller.recurringResp.value.data?[index]?.recurringTrip?.isRecurringTripEnabled ?? false,
+                                                value: controller
+                                                        .recurringResp
+                                                        .value
+                                                        .data?[index]
+                                                        ?.recurringTrip
+                                                        ?.isRecurringTripEnabled ??
+                                                    false,
                                                 onChanged: (value) {
-                                                  controller.isScheduled[index].value = value;
-                                                  controller.enableRecurringAPI(controller.recurringResp.value.data?[index]?.Id);
+                                                  controller.isScheduled[index]
+                                                      .value = value;
+                                                  controller.enableRecurringAPI(
+                                                      controller
+                                                          .recurringResp
+                                                          .value
+                                                          .data?[index]
+                                                          ?.Id);
                                                 },
-                                                inactiveThumbColor: ColorUtil.kNeutral1,
-                                                inactiveTrackColor: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kSecondaryPinkMode : ColorUtil.kPrimary05,
-                                                activeTrackColor: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01,
-                                                trackOutlineWidth: const MaterialStatePropertyAll(0),
-                                                thumbColor: const MaterialStatePropertyAll(ColorUtil.kWhiteColor),
-                                                trackOutlineColor: const MaterialStatePropertyAll(ColorUtil.kNeutral1),
+                                                inactiveThumbColor:
+                                                    ColorUtil.kNeutral1,
+                                                inactiveTrackColor:
+                                                    Get.find<HomeController>()
+                                                            .isPinkModeOn
+                                                            .value
+                                                        ? ColorUtil
+                                                            .kSecondaryPinkMode
+                                                        : ColorUtil.kPrimary05,
+                                                activeTrackColor:
+                                                    Get.find<HomeController>()
+                                                            .isPinkModeOn
+                                                            .value
+                                                        ? ColorUtil
+                                                            .kPrimary3PinkMode
+                                                        : ColorUtil
+                                                            .kSecondary01,
+                                                trackOutlineWidth:
+                                                    const MaterialStatePropertyAll(
+                                                        0),
+                                                thumbColor:
+                                                    const MaterialStatePropertyAll(
+                                                        ColorUtil.kWhiteColor),
+                                                trackOutlineColor:
+                                                    const MaterialStatePropertyAll(
+                                                        ColorUtil.kNeutral1),
                                               ),
                                             ),
                                           ),
                                         ],
                                       ),
-                                      const GreenPoolDivider().paddingOnly(top: 8.kh, bottom: 16.kh),
+                                      const GreenPoolDivider().paddingOnly(
+                                          top: 8.kh, bottom: 16.kh),
                                       OriginToDestination(
                                         needPickupText: false,
-                                        origin: "${controller.recurringResp.value.data?[index]?.origin?.name}",
-                                        destination: "${controller.recurringResp.value.data?[index]?.destination?.name}",
+                                        origin:
+                                            "${controller.recurringResp.value.data?[index]?.origin?.name}",
+                                        destination:
+                                            "${controller.recurringResp.value.data?[index]?.destination?.name}",
                                       ).paddingOnly(bottom: 8.kh),
-                                      const GreenPoolDivider().paddingOnly(top: 8.kh, bottom: 16.kh),
+                                      const GreenPoolDivider().paddingOnly(
+                                          top: 8.kh, bottom: 16.kh),
                                       Text(
                                         Strings.riderDetails,
                                         style: TextStyleUtil.k14Bold(),
                                       ).paddingOnly(bottom: 16.kh),
                                       SizedBox(
-                                        height: controller.recurringResp.value.data![index]!.ridesDetails!.length * 36.kh,
+                                        height: controller
+                                                .recurringResp
+                                                .value
+                                                .data![index]!
+                                                .ridesDetails!
+                                                .length *
+                                            36.kh,
                                         child: ListView.builder(
-                                            itemCount: controller.recurringResp.value.data?[index]?.ridesDetails?.length,
-                                            physics: const NeverScrollableScrollPhysics(),
+                                            itemCount: controller
+                                                .recurringResp
+                                                .value
+                                                .data?[index]
+                                                ?.ridesDetails
+                                                ?.length,
+                                            physics:
+                                                const NeverScrollableScrollPhysics(),
                                             itemBuilder: (context, index1) {
                                               return Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
                                                 children: [
                                                   Text(
                                                     "${controller.recurringResp.value.data?[index]?.ridesDetails?[index1]?.day}",
-                                                    style: TextStyleUtil.k14Semibold(color: ColorUtil.kBlack02),
+                                                    style: TextStyleUtil
+                                                        .k14Semibold(
+                                                            color: ColorUtil
+                                                                .kBlack02),
                                                   ),
                                                   SizedBox(
                                                     height: 24.kh,
                                                     width: 170.kw,
                                                     child: ListView.builder(
-                                                      itemCount: controller.recurringResp.value.data?[index]?.ridesDetails?[index1]?.ridersDetails?.length == 0
+                                                      itemCount: controller
+                                                                  .recurringResp
+                                                                  .value
+                                                                  .data?[index]
+                                                                  ?.ridesDetails?[
+                                                                      index1]
+                                                                  ?.ridersDetails
+                                                                  ?.length ==
+                                                              0
                                                           ? 4
-                                                          : (controller.recurringResp.value.data?[index]?.ridesDetails?[index1]?.ridersDetails?.length),
+                                                          : (controller
+                                                              .recurringResp
+                                                              .value
+                                                              .data?[index]
+                                                              ?.ridesDetails?[
+                                                                  index1]
+                                                              ?.ridersDetails
+                                                              ?.length),
                                                       reverse: true,
-                                                      scrollDirection: Axis.horizontal,
-                                                      itemBuilder: (context, index1) {
+                                                      scrollDirection:
+                                                          Axis.horizontal,
+                                                      itemBuilder:
+                                                          (context, index1) {
                                                         return Container(
-                                                          decoration: const BoxDecoration(
-                                                            shape: BoxShape.circle,
+                                                          decoration:
+                                                              const BoxDecoration(
+                                                            shape:
+                                                                BoxShape.circle,
                                                           ),
                                                           child: ClipOval(
-                                                            child: SizedBox.fromSize(
-                                                              size: Size.fromRadius(12.kh),
-                                                              child: Image.asset(
-                                                                ImageConstant.pngEmptyPassenger,
+                                                            child: SizedBox
+                                                                .fromSize(
+                                                              size: Size
+                                                                  .fromRadius(
+                                                                      12.kh),
+                                                              child:
+                                                                  Image.asset(
+                                                                ImageConstant
+                                                                    .pngEmptyPassenger,
                                                               ),
                                                             ),
                                                           ),
-                                                        ).paddingOnly(right: 4.kw);
+                                                        ).paddingOnly(
+                                                            right: 4.kw);
                                                       },
                                                     ),
                                                   ),

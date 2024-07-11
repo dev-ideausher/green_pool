@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/common_image_view.dart';
+import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../components/green_pool_divider.dart';
@@ -15,7 +16,7 @@ import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
 import '../../../services/text_style_util.dart';
 import '../../home/controllers/home_controller.dart';
-import '../../post_ride/views/amenities.dart';
+import '../../post_ride_step_one/views/amenities.dart';
 import '../../rider_my_ride_request/controllers/rider_my_ride_request_controller.dart';
 import '../controllers/rider_my_rides_confirm_details_controller.dart';
 
@@ -104,8 +105,7 @@ class RiderMyRidesConfirmDetailsView
                                         BlendMode.srcIn),
                                   ).paddingOnly(right: 4.kw),
                                   Text(
-                                    // '07 Nov 2023, 3:00pm',
-                                    "${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.date.toString().split("T")[0]}  ${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.time}",
+                                    "${GpUtil.getDateFormat(controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.time ?? "")}  ${GpUtil.convertUtcToLocal(controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.time ?? "")}",
                                     style: TextStyleUtil.k12Regular(
                                         color: ColorUtil.kBlack03),
                                   ),
@@ -431,7 +431,7 @@ class RiderMyRidesConfirmDetailsView
                   onPressed: () async {
                     try {
                       await Get.find<RiderMyRideRequestController>()
-                          .acceptDriversRequestAPI(controller.index);
+                          .moveToPaymentFromConfirmSection(controller.index ,controller.riderConfirmRequestModel.value.data![controller.index]!);
                     } catch (e) {
                       throw Exception(e);
                     }

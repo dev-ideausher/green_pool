@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:green_pool/app/components/common_image_view.dart';
+import 'package:green_pool/app/components/origin_to_destination.dart';
 import 'package:green_pool/app/data/driver_send_request_model.dart';
 import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
@@ -33,18 +35,17 @@ class RiderRequestBottomsheet extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(children: [
             Text(
-              Strings.rideRequest,
+              Strings.riderRequest,
               style: TextStyleUtil.k18Heading600(),
-            ).paddingOnly(bottom: 32.kh),
+            ).paddingOnly(bottom: 4.kh),
             const GreenPoolDivider().paddingSymmetric(vertical: 8.kh),
             ListTile(
               leading: ClipOval(
                 child: SizedBox.fromSize(
-                  size: Size.fromRadius(20.kh),
-                  child: Image.asset(
-                    ImageConstant.pngPassenger2,
-                  ),
-                ),
+                    size: Size.fromRadius(20.kh),
+                    child: CommonImageView(
+                      url: element?.riderDetails?.profilePic?.url,
+                    )),
               ),
               title: Text(
                 element?.riderDetails?.fullName ?? "",
@@ -62,109 +63,81 @@ class RiderRequestBottomsheet extends StatelessWidget {
                         BlendMode.srcIn),
                   ).paddingOnly(right: 4.kw),
                   Text(
-                    (GpUtil.getDateFormat(element?.date) +
-                        GpUtil.getTime(element?.time)),
+                    ("${GpUtil.getDateFormat(element?.time ?? "")}, ${GpUtil.convertUtcToLocal(element?.time ?? "")}"),
                     style: TextStyleUtil.k12Regular(color: ColorUtil.kBlack02),
                   ),
-                  4.kwidthBox,
-                  Icon(
-                    Icons.location_on,
-                    size: 16.kh,
-                    color: Get.find<HomeController>().isPinkModeOn.value
-                        ? ColorUtil.kPrimary3PinkMode
-                        : ColorUtil.kSecondary01,
-                  ),
-                  FutureBuilder<String>(
-                    future: GpUtil.calculateDistance(
-                        startLat:
-                            (element.origin?.coordinates?.lastOrNull ?? 0.0),
-                        startLong:
-                            (element.origin?.coordinates?.firstOrNull ?? 0.0),
-                        endLat: (element.destination?.coordinates?.lastOrNull ??
-                            0.0),
-                        endLong:
-                            (element.destination?.coordinates?.firstOrNull ??
-                                0.0)),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return const Text(
-                            "..."); // Show a loading indicator while fetching data
-                      } else if (snapshot.hasError) {
-                        // return Text('Error: ${snapshot.error}');
-                        return text("NA");
-                      } else {
-                        return text(snapshot.data.toString());
-                      }
-                    },
-                  ),
                 ],
-              ),
+              ).paddingOnly(top: 4.kh),
               contentPadding: EdgeInsets.zero,
-              trailing: InkWell(
-                onTap: () =>
-                    Get.find<MyRidesRequestController>().openMessage(element),
-                child: Container(
-                  height: 24.kh,
-                  width: 84.kw,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(40.kh),
-                      border: Border.all(color: ColorUtil.kSecondary01)),
-                  child: Text(
-                    Strings.message,
-                    style: TextStyleUtil.k12Semibold(),
-                  ),
-                ),
-              ),
-            ),
-            const GreenPoolDivider().paddingOnly(bottom: 16.kh),
-            Stack(
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      height: 10.kh,
-                      width: 10.kw,
-                      decoration: const BoxDecoration(
-                          shape: BoxShape.circle, color: ColorUtil.kGreenColor),
-                    ).paddingOnly(right: 8.kw),
-                    Text(
-                      (element?.origin?.name ?? ""),
-                      style:
-                          TextStyleUtil.k14Regular(color: ColorUtil.kBlack02),
+              trailing: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  InkWell(
+                    onTap: () => Get.find<MyRidesRequestController>()
+                        .openMessage(element),
+                    child: Container(
+                      height: 24.kh,
+                      width: 84.kw,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(40.kh),
+                          border: Border.all(color: ColorUtil.kSecondary01)),
+                      child: Text(
+                        Strings.message,
+                        style: TextStyleUtil.k12Semibold(),
+                      ),
                     ),
-                  ],
-                ).paddingOnly(bottom: 30.kh),
-                Positioned(
-                  top: 27.kh,
-                  child: Row(
+                  ),
+                  4.kheightBox,
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      Container(
-                        height: 10.kh,
-                        width: 10.kw,
-                        decoration: const BoxDecoration(
-                            shape: BoxShape.circle, color: ColorUtil.kError4),
-                      ).paddingOnly(right: 8.kw),
-                      Text(
-                        (element?.destination?.name ?? ""),
-                        style:
-                            TextStyleUtil.k14Regular(color: ColorUtil.kBlack02),
+                      Icon(
+                        Icons.location_on,
+                        size: 16.kh,
+                        color: Get.find<HomeController>().isPinkModeOn.value
+                            ? ColorUtil.kPrimary3PinkMode
+                            : ColorUtil.kSecondary01,
+                      ),
+                      FutureBuilder<String>(
+                        future: GpUtil.calculateDistance(
+                            startLat:
+                                (element.origin?.coordinates?.lastOrNull ??
+                                    0.0),
+                            startLong:
+                                (element.origin?.coordinates?.firstOrNull ??
+                                    0.0),
+                            endLat:
+                                (element.destination?.coordinates?.lastOrNull ??
+                                    0.0),
+                            endLong: (element
+                                    .destination?.coordinates?.firstOrNull ??
+                                0.0)),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Text(
+                                "..."); // Show a loading indicator while fetching data
+                          } else if (snapshot.hasError) {
+                            // return Text('Error: ${snapshot.error}');
+                            return text("NA");
+                          } else {
+                            return text(snapshot.data.toString());
+                          }
+                        },
                       ),
                     ],
                   ),
-                ),
-                Positioned(
-                  top: 10.kh,
-                  left: 4.5.kw,
-                  child: Container(
-                    height: 28.kh,
-                    width: 1.kw,
-                    color: ColorUtil.kBlack04,
-                  ),
-                ),
-              ],
-            ).paddingOnly(bottom: 8.kh),
-            const GreenPoolDivider().paddingOnly(bottom: 16.kh),
+                ],
+              ),
+            ),
+            const GreenPoolDivider().paddingOnly(bottom: 8.kh),
+            OriginToDestination(
+                    origin: element?.origin?.name ?? "",
+                    destination: element?.destination?.name ?? "",
+                    needPickupText: false)
+                .paddingOnly(bottom: 8.kh),
+            const GreenPoolDivider().paddingOnly(bottom: 8.kh),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -172,7 +145,7 @@ class RiderRequestBottomsheet extends StatelessWidget {
                   //rating column
                   children: [
                     Text(
-                      'Rating',
+                      Strings.rating,
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Container(
@@ -202,7 +175,7 @@ class RiderRequestBottomsheet extends StatelessWidget {
                   //ride with column
                   children: [
                     Text(
-                      'Ride With',
+                      Strings.rideWith,
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Text(
@@ -217,11 +190,11 @@ class RiderRequestBottomsheet extends StatelessWidget {
                   //joined in column
                   children: [
                     Text(
-                      'Joined',
+                      Strings.joined,
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Text(
-                      'in ${element?.riderDetails?.createdAt?.substring(0, 4) ?? 2024}',
+                      '${Strings.inA} ${element?.riderDetails?.createdAt?.substring(0, 4) ?? 2024}',
                       style:
                           TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                     ),

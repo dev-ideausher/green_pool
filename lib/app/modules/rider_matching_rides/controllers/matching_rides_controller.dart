@@ -1,8 +1,11 @@
 import 'package:get/get.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
+import 'package:green_pool/app/services/snackbar.dart';
 import '../../../data/matching_rides_model.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/gp_util.dart';
+import '../../find_ride/controllers/find_ride_controller.dart';
+import '../views/create_ride_alert_bottomsheet.dart';
 
 class MatchingRidesController extends GetxController {
   Map<String, dynamic>? rideDetails;
@@ -58,14 +61,40 @@ class MatchingRidesController extends GetxController {
         endLong: matchingRidesModel
                 .value.data?[index]?.destination?.coordinates?.first ??
             longitude);
+    final price =
+        int.parse(matchingRidesModel.value.data?[index]?.price ?? "") *
+            (rideDetails?['ridesDetails']['seatAvailable']);
+    final pricePerSeat =
+        int.parse(matchingRidesModel.value.data?[index]?.price ?? "");
     Get.toNamed(Routes.DRIVER_DETAILS, arguments: {
       'rideDetails': rideDetails,
       'driverRideId': driverRideId,
-      "price": (matchingRidesModel.value.data?[index]?.price)! *
-              (rideDetails?['ridesDetails']['seatAvailable']) ??
-          0,
+      "price": price,
+      "pricePerSeat": pricePerSeat,
       'distance': distance.toString(),
       'matchingRidesmodel': matchingRidesModel.value.data?[index]
     });
+  }
+
+  Future<void> createRideAlert() async {
+    if (rideDetails?['ridesDetails']['date'] != "" ||
+        rideDetails?['ridesDetails']['time'] != "" ||
+        (rideDetails?['ridesDetails']['date'] != "" &&
+            rideDetails?['ridesDetails']['time'] != "")) {
+      try {
+        final res = await Get.find<FindRideController>().riderPostRideAPI();
+
+        await Get.bottomSheet(
+          isDismissible: false,
+          persistent: true,
+          const CreateRideAlertBottomsheet(),
+        );
+      } catch (e) {
+        throw Exception(e);
+      }
+    } else {
+      Get.back();
+      showMySnackbar(msg: "To create a ride alert please enter Date and Time");
+    }
   }
 }

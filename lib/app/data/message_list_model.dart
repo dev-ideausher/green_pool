@@ -76,7 +76,8 @@ class MessageListModelChatRoomIds {
     }
   },
   "chatRoomId": "-NvqdDOYI7ygN2zqiSXy",
-  "unReadCount": 2
+  "unReadCount": 2,
+  "deleteUpdateTime": ""
 } 
 */
 
@@ -85,6 +86,7 @@ class MessageListModelChatRoomIds {
   MessageListModelChatRoomIdsUser2? user2;
   String? chatRoomId;
   int? unReadCount;
+  String? deleteUpdateTime;
 
   MessageListModelChatRoomIds({
     this.Id,
@@ -92,6 +94,7 @@ class MessageListModelChatRoomIds {
     this.user2,
     this.chatRoomId,
     this.unReadCount,
+    this.deleteUpdateTime,
   });
   MessageListModelChatRoomIds.fromJson(Map<String, dynamic> json) {
     Id = json['_id']?.toString();
@@ -101,6 +104,7 @@ class MessageListModelChatRoomIds {
         : null;
     chatRoomId = json['chatRoomId']?.toString();
     unReadCount = json['unReadCount']?.toInt();
+    deleteUpdateTime = json['deleteUpdateTime']?.toString();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -111,6 +115,7 @@ class MessageListModelChatRoomIds {
     }
     data['chatRoomId'] = chatRoomId;
     data['unReadCount'] = unReadCount;
+    data['deleteUpdateTime'] = deleteUpdateTime;
     return data;
   }
 }
@@ -130,7 +135,8 @@ class MessageListModel {
         }
       },
       "chatRoomId": "-NvqdDOYI7ygN2zqiSXy",
-      "unReadCount": 2
+      "unReadCount": 2,
+      "deleteUpdateTime": ""
     }
   ]
 } 

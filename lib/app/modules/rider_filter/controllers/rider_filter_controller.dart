@@ -110,7 +110,7 @@ class RiderFilterController extends GetxController {
     }
 
     try {
-      final response = await APIManager.postMatchngRides(
+      final response = await APIManager.postFindMatchingDrivers(
           body: rideDetails, queryParam: queryParam);
       var data = jsonDecode(response.toString());
       matchingRidesModel.value = MatchingRidesModel.fromJson(data);

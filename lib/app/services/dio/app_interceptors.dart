@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_timezone_updated_gradle/flutter_native_timezone.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get/instance_manager.dart';
 import '../../routes/app_pages.dart';
@@ -21,10 +22,13 @@ class AppInterceptors extends Interceptor {
   FutureOr<dynamic> onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
     isOverlayLoader ? DialogHelper.showLoading() : null;
+    final String currentTimeZone =
+        await FlutterNativeTimezone.getLocalTimezone();
     await Helpers.validateToken(
       onSuccess: () {
         options.headers = {
-          "Authorization": "Bearer ${Get.find<GetStorageService>().encjwToken}"
+          "Authorization": "Bearer ${Get.find<GetStorageService>().encjwToken}",
+          "timezone": currentTimeZone,
         };
         super.onRequest(options, handler);
       },

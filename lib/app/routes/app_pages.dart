@@ -9,8 +9,6 @@ import '../modules/add_bank_details/bindings/add_bank_details_binding.dart';
 import '../modules/add_bank_details/views/add_bank_details_view.dart';
 import '../modules/add_card/bindings/add_card_binding.dart';
 import '../modules/add_card/views/add_card_view.dart';
-import '../modules/change_password/bindings/change_password_binding.dart';
-import '../modules/change_password/views/change_password_view.dart';
 import '../modules/chat_page/bindings/chat_page_binding.dart';
 import '../modules/chat_page/views/chat_page_view.dart';
 import '../modules/create_account/bindings/create_account_binding.dart';
@@ -23,10 +21,6 @@ import '../modules/file_dispute/bindings/file_dispute_binding.dart';
 import '../modules/file_dispute/views/file_dispute_view.dart';
 import '../modules/find_ride/bindings/find_ride_binding.dart';
 import '../modules/find_ride/views/find_ride_view.dart';
-import '../modules/forgot_password/bindings/forgot_password_binding.dart';
-import '../modules/forgot_password/views/forgot_password_view.dart';
-import '../modules/forgot_password_otp/bindings/forgot_password_otp_binding.dart';
-import '../modules/forgot_password_otp/views/forgot_password_otp_view.dart';
 import '../modules/help_support/bindings/help_support_binding.dart';
 import '../modules/help_support/views/help_support_view.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -71,11 +65,6 @@ import '../modules/policy_cancellation/bindings/policy_cancellation_binding.dart
 import '../modules/policy_cancellation/views/policy_cancellation_view.dart';
 import '../modules/policy_privacy/bindings/policy_privacy_binding.dart';
 import '../modules/policy_privacy/views/policy_privacy_view.dart';
-import '../modules/post_ride/bindings/post_ride_binding.dart';
-import '../modules/post_ride/views/carpool_schedule_view.dart';
-import '../modules/post_ride/views/guidelines_view.dart';
-import '../modules/post_ride/views/post_ride_view.dart';
-import '../modules/post_ride/views/pricing_view.dart';
 import '../modules/post_ride_step_four/bindings/post_ride_step_four_binding.dart';
 import '../modules/post_ride_step_four/views/post_ride_step_four_view.dart';
 import '../modules/post_ride_step_one/bindings/post_ride_step_one_binding.dart';
@@ -189,7 +178,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.MY_RIDES_ONE_TIME,
-      page: () =>  MyRidesOneTimeView(),
+      page: () => MyRidesOneTimeView(),
       binding: MyRidesOneTimeBinding(),
     ),
     GetPage(
@@ -206,26 +195,6 @@ class AppPages {
       name: _Paths.PROFILE,
       page: () => const ProfileView(),
       binding: ProfileBinding(),
-    ),
-    GetPage(
-      name: _Paths.POST_RIDE,
-      page: () => const PostRideView(),
-      binding: PostRideBinding(),
-    ),
-    GetPage(
-      name: _Paths.CARPOOL_SCHEDULE,
-      page: () => const CarpoolScheduleView(),
-      binding: PostRideBinding(),
-    ),
-    GetPage(
-      name: _Paths.PRICING_VIEW,
-      page: () => const PricingView(),
-      binding: PostRideBinding(),
-    ),
-    GetPage(
-      name: _Paths.GUIDELINES_VIEW,
-      page: () => const GuidelinesView(),
-      binding: PostRideBinding(),
     ),
     GetPage(
       name: _Paths.NOTIFICATIONS,
@@ -328,11 +297,6 @@ class AppPages {
       binding: HelpSupportBinding(),
     ),
     GetPage(
-      name: _Paths.CHANGE_PASSWORD,
-      page: () => const ChangePasswordView(),
-      binding: ChangePasswordBinding(),
-    ),
-    GetPage(
       name: _Paths.FIND_RIDE,
       page: () => const FindRideView(),
       binding: FindRideBinding(),
@@ -373,19 +337,9 @@ class AppPages {
       binding: RiderMyRidesBinding(),
     ),
     GetPage(
-      name: _Paths.FORGOT_PASSWORD,
-      page: () => const ForgotPasswordView(),
-      binding: ForgotPasswordBinding(),
-    ),
-    GetPage(
       name: _Paths.MY_RIDES_RECURRING,
       page: () => const MyRidesRecurringView(),
       binding: MyRidesRecurringBinding(),
-    ),
-    GetPage(
-      name: _Paths.FORGOT_PASSWORD_OTP,
-      page: () => const ForgotPasswordOtpView(),
-      binding: ForgotPasswordOtpBinding(),
     ),
     GetPage(
       name: _Paths.RESET_PASSWORD,

@@ -7,8 +7,8 @@ import 'package:green_pool/app/components/common_image_view.dart';
 import 'package:green_pool/app/components/gp_progress.dart';
 import 'package:green_pool/app/components/origin_to_destination.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
-import 'package:green_pool/app/modules/post_ride/views/amenities.dart';
 import 'package:green_pool/app/services/custom_button.dart';
+import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../components/green_pool_divider.dart';
@@ -17,6 +17,7 @@ import '../../../constants/image_constant.dart';
 import '../../../res/strings.dart';
 import '../../../services/colors.dart';
 import '../../../services/text_style_util.dart';
+import '../../post_ride_step_one/views/amenities.dart';
 import '../controllers/my_rides_details_controller.dart';
 
 class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
@@ -57,7 +58,7 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                                 Text(
                                   // "7 July 2023, 3:00pm",
 
-                                  "${controller.myRidesModelData.value.driverBookingDetails?.date.toString().split("T").first ?? ""}  ${controller.myRidesModelData.value.driverBookingDetails?.time ?? "00:00"}",
+                                  "${GpUtil.getDateFormat( controller.myRidesModelData.value.driverBookingDetails?.time ?? "")}  ${GpUtil.convertUtcToLocal(controller.myRidesModelData.value.driverBookingDetails?.time ?? "")}",
                                   style: TextStyleUtil.k16Bold(
                                       color: ColorUtil.kBlack02),
                                 )

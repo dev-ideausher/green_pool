@@ -22,10 +22,10 @@ class APIManager {
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
           .post(Endpoints.riderFindRide, data: jsonEncode(body));
 
-  static Future<Response> postMatchngRides(
+  static Future<Response> postFindMatchingDrivers(
           {required dynamic body, dynamic queryParam}) async =>
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).post(
-        Endpoints.matchingRides + queryParam,
+        Endpoints.findMatchingDrivers + queryParam,
         data: jsonEncode(body),
       );
 
@@ -127,6 +127,11 @@ class APIManager {
         Dio(),
         showSnakbar: true,
       ).get(Endpoints.privacyPolicy);
+
+  static Future<Response> getGuidelines() async => await DioClient(
+        Dio(),
+        showSnakbar: true,
+      ).get(Endpoints.guideLines);
 
   static Future<Response> walletBalance() async => await DioClient(
         Dio(),
@@ -323,7 +328,7 @@ class APIManager {
   static Future<Response> patchAcceptRiderRequest(
           {required dynamic body}) async =>
       // driver will accept the request send by a rider
-      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+      await DioClient(Dio(), showSnakbar: false, isOverlayLoader: true)
           .patch(Endpoints.acceptRidersRequest, data: jsonEncode(body));
 
   static Future<Response> patchRejectRiderRequest(

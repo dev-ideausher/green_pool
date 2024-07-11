@@ -7,7 +7,6 @@ import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../components/common_image_view.dart';
 import '../../../components/gp_progress.dart';
-import '../../../constants/image_constant.dart';
 import '../../../services/colors.dart';
 import '../../../services/text_style_util.dart';
 import '../controllers/transaction_history_controller.dart';
@@ -97,15 +96,12 @@ class TransactionTile extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
         ),
         contentPadding: EdgeInsets.symmetric(horizontal: 24.kw, vertical: 8.kh),
-        leading: Container(
-          height: 40.kh,
-          width: 40.kw,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-              color: ColorUtil.kBlack07,
-              borderRadius: BorderRadius.circular(12.kh)),
+        leading: ClipRRect(
+          borderRadius: BorderRadius.circular(8.kh),
           child: CommonImageView(
             url: path,
+            height: 40.kh,
+            width: 40.kw,
           ),
         ),
         trailing: trailing ?? SizedBox(),

@@ -194,7 +194,8 @@ class RideHistoryView extends GetView<RideHistoryController> {
                                                               Text(
                                                                 // '07 Nov 2023, 3:00pm',
                                                                 GpUtil.getDateFormat(
-                                                                    his?.date),
+                                                                    his?.time ??
+                                                                        ""),
                                                                 style: TextStyleUtil
                                                                     .k12Regular(
                                                                         color: ColorUtil
@@ -331,7 +332,9 @@ class DriverRideHistTile extends StatelessWidget {
                 // GpUtil.getDateFormat(controller.rideHistModel.value.data?[index]?.date) ??
                 ((controller.rideHistModel.value.data?[index]?.time ?? "") == ""
                     ? ""
-                    : "${controller.rideHistModel.value.data?[index]?.time}"),
+                    : GpUtil.convertUtcToLocal(
+                        controller.rideHistModel.value.data?[index]?.time ??
+                            "")),
                 style: TextStyleUtil.k12Regular(color: ColorUtil.kBlack03),
               ),
               trailing: SizedBox(
@@ -393,9 +396,9 @@ class DriverRideHistTile extends StatelessWidget {
                             BlendMode.srcIn),
                       ).paddingOnly(right: 4.kw),
                       Text(
-                        GpUtil.getDateFormat(controller
-                                .rideHistModel.value.data?[index]?.date) ??
-                            "",
+                        GpUtil.getDateFormat(
+                            controller.rideHistModel.value.data?[index]?.time ??
+                                ""),
                         style:
                             TextStyleUtil.k12Regular(color: ColorUtil.kBlack03),
                       ),

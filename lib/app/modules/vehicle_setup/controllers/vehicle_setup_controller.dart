@@ -16,7 +16,6 @@ import 'package:dio/dio.dart' as dio;
 import 'package:path/path.dart' as path;
 
 class VehicleSetupController extends GetxController {
-  bool fromNavBar = false;
   Rx<File?> selectedVehicleImagePath = Rx<File?>(null);
   TextEditingController model = TextEditingController();
 
@@ -90,7 +89,6 @@ class VehicleSetupController extends GetxController {
     }
 
     final vehicleData = dio.FormData.fromMap({
-      'driverId': Get.find<GetStorageService>().getUserAppId,
       'model': model.text,
       'type': type.value,
       'color': color.value,
@@ -104,20 +102,16 @@ class VehicleSetupController extends GetxController {
     });
 
 /*    if (Get.find<GetStorageService>().profileStatus == true) {*/
-      try {
-        await APIManager.postVehicleDetails(body: vehicleData);
-        showMySnackbar(msg: "Data filled successfully");
-        Get.find<HomeController>().userInfoAPI();
-        // Get.offNamed(Routes.CARPOOL_SCHEDULE, arguments: isDriver);
-        if (fromNavBar) {
-          Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
-        } else {
-          // Get.until((route) => Get.currentRoute == Routes.POST_RIDE);
-          Get.offNamed(Routes.POST_RIDE_STEP_TWO, arguments: postRideModel.value);
-        }
-      } catch (e) {
-        throw Exception(e);
-      }
+    try {
+      await APIManager.postVehicleDetails(body: vehicleData);
+      showMySnackbar(msg: "Data filled successfully");
+      Get.find<GetStorageService>().setDriver = true;
+      Get.find<HomeController>().userInfoAPI();
+      // Get.offNamed(Routes.CARPOOL_SCHEDULE, arguments: isDriver);
+      Get.offNamed(Routes.POST_RIDE_STEP_TWO, arguments: postRideModel.value);
+    } catch (e) {
+      throw Exception(e);
+    }
     /*} else {
       showMySnackbar(msg: 'Please fill in all the details');
     }*/

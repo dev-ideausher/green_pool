@@ -114,11 +114,7 @@ class HomeController extends GetxController {
               });
         }
         // Setup message notifications
-        Permission.notification.isDenied.then((value) async {
-          if (value) {
-            Get.bottomSheet(const NotificationBottomSheet());
-          }
-        });
+        setupMessage();
       } catch (e) {
         debugPrint(e.toString());
       }
@@ -153,7 +149,8 @@ class HomeController extends GetxController {
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.always ||
-          permission == LocationPermission.whileInUse) {
+          permission == LocationPermission.whileInUse ||
+          permission == LocationPermission.unableToDetermine) {
         // Get.until((route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
         Get.back();
         await Permission.notification.isDenied.then((value) async {

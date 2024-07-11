@@ -29,9 +29,11 @@ class PaymentController extends GetxController {
   final RxBool fromDriverDetails = false.obs;
   final RxBool fromConfirmRequestSection = false.obs;
   String ridePostId = "";
+  String promoCodeId = "";
   int price = 0;
   int discountProvided = 0;
   int totalAmount = 0;
+  int pricePerSeat = 0;
 
   @override
   Future<void> onInit() async {
@@ -41,7 +43,7 @@ class PaymentController extends GetxController {
       riderSendRequestModelData = Get.arguments['riderSendRequestModelData'];
       price = rideData['price'];
       totalAmount = rideData['price'];
-      await getWallet();
+      pricePerSeat = int.parse(Get.arguments['pricePerSeat']);
     } catch (e) {
       try {
         ridePostId = Get.arguments['ridePostId'];
@@ -49,17 +51,18 @@ class PaymentController extends GetxController {
         totalAmount = int.parse(Get.arguments['price']);
         riderConfirmRequestModelData =
             Get.arguments['riderConfirmRequestModelData'];
+        pricePerSeat = Get.arguments['pricePerSeat'];
         fromConfirmRequestSection.value = true;
-        await getWallet();
       } catch (e) {
-        rideData = Get.arguments;
+        rideData = Get.arguments["rideData"];
         fromDriverDetails.value = true;
-        price = rideData['ridesDetails']['price'];
-        totalAmount = rideData['ridesDetails']['price'];
-        await getWallet();
+        price = rideData['ridesDetails']["price"];
+        totalAmount = rideData['ridesDetails']["price"];
+        pricePerSeat = Get.arguments["pricePerSeat"];
       }
     }
     checkWalletBalance();
+    await getWallet();
   }
 
   // @override
@@ -94,14 +97,15 @@ class PaymentController extends GetxController {
   }
 
   createRideAlert() async {
-    rideData!['ridesDetails']!['price'] = totalAmount;
+    rideData!['ridesDetails']!['price'] = price;
 
     if (walletBalance.value >= totalAmount) {
       try {
         final response = await APIManager.postCreateAlert(body: {
           "ridesDetails": rideData['ridesDetails'],
           "driverRideId": rideData['driverRideId'],
-          "distance": rideData['distance']
+          "distance": rideData['distance'],
+          "promoCodeId": promoCodeId
         });
         requestRideModel.value =
             RequestRideByRiderModel.fromJson(response.data);
@@ -119,43 +123,53 @@ class PaymentController extends GetxController {
   }
 
   Future<void> sendRequesttoDriverAPI() async {
-    try {
-      final response = await APIManager.postSendRequestToDriver(body: {
-        "riderRideId": rideData['riderRideId'],
-        "driverRideId": rideData['driverRideId'],
-        "driverId": rideData['driverId'],
-        "driverName": rideData['driverName'],
-        "driverNotificationPreferences":
-            rideData['driverNotificationPreferences'],
-        "price": totalAmount,
-      });
-      if (response.data['status']) {
-        DialogHelper.paymentSuccessfull();
-        Get.find<MyRidesOneTimeController>().myRidesAPI();
-        Get.find<RiderMyRideRequestController>().allRiderSendRequestAPI();
-      } else {
-        // showMySnackbar(msg: response.data['message']);
-        Get.bottomSheet(const InsufficientBalanceSheet());
+    if (walletBalance.value >= totalAmount) {
+      try {
+        final response = await APIManager.postSendRequestToDriver(body: {
+          "riderRideId": rideData['riderRideId'],
+          "driverRideId": rideData['driverRideId'],
+          "driverId": rideData['driverId'],
+          "driverName": rideData['driverName'],
+          "driverNotificationPreferences":
+              rideData['driverNotificationPreferences'],
+          "price": price,
+          "promoCodeId": promoCodeId
+        });
+        if (response.data['status']) {
+          DialogHelper.paymentSuccessfull();
+          Get.find<MyRidesOneTimeController>().myRidesAPI();
+          Get.find<RiderMyRideRequestController>().allRiderSendRequestAPI();
+        } else {
+          showMySnackbar(msg: response.data['message'].toString() ?? "");
+        }
+      } catch (e) {
+        throw Exception(e);
       }
-    } catch (e) {
-      throw Exception(e);
+    } else {
+      Get.bottomSheet(const InsufficientBalanceSheet());
     }
   }
 
   Future<void> confirmRequestOfDriverAPI() async {
-    try {
-      final response = await APIManager.acceptDriversRequest(
-          body: {"ridePostId": ridePostId, "price": totalAmount});
-      if (response.data['status']) {
-        Get.bottomSheet(const RequestAcceptedBottom());
-        Get.find<RiderMyRideRequestController>().allRiderConfirmRequestAPI();
-        Get.find<MyRidesOneTimeController>().myRidesAPI();
-      } else {
-        // showMySnackbar(msg: response.data['message']);
-        Get.bottomSheet(const InsufficientBalanceSheet());
+    if (walletBalance.value >= totalAmount) {
+      try {
+        final response = await APIManager.acceptDriversRequest(body: {
+          "ridePostId": ridePostId,
+          "price": price,
+          "promoCodeId": promoCodeId
+        });
+        if (response.data['status']) {
+          Get.bottomSheet(const RequestAcceptedBottom());
+          Get.find<RiderMyRideRequestController>().allRiderConfirmRequestAPI();
+          Get.find<MyRidesOneTimeController>().myRidesAPI();
+        } else {
+          showMySnackbar(msg: response.data['message'].toString() ?? "");
+        }
+      } catch (e) {
+        throw Exception(e);
       }
-    } catch (e) {
-      throw Exception(e);
+    } else {
+      Get.bottomSheet(const InsufficientBalanceSheet());
     }
   }
 
@@ -192,6 +206,7 @@ class PaymentController extends GetxController {
         discountProvided = discount!;
         totalAmount = price - discount;
       }
+      promoCodeId = promoCodeModel.value.data?[index]?.Id ?? "";
       isLoading.value = false;
       Get.back();
     } else {

@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:math';
 import 'dart:ui';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -206,20 +205,18 @@ class GpUtil {
         dateToCheck.day == now.day;
   }
 
-  static String getDateFormat(var mnow) {
+  static String getDateFormat(String time) {
     var outputDate = "";
-    if (mnow != null) {
+    if (time != "") {
       try {
-        var datetime = DateTime.parse(mnow);
-        var localDate = datetime;
-
-        var outputFormat = DateFormat('dd MMM yyyy');
-        outputDate = outputFormat.format(localDate);
+        var combinedDateUtc = convertCombinedUtcToLocal(time);
+        outputDate =
+            formatDate(DateTime.parse(combinedDateUtc.split("T").first))
+                .toString();
       } catch (e) {
         debugPrint(e.toString());
       }
     }
-
     return outputDate;
   }
 
@@ -230,7 +227,7 @@ class GpUtil {
         var datetime = DateTime.parse(mnow);
         var localDate = datetime.toLocal();
 
-        var outputFormat = DateFormat('HH:mm a');
+        var outputFormat = DateFormat('HH:mm');
         outputDate = outputFormat.format(localDate);
       } catch (e) {
         debugPrint(e.toString());
@@ -281,6 +278,88 @@ class GpUtil {
       await launchUrl(Uri.parse(googleUrl));
     } else {
       throw 'Could not open the map.';
+    }
+  }
+
+  static String convertCombinedToGmt(String combinedDateTime) {
+    if (combinedDateTime.isEmpty) {
+      return "";
+    }
+
+    try {
+      var inputFormat = DateFormat("yyyy-MM-dd'T'hh:mm a");
+      var localDateTime = inputFormat.parse(combinedDateTime);
+      var gmtDateTime = localDateTime.toUtc();
+
+      var outputFormat = DateFormat('yyyy-MM-ddTHH:mm');
+
+      return outputFormat.format(gmtDateTime);
+    } catch (e) {
+      debugPrint(e.toString());
+      return "";
+    }
+  }
+
+  static String convertCombinedUtcToLocal(String utcTimeString) {
+    if (utcTimeString.isEmpty) {
+      return "";
+    }
+
+    try {
+      var inputFormat = DateFormat("yyyy-MM-dd'T'HH:mm");
+
+      var utcDateTime = inputFormat.parseUtc(utcTimeString);
+      var localDateTime = utcDateTime.toLocal();
+
+      var outputFormat = DateFormat("yyyy-MM-dd'T'hh:mm a");
+
+      return outputFormat.format(localDateTime);
+    } catch (e) {
+      debugPrint(e.toString());
+      return "";
+    }
+  }
+
+  static String convertLocalTimeToGmt(String localTimeString) {
+    if (localTimeString.isEmpty) {
+      return "";
+    }
+
+    try {
+      // Parse the local time string to a DateTime object
+      var localDateTime = DateFormat('HH:mm').parse(localTimeString);
+
+      // Convert the local DateTime to UTC
+      var gmtDateTime = localDateTime.toUtc();
+
+      // Format the GMT DateTime object to a string
+      var outputFormat = DateFormat('HH:mm');
+      return outputFormat.format(gmtDateTime);
+    } catch (e) {
+      debugPrint(e.toString());
+      return "";
+    }
+  }
+
+  static String convertUtcToLocal(String utcTimeString) {
+    if (utcTimeString.isEmpty) {
+      return "";
+    }
+
+    try {
+      // Parse the UTC time string to a DateTime object
+      var utcDateTime =
+          DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").parseUtc(utcTimeString);
+
+      // Convert the UTC DateTime to local time
+      var localDateTime = utcDateTime.toLocal();
+
+      // Format the local DateTime object to a string
+      var outputFormat = DateFormat('hh:mm a');
+      return outputFormat.format(localDateTime);
+    } catch (e) {
+      debugPrint(e.toString());
+      return "";
     }
   }
 }

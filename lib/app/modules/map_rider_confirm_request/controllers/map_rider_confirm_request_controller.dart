@@ -5,16 +5,17 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
+import '../../../data/rider_confirm_request_model.dart';
 import '../../../services/dio/endpoints.dart';
 import '../../../services/gp_util.dart';
 import '../../home/controllers/home_controller.dart';
 import '../../rider_my_ride_request/controllers/rider_my_ride_request_controller.dart';
+import '../views/map_rider_confirm_bottomsheet.dart';
 
 class MapRiderConfirmRequestController extends GetxController {
   double latitude = Get.find<HomeController>().latitude.value;
   double longitude = Get.find<HomeController>().longitude.value;
-  var riderConfirmRequestModel =
-      Get.find<RiderMyRideRequestController>().riderConfirmRequestModel;
+  var riderConfirmRequestModel = RiderConfirmRequestModel().obs;
 
   late GoogleMapController mapController;
   final RxList<LatLng> polylineCoordinates = <LatLng>[].obs;
@@ -68,30 +69,27 @@ class MapRiderConfirmRequestController extends GetxController {
     }
   }
 
-  addMarkers(LatLng driverLocation, imgurl) async {
-    Uint8List bytes = (await NetworkAssetBundle(Uri.parse(imgurl)).load(imgurl))
-        .buffer
-        .asUint8List();
+  addMarkers(RiderConfirmRequestModelData element, LatLng driverLocation,
+      imgurl) async {
+    final bytes = await GpUtil.getMarkerIconFromUrl(imgurl);
     markers.add(Marker(
-      markerId: MarkerId(driverLocation.toString()),
-      position: driverLocation, //position of marker
-      onTap: () {
-        // Get.bottomSheet(const MapDriverSendBottomsheet());
-      },
-      infoWindow: const InfoWindow(
-        title: 'Driver',
-        snippet: 'Driver',
-      ),
-      icon: BitmapDescriptor.fromBytes(bytes,
-          size: Size(60.kw, 60.kh)), //Icon for Marker
-      // icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
-    ));
+        markerId: MarkerId(driverLocation.toString()),
+        position: driverLocation,
+        onTap: () {
+          Get.bottomSheet(MapRiderConfirmBottomsheet(element: element),
+              isScrollControlled: true);
+        },
+        // infoWindow: const InfoWindow(title: 'Rider', snippet: 'Rider'),
+        icon: bytes));
   }
 
   void createMarker() {
     isLoading.value = true;
+    riderConfirmRequestModel.value =
+        Get.find<RiderMyRideRequestController>().riderConfirmRequestModel.value;
     riderConfirmRequestModel.value.data?.forEach((element) async {
       await addMarkers(
+          element!,
           LatLng(element?.driverRideDetails?.origin?.coordinates?.last ?? 0.0,
               element?.driverRideDetails?.origin?.coordinates?.first ?? 0.0),
           element?.driverRideDetails?.driverDetails?[0]?.profilePic?.url);

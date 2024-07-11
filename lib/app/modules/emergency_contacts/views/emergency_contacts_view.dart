@@ -29,7 +29,7 @@ class EmergencyContactsView extends GetView<EmergencyContactsController> {
             style: TextStyleUtil.k16Bold(),
           ).paddingOnly(top: 32.kh, bottom: 24.kh),
           Text(
-            'Contact number 1',
+            Strings.contactNumberOne,
             style: TextStyleUtil.k14Bold(color: ColorUtil.kBlack02),
           ).paddingOnly(bottom: 16.kh),
           Text(
@@ -57,7 +57,7 @@ class EmergencyContactsView extends GetView<EmergencyContactsController> {
           ).paddingOnly(bottom: 24.kh),
           const GreenPoolDivider().paddingOnly(bottom: 16.kh),
           Text(
-            'Contact number 2',
+            Strings.contactNumberTwo,
             style: TextStyleUtil.k14Bold(color: ColorUtil.kBlack02),
           ).paddingOnly(bottom: 16.kh),
           Text(

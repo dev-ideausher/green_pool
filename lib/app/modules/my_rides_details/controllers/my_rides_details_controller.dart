@@ -51,16 +51,23 @@ class MyRidesDetailsController extends GetxController {
               [],
       onPressed: (rider) async {
         try {
-          final res =
-              await APIManager.getChatRoomId(receiverId: rider.riderDetails?.Id ?? "");
+          final res = await APIManager.getChatRoomId(
+              receiverId: rider.riderDetails?.Id ?? "");
           Get.toNamed(Routes.CHAT_PAGE,
               arguments: ChatArg(
-                  chatRoomId: res.data["chatChannelId"] ?? "",
+                  chatRoomId: res.data["data"]["chatRoomId"] ?? "",
+                  deleteUpdateTime: res.data["data"]["deleteUpdateTime"] ?? "",
                   id: rider.riderDetails?.Id,
                   name: rider.riderDetails?.fullName ?? "",
                   image: rider.riderDetails?.profilePic?.url));
         } catch (e) {
-          debugPrint(e.toString());
+          Get.toNamed(Routes.CHAT_PAGE,
+              arguments: ChatArg(
+                  chatRoomId: "",
+                  deleteUpdateTime: "",
+                  id: rider.riderDetails?.Id,
+                  name: rider.riderDetails?.fullName ?? "",
+                  image: rider.riderDetails?.profilePic?.url));
         }
       },
     ));

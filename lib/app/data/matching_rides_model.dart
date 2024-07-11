@@ -4,9 +4,9 @@
 class MatchingRidesModelDataDriverDetailsVehicleDetailsVehiclePic {
 /*
 {
-  "key": "vehiclePic/caa69155-4853-4a09-ac08-6584a2a3ee86-compressed_0956573e-9537-48c2-9539-f25f3e1597323162184291488028667.jpg",
-  "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/vehiclePic/caa69155-4853-4a09-ac08-6584a2a3ee86-compressed_0956573e-9537-48c2-9539-f25f3e1597323162184291488028667.jpg",
-  "_id": "6639b8a358249d84ebc50640"
+  "key": "vehiclePic/b9fae2cc-33ed-4b5c-b602-c075fa476e3f-1000000038.jpg",
+  "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/vehiclePic/b9fae2cc-33ed-4b5c-b602-c075fa476e3f-1000000038.jpg",
+  "_id": "6603d738ba3fdc24d7cbce50"
 } 
 */
 
@@ -37,20 +37,20 @@ class MatchingRidesModelDataDriverDetailsVehicleDetailsVehiclePic {
 class MatchingRidesModelDataDriverDetailsVehicleDetails {
 /*
 {
-  "_id": "6639b8a358249d84ebc5063f",
-  "driverId": "6639b78f58249d84ebc5062f",
+  "_id": "65c23bef32f497dc57fdf002",
+  "driverId": "65c228fd32f497dc57fdeff8",
   "vehiclePic": {
-    "key": "vehiclePic/caa69155-4853-4a09-ac08-6584a2a3ee86-compressed_0956573e-9537-48c2-9539-f25f3e1597323162184291488028667.jpg",
-    "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/vehiclePic/caa69155-4853-4a09-ac08-6584a2a3ee86-compressed_0956573e-9537-48c2-9539-f25f3e1597323162184291488028667.jpg",
-    "_id": "6639b8a358249d84ebc50640"
+    "key": "vehiclePic/b9fae2cc-33ed-4b5c-b602-c075fa476e3f-1000000038.jpg",
+    "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/vehiclePic/b9fae2cc-33ed-4b5c-b602-c075fa476e3f-1000000038.jpg",
+    "_id": "6603d738ba3fdc24d7cbce50"
   },
-  "model": "iuModel",
-  "type": "Sedan",
-  "color": "Silver",
-  "year": 2000,
-  "licencePlate": "CA2000",
-  "createdAt": "2024-05-07T05:14:11.059Z",
-  "updatedAt": "2024-05-07T05:14:11.059Z"
+  "model": "creta",
+  "type": "Convertible",
+  "color": "Black",
+  "year": 2024,
+  "licencePlate": "LA2024",
+  "createdAt": "2024-02-06T14:02:23.061Z",
+  "updatedAt": "2024-04-15T04:53:34.316Z"
 } 
 */
 
@@ -111,6 +111,39 @@ class MatchingRidesModelDataDriverDetailsVehicleDetails {
   }
 }
 
+class MatchingRidesModelDataDriverDetailsSuspensionDetails {
+/*
+{
+  "dateFrom": "2024-07-02T07:06:39.626Z",
+  "dateTo": "2024-07-02T07:06:39.626Z",
+  "cancelPolicy": "665d7b1bd2ce0392ad50be4c"
+} 
+*/
+
+  String? dateFrom;
+  String? dateTo;
+  String? cancelPolicy;
+
+  MatchingRidesModelDataDriverDetailsSuspensionDetails({
+    this.dateFrom,
+    this.dateTo,
+    this.cancelPolicy,
+  });
+  MatchingRidesModelDataDriverDetailsSuspensionDetails.fromJson(
+      Map<String, dynamic> json) {
+    dateFrom = json['dateFrom']?.toString();
+    dateTo = json['dateTo']?.toString();
+    cancelPolicy = json['cancelPolicy']?.toString();
+  }
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+    data['dateFrom'] = dateFrom;
+    data['dateTo'] = dateTo;
+    data['cancelPolicy'] = cancelPolicy;
+    return data;
+  }
+}
+
 class MatchingRidesModelDataDriverDetailsNotificationPreferences {
 /*
 {
@@ -154,44 +187,12 @@ class MatchingRidesModelDataDriverDetailsNotificationPreferences {
   }
 }
 
-class MatchingRidesModelDataDriverDetailsIdPic {
-/*
-{
-  "key": "idPic/00e6959a-4cdc-431d-ba58-da857820af92-compressed_6625135b-e7b2-47d0-bee1-c5168a1ff49b8491292186802062625.jpg",
-  "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/idPic/00e6959a-4cdc-431d-ba58-da857820af92-compressed_6625135b-e7b2-47d0-bee1-c5168a1ff49b8491292186802062625.jpg",
-  "_id": "6639b83358249d84ebc50639"
-} 
-*/
-
-  String? key;
-  String? url;
-  String? Id;
-
-  MatchingRidesModelDataDriverDetailsIdPic({
-    this.key,
-    this.url,
-    this.Id,
-  });
-  MatchingRidesModelDataDriverDetailsIdPic.fromJson(Map<String, dynamic> json) {
-    key = json['key']?.toString();
-    url = json['url']?.toString();
-    Id = json['_id']?.toString();
-  }
-  Map<String, dynamic> toJson() {
-    final data = <String, dynamic>{};
-    data['key'] = key;
-    data['url'] = url;
-    data['_id'] = Id;
-    return data;
-  }
-}
-
 class MatchingRidesModelDataDriverDetailsProfilePic {
 /*
 {
-  "key": "usersProfile/f8be0e1f-86ca-45d4-af4f-d4c04a83fe47-compressed_3f027cf1-f3a0-47b4-a359-af93fcbd77b54236667115881885527.jpg",
-  "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/f8be0e1f-86ca-45d4-af4f-d4c04a83fe47-compressed_3f027cf1-f3a0-47b4-a359-af93fcbd77b54236667115881885527.jpg",
-  "_id": "6639b83358249d84ebc50638"
+  "key": "usersProfile/343e91cd-5339-4cb2-ab54-bb2c5c85ef7b-compressed_image_picker_E10F697C-B897-4693-A1EE-3FAC86253315-80244-000007221A4BE6ED.jpg",
+  "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/343e91cd-5339-4cb2-ab54-bb2c5c85ef7b-compressed_image_picker_E10F697C-B897-4693-A1EE-3FAC86253315-80244-000007221A4BE6ED.jpg",
+  "_id": "664af3b5cd651d9acab11363"
 } 
 */
 
@@ -219,37 +220,68 @@ class MatchingRidesModelDataDriverDetailsProfilePic {
   }
 }
 
+class MatchingRidesModelDataDriverDetailsIdPic {
+/*
+{
+  "key": "idPic/14a1f67c-67d3-417a-88ab-de80318076ce-compressed_image_picker_27017447-33A6-4FD5-9E68-9E333A4519E7-80244-000007220A59499C.jpg",
+  "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/idPic/14a1f67c-67d3-417a-88ab-de80318076ce-compressed_image_picker_27017447-33A6-4FD5-9E68-9E333A4519E7-80244-000007220A59499C.jpg",
+  "_id": "664af3b5cd651d9acab11364"
+} 
+*/
+
+  String? key;
+  String? url;
+  String? Id;
+
+  MatchingRidesModelDataDriverDetailsIdPic({
+    this.key,
+    this.url,
+    this.Id,
+  });
+  MatchingRidesModelDataDriverDetailsIdPic.fromJson(Map<String, dynamic> json) {
+    key = json['key']?.toString();
+    url = json['url']?.toString();
+    Id = json['_id']?.toString();
+  }
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+    data['key'] = key;
+    data['url'] = url;
+    data['_id'] = Id;
+    return data;
+  }
+}
+
 class MatchingRidesModelDataDriverDetails {
 /*
 {
-  "_id": "6639b78f58249d84ebc5062f",
-  "isRegister": true,
-  "pinkMode": false,
-  "fullName": "Zen",
-  "phone": "+11234512345",
-  "email": "zen@test.com",
-  "city": "Brampton",
-  "profilePic": {
-    "key": "usersProfile/f8be0e1f-86ca-45d4-af4f-d4c04a83fe47-compressed_3f027cf1-f3a0-47b4-a359-af93fcbd77b54236667115881885527.jpg",
-    "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/f8be0e1f-86ca-45d4-af4f-d4c04a83fe47-compressed_3f027cf1-f3a0-47b4-a359-af93fcbd77b54236667115881885527.jpg",
-    "_id": "6639b83358249d84ebc50638"
-  },
-  "idPic": {
-    "key": "idPic/00e6959a-4cdc-431d-ba58-da857820af92-compressed_6625135b-e7b2-47d0-bee1-c5168a1ff49b8491292186802062625.jpg",
-    "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/idPic/00e6959a-4cdc-431d-ba58-da857820af92-compressed_6625135b-e7b2-47d0-bee1-c5168a1ff49b8491292186802062625.jpg",
-    "_id": "6639b83358249d84ebc50639"
-  },
-  "dob": "2006-05-12",
+  "_id": "65c228fd32f497dc57fdeff8",
+  "fullName": "Amar",
+  "phone": "+11111122222",
+  "email": "amar@ideausher.com",
+  "dob": "2006-05-25",
   "gender": "Male",
   "isDriver": true,
-  "referralCode": "N5213I5793",
+  "referralCode": "C3072B8509",
   "profileStatus": true,
   "vehicleStatus": true,
+  "firebaseUid": "foYFX1qnSaPETdXnF1IFVT0xpkZ2",
+  "firebaseSignInProvider": "phone",
+  "createdAt": "2024-02-06T12:41:33.824Z",
+  "updatedAt": "2024-07-08T07:12:13.245Z",
+  "idPic": {
+    "key": "idPic/14a1f67c-67d3-417a-88ab-de80318076ce-compressed_image_picker_27017447-33A6-4FD5-9E68-9E333A4519E7-80244-000007220A59499C.jpg",
+    "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/idPic/14a1f67c-67d3-417a-88ab-de80318076ce-compressed_image_picker_27017447-33A6-4FD5-9E68-9E333A4519E7-80244-000007220A59499C.jpg",
+    "_id": "664af3b5cd651d9acab11364"
+  },
+  "profilePic": {
+    "key": "usersProfile/343e91cd-5339-4cb2-ab54-bb2c5c85ef7b-compressed_image_picker_E10F697C-B897-4693-A1EE-3FAC86253315-80244-000007221A4BE6ED.jpg",
+    "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/343e91cd-5339-4cb2-ab54-bb2c5c85ef7b-compressed_image_picker_E10F697C-B897-4693-A1EE-3FAC86253315-80244-000007221A4BE6ED.jpg",
+    "_id": "664af3b5cd651d9acab11363"
+  },
   "status": "active",
-  "wallet": 0,
-  "rating": 0,
-  "totalRides": 0,
-  "isRecurringTripEnabled": false,
+  "city": "Zurich, Ontario",
+  "pinkMode": false,
   "notificationPreferences": {
     "trip": true,
     "alerts": true,
@@ -257,125 +289,137 @@ class MatchingRidesModelDataDriverDetails {
     "transactions": true,
     "offers": true
   },
-  "firebaseUid": "n9XvgstaJCShxg2V5AmREneUYOE2",
-  "firebaseSignInProvider": "phone",
-  "createdAt": "2024-05-07T05:09:35.528Z",
-  "updatedAt": "2024-05-09T05:38:05.406Z",
+  "rating": 0,
+  "totalRides": 0,
+  "isRegister": true,
   "role": "user",
+  "rideCancellationCount": 1,
+  "connected_account_id": "acct_1POa6QSBsf3jz2sG",
+  "suspensionDetails": {
+    "dateFrom": "2024-07-02T07:06:39.626Z",
+    "dateTo": "2024-07-02T07:06:39.626Z",
+    "cancelPolicy": "665d7b1bd2ce0392ad50be4c"
+  },
   "vehicleDetails": [
     {
-      "_id": "6639b8a358249d84ebc5063f",
-      "driverId": "6639b78f58249d84ebc5062f",
+      "_id": "65c23bef32f497dc57fdf002",
+      "driverId": "65c228fd32f497dc57fdeff8",
       "vehiclePic": {
-        "key": "vehiclePic/caa69155-4853-4a09-ac08-6584a2a3ee86-compressed_0956573e-9537-48c2-9539-f25f3e1597323162184291488028667.jpg",
-        "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/vehiclePic/caa69155-4853-4a09-ac08-6584a2a3ee86-compressed_0956573e-9537-48c2-9539-f25f3e1597323162184291488028667.jpg",
-        "_id": "6639b8a358249d84ebc50640"
+        "key": "vehiclePic/b9fae2cc-33ed-4b5c-b602-c075fa476e3f-1000000038.jpg",
+        "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/vehiclePic/b9fae2cc-33ed-4b5c-b602-c075fa476e3f-1000000038.jpg",
+        "_id": "6603d738ba3fdc24d7cbce50"
       },
-      "model": "iuModel",
-      "type": "Sedan",
-      "color": "Silver",
-      "year": 2000,
-      "licencePlate": "CA2000",
-      "createdAt": "2024-05-07T05:14:11.059Z",
-      "updatedAt": "2024-05-07T05:14:11.059Z"
+      "model": "creta",
+      "type": "Convertible",
+      "color": "Black",
+      "year": 2024,
+      "licencePlate": "LA2024",
+      "createdAt": "2024-02-06T14:02:23.061Z",
+      "updatedAt": "2024-04-15T04:53:34.316Z"
     }
   ]
 } 
 */
 
   String? Id;
-  bool? isRegister;
-  bool? pinkMode;
   String? fullName;
   String? phone;
   String? email;
-  String? city;
-  MatchingRidesModelDataDriverDetailsProfilePic? profilePic;
-  MatchingRidesModelDataDriverDetailsIdPic? idPic;
   String? dob;
   String? gender;
   bool? isDriver;
   String? referralCode;
   bool? profileStatus;
   bool? vehicleStatus;
-  String? status;
-  int? wallet;
-  int? rating;
-  int? totalRides;
-  bool? isRecurringTripEnabled;
-  MatchingRidesModelDataDriverDetailsNotificationPreferences?
-      notificationPreferences;
   String? firebaseUid;
   String? firebaseSignInProvider;
   String? createdAt;
   String? updatedAt;
+  MatchingRidesModelDataDriverDetailsIdPic? idPic;
+  MatchingRidesModelDataDriverDetailsProfilePic? profilePic;
+  String? status;
+  String? city;
+  bool? pinkMode;
+  MatchingRidesModelDataDriverDetailsNotificationPreferences?
+      notificationPreferences;
+  int? rating;
+  int? totalRides;
+  bool? isRegister;
   String? role;
+  int? rideCancellationCount;
+  String? connectedAccountId;
+  MatchingRidesModelDataDriverDetailsSuspensionDetails? suspensionDetails;
   List<MatchingRidesModelDataDriverDetailsVehicleDetails?>? vehicleDetails;
 
   MatchingRidesModelDataDriverDetails({
     this.Id,
-    this.isRegister,
-    this.pinkMode,
     this.fullName,
     this.phone,
     this.email,
-    this.city,
-    this.profilePic,
-    this.idPic,
     this.dob,
     this.gender,
     this.isDriver,
     this.referralCode,
     this.profileStatus,
     this.vehicleStatus,
-    this.status,
-    this.wallet,
-    this.rating,
-    this.totalRides,
-    this.isRecurringTripEnabled,
-    this.notificationPreferences,
     this.firebaseUid,
     this.firebaseSignInProvider,
     this.createdAt,
     this.updatedAt,
+    this.idPic,
+    this.profilePic,
+    this.status,
+    this.city,
+    this.pinkMode,
+    this.notificationPreferences,
+    this.rating,
+    this.totalRides,
+    this.isRegister,
     this.role,
+    this.rideCancellationCount,
+    this.connectedAccountId,
+    this.suspensionDetails,
     this.vehicleDetails,
   });
   MatchingRidesModelDataDriverDetails.fromJson(Map<String, dynamic> json) {
     Id = json['_id']?.toString();
-    isRegister = json['isRegister'];
-    pinkMode = json['pinkMode'];
     fullName = json['fullName']?.toString();
     phone = json['phone']?.toString();
     email = json['email']?.toString();
-    city = json['city']?.toString();
-    profilePic = (json['profilePic'] != null)
-        ? MatchingRidesModelDataDriverDetailsProfilePic.fromJson(
-            json['profilePic'])
-        : null;
-    idPic = (json['idPic'] != null)
-        ? MatchingRidesModelDataDriverDetailsIdPic.fromJson(json['idPic'])
-        : null;
     dob = json['dob']?.toString();
     gender = json['gender']?.toString();
     isDriver = json['isDriver'];
     referralCode = json['referralCode']?.toString();
     profileStatus = json['profileStatus'];
     vehicleStatus = json['vehicleStatus'];
-    status = json['status']?.toString();
-    wallet = json['wallet']?.toInt();
-    rating = json['rating']?.toInt();
-    totalRides = json['totalRides']?.toInt();
-    isRecurringTripEnabled = json['isRecurringTripEnabled'];
-    notificationPreferences = (json['notificationPreferences'] != null)
-        ? MatchingRidesModelDataDriverDetailsNotificationPreferences.fromJson(
-            json['notificationPreferences'])
-        : null;
     firebaseUid = json['firebaseUid']?.toString();
     firebaseSignInProvider = json['firebaseSignInProvider']?.toString();
     createdAt = json['createdAt']?.toString();
     updatedAt = json['updatedAt']?.toString();
+    idPic = (json['idPic'] != null)
+        ? MatchingRidesModelDataDriverDetailsIdPic.fromJson(json['idPic'])
+        : null;
+    profilePic = (json['profilePic'] != null)
+        ? MatchingRidesModelDataDriverDetailsProfilePic.fromJson(
+            json['profilePic'])
+        : null;
+    status = json['status']?.toString();
+    city = json['city']?.toString();
+    pinkMode = json['pinkMode'];
+    notificationPreferences = (json['notificationPreferences'] != null)
+        ? MatchingRidesModelDataDriverDetailsNotificationPreferences.fromJson(
+            json['notificationPreferences'])
+        : null;
+    rating = json['rating']?.toInt();
+    totalRides = json['totalRides']?.toInt();
+    isRegister = json['isRegister'];
     role = json['role']?.toString();
+    rideCancellationCount = json['rideCancellationCount']?.toInt();
+    connectedAccountId = json['connected_account_id']?.toString();
+    suspensionDetails = (json['suspensionDetails'] != null)
+        ? MatchingRidesModelDataDriverDetailsSuspensionDetails.fromJson(
+            json['suspensionDetails'])
+        : null;
     if (json['vehicleDetails'] != null) {
       final v = json['vehicleDetails'];
       final arr0 = <MatchingRidesModelDataDriverDetailsVehicleDetails>[];
@@ -388,37 +432,40 @@ class MatchingRidesModelDataDriverDetails {
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['_id'] = Id;
-    data['isRegister'] = isRegister;
-    data['pinkMode'] = pinkMode;
     data['fullName'] = fullName;
     data['phone'] = phone;
     data['email'] = email;
-    data['city'] = city;
-    if (profilePic != null) {
-      data['profilePic'] = profilePic!.toJson();
-    }
-    if (idPic != null) {
-      data['idPic'] = idPic!.toJson();
-    }
     data['dob'] = dob;
     data['gender'] = gender;
     data['isDriver'] = isDriver;
     data['referralCode'] = referralCode;
     data['profileStatus'] = profileStatus;
     data['vehicleStatus'] = vehicleStatus;
-    data['status'] = status;
-    data['wallet'] = wallet;
-    data['rating'] = rating;
-    data['totalRides'] = totalRides;
-    data['isRecurringTripEnabled'] = isRecurringTripEnabled;
-    if (notificationPreferences != null) {
-      data['notificationPreferences'] = notificationPreferences!.toJson();
-    }
     data['firebaseUid'] = firebaseUid;
     data['firebaseSignInProvider'] = firebaseSignInProvider;
     data['createdAt'] = createdAt;
     data['updatedAt'] = updatedAt;
+    if (idPic != null) {
+      data['idPic'] = idPic!.toJson();
+    }
+    if (profilePic != null) {
+      data['profilePic'] = profilePic!.toJson();
+    }
+    data['status'] = status;
+    data['city'] = city;
+    data['pinkMode'] = pinkMode;
+    if (notificationPreferences != null) {
+      data['notificationPreferences'] = notificationPreferences!.toJson();
+    }
+    data['rating'] = rating;
+    data['totalRides'] = totalRides;
+    data['isRegister'] = isRegister;
     data['role'] = role;
+    data['rideCancellationCount'] = rideCancellationCount;
+    data['connected_account_id'] = connectedAccountId;
+    if (suspensionDetails != null) {
+      data['suspensionDetails'] = suspensionDetails!.toJson();
+    }
     if (vehicleDetails != null) {
       final v = vehicleDetails;
       final arr0 = [];
@@ -612,27 +659,35 @@ class MatchingRidesModelDataRidersDetatils {
 class MatchingRidesModelDataMatchedDestinationLocation {
 /*
 {
-  "name": "Toronto Pearson International Airport (YYZ), Mississauga",
-  "type": "Point",
+  "name": "",
   "coordinates": [
     -79.6333674
-  ]
+  ],
+  "originToStopFair": "",
+  "stopToStopFair": "",
+  "stopTodestinationFair": "",
+  "_id": "668b8f0b6195920124c264e9"
 } 
 */
 
   String? name;
-  String? type;
   List<double?>? coordinates;
+  String? originToStopFair;
+  String? stopToStopFair;
+  String? stopTodestinationFair;
+  String? Id;
 
   MatchingRidesModelDataMatchedDestinationLocation({
     this.name,
-    this.type,
     this.coordinates,
+    this.originToStopFair,
+    this.stopToStopFair,
+    this.stopTodestinationFair,
+    this.Id,
   });
   MatchingRidesModelDataMatchedDestinationLocation.fromJson(
       Map<String, dynamic> json) {
     name = json['name']?.toString();
-    type = json['type']?.toString();
     if (json['coordinates'] != null) {
       final v = json['coordinates'];
       final arr0 = <double>[];
@@ -641,11 +696,14 @@ class MatchingRidesModelDataMatchedDestinationLocation {
       });
       coordinates = arr0;
     }
+    originToStopFair = json['originToStopFair']?.toString();
+    stopToStopFair = json['stopToStopFair']?.toString();
+    stopTodestinationFair = json['stopTodestinationFair']?.toString();
+    Id = json['_id']?.toString();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['name'] = name;
-    data['type'] = type;
     if (coordinates != null) {
       final v = coordinates;
       final arr0 = [];
@@ -654,6 +712,10 @@ class MatchingRidesModelDataMatchedDestinationLocation {
       });
       data['coordinates'] = arr0;
     }
+    data['originToStopFair'] = originToStopFair;
+    data['stopToStopFair'] = stopToStopFair;
+    data['stopTodestinationFair'] = stopTodestinationFair;
+    data['_id'] = Id;
     return data;
   }
 }
@@ -661,30 +723,35 @@ class MatchingRidesModelDataMatchedDestinationLocation {
 class MatchingRidesModelDataMatchedOriginLocation {
 /*
 {
-  "name": "349 Queen St W, Toronto",
-  "type": "Point",
+  "name": "",
   "coordinates": [
-    -79.3924196
+    -79.6333674
   ],
-  "originDestinationFair": "14"
+  "originToStopFair": "",
+  "stopToStopFair": "",
+  "stopTodestinationFair": "",
+  "_id": "668b8f0b6195920124c264e9"
 } 
 */
 
   String? name;
-  String? type;
   List<double?>? coordinates;
-  String? originDestinationFair;
+  String? originToStopFair;
+  String? stopToStopFair;
+  String? stopTodestinationFair;
+  String? Id;
 
   MatchingRidesModelDataMatchedOriginLocation({
     this.name,
-    this.type,
     this.coordinates,
-    this.originDestinationFair,
+    this.originToStopFair,
+    this.stopToStopFair,
+    this.stopTodestinationFair,
+    this.Id,
   });
   MatchingRidesModelDataMatchedOriginLocation.fromJson(
       Map<String, dynamic> json) {
     name = json['name']?.toString();
-    type = json['type']?.toString();
     if (json['coordinates'] != null) {
       final v = json['coordinates'];
       final arr0 = <double>[];
@@ -693,12 +760,14 @@ class MatchingRidesModelDataMatchedOriginLocation {
       });
       coordinates = arr0;
     }
-    originDestinationFair = json['originDestinationFair']?.toString();
+    originToStopFair = json['originToStopFair']?.toString();
+    stopToStopFair = json['stopToStopFair']?.toString();
+    stopTodestinationFair = json['stopTodestinationFair']?.toString();
+    Id = json['_id']?.toString();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['name'] = name;
-    data['type'] = type;
     if (coordinates != null) {
       final v = coordinates;
       final arr0 = [];
@@ -707,7 +776,10 @@ class MatchingRidesModelDataMatchedOriginLocation {
       });
       data['coordinates'] = arr0;
     }
-    data['originDestinationFair'] = originDestinationFair;
+    data['originToStopFair'] = originToStopFair;
+    data['stopToStopFair'] = stopToStopFair;
+    data['stopTodestinationFair'] = stopTodestinationFair;
+    data['_id'] = Id;
     return data;
   }
 }
@@ -719,10 +791,10 @@ class MatchingRidesModelDataPreferencesOther {
   "EnjoysMusic": true,
   "SmokeFree": true,
   "PetFriendly": true,
-  "WinterTires": false,
+  "WinterTires": true,
   "CoolingOrHeating": true,
   "BabySeat": true,
-  "HeatedSeats": false
+  "HeatedSeats": true
 } 
 */
 
@@ -778,10 +850,10 @@ class MatchingRidesModelDataPreferences {
     "EnjoysMusic": true,
     "SmokeFree": true,
     "PetFriendly": true,
-    "WinterTires": false,
+    "WinterTires": true,
     "CoolingOrHeating": true,
     "BabySeat": true,
-    "HeatedSeats": false
+    "HeatedSeats": true
   }
 } 
 */
@@ -814,7 +886,7 @@ class MatchingRidesModelDataReturnTrip {
 {
   "isReturnTrip": false,
   "returnDate": null,
-  "returnTime": ""
+  "returnTime": null
 } 
 */
 
@@ -909,20 +981,18 @@ class MatchingRidesModelDataStops {
 /*
 {
   "name": "",
-  "type": "Point",
   "coordinates": [
-    0
+    -79.6333674
   ],
-  "originToStopFair": null,
-  "stopToStopFair": null,
-  "stopTodestinationFair": null,
-  "_id": "663c611dc10d2d6a33b4fffb"
+  "originToStopFair": "",
+  "stopToStopFair": "",
+  "stopTodestinationFair": "",
+  "_id": "668b8f0b6195920124c264e9"
 } 
 */
 
   String? name;
-  String? type;
-  List<int?>? coordinates;
+  List<double?>? coordinates;
   String? originToStopFair;
   String? stopToStopFair;
   String? stopTodestinationFair;
@@ -930,7 +1000,6 @@ class MatchingRidesModelDataStops {
 
   MatchingRidesModelDataStops({
     this.name,
-    this.type,
     this.coordinates,
     this.originToStopFair,
     this.stopToStopFair,
@@ -939,12 +1008,11 @@ class MatchingRidesModelDataStops {
   });
   MatchingRidesModelDataStops.fromJson(Map<String, dynamic> json) {
     name = json['name']?.toString();
-    type = json['type']?.toString();
     if (json['coordinates'] != null) {
       final v = json['coordinates'];
-      final arr0 = <int>[];
+      final arr0 = <double>[];
       v.forEach((v) {
-        arr0.add(v.toInt());
+        arr0.add(v.toDouble());
       });
       coordinates = arr0;
     }
@@ -956,7 +1024,6 @@ class MatchingRidesModelDataStops {
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['name'] = name;
-    data['type'] = type;
     if (coordinates != null) {
       final v = coordinates;
       final arr0 = [];
@@ -976,10 +1043,10 @@ class MatchingRidesModelDataStops {
 class MatchingRidesModelDataDestination {
 /*
 {
-  "name": "Toronto Pearson International Airport (YYZ), Mississauga",
+  "name": "Brampton, ON, Canada",
   "type": "Point",
   "coordinates": [
-    -79.6333674
+    -79.7624177
   ]
 } 
 */
@@ -1024,12 +1091,12 @@ class MatchingRidesModelDataDestination {
 class MatchingRidesModelDataOrigin {
 /*
 {
-  "name": "349 Queen St W, Toronto",
+  "name": "2100 Bovaird Dr E, Brampton, ON L6R 3J7, Canada",
   "type": "Point",
   "coordinates": [
-    -79.3924196
+    -79.7448005
   ],
-  "originDestinationFair": "14"
+  "originDestinationFair": "15"
 } 
 */
 
@@ -1077,34 +1144,33 @@ class MatchingRidesModelDataOrigin {
 class MatchingRidesModelData {
 /*
 {
-  "_id": "663c611dc10d2d6a33b4fffa",
-  "driverId": "6639b78f58249d84ebc5062f",
+  "_id": "668b8f0b6195920124c264e8",
+  "driverId": "65c228fd32f497dc57fdeff8",
   "origin": {
-    "name": "349 Queen St W, Toronto",
+    "name": "2100 Bovaird Dr E, Brampton, ON L6R 3J7, Canada",
     "type": "Point",
     "coordinates": [
-      -79.3924196
+      -79.7448005
     ],
-    "originDestinationFair": "14"
+    "originDestinationFair": "15"
   },
   "destination": {
-    "name": "Toronto Pearson International Airport (YYZ), Mississauga",
+    "name": "Brampton, ON, Canada",
     "type": "Point",
     "coordinates": [
-      -79.6333674
+      -79.7624177
     ]
   },
   "stops": [
     {
       "name": "",
-      "type": "Point",
       "coordinates": [
-        0
+        -79.6333674
       ],
-      "originToStopFair": null,
-      "stopToStopFair": null,
-      "stopTodestinationFair": null,
-      "_id": "663c611dc10d2d6a33b4fffb"
+      "originToStopFair": "",
+      "stopToStopFair": "",
+      "stopTodestinationFair": "",
+      "_id": "668b8f0b6195920124c264e9"
     }
   ],
   "tripType": "oneTime",
@@ -1117,16 +1183,17 @@ class MatchingRidesModelData {
     ],
     "isRecurringTripEnabled": false
   },
-  "date": "2024-05-09T00:00:00.000Z",
-  "time": "10:58 AM",
+  "date": "2024-07-08T00:00:00.000Z",
+  "time": "19:30",
   "returnTrip": {
     "isReturnTrip": false,
     "returnDate": null,
-    "returnTime": ""
+    "returnTime": null
   },
   "arrivalDate": null,
   "arrivalTime": null,
-  "seatAvailable": 2,
+  "totalSeatAvailable": 3,
+  "seatAvailable": 3,
   "preferences": {
     "luggageType": "S",
     "other": {
@@ -1134,34 +1201,40 @@ class MatchingRidesModelData {
       "EnjoysMusic": true,
       "SmokeFree": true,
       "PetFriendly": true,
-      "WinterTires": false,
+      "WinterTires": true,
       "CoolingOrHeating": true,
       "BabySeat": true,
-      "HeatedSeats": false
+      "HeatedSeats": true
     }
   },
   "isStarted": false,
   "isCompleted": false,
   "isCancelled": false,
-  "description": null,
-  "createdAt": "2024-05-09T05:37:33.213Z",
-  "updatedAt": "2024-05-09T05:37:33.213Z",
+  "description": "ride - 8th july 01:30 PM; return ride: 9th july 01:00 AM",
+  "endDateTime": "2024-07-08T07:02:35.862Z",
+  "createdAt": "2024-07-08T07:02:35.866Z",
+  "updatedAt": "2024-07-08T07:02:35.866Z",
   "matchedOriginLocation": {
-    "name": "349 Queen St W, Toronto",
-    "type": "Point",
-    "coordinates": [
-      -79.3924196
-    ],
-    "originDestinationFair": "14"
-  },
-  "matchedDestinationLocation": {
-    "name": "Toronto Pearson International Airport (YYZ), Mississauga",
-    "type": "Point",
+    "name": "",
     "coordinates": [
       -79.6333674
-    ]
+    ],
+    "originToStopFair": "",
+    "stopToStopFair": "",
+    "stopTodestinationFair": "",
+    "_id": "668b8f0b6195920124c264e9"
   },
-  "sortField": null,
+  "matchedDestinationLocation": {
+    "name": "",
+    "coordinates": [
+      -79.6333674
+    ],
+    "originToStopFair": "",
+    "stopToStopFair": "",
+    "stopTodestinationFair": "",
+    "_id": "668b8f0b6195920124c264e9"
+  },
+  "price": "",
   "ridersDetatils": [
     {
       "_id": "65c22d5672eca065a18fa015",
@@ -1192,34 +1265,33 @@ class MatchingRidesModelData {
   ],
   "driverDetails": [
     {
-      "_id": "6639b78f58249d84ebc5062f",
-      "isRegister": true,
-      "pinkMode": false,
-      "fullName": "Zen",
-      "phone": "+11234512345",
-      "email": "zen@test.com",
-      "city": "Brampton",
-      "profilePic": {
-        "key": "usersProfile/f8be0e1f-86ca-45d4-af4f-d4c04a83fe47-compressed_3f027cf1-f3a0-47b4-a359-af93fcbd77b54236667115881885527.jpg",
-        "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/f8be0e1f-86ca-45d4-af4f-d4c04a83fe47-compressed_3f027cf1-f3a0-47b4-a359-af93fcbd77b54236667115881885527.jpg",
-        "_id": "6639b83358249d84ebc50638"
-      },
-      "idPic": {
-        "key": "idPic/00e6959a-4cdc-431d-ba58-da857820af92-compressed_6625135b-e7b2-47d0-bee1-c5168a1ff49b8491292186802062625.jpg",
-        "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/idPic/00e6959a-4cdc-431d-ba58-da857820af92-compressed_6625135b-e7b2-47d0-bee1-c5168a1ff49b8491292186802062625.jpg",
-        "_id": "6639b83358249d84ebc50639"
-      },
-      "dob": "2006-05-12",
+      "_id": "65c228fd32f497dc57fdeff8",
+      "fullName": "Amar",
+      "phone": "+11111122222",
+      "email": "amar@ideausher.com",
+      "dob": "2006-05-25",
       "gender": "Male",
       "isDriver": true,
-      "referralCode": "N5213I5793",
+      "referralCode": "C3072B8509",
       "profileStatus": true,
       "vehicleStatus": true,
+      "firebaseUid": "foYFX1qnSaPETdXnF1IFVT0xpkZ2",
+      "firebaseSignInProvider": "phone",
+      "createdAt": "2024-02-06T12:41:33.824Z",
+      "updatedAt": "2024-07-08T07:12:13.245Z",
+      "idPic": {
+        "key": "idPic/14a1f67c-67d3-417a-88ab-de80318076ce-compressed_image_picker_27017447-33A6-4FD5-9E68-9E333A4519E7-80244-000007220A59499C.jpg",
+        "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/idPic/14a1f67c-67d3-417a-88ab-de80318076ce-compressed_image_picker_27017447-33A6-4FD5-9E68-9E333A4519E7-80244-000007220A59499C.jpg",
+        "_id": "664af3b5cd651d9acab11364"
+      },
+      "profilePic": {
+        "key": "usersProfile/343e91cd-5339-4cb2-ab54-bb2c5c85ef7b-compressed_image_picker_E10F697C-B897-4693-A1EE-3FAC86253315-80244-000007221A4BE6ED.jpg",
+        "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/343e91cd-5339-4cb2-ab54-bb2c5c85ef7b-compressed_image_picker_E10F697C-B897-4693-A1EE-3FAC86253315-80244-000007221A4BE6ED.jpg",
+        "_id": "664af3b5cd651d9acab11363"
+      },
       "status": "active",
-      "wallet": 0,
-      "rating": 0,
-      "totalRides": 0,
-      "isRecurringTripEnabled": false,
+      "city": "Zurich, Ontario",
+      "pinkMode": false,
       "notificationPreferences": {
         "trip": true,
         "alerts": true,
@@ -1227,27 +1299,33 @@ class MatchingRidesModelData {
         "transactions": true,
         "offers": true
       },
-      "firebaseUid": "n9XvgstaJCShxg2V5AmREneUYOE2",
-      "firebaseSignInProvider": "phone",
-      "createdAt": "2024-05-07T05:09:35.528Z",
-      "updatedAt": "2024-05-09T05:38:05.406Z",
+      "rating": 0,
+      "totalRides": 0,
+      "isRegister": true,
       "role": "user",
+      "rideCancellationCount": 1,
+      "connected_account_id": "acct_1POa6QSBsf3jz2sG",
+      "suspensionDetails": {
+        "dateFrom": "2024-07-02T07:06:39.626Z",
+        "dateTo": "2024-07-02T07:06:39.626Z",
+        "cancelPolicy": "665d7b1bd2ce0392ad50be4c"
+      },
       "vehicleDetails": [
         {
-          "_id": "6639b8a358249d84ebc5063f",
-          "driverId": "6639b78f58249d84ebc5062f",
+          "_id": "65c23bef32f497dc57fdf002",
+          "driverId": "65c228fd32f497dc57fdeff8",
           "vehiclePic": {
-            "key": "vehiclePic/caa69155-4853-4a09-ac08-6584a2a3ee86-compressed_0956573e-9537-48c2-9539-f25f3e1597323162184291488028667.jpg",
-            "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/vehiclePic/caa69155-4853-4a09-ac08-6584a2a3ee86-compressed_0956573e-9537-48c2-9539-f25f3e1597323162184291488028667.jpg",
-            "_id": "6639b8a358249d84ebc50640"
+            "key": "vehiclePic/b9fae2cc-33ed-4b5c-b602-c075fa476e3f-1000000038.jpg",
+            "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/vehiclePic/b9fae2cc-33ed-4b5c-b602-c075fa476e3f-1000000038.jpg",
+            "_id": "6603d738ba3fdc24d7cbce50"
           },
-          "model": "iuModel",
-          "type": "Sedan",
-          "color": "Silver",
-          "year": 2000,
-          "licencePlate": "CA2000",
-          "createdAt": "2024-05-07T05:14:11.059Z",
-          "updatedAt": "2024-05-07T05:14:11.059Z"
+          "model": "creta",
+          "type": "Convertible",
+          "color": "Black",
+          "year": 2024,
+          "licencePlate": "LA2024",
+          "createdAt": "2024-02-06T14:02:23.061Z",
+          "updatedAt": "2024-04-15T04:53:34.316Z"
         }
       ]
     }
@@ -1257,7 +1335,6 @@ class MatchingRidesModelData {
 
   String? Id;
   String? driverId;
-  int? price;
   MatchingRidesModelDataOrigin? origin;
   MatchingRidesModelDataDestination? destination;
   List<MatchingRidesModelDataStops?>? stops;
@@ -1268,24 +1345,25 @@ class MatchingRidesModelData {
   MatchingRidesModelDataReturnTrip? returnTrip;
   String? arrivalDate;
   String? arrivalTime;
+  int? totalSeatAvailable;
   int? seatAvailable;
   MatchingRidesModelDataPreferences? preferences;
   bool? isStarted;
   bool? isCompleted;
   bool? isCancelled;
   String? description;
+  String? endDateTime;
   String? createdAt;
   String? updatedAt;
   MatchingRidesModelDataMatchedOriginLocation? matchedOriginLocation;
   MatchingRidesModelDataMatchedDestinationLocation? matchedDestinationLocation;
-  String? sortField;
+  String? price;
   List<MatchingRidesModelDataRidersDetatils?>? ridersDetatils;
   List<MatchingRidesModelDataDriverDetails?>? driverDetails;
 
   MatchingRidesModelData({
     this.Id,
     this.driverId,
-    this.price,
     this.origin,
     this.destination,
     this.stops,
@@ -1296,29 +1374,25 @@ class MatchingRidesModelData {
     this.returnTrip,
     this.arrivalDate,
     this.arrivalTime,
+    this.totalSeatAvailable,
     this.seatAvailable,
     this.preferences,
     this.isStarted,
     this.isCompleted,
     this.isCancelled,
     this.description,
+    this.endDateTime,
     this.createdAt,
     this.updatedAt,
     this.matchedOriginLocation,
     this.matchedDestinationLocation,
-    this.sortField,
+    this.price,
     this.ridersDetatils,
     this.driverDetails,
   });
   MatchingRidesModelData.fromJson(Map<String, dynamic> json) {
     Id = json['_id']?.toString();
     driverId = json['driverId']?.toString();
-    try {
-      price = json['price']?.toInt();
-    } catch (e) {
-      price = int.parse(json['price']);
-      print(e);
-    }
     origin = (json['origin'] != null)
         ? MatchingRidesModelDataOrigin.fromJson(json['origin'])
         : null;
@@ -1344,6 +1418,7 @@ class MatchingRidesModelData {
         : null;
     arrivalDate = json['arrivalDate']?.toString();
     arrivalTime = json['arrivalTime']?.toString();
+    totalSeatAvailable = json['totalSeatAvailable']?.toInt();
     seatAvailable = json['seatAvailable']?.toInt();
     preferences = (json['preferences'] != null)
         ? MatchingRidesModelDataPreferences.fromJson(json['preferences'])
@@ -1352,6 +1427,7 @@ class MatchingRidesModelData {
     isCompleted = json['isCompleted'];
     isCancelled = json['isCancelled'];
     description = json['description']?.toString();
+    endDateTime = json['endDateTime']?.toString();
     createdAt = json['createdAt']?.toString();
     updatedAt = json['updatedAt']?.toString();
     matchedOriginLocation = (json['matchedOriginLocation'] != null)
@@ -1362,7 +1438,7 @@ class MatchingRidesModelData {
         ? MatchingRidesModelDataMatchedDestinationLocation.fromJson(
             json['matchedDestinationLocation'])
         : null;
-    sortField = json['sortField']?.toString();
+    price = json['price']?.toString();
     if (json['ridersDetatils'] != null) {
       final v = json['ridersDetatils'];
       final arr0 = <MatchingRidesModelDataRidersDetatils>[];
@@ -1384,7 +1460,6 @@ class MatchingRidesModelData {
     final data = <String, dynamic>{};
     data['_id'] = Id;
     data['driverId'] = driverId;
-    data['price'] = price;
     if (origin != null) {
       data['origin'] = origin!.toJson();
     }
@@ -1410,6 +1485,7 @@ class MatchingRidesModelData {
     }
     data['arrivalDate'] = arrivalDate;
     data['arrivalTime'] = arrivalTime;
+    data['totalSeatAvailable'] = totalSeatAvailable;
     data['seatAvailable'] = seatAvailable;
     if (preferences != null) {
       data['preferences'] = preferences!.toJson();
@@ -1418,6 +1494,7 @@ class MatchingRidesModelData {
     data['isCompleted'] = isCompleted;
     data['isCancelled'] = isCancelled;
     data['description'] = description;
+    data['endDateTime'] = endDateTime;
     data['createdAt'] = createdAt;
     data['updatedAt'] = updatedAt;
     if (matchedOriginLocation != null) {
@@ -1426,7 +1503,7 @@ class MatchingRidesModelData {
     if (matchedDestinationLocation != null) {
       data['matchedDestinationLocation'] = matchedDestinationLocation!.toJson();
     }
-    data['sortField'] = sortField;
+    data['price'] = price;
     if (ridersDetatils != null) {
       final v = ridersDetatils;
       final arr0 = [];
@@ -1453,34 +1530,33 @@ class MatchingRidesModel {
   "status": true,
   "data": [
     {
-      "_id": "663c611dc10d2d6a33b4fffa",
-      "driverId": "6639b78f58249d84ebc5062f",
+      "_id": "668b8f0b6195920124c264e8",
+      "driverId": "65c228fd32f497dc57fdeff8",
       "origin": {
-        "name": "349 Queen St W, Toronto",
+        "name": "2100 Bovaird Dr E, Brampton, ON L6R 3J7, Canada",
         "type": "Point",
         "coordinates": [
-          -79.3924196
+          -79.7448005
         ],
-        "originDestinationFair": "14"
+        "originDestinationFair": "15"
       },
       "destination": {
-        "name": "Toronto Pearson International Airport (YYZ), Mississauga",
+        "name": "Brampton, ON, Canada",
         "type": "Point",
         "coordinates": [
-          -79.6333674
+          -79.7624177
         ]
       },
       "stops": [
         {
           "name": "",
-          "type": "Point",
           "coordinates": [
-            0
+            -79.6333674
           ],
-          "originToStopFair": null,
-          "stopToStopFair": null,
-          "stopTodestinationFair": null,
-          "_id": "663c611dc10d2d6a33b4fffb"
+          "originToStopFair": "",
+          "stopToStopFair": "",
+          "stopTodestinationFair": "",
+          "_id": "668b8f0b6195920124c264e9"
         }
       ],
       "tripType": "oneTime",
@@ -1493,16 +1569,17 @@ class MatchingRidesModel {
         ],
         "isRecurringTripEnabled": false
       },
-      "date": "2024-05-09T00:00:00.000Z",
-      "time": "10:58 AM",
+      "date": "2024-07-08T00:00:00.000Z",
+      "time": "19:30",
       "returnTrip": {
         "isReturnTrip": false,
         "returnDate": null,
-        "returnTime": ""
+        "returnTime": null
       },
       "arrivalDate": null,
       "arrivalTime": null,
-      "seatAvailable": 2,
+      "totalSeatAvailable": 3,
+      "seatAvailable": 3,
       "preferences": {
         "luggageType": "S",
         "other": {
@@ -1510,34 +1587,40 @@ class MatchingRidesModel {
           "EnjoysMusic": true,
           "SmokeFree": true,
           "PetFriendly": true,
-          "WinterTires": false,
+          "WinterTires": true,
           "CoolingOrHeating": true,
           "BabySeat": true,
-          "HeatedSeats": false
+          "HeatedSeats": true
         }
       },
       "isStarted": false,
       "isCompleted": false,
       "isCancelled": false,
-      "description": null,
-      "createdAt": "2024-05-09T05:37:33.213Z",
-      "updatedAt": "2024-05-09T05:37:33.213Z",
+      "description": "ride - 8th july 01:30 PM; return ride: 9th july 01:00 AM",
+      "endDateTime": "2024-07-08T07:02:35.862Z",
+      "createdAt": "2024-07-08T07:02:35.866Z",
+      "updatedAt": "2024-07-08T07:02:35.866Z",
       "matchedOriginLocation": {
-        "name": "349 Queen St W, Toronto",
-        "type": "Point",
-        "coordinates": [
-          -79.3924196
-        ],
-        "originDestinationFair": "14"
-      },
-      "matchedDestinationLocation": {
-        "name": "Toronto Pearson International Airport (YYZ), Mississauga",
-        "type": "Point",
+        "name": "",
         "coordinates": [
           -79.6333674
-        ]
+        ],
+        "originToStopFair": "",
+        "stopToStopFair": "",
+        "stopTodestinationFair": "",
+        "_id": "668b8f0b6195920124c264e9"
       },
-      "sortField": null,
+      "matchedDestinationLocation": {
+        "name": "",
+        "coordinates": [
+          -79.6333674
+        ],
+        "originToStopFair": "",
+        "stopToStopFair": "",
+        "stopTodestinationFair": "",
+        "_id": "668b8f0b6195920124c264e9"
+      },
+      "price": "",
       "ridersDetatils": [
         {
           "_id": "65c22d5672eca065a18fa015",
@@ -1568,34 +1651,33 @@ class MatchingRidesModel {
       ],
       "driverDetails": [
         {
-          "_id": "6639b78f58249d84ebc5062f",
-          "isRegister": true,
-          "pinkMode": false,
-          "fullName": "Zen",
-          "phone": "+11234512345",
-          "email": "zen@test.com",
-          "city": "Brampton",
-          "profilePic": {
-            "key": "usersProfile/f8be0e1f-86ca-45d4-af4f-d4c04a83fe47-compressed_3f027cf1-f3a0-47b4-a359-af93fcbd77b54236667115881885527.jpg",
-            "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/f8be0e1f-86ca-45d4-af4f-d4c04a83fe47-compressed_3f027cf1-f3a0-47b4-a359-af93fcbd77b54236667115881885527.jpg",
-            "_id": "6639b83358249d84ebc50638"
-          },
-          "idPic": {
-            "key": "idPic/00e6959a-4cdc-431d-ba58-da857820af92-compressed_6625135b-e7b2-47d0-bee1-c5168a1ff49b8491292186802062625.jpg",
-            "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/idPic/00e6959a-4cdc-431d-ba58-da857820af92-compressed_6625135b-e7b2-47d0-bee1-c5168a1ff49b8491292186802062625.jpg",
-            "_id": "6639b83358249d84ebc50639"
-          },
-          "dob": "2006-05-12",
+          "_id": "65c228fd32f497dc57fdeff8",
+          "fullName": "Amar",
+          "phone": "+11111122222",
+          "email": "amar@ideausher.com",
+          "dob": "2006-05-25",
           "gender": "Male",
           "isDriver": true,
-          "referralCode": "N5213I5793",
+          "referralCode": "C3072B8509",
           "profileStatus": true,
           "vehicleStatus": true,
+          "firebaseUid": "foYFX1qnSaPETdXnF1IFVT0xpkZ2",
+          "firebaseSignInProvider": "phone",
+          "createdAt": "2024-02-06T12:41:33.824Z",
+          "updatedAt": "2024-07-08T07:12:13.245Z",
+          "idPic": {
+            "key": "idPic/14a1f67c-67d3-417a-88ab-de80318076ce-compressed_image_picker_27017447-33A6-4FD5-9E68-9E333A4519E7-80244-000007220A59499C.jpg",
+            "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/idPic/14a1f67c-67d3-417a-88ab-de80318076ce-compressed_image_picker_27017447-33A6-4FD5-9E68-9E333A4519E7-80244-000007220A59499C.jpg",
+            "_id": "664af3b5cd651d9acab11364"
+          },
+          "profilePic": {
+            "key": "usersProfile/343e91cd-5339-4cb2-ab54-bb2c5c85ef7b-compressed_image_picker_E10F697C-B897-4693-A1EE-3FAC86253315-80244-000007221A4BE6ED.jpg",
+            "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/343e91cd-5339-4cb2-ab54-bb2c5c85ef7b-compressed_image_picker_E10F697C-B897-4693-A1EE-3FAC86253315-80244-000007221A4BE6ED.jpg",
+            "_id": "664af3b5cd651d9acab11363"
+          },
           "status": "active",
-          "wallet": 0,
-          "rating": 0,
-          "totalRides": 0,
-          "isRecurringTripEnabled": false,
+          "city": "Zurich, Ontario",
+          "pinkMode": false,
           "notificationPreferences": {
             "trip": true,
             "alerts": true,
@@ -1603,27 +1685,33 @@ class MatchingRidesModel {
             "transactions": true,
             "offers": true
           },
-          "firebaseUid": "n9XvgstaJCShxg2V5AmREneUYOE2",
-          "firebaseSignInProvider": "phone",
-          "createdAt": "2024-05-07T05:09:35.528Z",
-          "updatedAt": "2024-05-09T05:38:05.406Z",
+          "rating": 0,
+          "totalRides": 0,
+          "isRegister": true,
           "role": "user",
+          "rideCancellationCount": 1,
+          "connected_account_id": "acct_1POa6QSBsf3jz2sG",
+          "suspensionDetails": {
+            "dateFrom": "2024-07-02T07:06:39.626Z",
+            "dateTo": "2024-07-02T07:06:39.626Z",
+            "cancelPolicy": "665d7b1bd2ce0392ad50be4c"
+          },
           "vehicleDetails": [
             {
-              "_id": "6639b8a358249d84ebc5063f",
-              "driverId": "6639b78f58249d84ebc5062f",
+              "_id": "65c23bef32f497dc57fdf002",
+              "driverId": "65c228fd32f497dc57fdeff8",
               "vehiclePic": {
-                "key": "vehiclePic/caa69155-4853-4a09-ac08-6584a2a3ee86-compressed_0956573e-9537-48c2-9539-f25f3e1597323162184291488028667.jpg",
-                "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/vehiclePic/caa69155-4853-4a09-ac08-6584a2a3ee86-compressed_0956573e-9537-48c2-9539-f25f3e1597323162184291488028667.jpg",
-                "_id": "6639b8a358249d84ebc50640"
+                "key": "vehiclePic/b9fae2cc-33ed-4b5c-b602-c075fa476e3f-1000000038.jpg",
+                "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/vehiclePic/b9fae2cc-33ed-4b5c-b602-c075fa476e3f-1000000038.jpg",
+                "_id": "6603d738ba3fdc24d7cbce50"
               },
-              "model": "iuModel",
-              "type": "Sedan",
-              "color": "Silver",
-              "year": 2000,
-              "licencePlate": "CA2000",
-              "createdAt": "2024-05-07T05:14:11.059Z",
-              "updatedAt": "2024-05-07T05:14:11.059Z"
+              "model": "creta",
+              "type": "Convertible",
+              "color": "Black",
+              "year": 2024,
+              "licencePlate": "LA2024",
+              "createdAt": "2024-02-06T14:02:23.061Z",
+              "updatedAt": "2024-04-15T04:53:34.316Z"
             }
           ]
         }

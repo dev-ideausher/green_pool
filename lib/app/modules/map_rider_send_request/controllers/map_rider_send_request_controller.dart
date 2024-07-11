@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:green_pool/app/modules/map_rider_send_request/controllers/rider_request_send_driver_bottomsheet.dart';
 import 'package:green_pool/app/modules/rider_my_ride_request/controllers/rider_my_ride_request_controller.dart';
-import 'package:path/path.dart';
 
 import '../../../data/rider_send_request_model.dart';
 import '../../../services/dio/endpoints.dart';
 import '../../../services/gp_util.dart';
 import '../../home/controllers/home_controller.dart';
-import '../../map_driver_send_request/views/map_driver_send_bottomsheet.dart';
 
 class MapRiderSendRequestController extends GetxController {
   double latitude = Get.find<HomeController>().latitude.value;
@@ -79,29 +75,19 @@ class MapRiderSendRequestController extends GetxController {
     }
   }
 
-  addMarkers(RiderSendRequestModelData riderSendReqModel, LatLng driverLocation,
-      String imgurl,
-      {bool isStop = false}) async {
-    BitmapDescriptor? bytes;
-    if (!isStop) {
-      bytes = await GpUtil.getMarkerIconFromUrl(imgurl);
-    }
-
+  addMarkers(
+      RiderSendRequestModelData element, LatLng driverLocation, imgurl) async {
+    final bytes = await GpUtil.getMarkerIconFromUrl(imgurl);
     markers.add(Marker(
-      markerId: MarkerId(driverLocation.toString()),
-      position: driverLocation,
-      //position of marker
-      onTap: () {
-        Get.bottomSheet(RiderRequestSendDriverBottomsheet(
-          element: riderSendReqModel,
-        ));
-      },
-      /*infoWindow: const InfoWindow(
-        title: 'Driver',
-        snippet: 'Driver',
-      ),*/
-      icon: isStop ? BitmapDescriptor.defaultMarker : bytes!, //Icon for Marker
-    ));
+        markerId: MarkerId(driverLocation.toString()),
+        position: driverLocation,
+        onTap: () {
+          Get.bottomSheet(RiderRequestSendDriverBottomsheet(
+            element: element,
+          ));
+        },
+        // infoWindow: const InfoWindow(title: 'Rider', snippet: 'Rider'),
+        icon: bytes));
   }
 
   void createMarker() {
@@ -117,8 +103,7 @@ class MapRiderSendRequestController extends GetxController {
             element,
             LatLng(rider?.coordinates?.last!.toDouble() ?? 0.0,
                 rider?.coordinates?.first!.toDouble() ?? 0.0),
-            "",
-            isStop: true);
+            "");
       });
     });
     destinationLat.value =

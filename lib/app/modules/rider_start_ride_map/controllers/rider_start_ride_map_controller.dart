@@ -336,12 +336,19 @@ class RiderStartRideMapController extends GetxController {
           receiverId: bookingDetail.value.driverDetails?.Id ?? "");
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
-              chatRoomId: res.data["chatChannelId"] ?? "",
+              chatRoomId: res.data["data"]["chatRoomId"] ?? "",
+              deleteUpdateTime: res.data["data"]["deleteUpdateTime"] ?? "",
               id: bookingDetail.value.driverDetails?.Id,
               name: bookingDetail.value.driverDetails?.fullName,
               image: bookingDetail.value.driverDetails?.profilePic?.url));
     } catch (e) {
-      debugPrint(e.toString());
+      Get.toNamed(Routes.CHAT_PAGE,
+          arguments: ChatArg(
+              chatRoomId: "",
+              deleteUpdateTime: "",
+              id: bookingDetail.value.driverDetails?.Id,
+              name: bookingDetail.value.driverDetails?.fullName,
+              image: bookingDetail.value.driverDetails?.profilePic?.url));
     }
   }
 

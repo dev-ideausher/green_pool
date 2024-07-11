@@ -20,7 +20,7 @@ class RiderMyRideRequestView extends GetView<RiderMyRideRequestController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: GreenPoolAppBar(
-        title: const Text('My Rides'),
+        title: Text(Strings.myRides),
         actions: [
           Obx(
             () => GestureDetector(
@@ -66,10 +66,10 @@ class RiderMyRideRequestView extends GetView<RiderMyRideRequestController> {
                   labelColor: Get.find<HomeController>().isPinkModeOn.value
                       ? ColorUtil.kPrimary3PinkMode
                       : ColorUtil.kSecondary01,
-                  tabs:  [
+                  tabs: [
                     Tab(
                       child: Text(
-                        'Confirm Requests',
+                        Strings.confirmRequests,
                       ),
                     ),
                     Tab(

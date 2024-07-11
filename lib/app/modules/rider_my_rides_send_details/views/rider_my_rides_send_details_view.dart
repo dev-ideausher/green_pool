@@ -6,11 +6,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/common_image_view.dart';
 import 'package:green_pool/app/modules/rider_my_ride_request/controllers/rider_my_ride_request_controller.dart';
-import 'package:green_pool/app/routes/app_pages.dart';
+import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
-import 'package:green_pool/app/services/snackbar.dart';
 
-import '../../../components/gp_progress.dart';
 import '../../../components/green_pool_divider.dart';
 import '../../../components/greenpool_appbar.dart';
 import '../../../components/origin_to_destination.dart';
@@ -20,10 +18,8 @@ import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
 import '../../../services/text_style_util.dart';
 import '../../home/controllers/home_controller.dart';
-import '../../post_ride/views/amenities.dart';
-import '../../profile/controllers/profile_controller.dart';
-import '../../ride_details/views/copassenger_list.dart';
 
+import '../../post_ride_step_one/views/amenities.dart';
 import '../controllers/rider_my_rides_send_details_controller.dart';
 
 class RiderMyRidesSendDetailsView
@@ -57,18 +53,9 @@ class RiderMyRidesSendDetailsView
                           ),
                           child: ClipRRect(
                               borderRadius: BorderRadius.circular(8.kh),
-                              child: controller
-                                          .riderSendRequestModel
-                                          .value
-                                          .data?[controller.index]
-                                          ?.driverDetails?[0]
-                                          ?.profilePic
-                                          ?.url ==
-                                      null
-                                  ? const GpProgress()
-                                  : CommonImageView(
-                                      url:
-                                          "${controller.riderSendRequestModel.value.data?[controller.index]?.driverDetails?[0]?.profilePic?.url}")),
+                              child: CommonImageView(
+                                  url:
+                                      "${controller.riderSendRequestModel.value.data?[controller.index]?.driverDetails?[0]?.profilePic?.url}")),
                         ).paddingOnly(bottom: 8.kh),
                       ],
                     ).paddingOnly(right: 16.kw, bottom: 16.kh),
@@ -129,8 +116,7 @@ class RiderMyRidesSendDetailsView
                                           null
                                       ? const SizedBox()
                                       : Text(
-                                          // '07 Nov 2023, 3:00pm',
-                                          "${controller.riderSendRequestModel.value.data?[controller.index]?.date.toString().split("T")[0]}  ${controller.riderSendRequestModel.value.data?[controller.index]?.time}",
+                                          "${GpUtil.getDateFormat(controller.riderSendRequestModel.value.data?[controller.index]?.time ?? "")}  ${GpUtil.convertUtcToLocal(controller.riderSendRequestModel.value.data?[controller.index]?.time ?? "")}",
                                           style: TextStyleUtil.k12Regular(
                                               color: ColorUtil.kBlack03),
                                         ),
@@ -439,16 +425,16 @@ class RiderMyRidesSendDetailsView
               onPressed: () async {
                 try {
                   await Get.find<RiderMyRideRequestController>()
-                      .sendRideRequestToDriverAPI(controller
+                      .moveToPaymentFromSendRequest(controller
                           .riderSendRequestModel.value.data![controller.index]);
-                  showMySnackbar(msg: "Request sent successfully!");
-                  Get.until(
-                      (route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
+                  // showMySnackbar(msg: "Request sent successfully!");
+                  // Get.until(
+                  //     (route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
                 } catch (e) {
                   throw Exception(e);
                 }
               },
-              label: 'Request Rider',
+              label: Strings.requestDriver,
             ).paddingOnly(bottom: 40.kh, top: 16.kh),
           ],
         ).paddingSymmetric(horizontal: 16.kw),

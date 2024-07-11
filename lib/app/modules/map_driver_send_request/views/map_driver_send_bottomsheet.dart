@@ -75,8 +75,10 @@ class MapDriverSendBottomsheet extends StatelessWidget {
                                       BlendMode.srcIn),
                                 ).paddingOnly(right: 4.kw),
                                 Text(
-                                  (GpUtil.getDateFormat(element?.date) +
-                                      GpUtil.getTime(element?.time)),
+                                  (GpUtil.getDateFormat(
+                                          element?.time ?? "") +
+                                      GpUtil.convertUtcToLocal(
+                                          element?.time ?? "")),
                                   style: TextStyleUtil.k12Regular(
                                       color: ColorUtil.kBlack02),
                                 ),
@@ -142,7 +144,7 @@ class MapDriverSendBottomsheet extends StatelessWidget {
                       //rating column
                       children: [
                         Text(
-                          'Rating',
+                          Strings.rating,
                           style: TextStyleUtil.k12Semibold(),
                         ).paddingOnly(bottom: 4.kh),
                         Container(
@@ -172,7 +174,7 @@ class MapDriverSendBottomsheet extends StatelessWidget {
                       //ride with column
                       children: [
                         Text(
-                          'Ride With',
+                          Strings.rideWith,
                           style: TextStyleUtil.k12Semibold(),
                         ).paddingOnly(bottom: 4.kh),
                         Text(
@@ -187,11 +189,11 @@ class MapDriverSendBottomsheet extends StatelessWidget {
                       //joined in column
                       children: [
                         Text(
-                          'Joined',
+                          Strings.joined,
                           style: TextStyleUtil.k12Semibold(),
                         ).paddingOnly(bottom: 4.kh),
                         Text(
-                          'in ${element?.riderDetails?.createdAt?.substring(0, 4) ?? 2024}',
+                          '${Strings.inA} ${element?.riderDetails?.createdAt?.substring(0, 4) ?? 2024}',
                           style: TextStyleUtil.k14Regular(
                               color: ColorUtil.kBlack03),
                         ),
@@ -205,7 +207,7 @@ class MapDriverSendBottomsheet extends StatelessWidget {
                   children: [
                     GreenPoolButton(
                       onPressed: () {},
-                      label: 'Accept',
+                      label: Strings.accept,
                       fontSize: 14.kh,
                       height: 40.kh,
                       width: 144.kw,
@@ -214,7 +216,7 @@ class MapDriverSendBottomsheet extends StatelessWidget {
                     GreenPoolButton(
                       onPressed: () {},
                       isBorder: true,
-                      label: 'Reject',
+                      label: Strings.reject,
                       fontSize: 14.kh,
                       height: 40.kh,
                       width: 144.kw,

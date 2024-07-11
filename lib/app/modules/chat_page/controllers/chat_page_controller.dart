@@ -1,12 +1,10 @@
 import 'package:firebase_database/firebase_database.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/data/message_model.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/snackbar.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../../data/chat_arg.dart';
 import '../../../res/strings.dart';
@@ -55,7 +53,12 @@ class ChatPageController extends GetxController {
             DataMsgModel.fromMap(Map<String, dynamic>.from(data));
         messages.value = liveLocation.messages;
         messages.value.sort((a, b) => a.timestamp!.compareTo(b.timestamp!));
-        WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToBottom());
+        if (chatArg.value.deleteUpdateTime != null ||
+            chatArg.value.deleteUpdateTime != "") {
+          messages.value.removeWhere((item) => item.timestamp
+              .isBefore(DateTime.parse(chatArg.value.deleteUpdateTime ?? "")));
+        }
+        WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToBottom());        
       }
     }, onError: (Object error) {
       debugPrint("Error: $error");
@@ -167,29 +170,6 @@ class ChatPageController extends GetxController {
         ),
       ),
     );
-
-    // Get.defaultDialog(
-    //   title: Strings.deleteChat,
-    //   content: Text(Strings.areYouSureYouWantToDeleteThisChat),
-    //   actions: [
-    //     TextButton(
-    //       onPressed: () {
-    //         Get.back();
-    //       },
-    //       child: Text(
-    //         Strings.cancel,
-    //         style: TextStyleUtil.k14Bold(color: ColorUtil.kBlack03),
-    //       ),
-    //     ),
-    //     ElevatedButton(
-    //       onPressed: () {
-    //         Get.back();
-    //         deleteChatApi();
-    //       },
-    //       child: Text(Strings.delete, style: TextStyleUtil.k14Bold(color: ColorUtil.kError4)),
-    //     ),
-    //   ],
-    // );
   }
 
   Future<void> deleteChatApi() async {

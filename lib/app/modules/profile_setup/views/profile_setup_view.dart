@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/modules/profile_setup/views/setup_user.dart';
 import 'package:green_pool/app/modules/profile_setup/views/setup_vehicle.dart';
-import 'package:green_pool/app/modules/rider_profile_setup/views/rider_profile_setup_view.dart';
 import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
