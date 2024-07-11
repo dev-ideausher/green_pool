@@ -10,6 +10,7 @@ import 'package:green_pool/app/services/dialog_helper.dart';
 import '../../../data/request_ride_by_rider_model.dart';
 import '../../../data/rider_confirm_request_model.dart';
 import '../../../data/rider_send_request_model.dart';
+import '../../../routes/app_pages.dart';
 import '../../../services/dio/api_service.dart';
 import '../../../services/snackbar.dart';
 import '../../rider_my_ride_request/views/request_accepted_bottom.dart';
@@ -228,5 +229,9 @@ class PaymentController extends GetxController {
     } else {
       buttonState.value = false;
     }
+  }
+
+  void moveToWallet() {
+    Get.toNamed(Routes.WALLET);
   }
 }

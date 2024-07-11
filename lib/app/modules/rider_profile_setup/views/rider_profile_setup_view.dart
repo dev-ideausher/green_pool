@@ -117,6 +117,7 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
                 keyboardType: TextInputType.emailAddress,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 suffix: SvgPicture.asset(ImageConstant.svgProfileEditPen),
+                readOnly: controller.readOnlyEmail,
               ).paddingOnly(bottom: 16.kh),
               const RichTextHeading(text: 'Phone Number')
                   .paddingOnly(bottom: 8.kh),

@@ -1,8 +1,12 @@
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/services/snackbar.dart';
 import '../../../data/matching_rides_model.dart';
 import '../../../routes/app_pages.dart';
+import '../../../services/dio/api_service.dart';
 import '../../../services/gp_util.dart';
 import '../../find_ride/controllers/find_ride_controller.dart';
 import '../views/create_ride_alert_bottomsheet.dart';
@@ -14,13 +18,14 @@ class MatchingRidesController extends GetxController {
   // String minStopDistance = '';
   double latitude = Get.find<HomeController>().latitude.value;
   double longitude = Get.find<HomeController>().longitude.value;
-  final Rx<MatchingRidesModel> matchingRidesModel = MatchingRidesModel().obs;
+  Rx<MatchingRidesModel> matchingRidesModel = MatchingRidesModel().obs;
+  RxBool isLoading = true.obs;
 
   @override
-  void onInit() {
+  Future<void> onInit() async {
     super.onInit();
-    matchingRidesModel.value = Get.arguments['matchingRidesModel'];
-    rideDetails = Get.arguments['findRideData'];
+    rideDetails = Get.arguments;
+    await getMatchingRidesAPI();
   }
 
   // @override
@@ -32,6 +37,21 @@ class MatchingRidesController extends GetxController {
   // void onClose() {
   //   super.onClose();
   // }
+
+  Future<void> getMatchingRidesAPI() async {
+    final findRideData = rideDetails;
+
+    try {
+      final response = await APIManager.postFindMatchingDrivers(
+          body: findRideData, queryParam: "?isFindRide=true");
+      matchingRidesModel.value =
+          MatchingRidesModel.fromJson(jsonDecode(response.toString()));
+      matchingRidesModel.refresh();
+      isLoading.value = false;
+    } catch (error) {
+      debugPrint(error.toString());
+    }
+  }
 
   moveToFilter() {
     Get.toNamed(Routes.RIDER_FILTER, arguments: {
@@ -77,9 +97,8 @@ class MatchingRidesController extends GetxController {
   }
 
   Future<void> createRideAlert() async {
-    if (
-        rideDetails?['ridesDetails']['date'] != "" &&
-            rideDetails?['ridesDetails']['time'] != "") {
+    if (rideDetails?['ridesDetails']['date'] != "" &&
+        rideDetails?['ridesDetails']['time'] != "") {
       try {
         final res = await Get.find<FindRideController>().riderPostRideAPI();
 
@@ -88,6 +107,7 @@ class MatchingRidesController extends GetxController {
           persistent: true,
           const CreateRideAlertBottomsheet(),
         );
+        await getMatchingRidesAPI();
       } catch (e) {
         throw Exception(e);
       }

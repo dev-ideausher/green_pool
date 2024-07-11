@@ -49,7 +49,7 @@ class MatchingRidesView extends GetView<MatchingRidesController> {
         ).paddingOnly(bottom: 24.kh),
       ),
       body: Obx(
-        () => controller.matchingRidesModel.value.data == null
+        () => controller.isLoading.value
             ? const GpProgress()
             : (controller.matchingRidesModel.value.data?.length ?? 0) == 0
                 ? Center(

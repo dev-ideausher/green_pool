@@ -24,6 +24,7 @@ import 'city_list.dart';
 class RiderProfileSetupController extends GetxController {
   RxBool isPicked = false.obs;
   bool fromNavBar = false;
+  bool readOnlyEmail = false;
   RxList<String> cityNames = <String>[].obs;
   String name = '';
   Rx<File?> selectedProfileImagePath = Rx<File?>(null);
@@ -58,6 +59,11 @@ class RiderProfileSetupController extends GetxController {
     } catch (e) {
       fromNavBar = Get.arguments['fromNavBar'];
       fullName.text = Get.arguments['fullName'];
+    }
+    if (Get.find<GetStorageService>().emailId != "") {
+      readOnlyEmail = true;
+    } else {
+      readOnlyEmail = false;
     }
   }
 

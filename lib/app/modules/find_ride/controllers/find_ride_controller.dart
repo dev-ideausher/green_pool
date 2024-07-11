@@ -11,7 +11,6 @@ import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/snackbar.dart';
 
 import '../../../data/find_ride_response_model.dart';
-import '../../../data/matching_rides_model.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/dio/api_service.dart';
 import '../../../services/storage.dart';
@@ -36,7 +35,6 @@ class FindRideController extends GetxController {
   double riderDestinationLong = 0.0;
 
   RxList<LocationModel> locationModelNames = <LocationModel>[].obs;
-  Rx<MatchingRidesModel> matchingRidesModel = MatchingRidesModel().obs;
   var rideresponse = FindRideResponseModel().obs;
 
   @override
@@ -99,10 +97,11 @@ class FindRideController extends GetxController {
 
   void decideRouting() async {
     if (Get.find<GetStorageService>().isLoggedIn) {
+      final rideDetails = _getRideDetails();
       if (Get.find<HomeController>().userInfo.value.data?.profileStatus ==
           true) {
         _storePreviousLocations();
-        await getMatchingRidesAPI();
+        Get.toNamed(Routes.MATCHING_RIDES, arguments: rideDetails.toJson());
       } else {
         Get.toNamed(Routes.RIDER_PROFILE_SETUP, arguments: false);
       }
@@ -116,23 +115,6 @@ class FindRideController extends GetxController {
     }
   }
 
-  Future<void> getMatchingRidesAPI() async {
-    final findRideData = _getRideDetails();
-
-    try {
-      final response = await APIManager.postFindMatchingDrivers(
-          body: findRideData.toJson(), queryParam: "");
-      matchingRidesModel.value =
-          MatchingRidesModel.fromJson(jsonDecode(response.toString()));
-      Get.toNamed(Routes.MATCHING_RIDES, arguments: {
-        'findRideData': findRideData.toJson(),
-        'matchingRidesModel': matchingRidesModel.value,
-      });
-    } catch (error) {
-      debugPrint(error.toString());
-    }
-  }
-
   Future<void> riderPostRideAPI() async {
     final findRideData = _getRideDetails();
 
@@ -143,7 +125,6 @@ class FindRideController extends GetxController {
         rideresponse.value =
             FindRideResponseModel.fromJson(jsonDecode(response.toString()));
         log("this is rider's ride id: ${rideresponse.value.data![0]?.Id}");
-        await getMatchingRidesAPI();
       } else {
         showMySnackbar(msg: "Same ride is already posted");
       }

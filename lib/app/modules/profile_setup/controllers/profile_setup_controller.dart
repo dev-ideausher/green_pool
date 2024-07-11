@@ -32,6 +32,7 @@ class ProfileSetupController extends GetxController
   RxBool isIDPicked = false.obs;
   RxBool expandList = false.obs;
   RxBool imageNotUploaded = false.obs;
+  bool readOnlyEmail = false;
   TextEditingController fullName = TextEditingController(
       text: Get.find<GetStorageService>().getUserName ?? "");
   TextEditingController email =
@@ -73,6 +74,11 @@ class ProfileSetupController extends GetxController
       fullName.text = Get.arguments['fullName'];
     }
     tabBarController = TabController(length: 2, vsync: this);
+    if (Get.find<GetStorageService>().emailId != "") {
+      readOnlyEmail = true;
+    } else {
+      readOnlyEmail = false;
+    }
   }
 
   Future<void> setDate(BuildContext context) async {

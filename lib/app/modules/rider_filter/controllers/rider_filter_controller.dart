@@ -102,11 +102,11 @@ class RiderFilterController extends GetxController {
 
     if (sortByAdded && preferenceAdded) {
       queryParam =
-          "?sortType=${sortTypeJson}&preferences=${preferencesDataJson}";
+          "?sortType=${sortTypeJson}&preferences=${preferencesDataJson}&isFindRide=true";
     } else if (sortByAdded) {
-      queryParam = "?sortType=${sortTypeJson}";
+      queryParam = "?sortType=${sortTypeJson}&isFindRide=true";
     } else {
-      queryParam = "?preferences=${preferencesDataJson}";
+      queryParam = "?preferences=${preferencesDataJson}&isFindRide=true";
     }
 
     try {

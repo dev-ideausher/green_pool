@@ -107,7 +107,7 @@ class MapRiderConfirmBottomsheet extends StatelessWidget {
                                   BlendMode.srcIn),
                             ).paddingOnly(right: 4.kw),
                             Text(
-                              "${GpUtil.getDateFormat(element.driverRideDetails?.time ?? "" )}  ${GpUtil.convertUtcToLocal(element.driverRideDetails?.time ?? "")}",
+                              "${GpUtil.getDateFormat(element.driverRideDetails?.time ?? "")}  ${GpUtil.convertUtcToLocal(element.driverRideDetails?.time ?? "")}",
                               style: TextStyleUtil.k12Regular(
                                   color: ColorUtil.kBlack02),
                             ),
@@ -143,7 +143,7 @@ class MapRiderConfirmBottomsheet extends StatelessWidget {
                         element.driverRideDetails?.destination?.name ?? "",
                     needPickupText: false)
                 .paddingOnly(bottom: 8.kh),
-            const GreenPoolDivider().paddingOnly(bottom: 16.kh),
+            const GreenPoolDivider().paddingOnly(bottom: 8.kh),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -259,4 +259,4 @@ class MapRiderConfirmBottomsheet extends StatelessWidget {
       style: TextStyleUtil.k12Regular(color: ColorUtil.kBlack02),
     );
   }
-}          
+}

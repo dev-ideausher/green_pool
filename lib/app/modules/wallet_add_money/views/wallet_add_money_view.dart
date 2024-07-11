@@ -89,6 +89,22 @@ class WalletAddMoneyView extends GetView<WalletAddMoneyController> {
                     controller.setButtonState(value ?? "");
                   },
                 ),
+                Text.rich(
+                  TextSpan(
+                    children: [
+                      TextSpan(
+                        text: '*',
+                        style:
+                            TextStyleUtil.k14Regular(color: ColorUtil.kError3),
+                      ),
+                      TextSpan(
+                        text: "Minimum addition amount: \$100",
+                        style:
+                            TextStyleUtil.k12Regular(color: ColorUtil.kBlack03),
+                      ),
+                    ],
+                  ),
+                ).paddingOnly(top: 4.kh, left: 2.kw),
               ],
             ),
           ),

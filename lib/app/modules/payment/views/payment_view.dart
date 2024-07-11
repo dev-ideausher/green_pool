@@ -8,7 +8,6 @@ import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/modules/payment/controllers/payment_controller.dart';
 import 'package:green_pool/app/modules/payment/views/promo_code.dart';
 import 'package:green_pool/app/res/strings.dart';
-import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
@@ -97,7 +96,7 @@ class PaymentView extends GetView<PaymentController> {
                     tileColor: ColorUtil.kWhiteColor,
                     minTileHeight: 76.kh,
                     onTap: () {
-                      Get.toNamed(Routes.WALLET);
+                      controller.moveToWallet();
                     },
                     title: Text(
                       Strings.walletBalance,

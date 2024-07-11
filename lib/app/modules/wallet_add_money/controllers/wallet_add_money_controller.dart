@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:green_pool/app/modules/payment/controllers/payment_controller.dart';
 import 'package:green_pool/app/modules/wallet/controllers/wallet_controller.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/dio/api_service.dart';
@@ -15,10 +16,8 @@ class WalletAddMoneyController extends GetxController {
     super.onInit();
   }
 
-
-
   setButtonState(String value) {
-    if (value.isEmpty || value == "" || int.parse(value) < 100 ) {
+    if (value.isEmpty || value == "" || int.parse(value) < 100) {
       buttonState.value = false;
     } else {
       buttonState.value = true;
@@ -28,11 +27,16 @@ class WalletAddMoneyController extends GetxController {
   addMoney() async {
     // Get.toNamed(Routes.PAYMENT_METHOD);
     try {
-      final response = await APIManager.addAmount(body: {"amount": amountTextController.text.trim()});
+      final response = await APIManager.addAmount(
+          body: {"amount": amountTextController.text.trim()});
       final addAmountModel = AddAmountModel.fromJson(response.data);
       if (addAmountModel.status ?? false) {
         amountTextController.clear();
-        Get.toNamed(Routes.WEB_ADD_PAY, arguments: addAmountModel.data)?.then((value) => Get.find<WalletController>().getWallet());
+        Get.toNamed(Routes.WEB_ADD_PAY, arguments: addAmountModel.data)
+            ?.then((value) {
+          Get.find<WalletController>().getWallet();
+          Get.find<PaymentController>().getWallet();
+        });
       }
     } catch (e) {
       debugPrint(e.toString());

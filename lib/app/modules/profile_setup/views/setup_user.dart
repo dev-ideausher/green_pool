@@ -97,6 +97,7 @@ class SetupUser extends GetView<ProfileSetupController> {
               validator: (value) => controller.validateEmail(value),
               autovalidateMode: AutovalidateMode.onUserInteraction,
               suffix: SvgPicture.asset(ImageConstant.svgProfileEditPen),
+              readOnly: controller.readOnlyEmail,
             ).paddingOnly(bottom: 16.kh),
             const RichTextHeading(text: 'Phone Number')
                 .paddingOnly(bottom: 8.kh),

@@ -237,6 +237,9 @@ class ChatPageView extends GetView<ChatPageController> {
                           message.timestamp.month,
                           message.timestamp.day,
                         );
+                        final now = DateTime.now();
+                        final currentDate =
+                            DateTime(now.year, now.month, now.day);
 
                         bool showDate = true;
                         if (index < controller.messages.length - 1) {
@@ -260,7 +263,7 @@ class ChatPageView extends GetView<ChatPageController> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Text(
-                                      GpUtil.isToday(message.timestamp)
+                                      messageDate.isAtSameMomentAs(currentDate)
                                           ? Strings.today
                                           : DateFormat.E()
                                               .format(message.timestamp),

@@ -49,7 +49,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                       : ListView.builder(
                                           shrinkWrap: true,
                                           physics:
-                                              NeverScrollableScrollPhysics(),
+                                              const NeverScrollableScrollPhysics(),
                                           itemCount: controller
                                               .recurringResp.value.data?.length,
                                           itemBuilder: (context, index) {
@@ -62,7 +62,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                 ),
                                 ListView.builder(
                                   shrinkWrap: true,
-                                  physics: NeverScrollableScrollPhysics(),
+                                  physics: const NeverScrollableScrollPhysics(),
                                   itemCount: controller.myRidesModelData.length,
                                   itemBuilder: (context, index) {
                                     if (type == null) {

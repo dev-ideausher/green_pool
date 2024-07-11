@@ -24,7 +24,7 @@ class APIManager {
 
   static Future<Response> postFindMatchingDrivers(
           {required dynamic body, dynamic queryParam}) async =>
-      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).post(
+      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false).post(
         Endpoints.findMatchingDrivers + queryParam,
         data: jsonEncode(body),
       );
