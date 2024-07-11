@@ -6,7 +6,7 @@ import '../../../routes/app_pages.dart';
 
 class WalletController extends GetxController {
   final RxBool isLoad = true.obs;
-  final RxInt walletBalance = 0.obs;
+  final RxDouble walletBalance = 0.0.obs;
 
   @override
   Future<void> onInit() async {

@@ -8,7 +8,7 @@ class PromoCodeModelData {
   "promoCode": "PROMO123",
   "promoTitle": "Get 12% discount ",
   "discountCodeType": "%",
-  "discountAmount": 12,
+  "discountAmount": 12.54,
   "usageLimit": 2,
   "expireDate": "2024-07-03T00:00:00.000Z",
   "status": true,
@@ -24,7 +24,7 @@ class PromoCodeModelData {
   String? promoCode;
   String? promoTitle;
   String? discountCodeType;
-  int? discountAmount;
+  double? discountAmount;
   int? usageLimit;
   String? expireDate;
   bool? status;
@@ -54,7 +54,7 @@ class PromoCodeModelData {
     promoCode = json['promoCode']?.toString();
     promoTitle = json['promoTitle']?.toString();
     discountCodeType = json['discountCodeType']?.toString();
-    discountAmount = json['discountAmount']?.toInt();
+    discountAmount = json['discountAmount']?.toDouble();
     usageLimit = json['usageLimit']?.toInt();
     expireDate = json['expireDate']?.toString();
     status = json['status'];
@@ -94,7 +94,7 @@ class PromoCodeModel {
       "promoCode": "PROMO123",
       "promoTitle": "Get 12% discount ",
       "discountCodeType": "%",
-      "discountAmount": 12,
+      "discountAmount": 12.54,
       "usageLimit": 2,
       "expireDate": "2024-07-03T00:00:00.000Z",
       "status": true,
@@ -120,13 +120,13 @@ class PromoCodeModel {
   PromoCodeModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message']?.toString();
-  if (json['data'] != null) {
-  final v = json['data'];
-  final arr0 = <PromoCodeModelData>[];
-  v.forEach((v) {
-  arr0.add(PromoCodeModelData.fromJson(v));
-  });
-    this.data = arr0;
+    if (json['data'] != null) {
+      final v = json['data'];
+      final arr0 = <PromoCodeModelData>[];
+      v.forEach((v) {
+        arr0.add(PromoCodeModelData.fromJson(v));
+      });
+      this.data = arr0;
     }
   }
   Map<String, dynamic> toJson() {
@@ -136,9 +136,9 @@ class PromoCodeModel {
     if (this.data != null) {
       final v = this.data;
       final arr0 = [];
-  v!.forEach((v) {
-  arr0.add(v!.toJson());
-  });
+      v!.forEach((v) {
+        arr0.add(v!.toJson());
+      });
       data['data'] = arr0;
     }
     return data;

@@ -119,7 +119,7 @@ class PaymentView extends GetView<PaymentController> {
                       ),
                     ),
                     trailing: Text(
-                      "\$${controller.walletBalance.value}",
+                      "\$${controller.walletBalance.value.toStringAsFixed(2)}",
                       style:
                           TextStyleUtil.k16Bold(color: ColorUtil.kSecondary01),
                     ),

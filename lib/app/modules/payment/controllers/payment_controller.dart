@@ -21,7 +21,7 @@ class PaymentController extends GetxController {
   var riderSendRequestModelData = RiderSendRequestModelData();
   var riderConfirmRequestModelData = RiderConfirmRequestModelData();
   var promoCodeModel = PromoCodeModel().obs;
-  final RxInt walletBalance = 0.obs;
+  final RxDouble walletBalance = 0.0.obs;
   final RxBool isLoading = true.obs;
   final RxBool isPromoLoading = true.obs;
   final RxBool discountAvailed = false.obs;
@@ -31,8 +31,8 @@ class PaymentController extends GetxController {
   String ridePostId = "";
   String promoCodeId = "";
   int price = 0;
-  int discountProvided = 0;
-  int totalAmount = 0;
+  double discountProvided = 0.0;
+  double totalAmount = 0.0;
   int pricePerSeat = 0;
 
   @override
@@ -42,13 +42,14 @@ class PaymentController extends GetxController {
       rideData = Get.arguments['rideData'];
       riderSendRequestModelData = Get.arguments['riderSendRequestModelData'];
       price = rideData['price'];
-      totalAmount = rideData['price'];
+      totalAmount = double.parse(rideData['price'].toStringAsFixed(2));
       pricePerSeat = int.parse(Get.arguments['pricePerSeat']);
     } catch (e) {
       try {
         ridePostId = Get.arguments['ridePostId'];
         price = int.parse(Get.arguments['price']);
-        totalAmount = int.parse(Get.arguments['price']);
+        totalAmount =
+            double.parse(int.parse(Get.arguments['price']).toStringAsFixed(2));
         riderConfirmRequestModelData =
             Get.arguments['riderConfirmRequestModelData'];
         pricePerSeat = Get.arguments['pricePerSeat'];
@@ -57,7 +58,8 @@ class PaymentController extends GetxController {
         rideData = Get.arguments["rideData"];
         fromDriverDetails.value = true;
         price = rideData['ridesDetails']["price"];
-        totalAmount = rideData['ridesDetails']["price"];
+        totalAmount =
+            double.parse(rideData['ridesDetails']["price"].toStringAsFixed(2));
         pricePerSeat = Get.arguments["pricePerSeat"];
       }
     }
@@ -191,18 +193,20 @@ class PaymentController extends GetxController {
       //if price meets minAmnt criteria then apply type of discount accordingly
       discountAvailed.value = true;
       if (promoCodeModel.value.data![index]!.discountCodeType == "%") {
-        final int discountPercent =
+        final double discountPercent =
             promoCodeModel.value.data![index]!.discountAmount!;
 
-        final int discountAmount = (price * discountPercent / 100).round();
+        final double discountAmount =
+            double.parse((price * discountPercent / 100).toStringAsFixed(2));
 
         discountProvided = discountAmount;
 
-        final int discountedPrice = price - discountAmount;
+        final double discountedPrice = price - discountAmount;
 
         totalAmount = discountedPrice;
       } else {
-        final int? discount = promoCodeModel.value.data![index]!.discountAmount;
+        final double? discount =
+            promoCodeModel.value.data![index]!.discountAmount;
         discountProvided = discount!;
         totalAmount = price - discount;
       }

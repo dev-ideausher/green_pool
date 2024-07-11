@@ -90,13 +90,13 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                   .myRidesModelData[index]);
                                         } else {
                                           //---------------- for rider tile ------------------//
-                                          return const SizedBox();
+                                          return const NoRidesWidget();
                                         }
                                       } else {
                                         if (controller.myRidesModelData[index]
                                                 .driverId !=
                                             null) {
-                                          return const SizedBox();
+                                          return const NoRidesWidget();
                                         } else {
                                           //---------------- for rider tile ------------------//
                                           return RiderTile(

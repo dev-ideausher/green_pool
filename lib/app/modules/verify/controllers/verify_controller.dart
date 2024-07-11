@@ -145,8 +145,7 @@ class VerifyController extends GetxController {
         //if user is coming from nav bar then they should go back to bottom nav page
         storageService.profileStatus = true;
         storageService.isLoggedIn = true;
-        // Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
-        Get.until((route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
+        Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
         showMySnackbar(
             msg: "You are now logged in! This account already exists.");
         await homeController.userInfoAPI();
@@ -235,8 +234,7 @@ class VerifyController extends GetxController {
       if (fromNavBar) {
         storageService.profileStatus = true;
         storageService.isLoggedIn = true;
-        // Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
-        Get.until((route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
+        Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
         showMySnackbar(msg: 'Login Successful');
         await homeController.userInfoAPI();
       } else {

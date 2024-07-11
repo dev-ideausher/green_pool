@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 
 import '../../../routes/app_pages.dart';
 import '../../../services/storage.dart';

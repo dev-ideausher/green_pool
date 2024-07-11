@@ -8,7 +8,6 @@ import 'package:green_pool/app/modules/messages/controllers/messages_controller.
 import 'package:green_pool/app/modules/my_rides_request/controllers/my_rides_request_controller.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:permission_handler/permission_handler.dart';
-import '../modules/home/views/noti_bottomsheet.dart';
 import '../modules/my_rides_one_time/controllers/my_rides_one_time_controller.dart';
 
 class PushNotificationService {
@@ -166,7 +165,7 @@ class PushNotificationService {
       case 'Rider Request Accept':
       case 'Rider Ride Cancellation':
       case 'Ride Cancellation':
-      case 'End Ride':
+      case 'End_Ride':
       case 'Rider New request':
         Get.find<MyRidesOneTimeController>().myRidesAPI();
         break;

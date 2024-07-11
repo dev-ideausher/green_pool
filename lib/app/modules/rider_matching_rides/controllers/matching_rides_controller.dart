@@ -77,10 +77,9 @@ class MatchingRidesController extends GetxController {
   }
 
   Future<void> createRideAlert() async {
-    if (rideDetails?['ridesDetails']['date'] != "" ||
-        rideDetails?['ridesDetails']['time'] != "" ||
-        (rideDetails?['ridesDetails']['date'] != "" &&
-            rideDetails?['ridesDetails']['time'] != "")) {
+    if (
+        rideDetails?['ridesDetails']['date'] != "" &&
+            rideDetails?['ridesDetails']['time'] != "") {
       try {
         final res = await Get.find<FindRideController>().riderPostRideAPI();
 

@@ -52,7 +52,7 @@ class WalletView extends GetView<WalletController> {
                             style: TextStyleUtil.k18Heading600(),
                           ).paddingOnly(bottom: 16.kh),
                           Text(
-                            "\$ ${controller.walletBalance.value}",
+                            "\$ ${controller.walletBalance.value.toStringAsFixed(2)}",
                             style: TextStyleUtil.k32Heading700(
                                 color: ColorUtil.kSecondary01),
                           ).paddingOnly(bottom: 20.kh),
