@@ -811,7 +811,8 @@ class DriverSendRequestModelData {
     "coordinates": [
       -79.62353949999999
     ]
-  }
+  },
+  "requestSent": false
 } 
 */
 
@@ -846,6 +847,7 @@ class DriverSendRequestModelData {
   List<double?>? stopsDestinationDistances;
   double? minStopDestinationDistance;
   DriverSendRequestModelDataMatchedDestinationLocation? matchedDestinationLocation;
+  bool? requestSent;
 
   DriverSendRequestModelData({
     this.Id,
@@ -879,6 +881,7 @@ class DriverSendRequestModelData {
     this.stopsDestinationDistances,
     this.minStopDestinationDistance,
     this.matchedDestinationLocation,
+    this.requestSent,
   });
   DriverSendRequestModelData.fromJson(Map<String, dynamic> json) {
     Id = json['_id']?.toString();
@@ -940,6 +943,7 @@ class DriverSendRequestModelData {
     }
     minStopDestinationDistance = json['minStopDestinationDistance']?.toDouble();
     matchedDestinationLocation = (json['matchedDestinationLocation'] != null) ? DriverSendRequestModelDataMatchedDestinationLocation.fromJson(json['matchedDestinationLocation']) : null;
+    requestSent = json['requestSent'];
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -1018,6 +1022,7 @@ class DriverSendRequestModelData {
     if (matchedDestinationLocation != null) {
       data['matchedDestinationLocation'] = matchedDestinationLocation!.toJson();
     }
+    data['requestSent'] = requestSent;
     return data;
   }
 }
@@ -1160,7 +1165,8 @@ class DriverSendRequestModel {
         "coordinates": [
           -79.62353949999999
         ]
-      }
+      },
+      "requestSent": false
     }
   ]
 } 

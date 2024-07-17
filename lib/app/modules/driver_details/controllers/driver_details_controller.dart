@@ -38,6 +38,29 @@ class DriverDetailsController extends GetxController {
   // }
 
   moveToPayment() {
+    rideDetails?["ridesDetails"]["date"] =
+        matchingRidesModelData.value.time.toString().split("T").first;
+    rideDetails?["ridesDetails"]["time"] = matchingRidesModelData.value.time;
+    if (rideDetails?["ridesDetails"]["origin"]["name"] == "") {
+      rideDetails?["ridesDetails"]["origin"]["name"] =
+          matchingRidesModelData.value.matchedOriginLocation?.name;
+      rideDetails?["ridesDetails"]["origin"]["longitude"] =
+          matchingRidesModelData
+              .value.matchedOriginLocation?.coordinates?.first;
+      rideDetails?["ridesDetails"]["origin"]["latitude"] =
+          matchingRidesModelData.value.matchedOriginLocation?.coordinates?.last;
+    }
+    if (rideDetails?["ridesDetails"]["destination"]["name"] == "") {
+      rideDetails?["ridesDetails"]["destination"]["name"] =
+          matchingRidesModelData.value.matchedDestinationLocation?.name;
+      rideDetails?["ridesDetails"]["destination"]["longitude"] =
+          matchingRidesModelData
+              .value.matchedDestinationLocation?.coordinates?.first;
+      rideDetails?["ridesDetails"]["destination"]["latitude"] =
+          matchingRidesModelData
+              .value.matchedDestinationLocation?.coordinates?.last;
+    }
+
     final Map<String, dynamic> rideData = {
       "ridesDetails": rideDetails!["ridesDetails"],
       "driverRideId": driverRideId,

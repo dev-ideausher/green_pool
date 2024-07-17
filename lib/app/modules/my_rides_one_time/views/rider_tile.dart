@@ -242,10 +242,12 @@ class RiderTile extends StatelessWidget {
               //middle divider
               myRidesModelData?.date == null
                   ? const SizedBox()
-                  : const GreenPoolDivider().paddingOnly(bottom: 16.kh),
+                  : const GreenPoolDivider().paddingOnly(bottom: 8.kh),
               OriginToDestination(
                       needPickupText: true,
                       origin: "${myRidesModelData?.origin?.name}",
+                      stop1: myRidesModelData?.stops?[0]?.name ?? "",
+                      stop2: myRidesModelData?.stops?[1]?.name ?? "",
                       destination: "${myRidesModelData?.destination?.name}")
                   .paddingOnly(bottom: 8.kh),
 

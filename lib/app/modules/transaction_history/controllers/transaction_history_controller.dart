@@ -6,13 +6,13 @@ import '../../../data/transactions_model.dart';
 
 class TransactionHistoryController extends GetxController {
   final RxBool isLoad = true.obs;
-  final RxList<TransactionsModelTransactions> transactions = <TransactionsModelTransactions>[].obs;
+  final RxList<TransactionsModelTransactions> transactions =
+      <TransactionsModelTransactions>[].obs;
 
   @override
   void onInit() {
     super.onInit();
     getTransactionHistory();
-    isLoad.value = false;
   }
 
   Future<void> getTransactionHistory() async {
@@ -20,7 +20,7 @@ class TransactionHistoryController extends GetxController {
       final res = await APIManager.transactions();
       final transactionsModel = TransactionsModel.fromJson(res.data);
       transactions.value = transactionsModel.transactions!;
-
+      isLoad.value = false;
     } catch (e) {
       debugPrint(e.toString());
     }

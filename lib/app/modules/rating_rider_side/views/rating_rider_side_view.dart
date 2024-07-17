@@ -22,7 +22,7 @@ class RatingRiderSideView extends GetView<RatingRiderSideController> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomSheet: Obx(
-        () => !controller.isLoading.value
+        () => controller.isLoading.value
             ? const GpProgress()
             : Container(
                 height: 400.kh,
@@ -76,7 +76,6 @@ class RatingRiderSideView extends GetView<RatingRiderSideController> {
                           ),
                           onRatingUpdate: (double value) {
                             controller.driverRating.value = value;
-                            
                           },
                         ),
                       ),
@@ -168,7 +167,7 @@ class RatingRiderSideView extends GetView<RatingRiderSideController> {
                       GreenPoolButton(
                         onPressed: () {
                           controller.rateDriverAPI(
-                                "${controller.myRidesModel.value.data?.driverBookingDetails?.driverId}");
+                              "${controller.myRidesModel.value.data?.driverBookingDetails?.driverId}");
                           Get.find<HomeController>().changeTabIndex(0);
                           Get.until((route) =>
                               Get.currentRoute == Routes.BOTTOM_NAVIGATION);
@@ -180,24 +179,26 @@ class RatingRiderSideView extends GetView<RatingRiderSideController> {
                 ),
               ),
       ),
-      body: Center(
-        child: Column(
-          children: [
-            SvgPicture.asset(ImageConstant.svgRideCompleted)
-                .paddingOnly(top: 40.kh, bottom: 24.kh),
-            Text(
-              "Ride Completed!",
-              style: TextStyleUtil.k24Heading600(),
-              textAlign: TextAlign.center,
-            ).paddingOnly(bottom: 8.kh),
-            Text(
-              "Hope you had a great car pooling\nexperience!",
-              style: TextStyleUtil.k16Regular(color: ColorUtil.kBlack04),
-              textAlign: TextAlign.center,
+      body: controller.isLoading.value
+          ? const GpProgress()
+          : Center(
+              child: Column(
+                children: [
+                  SvgPicture.asset(ImageConstant.svgRideCompleted)
+                      .paddingOnly(top: 40.kh, bottom: 24.kh),
+                  Text(
+                    "Ride Completed!",
+                    style: TextStyleUtil.k24Heading600(),
+                    textAlign: TextAlign.center,
+                  ).paddingOnly(bottom: 8.kh),
+                  Text(
+                    "Hope you had a great car pooling\nexperience!",
+                    style: TextStyleUtil.k16Regular(color: ColorUtil.kBlack04),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
             ),
-          ],
-        ),
-      ),
     );
   }
 }

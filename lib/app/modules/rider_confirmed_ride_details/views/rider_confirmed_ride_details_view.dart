@@ -133,7 +133,7 @@ class RiderConfirmedRideDetailsView
                                 ).paddingOnly(right: 8.kw),
                                 Text(
                                   "${controller.myRidesModel.value.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.seatAvailable} seats",
-                                  style: TextStyleUtil.k14Regular(
+                                  style: TextStyleUtil.k12Regular(
                                       color: ColorUtil.kBlack03),
                                 ),
                               ],
@@ -144,11 +144,13 @@ class RiderConfirmedRideDetailsView
                     ),
 
                     //middle divider
-                    const GreenPoolDivider().paddingOnly(bottom: 16.kh),
+                    const GreenPoolDivider().paddingOnly(bottom: 8.kh),
                     OriginToDestination(
                             needPickupText: true,
                             origin:
                                 "${controller.myRidesModel.value.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.origin?.name}",
+                            stop1: controller.myRidesModel.value.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.stops?[0]?.name ?? "",
+                            stop2: controller.myRidesModel.value.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.stops?[1]?.name ?? "",
                             destination:
                                 "${controller.myRidesModel.value.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.destination?.name}")
                         .paddingOnly(bottom: 8.kh),

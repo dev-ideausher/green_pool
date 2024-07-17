@@ -39,12 +39,13 @@ class MyRidesOneTimeController extends GetxController {
       myRidesModelData.value = mData.data!
           .where((element) => !(element.isCancelled ?? false))
           .toList();
+      await allRecurringRidesAPI();
     } catch (e) {
       debugPrint(e.toString());
     }
-    if (isRecurring) {
-      await allRecurringRidesAPI();
-    }
+    // if (isRecurring) {
+    //   await allRecurringRidesAPI();
+    // }
     isLoad.value = false;
   }
 
@@ -105,12 +106,10 @@ class MyRidesOneTimeController extends GetxController {
         Get.toNamed(Routes.RIDER_CONFIRMED_RIDE_DETAILS,
                 arguments: myRidesModelData)
             ?.then((v) => myRidesAPI);
-        ;
       } else {
         Get.toNamed(Routes.RIDER_MY_RIDE_REQUEST,
                 arguments: myRidesModelData.Id)
             ?.then((v) => myRidesAPI);
-        ;
       }
     } else {
       if (myRidesModelData.confirmDriverDetails?.first?.driverPostsDetails
@@ -118,7 +117,6 @@ class MyRidesOneTimeController extends GetxController {
           false) {
         Get.toNamed(Routes.RIDER_START_RIDE_MAP, arguments: myRidesModelData)
             ?.then((v) => myRidesAPI);
-        ;
       } else {
         if (myRidesModelData.rideStatus == "Confirmed") {
           Get.toNamed(Routes.RIDER_CONFIRMED_RIDE_DETAILS,
@@ -140,7 +138,7 @@ class MyRidesOneTimeController extends GetxController {
     } else {
       if (value.postsInfo!.isNotEmpty) {
         Get.toNamed(Routes.START_RIDE,
-                arguments: value.postsInfo?[0].driverRideId)
+                arguments: value.postsInfo?[0]?.driverRideId)
             ?.then((v) => myRidesAPI);
       } else {
         showMySnackbar(msg: "You have no riders at the moment");
@@ -210,19 +208,19 @@ class MyRidesOneTimeController extends GetxController {
     }
   }
 
-  enableRecurringAPI(input) async {
-    final driverRideId = input;
-    try {
-      final response =
-          await APIManager.enableDisableRecurring(driverRIdeId: driverRideId);
-      var data = jsonDecode(response.toString());
-      await allRecurringRidesAPI();
+  // enableRecurringAPI(input) async {
+  //   final driverRideId = input;
+  //   try {
+  //     final response =
+  //         await APIManager.enableDisableRecurring(driverRIdeId: driverRideId);
+  //     var data = jsonDecode(response.toString());
+  //     await allRecurringRidesAPI();
 
-      print(data.toString());
-    } catch (e) {
-      throw Exception(e);
-    }
-  }
+  //     print(data.toString());
+  //   } catch (e) {
+  //     throw Exception(e);
+  //   }
+  // }
 
   Future<void> moveToRequests(MyRidesModelData value) async {
     await Get.toNamed(Routes.MY_RIDES_REQUEST,
@@ -231,5 +229,22 @@ class MyRidesOneTimeController extends GetxController {
                 // riderRidId: myRidesModelData.value.riderRideId ?? ""
                 riderRidId: ""))
         ?.then((v) => myRidesAPI);
+  }
+
+  void deleteRecurringride(String id) {
+    DialogHelper.deleteRecurringride(
+      () async {
+        Get.back();
+        try {
+          isLoad.value = true;
+          await APIManager.deleteRecurringRide(rideId: id);
+          showMySnackbar(msg: "Ride deleted successfully!");
+          await myRidesAPI();
+          isLoad.value = false;
+        } catch (e) {
+          debugPrint(e.toString());
+        }
+      },
+    );
   }
 }

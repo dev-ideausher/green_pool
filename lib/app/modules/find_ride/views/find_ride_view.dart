@@ -38,7 +38,11 @@ class FindRideView extends GetView<FindRideController> {
         () => Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            RichTextHeading(text: Strings.pickup).paddingOnly(top: 12.kh),
+            // RichTextHeading(text: Strings.pickup).paddingOnly(top: 12.kh),
+            Text(
+              Strings.pickup,
+              style: TextStyleUtil.k14Semibold(),
+            ).paddingOnly(top: 12.kh),
             GreenPoolTextField(
               hintText: Strings.enterOrigin,
               keyboardType: TextInputType.streetAddress,
@@ -61,7 +65,11 @@ class FindRideView extends GetView<FindRideController> {
                     : ColorUtil.kSecondary01,
               ),
             ).paddingOnly(top: 8.kh, bottom: 16.kh),
-            RichTextHeading(text: Strings.destination),
+            // RichTextHeading(text: Strings.destination),
+            Text(
+              Strings.destination,
+              style: TextStyleUtil.k14Semibold(),
+            ),
             GreenPoolTextField(
               hintText: Strings.enterAdestination,
               keyboardType: TextInputType.streetAddress,

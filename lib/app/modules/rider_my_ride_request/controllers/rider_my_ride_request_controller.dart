@@ -233,4 +233,8 @@ class RiderMyRideRequestController extends GetxController {
       'pricePerSeat': riderSendRequestModelData.price
     });
   }
+
+  void moveToDetailsPage(RiderSendRequestModelData data) {
+    Get.toNamed(Routes.RIDER_MY_RIDES_SEND_DETAILS, arguments: data);
+  }
 }

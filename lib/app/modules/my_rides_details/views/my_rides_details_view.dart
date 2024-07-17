@@ -58,7 +58,7 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                                 Text(
                                   // "7 July 2023, 3:00pm",
 
-                                  "${GpUtil.getDateFormat( controller.myRidesModelData.value.driverBookingDetails?.time ?? "")}  ${GpUtil.convertUtcToLocal(controller.myRidesModelData.value.driverBookingDetails?.time ?? "")}",
+                                  "${GpUtil.getDateFormat(controller.myRidesModelData.value.driverBookingDetails?.time ?? "")}  ${GpUtil.convertUtcToLocal(controller.myRidesModelData.value.driverBookingDetails?.time ?? "")}",
                                   style: TextStyleUtil.k16Bold(
                                       color: ColorUtil.kBlack02),
                                 )
@@ -82,6 +82,20 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                                 origin: controller.myRidesModelData.value
                                         .driverBookingDetails?.origin?.name ??
                                     "",
+                                stop1: controller
+                                        .myRidesModelData
+                                        .value
+                                        .driverBookingDetails
+                                        ?.stops?[0]
+                                        ?.name ??
+                                    "",
+                                stop2: controller
+                                        .myRidesModelData
+                                        .value
+                                        .driverBookingDetails
+                                        ?.stops?[1]
+                                        ?.name ??
+                                    "",
                                 destination: controller
                                         .myRidesModelData
                                         .value
@@ -103,7 +117,7 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                     ).paddingOnly(bottom: 16.kh),
 
                     (controller.myRidesModelData.value.driverBookingDetails
-                                    ?.riders?.length ??
+                                    ?.riderBookingDetails?.length ??
                                 0) ==
                             0
                         ? Center(
@@ -120,7 +134,7 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                                         ?.riderBookingDetails
                                         ?.length ??
                                     0) *
-                                122.kh),
+                                115.kh),
                             child: ListView.builder(
                                 itemCount: controller
                                         .myRidesModelData
@@ -136,44 +150,42 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                                       .value
                                       .driverBookingDetails
                                       ?.riderBookingDetails?[index1];
-                                  return Container(
-                                    child: Column(
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Container(
-                                              decoration: const BoxDecoration(
-                                                shape: BoxShape.circle,
-                                              ),
-                                              child: ClipOval(
-                                                child: SizedBox.fromSize(
-                                                  size: Size.fromRadius(20.kh),
-                                                  child: CommonImageView(
-                                                      url:
-                                                          "${rider?.riderDetails?.profilePic?.url ?? ""}"),
-                                                ),
-                                              ),
-                                            ).paddingOnly(right: 8.kw),
-                                            Text(
-                                              rider?.riderDetails?.fullName ??
-                                                  "",
-                                              style:
-                                                  TextStyleUtil.k14Semibold(),
+                                  return Column(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Container(
+                                            decoration: const BoxDecoration(
+                                              shape: BoxShape.circle,
                                             ),
-                                          ],
-                                        ).paddingOnly(bottom: 12.kh),
-                                        OriginToDestination(
-                                                needPickupText: true,
-                                                origin:
-                                                    '${controller.myRidesModelData.value?.driverBookingDetails?.origin?.name}',
-                                                destination:
-                                                    '${controller.myRidesModelData.value?.driverBookingDetails?.destination?.name}')
-                                            .paddingOnly(bottom: 8.kh),
-                                      ],
-                                    ),
+                                            child: ClipOval(
+                                              child: SizedBox.fromSize(
+                                                size: Size.fromRadius(20.kh),
+                                                child: CommonImageView(
+                                                    url: rider?.riderDetails
+                                                            ?.profilePic?.url ??
+                                                        ""),
+                                              ),
+                                            ),
+                                          ).paddingOnly(right: 8.kw),
+                                          Text(
+                                            rider?.riderDetails?.fullName ?? "",
+                                            style: TextStyleUtil.k14Semibold(),
+                                          ),
+                                        ],
+                                      ).paddingOnly(bottom: 12.kh),
+                                      OriginToDestination(
+                                              needPickupText: true,
+                                              origin: '${rider?.origin?.name}',
+                                              stop1: "",
+                                              stop2: "",
+                                              destination:
+                                                  '${rider?.destination?.name}')
+                                          .paddingOnly(bottom: 8.kh),
+                                    ],
                                   );
                                 }),
-                          ).paddingOnly(bottom: 16.kh),
+                          ),
                     const GreenPoolDivider().paddingOnly(bottom: 16.kh),
 
                     //Vehicle details

@@ -118,14 +118,30 @@ class PostRideStepTwoController extends GetxController {
       initialTime: TimeOfDay.now(),
       initialEntryMode: TimePickerEntryMode.dial,
     );
+    if (pickedTime != null) {}
     if (pickedTime != null) {
       // Use MaterialLocalizations to format the time in 24-hour format
       final MaterialLocalizations localizations =
           MaterialLocalizations.of(context);
       String formattedTime = localizations.formatTimeOfDay(pickedTime,
           alwaysUse24HourFormat: false);
-      selectedTime.text = formattedTime;
-      setActiveStateCarpoolSchedule();
+
+      if (selectedDate.text.isNotEmpty) {
+        if (GpUtil.isToday(DateTime.parse(selectedDate.text))) {
+          if (GpUtil.isAfterCurrentTime(formattedTime)) {
+            selectedTime.text = formattedTime;
+            setActiveStateCarpoolSchedule();
+          } else {
+            showMySnackbar(msg: "Please select a valid time");
+            selectedTime.clear();
+          }
+        } else {
+          selectedTime.text = formattedTime;
+          setActiveStateCarpoolSchedule();
+        }
+      } else {
+        showMySnackbar(msg: "Please select a date");
+      }
     }
   }
 
@@ -191,7 +207,14 @@ class PostRideStepTwoController extends GetxController {
           MaterialLocalizations.of(context);
       String formattedTime = localizations.formatTimeOfDay(pickedTime,
           alwaysUse24HourFormat: false);
-      selectedRecurringTime.text = formattedTime;
+
+      if (GpUtil.isAfterCurrentTime(formattedTime)) {
+        selectedRecurringTime.text = formattedTime;
+        setActiveStateCarpoolSchedule();
+      } else {
+        showMySnackbar(msg: "Please select a valid time");
+        selectedRecurringTime.clear();
+      }
     }
   }
 
@@ -204,7 +227,7 @@ class PostRideStepTwoController extends GetxController {
                 selectedReturnTime.value.text.isNotEmpty)
             : (formattedOneTimeDate.value.text.isNotEmpty &&
                 selectedTime.value.text.isNotEmpty)
-        : daysOfWeek!.isNotEmpty) {
+        : (daysOfWeek!.isNotEmpty && selectedRecurringTime.text.isNotEmpty)) {
       isActiveCarpoolButton.value = true;
     } else {
       isActiveCarpoolButton.value = false;
@@ -243,6 +266,10 @@ class PostRideStepTwoController extends GetxController {
     final returnDate = combinedReturnDateTimeUTC.split("T").first;
     final returnTime = combinedReturnDateTimeUTC;
 
+    final combinedRecurringTime =
+        "${selectedDate.text.toString().split("T").first}T${selectedRecurringTime.text}";
+    final recurringTime = GpUtil.convertCombinedToGmt(combinedRecurringTime);
+
     Get.toNamed(Routes.POST_RIDE_STEP_THREE,
         arguments: PostRideModel(
           ridesDetails: PostRideModelRidesDetails(
@@ -271,10 +298,8 @@ class PostRideStepTwoController extends GetxController {
                       postRideModel.value.ridesDetails?.stops?[1]?.longitude),
             ],
             tripType: tabIndex.value == 0 ? "oneTime" : "recurring",
-            date: tabIndex.value == 1 ? "" : date,
-            time: tabIndex.value == 1
-                ? GpUtil.convertLocalTimeToGmt(selectedRecurringTime.text)
-                : time,
+            date: date,
+            time: tabIndex.value == 1 ? recurringTime : time,
             recurringTrip: PostRideModelRidesDetailsRecurringTrip(
                 recurringTripDays: tabIndex.value == 1 ? daysOfWeek : []),
             seatAvailable: count.value,

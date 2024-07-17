@@ -23,41 +23,49 @@ class TransactionHistoryView extends GetView<TransactionHistoryController> {
       body: Obx(
         () => controller.isLoad.value
             ? const GpProgress()
-            : ListView.builder(
-                itemCount: controller.transactions.length,
-                itemBuilder: (context, index) {
-                  final transaction = controller.transactions[index];
-                  return TransactionTile(
-                          title: Get.find<HomeController>()
-                                  .userInfo
-                                  .value
-                                  .data
-                                  ?.fullName ??
-                              "",
-                          path: Get.find<HomeController>()
-                                  .userInfo
-                                  .value
-                                  .data
-                                  ?.profilePic
-                                  ?.url ??
-                              "",
-                          onTap: () {},
-                          trailing: Text(
-                            "\$ ${transaction.amount}",
-                            style: TextStyleUtil.k16Semibold(
-                                fontSize: 16.kh,
-                                color: (transaction?.transactionType ?? "") ==
-                                        "credit"
-                                    ? Get.find<HomeController>()
-                                            .isPinkModeOn
-                                            .value
-                                        ? ColorUtil.kPrimary2PinkMode
-                                        : ColorUtil.kGreenColor
-                                    : ColorUtil.kError4),
-                          ),
-                          subtitle: "Id: #${transaction.Id}")
-                      .paddingOnly(bottom: 8.kh);
-                }).paddingOnly(top: 32.kh),
+            : controller.transactions.isEmpty
+                ? Center(
+                    child: Center(
+                    child: Text(
+                      "Your future transactions will appear here",
+                      style: TextStyleUtil.k24Heading600(),
+                      textAlign: TextAlign.center,
+                    ),
+                  ))
+                : ListView.builder(
+                    itemCount: controller.transactions.length,
+                    itemBuilder: (context, index) {
+                      final transaction = controller.transactions[index];
+                      return TransactionTile(
+                              title: Get.find<HomeController>()
+                                      .userInfo
+                                      .value
+                                      .data
+                                      ?.fullName ??
+                                  "",
+                              path: Get.find<HomeController>()
+                                      .userInfo
+                                      .value
+                                      .data
+                                      ?.profilePic
+                                      ?.url ??
+                                  "",
+                              onTap: () {},
+                              trailing: Text(
+                                "\$ ${transaction.amount}",
+                                style: TextStyleUtil.k16Semibold(
+                                    fontSize: 16.kh,
+                                    color: (transaction?.type ?? "") == "Credit"
+                                        ? Get.find<HomeController>()
+                                                .isPinkModeOn
+                                                .value
+                                            ? ColorUtil.kPrimary2PinkMode
+                                            : ColorUtil.kGreenColor
+                                        : ColorUtil.kError2),
+                              ),
+                              subtitle: "Id: #${transaction.Id}")
+                          .paddingOnly(bottom: 8.kh);
+                    }).paddingOnly(top: 32.kh),
       ),
     );
   }

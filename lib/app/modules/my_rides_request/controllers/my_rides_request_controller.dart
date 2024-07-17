@@ -50,7 +50,6 @@ class MyRidesRequestController extends GetxController {
       confirmRequestModel.value = DriverConfirmRequestModel.fromJson(data);
       isLoading = false.obs;
     } catch (e) {
-      // debugPrint(e.toString());
       throw Exception(e);
     }
   }

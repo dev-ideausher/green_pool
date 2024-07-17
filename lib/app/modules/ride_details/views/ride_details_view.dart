@@ -200,6 +200,8 @@ class RideDetailsView extends GetView<RideDetailsController> {
               const GreenPoolDivider().paddingOnly(bottom: 16.kh),
               OriginToDestination(
                       origin: '${controller.rideHistory.value.origin?.name}',
+                      stop1: controller.rideHistory.value.stops?[0]?.name ?? "",
+                      stop2: controller.rideHistory.value.stops?[1]?.name ?? "",
                       destination:
                           '${controller.rideHistory.value.destination?.name}',
                       needPickupText: true)

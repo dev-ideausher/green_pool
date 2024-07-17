@@ -4,71 +4,41 @@
 class TransactionsModelTransactions {
 /*
 {
-  "_id": "6644c47d5194f36bbc5faa71",
-  "userId": "65c228fd32f497dc57fdeff8",
-  "walletId": "6644903550558f306808f14d",
-  "transactionType": "credit",
-  "amount": 10,
-  "balanceBefore": 70,
-  "balanceAfter": 80,
-  "description": "",
-  "paymentId": "6644b5afe302e9f3e10c2b98",
-  "createdAt": "2024-05-15T14:19:41.477Z",
-  "updatedAt": "2024-05-15T14:19:41.477Z"
-}
+  "_id": "668698d659e8f53a342b5146",
+  "type": "Credit",
+  "amount": 1000,
+  "createdAt": "2024-07-04T12:43:02.519Z",
+  "reason": "Payment Added to Account"
+} 
 */
 
   String? Id;
-  String? userId;
-  String? walletId;
-  String? transactionType;
+  String? type;
   int? amount;
-  int? balanceBefore;
-  int? balanceAfter;
-  String? description;
-  String? paymentId;
   String? createdAt;
-  String? updatedAt;
+  String? reason;
 
   TransactionsModelTransactions({
     this.Id,
-    this.userId,
-    this.walletId,
-    this.transactionType,
+    this.type,
     this.amount,
-    this.balanceBefore,
-    this.balanceAfter,
-    this.description,
-    this.paymentId,
     this.createdAt,
-    this.updatedAt,
+    this.reason,
   });
   TransactionsModelTransactions.fromJson(Map<String, dynamic> json) {
     Id = json['_id']?.toString();
-    userId = json['userId']?.toString();
-    walletId = json['walletId']?.toString();
-    transactionType = json['transactionType']?.toString();
+    type = json['type']?.toString();
     amount = json['amount']?.toInt();
-    balanceBefore = json['balanceBefore']?.toInt();
-    balanceAfter = json['balanceAfter']?.toInt();
-    description = json['description']?.toString();
-    paymentId = json['paymentId']?.toString();
     createdAt = json['createdAt']?.toString();
-    updatedAt = json['updatedAt']?.toString();
+    reason = json['reason']?.toString();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['_id'] = Id;
-    data['userId'] = userId;
-    data['walletId'] = walletId;
-    data['transactionType'] = transactionType;
+    data['type'] = type;
     data['amount'] = amount;
-    data['balanceBefore'] = balanceBefore;
-    data['balanceAfter'] = balanceAfter;
-    data['description'] = description;
-    data['paymentId'] = paymentId;
     data['createdAt'] = createdAt;
-    data['updatedAt'] = updatedAt;
+    data['reason'] = reason;
     return data;
   }
 }
@@ -79,20 +49,14 @@ class TransactionsModel {
   "status": true,
   "transactions": [
     {
-      "_id": "6644c47d5194f36bbc5faa71",
-      "userId": "65c228fd32f497dc57fdeff8",
-      "walletId": "6644903550558f306808f14d",
-      "transactionType": "credit",
-      "amount": 10,
-      "balanceBefore": 70,
-      "balanceAfter": 80,
-      "description": "",
-      "paymentId": "6644b5afe302e9f3e10c2b98",
-      "createdAt": "2024-05-15T14:19:41.477Z",
-      "updatedAt": "2024-05-15T14:19:41.477Z"
+      "_id": "668698d659e8f53a342b5146",
+      "type": "Credit",
+      "amount": 1000,
+      "createdAt": "2024-07-04T12:43:02.519Z",
+      "reason": "Payment Added to Account"
     }
   ]
-}
+} 
 */
 
   bool? status;
@@ -104,13 +68,13 @@ class TransactionsModel {
   });
   TransactionsModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
-    if (json['transactions'] != null) {
-      final v = json['transactions'];
-      final arr0 = <TransactionsModelTransactions>[];
-      v.forEach((v) {
-        arr0.add(TransactionsModelTransactions.fromJson(v));
-      });
-      transactions = arr0;
+  if (json['transactions'] != null) {
+  final v = json['transactions'];
+  final arr0 = <TransactionsModelTransactions>[];
+  v.forEach((v) {
+  arr0.add(TransactionsModelTransactions.fromJson(v));
+  });
+    transactions = arr0;
     }
   }
   Map<String, dynamic> toJson() {
@@ -119,9 +83,9 @@ class TransactionsModel {
     if (transactions != null) {
       final v = transactions;
       final arr0 = [];
-      v!.forEach((v) {
-        arr0.add(v!.toJson());
-      });
+  v!.forEach((v) {
+  arr0.add(v!.toJson());
+  });
       data['transactions'] = arr0;
     }
     return data;

@@ -157,15 +157,34 @@ class FindRideController extends GetxController {
       initialEntryMode: TimePickerEntryMode.dial,
     );
 
+    // if (pickedTime != null) {
+    //   final localizations = MaterialLocalizations.of(context);
+    //   selectedTime.text = localizations.formatTimeOfDay(pickedTime,
+    //       alwaysUse24HourFormat: false);
+    // }
     if (pickedTime != null) {
       final localizations = MaterialLocalizations.of(context);
-      selectedTime.text = localizations.formatTimeOfDay(pickedTime,
+      final formattedTime = localizations.formatTimeOfDay(pickedTime,
           alwaysUse24HourFormat: false);
+      if (date.text.isNotEmpty) {
+        if (GpUtil.isToday(DateTime.parse(date.text))) {
+          if (GpUtil.isAfterCurrentTime(formattedTime)) {
+            selectedTime.text = formattedTime;
+          } else {
+            showMySnackbar(msg: "Please select a valid time");
+            selectedTime.clear();
+          }
+        } else {
+          selectedTime.text = formattedTime;
+        }
+      } else {
+        showMySnackbar(msg: "Please select a date");
+      }
     }
   }
 
   void setActiveState() {
-    isActive.value = riderOriginTextController.text.isNotEmpty &&
+    isActive.value = riderOriginTextController.text.isNotEmpty ||
         riderDestinationTextController.text.isNotEmpty;
   }
 

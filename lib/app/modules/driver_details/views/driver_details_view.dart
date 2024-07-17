@@ -137,9 +137,13 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                 OriginToDestination(
                         needPickupText: true,
                         origin:
-                            "${controller.matchingRidesModelData.value.origin?.name}",
+                            "${controller.matchingRidesModelData.value.matchedOriginLocation?.name}",
+                        stop1:
+                            "${controller.matchingRidesModelData.value.stops?[0]?.name}",
+                        stop2:
+                            "${controller.matchingRidesModelData.value.stops?[1]?.name}",
                         destination:
-                            "${controller.matchingRidesModelData.value.destination?.name}")
+                            "${controller.matchingRidesModelData.value.matchedDestinationLocation?.name}")
                     .paddingSymmetric(vertical: 8.kh),
                 //bottom line
                 const GreenPoolDivider(),

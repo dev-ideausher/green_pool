@@ -60,8 +60,7 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                             controller.riderSendRequestModel.value.data![index];
                         return GestureDetector(
                           onTap: () {
-                            Get.toNamed(Routes.RIDER_MY_RIDES_SEND_DETAILS,
-                                arguments: index);
+                            controller.moveToDetailsPage(rideDetails);
                           },
                           child: Container(
                             padding: EdgeInsets.all(16.kh),
@@ -243,6 +242,10 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                 OriginToDestination(
                                         needPickupText: false,
                                         origin: "${rideDetails?.origin?.name}",
+                                        stop1:
+                                            rideDetails.stops?[0]?.name ?? "",
+                                        stop2:
+                                            rideDetails.stops?[1]?.name ?? "",
                                         destination:
                                             "${rideDetails?.destination?.name}")
                                     .paddingOnly(bottom: 8.kh),
@@ -290,14 +293,26 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                       height: 40.kh,
                                       padding: EdgeInsets.all(8.kh),
                                       fontSize: 14.kh,
-                                      label: Strings.request,
+                                      label: controller
+                                                  .riderSendRequestModel
+                                                  .value
+                                                  .data![index]
+                                                  .requestSent ??
+                                              false
+                                          ? Strings.sent
+                                          : Strings.request,
                                       onPressed: () async {
-                                        // await controller
-                                        //     .sendRideRequestToDriverAPI(
-                                        //         controller.riderSendRequestModel
-                                        //             .value.data![index]);
-                                        controller.moveToPaymentFromSendRequest(
-                                            rideDetails);
+                                        if (controller
+                                                .riderSendRequestModel
+                                                .value
+                                                .data![index]
+                                                .requestSent ??
+                                            false) {
+                                        } else {
+                                          controller
+                                              .moveToPaymentFromSendRequest(
+                                                  rideDetails);
+                                        }
                                       },
                                     ),
                                   ],

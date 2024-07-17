@@ -304,14 +304,7 @@ class MyRidesRecurringDetailsView
                                                         ?.recurringRides?[index]
                                                         ?.Id ??
                                                     "",
-                                                riderRidId: controller
-                                                        .recurringModel
-                                                        .value
-                                                        .data
-                                                        ?.recurringRides?[index]
-                                                        ?.riders?[0]
-                                                        ?.Id ??
-                                                    ""));
+                                                riderRidId: ""));
                                       }),
                                 )
                               ],

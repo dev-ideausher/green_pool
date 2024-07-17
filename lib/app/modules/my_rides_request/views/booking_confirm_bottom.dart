@@ -166,7 +166,7 @@ class BookingConfirmBottom extends StatelessWidget {
               const GreenPoolDivider().paddingOnly(bottom: 16.kh),
               OriginToDestination(
                       origin:
-                          "${driverRideData?.rideDetails?[0]?.origin?.name}",
+                          "${driverRideData?.rideDetails?[0]?.origin?.name}",                          
                       destination:
                           "${driverRideData?.rideDetails?[0]?.destination?.name}",
                       needPickupText: false)

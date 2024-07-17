@@ -325,6 +325,10 @@ class APIManager {
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
           .delete(Endpoints.deleteAccount);
 
+  static Future<dynamic> deleteRecurringRide({required String rideId}) async =>
+      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+          .delete(Endpoints.recurringRideDetails + rideId);
+
   static Future<Response> patchAcceptRiderRequest(
           {required dynamic body}) async =>
       // driver will accept the request send by a rider

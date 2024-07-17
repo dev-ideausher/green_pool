@@ -21,7 +21,7 @@ import '../../../services/snackbar.dart';
 
 class HomeController extends GetxController {
   final RxInt selectedIndex = 0.obs;
-  final PageController? pageController = PageController();
+  final PageController pageController = PageController();
   final RxBool findingRide = false.obs;
   RxDouble latitude = 0.0.obs;
   RxDouble longitude = 0.0.obs;
@@ -31,12 +31,12 @@ class HomeController extends GetxController {
   bool canPop = false;
 
   void changeTabIndex(int index) {
-    selectedIndex.value = index;
-    pageController?.animateToPage(
+    pageController.animateToPage(
       index,
       duration: const Duration(milliseconds: 1),
       curve: Curves.easeIn,
     );
+    selectedIndex.value = index;
   }
 
   @override
@@ -91,12 +91,17 @@ class HomeController extends GetxController {
         userInfo.value = UserInfoModel.fromJson(data);
         userInfo.refresh();
 
+        //store values
+        storageService.setUserAppId = userInfo.value.data?.Id;
+        storageService.setUserName = userInfo.value.data?.fullName ?? "";
+        storageService.profilePicUrl = userInfo.value.data?.profilePic?.url;
+        storageService.setFirebaseUid = userInfo.value.data?.firebaseUid ?? "";
+
         // Subscribe to FCM notifications using the user ID
         PushNotificationService.subFcm("${userInfo.value.data?.Id}");
 
         // Update the pink mode status from storage service
         isPinkModeOn.value = storageService.isPinkMode;
-        // storageService.setFirebaseUid = userInfo.value.data?.firebaseUid ?? "";
         print(storageService.encjwToken);
 
         //method to handle location changes

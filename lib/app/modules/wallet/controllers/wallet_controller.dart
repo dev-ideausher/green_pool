@@ -6,7 +6,7 @@ import '../../../routes/app_pages.dart';
 
 class WalletController extends GetxController {
   final RxBool isLoad = true.obs;
-  final RxDouble walletBalance = 0.0.obs;
+  final RxString walletBalance = "0.0".obs;
 
   @override
   Future<void> onInit() async {
@@ -18,7 +18,7 @@ class WalletController extends GetxController {
   getWallet() async {
     try {
       final res = await APIManager.walletBalance();
-      walletBalance.value = res.data['wallet']['balance'] ?? 0;
+      walletBalance.value = res.data['wallet'] ?? 0;
       walletBalance.refresh();
     } catch (e) {
       debugPrint(e.toString());

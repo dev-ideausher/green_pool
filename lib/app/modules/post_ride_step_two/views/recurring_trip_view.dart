@@ -137,10 +137,7 @@ class RecurringTripView extends GetView<PostRideStepTwoController> {
             ],
           ).paddingOnly(bottom: 8.kh),
         ),
-        Text(
-          'Time',
-          style: TextStyleUtil.k14Semibold(),
-        ),
+        const RichTextHeading(text: "Time"),
         GreenPoolTextField(
           hintText: 'Select Time',
           controller: controller.selectedRecurringTime,

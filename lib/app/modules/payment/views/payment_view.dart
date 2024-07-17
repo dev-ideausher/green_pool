@@ -45,7 +45,7 @@ class PaymentView extends GetView<PaymentController> {
                   //     color: ColorUtil.kGreyColor,
                   //   ),
                   // ).paddingSymmetric(horizontal: 16.kw),
-                  Obx(
+                  /*Obx(
                     () => OriginToDestination(
                             origin: controller.fromDriverDetails.value
                                 ? controller.rideData['ridesDetails']['origin']
@@ -55,7 +55,7 @@ class PaymentView extends GetView<PaymentController> {
                                     ? "${controller.riderConfirmRequestModelData?.driverRideDetails?.origin!.name.toString()}"
                                     : controller
                                         .riderSendRequestModelData.origin!.name
-                                        .toString(),
+                                        .toString(),                                                
                             destination: controller.fromDriverDetails.value
                                 ? controller.rideData['ridesDetails']
                                         ['destination']['name']
@@ -67,7 +67,14 @@ class PaymentView extends GetView<PaymentController> {
                                         .toString(),
                             needPickupText: false)
                         .paddingSymmetric(horizontal: 16.kw),
-                  ),
+                  ),*/
+                  OriginToDestination(
+                          origin: controller.origin ?? "",
+                          stop1: controller.stop1 ?? "",
+                          stop2: controller.stop2 ?? "",
+                          destination: controller.destination ?? "",
+                          needPickupText: false)
+                      .paddingSymmetric(horizontal: 16.kw),
                   24.kheightBox,
                   Text(
                     Strings.promotions,
@@ -118,7 +125,7 @@ class PaymentView extends GetView<PaymentController> {
                       ),
                     ),
                     trailing: Text(
-                      "\$${controller.walletBalance.value.toStringAsFixed(2)}",
+                      "\$${controller.walletBalance.value}",
                       style:
                           TextStyleUtil.k16Bold(color: ColorUtil.kSecondary01),
                     ),

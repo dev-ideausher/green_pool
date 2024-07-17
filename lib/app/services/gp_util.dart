@@ -362,4 +362,22 @@ class GpUtil {
       return "";
     }
   }
+
+  static bool isAfterCurrentTime(String inputTime) {
+    // Parse the input time
+    DateFormat inputFormat = DateFormat('h:mm a');
+    DateTime inputDateTime = inputFormat.parse(inputTime);
+
+    // Get the current local time
+    DateTime now = DateTime.now();
+
+    // Compare only the hour and minute
+    if (inputDateTime.hour > now.hour) {
+      return true;
+    } else if (inputDateTime.hour == now.hour &&
+        inputDateTime.minute >= now.minute) {
+      return true;
+    }
+    return false;
+  }
 }

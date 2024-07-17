@@ -202,10 +202,10 @@ class SendRequest extends GetView<MyRidesRequestController> {
                                     ),
                                   ),
                                 ],
-                              ),
+                              ).paddingOnly(bottom: 8.kh),
 
                               const GreenPoolDivider()
-                                  .paddingOnly(bottom: 16.kh),
+                                  .paddingOnly(bottom: 8.kh),
                               OriginToDestination(
                                       origin:
                                           "${controller.sendRequestModel.value.data![index]?.origin?.name}",
@@ -242,17 +242,27 @@ class SendRequest extends GetView<MyRidesRequestController> {
                                     ),
                                   ).paddingAll(8.kh),
                                   GreenPoolButton(
-                                    width: 144.kw,
-                                    height: 40.kh,
-                                    padding: EdgeInsets.all(8.kh),
-                                    fontSize: 14.kh,
-                                    label: Strings.request,
-                                    onPressed: () async => await controller
-                                        .sendRequestToRiderAPI(controller
-                                            .sendRequestModel
-                                            .value
-                                            .data![index]),
-                                  ),
+                                      width: 144.kw,
+                                      height: 40.kh,
+                                      padding: EdgeInsets.all(8.kh),
+                                      fontSize: 14.kh,
+                                      label: controller.sendRequestModel.value
+                                                  .data![index].requestSent ??
+                                              false
+                                          ? Strings.sent
+                                          : Strings.request,
+                                      onPressed: () async {
+                                        if (controller.sendRequestModel.value
+                                                .data![index].requestSent ??
+                                            false) {
+                                        } else {
+                                          await controller
+                                              .sendRequestToRiderAPI(controller
+                                                  .sendRequestModel
+                                                  .value
+                                                  .data![index]);
+                                        }
+                                      }),
                                 ],
                               ),
                             ],

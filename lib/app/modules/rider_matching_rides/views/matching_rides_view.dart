@@ -6,8 +6,6 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/components/common_image_view.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
-import 'package:green_pool/app/modules/find_ride/controllers/find_ride_controller.dart';
-import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
@@ -199,7 +197,7 @@ class MatchingRidesView extends GetView<MatchingRidesController> {
                                                                 TextSpan(
                                                                   // text: '\$3.50',
                                                                   text:
-                                                                      "\$ ${controller.matchingRidesModel.value.data![index]?.origin?.originDestinationFair}",
+                                                                      "\$ ${controller.matchingRidesModel.value.data![index]?.price}",
                                                                   style: TextStyleUtil
                                                                       .k16Bold(
                                                                           color:

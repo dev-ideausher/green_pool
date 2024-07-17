@@ -22,11 +22,10 @@ class PaymentController extends GetxController {
   var riderSendRequestModelData = RiderSendRequestModelData();
   var riderConfirmRequestModelData = RiderConfirmRequestModelData();
   var promoCodeModel = PromoCodeModel().obs;
-  final RxDouble walletBalance = 0.0.obs;
+  final RxString walletBalance = "0.0".obs;
   final RxBool isLoading = true.obs;
   final RxBool isPromoLoading = true.obs;
   final RxBool discountAvailed = false.obs;
-  final RxBool buttonState = false.obs;
   final RxBool fromDriverDetails = false.obs;
   final RxBool fromConfirmRequestSection = false.obs;
   String ridePostId = "";
@@ -35,6 +34,10 @@ class PaymentController extends GetxController {
   double discountProvided = 0.0;
   double totalAmount = 0.0;
   int pricePerSeat = 0;
+  String? origin = "";
+  String? stop1 = "";
+  String? stop2 = "";
+  String? destination = "";
 
   @override
   Future<void> onInit() async {
@@ -45,6 +48,10 @@ class PaymentController extends GetxController {
       price = rideData['price'];
       totalAmount = double.parse(rideData['price'].toStringAsFixed(2));
       pricePerSeat = int.parse(Get.arguments['pricePerSeat']);
+      origin = riderSendRequestModelData.origin!.name;
+      destination = riderSendRequestModelData.destination!.name;
+      stop1 = riderSendRequestModelData.stops?[0]?.name;
+      stop2 = riderSendRequestModelData.stops?[1]?.name;
     } catch (e) {
       try {
         ridePostId = Get.arguments['ridePostId'];
@@ -55,16 +62,22 @@ class PaymentController extends GetxController {
             Get.arguments['riderConfirmRequestModelData'];
         pricePerSeat = Get.arguments['pricePerSeat'];
         fromConfirmRequestSection.value = true;
+        origin = riderConfirmRequestModelData?.driverRideDetails?.origin!.name.toString();
+        destination = riderConfirmRequestModelData?.driverRideDetails?.destination!.name.toString();
+        stop1 = riderConfirmRequestModelData?.driverRideDetails?.stops?[0]?.name.toString();
+        stop2 = riderConfirmRequestModelData?.driverRideDetails?.stops?[1]?.name.toString();
       } catch (e) {
         rideData = Get.arguments["rideData"];
         fromDriverDetails.value = true;
+        origin = rideData['ridesDetails']['origin']['name'].toString();
+        destination =
+            rideData['ridesDetails']['destination']['name'].toString();
         price = rideData['ridesDetails']["price"];
         totalAmount =
             double.parse(rideData['ridesDetails']["price"].toStringAsFixed(2));
         pricePerSeat = Get.arguments["pricePerSeat"];
       }
     }
-    checkWalletBalance();
     await getWallet();
   }
 
@@ -81,7 +94,7 @@ class PaymentController extends GetxController {
   getWallet() async {
     try {
       final res = await APIManager.walletBalance();
-      walletBalance.value = res.data['wallet']['balance'] ?? 0;
+      walletBalance.value = res.data['wallet'] ?? 0;
       walletBalance.refresh();
       isLoading.value = false;
     } catch (e) {
@@ -102,7 +115,7 @@ class PaymentController extends GetxController {
   createRideAlert() async {
     rideData!['ridesDetails']!['price'] = price;
 
-    if (walletBalance.value >= totalAmount) {
+    if (double.parse(walletBalance.value) >= totalAmount) {
       try {
         final response = await APIManager.postCreateAlert(body: {
           "ridesDetails": rideData['ridesDetails'],
@@ -126,7 +139,7 @@ class PaymentController extends GetxController {
   }
 
   Future<void> sendRequesttoDriverAPI() async {
-    if (walletBalance.value >= totalAmount) {
+    if (double.parse(walletBalance.value) >= totalAmount) {
       try {
         final response = await APIManager.postSendRequestToDriver(body: {
           "riderRideId": rideData['riderRideId'],
@@ -154,7 +167,7 @@ class PaymentController extends GetxController {
   }
 
   Future<void> confirmRequestOfDriverAPI() async {
-    if (walletBalance.value >= totalAmount) {
+    if (double.parse(walletBalance.value) >= totalAmount) {
       try {
         final response = await APIManager.acceptDriversRequest(body: {
           "ridePostId": ridePostId,
@@ -220,14 +233,6 @@ class PaymentController extends GetxController {
       showMySnackbar(
           msg:
               "The minimum ride amount to avail this offer is \$${promoCodeModel.value.data![index]!.minAmount!}");
-    }
-  }
-
-  void checkWalletBalance() {
-    if (walletBalance.value >= price) {
-      buttonState.value = true;
-    } else {
-      buttonState.value = false;
     }
   }
 

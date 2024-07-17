@@ -14,7 +14,6 @@ class ProfileController extends GetxController {
   var userInfo = Get.find<HomeController>().userInfo;
   TextEditingController ratingTextController = TextEditingController();
   RxDouble rating = 4.0.obs;
-  ScrollController scrollController = ScrollController();
 
   // @override
   // void onInit() {

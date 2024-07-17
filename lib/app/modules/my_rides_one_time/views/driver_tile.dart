@@ -72,7 +72,7 @@ class DriverTile extends StatelessWidget {
                     child: ListView.builder(
                       shrinkWrap: true,
                       itemCount: (myRidesModelData.postsInfo?.length ?? 0) == 0
-                          ? 4
+                          ? myRidesModelData.totalSeatAvailable
                           : myRidesModelData.postsInfo?.length,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index1) {
@@ -127,8 +127,10 @@ class DriverTile extends StatelessWidget {
                     ).paddingOnly(bottom: 8.kh),
               const GreenPoolDivider().paddingOnly(bottom: 8.kh),
               OriginToDestination(
-                needPickupText: false,
+                needPickupText: true,
                 origin: myRidesModelData.origin?.name ?? Strings.pickup,
+                stop1: myRidesModelData.stops?[0]?.name ?? "",
+                stop2: myRidesModelData.stops?[1]?.name ?? "",
                 destination:
                     myRidesModelData.destination?.name ?? Strings.destination,
               ).paddingOnly(bottom: 8.kh),

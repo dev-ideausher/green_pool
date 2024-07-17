@@ -32,13 +32,12 @@ class RatingRiderSideController extends GetxController {
 
   myRidesDetailsAPI(String rideId) async {
     try {
-      isLoading.value = true;
       final response = await APIManager.getMyRidesDetails(rideId: rideId);
       var data = jsonDecode(response.toString());
       // myRidesModel.value = BookingDetailModel.fromJson(data).data!;
       myRidesModel.value = BookingDetailModel.fromJson(data);
       print(myRidesModel.value.data?.driverBookingDetails?.destination?.name);
-      isLoading.value = true;
+      isLoading.value = false;
     } catch (e) {
       debugPrint(e.toString());
     }

@@ -55,7 +55,7 @@ class RiderMyRidesSendDetailsView
                               borderRadius: BorderRadius.circular(8.kh),
                               child: CommonImageView(
                                   url:
-                                      "${controller.riderSendRequestModel.value.data?[controller.index]?.driverDetails?[0]?.profilePic?.url}")),
+                                      "${controller.riderSendRequestModelData.driverDetails?[0]?.profilePic?.url}")),
                         ).paddingOnly(bottom: 8.kh),
                       ],
                     ).paddingOnly(right: 16.kw, bottom: 16.kh),
@@ -69,7 +69,7 @@ class RiderMyRidesSendDetailsView
                             children: [
                               Text(
                                 // 'Sam Alexander',
-                                "${controller.riderSendRequestModel.value.data?[controller.index]?.driverDetails?[0]?.fullName}",
+                                "${controller.riderSendRequestModelData.driverDetails?[0]?.fullName}",
                                 style: TextStyleUtil.k16Bold(),
                               ),
                               Text.rich(
@@ -82,7 +82,7 @@ class RiderMyRidesSendDetailsView
                                     ),
                                     TextSpan(
                                       text:
-                                          '\$ ${controller.riderSendRequestModel.value.data?[controller.index]?.origin?.originDestinationFair}',
+                                          '\$ ${controller.riderSendRequestModelData.origin?.originDestinationFair}',
                                       style: TextStyleUtil.k16Semibold(
                                           fontSize: 16.kh,
                                           color: ColorUtil.kSecondary01),
@@ -97,8 +97,7 @@ class RiderMyRidesSendDetailsView
                             children: [
                               Row(
                                 children: [
-                                  controller.riderSendRequestModel.value
-                                              .data?[controller.index]?.date ==
+                                  controller.riderSendRequestModelData.date ==
                                           null
                                       ? const SizedBox()
                                       : SvgPicture.asset(
@@ -111,12 +110,11 @@ class RiderMyRidesSendDetailsView
                                                   : ColorUtil.kSecondary01,
                                               BlendMode.srcIn),
                                         ).paddingOnly(right: 4.kw),
-                                  controller.riderSendRequestModel.value
-                                              .data?[controller.index]?.date ==
+                                  controller.riderSendRequestModelData.date ==
                                           null
                                       ? const SizedBox()
                                       : Text(
-                                          "${GpUtil.getDateFormat(controller.riderSendRequestModel.value.data?[controller.index]?.time ?? "")}  ${GpUtil.convertUtcToLocal(controller.riderSendRequestModel.value.data?[controller.index]?.time ?? "")}",
+                                          "${GpUtil.getDateFormat(controller.riderSendRequestModelData.time ?? "")}  ${GpUtil.convertUtcToLocal(controller.riderSendRequestModelData.time ?? "")}",
                                           style: TextStyleUtil.k12Regular(
                                               color: ColorUtil.kBlack03),
                                         ),
@@ -134,7 +132,7 @@ class RiderMyRidesSendDetailsView
                                         : ColorUtil.kSecondary01,
                                   ).paddingOnly(right: 8.kw),
                                   Text(
-                                    "${controller.riderSendRequestModel.value.data?[controller.index]?.seatAvailable} seats",
+                                    "${controller.riderSendRequestModelData.seatAvailable} seats",
                                     style: TextStyleUtil.k14Regular(
                                         color: ColorUtil.kBlack03),
                                   ),
@@ -146,14 +144,20 @@ class RiderMyRidesSendDetailsView
                       ),
                     ),
                   ],
-                ).paddingOnly(top: 32.kh),
+                ).paddingOnly(top: 8.kh),
                 //middle divider
                 const GreenPoolDivider().paddingOnly(bottom: 16.kh),
                 OriginToDestination(
                   origin:
-                      "${controller.riderSendRequestModel.value.data?[controller.index]?.origin?.name}",
+                      "${controller.riderSendRequestModelData.origin?.name}",
+                  stop1:
+                      controller.riderSendRequestModelData?.stops?[0]?.name ??
+                          "",
+                  stop2:
+                      controller.riderSendRequestModelData?.stops?[1]?.name ??
+                          "",
                   destination:
-                      "${controller.riderSendRequestModel.value.data?[controller.index]?.destination?.name}",
+                      "${controller.riderSendRequestModelData.destination?.name}",
                   needPickupText: true,
                 ).paddingOnly(bottom: 8.kh),
                 //bottom line
@@ -189,7 +193,7 @@ class RiderMyRidesSendDetailsView
                           size: 12.kh,
                         ).paddingOnly(right: 4.kw),
                         Text(
-                          "${controller.riderSendRequestModel.value.data?[controller.index]?.driverDetails?[0]?.rating}",
+                          "${controller.riderSendRequestModelData.driverDetails?[0]?.rating}",
                           style: TextStyleUtil.k14Regular(),
                         ),
                       ]),
@@ -204,7 +208,7 @@ class RiderMyRidesSendDetailsView
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Text(
-                      "${controller.riderSendRequestModel.value.data?[controller.index]?.driverDetails?[0]?.totalRides} people",
+                      "${controller.riderSendRequestModelData.driverDetails?[0]?.totalRides} people",
                       style:
                           TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                     ),
@@ -218,7 +222,7 @@ class RiderMyRidesSendDetailsView
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Text(
-                      'in ${controller.riderSendRequestModel.value.data?[controller.index]?.createdAt.toString().split("-")[0]}',
+                      'in ${controller.riderSendRequestModelData.createdAt.toString().split("-")[0]}',
                       style:
                           TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                     ),
@@ -234,56 +238,46 @@ class RiderMyRidesSendDetailsView
               Strings.coPassengers,
               style: TextStyleUtil.k14Bold(),
             ).paddingOnly(bottom: 16.kh),
-            Obx(
-              () => (controller
-                              .riderSendRequestModel
-                              .value
-                              .data?[controller.index]
-                              ?.ridersDetatils
-                              ?.length ??
-                          0) ==
-                      0
-                  ? Center(
-                      child: Text(
-                        Strings.noPassengersAvailable,
-                        style: TextStyleUtil.k14Semibold(),
-                      ),
-                    ).paddingOnly(bottom: 16.kh)
-                  : SizedBox(
-                      height: 96.kh,
-                      child: ListView.builder(
-                          itemCount: controller
-                                  .riderSendRequestModel
-                                  .value
-                                  .data?[controller.index]
-                                  ?.ridersDetatils
-                                  ?.length ??
-                              6,
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) {
-                            return Column(
-                              children: [
-                                Container(
-                                  decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: ClipOval(
-                                      child: SizedBox.fromSize(
-                                          size: Size.fromRadius(20.kh),
-                                          child: CommonImageView(
-                                              url:
-                                                  "${controller.riderSendRequestModel.value.data?[controller.index]?.ridersDetatils?[index]?.profilePic?.url}"))),
-                                ).paddingOnly(bottom: 4.kh),
-                                Text(
-                                  "${controller.riderSendRequestModel.value.data?[controller.index]?.ridersDetatils?[index]?.fullName.toString().split(" ").first}\n${controller.riderSendRequestModel.value.data?[controller.index]?.ridersDetatils?[index]?.fullName.toString().split(" ").last}",
-                                  style: TextStyleUtil.k12Semibold(),
-                                  textAlign: TextAlign.center,
+            (controller.riderSendRequestModelData.ridersDetatils?.length ??
+                        0) ==
+                    0
+                ? Center(
+                    child: Text(
+                      Strings.noPassengersAvailable,
+                      style: TextStyleUtil.k14Semibold(),
+                    ),
+                  ).paddingOnly(bottom: 16.kh)
+                : SizedBox(
+                    height: 96.kh,
+                    child: ListView.builder(
+                        itemCount: controller.riderSendRequestModelData
+                                .ridersDetatils?.length ??
+                            6,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          return Column(
+                            children: [
+                              Container(
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
                                 ),
-                              ],
-                            ).paddingOnly(right: 32.kw);
-                          }),
-                    ).paddingOnly(bottom: 16.kh),
-            ),
+                                child: ClipOval(
+                                    child: SizedBox.fromSize(
+                                        size: Size.fromRadius(20.kh),
+                                        child: CommonImageView(
+                                            url:
+                                                "${controller.riderSendRequestModelData.ridersDetatils?[index]?.profilePic?.url}"))),
+                              ).paddingOnly(bottom: 4.kh),
+                              Text(
+                                "${controller.riderSendRequestModelData.ridersDetatils?[index]?.fullName.toString().split(" ").first}\n${controller.riderSendRequestModelData.ridersDetatils?[index]?.fullName.toString().split(" ").last}",
+                                style: TextStyleUtil.k12Semibold(),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ).paddingOnly(right: 32.kw);
+                        }),
+                  ).paddingOnly(bottom: 16.kh),
+
             const GreenPoolDivider().paddingOnly(bottom: 16.kh),
 
             //Vehicle details
@@ -299,21 +293,21 @@ class RiderMyRidesSendDetailsView
                       height: 64.kh,
                       width: 64.kw,
                       url:
-                          "${controller.riderSendRequestModel.value.data?[controller.index]?.driverDetails?[0]?.vehicleDetails?[0]?.vehiclePic?.url}"),
+                          "${controller.riderSendRequestModelData.driverDetails?[0]?.vehicleDetails?[0]?.vehiclePic?.url}"),
                 ).paddingOnly(right: 8.kh),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       // 'Toyota Corolla',
-                      "${controller.riderSendRequestModel.value.data?[controller.index]?.driverDetails?[0]?.vehicleDetails?[0]?.model}",
+                      "${controller.riderSendRequestModelData.driverDetails?[0]?.vehicleDetails?[0]?.model}",
                       style: TextStyleUtil.k16Bold(color: ColorUtil.kBlack02),
                     ).paddingOnly(bottom: 4.kh),
                     Row(
                       children: [
                         Text(
                           // 'Sedan',
-                          "${controller.riderSendRequestModel.value.data?[controller.index]?.driverDetails?[0]?.vehicleDetails?[0]?.type}",
+                          "${controller.riderSendRequestModelData.driverDetails?[0]?.vehicleDetails?[0]?.type}",
                           style: TextStyleUtil.k14Semibold(
                               color: ColorUtil.kBlack03),
                         ),
@@ -323,7 +317,7 @@ class RiderMyRidesSendDetailsView
                           color: ColorUtil.kBlack03,
                         ).paddingSymmetric(vertical: 2.5.kh, horizontal: 8.kw),
                         Text(
-                          "${controller.riderSendRequestModel.value.data?[controller.index]?.driverDetails?[0]?.vehicleDetails?[0]?.licencePlate}",
+                          "${controller.riderSendRequestModelData.driverDetails?[0]?.vehicleDetails?[0]?.licencePlate}",
                           style: TextStyleUtil.k14Semibold(
                               color: ColorUtil.kBlack03),
                         ),
@@ -342,8 +336,8 @@ class RiderMyRidesSendDetailsView
               style: TextStyleUtil.k14Bold(),
             ).paddingOnly(bottom: 16.kh),
 
-            controller.riderSendRequestModel.value.data?[controller.index]
-                        ?.preferences?.other?.AppreciatesConversation ==
+            controller.riderSendRequestModelData.preferences?.other
+                        ?.AppreciatesConversation ==
                     true
                 ? Amenities(
                         toggleSwitch: false,
@@ -351,8 +345,8 @@ class RiderMyRidesSendDetailsView
                         image: ImageConstant.svgAmenities1)
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
-            controller.riderSendRequestModel.value.data?[controller.index]
-                        ?.preferences?.other?.EnjoysMusic ==
+            controller.riderSendRequestModelData.preferences?.other
+                        ?.EnjoysMusic ==
                     true
                 ? Amenities(
                         toggleSwitch: false,
@@ -360,8 +354,8 @@ class RiderMyRidesSendDetailsView
                         image: ImageConstant.svgAmenities2)
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
-            controller.riderSendRequestModel.value.data?[controller.index]
-                        ?.preferences?.other?.SmokeFree ==
+            controller.riderSendRequestModelData.preferences?.other
+                        ?.SmokeFree ==
                     true
                 ? Amenities(
                         toggleSwitch: false,
@@ -369,8 +363,8 @@ class RiderMyRidesSendDetailsView
                         image: ImageConstant.svgAmenities3)
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
-            controller.riderSendRequestModel.value.data?[controller.index]
-                        ?.preferences?.other?.PetFriendly ==
+            controller.riderSendRequestModelData.preferences?.other
+                        ?.PetFriendly ==
                     true
                 ? Amenities(
                         toggleSwitch: false,
@@ -378,8 +372,8 @@ class RiderMyRidesSendDetailsView
                         image: ImageConstant.svgAmenities4)
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
-            controller.riderSendRequestModel.value.data?[controller.index]
-                        ?.preferences?.other?.WinterTires ==
+            controller.riderSendRequestModelData.preferences?.other
+                        ?.WinterTires ==
                     true
                 ? Amenities(
                         toggleSwitch: false,
@@ -387,8 +381,8 @@ class RiderMyRidesSendDetailsView
                         image: ImageConstant.svgAmenities5)
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
-            controller.riderSendRequestModel.value.data?[controller.index]
-                        ?.preferences?.other?.CoolingOrHeating ==
+            controller.riderSendRequestModelData.preferences?.other
+                        ?.CoolingOrHeating ==
                     true
                 ? Amenities(
                         toggleSwitch: false,
@@ -396,8 +390,7 @@ class RiderMyRidesSendDetailsView
                         image: ImageConstant.svgAmenities6)
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
-            controller.riderSendRequestModel.value.data?[controller.index]
-                        ?.preferences?.other?.BabySeat ==
+            controller.riderSendRequestModelData.preferences?.other?.BabySeat ==
                     true
                 ? Amenities(
                         toggleSwitch: false,
@@ -405,8 +398,8 @@ class RiderMyRidesSendDetailsView
                         image: ImageConstant.svgAmenities7)
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
-            controller.riderSendRequestModel.value.data?[controller.index]
-                        ?.preferences?.other?.HeatedSeats ==
+            controller.riderSendRequestModelData.preferences?.other
+                        ?.HeatedSeats ==
                     true
                 ? Amenities(
                         toggleSwitch: false,
@@ -417,7 +410,9 @@ class RiderMyRidesSendDetailsView
 
             const GreenPoolDivider().paddingOnly(top: 8.kh),
             GreenPoolButton(
-              onPressed: () {},
+              onPressed: () {
+                controller.openMessage(controller.riderSendRequestModelData);
+              },
               label: Strings.message,
               isBorder: true,
             ),
@@ -425,11 +420,8 @@ class RiderMyRidesSendDetailsView
               onPressed: () async {
                 try {
                   await Get.find<RiderMyRideRequestController>()
-                      .moveToPaymentFromSendRequest(controller
-                          .riderSendRequestModel.value.data![controller.index]);
-                  // showMySnackbar(msg: "Request sent successfully!");
-                  // Get.until(
-                  //     (route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
+                      .moveToPaymentFromSendRequest(
+                          controller.riderSendRequestModelData);
                 } catch (e) {
                   throw Exception(e);
                 }

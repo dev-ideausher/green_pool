@@ -270,6 +270,8 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                 OriginToDestination(
                                   origin:
                                       "${controller.riderConfirmRequestModel.value.data?[index]?.driverRideDetails?.origin?.name}",
+                                      stop1: controller.riderConfirmRequestModel.value.data?[index]?.driverRideDetails?.stops?[0]?.name ?? "",
+                                      stop2: controller.riderConfirmRequestModel.value.data?[index]?.driverRideDetails?.stops?[1]?.name ?? "",
                                   destination:
                                       "${controller.riderConfirmRequestModel.value.data?[index]?.driverRideDetails?.destination?.name}",
                                   needPickupText: false,

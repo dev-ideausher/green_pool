@@ -172,22 +172,28 @@ class RiderStartRideMapController extends GetxController {
                   0.0);
         }
         markers.clear();
-        bookingDetail.value.driverBookingDetails?.riderBookingDetails?.forEach(
-          (element) {
-            addMarkers(
-                LatLng(element.origin?.coordinates?.lastOrNull ?? 0.0,
-                    element.origin?.coordinates?.firstOrNull ?? 0.0),
-                "",
-                "Origin",
-                0.0);
-            addMarkers(
-                LatLng(element.destination?.coordinates?.lastOrNull ?? 0.0,
-                    element.destination?.coordinates?.firstOrNull ?? 0.0),
-                "",
-                "Destination",
-                0.0);
-          },
-        );
+        addMarkers(
+            LatLng(
+                bookingDetail.value.driverBookingDetails?.origin?.coordinates
+                        ?.lastOrNull ??
+                    0.0,
+                bookingDetail.value.driverBookingDetails?.origin?.coordinates
+                        ?.firstOrNull ??
+                    0.0),
+            "",
+            "Origin",
+            0.0);
+        addMarkers(
+            LatLng(
+                bookingDetail.value.driverBookingDetails?.destination
+                        ?.coordinates?.lastOrNull ??
+                    0.0,
+                bookingDetail.value.driverBookingDetails?.destination
+                        ?.coordinates?.firstOrNull ??
+                    0.0),
+            "",
+            "Destination",
+            0.0);
         addMarkers(LatLng(currentLat.value, currentLong.value),
             ImageConstant.pngCarPointer, "", heading);
       }
@@ -211,34 +217,46 @@ class RiderStartRideMapController extends GetxController {
         polylineCoordinates.assignAll(result.points
             .map((PointLatLng point) => LatLng(point.latitude, point.longitude))
             .toList());
-        addVehicleMarker(
-            polylineCoordinates.first,
-            bookingDetail
-                    .value.driverDetails?.vehicleDetails?.vehiclePic?.url ??
-                "");
+        // addVehicleMarker(
+        //     polylineCoordinates.first,
+        //     bookingDetail
+        //             .value.driverDetails?.vehicleDetails?.vehiclePic?.url ??
+        //         "");
 
-        bookingDetail.value.driverBookingDetails?.riderBookingDetails?.forEach(
-          (element) {
-            addMarkers(
-                LatLng(element.origin?.coordinates?.lastOrNull ?? 0.0,
-                    element.origin?.coordinates?.firstOrNull ?? 0.0),
-                "",
-                "Origin",
-                0.0);
-            addMarkers(
-                LatLng(element.origin?.coordinates?.lastOrNull ?? 0.0,
-                    element.origin?.coordinates?.firstOrNull ?? 0.0),
-                ImageConstant.pngCarPointer,
-                "",
-                0.0);
-            addMarkers(
-                LatLng(element.destination?.coordinates?.lastOrNull ?? 0.0,
-                    element.destination?.coordinates?.firstOrNull ?? 0.0),
-                "",
-                "Destination",
-                0.0);
-          },
-        );
+        addMarkers(
+            LatLng(
+                bookingDetail.value.driverBookingDetails?.origin?.coordinates
+                        ?.lastOrNull ??
+                    0.0,
+                bookingDetail.value.driverBookingDetails?.origin?.coordinates
+                        ?.firstOrNull ??
+                    0.0),
+            "",
+            "Origin",
+            0.0);
+        addMarkers(
+            LatLng(
+                bookingDetail.value.driverBookingDetails?.origin?.coordinates
+                        ?.lastOrNull ??
+                    0.0,
+                bookingDetail.value.driverBookingDetails?.origin?.coordinates
+                        ?.firstOrNull ??
+                    0.0),
+            ImageConstant.pngCarPointer,
+            "",
+            0.0);
+        addMarkers(
+            LatLng(
+                bookingDetail.value.driverBookingDetails?.destination
+                        ?.coordinates?.lastOrNull ??
+                    0.0,
+                bookingDetail.value.driverBookingDetails?.destination
+                        ?.coordinates?.firstOrNull ??
+                    0.0),
+            "",
+            "Destination",
+            0.0);
+
         mapController.animateCamera(CameraUpdate.newLatLngBounds(
             GpUtil.boundsFromLatLngList(polylineCoordinates), 70));
       }

@@ -492,4 +492,8 @@ class Strings {
   static String contactNumberOne = 'Contact number 1';
 
   static String contactNumberTwo = 'Contact number 2';
+
+  static String deleteAllUpcomingRides = "Are you sure you want to delete ride?\nThis will delete all the upcoming rides.";
+
+  static var sent = "Sent";
 }

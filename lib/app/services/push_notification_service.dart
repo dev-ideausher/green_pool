@@ -152,7 +152,7 @@ class PushNotificationService {
   void _handleNotificationType(Map<String, dynamic> data) {
     final notificationType = data['notification_type'];
     switch (notificationType) {
-      case 'Start_Ride':
+      case 'Start Ride':
       case 'Rider_Pickup_Request':
       case 'Rider_Dropoff_Request':
       case 'Rider_Confirm_Request':
@@ -191,7 +191,6 @@ class PushNotificationService {
     final currentRoute = Get.currentRoute;
 
     void navigateToBottomNavigation(tabIndex) {
-      // Get.until((route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
       Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
       homeController.changeTabIndex(tabIndex);
     }
@@ -206,7 +205,7 @@ class PushNotificationService {
         homeController.changeTabIndex(1);
         break;
 
-      case "Rider New request":
+      case "Rider New Request":
       case "Rider Ride Confirmation":
       case "Rider Request Accept":
       case "Rider Ride Cancellation":
@@ -225,6 +224,7 @@ class PushNotificationService {
         break;
 
       case "Payment Received":
+      case "Payment Refund":
         if (currentRoute == Routes.BOTTOM_NAVIGATION) {
           navigateToWallet();
         } else {
@@ -237,7 +237,7 @@ class PushNotificationService {
       case "Driver Request Accept":
       case "Driver Ride Confirmation":
       // when rider accepts from confirm section
-      case 'Start_Ride':
+      case 'Start Ride':
         // Get.toNamed(Routes.RIDER_START_RIDE_MAP, arguments: actionData?.data);
         // need my rides model data
         if (currentRoute == Routes.BOTTOM_NAVIGATION) {
@@ -260,7 +260,7 @@ class PushNotificationService {
         // when payment deducts from wallet
         break;
 
-      case 'End Ride':
+      case 'End_Ride':
         if (currentRoute == Routes.RIDER_START_RIDE_MAP) {
           Get.offNamed(Routes.RATING_RIDER_SIDE, arguments: actionData?.data);
         } else {
@@ -310,6 +310,197 @@ class PushNotificationService {
     }
   }
 }
+/* TO COMPARE
+class PushNotificationService {
+  Future<void> setupInteractedMessage() async {
+    try {
+      await Permission.notification.isDenied.then((value) {
+        if (value) {
+          Permission.notification.request();
+        }
+      });
+      FirebaseMessaging.onMessageOpenedApp
+          .listen((RemoteMessage message) async {
+        await Future.delayed(const Duration(seconds: 2));
+        saveNotification(message);
+      });
+      await registerNotificationListeners();
+      await getFirebaseToken();
+    } catch (e) {
+      log(e.toString());
+    }
+  }
+
+  Future<void> registerNotificationListeners() async {
+    final AndroidNotificationChannel channel = androidNotificationChannel();
+    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+        FlutterLocalNotificationsPlugin();
+    await flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
+        ?.createNotificationChannel(channel);
+    const AndroidInitializationSettings androidSettings =
+        AndroidInitializationSettings('logo');
+    const DarwinInitializationSettings iOSSettings =
+        DarwinInitializationSettings(
+      requestSoundPermission: true,
+      requestBadgePermission: true,
+      requestAlertPermission: true,
+    );
+    const InitializationSettings initSettings =
+        InitializationSettings(android: androidSettings, iOS: iOSSettings);
+    flutterLocalNotificationsPlugin.initialize(
+      initSettings,
+      onDidReceiveNotificationResponse: (NotificationResponse details) {},
+    );
+    try {
+      FirebaseMessaging.onBackgroundMessage(
+          _firebaseMessagingBackgroundHandler);
+    } catch (e) {
+      print(e);
+    }
+    FirebaseMessaging.onMessage.listen((RemoteMessage? message) {
+      if (message == null) return;
+
+      print(message);
+      final RemoteNotification? notification = message.notification;
+      final AndroidNotification? android = message.notification?.android;
+
+      if (notification != null && android != null) {
+        flutterLocalNotificationsPlugin.show(
+          notification.hashCode,
+          notification.title,
+          notification.body,
+          NotificationDetails(
+            android: AndroidNotificationDetails(channel.id, channel.name,
+                channelDescription: channel.description,
+                icon: "logo",
+                color: ColorUtil.kAccent1),
+          ),
+        );
+
+        saveNotification(message);
+      }
+    });
+  }
+
+  AndroidNotificationChannel androidNotificationChannel() =>
+      const AndroidNotificationChannel(
+        'high_importance_channel', // id
+        'High Importance Notifications', // title
+        description:
+            'This channel is used for important notifications.', // description
+        importance: Importance.max,
+      );
+
+  Future<void> _firebaseMessagingBackgroundHandler(
+      RemoteMessage message) async {
+    await Firebase.initializeApp();
+    print("Background Message Handler Working...");
+
+    try {
+      await Future.delayed(const Duration(seconds: 2));
+      if (message.data["notification_type"] == "chat") {
+        var jsonc = {"user1Name": "Test User", "user1profilePic": ""};
+        await FlutterCallkitIncoming.showCallkitIncoming(
+            Tools().callKitparams(data: jsonc));
+      }
+      saveNotification(message);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  saveNotification(RemoteMessage message) async {
+    try {
+      bool isReg = Get.isRegistered<MessagesPageController>();
+      if (!isReg) {
+        Get.put(MessagesPageController());
+      }
+      if (message.data["notification_type"] == "chat") {
+        Map<String, dynamic> jsond = json.decode(message.data["chat_data"]);
+        var msg = MessageModel.fromJson(jsond);
+        if (Get.currentRoute == Routes.CHAT_MESSAGE_PAGE) {
+          if (message.data["chat_data"].isNotEmpty &&
+              msg.primaryUserId.toString() !=
+                  Get.find<GetStorageService>().id) {
+            Get.find<ChatMessagePageController>().addMessage(chatMessage: msg);
+          }
+        } else {
+          UserModel? userModel;
+          try {
+            await APIManager.getUserById(id: msg.primaryUserId.toString())
+                .then((value) {
+              if (value.data["status"]) {
+                userModel =
+                    UserModel.fromJson(value.data["data"]["usersDetails"][0]);
+
+                Get.toNamed(Routes.CHAT_MESSAGE_PAGE, arguments: {
+                  "userModel": userModel,
+                  "ChannelId": msg.channelId
+                });
+              } else {
+                showMySnackbar(msg: value.data["message"]);
+              }
+            });
+          } catch (e) {
+            log(e.toString());
+          }
+        }
+      } else if (message.data["notification_type"] == "call") {
+        // var jsonc = json.decode(message.data["payload"]);
+        var jsonc = {"user1Name": "Test User", "user1profilePic": ""};
+
+        await FlutterCallkitIncoming.showCallkitIncoming(
+            Tools().callKitparams(data: jsonc));
+      }
+      /*else if (message.data["notification_type"] == "confirmed") {
+        Get.dialog(AppointmentConfirm(
+          onCancel: () async {
+            Get.offAllNamed(Routes.MAIN_PAGE);
+            await Future.delayed(const Duration(seconds: 1));
+            Get.find<MainPageController>().updatePage(1);
+          },
+          title: message.notification?.title.toString() ?? "",
+          desc: message.notification?.body.toString() ?? "",
+        ));
+      } else if (message.data["notification_type"] == "booked") {
+        Get.dialog(AppointmentConfirm(
+          onCancel: () async {
+            Get.offAllNamed(Routes.MAIN_PAGE);
+            await Future.delayed(const Duration(seconds: 1));
+            Get.find<MainPageController>().updatePage(1);
+          },
+          title: message.notification?.title.toString() ?? "",
+          desc: message.notification?.body.toString() ?? "",
+        ));
+      }*/
+      // Get.find<MyNotificationsController>().getNotification();
+      Get.find<MessagesPageController>().getAllUsersChannel();
+    } catch (e) {
+      print("Error in token listened");
+      print(e);
+    }
+  }
+
+  static Future<void> subFcm(String topic) async {
+    print("Subscribed------");
+    try {
+      await FirebaseMessaging.instance.subscribeToTopic(topic);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  static Future<void> unsubFcm(String topic) async {
+    await FirebaseMessaging.instance.unsubscribeFromTopic(topic);
+  }
+
+  Future<void> getFirebaseToken() async {
+    await FirebaseMessaging.instance.getToken().then((value) {});
+  }
+}
+*/
 
 /*
 void _handleNotificationClickPayload(String payload) {

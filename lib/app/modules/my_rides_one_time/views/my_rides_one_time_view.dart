@@ -12,7 +12,6 @@ import 'package:green_pool/app/modules/my_rides_one_time/views/rider_tile.dart';
 import 'package:green_pool/app/res/strings.dart';
 
 import 'package:green_pool/app/services/responsive_size.dart';
-import 'package:green_pool/app/services/storage.dart';
 
 import '../../../../generated/assets.dart';
 import '../../../components/gp_progress.dart';
@@ -31,36 +30,70 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
     controller.myRidesAPI();
     return Scaffold(
       body: SafeArea(
-        child: Get.find<GetStorageService>().isLoggedIn
-            ? Obx(
-                () => controller.isLoad.value
-                    ? const GpProgress()
-                    : controller.myRidesModelData.isEmpty
-                        ? const NoRidesWidget()
-                        : SingleChildScrollView(
-                            child: Column(
-                              children: [
-                                Visibility(
-                                  visible: type == null,
-                                  child: (controller.recurringResp.value.data
-                                              ?.isEmpty ??
-                                          true)
-                                      ? const SizedBox()
-                                      : ListView.builder(
-                                          shrinkWrap: true,
-                                          physics:
-                                              const NeverScrollableScrollPhysics(),
-                                          itemCount: controller
-                                              .recurringResp.value.data?.length,
-                                          itemBuilder: (context, index) {
-                                            return RecurringTile(
-                                                recurringResp: controller
-                                                    .recurringResp
-                                                    .value
-                                                    .data?[index]);
-                                          }),
-                                ),
-                                ListView.builder(
+          child: Obx(
+        () => controller.isLoad.value
+            ? const GpProgress()
+            : controller.myRidesModelData.isEmpty
+                ? const NoRidePosted()
+                : SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Visibility(
+                          visible: type == null,
+                          child: (controller
+                                      .recurringResp.value.data?.isEmpty ??
+                                  true)
+                              ? const SizedBox()
+                              : ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemCount: controller
+                                      .recurringResp.value.data?.length,
+                                  itemBuilder: (context, index) {
+                                    return RecurringTile(
+                                        recurringResp: controller
+                                            .recurringResp.value.data?[index]);
+                                  }),
+                        ),
+                        Builder(builder: (context) {
+                          bool isListEmpty = false;
+                          if (type == null &&
+                              controller.myRidesModelData.isEmpty) {
+                            const NoRidePosted();
+                          } else if (type == Strings.booked) {
+                            bool containsDriverId = controller.myRidesModelData
+                                .any((obj) => obj.driverId == null);
+                            if (!containsDriverId) {
+                              final myList = controller.myRidesModelData
+                                  .where((obj) => obj.driverId == null)
+                                  .toList();
+                              if (myList.isEmpty) {
+                                isListEmpty = false;
+                              } else {
+                                isListEmpty = true;
+                              }
+                            } else {
+                              isListEmpty = true;
+                            }
+                          } else if (type == Strings.published) {
+                            bool containsRiderId = controller.myRidesModelData
+                                .any((obj) => obj.riderId == null);
+                            if (!containsRiderId) {
+                              final myList = controller.myRidesModelData
+                                  .where((obj) => obj.riderId == null)
+                                  .toList();
+                              if (myList.isEmpty) {
+                                isListEmpty = false;
+                              } else {
+                                isListEmpty = true;
+                              }
+                            } else {
+                              isListEmpty = true;
+                            }
+                          }
+                          return isListEmpty
+                              ? const NoRidePosted()
+                              : ListView.builder(
                                   shrinkWrap: true,
                                   physics: const NeverScrollableScrollPhysics(),
                                   itemCount: controller.myRidesModelData.length,
@@ -90,13 +123,13 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                   .myRidesModelData[index]);
                                         } else {
                                           //---------------- for rider tile ------------------//
-                                          return const NoRidesWidget();
+                                          return const SizedBox();
                                         }
                                       } else {
                                         if (controller.myRidesModelData[index]
                                                 .driverId !=
                                             null) {
-                                          return const NoRidesWidget();
+                                          return const SizedBox();
                                         } else {
                                           //---------------- for rider tile ------------------//
                                           return RiderTile(
@@ -106,24 +139,18 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                       }
                                     }
                                   },
-                                ).paddingOnly(top: 32.kh),
-                              ],
-                            ).paddingSymmetric(horizontal: 16.kw),
-                          ),
-              )
-            : Center(
-                child: Text(
-                  Strings.pleaseLoginOrSignUp,
-                  style: TextStyleUtil.k24Heading600(),
-                ),
-              ),
-      ),
+                                ).paddingOnly(top: 32.kh);
+                        }),
+                      ],
+                    ).paddingSymmetric(horizontal: 16.kw),
+                  ),
+      )),
     );
   }
 }
 
-class NoRidesWidget extends StatelessWidget {
-  const NoRidesWidget({
+class NoRidePosted extends StatelessWidget {
+  const NoRidePosted({
     super.key,
   });
 

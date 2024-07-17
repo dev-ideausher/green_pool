@@ -178,6 +178,8 @@ class FileDisputeView extends GetView<FileDisputeController> {
                                           needPickupText: false,
                                           origin:
                                               "${controller.rideHistModel.value.data?[index]?.origin?.name}",
+                                          stop1: controller.rideHistModel.value.data?[index]?.stops?[0]?.name ?? "",    
+                                          stop2: controller.rideHistModel.value.data?[index]?.stops?[1]?.name ?? "",    
                                           destination:
                                               "${controller.rideHistModel.value.data?[index]?.destination?.name}")
                                       .paddingSymmetric(vertical: 8.kh),

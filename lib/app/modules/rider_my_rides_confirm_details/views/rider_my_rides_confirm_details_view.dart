@@ -141,6 +141,8 @@ class RiderMyRidesConfirmDetailsView
                 OriginToDestination(
                         origin:
                             "${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.origin?.name}",
+                        stop1: controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.stops?[0]?.name ?? "",
+                        stop2: controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.stops?[1]?.name ?? "",
                         destination:
                             "${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.destination?.name}",
                         needPickupText: true)
@@ -290,7 +292,7 @@ class RiderMyRidesConfirmDetailsView
                       height: 64.kh,
                       width: 64.kw,
                       url:
-                          "${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.driverDetails?[0]?.profilePic?.url}"),
+                          "${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.driverDetails?[0]?.vehicleDetails?[0]?.vehiclePic?.url}"),
                 ).paddingOnly(right: 8.kh),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -431,7 +433,10 @@ class RiderMyRidesConfirmDetailsView
                   onPressed: () async {
                     try {
                       await Get.find<RiderMyRideRequestController>()
-                          .moveToPaymentFromConfirmSection(controller.index ,controller.riderConfirmRequestModel.value.data![controller.index]!);
+                          .moveToPaymentFromConfirmSection(
+                              controller.index,
+                              controller.riderConfirmRequestModel.value
+                                  .data![controller.index]!);
                     } catch (e) {
                       throw Exception(e);
                     }

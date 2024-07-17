@@ -82,10 +82,10 @@ class MatchingRidesController extends GetxController {
                 .value.data?[index]?.destination?.coordinates?.first ??
             longitude);
     final price =
-        int.parse(matchingRidesModel.value.data?[index]?.price ?? "") *
+        int.parse(matchingRidesModel.value.data?[index]?.price ?? "0") *
             (rideDetails?['ridesDetails']['seatAvailable']);
     final pricePerSeat =
-        int.parse(matchingRidesModel.value.data?[index]?.price ?? "");
+        int.parse(matchingRidesModel.value.data?[index]?.price ?? "0");
     Get.toNamed(Routes.DRIVER_DETAILS, arguments: {
       'rideDetails': rideDetails,
       'driverRideId': driverRideId,
@@ -98,7 +98,9 @@ class MatchingRidesController extends GetxController {
 
   Future<void> createRideAlert() async {
     if (rideDetails?['ridesDetails']['date'] != "" &&
-        rideDetails?['ridesDetails']['time'] != "") {
+        rideDetails?['ridesDetails']['time'] != "" &&
+        rideDetails?['ridesDetails']['origin']['name'] != "" &&
+        rideDetails?['ridesDetails']['destination']['name'] != "") {
       try {
         final res = await Get.find<FindRideController>().riderPostRideAPI();
 
@@ -113,7 +115,8 @@ class MatchingRidesController extends GetxController {
       }
     } else {
       Get.back();
-      showMySnackbar(msg: "To create a ride alert please enter Date and Time");
+      showMySnackbar(
+          msg: "To create a ride alert please enter all the details");
     }
   }
 }

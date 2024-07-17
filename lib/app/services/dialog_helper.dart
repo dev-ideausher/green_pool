@@ -154,8 +154,7 @@ class DialogHelper {
     );
   }
 
-  static void selectOriginOrDestination(
-      Function() onPressedPickup, Function() onPressedDropoff) {
+  static void deleteRecurringride(Function() onPressed) {
     Get.dialog(
       useSafeArea: true,
       Center(
@@ -178,37 +177,27 @@ class DialogHelper {
                 ),
               ),
               Text(
-                Strings.setLocation,
+                Strings.deleteRide,
                 style: TextStyleUtil.k18Semibold(),
                 textAlign: TextAlign.left,
               ).paddingSymmetric(vertical: 4.kh),
               Text(
-                Strings.selectOriginOrDestination,
+                Strings.deleteAllUpcomingRides,
                 style: TextStyleUtil.k14Regular(
                   color: ColorUtil.kBlack04,
                 ),
                 textAlign: TextAlign.left,
               ).paddingOnly(bottom: 40.kh),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  GreenPoolButton(
-                    onPressed: onPressedPickup,
-                    height: 40.kh,
-                    width: 124.kw,
-                    label: Strings.pickup,
-                    fontSize: 14.kh,
-                    padding: const EdgeInsets.all(8),
-                  ),
-                  GreenPoolButton(
-                    onPressed: onPressedDropoff,
-                    height: 40.kh,
-                    width: 124.kw,
-                    label: Strings.destination,
-                    fontSize: 14.kh,
-                    padding: const EdgeInsets.all(8),
-                  ),
-                ],
+              Container(
+                alignment: Alignment.centerRight,
+                child: GreenPoolButton(
+                  onPressed: onPressed,
+                  height: 40.kh,
+                  width: 144.kw,
+                  label: Strings.deleteRide,
+                  fontSize: 14.kh,
+                  padding: const EdgeInsets.all(8),
+                ),
               ),
             ],
           ),
