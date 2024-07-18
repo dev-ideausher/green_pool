@@ -19,6 +19,7 @@ class ChatPageController extends GetxController {
   final TextEditingController eMsg = TextEditingController();
   final RxList<MessageModel> messages = <MessageModel>[].obs;
   final ScrollController scrollController = ScrollController();
+
   @override
   void onInit() {
     super.onInit();
@@ -40,25 +41,20 @@ class ChatPageController extends GetxController {
   }
 
   void getChat() async {
-    FirebaseDatabase.instance
-        .ref()
-        .child('chats')
-        .child(chatArg.value.chatRoomId ?? "")
-        .child("messages")
-        .onValue
-        .listen((event) async {
+    FirebaseDatabase.instance.ref().child('chats').child(chatArg.value.chatRoomId ?? "").child("messages").onValue.listen((event) async {
       var data = event.snapshot.value;
       if (data is Map) {
-        final liveLocation =
-            DataMsgModel.fromMap(Map<String, dynamic>.from(data));
+        final liveLocation = DataMsgModel.fromMap(Map<String, dynamic>.from(data));
         messages.value = liveLocation.messages;
         messages.value.sort((a, b) => a.timestamp!.compareTo(b.timestamp!));
-        if (chatArg.value.deleteUpdateTime != null ||
-            chatArg.value.deleteUpdateTime != "") {
-          messages.value.removeWhere((item) => item.timestamp
-              .isBefore(DateTime.parse(chatArg.value.deleteUpdateTime ?? "")));
+        try {
+          if (chatArg.value.deleteUpdateTime != null || chatArg.value.deleteUpdateTime != "") {
+            messages.value.removeWhere((item) => item.timestamp.isBefore(DateTime.parse(chatArg.value.deleteUpdateTime ?? "")));
+          }
+        } catch (e) {
+          debugPrint(e.toString());
         }
-        WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToBottom());        
+        WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToBottom());
       }
     }, onError: (Object error) {
       debugPrint("Error: $error");
@@ -93,8 +89,7 @@ class ChatPageController extends GetxController {
     eMsg.clear();
     try {
       sendingMsg.value = true;
-      final res = await APIManager.sendMessage(
-          body: {"message": msg, "receiverId": chatArg.value.id});
+      final res = await APIManager.sendMessage(body: {"message": msg, "receiverId": chatArg.value.id});
       eMsg.clear();
       chatArg.value.chatRoomId = res.data["chatRoomId"];
       getChat();
@@ -174,8 +169,7 @@ class ChatPageController extends GetxController {
 
   Future<void> deleteChatApi() async {
     try {
-      final res = await APIManager.deleteChat(
-          chatRoomId: chatArg.value.chatRoomId ?? "");
+      final res = await APIManager.deleteChat(chatRoomId: chatArg.value.chatRoomId ?? "");
       Get.back();
       showMySnackbar(msg: res.data["message"]);
     } catch (e) {

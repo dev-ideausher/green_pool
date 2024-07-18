@@ -24,9 +24,7 @@ class PushNotificationService {
           await Permission.notification.request();
         }
       });
-      FirebaseMessaging.instance
-          .getInitialMessage()
-          .then((RemoteMessage? message) {
+      FirebaseMessaging.instance.getInitialMessage().then((RemoteMessage? message) {
         if (message != null) {
           _handleNotificationClick(message);
         }
@@ -45,10 +43,7 @@ class PushNotificationService {
   Future<void> registerNotificationListeners() async {
     final AndroidNotificationChannel channel = androidNotificationChannel();
 
-    await flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>()
-        ?.createNotificationChannel(channel);
+    await flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()?.createNotificationChannel(channel);
 
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
@@ -73,8 +68,7 @@ class PushNotificationService {
               color: Get.context!.theme.primaryColor,
             ),
           ),
-          payload: message.data[
-              'notification_type'], // Adding payload for notification click handling
+          payload: message.data['notification_type'], // Adding payload for notification click handling
         );
         saveNotification(message);
       }
@@ -82,8 +76,7 @@ class PushNotificationService {
 
     flutterLocalNotificationsPlugin.initialize(
       InitializationSettings(
-        android: const AndroidInitializationSettings(
-            'logo'), // Ensure 'app_icon' exists
+        android: const AndroidInitializationSettings('logo'), // Ensure 'app_icon' exists
         iOS: DarwinInitializationSettings(
           onDidReceiveLocalNotification: (id, title, body, payload) async {
             // Handle local notification on iOS
@@ -111,34 +104,29 @@ class PushNotificationService {
     );
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
       debugPrint('User granted permission');
-    } else if (settings.authorizationStatus ==
-        AuthorizationStatus.provisional) {
+    } else if (settings.authorizationStatus == AuthorizationStatus.provisional) {
       debugPrint('User granted provisional permission');
     } else {
       debugPrint('User declined or has not accepted permission');
     }
-    await FirebaseMessaging.instance
-        .setForegroundNotificationPresentationOptions(
+    await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
       alert: true,
       badge: true,
       sound: true,
     );
   }
 
-  AndroidNotificationChannel androidNotificationChannel() =>
-      const AndroidNotificationChannel(
+  AndroidNotificationChannel androidNotificationChannel() => const AndroidNotificationChannel(
         'high_importance_channel',
         'High Importance Notifications',
         description: 'This channel is used for important notifications.',
         importance: Importance.max,
       );
 
-  static Future<void> _firebaseMessagingBackgroundHandler(
-      RemoteMessage message) async {
+  static Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
     await Firebase.initializeApp();
     debugPrint('Handling background message: ${message.messageId}');
-    PushNotificationService(FlutterLocalNotificationsPlugin())
-        .saveNotification(message);
+    PushNotificationService(FlutterLocalNotificationsPlugin()).saveNotification(message);
   }
 
   void saveNotification(RemoteMessage message) {
@@ -190,9 +178,9 @@ class PushNotificationService {
     final homeController = Get.find<HomeController>();
     final currentRoute = Get.currentRoute;
 
-    void navigateToBottomNavigation(tabIndex) {
+    Future<void> navigateToBottomNavigation(tabIndex) async {
       Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
-      homeController.changeTabIndex(tabIndex);
+      await Future.delayed(const Duration(seconds: 1)).then((value) => homeController.changeTabIndex(tabIndex));
     }
 
     void navigateToWallet() {
