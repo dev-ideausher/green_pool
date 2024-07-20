@@ -166,7 +166,7 @@ class BookingConfirmBottom extends StatelessWidget {
               const GreenPoolDivider().paddingOnly(bottom: 16.kh),
               OriginToDestination(
                       origin:
-                          "${driverRideData?.rideDetails?[0]?.origin?.name}",                          
+                          "${driverRideData?.rideDetails?[0]?.origin?.name}",
                       destination:
                           "${driverRideData?.rideDetails?[0]?.destination?.name}",
                       needPickupText: false)
@@ -186,9 +186,11 @@ class BookingConfirmBottom extends StatelessWidget {
                     final rejectRiderResponse =
                         await APIManager.patchRejectRiderRequest(
                             body: {"ridePostId": driverRideData?.Id});
-                    var data = jsonDecode(rejectRiderResponse.toString());
-                    Get.back();
-                    showMySnackbar(msg: 'Request rejected successfully!');
+                    if (rejectRiderResponse.data["status"]) {
+                      var data = jsonDecode(rejectRiderResponse.toString());
+                      Get.back();
+                      showMySnackbar(msg: 'Request rejected successfully!');
+                    } 
                   } catch (e) {
                     throw Exception(e);
                   }

@@ -127,7 +127,6 @@ class RiderStartRideMapController extends GetxController {
       if (data is Map) {
         final liveLocation =
             LiveLocationModel.fromMap(Map<String, dynamic>.from(data));
-        // rotation: liveLocation.heading ?? 0.0,
         final heading = liveLocation.heading;
         currentLat.value = liveLocation.latitude ?? 0.0;
         currentLong.value = liveLocation.longitude ?? 0.0;
@@ -298,7 +297,7 @@ class RiderStartRideMapController extends GetxController {
       double originLong) async {
     try {
       final response = await APIManager.getArrivalTime(
-          origin: ("$latitude,$longitude"),
+          origin: ("$originLat,$originLong"),
           destination: ("$latitude,$longitude"));
       final data = response.data;
       final routes = data['routes'] as List<dynamic>;

@@ -253,12 +253,11 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(8.kh),
                   child: CommonImageView(
-                          height: 64.kh,
-                          width: 64.kw,
-                          url:
-                              "${controller.matchingRidesModelData.value.driverDetails?[0]?.vehicleDetails?[0]?.vehiclePic?.url}")
-                      .paddingOnly(right: 8.kh),
-                ),
+                      height: 64.kh,
+                      width: 64.kw,
+                      url:
+                          "${controller.matchingRidesModelData.value.driverDetails?[0]?.vehicleDetails?[0]?.vehiclePic?.url}"),
+                ).paddingOnly(right: 8.kh),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

@@ -194,7 +194,7 @@ class ProfileSetupController extends GetxController
       'fullName': fullName.text,
       'email': email.text,
       'phone': phoneNumber.text,
-      'gender': gender.value,
+      'gender': gender.text,
       'city': city.value.text,
       'dob': dateOfBirth.text,
       'profilePic': await dio.MultipartFile.fromFile(
@@ -300,10 +300,10 @@ class ProfileSetupController extends GetxController
       return 'Please enter your phone number';
     }
 
-    // Check if the value contains a valid country code and phone number
-    final RegExp phoneExp = RegExp(r'^\+(\+1|91)?[0-9]{10,11}$');
+    // Check if the value contains exactly 10 digits
+    final RegExp phoneExp = RegExp(r'^[0-9]{10}$');
     if (!phoneExp.hasMatch(value)) {
-      return 'Please enter a valid phone number';
+      return 'Please enter a valid 10-digit phone number';
     }
 
     return null; // Return null if the value is valid

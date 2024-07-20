@@ -15,7 +15,7 @@ class MapDriverConfirmRequestView
         () => controller.isLoading.value
             ? const GpProgress()
             : GoogleMap(
-          myLocationEnabled: true,
+                myLocationEnabled: true,
                 onMapCreated: controller.onMapCreated,
                 initialCameraPosition: CameraPosition(
                     target: LatLng(controller.latitude, controller.longitude),
@@ -25,15 +25,15 @@ class MapDriverConfirmRequestView
                 // onCameraMove: (position) {
                 //   GpUtil.moveCamera(controller.mapController, position.target);
                 // },
-                polylines: {
-                  Polyline(
-                    visible: true,
-                    width: 4,
-                    polylineId: const PolylineId('polyline'),
-                    points: controller.polylineCoordinates,
-                    patterns: [PatternItem.dash(10), PatternItem.gap(10)],
-                  ),
-                },
+                // polylines: {
+                //   Polyline(
+                //     visible: true,
+                //     width: 4,
+                //     polylineId: const PolylineId('polyline'),
+                //     points: controller.polylineCoordinates,
+                //     patterns: [PatternItem.dash(10), PatternItem.gap(10)],
+                //   ),
+                // },
               ),
       ),
     );

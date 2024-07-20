@@ -38,6 +38,7 @@ class InsufficientBalanceSheet extends StatelessWidget {
               textAlign: TextAlign.center),
           GreenPoolButton(
             onPressed: () {
+              Get.back();
               Get.toNamed(Routes.WALLET);
             },
             label: Strings.addMoneyToWallet,

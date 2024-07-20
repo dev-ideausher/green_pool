@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
+import 'package:green_pool/app/modules/rider_matching_rides/views/filter_ride.dart';
 import 'package:green_pool/app/services/snackbar.dart';
 import '../../../data/matching_rides_model.dart';
 import '../../../routes/app_pages.dart';
@@ -20,6 +21,22 @@ class MatchingRidesController extends GetxController {
   double longitude = Get.find<HomeController>().longitude.value;
   Rx<MatchingRidesModel> matchingRidesModel = MatchingRidesModel().obs;
   RxBool isLoading = true.obs;
+
+  //filter
+  RxBool earlyDeparture = false.obs;
+  RxBool lowestPrice = false.obs;
+  RxBool closeToDeparture = false.obs;
+  RxBool closeToArrival = false.obs;
+  RxBool appreciatesConvo = false.obs;
+  RxBool enjoysMusic = false.obs;
+  RxBool smokeFree = false.obs;
+  RxBool petFriendly = false.obs;
+  RxBool winterTires = false.obs;
+  RxBool coolOrHeat = false.obs;
+  RxBool babySeat = false.obs;
+  RxBool heatedSeats = false.obs;
+  bool preferenceAdded = false;
+  bool sortByAdded = false;
 
   @override
   Future<void> onInit() async {
@@ -46,21 +63,28 @@ class MatchingRidesController extends GetxController {
           body: findRideData, queryParam: "?isFindRide=true");
       matchingRidesModel.value =
           MatchingRidesModel.fromJson(jsonDecode(response.toString()));
-      matchingRidesModel.refresh();
-      isLoading.value = false;
+      if (matchingRidesModel.value.status!) {
+        matchingRidesModel.refresh();
+        isLoading.value = false;
+      } else {
+        showMySnackbar(msg: matchingRidesModel.value.message ?? "");
+      }
     } catch (error) {
       debugPrint(error.toString());
     }
   }
 
+  // moveToFilter() {
+  //   Get.toNamed(Routes.RIDER_FILTER, arguments: {
+  //     'rideDetails': rideDetails,
+  //     'matchingRidesModel': matchingRidesModel.value
+  //   })?.then((value) {
+  //     matchingRidesModel.value = value;
+  //     matchingRidesModel.refresh();
+  //   });
+  // }
   moveToFilter() {
-    Get.toNamed(Routes.RIDER_FILTER, arguments: {
-      'rideDetails': rideDetails,
-      'matchingRidesModel': matchingRidesModel.value
-    })?.then((value) {
-      matchingRidesModel.value = value;
-      matchingRidesModel.refresh();
-    });
+    Get.to(() => const FilterRide());
   }
 
   Future<void> moveToDriverDetails(index) async {
@@ -117,6 +141,102 @@ class MatchingRidesController extends GetxController {
       Get.back();
       showMySnackbar(
           msg: "To create a ride alert please enter all the details");
+    }
+  }
+
+  //filter
+  clearAll() {
+    earlyDeparture.value = false;
+    lowestPrice.value = false;
+    closeToDeparture.value = false;
+    closeToArrival.value = false;
+    appreciatesConvo.value = false;
+    enjoysMusic.value = false;
+    smokeFree.value = false;
+    petFriendly.value = false;
+    winterTires.value = false;
+    coolOrHeat.value = false;
+    babySeat.value = false;
+    heatedSeats.value = false;
+  }
+
+  filterRideAPI() async {
+    String queryParam = "";
+
+    Map<String, dynamic> getPreferencesData() {
+      final Map<String, dynamic> preferencesData = {};
+
+      if (appreciatesConvo.value)
+        preferencesData["AppreciatesConversation"] = true;
+      if (enjoysMusic.value) preferencesData["EnjoysMusic"] = true;
+      if (coolOrHeat.value) preferencesData["CoolingOrHeating"] = true;
+      if (smokeFree.value) preferencesData["SmokeFree"] = true;
+      if (petFriendly.value) preferencesData["PetFriendly"] = true;
+      if (winterTires.value) preferencesData["WinterTires"] = true;
+      if (babySeat.value) preferencesData["BabySeats"] = true;
+      if (heatedSeats.value) preferencesData["HeatedSeats"] = true;
+
+      return preferencesData;
+    }
+
+    Map<String, dynamic> getSortByFilters() {
+      final Map<String, dynamic> sortType = {};
+
+      if (closeToArrival.value) sortType["sortByCloseToArrival"] = true;
+      if (closeToDeparture.value) sortType["sortByCloseToDeparture"] = true;
+      if (earlyDeparture.value) sortType["sortByDeparture"] = true;
+      if (lowestPrice.value) sortType["sortByPrice"] = true;
+
+      return sortType;
+    }
+
+    String sortTypeJson = jsonEncode(getSortByFilters());
+    String preferencesDataJson = jsonEncode(getPreferencesData());
+
+    if (appreciatesConvo.value == true ||
+        enjoysMusic.value == true ||
+        smokeFree.value == true ||
+        petFriendly.value == true ||
+        winterTires.value == true ||
+        coolOrHeat.value == true ||
+        babySeat.value == true ||
+        heatedSeats.value == true) {
+      preferenceAdded = true;
+    } else {
+      preferenceAdded = false;
+    }
+
+    if (closeToArrival.value ||
+        closeToDeparture.value ||
+        earlyDeparture.value ||
+        lowestPrice.value) {
+      sortByAdded = true;
+    } else {
+      sortByAdded = false;
+    }
+
+    if (sortByAdded && preferenceAdded) {
+      queryParam =
+          "?sortType=${sortTypeJson}&preferences=${preferencesDataJson}&isFindRide=true";
+    } else if (sortByAdded) {
+      queryParam = "?sortType=${sortTypeJson}&isFindRide=true";
+    } else if (preferenceAdded) {
+      queryParam = "?preferences=${preferencesDataJson}&isFindRide=true";
+    } else {
+      queryParam = "?isFindRide=true";
+    }
+
+    try {
+      isLoading.value = true;
+      Get.back();
+      final response = await APIManager.postFindMatchingDrivers(
+          body: rideDetails, queryParam: queryParam);
+      var data = jsonDecode(response.toString());
+      matchingRidesModel.value = MatchingRidesModel.fromJson(data);
+      matchingRidesModel.refresh();
+      isLoading.value = false;
+    } catch (e) {
+      throw Exception(e);
     }
   }
 }

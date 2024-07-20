@@ -156,15 +156,19 @@ class CreateAccountController extends GetxController {
   void googleAuth() async {
     try {
       Get.lazyPut(() => VerifyController());
-      await Get.find<AuthService>().google();
-      Get.find<VerifyController>().fullName =
-          Get.find<GetStorageService>().getUserName;
-      if (postRideModel.value != null) {
-        Get.find<VerifyController>().postRideModel.value = postRideModel.value;
-      } else if (findRideModel.value != null) {
-        Get.find<VerifyController>().findRideModel.value = findRideModel.value;
+      bool isStatus = await Get.find<AuthService>().google();
+      if (isStatus) {
+        Get.find<VerifyController>().fullName =
+            Get.find<GetStorageService>().getUserName;
+        if (postRideModel.value != null) {
+          Get.find<VerifyController>().postRideModel.value =
+              postRideModel.value;
+        } else if (findRideModel.value != null) {
+          Get.find<VerifyController>().findRideModel.value =
+              findRideModel.value;
+        }
+        await Get.find<VerifyController>().loginAPI();
       }
-      await Get.find<VerifyController>().loginAPI();
     } catch (error) {
       log("$error");
     }

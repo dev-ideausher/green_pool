@@ -9,18 +9,19 @@ import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
 import '../../../constants/image_constant.dart';
-import '../controllers/rider_filter_controller.dart';
 import '../../rider_matching_rides/views/filter_list.dart';
+import '../controllers/matching_rides_controller.dart';
 
-class RiderFilterView extends GetView<RiderFilterController> {
-  const RiderFilterView({super.key});
+class FilterRide extends GetView<MatchingRidesController> {
+  const FilterRide({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const GreenPoolAppBar(
         title: Text('Filter'),
       ),
-      /*body: Obx(
+      body: Obx(
         () => Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -155,7 +156,7 @@ class RiderFilterView extends GetView<RiderFilterController> {
             ).paddingOnly(bottom: 40.kh),
           ],
         ).paddingSymmetric(horizontal: 16.kw),
-      ),*/
+      ),
     );
   }
 }

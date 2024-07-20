@@ -24,54 +24,63 @@ class NotificationsView extends GetView<NotificationsController> {
       body: Obx(
         () => controller.isLoad.value
             ? const GpProgress()
-            : ListView.builder(
-                itemCount: controller.notifications.length,
-                itemBuilder: (context, index) {
-                  final notification = controller.notifications[index];
-                  return Container(
-                    margin: EdgeInsets.only(bottom: 8.kh),
-                    decoration: BoxDecoration(
-                        color: ColorUtil.kWhiteColor,
-                        borderRadius: BorderRadius.circular(8.kh)),
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 8.kw, vertical: 16.kh),
-                    child: Obx(
-                      () => ListTile(
-                        leading: Container(
-                          height: 8.kh,
-                          width: 8.kh,
-                          decoration: BoxDecoration(
-                              color:
-                                  Get.find<HomeController>().isPinkModeOn.value
+            : controller.notifications.isEmpty
+                ? Center(
+                    child: Text(
+                      "Your future notifications will appear here",
+                      style: TextStyleUtil.k24Heading600(),
+                      textAlign: TextAlign.center,
+                    ),
+                  )
+                : ListView.builder(
+                    itemCount: controller.notifications.length,
+                    itemBuilder: (context, index) {
+                      final notification = controller.notifications[index];
+                      return Container(
+                        margin: EdgeInsets.only(bottom: 8.kh),
+                        decoration: BoxDecoration(
+                            color: ColorUtil.kWhiteColor,
+                            borderRadius: BorderRadius.circular(8.kh)),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 8.kw, vertical: 16.kh),
+                        child: Obx(
+                          () => ListTile(
+                            leading: Container(
+                              height: 8.kh,
+                              width: 8.kh,
+                              decoration: BoxDecoration(
+                                  color: Get.find<HomeController>()
+                                          .isPinkModeOn
+                                          .value
                                       ? ColorUtil.kPrimaryPinkMode
                                       : ColorUtil.kPrimary01,
-                              shape: BoxShape.circle),
+                                  shape: BoxShape.circle),
+                            ),
+                            onTap: () {
+                              controller.toggleExpanded(index);
+                            },
+                            title: Text(
+                              notification.title ?? '',
+                              style: TextStyleUtil.k14Regular(),
+                            ),
+                            subtitle: controller.isExpandedList[index].value
+                                ? Text(
+                                    notification.body ?? '',
+                                  )
+                                : Text(
+                                    notification.body ?? '',
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                            trailing: Text(
+                              GpUtil.getAgoTime(notification.createdAt),
+                              style: TextStyleUtil.k12Regular(
+                                  color: ColorUtil.kBlack04),
+                            ),
+                          ).paddingOnly(right: 8.kw),
                         ),
-                        onTap: () {
-                          controller.toggleExpanded(index);
-                        },
-                        title: Text(
-                          notification.title ?? '',
-                          style: TextStyleUtil.k14Regular(),
-                        ),
-                        subtitle: controller.isExpandedList[index].value
-                            ? Text(
-                                notification.body ?? '',
-                              )
-                            : Text(
-                                notification.body ?? '',
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                        trailing: Text(
-                          GpUtil.getAgoTime(notification.createdAt),
-                          style: TextStyleUtil.k12Regular(
-                              color: ColorUtil.kBlack04),
-                        ),
-                      ).paddingOnly(right: 8.kw),
-                    ),
-                  ).paddingSymmetric(horizontal: 16.kw);
-                },
-              ).paddingOnly(top: 12.kh),
+                      ).paddingSymmetric(horizontal: 16.kw);
+                    },
+                  ).paddingOnly(top: 12.kh),
       ),
     );
   }

@@ -37,7 +37,13 @@ class RiderProfileSetupController extends GetxController {
   TextEditingController email = TextEditingController(
       text: Get.find<AuthService>().auth.currentUser?.email);
   TextEditingController phoneNumber = TextEditingController(
-      text: Get.find<AuthService>().auth.currentUser?.phoneNumber);
+      text: Get.find<AuthService>()
+          .auth
+          .currentUser
+          ?.phoneNumber
+          .toString()
+          .split("+1")
+          .last);
   TextEditingController gender = TextEditingController();
 
   TextEditingController dateOfBirth = TextEditingController();
@@ -229,10 +235,10 @@ class RiderProfileSetupController extends GetxController {
       return 'Please enter your phone number';
     }
 
-    // Check if the value contains a valid country code and phone number
-    final RegExp phoneExp = RegExp(r'^\+(\+1|91)?[0-9]{10,11}$');
+    // Check if the value contains exactly 10 digits
+    final RegExp phoneExp = RegExp(r'^[0-9]{10}$');
     if (!phoneExp.hasMatch(value)) {
-      return 'Please enter a valid phone number';
+      return 'Please enter a valid 10-digit phone number';
     }
 
     return null; // Return null if the value is valid

@@ -6,7 +6,7 @@ import 'package:green_pool/app/services/dio/api_service.dart';
 import '../../../data/matching_rides_model.dart';
 
 class RiderFilterController extends GetxController {
-  Map<String, dynamic>? rideDetails;
+  /*Map<String, dynamic>? rideDetails;
   RxBool earlyDeparture = false.obs;
   RxBool lowestPrice = false.obs;
   RxBool closeToDeparture = false.obs;
@@ -115,8 +115,9 @@ class RiderFilterController extends GetxController {
       var data = jsonDecode(response.toString());
       matchingRidesModel.value = MatchingRidesModel.fromJson(data);
       Get.back(result: matchingRidesModel.value);
+      
     } catch (e) {
       throw Exception(e);
     }
-  }
+  }*/
 }

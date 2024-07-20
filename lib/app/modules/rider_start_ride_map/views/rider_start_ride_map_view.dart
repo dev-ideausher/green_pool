@@ -41,7 +41,7 @@ class RiderStartRideMapView extends GetView<RiderStartRideMapController> {
                       width: 4,
                       color: ColorUtil.kSecondary01),
                 },
-              ),
+              ).paddingOnly(bottom: 200.kh),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
       floatingActionButton: Column(
@@ -80,9 +80,6 @@ class RiderStartRideMapView extends GetView<RiderStartRideMapController> {
                   .paddingOnly(bottom: 4.kh),
             ],
           ),
-          Text(Strings.openGoogleMaps,
-              style: TextStyleUtil.k12Bold(
-                  color: ColorUtil.kBlueColor, fontWeight: FontWeight.w700)),
         ],
       ).paddingOnly(top: 8.kh),
       bottomSheet: const ArrivingBottomSheet(),

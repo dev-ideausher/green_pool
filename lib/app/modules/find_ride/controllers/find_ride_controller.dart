@@ -126,7 +126,7 @@ class FindRideController extends GetxController {
             FindRideResponseModel.fromJson(jsonDecode(response.toString()));
         log("this is rider's ride id: ${rideresponse.value.data![0]?.Id}");
       } else {
-        showMySnackbar(msg: "Same ride is already posted");
+        showMySnackbar(msg: rideresponse.value?.message ?? "");
       }
     } catch (e) {
       throw Exception(e);

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/data/ride_detail_id.dart';
+import 'package:green_pool/app/modules/my_rides_one_time/controllers/my_rides_one_time_controller.dart';
 import '../../../data/chat_arg.dart';
 import '../../../data/driver_cofirm_request_model.dart';
 import '../../../data/driver_send_request_model.dart';
@@ -69,6 +70,7 @@ class MyRidesRequestController extends GetxController {
         showMySnackbar(
             msg: acceptRiderResponse.data?['message'] ??
                 'Request accepted successfully!');
+        Get.find<MyRidesOneTimeController>().myRidesAPI();
       } else {
         showMySnackbar(msg: acceptRiderResponse.data?['message'] ?? "");
       }

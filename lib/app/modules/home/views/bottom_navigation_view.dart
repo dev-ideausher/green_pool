@@ -101,6 +101,7 @@ class BottomNavigationView extends GetView<HomeController> {
         ),
         body: PageView(
           controller: controller.pageController,
+          physics: const NeverScrollableScrollPhysics(),
           onPageChanged: (index) {
             controller.changeTabIndex(index);
           },

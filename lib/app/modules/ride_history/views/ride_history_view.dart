@@ -236,8 +236,12 @@ class RideHistoryView extends GetView<RideHistoryController> {
                                                     needPickupText: false,
                                                     origin:
                                                         "${his?.origin?.name}",
-                                                    stop1: his?.stops?[0]?.name ?? "",    
-                                                    stop2: his?.stops?[1]?.name ?? "",    
+                                                    stop1:
+                                                        his?.stops?[0]?.name ??
+                                                            "",
+                                                    stop2:
+                                                        his?.stops?[1]?.name ??
+                                                            "",
                                                     destination:
                                                         "${his?.destination?.name}")
                                                 .paddingOnly(bottom: 8.kh),
@@ -274,7 +278,7 @@ class RideHistoryView extends GetView<RideHistoryController> {
                                         ),
                                       ).paddingOnly(bottom: 16.kh),
                                     );
-                            }).paddingOnly(top: 32.kh),
+                            }).paddingOnly(top: 8.kh),
                       ),
                     ],
                   ).paddingSymmetric(horizontal: 16.kw),
@@ -412,8 +416,12 @@ class DriverRideHistTile extends StatelessWidget {
               origin:
                   controller.rideHistModel.value.data?[index]?.origin?.name ??
                       Strings.pickup,
-              stop1: controller.rideHistModel.value.data?[index]?.stops?[0]?.name ?? "",
-              stop2: controller.rideHistModel.value.data?[index]?.stops?[1]?.name ?? "",        
+              stop1: controller
+                      .rideHistModel.value.data?[index]?.stops?[0]?.name ??
+                  "",
+              stop2: controller
+                      .rideHistModel.value.data?[index]?.stops?[1]?.name ??
+                  "",
               destination: controller
                       .rideHistModel.value.data?[index]?.destination?.name ??
                   Strings.destination,

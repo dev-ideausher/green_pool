@@ -44,14 +44,14 @@ class RatingRiderSideView extends GetView<RatingRiderSideController> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                              "${controller.myRidesModel.value.data?.driverDetails?.fullName}"),
+                              "${controller.bookingModelData.value?.driverDetails?.fullName}"),
                           ClipRRect(
                             borderRadius: BorderRadius.circular(8.kh),
                             child: CommonImageView(
                                 height: 42.kh,
                                 width: 42.kw,
                                 url:
-                                    "${controller.myRidesModel.value.data?.driverDetails?.profilePic?.url}"),
+                                    "${controller.bookingModelData.value?.driverDetails?.profilePic?.url}"),
                           )
                         ],
                       ),
@@ -87,9 +87,8 @@ class RatingRiderSideView extends GetView<RatingRiderSideController> {
                       ).paddingOnly(bottom: 16.kh),
                       SizedBox(
                         height: (controller
-                                    .myRidesModel
+                                    .bookingModelData
                                     .value
-                                    .data
                                     ?.driverBookingDetails
                                     ?.riderBookingDetails
                                     ?.length ??
@@ -97,18 +96,16 @@ class RatingRiderSideView extends GetView<RatingRiderSideController> {
                             98.kh,
                         child: ListView.builder(
                             itemCount: controller
-                                .myRidesModel
+                                .bookingModelData
                                 .value
-                                .data
                                 ?.driverBookingDetails
                                 ?.riderBookingDetails
                                 ?.length,
                             physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
                               final rider = controller
-                                  .myRidesModel
+                                  .bookingModelData
                                   .value
-                                  .data
                                   ?.driverBookingDetails
                                   ?.riderBookingDetails?[index]
                                   .riderDetails;
@@ -167,7 +164,7 @@ class RatingRiderSideView extends GetView<RatingRiderSideController> {
                       GreenPoolButton(
                         onPressed: () {
                           controller.rateDriverAPI(
-                              "${controller.myRidesModel.value.data?.driverBookingDetails?.driverId}");
+                              "${controller.bookingModelData.value?.driverBookingDetails?.driverId}");
                           Get.find<HomeController>().changeTabIndex(0);
                           Get.until((route) =>
                               Get.currentRoute == Routes.BOTTOM_NAVIGATION);
@@ -179,26 +176,29 @@ class RatingRiderSideView extends GetView<RatingRiderSideController> {
                 ),
               ),
       ),
-      body: controller.isLoading.value
-          ? const GpProgress()
-          : Center(
-              child: Column(
-                children: [
-                  SvgPicture.asset(ImageConstant.svgRideCompleted)
-                      .paddingOnly(top: 40.kh, bottom: 24.kh),
-                  Text(
-                    "Ride Completed!",
-                    style: TextStyleUtil.k24Heading600(),
-                    textAlign: TextAlign.center,
-                  ).paddingOnly(bottom: 8.kh),
-                  Text(
-                    "Hope you had a great car pooling\nexperience!",
-                    style: TextStyleUtil.k16Regular(color: ColorUtil.kBlack04),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
+      body: Obx(
+        () => controller.isLoading.value
+            ? const GpProgress()
+            : Center(
+                child: Column(
+                  children: [
+                    SvgPicture.asset(ImageConstant.svgRideCompleted)
+                        .paddingOnly(top: 40.kh, bottom: 24.kh),
+                    Text(
+                      "Ride Completed!",
+                      style: TextStyleUtil.k24Heading600(),
+                      textAlign: TextAlign.center,
+                    ).paddingOnly(bottom: 8.kh),
+                    Text(
+                      "Hope you had a great car pooling\nexperience!",
+                      style:
+                          TextStyleUtil.k16Regular(color: ColorUtil.kBlack04),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
               ),
-            ),
+      ),
     );
   }
 }

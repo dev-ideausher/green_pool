@@ -105,16 +105,16 @@ class MapDriverConfirmBottomsheet extends StatelessWidget {
                       ),
                       FutureBuilder<String>(
                         future: GpUtil.calculateDistance(
-                            startLat: (element.rideDetails?.first?.origin
+                            startLat: Get.find<HomeController>()
+                                        .latitude
+                                        .value,
+                                    startLong: Get.find<HomeController>()
+                                        .longitude
+                                        .value,
+                            endLat: (element.rideDetails?.first?.origin
                                     ?.coordinates?.lastOrNull ??
                                 0.0),
-                            startLong: (element.rideDetails?.first?.origin
-                                    ?.coordinates?.firstOrNull ??
-                                0.0),
-                            endLat: (element.rideDetails?.first?.destination
-                                    ?.coordinates?.lastOrNull ??
-                                0.0),
-                            endLong: (element.rideDetails?.first?.destination
+                            endLong: (element.rideDetails?.first?.origin
                                     ?.coordinates?.firstOrNull ??
                                 0.0)),
                         builder: (context, snapshot) {

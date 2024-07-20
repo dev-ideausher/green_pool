@@ -364,7 +364,7 @@ class Strings {
   static String enableLocation = "Enable Location";
 
   static String allowLocationAccess =
-      "Please allow Greenpool acces to location services.";
+      "Please allow Greenpool access to location services.";
 
   static var allowAccess = "Allow Access";
 
@@ -493,7 +493,8 @@ class Strings {
 
   static String contactNumberTwo = 'Contact number 2';
 
-  static String deleteAllUpcomingRides = "Are you sure you want to delete ride?\nThis will delete all the upcoming rides.";
+  static String deleteAllUpcomingRides =
+      "Are you sure you want to delete ride?\nThis will delete all the upcoming rides.";
 
   static var sent = "Sent";
 }

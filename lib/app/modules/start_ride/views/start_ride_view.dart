@@ -87,9 +87,6 @@ class StartRideView extends GetView<StartRideController> {
                   )).paddingOnly(bottom: 4.kh),
             ],
           ),
-          Text(Strings.openGoogleMaps,
-              style: TextStyleUtil.k12Bold(
-                  color: ColorUtil.kBlueColor, fontWeight: FontWeight.w700)),
         ],
       ).paddingOnly(top: 8.kh),
       bottomSheet: Obx(

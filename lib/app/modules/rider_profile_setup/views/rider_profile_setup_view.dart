@@ -116,7 +116,9 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
                 validator: (value) => controller.validateEmail(value),
                 keyboardType: TextInputType.emailAddress,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
-                suffix: SvgPicture.asset(ImageConstant.svgProfileEditPen),
+                suffix: controller.readOnlyEmail
+                    ? const SizedBox()
+                    : SvgPicture.asset(ImageConstant.svgProfileEditPen),
                 readOnly: controller.readOnlyEmail,
               ).paddingOnly(bottom: 16.kh),
               const RichTextHeading(text: 'Phone Number')
@@ -124,6 +126,12 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
               GreenPoolTextField(
                 hintText: 'Enter phone number',
                 controller: controller.phoneNumber,
+                prefix: Text(
+                    "+1",
+                    style: TextStyleUtil.k14Regular(
+                      color: ColorUtil.kBlack03,
+                    ),
+                  ),
                 validator: (value) => controller.phoneNumberValidator(value),
                 autovalidateMode: AutovalidateMode.onUserInteraction,
               ).paddingOnly(bottom: 16.kh),

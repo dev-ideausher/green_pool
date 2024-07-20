@@ -5,7 +5,6 @@ import 'package:green_pool/app/components/green_pool_divider.dart';
 import 'package:green_pool/app/data/my_rides_model.dart';
 import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
-import 'package:intl/intl.dart';
 
 import '../../../components/common_image_view.dart';
 import '../../../components/origin_to_destination.dart';

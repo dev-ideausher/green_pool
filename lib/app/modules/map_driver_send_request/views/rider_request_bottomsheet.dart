@@ -101,17 +101,17 @@ class RiderRequestBottomsheet extends StatelessWidget {
                       ),
                       FutureBuilder<String>(
                         future: GpUtil.calculateDistance(
-                            startLat:
+                            startLat: Get.find<HomeController>()
+                                        .latitude
+                                        .value,
+                                    startLong: Get.find<HomeController>()
+                                        .longitude
+                                        .value,
+                            endLat:
                                 (element.origin?.coordinates?.lastOrNull ??
                                     0.0),
-                            startLong:
-                                (element.origin?.coordinates?.firstOrNull ??
-                                    0.0),
-                            endLat:
-                                (element.destination?.coordinates?.lastOrNull ??
-                                    0.0),
                             endLong: (element
-                                    .destination?.coordinates?.firstOrNull ??
+                                    .origin?.coordinates?.firstOrNull ??
                                 0.0)),
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==

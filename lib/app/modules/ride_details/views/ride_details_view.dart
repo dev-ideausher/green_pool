@@ -23,6 +23,8 @@ class RideDetailsView extends GetView<RideDetailsController> {
   @override
   Widget build(BuildContext context) {
     final isRideCancelled = controller.rideHistory.value.rideStatus == "Cancel";
+    final isRideCompleted =
+        controller.rideHistory.value.rideStatus == "Completed";
     return Scaffold(
       appBar: GreenPoolAppBar(
         title: Text(Strings.rideDetails),
@@ -31,27 +33,34 @@ class RideDetailsView extends GetView<RideDetailsController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           //ride completed
-          Container(
-            padding: EdgeInsets.all(16.kh),
-            decoration: BoxDecoration(
-                color:
-                    isRideCancelled ? ColorUtil.kError2 : ColorUtil.kGreenColor,
-                borderRadius: BorderRadius.circular(8.kh)),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Icon(
-                  isRideCancelled ? Icons.block : Icons.check,
-                  size: 20.kh,
-                  color: ColorUtil.kWhiteColor,
-                ).paddingOnly(right: 8.kw),
-                Text(
-                  isRideCancelled ? "Ride Cancelled" : 'Completed Successfully',
-                  style: TextStyleUtil.k14Regular(color: ColorUtil.kWhiteColor),
-                ),
-              ],
-            ),
-          ).paddingOnly(top: 32.kh, bottom: 16.kh),
+          Visibility(
+            visible: isRideCompleted || isRideCancelled,
+            child: Container(
+              padding: EdgeInsets.all(16.kh),
+              decoration: BoxDecoration(
+                  color: isRideCancelled
+                      ? ColorUtil.kError2
+                      : ColorUtil.kGreenColor,
+                  borderRadius: BorderRadius.circular(8.kh)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Icon(
+                    isRideCancelled ? Icons.block : Icons.check,
+                    size: 20.kh,
+                    color: ColorUtil.kWhiteColor,
+                  ).paddingOnly(right: 8.kw),
+                  Text(
+                    isRideCancelled
+                        ? "Ride Cancelled"
+                        : 'Completed Successfully',
+                    style:
+                        TextStyleUtil.k14Regular(color: ColorUtil.kWhiteColor),
+                  ),
+                ],
+              ),
+            ).paddingOnly(top: 8.kh, bottom: 16.kh),
+          ),
 
           //details with pick up and drop off
           Column(
@@ -137,7 +146,7 @@ class RideDetailsView extends GetView<RideDetailsController> {
                                   ),
                                   TextSpan(
                                     text:
-                                        '\$ ${controller.rideHistory.value.origin?.originDestinationFair}',
+                                        '\$ ${controller.rideHistory.value.price}',
                                     style: TextStyleUtil.k16Semibold(
                                         fontSize: 16.kh,
                                         color: ColorUtil.kSecondary01),
@@ -182,8 +191,7 @@ class RideDetailsView extends GetView<RideDetailsController> {
                                       : ColorUtil.kSecondary01,
                                 ).paddingOnly(right: 8.kw),
                                 Text(
-                                  // '${controller.rideHistory.value.driver?.} seats',
-                                  'seats',
+                                  '${controller.rideHistory.value.seatAvailable} seats',
                                   style: TextStyleUtil.k14Regular(
                                       color: ColorUtil.kBlack03),
                                 ),
@@ -299,13 +307,6 @@ class RideDetailsView extends GetView<RideDetailsController> {
             ],
           ),
           const GreenPoolDivider().paddingSymmetric(vertical: 16.kh),
-
-          //Bill details
-          Text(
-            'Bill Details',
-            style: TextStyleUtil.k14Bold(),
-          ).paddingOnly(bottom: 16.kh),
-          //TODO: bill details
         ],
       ).paddingSymmetric(horizontal: 16.kw),
     );

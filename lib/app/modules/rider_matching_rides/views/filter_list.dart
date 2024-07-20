@@ -6,7 +6,7 @@ import 'package:green_pool/app/services/responsive_size.dart';
 import '../../../services/colors.dart';
 import '../../../services/text_style_util.dart';
 import '../../home/controllers/home_controller.dart';
-import '../controllers/rider_filter_controller.dart';
+import '../../rider_filter/controllers/rider_filter_controller.dart';
 
 class FilterList extends GetView<RiderFilterController> {
   final String image, text;

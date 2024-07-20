@@ -27,15 +27,15 @@ class MapRiderConfirmRequestView
                 // onCameraMove: (position) {
                 //   GpUtil.moveCamera(controller.mapController, position.target);
                 // },
-                polylines: {
-                  Polyline(
-                    visible: true,
-                    width: 4,
-                    polylineId: const PolylineId('polyline'),
-                    points: controller.polylineCoordinates,
-                    patterns: [PatternItem.dash(10), PatternItem.gap(10)],
-                  ),
-                },
+                // polylines: {
+                //   Polyline(
+                //     visible: true,
+                //     width: 4,
+                //     polylineId: const PolylineId('polyline'),
+                //     points: controller.polylineCoordinates,
+                //     patterns: [PatternItem.dash(10), PatternItem.gap(10)],
+                //   ),
+                // },
               ),
       ),
     );

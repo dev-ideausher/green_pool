@@ -275,24 +275,27 @@ class RiderTile extends StatelessWidget {
                                   ? ColorUtil.kPrimary3PinkMode
                                   : ColorUtil.kSecondary01,
                         ),
-                        GreenPoolButton(
-                          height: 40.kh,
-                          width: 144.kw,
-                          padding: EdgeInsets.all(0.kh),
-                          onPressed: () {
-                            controller.riderCancelRideAPI(myRidesModelData!);
-                          },
-                          isBorder: true,
-                          label: Strings.cancelRide,
-                          fontSize: 14.kh,
-                          borderColor:
-                              Get.find<HomeController>().isPinkModeOn.value
-                                  ? ColorUtil.kPrimary3PinkMode
-                                  : ColorUtil.kSecondary01,
-                          labelColor:
-                              Get.find<HomeController>().isPinkModeOn.value
-                                  ? ColorUtil.kPrimary3PinkMode
-                                  : ColorUtil.kSecondary01,
+                        Visibility(
+                          visible: myRidesModelData?.isStarted != true,
+                          child: GreenPoolButton(
+                            height: 40.kh,
+                            width: 144.kw,
+                            padding: EdgeInsets.all(0.kh),
+                            onPressed: () {
+                              controller.riderCancelRideAPI(myRidesModelData!);
+                            },
+                            isBorder: true,
+                            label: Strings.cancelRide,
+                            fontSize: 14.kh,
+                            borderColor:
+                                Get.find<HomeController>().isPinkModeOn.value
+                                    ? ColorUtil.kPrimary3PinkMode
+                                    : ColorUtil.kSecondary01,
+                            labelColor:
+                                Get.find<HomeController>().isPinkModeOn.value
+                                    ? ColorUtil.kPrimary3PinkMode
+                                    : ColorUtil.kSecondary01,
+                          ),
                         ),
                       ],
                     ),

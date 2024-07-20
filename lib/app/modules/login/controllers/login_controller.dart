@@ -159,8 +159,10 @@ class LoginController extends GetxController {
   void googleAuth() async {
     try {
       Get.lazyPut(() => VerifyController());
-      await Get.find<AuthService>().google();
-      await Get.find<VerifyController>().loginAPI();
+      bool isStatus = await Get.find<AuthService>().google();
+      if(isStatus){
+        await Get.find<VerifyController>().loginAPI();
+      }      
     } catch (error) {
       log("$error");
     }

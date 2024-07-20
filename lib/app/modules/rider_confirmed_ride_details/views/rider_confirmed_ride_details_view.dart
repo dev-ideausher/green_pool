@@ -149,8 +149,22 @@ class RiderConfirmedRideDetailsView
                             needPickupText: true,
                             origin:
                                 "${controller.myRidesModel.value.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.origin?.name}",
-                            stop1: controller.myRidesModel.value.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.stops?[0]?.name ?? "",
-                            stop2: controller.myRidesModel.value.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.stops?[1]?.name ?? "",
+                            stop1: controller
+                                    .myRidesModel
+                                    .value
+                                    .confirmDriverDetails?[0]
+                                    ?.driverPostsDetails?[0]
+                                    ?.stops?[0]
+                                    ?.name ??
+                                "",
+                            stop2: controller
+                                    .myRidesModel
+                                    .value
+                                    .confirmDriverDetails?[0]
+                                    ?.driverPostsDetails?[0]
+                                    ?.stops?[1]
+                                    ?.name ??
+                                "",
                             destination:
                                 "${controller.myRidesModel.value.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.destination?.name}")
                         .paddingOnly(bottom: 8.kh),

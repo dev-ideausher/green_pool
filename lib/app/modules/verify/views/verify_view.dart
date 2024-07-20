@@ -51,9 +51,9 @@ class VerifyView extends GetView<VerifyController> {
                   keyboardType: const TextInputType.numberWithOptions(),
                   autofocus: false,
                   closeKeyboardWhenCompleted: true,
-                  onCompleted: (value) async {
-                    await controller.verifyOTP();
-                  },
+                  // onCompleted: (value) async {
+                  //   await controller.verifyOTP();
+                  // },
                   preFilledWidget: Text(
                     '0',
                     style: TextStyleUtil.k18Regular(color: ColorUtil.kBlack04),

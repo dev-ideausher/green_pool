@@ -50,9 +50,9 @@ class AppInterceptors extends Interceptor {
     try {
       final errorMessage = DioExceptions.fromDioError(err).toString();
       isOverlayLoader ? DialogHelper.hideDialog() : null;
-      showSnakbar == true
-          ? showMySnackbar(msg: errorMessage, title: 'Error')
-          : null;
+      if(showSnakbar == true){
+        showMySnackbar(msg: errorMessage, title: 'Error');
+      }
     } catch (e) {
       debugPrint(e.toString());
     }

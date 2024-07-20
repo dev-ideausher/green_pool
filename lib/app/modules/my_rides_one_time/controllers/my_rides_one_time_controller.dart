@@ -134,7 +134,7 @@ class MyRidesOneTimeController extends GetxController {
   Future<void> startRide(MyRidesModelData value) async {
     if (value.postsInfo?.isEmpty ?? false) {
       // openMyRideDetail(value);
-      moveToRequests(value);
+      moveToRequests(value).then((v) => myRidesAPI);
     } else {
       if (value.postsInfo!.isNotEmpty) {
         Get.toNamed(Routes.START_RIDE,

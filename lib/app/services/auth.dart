@@ -85,6 +85,7 @@ class AuthService extends GetxService {
   mobileOtp({required String phoneno}) async {
     await auth.requestVerificationCode(
       phoneNumber: phoneno,
+      timeout: const Duration(seconds: 120),
       onCodeSent: (verificationID) => print('verificationId: $verificationID'),
     );
   }

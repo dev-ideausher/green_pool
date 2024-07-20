@@ -96,14 +96,21 @@ class SetupUser extends GetView<ProfileSetupController> {
               keyboardType: TextInputType.emailAddress,
               validator: (value) => controller.validateEmail(value),
               autovalidateMode: AutovalidateMode.onUserInteraction,
-              suffix: SvgPicture.asset(ImageConstant.svgProfileEditPen),
+              suffix: controller.readOnlyEmail
+                  ? const SizedBox()
+                  : SvgPicture.asset(ImageConstant.svgProfileEditPen),
               readOnly: controller.readOnlyEmail,
             ).paddingOnly(bottom: 16.kh),
             const RichTextHeading(text: 'Phone Number')
                 .paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
               hintText: 'Enter phone number',
-              // initialValue: FirebaseAuth.instance.currentUser?.phoneNumber.toString(),
+              prefix: Text(
+                "+1",
+                style: TextStyleUtil.k14Regular(
+                  color: ColorUtil.kBlack03,
+                ),
+              ),
               controller: controller.phoneNumber,
               validator: (value) => controller.phoneNumberValidator(value),
               autovalidateMode: AutovalidateMode.onUserInteraction,

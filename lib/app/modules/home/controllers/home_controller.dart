@@ -87,15 +87,14 @@ class HomeController extends GetxController {
       try {
         final response = await APIManager.getUserByID();
         var data = jsonDecode(response.toString());
-        //update the user info
         userInfo.value = UserInfoModel.fromJson(data);
-        userInfo.refresh();
 
         //store values
         storageService.setUserAppId = userInfo.value.data?.Id;
         storageService.setUserName = userInfo.value.data?.fullName ?? "";
         storageService.profilePicUrl = userInfo.value.data?.profilePic?.url;
         storageService.setFirebaseUid = userInfo.value.data?.firebaseUid ?? "";
+        userInfo.refresh();
 
         // Subscribe to FCM notifications using the user ID
         PushNotificationService.subFcm("${userInfo.value.data?.Id}");
@@ -181,9 +180,11 @@ class HomeController extends GetxController {
     if (Get.find<GetStorageService>().isLoggedIn) {
       if (Get.find<GetStorageService>().profileStatus) {
         changeTabIndex(index);
+        userInfo.refresh();
       } else {
         if (index != 0) {
-          Get.toNamed(Routes.RIDER_PROFILE_SETUP, arguments: true);
+          Get.toNamed(Routes.RIDER_PROFILE_SETUP,
+              arguments: {"fromNavBar": true, "fullName": ""});
           showMySnackbar(msg: Strings.pleaseCompleteProfileSetup);
         }
       }
