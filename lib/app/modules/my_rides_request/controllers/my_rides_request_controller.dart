@@ -89,7 +89,7 @@ class MyRidesRequestController extends GetxController {
           await APIManager.patchRejectRiderRequest(body: rideData);
       var data = jsonDecode(rejectRiderResponse.toString());
       allConfirmRequestAPI();
-      Get.back();
+      Get.until((route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
       showMySnackbar(msg: 'Request rejected successfully!');
     } catch (e) {
       throw Exception(e);
@@ -117,6 +117,7 @@ class MyRidesRequestController extends GetxController {
       // driver will send request to the customer (from send request view)
       final sendRiderRequestResponse =
           await APIManager.postSendRequestToRider(body: {
+        "riderId": driverSendModelData.riderDetails?.Id,
         "riderRideId": driverSendModelData.Id,
         "driverRideId": rideDetailId.value.driverRidId,
         "riderName": driverSendModelData.riderDetails?.fullName,

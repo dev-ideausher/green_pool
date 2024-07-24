@@ -35,7 +35,7 @@ class FindRideController extends GetxController {
   double riderDestinationLong = 0.0;
 
   RxList<LocationModel> locationModelNames = <LocationModel>[].obs;
-  var rideresponse = FindRideResponseModel().obs;
+  // var rideresponse = FindRideResponseModel().obs;
 
   @override
   void onInit() {
@@ -115,7 +115,7 @@ class FindRideController extends GetxController {
     }
   }
 
-  Future<void> riderPostRideAPI() async {
+  /*Future<void> riderPostRideAPI() async {
     final findRideData = _getRideDetails();
 
     try {
@@ -131,7 +131,7 @@ class FindRideController extends GetxController {
     } catch (e) {
       throw Exception(e);
     }
-  }
+  }*/
 
   Future<void> setDate(BuildContext context) async {
     DateTime? pickedDate = await showDatePicker(

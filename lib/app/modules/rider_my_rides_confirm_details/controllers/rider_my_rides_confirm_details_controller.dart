@@ -1,15 +1,14 @@
 import 'package:get/get.dart';
-import 'package:green_pool/app/modules/rider_my_ride_request/controllers/rider_my_ride_request_controller.dart';
+import 'package:green_pool/app/data/rider_confirm_request_model.dart';
 
 class RiderMyRidesConfirmDetailsController extends GetxController {
-  var riderConfirmRequestModel =
-      Get.find<RiderMyRideRequestController>().riderConfirmRequestModel;
-  int index = 0;
+  var riderConfirmRequestModel = RiderConfirmRequestModelData();
+  
 
   @override
   void onInit() {
     super.onInit();
-    index = Get.arguments;
+    riderConfirmRequestModel = Get.arguments;
   }
 
   // @override

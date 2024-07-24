@@ -13,7 +13,6 @@ import '../../../res/strings.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/colors.dart';
 import '../../../services/text_style_util.dart';
-import '../../home/controllers/home_controller.dart';
 import '../controllers/my_rides_one_time_controller.dart';
 
 class RecurringTile extends StatelessWidget {

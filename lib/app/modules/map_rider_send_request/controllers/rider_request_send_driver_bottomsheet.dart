@@ -12,6 +12,7 @@ import '../../../data/rider_send_request_model.dart';
 import '../../../res/strings.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
+import '../../../services/snackbar.dart';
 import '../../../services/text_style_util.dart';
 import '../../home/controllers/home_controller.dart';
 import '../../rider_my_ride_request/controllers/rider_my_ride_request_controller.dart';
@@ -225,9 +226,17 @@ class RiderRequestSendDriverBottomsheet extends StatelessWidget {
                   ),
                 )),*/
             GreenPoolButton(
-              onPressed: () => Get.find<RiderMyRideRequestController>()
-                  .moveToPaymentFromSendRequest(element!),
-              label: Strings.sendRequest,
+              onPressed: () {
+                if (element.requestSent ?? false) {
+                  showMySnackbar(msg: "The request has already been sent.");
+                } else {
+                  Get.find<RiderMyRideRequestController>()
+                      .moveToPaymentFromSendRequest(element!);
+                }
+              },
+              label: element.requestSent ?? false
+                  ? Strings.sent
+                  : Strings.sendRequest,
               fontSize: 14.kh,
               height: 40.kh,
               width: 144.kw,

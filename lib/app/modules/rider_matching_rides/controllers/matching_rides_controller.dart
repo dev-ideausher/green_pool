@@ -1,15 +1,16 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/modules/rider_matching_rides/views/filter_ride.dart';
 import 'package:green_pool/app/services/snackbar.dart';
+import '../../../data/find_ride_response_model.dart';
 import '../../../data/matching_rides_model.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/dio/api_service.dart';
 import '../../../services/gp_util.dart';
-import '../../find_ride/controllers/find_ride_controller.dart';
 import '../views/create_ride_alert_bottomsheet.dart';
 
 class MatchingRidesController extends GetxController {
@@ -21,6 +22,7 @@ class MatchingRidesController extends GetxController {
   double longitude = Get.find<HomeController>().longitude.value;
   Rx<MatchingRidesModel> matchingRidesModel = MatchingRidesModel().obs;
   RxBool isLoading = true.obs;
+  var rideresponse = FindRideResponseModel().obs;
 
   //filter
   RxBool earlyDeparture = false.obs;
@@ -74,15 +76,6 @@ class MatchingRidesController extends GetxController {
     }
   }
 
-  // moveToFilter() {
-  //   Get.toNamed(Routes.RIDER_FILTER, arguments: {
-  //     'rideDetails': rideDetails,
-  //     'matchingRidesModel': matchingRidesModel.value
-  //   })?.then((value) {
-  //     matchingRidesModel.value = value;
-  //     matchingRidesModel.refresh();
-  //   });
-  // }
   moveToFilter() {
     Get.to(() => const FilterRide());
   }
@@ -126,14 +119,7 @@ class MatchingRidesController extends GetxController {
         rideDetails?['ridesDetails']['origin']['name'] != "" &&
         rideDetails?['ridesDetails']['destination']['name'] != "") {
       try {
-        final res = await Get.find<FindRideController>().riderPostRideAPI();
-
-        await Get.bottomSheet(
-          isDismissible: false,
-          persistent: true,
-          const CreateRideAlertBottomsheet(),
-        );
-        await getMatchingRidesAPI();
+        riderPostRideAPI();
       } catch (e) {
         throw Exception(e);
       }
@@ -141,6 +127,29 @@ class MatchingRidesController extends GetxController {
       Get.back();
       showMySnackbar(
           msg: "To create a ride alert please enter all the details");
+    }
+  }
+
+  Future<void> riderPostRideAPI() async {
+    final findRideData = rideDetails;
+
+    try {
+      final response = await APIManager.postRiderFindRide(body: findRideData);
+      if (response.data['status']) {
+        rideresponse.value =
+            FindRideResponseModel.fromJson(jsonDecode(response.toString()));
+        await Get.bottomSheet(
+          isDismissible: false,
+          persistent: true,
+          const CreateRideAlertBottomsheet(),
+        );
+        await getMatchingRidesAPI();
+        log("this is rider's ride id: ${rideresponse.value.data![0]?.Id}");
+      } else {
+        showMySnackbar(msg: response.data['message'].toString() ?? "");
+      }
+    } catch (e) {
+      throw Exception(e);
     }
   }
 

@@ -70,11 +70,12 @@ class DriverTile extends StatelessWidget {
                     alignment: Alignment.centerRight,
                     child: ListView.builder(
                       shrinkWrap: true,
-                      itemCount: (myRidesModelData.postsInfo?.length ?? 0) == 0
-                          ? myRidesModelData.totalSeatAvailable
-                          : myRidesModelData.postsInfo?.length,
+                      itemCount: (myRidesModelData.seatAvailable ?? 0) +
+                          (myRidesModelData.postsInfo?.length ?? 0),
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index1) {
+                        bool isSeatAvailable =
+                            index1 < (myRidesModelData.seatAvailable ?? 0);                        
                         return Container(
                           decoration: const BoxDecoration(
                             shape: BoxShape.circle,
@@ -82,15 +83,22 @@ class DriverTile extends StatelessWidget {
                           child: ClipOval(
                             child: SizedBox.fromSize(
                               size: Size.fromRadius(12.kh),
-                              child: (myRidesModelData.postsInfo?.length ??
-                                          0) ==
-                                      0
+                              child: isSeatAvailable
                                   ? Image.asset(
                                       ImageConstant.pngEmptyPassenger,
                                     )
                                   : CommonImageView(
-                                      url:
-                                          "${myRidesModelData.postsInfo?[index1]?.riderPostsDetails?[0]?.ridersDetails?[0]?.profilePic?.url}"),
+                                      url: myRidesModelData
+                                              .postsInfo?[index1 -
+                                                  (myRidesModelData
+                                                          .seatAvailable ??
+                                                      0)]
+                                              ?.riderPostsDetails?[0]
+                                              ?.ridersDetails?[0]
+                                              ?.profilePic
+                                              ?.url ??
+                                          "",
+                                    ),
                             ),
                           ),
                         ).paddingOnly(right: 4.kw);

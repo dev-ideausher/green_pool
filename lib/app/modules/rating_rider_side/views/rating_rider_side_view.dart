@@ -149,7 +149,7 @@ class RatingRiderSideView extends GetView<RatingRiderSideController> {
                                         ),
                                       ),
                                       onRatingUpdate: (double value) {
-                                        controller.rating.value = value;
+                                        controller.rating.value = value;                                        
                                         controller.debouncer(() => controller
                                             .rateUserAPI("${rider?.Id}"));
                                       },

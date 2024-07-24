@@ -6,6 +6,7 @@ import 'package:green_pool/app/components/origin_to_destination.dart';
 import 'package:green_pool/app/data/driver_send_request_model.dart';
 import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
+import 'package:green_pool/app/services/snackbar.dart';
 
 import '../../../components/green_pool_divider.dart';
 import '../../../constants/image_constant.dart';
@@ -101,18 +102,14 @@ class RiderRequestBottomsheet extends StatelessWidget {
                       ),
                       FutureBuilder<String>(
                         future: GpUtil.calculateDistance(
-                            startLat: Get.find<HomeController>()
-                                        .latitude
-                                        .value,
-                                    startLong: Get.find<HomeController>()
-                                        .longitude
-                                        .value,
-                            endLat:
-                                (element.origin?.coordinates?.lastOrNull ??
-                                    0.0),
-                            endLong: (element
-                                    .origin?.coordinates?.firstOrNull ??
-                                0.0)),
+                            startLat: Get.find<HomeController>().latitude.value,
+                            startLong:
+                                Get.find<HomeController>().longitude.value,
+                            endLat: (element.origin?.coordinates?.lastOrNull ??
+                                0.0),
+                            endLong:
+                                (element.origin?.coordinates?.firstOrNull ??
+                                    0.0)),
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
@@ -204,9 +201,17 @@ class RiderRequestBottomsheet extends StatelessWidget {
             ),
             const GreenPoolDivider().paddingOnly(bottom: 16.kh, top: 8.kh),
             GreenPoolButton(
-              onPressed: () => Get.find<MyRidesRequestController>()
-                  .sendRequestToRiderAPI(element!),
-              label: Strings.requestRider,
+              onPressed: () {
+                if (element?.requestSent ?? false) {
+                  showMySnackbar(msg: "The request has already been sent.");
+                } else {
+                  Get.find<MyRidesRequestController>()
+                      .sendRequestToRiderAPI(element!);
+                }
+              },
+              label: element?.requestSent ?? false
+                  ? Strings.sent
+                  : Strings.requestRider,
               fontSize: 14.kh,
               height: 40.kh,
               width: 144.kw,

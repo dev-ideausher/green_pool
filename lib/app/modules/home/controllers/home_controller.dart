@@ -169,6 +169,12 @@ class HomeController extends GetxController {
     }
 
     if (permission == LocationPermission.deniedForever) {
+      Get.back();
+      await Permission.notification.isDenied.then((value) async {
+        if (value) {
+          Get.bottomSheet(const NotificationBottomSheet());
+        }
+      });
       return Future.error(
           'Location permissions are permanently denied, we cannot request permissions.');
     }

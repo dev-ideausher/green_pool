@@ -163,9 +163,11 @@ class PushNotificationService {
       case 'Driver Request Accept':
       case 'Rider Request Accept':
       case 'Rider Ride Cancellation':
+      case 'Rider Ride Confirmation':
       case 'Ride Cancellation':
       case 'End_Ride':
       case 'Rider New request':
+      case "Rider Request Declined":
         Get.find<MyRidesOneTimeController>().myRidesAPI();
         break;
       case 'Chat':

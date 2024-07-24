@@ -64,8 +64,8 @@ class TransactionHistoryView extends GetView<TransactionHistoryController> {
                                         : ColorUtil.kError2),
                               ),
                               subtitle: "Id: #${transaction.Id}")
-                          .paddingOnly(bottom: 8.kh);
-                    }).paddingOnly(top: 32.kh),
+                          .paddingOnly(bottom: 8.kh, left: 16.kw, right: 16.kw);
+                    }).paddingOnly(top: 8.kh),
       ),
     );
   }

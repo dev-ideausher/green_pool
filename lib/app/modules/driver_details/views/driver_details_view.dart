@@ -27,6 +27,20 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
     return Scaffold(
       appBar: GreenPoolAppBar(
         title: Text(Strings.driverDetails),
+        leading: GestureDetector(
+          onTap: () {
+            Get.back();
+            controller.rideDetails!['ridesDetails']!['date'] = "";
+          },
+          child: Padding(
+            padding: EdgeInsets.all(8.kh),
+            child: SvgPicture.asset(
+              ImageConstant.svgIconBack,
+              height: 24.kh,
+              width: 24.kw,
+            ),
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -76,7 +90,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                                     ),
                                     TextSpan(
                                       text:
-                                          '\$ ${controller.matchingRidesModelData.value.origin?.originDestinationFair}',
+                                          '\$ ${controller.matchingRidesModelData.value.price}',
                                       style: TextStyleUtil.k18Semibold(
                                           color: ColorUtil.kSecondary01),
                                     ),
@@ -137,13 +151,13 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                 OriginToDestination(
                         needPickupText: true,
                         origin:
-                            "${controller.matchingRidesModelData.value.matchedOriginLocation?.name}",
+                            "${controller.matchingRidesModelData.value.origin?.name}",
                         stop1:
                             "${controller.matchingRidesModelData.value.stops?[0]?.name}",
                         stop2:
                             "${controller.matchingRidesModelData.value.stops?[1]?.name}",
                         destination:
-                            "${controller.matchingRidesModelData.value.matchedDestinationLocation?.name}")
+                            "${controller.matchingRidesModelData.value.destination?.name}")
                     .paddingSymmetric(vertical: 8.kh),
                 //bottom line
                 const GreenPoolDivider(),

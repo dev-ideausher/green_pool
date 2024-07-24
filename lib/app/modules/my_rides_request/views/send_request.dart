@@ -13,6 +13,7 @@ import '../../../constants/image_constant.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
 import '../../../services/gp_util.dart';
+import '../../../services/snackbar.dart';
 import '../../../services/text_style_util.dart';
 import '../../home/controllers/home_controller.dart';
 import '../controllers/my_rides_request_controller.dart';
@@ -255,6 +256,7 @@ class SendRequest extends GetView<MyRidesRequestController> {
                                         if (controller.sendRequestModel.value
                                                 .data![index].requestSent ??
                                             false) {
+                                              showMySnackbar(msg: "The request has already been sent.");
                                         } else {
                                           await controller
                                               .sendRequestToRiderAPI(controller

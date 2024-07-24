@@ -59,7 +59,8 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                         return GestureDetector(
                           onTap: () {
                             Get.toNamed(Routes.RIDER_MY_RIDES_CONFIRM_DETAILS,
-                                arguments: index);
+                                arguments: controller.riderConfirmRequestModel
+                                    .value.data?[index]);
                           },
                           child: Container(
                             padding: EdgeInsets.all(16.kh),
@@ -154,7 +155,6 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Row(
-                                          //TODO: space between
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
@@ -228,7 +228,7 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                                       BlendMode.srcIn),
                                                 ).paddingOnly(right: 4.kw),
                                                 Text(
-                                                  "${GpUtil.getDateFormat(controller.riderConfirmRequestModel.value.data?[index]?.driverRideDetails?.time ?? "" )}  ${GpUtil.convertUtcToLocal(controller.riderConfirmRequestModel.value.data?[index]?.driverRideDetails?.time ?? "")}",
+                                                  "${GpUtil.getDateFormat(controller.riderConfirmRequestModel.value.data?[index]?.driverRideDetails?.time ?? "")}  ${GpUtil.convertUtcToLocal(controller.riderConfirmRequestModel.value.data?[index]?.driverRideDetails?.time ?? "")}",
                                                   style:
                                                       TextStyleUtil.k12Regular(
                                                           color: ColorUtil
@@ -270,8 +270,22 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                 OriginToDestination(
                                   origin:
                                       "${controller.riderConfirmRequestModel.value.data?[index]?.driverRideDetails?.origin?.name}",
-                                      stop1: controller.riderConfirmRequestModel.value.data?[index]?.driverRideDetails?.stops?[0]?.name ?? "",
-                                      stop2: controller.riderConfirmRequestModel.value.data?[index]?.driverRideDetails?.stops?[1]?.name ?? "",
+                                  stop1: controller
+                                          .riderConfirmRequestModel
+                                          .value
+                                          .data?[index]
+                                          ?.driverRideDetails
+                                          ?.stops?[0]
+                                          ?.name ??
+                                      "",
+                                  stop2: controller
+                                          .riderConfirmRequestModel
+                                          .value
+                                          .data?[index]
+                                          ?.driverRideDetails
+                                          ?.stops?[1]
+                                          ?.name ??
+                                      "",
                                   destination:
                                       "${controller.riderConfirmRequestModel.value.data?[index]?.driverRideDetails?.destination?.name}",
                                   needPickupText: false,
@@ -292,7 +306,6 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                         // await controller.acceptDriversRequestAPI(index,showAcceptBottom: true);
                                         controller
                                             .moveToPaymentFromConfirmSection(
-                                                index,
                                                 controller
                                                     .riderConfirmRequestModel
                                                     .value

@@ -120,11 +120,7 @@ class StartRideController extends GetxController {
   }
 
   addMarkers(
-      LatLng carLocation, String image, String? title, double? rotation) async {
-    // String imgurl = "https://www.fluttercampus.com/img/car.png";
-    // Uint8List bytes = (await NetworkAssetBundle(Uri.parse(imgurl)).load(imgurl))
-    //     .buffer
-    //     .asUint8List();
+      LatLng carLocation, String image, String? title, double? rotation) async {    
     markers.add(Marker(
       markerId: MarkerId(carLocation.toString()),
       position: carLocation, //position of marker
@@ -220,7 +216,10 @@ class StartRideController extends GetxController {
   startRideAPI() async {
     try {
       final response = await APIManager.startRide(
-          body: {"driverRideId": myRidesModel.value.driverRideId});
+          body: {
+              "driverRideId": myRidesModel.value.driverRideId
+                }
+            );
       var data = jsonDecode(response.toString());
       if (data['status']) {
         myRidesModel.value.driverBookingDetails?.isStarted = true;

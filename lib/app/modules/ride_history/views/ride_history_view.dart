@@ -92,8 +92,9 @@ class RideHistoryView extends GetView<RideHistoryController> {
                                                             BorderRadius
                                                                 .circular(8.kh),
                                                         child: CommonImageView(
-                                                            url:
-                                                                "${his?.driver?.profilePic?.url}"),
+                                                          url:
+                                                              "${his?.driver?.profilePic?.url}",
+                                                        ),
                                                       ),
                                                     ).paddingOnly(bottom: 8.kh),
                                                     Positioned(
@@ -135,8 +136,7 @@ class RideHistoryView extends GetView<RideHistoryController> {
                                                             ).paddingOnly(
                                                                 right: 2.kw),
                                                             Text(
-                                                              // '4.5',
-                                                              "${his?.driver?.rating?.toStringAsFixed(1)}",
+                                                              '${his?.driver?.rating!.toStringAsFixed(1)}',
                                                               style: TextStyleUtil.k12Semibold(
                                                                   color: Get.find<
                                                                               HomeController>()
@@ -162,11 +162,40 @@ class RideHistoryView extends GetView<RideHistoryController> {
                                                         CrossAxisAlignment
                                                             .start,
                                                     children: [
-                                                      Text(
-                                                        // 'Savannah Nguyen',
-                                                        "${his?.driver?.fullName}",
-                                                        style: TextStyleUtil
-                                                            .k16Bold(),
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Text(
+                                                            '${his?.driver?.fullName}',
+                                                            style: TextStyleUtil
+                                                                .k16Bold(),
+                                                          ),
+                                                          Text.rich(
+                                                            TextSpan(
+                                                              children: [
+                                                                TextSpan(
+                                                                  text:
+                                                                      'Fare: ',
+                                                                  style: TextStyleUtil
+                                                                      .k14Semibold(
+                                                                          color:
+                                                                              ColorUtil.kSecondary01),
+                                                                ),
+                                                                TextSpan(
+                                                                  text:
+                                                                      '\$ ${his?.price}',
+                                                                  style: TextStyleUtil.k16Semibold(
+                                                                      fontSize:
+                                                                          16.kh,
+                                                                      color: ColorUtil
+                                                                          .kSecondary01),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ],
                                                       ).paddingOnly(
                                                           bottom: 8.kh),
                                                       Row(
@@ -193,9 +222,7 @@ class RideHistoryView extends GetView<RideHistoryController> {
                                                                   right: 4.kw),
                                                               Text(
                                                                 // '07 Nov 2023, 3:00pm',
-                                                                GpUtil.getDateFormat(
-                                                                    his?.time ??
-                                                                        ""),
+                                                                "${GpUtil.getDateFormat(his?.time ?? "")} ${GpUtil.convertUtcToLocal(his?.time ?? "")}",
                                                                 style: TextStyleUtil
                                                                     .k12Regular(
                                                                         color: ColorUtil
@@ -203,24 +230,31 @@ class RideHistoryView extends GetView<RideHistoryController> {
                                                               ),
                                                             ],
                                                           ),
-                                                          /*Row(
+                                                          Row(
                                                             children: [
                                                               Icon(
-                                                                Icons.time_to_leave,
+                                                                Icons
+                                                                    .time_to_leave,
                                                                 size: 18.kh,
-                                                                color: Get.find<HomeController>().isPinkModeOn.value
-                                                                    ? ColorUtil.kPrimary3PinkMode
-                                                                    : ColorUtil.kSecondary01,
-                                                              ).paddingOnly(right: 8.kw),
+                                                                color: Get.find<
+                                                                            HomeController>()
+                                                                        .isPinkModeOn
+                                                                        .value
+                                                                    ? ColorUtil
+                                                                        .kPrimary3PinkMode
+                                                                    : ColorUtil
+                                                                        .kSecondary01,
+                                                              ).paddingOnly(
+                                                                  right: 8.kw),
                                                               Text(
-                                                    '${controller.rideHistModel.value.data?[index]?.driverBookingDetails?[0]?.seatAvailable} seats',
-                                                    style: TextStyleUtil
-                                                        .k14Regular(
-                                                        color: ColorUtil
-                                                            .kBlack03),
-                                                  ),
+                                                                '${his?.seatAvailable} seats',
+                                                                style: TextStyleUtil
+                                                                    .k14Regular(
+                                                                        color: ColorUtil
+                                                                            .kBlack03),
+                                                              ),
                                                             ],
-                                                          ),*/
+                                                          ),
                                                         ],
                                                       ),
                                                     ],

@@ -251,7 +251,7 @@ class PostRideStepThreeView extends GetView<PostRideStepThreeController> {
                           ).paddingOnly(left: 8.kw),
                         ),
                       ],
-                    ).paddingOnly(top: 32.kh, bottom: 4.kh),
+                    ).paddingOnly(top: 12.kh, bottom: 4.kh),
                     Text(
                       'Include key trip details for informed bookings.',
                       style:

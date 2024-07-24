@@ -52,7 +52,7 @@ class RiderMyRidesConfirmDetailsView
                           borderRadius: BorderRadius.circular(8.kh),
                           child: CommonImageView(
                               url:
-                                  "${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.driverDetails?[0]?.profilePic?.url}")),
+                                  "${controller.riderConfirmRequestModel.driverRideDetails?.driverDetails?[0]?.profilePic?.url}")),
                     )
                         .paddingOnly(bottom: 8.kh)
                         .paddingOnly(right: 16.kw, bottom: 16.kh),
@@ -66,7 +66,7 @@ class RiderMyRidesConfirmDetailsView
                             children: [
                               Text(
                                 // 'Sam Alexander',
-                                "${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.driverDetails?[0]?.fullName}",
+                                "${controller.riderConfirmRequestModel.driverRideDetails?.driverDetails?[0]?.fullName}",
                                 style: TextStyleUtil.k16Bold(),
                               ),
                               Text.rich(
@@ -79,7 +79,7 @@ class RiderMyRidesConfirmDetailsView
                                     ),
                                     TextSpan(
                                       text:
-                                          '\$ ${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.origin?.originDestinationFair}',
+                                          '\$ ${controller.riderConfirmRequestModel.price}',
                                       style: TextStyleUtil.k16Semibold(
                                           fontSize: 16.kh,
                                           color: ColorUtil.kSecondary01),
@@ -105,7 +105,7 @@ class RiderMyRidesConfirmDetailsView
                                         BlendMode.srcIn),
                                   ).paddingOnly(right: 4.kw),
                                   Text(
-                                    "${GpUtil.getDateFormat(controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.time ?? "")}  ${GpUtil.convertUtcToLocal(controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.time ?? "")}",
+                                    "${GpUtil.getDateFormat(controller.riderConfirmRequestModel.driverRideDetails?.time ?? "")}  ${GpUtil.convertUtcToLocal(controller.riderConfirmRequestModel.driverRideDetails?.time ?? "")}",
                                     style: TextStyleUtil.k12Regular(
                                         color: ColorUtil.kBlack03),
                                   ),
@@ -123,7 +123,7 @@ class RiderMyRidesConfirmDetailsView
                                         : ColorUtil.kSecondary01,
                                   ).paddingOnly(right: 8.kw),
                                   Text(
-                                    "${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.seatAvailable} seats",
+                                    "${controller.riderConfirmRequestModel.driverRideDetails?.seatAvailable} seats",
                                     style: TextStyleUtil.k14Regular(
                                         color: ColorUtil.kBlack03),
                                   ),
@@ -140,11 +140,15 @@ class RiderMyRidesConfirmDetailsView
                 const GreenPoolDivider(),
                 OriginToDestination(
                         origin:
-                            "${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.origin?.name}",
-                        stop1: controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.stops?[0]?.name ?? "",
-                        stop2: controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.stops?[1]?.name ?? "",
+                            "${controller.riderConfirmRequestModel.driverRideDetails?.origin?.name}",
+                        stop1: controller.riderConfirmRequestModel
+                                .driverRideDetails?.stops?[0]?.name ??
+                            "",
+                        stop2: controller.riderConfirmRequestModel
+                                .driverRideDetails?.stops?[1]?.name ??
+                            "",
                         destination:
-                            "${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.destination?.name}",
+                            "${controller.riderConfirmRequestModel.driverRideDetails?.destination?.name}",
                         needPickupText: true)
                     .paddingSymmetric(vertical: 8.kh),
                 //bottom line
@@ -180,7 +184,7 @@ class RiderMyRidesConfirmDetailsView
                           size: 12.kh,
                         ).paddingOnly(right: 4.kw),
                         Text(
-                          "${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.driverDetails?[0]?.rating?.roundToDouble()}",
+                          "${controller.riderConfirmRequestModel.driverRideDetails?.driverDetails?[0]?.rating?.roundToDouble()}",
                           style: TextStyleUtil.k14Regular(),
                         ),
                       ]),
@@ -195,7 +199,7 @@ class RiderMyRidesConfirmDetailsView
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Text(
-                      "${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.driverDetails?[0]?.totalRides} people",
+                      "${controller.riderConfirmRequestModel.driverRideDetails?.driverDetails?[0]?.totalRides} people",
                       style:
                           TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                     ),
@@ -209,7 +213,7 @@ class RiderMyRidesConfirmDetailsView
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Text(
-                      'in ${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.createdAt.toString().split("-")[0]}',
+                      'in ${controller.riderConfirmRequestModel.driverRideDetails?.createdAt.toString().split("-")[0]}',
                       style:
                           TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                     ),
@@ -225,58 +229,47 @@ class RiderMyRidesConfirmDetailsView
               Strings.coPassengers,
               style: TextStyleUtil.k14Bold(),
             ).paddingOnly(bottom: 16.kh),
-            Obx(
-              () => (controller
-                              .riderConfirmRequestModel
-                              .value
-                              .data?[controller.index]
-                              ?.driverRideDetails
-                              ?.riders
-                              ?.length ??
-                          0) ==
-                      0
-                  ? Center(
-                      child: Text(
-                        Strings.noPassengersAvailable,
-                        style: TextStyleUtil.k14Semibold(),
-                      ),
-                    ).paddingOnly(bottom: 16.kh)
-                  : SizedBox(
-                      height: 96.kh,
-                      child: ListView.builder(
-                          itemCount: controller
-                                  .riderConfirmRequestModel
-                                  .value
-                                  .data?[controller.index]
-                                  ?.driverRideDetails
-                                  ?.riders
-                                  ?.length ??
-                              6,
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index1) {
-                            return Column(
-                              children: [
-                                Container(
-                                  decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: ClipOval(
-                                      child: SizedBox.fromSize(
-                                          size: Size.fromRadius(20.kh),
-                                          child: CommonImageView(
-                                              url:
-                                                  "${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.riders?[index1]?.profilePic?.url}"))),
-                                ).paddingOnly(bottom: 4.kh),
-                                Text(
-                                  "${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.riders?[index1]?.fullName}",
-                                  style: TextStyleUtil.k12Semibold(),
-                                  textAlign: TextAlign.center,
+            (controller.riderConfirmRequestModel?.driverRideDetails?.riders
+                            ?.length ??
+                        0) ==
+                    0
+                ? Center(
+                    child: Text(
+                      Strings.noPassengersAvailable,
+                      style: TextStyleUtil.k14Semibold(),
+                    ),
+                  ).paddingOnly(bottom: 16.kh)
+                : SizedBox(
+                    height: 96.kh,
+                    child: ListView.builder(
+                        itemCount: controller.riderConfirmRequestModel
+                                .driverRideDetails?.riders?.length ??
+                            6,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index1) {
+                          return Column(
+                            children: [
+                              Container(
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
                                 ),
-                              ],
-                            ).paddingOnly(right: 32.kw);
-                          }),
-                    ).paddingOnly(bottom: 16.kh),
-            ),
+                                child: ClipOval(
+                                    child: SizedBox.fromSize(
+                                        size: Size.fromRadius(20.kh),
+                                        child: CommonImageView(
+                                            url:
+                                                "${controller.riderConfirmRequestModel.driverRideDetails?.riders?[index1]?.profilePic?.url}"))),
+                              ).paddingOnly(bottom: 4.kh),
+                              Text(
+                                "${controller.riderConfirmRequestModel.driverRideDetails?.riders?[index1]?.fullName}",
+                                style: TextStyleUtil.k12Semibold(),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ).paddingOnly(right: 32.kw);
+                        }),
+                  ).paddingOnly(bottom: 16.kh),
+
             const GreenPoolDivider().paddingOnly(bottom: 16.kh),
 
             //Vehicle details
@@ -292,19 +285,19 @@ class RiderMyRidesConfirmDetailsView
                       height: 64.kh,
                       width: 64.kw,
                       url:
-                          "${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.driverDetails?[0]?.vehicleDetails?[0]?.vehiclePic?.url}"),
+                          "${controller.riderConfirmRequestModel.driverRideDetails?.driverDetails?[0]?.vehicleDetails?[0]?.vehiclePic?.url}"),
                 ).paddingOnly(right: 8.kh),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.driverDetails?[0]?.vehicleDetails?[0]?.model}",
+                      "${controller.riderConfirmRequestModel.driverRideDetails?.driverDetails?[0]?.vehicleDetails?[0]?.model}",
                       style: TextStyleUtil.k16Bold(color: ColorUtil.kBlack02),
                     ).paddingOnly(bottom: 4.kh),
                     Row(
                       children: [
                         Text(
-                          "${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.driverDetails?[0]?.vehicleDetails?[0]?.type}",
+                          "${controller.riderConfirmRequestModel.driverRideDetails?.driverDetails?[0]?.vehicleDetails?[0]?.type}",
                           style: TextStyleUtil.k14Semibold(
                               color: ColorUtil.kBlack03),
                         ),
@@ -314,7 +307,7 @@ class RiderMyRidesConfirmDetailsView
                           color: ColorUtil.kBlack03,
                         ).paddingSymmetric(vertical: 2.5.kh, horizontal: 8.kw),
                         Text(
-                          "${controller.riderConfirmRequestModel.value.data?[controller.index]?.driverRideDetails?.driverDetails?[0]?.vehicleDetails?[0]?.licencePlate}",
+                          "${controller.riderConfirmRequestModel.driverRideDetails?.driverDetails?[0]?.vehicleDetails?[0]?.licencePlate}",
                           style: TextStyleUtil.k14Semibold(
                               color: ColorUtil.kBlack03),
                         ),
@@ -333,14 +326,8 @@ class RiderMyRidesConfirmDetailsView
               style: TextStyleUtil.k14Bold(),
             ).paddingOnly(bottom: 16.kh),
 
-            controller
-                        .riderConfirmRequestModel
-                        .value
-                        .data?[controller.index]
-                        ?.driverRideDetails
-                        ?.preferences
-                        ?.other
-                        ?.AppreciatesConversation ==
+            controller.riderConfirmRequestModel.driverRideDetails?.preferences
+                        ?.other?.AppreciatesConversation ==
                     true
                 ? Amenities(
                         toggleSwitch: false,
@@ -348,8 +335,8 @@ class RiderMyRidesConfirmDetailsView
                         image: ImageConstant.svgAmenities1)
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
-            controller.riderConfirmRequestModel.value.data?[controller.index]
-                        ?.driverRideDetails?.preferences?.other?.EnjoysMusic ==
+            controller.riderConfirmRequestModel.driverRideDetails?.preferences
+                        ?.other?.EnjoysMusic ==
                     true
                 ? Amenities(
                         toggleSwitch: false,
@@ -357,8 +344,8 @@ class RiderMyRidesConfirmDetailsView
                         image: ImageConstant.svgAmenities2)
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
-            controller.riderConfirmRequestModel.value.data?[controller.index]
-                        ?.driverRideDetails?.preferences?.other?.SmokeFree ==
+            controller.riderConfirmRequestModel.driverRideDetails?.preferences
+                        ?.other?.SmokeFree ==
                     true
                 ? Amenities(
                         toggleSwitch: false,
@@ -366,8 +353,8 @@ class RiderMyRidesConfirmDetailsView
                         image: ImageConstant.svgAmenities3)
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
-            controller.riderConfirmRequestModel.value.data?[controller.index]
-                        ?.driverRideDetails?.preferences?.other?.PetFriendly ==
+            controller.riderConfirmRequestModel.driverRideDetails?.preferences
+                        ?.other?.PetFriendly ==
                     true
                 ? Amenities(
                         toggleSwitch: false,
@@ -375,8 +362,8 @@ class RiderMyRidesConfirmDetailsView
                         image: ImageConstant.svgAmenities4)
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
-            controller.riderConfirmRequestModel.value.data?[controller.index]
-                        ?.driverRideDetails?.preferences?.other?.WinterTires ==
+            controller.riderConfirmRequestModel.driverRideDetails?.preferences
+                        ?.other?.WinterTires ==
                     true
                 ? Amenities(
                         toggleSwitch: false,
@@ -384,14 +371,8 @@ class RiderMyRidesConfirmDetailsView
                         image: ImageConstant.svgAmenities5)
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
-            controller
-                        .riderConfirmRequestModel
-                        .value
-                        .data?[controller.index]
-                        ?.driverRideDetails
-                        ?.preferences
-                        ?.other
-                        ?.CoolingOrHeating ==
+            controller.riderConfirmRequestModel.driverRideDetails?.preferences
+                        ?.other?.CoolingOrHeating ==
                     true
                 ? Amenities(
                         toggleSwitch: false,
@@ -399,8 +380,8 @@ class RiderMyRidesConfirmDetailsView
                         image: ImageConstant.svgAmenities6)
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
-            controller.riderConfirmRequestModel.value.data?[controller.index]
-                        ?.driverRideDetails?.preferences?.other?.BabySeat ==
+            controller.riderConfirmRequestModel.driverRideDetails?.preferences
+                        ?.other?.BabySeat ==
                     true
                 ? Amenities(
                         toggleSwitch: false,
@@ -408,8 +389,8 @@ class RiderMyRidesConfirmDetailsView
                         image: ImageConstant.svgAmenities7)
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
-            (controller.riderConfirmRequestModel.value.data?[controller.index]
-                        ?.driverRideDetails?.preferences?.other?.HeatedSeats) ==
+            (controller.riderConfirmRequestModel.driverRideDetails?.preferences
+                        ?.other?.HeatedSeats) ==
                     true
                 ? Amenities(
                         toggleSwitch: false,
@@ -421,8 +402,8 @@ class RiderMyRidesConfirmDetailsView
             const GreenPoolDivider().paddingSymmetric(vertical: 16.kh),
             GreenPoolButton(
               onPressed: () => Get.find<RiderMyRideRequestController>()
-                  .openMessageFromConfirm(controller.riderConfirmRequestModel
-                      .value.data?[controller.index]?.driverRideDetails),
+                  .openMessageFromConfirm(
+                      controller.riderConfirmRequestModel.driverRideDetails),
               label: Strings.message,
               isBorder: true,
             ).paddingOnly(top: 8.kh),
@@ -434,9 +415,7 @@ class RiderMyRidesConfirmDetailsView
                     try {
                       await Get.find<RiderMyRideRequestController>()
                           .moveToPaymentFromConfirmSection(
-                              controller.index,
-                              controller.riderConfirmRequestModel.value
-                                  .data![controller.index]!);
+                              controller.riderConfirmRequestModel);
                     } catch (e) {
                       throw Exception(e);
                     }

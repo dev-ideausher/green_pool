@@ -17,6 +17,8 @@ import '../../../routes/app_pages.dart';
 class MyRidesOneTimeController extends GetxController {
   RxString ridePostId = ''.obs;
   final RxList<MyRidesModelData> myRidesModelData = <MyRidesModelData>[].obs;
+  final RxList<MyRidesModelData> driverRides = <MyRidesModelData>[].obs;
+  final RxList<MyRidesModelData> riderRides = <MyRidesModelData>[].obs;
   final Rx<BookingDetailModelData> rideBookingData =
       BookingDetailModelData().obs;
   var confirmRequestModel = DriverConfirmRequestModel().obs;
@@ -39,6 +41,10 @@ class MyRidesOneTimeController extends GetxController {
       myRidesModelData.value = mData.data!
           .where((element) => !(element.isCancelled ?? false))
           .toList();
+      driverRides.value =
+          myRidesModelData.where((item) => (item.driverId != null)).toList();
+      riderRides.value =
+          myRidesModelData.where((item) => (item.riderId != null)).toList();
       await allRecurringRidesAPI();
     } catch (e) {
       debugPrint(e.toString());
@@ -207,20 +213,6 @@ class MyRidesOneTimeController extends GetxController {
       throw Exception(e);
     }
   }
-
-  // enableRecurringAPI(input) async {
-  //   final driverRideId = input;
-  //   try {
-  //     final response =
-  //         await APIManager.enableDisableRecurring(driverRIdeId: driverRideId);
-  //     var data = jsonDecode(response.toString());
-  //     await allRecurringRidesAPI();
-
-  //     print(data.toString());
-  //   } catch (e) {
-  //     throw Exception(e);
-  //   }
-  // }
 
   Future<void> moveToRequests(MyRidesModelData value) async {
     await Get.toNamed(Routes.MY_RIDES_REQUEST,

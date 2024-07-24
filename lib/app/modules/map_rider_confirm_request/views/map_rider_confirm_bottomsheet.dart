@@ -220,8 +220,7 @@ class MapRiderConfirmBottomsheet extends StatelessWidget {
                 children: [
                   GreenPoolButton(
                     onPressed: () async {
-                      await controller.moveToPaymentFromConfirmSection(
-                          0, element);
+                      await controller.moveToPaymentFromConfirmSection(element);
                     },
                     label: Strings.accept,
                     fontSize: 14.kh,

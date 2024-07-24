@@ -15,6 +15,7 @@ import '../../../res/strings.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
+import '../../../services/snackbar.dart';
 import '../../../services/text_style_util.dart';
 import '../../home/controllers/home_controller.dart';
 
@@ -308,6 +309,9 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                                 .data![index]
                                                 .requestSent ??
                                             false) {
+                                          showMySnackbar(
+                                              msg:
+                                                  "The request has already been sent.");
                                         } else {
                                           controller
                                               .moveToPaymentFromSendRequest(

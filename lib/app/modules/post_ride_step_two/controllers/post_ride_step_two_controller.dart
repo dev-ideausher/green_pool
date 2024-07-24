@@ -14,6 +14,7 @@ class PostRideStepTwoController extends GetxController {
   RxBool isPinkMode = Get.find<HomeController>().isPinkModeOn;
   RxInt tabIndex = 0.obs;
   TextEditingController selectedDate = TextEditingController();
+  TextEditingController dateForRecurringRide = TextEditingController();
   TextEditingController formattedOneTimeDate = TextEditingController();
   TextEditingController selectedTime = TextEditingController();
   TextEditingController selectedReturnDate = TextEditingController();
@@ -87,6 +88,7 @@ class PostRideStepTwoController extends GetxController {
     selectedTime.text = formattedTime;
     final pickedDate = DateTime.now();
     selectedDate.text = pickedDate.toIso8601String();
+    dateForRecurringRide.text = selectedDate.text;
     formattedOneTimeDate.text =
         "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
     postRideModel.value = Get.arguments;
@@ -155,11 +157,16 @@ class PostRideStepTwoController extends GetxController {
 
     if (pickedDate != null) {
       String formattedDate = pickedDate.toIso8601String();
-      selectedReturnDate.text = formattedDate;
-      selectedReturnTime.clear();
-      formattedReturnDate.text =
-          "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
-      setActiveStateCarpoolSchedule();
+      if (!GpUtil.isToday(DateTime.parse(selectedDate.text)) &&
+          GpUtil.isToday(DateTime.parse(formattedDate))) {
+        showMySnackbar(msg: "Please select a valid date");
+      } else {
+        selectedReturnDate.text = formattedDate;
+        selectedReturnTime.clear();
+        formattedReturnDate.text =
+            "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
+        setActiveStateCarpoolSchedule();
+      }
     }
   }
 
@@ -267,7 +274,7 @@ class PostRideStepTwoController extends GetxController {
     final returnTime = combinedReturnDateTimeUTC;
 
     final combinedRecurringTime =
-        "${selectedDate.text.toString().split("T").first}T${selectedRecurringTime.text}";
+        "${dateForRecurringRide.text.toString().split("T").first}T${selectedRecurringTime.text}";
     final recurringTime = GpUtil.convertCombinedToGmt(combinedRecurringTime);
 
     Get.toNamed(Routes.POST_RIDE_STEP_THREE,
@@ -298,7 +305,9 @@ class PostRideStepTwoController extends GetxController {
                       postRideModel.value.ridesDetails?.stops?[1]?.longitude),
             ],
             tripType: tabIndex.value == 0 ? "oneTime" : "recurring",
-            date: date,
+            date: tabIndex.value == 0
+                ? date
+                : recurringTime.toString().split("T").first,
             time: tabIndex.value == 1 ? recurringTime : time,
             recurringTrip: PostRideModelRidesDetailsRecurringTrip(
                 recurringTripDays: tabIndex.value == 1 ? daysOfWeek : []),

@@ -127,7 +127,7 @@ class RiderTile extends StatelessWidget {
                                         ),
                                         TextSpan(
                                           text:
-                                              '\$ ${myRidesModelData?.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.origin?.originDestinationFair}',
+                                              '\$ ${myRidesModelData?.confirmDriverDetails?[0]?.price}',
                                           style: TextStyleUtil.k16Semibold(
                                               fontSize: 16.kh,
                                               color: ColorUtil.kSecondary01),

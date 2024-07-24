@@ -193,8 +193,12 @@ class RiderStartRideMapController extends GetxController {
             "",
             "Destination",
             0.0);
-        addMarkers(LatLng(currentLat.value, currentLong.value),
-            ImageConstant.pngCarPointer, "", heading);
+        addMarkers(
+          LatLng(currentLat.value, currentLong.value),
+          ImageConstant.pngCarPointer,
+          "",
+          heading,
+        );
       }
     }, onError: (Object error) {
       debugPrint("Error: $error");
@@ -285,7 +289,7 @@ class RiderStartRideMapController extends GetxController {
         snippet: '',
       ),
       rotation: rotation ?? 0.0,
-      anchor: const Offset(0.5, 0),
+      // anchor: const Offset(0.5, 0),
       icon: image == ""
           ? BitmapDescriptor.defaultMarker
           : await BitmapDescriptor.fromAssetImage(

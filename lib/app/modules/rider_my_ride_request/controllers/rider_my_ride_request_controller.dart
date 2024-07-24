@@ -192,14 +192,14 @@ class RiderMyRideRequestController extends GetxController {
   }
 
   moveToPaymentFromConfirmSection(
-      int index, RiderConfirmRequestModelData riderConfirmRequestModelData) {
+      RiderConfirmRequestModelData riderConfirmRequestModelData) {
     Get.toNamed(Routes.PAYMENT, arguments: {
-      "ridePostId": riderConfirmRequestModel.value.data?[index]?.Id,
-      "price": ((riderConfirmRequestModel.value.data?[index]?.price)! *
+      "ridePostId": riderConfirmRequestModelData.Id,
+      "price": ((riderConfirmRequestModelData.price)! *
               (riderConfirmRequestModelData.riderRideDetails!.seatAvailable!))
           .toString(),
       'riderConfirmRequestModelData': riderConfirmRequestModelData,
-      'pricePerSeat': riderConfirmRequestModel.value.data?[index]?.price
+      'pricePerSeat': riderConfirmRequestModelData.price
     });
   }
 
