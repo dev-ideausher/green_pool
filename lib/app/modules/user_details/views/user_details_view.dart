@@ -25,8 +25,8 @@ class UserDetailsView extends GetView<UserDetailsController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const GreenPoolAppBar(
-        title: Text('User Details'),
+      appBar: GreenPoolAppBar(
+        title: Text(Strings.userDetails),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -86,15 +86,15 @@ class UserDetailsView extends GetView<UserDetailsController> {
                     ).paddingOnly(bottom: 12.kh, top: 32.kh),
                   ),
                   Text(
-                    'Take or upload profile photo',
+                    Strings.takeOrUploadProfilePic,
                     style: TextStyleUtil.k16Regular(color: ColorUtil.kNeutral4),
                   ),
                 ],
               ),
             ).paddingOnly(bottom: 40.kh),
-            const RichTextHeading(text: 'Full Name').paddingOnly(bottom: 8.kh),
+            RichTextHeading(text: Strings.fullName).paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
-              hintText: 'Full name',
+              hintText: Strings.fullName,
               controller: controller.nameTextController,
               suffix: SvgPicture.asset(
                 ImageConstant.svgProfileEditPen,
@@ -106,31 +106,31 @@ class UserDetailsView extends GetView<UserDetailsController> {
                 ),
               ),
             ).paddingOnly(bottom: 16.kh),
-            const RichTextHeading(text: 'Email Address')
+            RichTextHeading(text: Strings.emailAddress)
                 .paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
-              hintText: 'Email ID',
+              hintText: Strings.emailID,
               keyboardType: TextInputType.emailAddress,
               controller: controller.emailTextController,
             ).paddingOnly(bottom: 16.kh),
-            const RichTextHeading(text: 'Phone number')
+            RichTextHeading(text: Strings.phoneNumber)
                 .paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
-              hintText: 'Phone number',
+              hintText: Strings.phoneNumber,
               controller: controller.phoneTextController,
               readOnly: true,
             ).paddingOnly(bottom: 16.kh),
-            const RichTextHeading(text: 'Gender').paddingOnly(bottom: 8.kh),
+            RichTextHeading(text: Strings.gender).paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
-              hintText: "Gender",
+              hintText: Strings.gender,
               controller: controller.genderTextController,
               readOnly: true,
             ).paddingOnly(bottom: 16.kh),
-            const RichTextHeading(text: 'City Province')
+            RichTextHeading(text: Strings.cityProvince)
                 .paddingOnly(bottom: 8.kh),
             Obx(
               () => GreenPoolTextField(
-                hintText: "Select your City",
+                hintText: Strings.selectCity,
                 controller: controller.city,
                 suffix: controller.isCityListExpanded.value
                     ? const Icon(Icons.arrow_drop_up)
@@ -177,22 +177,22 @@ class UserDetailsView extends GetView<UserDetailsController> {
               TextSpan(
                 children: [
                   TextSpan(
-                    text: 'Date of Birth ',
+                    text: Strings.dateOfBirth,
                     style: TextStyleUtil.k14Semibold(),
                   ),
                   TextSpan(
-                    text: '(should be above 18)',
+                    text: Strings.above18,
                     style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack04),
                   ),
                 ],
               ),
             ).paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
-              hintText: 'D.O.B',
+              hintText: Strings.dob,
               controller: controller.dobTextController,
               readOnly: true,
             ).paddingOnly(bottom: 16.kh),
-            const RichTextHeading(text: 'ID Verification')
+            RichTextHeading(text: Strings.idVerification)
                 .paddingOnly(bottom: 8.kh),
             GestureDetector(
               onTap: () {
@@ -225,7 +225,7 @@ class UserDetailsView extends GetView<UserDetailsController> {
               onPressed: () {
                 controller.updateDetailsAPI();
               },
-              label: 'Save',
+              label: Strings.save,
             ).paddingOnly(top: 40.kh, bottom: 16.kh),
             GreenPoolButton(
               onPressed: () => controller.deleteAccountAPI(),

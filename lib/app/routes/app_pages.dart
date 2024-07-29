@@ -107,8 +107,6 @@ import '../modules/rider_my_rides_confirm_details/bindings/rider_my_rides_confir
 import '../modules/rider_my_rides_confirm_details/views/rider_my_rides_confirm_details_view.dart';
 import '../modules/rider_my_rides_send_details/bindings/rider_my_rides_send_details_binding.dart';
 import '../modules/rider_my_rides_send_details/views/rider_my_rides_send_details_view.dart';
-import '../modules/rider_post_ride/bindings/rider_post_ride_binding.dart';
-import '../modules/rider_post_ride/views/rider_post_ride_view.dart';
 import '../modules/rider_profile_setup/bindings/rider_profile_setup_binding.dart';
 import '../modules/rider_profile_setup/views/rider_profile_setup_view.dart';
 import '../modules/rider_start_ride_map/bindings/rider_start_ride_map_binding.dart';
@@ -315,11 +313,6 @@ class AppPages {
       name: _Paths.RIDER_PROFILE_SETUP,
       page: () => const RiderProfileSetupView(),
       binding: RiderProfileSetupBinding(),
-    ),
-    GetPage(
-      name: _Paths.RIDER_POST_RIDE,
-      page: () => const RiderPostRideView(),
-      binding: RiderPostRideBinding(),
     ),
     GetPage(
       name: _Paths.RIDER_MY_RIDE_REQUEST,

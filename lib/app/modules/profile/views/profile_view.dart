@@ -116,35 +116,6 @@ class ProfileView extends GetView<ProfileController> {
                 image: ImageConstant.svgProfileDiscount,
                 text: "Student Discount"),
             ProfileContainer(
-                // onTap: () => Get.bottomSheet(
-                //       Container(
-                //           padding: EdgeInsets.all(24.kh),
-                //           height: 317.kh,
-                //           width: 100.w,
-                //           decoration: BoxDecoration(
-                //               color: ColorUtil.kWhiteColor,
-                //               borderRadius: BorderRadius.only(
-                //                   topLeft:
-                //                       Radius.circular(40.kh),
-                //                   topRight: Radius.circular(
-                //                       40.kh))),
-                //           child: Column(
-                //             children: [
-                //               Text(
-                //                 'Refer a friend',
-                //                 style: TextStyleUtil
-                //                     .k18Semibold(),
-                //               ).paddingOnly(bottom: 8.kh),
-                //               Text(
-                //                 'Share your referral URL through:',
-                //                 style:
-                //                     TextStyleUtil.k14Semibold(
-                //                         color: ColorUtil
-                //                             .kBlack04),
-                //               ),
-                //             ],
-                //           )),
-                //     ),
                 onTap: () async {
                   await Share.share(
                       "Check this cool app! \nhttps://play.google.com/store/apps/details?id=com.greenpool.app");
@@ -162,7 +133,11 @@ class ProfileView extends GetView<ProfileController> {
             ProfileContainer(
               image: ImageConstant.svgProfileAbout,
               text: "About",
-              onTap: () => Get.toNamed(Routes.ABOUT),
+              // onTap: () => Get.toNamed(Routes.ABOUT),
+              onTap: () async {
+                await launchUrl(Uri.parse(
+                    "https://green-pool-front-end.vercel.app/aboutus"));
+              },
             ),
             ProfileContainer(
                 onTap: () => Get.toNamed(Routes.FILE_DISPUTE),

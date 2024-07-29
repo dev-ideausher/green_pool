@@ -172,7 +172,7 @@ class RiderTile extends StatelessWidget {
                                             : ColorUtil.kSecondary01,
                                       ).paddingOnly(right: 8.kw),
                                       Text(
-                                        '${myRidesModelData?.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.seatAvailable} seats',
+                                        '${myRidesModelData?.seatAvailable} seats',
                                         style: TextStyleUtil.k14Regular(
                                             color: ColorUtil.kBlack03),
                                       ),

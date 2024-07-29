@@ -84,6 +84,12 @@ class StartRideController extends GetxController {
       final List<double?> originCoordinates =
           myRidesModel.value.driverBookingDetails?.origin?.coordinates ??
               [0.0, 0.0];
+      final List<double?> stop1Coordinates =
+          myRidesModel.value.driverBookingDetails?.stops?[0]?.coordinates ??
+              [0.0, 0.0];
+      final List<double?> stop2Coordinates =
+          myRidesModel.value.driverBookingDetails?.stops?[1]?.coordinates ??
+              [0.0, 0.0];
       final List<double?> destinationCoordinates =
           myRidesModel.value.driverBookingDetails?.destination?.coordinates ??
               [0.0, 0.0];
@@ -92,6 +98,14 @@ class StartRideController extends GetxController {
         request: PolylineRequest(
             origin:
                 PointLatLng(originCoordinates.last!, originCoordinates.first!),
+            wayPoints: [
+              PolylineWayPoint(
+                  location:
+                      "${stop1Coordinates?.last.toString()},${stop1Coordinates?.first.toString()}"),
+              PolylineWayPoint(
+                  location:
+                      "${stop2Coordinates?.last.toString()},${stop2Coordinates?.first.toString()}")
+            ],
             destination: PointLatLng(
                 destinationCoordinates.last!, destinationCoordinates.first!),
             mode: TravelMode.driving),
@@ -105,8 +119,12 @@ class StartRideController extends GetxController {
       markers.clear();
       addMarkers(LatLng(originCoordinates.last!, originCoordinates.first!), "",
           "Origin", 0.0);
+      addMarkers(LatLng(stop1Coordinates.last!, stop1Coordinates.first!), "",
+          "Stop", 0.0);
+      addMarkers(LatLng(stop2Coordinates.last!, stop2Coordinates.first!), "",
+          "Stop", 0.0);
       addMarkers(LatLng(originCoordinates.last!, originCoordinates.first!),
-          ImageConstant.pngCarPointer, "Origin", 0.0);
+          ImageConstant.pngCarPointer, "", 0.0);
       addMarkers(
           LatLng(destinationCoordinates.last!, destinationCoordinates.first!),
           "",
@@ -120,7 +138,7 @@ class StartRideController extends GetxController {
   }
 
   addMarkers(
-      LatLng carLocation, String image, String? title, double? rotation) async {    
+      LatLng carLocation, String image, String? title, double? rotation) async {
     markers.add(Marker(
       markerId: MarkerId(carLocation.toString()),
       position: carLocation, //position of marker
@@ -197,6 +215,30 @@ class StartRideController extends GetxController {
 
         addMarkers(
             LatLng(
+                myRidesModel.value.driverBookingDetails?.stops?[0]?.coordinates
+                        ?.last ??
+                    0.0,
+                myRidesModel.value.driverBookingDetails?.stops?[0]?.coordinates
+                        ?.first ??
+                    0.0),
+            "",
+            "Stop",
+            0.0);
+
+        addMarkers(
+            LatLng(
+                myRidesModel.value.driverBookingDetails?.stops?[1]?.coordinates
+                        ?.last ??
+                    0.0,
+                myRidesModel.value.driverBookingDetails?.stops?[1]?.coordinates
+                        ?.first ??
+                    0.0),
+            "",
+            "Origin",
+            0.0);
+
+        addMarkers(
+            LatLng(
                 myRidesModel.value.driverBookingDetails?.destination
                         ?.coordinates?.last ??
                     0.0,
@@ -209,6 +251,39 @@ class StartRideController extends GetxController {
 
         addMarkers(LatLng(currentLat, currentLong), ImageConstant.pngCarPointer,
             "Current Location", heading);
+
+        if (myRidesModel.value.driverBookingDetails?.stops?[0]?.coordinates !=
+                null ||
+            myRidesModel.value.driverBookingDetails?.stops?[0]?.coordinates !=
+                "") {
+          addMarkers(
+              LatLng(
+                  myRidesModel.value.driverBookingDetails?.stops?[0]
+                          ?.coordinates?.lastOrNull ??
+                      0.0,
+                  myRidesModel.value.driverBookingDetails?.stops?[0]
+                          ?.coordinates?.firstOrNull ??
+                      0.0),
+              "",
+              "Stop",
+              0.0);
+          if (myRidesModel.value.driverBookingDetails?.stops?[1]?.coordinates !=
+                  null ||
+              myRidesModel.value.driverBookingDetails?.stops?[1]?.coordinates !=
+                  "") {
+            addMarkers(
+                LatLng(
+                    myRidesModel.value.driverBookingDetails?.stops?[1]
+                            ?.coordinates?.lastOrNull ??
+                        0.0,
+                    myRidesModel.value.driverBookingDetails?.stops?[1]
+                            ?.coordinates?.firstOrNull ??
+                        0.0),
+                "",
+                "Stop",
+                0.0);
+          }
+        }
       }
     });
   }
@@ -216,10 +291,7 @@ class StartRideController extends GetxController {
   startRideAPI() async {
     try {
       final response = await APIManager.startRide(
-          body: {
-              "driverRideId": myRidesModel.value.driverRideId
-                }
-            );
+          body: {"driverRideId": myRidesModel.value.driverRideId});
       var data = jsonDecode(response.toString());
       if (data['status']) {
         myRidesModel.value.driverBookingDetails?.isStarted = true;

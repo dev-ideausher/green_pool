@@ -7,6 +7,7 @@ import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../components/common_image_view.dart';
 import '../../../components/gp_progress.dart';
+import '../../../res/strings.dart';
 import '../../../services/colors.dart';
 import '../../../services/text_style_util.dart';
 import '../controllers/transaction_history_controller.dart';
@@ -17,8 +18,8 @@ class TransactionHistoryView extends GetView<TransactionHistoryController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const GreenPoolAppBar(
-        title: Text("Transaction History"),
+      appBar: GreenPoolAppBar(
+        title: Text(Strings.transactionHistory),
       ),
       body: Obx(
         () => controller.isLoad.value
@@ -27,7 +28,7 @@ class TransactionHistoryView extends GetView<TransactionHistoryController> {
                 ? Center(
                     child: Center(
                     child: Text(
-                      "Your future transactions will appear here",
+                      Strings.futureTransactionsWillBeVisibleHere,
                       style: TextStyleUtil.k24Heading600(),
                       textAlign: TextAlign.center,
                     ),
@@ -50,9 +51,28 @@ class TransactionHistoryView extends GetView<TransactionHistoryController> {
                                       ?.profilePic
                                       ?.url ??
                                   "",
-                              onTap: () {},
+                              onLongPress: () {
+                                Get.dialog(
+                                  useSafeArea: true,
+                                  Center(
+                                    child: Container(
+                                        padding: EdgeInsets.all(16.kh),
+                                        width: 80.w,
+                                        decoration: BoxDecoration(
+                                          color: ColorUtil.kWhiteColor,
+                                          borderRadius:
+                                              BorderRadius.circular(8.kh),
+                                        ),
+                                        child: Text(
+                                          "Id: #${transaction.Id}",
+                                          style: TextStyleUtil.k14Regular(
+                                              color: ColorUtil.kBlack03),
+                                        )),
+                                  ),
+                                );
+                              },
                               trailing: Text(
-                                "\$ ${transaction.amount}",
+                                "${Strings.dollar} ${transaction.amount}",
                                 style: TextStyleUtil.k16Semibold(
                                     fontSize: 16.kh,
                                     color: (transaction?.type ?? "") == "Credit"
@@ -73,14 +93,14 @@ class TransactionHistoryView extends GetView<TransactionHistoryController> {
 
 class TransactionTile extends StatelessWidget {
   final String title, path, subtitle;
-  final Function() onTap;
+  final Function() onLongPress;
   final Widget? trailing;
 
   const TransactionTile({
     super.key,
     required this.title,
     required this.path,
-    required this.onTap,
+    required this.onLongPress,
     this.trailing,
     required this.subtitle,
   });
@@ -91,7 +111,7 @@ class TransactionTile extends StatelessWidget {
       height: 78.kh,
       child: ListTile(
         tileColor: ColorUtil.kWhiteColor,
-        onTap: onTap,
+        onLongPress: onLongPress,
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.kh)),
         title: Text(

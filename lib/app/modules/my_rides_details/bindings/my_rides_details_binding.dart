@@ -6,6 +6,7 @@ class MyRidesDetailsBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<MyRidesDetailsController>(
+      fenix: true,
       () => MyRidesDetailsController(),
     );
   }

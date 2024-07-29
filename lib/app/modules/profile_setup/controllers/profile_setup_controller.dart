@@ -38,7 +38,13 @@ class ProfileSetupController extends GetxController
   TextEditingController email =
       TextEditingController(text: Get.find<GetStorageService>().emailId ?? "");
   TextEditingController phoneNumber = TextEditingController(
-      text: Get.find<AuthService>().auth.currentUser?.phoneNumber);
+      text: Get.find<AuthService>()
+          .auth
+          .currentUser
+          ?.phoneNumber
+          .toString()
+          .split("+1")
+          .last);
   TextEditingController gender = TextEditingController();
   TextEditingController city = TextEditingController();
   TextEditingController dateOfBirth = TextEditingController();

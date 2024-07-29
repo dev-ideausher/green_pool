@@ -7,7 +7,7 @@ class BookingDetailModelDataDriverDetailsVehicleDetailsVehiclePic {
   "key": "vehiclePic/b9fae2cc-33ed-4b5c-b602-c075fa476e3f-1000000038.jpg",
   "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/vehiclePic/b9fae2cc-33ed-4b5c-b602-c075fa476e3f-1000000038.jpg",
   "_id": "6603d738ba3fdc24d7cbce50"
-}
+} 
 */
 
   String? key;
@@ -19,7 +19,8 @@ class BookingDetailModelDataDriverDetailsVehicleDetailsVehiclePic {
     this.url,
     this.Id,
   });
-  BookingDetailModelDataDriverDetailsVehicleDetailsVehiclePic.fromJson(Map<String, dynamic> json) {
+  BookingDetailModelDataDriverDetailsVehicleDetailsVehiclePic.fromJson(
+      Map<String, dynamic> json) {
     key = json['key']?.toString();
     url = json['url']?.toString();
     Id = json['_id']?.toString();
@@ -50,7 +51,7 @@ class BookingDetailModelDataDriverDetailsVehicleDetails {
   "licencePlate": "LA2024",
   "createdAt": "2024-02-06T14:02:23.061Z",
   "updatedAt": "2024-04-15T04:53:34.316Z"
-}
+} 
 */
 
   String? Id;
@@ -76,10 +77,14 @@ class BookingDetailModelDataDriverDetailsVehicleDetails {
     this.createdAt,
     this.updatedAt,
   });
-  BookingDetailModelDataDriverDetailsVehicleDetails.fromJson(Map<String, dynamic> json) {
+  BookingDetailModelDataDriverDetailsVehicleDetails.fromJson(
+      Map<String, dynamic> json) {
     Id = json['_id']?.toString();
     driverId = json['driverId']?.toString();
-    vehiclePic = (json['vehiclePic'] != null) ? BookingDetailModelDataDriverDetailsVehicleDetailsVehiclePic.fromJson(json['vehiclePic']) : null;
+    vehiclePic = (json['vehiclePic'] != null)
+        ? BookingDetailModelDataDriverDetailsVehicleDetailsVehiclePic.fromJson(
+            json['vehiclePic'])
+        : null;
     model = json['model']?.toString();
     type = json['type']?.toString();
     color = json['color']?.toString();
@@ -114,7 +119,7 @@ class BookingDetailModelDataDriverDetailsNotificationPreferences {
   "payments": true,
   "transactions": true,
   "offers": true
-}
+} 
 */
 
   bool? trip;
@@ -130,7 +135,8 @@ class BookingDetailModelDataDriverDetailsNotificationPreferences {
     this.transactions,
     this.offers,
   });
-  BookingDetailModelDataDriverDetailsNotificationPreferences.fromJson(Map<String, dynamic> json) {
+  BookingDetailModelDataDriverDetailsNotificationPreferences.fromJson(
+      Map<String, dynamic> json) {
     trip = json['trip'];
     alerts = json['alerts'];
     payments = json['payments'];
@@ -154,7 +160,7 @@ class BookingDetailModelDataDriverDetailsProfilePic {
   "key": "usersProfile/343e91cd-5339-4cb2-ab54-bb2c5c85ef7b-compressed_image_picker_E10F697C-B897-4693-A1EE-3FAC86253315-80244-000007221A4BE6ED.jpg",
   "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/343e91cd-5339-4cb2-ab54-bb2c5c85ef7b-compressed_image_picker_E10F697C-B897-4693-A1EE-3FAC86253315-80244-000007221A4BE6ED.jpg",
   "_id": "664af3b5cd651d9acab11363"
-}
+} 
 */
 
   String? key;
@@ -166,7 +172,8 @@ class BookingDetailModelDataDriverDetailsProfilePic {
     this.url,
     this.Id,
   });
-  BookingDetailModelDataDriverDetailsProfilePic.fromJson(Map<String, dynamic> json) {
+  BookingDetailModelDataDriverDetailsProfilePic.fromJson(
+      Map<String, dynamic> json) {
     key = json['key']?.toString();
     url = json['url']?.toString();
     Id = json['_id']?.toString();
@@ -186,7 +193,7 @@ class BookingDetailModelDataDriverDetailsIdPic {
   "key": "idPic/14a1f67c-67d3-417a-88ab-de80318076ce-compressed_image_picker_27017447-33A6-4FD5-9E68-9E333A4519E7-80244-000007220A59499C.jpg",
   "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/idPic/14a1f67c-67d3-417a-88ab-de80318076ce-compressed_image_picker_27017447-33A6-4FD5-9E68-9E333A4519E7-80244-000007220A59499C.jpg",
   "_id": "664af3b5cd651d9acab11364"
-}
+} 
 */
 
   String? key;
@@ -269,7 +276,7 @@ class BookingDetailModelDataDriverDetails {
     "createdAt": "2024-02-06T14:02:23.061Z",
     "updatedAt": "2024-04-15T04:53:34.316Z"
   }
-}
+} 
 */
 
   String? Id;
@@ -291,7 +298,8 @@ class BookingDetailModelDataDriverDetails {
   String? status;
   String? city;
   bool? pinkMode;
-  BookingDetailModelDataDriverDetailsNotificationPreferences? notificationPreferences;
+  BookingDetailModelDataDriverDetailsNotificationPreferences?
+      notificationPreferences;
   double? rating;
   int? totalRides;
   bool? isRegister;
@@ -340,17 +348,28 @@ class BookingDetailModelDataDriverDetails {
     firebaseSignInProvider = json['firebaseSignInProvider']?.toString();
     createdAt = json['createdAt']?.toString();
     updatedAt = json['updatedAt']?.toString();
-    idPic = (json['idPic'] != null) ? BookingDetailModelDataDriverDetailsIdPic.fromJson(json['idPic']) : null;
-    profilePic = (json['profilePic'] != null) ? BookingDetailModelDataDriverDetailsProfilePic.fromJson(json['profilePic']) : null;
+    idPic = (json['idPic'] != null)
+        ? BookingDetailModelDataDriverDetailsIdPic.fromJson(json['idPic'])
+        : null;
+    profilePic = (json['profilePic'] != null)
+        ? BookingDetailModelDataDriverDetailsProfilePic.fromJson(
+            json['profilePic'])
+        : null;
     status = json['status']?.toString();
     city = json['city']?.toString();
     pinkMode = json['pinkMode'];
-    notificationPreferences = (json['notificationPreferences'] != null) ? BookingDetailModelDataDriverDetailsNotificationPreferences.fromJson(json['notificationPreferences']) : null;
+    notificationPreferences = (json['notificationPreferences'] != null)
+        ? BookingDetailModelDataDriverDetailsNotificationPreferences.fromJson(
+            json['notificationPreferences'])
+        : null;
     rating = json['rating']?.toDouble();
     totalRides = json['totalRides']?.toInt();
     isRegister = json['isRegister'];
     role = json['role']?.toString();
-    vehicleDetails = (json['vehicleDetails'] != null) ? BookingDetailModelDataDriverDetailsVehicleDetails.fromJson(json['vehicleDetails']) : null;
+    vehicleDetails = (json['vehicleDetails'] != null)
+        ? BookingDetailModelDataDriverDetailsVehicleDetails.fromJson(
+            json['vehicleDetails'])
+        : null;
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -399,7 +418,7 @@ class BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsRiderDetailsN
   "payments": true,
   "transactions": true,
   "offers": true
-}
+} 
 */
 
   bool? trip;
@@ -415,7 +434,8 @@ class BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsRiderDetailsN
     this.transactions,
     this.offers,
   });
-  BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsRiderDetailsNotificationPreferences.fromJson(Map<String, dynamic> json) {
+  BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsRiderDetailsNotificationPreferences.fromJson(
+      Map<String, dynamic> json) {
     trip = json['trip'];
     alerts = json['alerts'];
     payments = json['payments'];
@@ -439,7 +459,7 @@ class BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsRiderDetailsI
   "key": "idPic/03fb4f4e-c5d2-4532-b301-e2a2753b9bdd-compressed_image_picker_6D053889-80A9-42C8-91F6-2D6F41BCDAF6-12556-0000078B873B8FDE.jpg",
   "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/idPic/03fb4f4e-c5d2-4532-b301-e2a2753b9bdd-compressed_image_picker_6D053889-80A9-42C8-91F6-2D6F41BCDAF6-12556-0000078B873B8FDE.jpg",
   "_id": "664b3d653732bc9ccad99165"
-}
+} 
 */
 
   String? key;
@@ -451,7 +471,8 @@ class BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsRiderDetailsI
     this.url,
     this.Id,
   });
-  BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsRiderDetailsIdPic.fromJson(Map<String, dynamic> json) {
+  BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsRiderDetailsIdPic.fromJson(
+      Map<String, dynamic> json) {
     key = json['key']?.toString();
     url = json['url']?.toString();
     Id = json['_id']?.toString();
@@ -471,7 +492,7 @@ class BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsRiderDetailsP
   "key": "usersProfile/448341dc-ad54-46c9-8d55-116d059f7358-compressed_image_picker_76EB2E72-E7D5-4F31-A3F0-A0ECC32E8669-12556-0000078B4CDF0493.jpg",
   "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/448341dc-ad54-46c9-8d55-116d059f7358-compressed_image_picker_76EB2E72-E7D5-4F31-A3F0-A0ECC32E8669-12556-0000078B4CDF0493.jpg",
   "_id": "664b3d653732bc9ccad99164"
-}
+} 
 */
 
   String? key;
@@ -483,7 +504,8 @@ class BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsRiderDetailsP
     this.url,
     this.Id,
   });
-  BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsRiderDetailsProfilePic.fromJson(Map<String, dynamic> json) {
+  BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsRiderDetailsProfilePic.fromJson(
+      Map<String, dynamic> json) {
     key = json['key']?.toString();
     url = json['url']?.toString();
     Id = json['_id']?.toString();
@@ -539,9 +561,8 @@ class BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsRiderDetails 
   "firebaseUid": "QyMqFd92cKb8XmwBZCT8p52himf1",
   "firebaseSignInProvider": "phone",
   "createdAt": "2024-05-20T08:25:51.820Z",
-  "updatedAt": "2024-05-21T13:30:14.381Z",
-  "__v": 0
-}
+  "updatedAt": "2024-05-21T13:30:14.381Z"
+} 
 */
 
   String? Id;
@@ -552,8 +573,10 @@ class BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsRiderDetails 
   String? phone;
   String? email;
   String? city;
-  BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsRiderDetailsProfilePic? profilePic;
-  BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsRiderDetailsIdPic? idPic;
+  BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsRiderDetailsProfilePic?
+      profilePic;
+  BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsRiderDetailsIdPic?
+      idPic;
   String? dob;
   String? gender;
   bool? isDriver;
@@ -565,12 +588,12 @@ class BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsRiderDetails 
   int? rating;
   int? totalRides;
   bool? isRecurringTripEnabled;
-  BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsRiderDetailsNotificationPreferences? notificationPreferences;
+  BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsRiderDetailsNotificationPreferences?
+      notificationPreferences;
   String? firebaseUid;
   String? firebaseSignInProvider;
   String? createdAt;
   String? updatedAt;
-
 
   BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsRiderDetails({
     this.Id,
@@ -600,7 +623,8 @@ class BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsRiderDetails 
     this.createdAt,
     this.updatedAt,
   });
-  BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsRiderDetails.fromJson(Map<String, dynamic> json) {
+  BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsRiderDetails.fromJson(
+      Map<String, dynamic> json) {
     Id = json['_id']?.toString();
     isRegister = json['isRegister'];
     role = json['role']?.toString();
@@ -609,8 +633,14 @@ class BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsRiderDetails 
     phone = json['phone']?.toString();
     email = json['email']?.toString();
     city = json['city']?.toString();
-    profilePic = (json['profilePic'] != null) ? BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsRiderDetailsProfilePic.fromJson(json['profilePic']) : null;
-    idPic = (json['idPic'] != null) ? BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsRiderDetailsIdPic.fromJson(json['idPic']) : null;
+    profilePic = (json['profilePic'] != null)
+        ? BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsRiderDetailsProfilePic
+            .fromJson(json['profilePic'])
+        : null;
+    idPic = (json['idPic'] != null)
+        ? BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsRiderDetailsIdPic
+            .fromJson(json['idPic'])
+        : null;
     dob = json['dob']?.toString();
     gender = json['gender']?.toString();
     isDriver = json['isDriver'];
@@ -622,7 +652,10 @@ class BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsRiderDetails 
     rating = json['rating']?.toInt();
     totalRides = json['totalRides']?.toInt();
     isRecurringTripEnabled = json['isRecurringTripEnabled'];
-    notificationPreferences = (json['notificationPreferences'] != null) ? BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsRiderDetailsNotificationPreferences.fromJson(json['notificationPreferences']) : null;
+    notificationPreferences = (json['notificationPreferences'] != null)
+        ? BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsRiderDetailsNotificationPreferences
+            .fromJson(json['notificationPreferences'])
+        : null;
     firebaseUid = json['firebaseUid']?.toString();
     firebaseSignInProvider = json['firebaseSignInProvider']?.toString();
     createdAt = json['createdAt']?.toString();
@@ -677,7 +710,7 @@ class BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsPreferencesOt
   "CoolingOrHeating": false,
   "BabySeat": false,
   "HeatedSeats": false
-}
+} 
 */
 
   bool? AppreciatesConversation;
@@ -699,7 +732,8 @@ class BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsPreferencesOt
     this.BabySeat,
     this.HeatedSeats,
   });
-  BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsPreferencesOther.fromJson(Map<String, dynamic> json) {
+  BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsPreferencesOther.fromJson(
+      Map<String, dynamic> json) {
     AppreciatesConversation = json['AppreciatesConversation'];
     EnjoysMusic = json['EnjoysMusic'];
     SmokeFree = json['SmokeFree'];
@@ -737,18 +771,23 @@ class BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsPreferences {
     "HeatedSeats": false
   },
   "luggageType": ""
-}
+} 
 */
 
-  BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsPreferencesOther? other;
+  BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsPreferencesOther?
+      other;
   String? luggageType;
 
   BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsPreferences({
     this.other,
     this.luggageType,
   });
-  BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsPreferences.fromJson(Map<String, dynamic> json) {
-    other = (json['other'] != null) ? BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsPreferencesOther.fromJson(json['other']) : null;
+  BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsPreferences.fromJson(
+      Map<String, dynamic> json) {
+    other = (json['other'] != null)
+        ? BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsPreferencesOther
+            .fromJson(json['other'])
+        : null;
     luggageType = json['luggageType']?.toString();
   }
   Map<String, dynamic> toJson() {
@@ -768,7 +807,7 @@ class BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsReturnTrip {
   "isReturnTrip": false,
   "returnDate": "null",
   "returnTime": "null"
-}
+} 
 */
 
   String? returnTripId;
@@ -782,7 +821,8 @@ class BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsReturnTrip {
     this.returnDate,
     this.returnTime,
   });
-  BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsReturnTrip.fromJson(Map<String, dynamic> json) {
+  BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsReturnTrip.fromJson(
+      Map<String, dynamic> json) {
     returnTripId = json['returnTripId']?.toString();
     isReturnTrip = json['isReturnTrip'];
     returnDate = json['returnDate']?.toString();
@@ -808,7 +848,7 @@ class BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsRecurringTrip
     1
   ],
   "isRecurringTripEnabled": false
-}
+} 
 */
 
   List<String?>? recurringTripIds;
@@ -820,7 +860,8 @@ class BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsRecurringTrip
     this.recurringTripDays,
     this.isRecurringTripEnabled,
   });
-  BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsRecurringTrip.fromJson(Map<String, dynamic> json) {
+  BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsRecurringTrip.fromJson(
+      Map<String, dynamic> json) {
     if (json['recurringTripIds'] != null) {
       final v = json['recurringTripIds'];
       final arr0 = <String>[];
@@ -870,7 +911,7 @@ class BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsDestination {
   "coordinates": [
     -117.5
   ]
-}
+} 
 */
 
   String? name;
@@ -882,7 +923,8 @@ class BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsDestination {
     this.type,
     this.coordinates,
   });
-  BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsDestination.fromJson(Map<String, dynamic> json) {
+  BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsDestination.fromJson(
+      Map<String, dynamic> json) {
     name = json['name']?.toString();
     type = json['type']?.toString();
     if (json['coordinates'] != null) {
@@ -919,7 +961,7 @@ class BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsOrigin {
     -117.7102669
   ],
   "originDestinationFair": "1"
-}
+} 
 */
 
   String? name;
@@ -933,7 +975,8 @@ class BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsOrigin {
     this.coordinates,
     this.originDestinationFair,
   });
-  BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsOrigin.fromJson(Map<String, dynamic> json) {
+  BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsOrigin.fromJson(
+      Map<String, dynamic> json) {
     name = json['name']?.toString();
     type = json['type']?.toString();
     if (json['coordinates'] != null) {
@@ -1067,26 +1110,29 @@ class BookingDetailModelDataDriverBookingDetailsRiderBookingDetails {
     "firebaseUid": "QyMqFd92cKb8XmwBZCT8p52himf1",
     "firebaseSignInProvider": "phone",
     "createdAt": "2024-05-20T08:25:51.820Z",
-    "updatedAt": "2024-05-21T13:30:14.381Z",
-    "__v": 0
+    "updatedAt": "2024-05-21T13:30:14.381Z"
   }
-}
+} 
 */
 
   String? Id;
   String? riderId;
   BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsOrigin? origin;
-  BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsDestination? destination;
+  BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsDestination?
+      destination;
   int? price;
   String? tripType;
-  BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsRecurringTrip? recurringTrip;
+  BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsRecurringTrip?
+      recurringTrip;
   String? date;
   String? time;
-  BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsReturnTrip? returnTrip;
+  BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsReturnTrip?
+      returnTrip;
   String? arrivalDate;
   String? arrivalTime;
   int? seatAvailable;
-  BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsPreferences? preferences;
+  BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsPreferences?
+      preferences;
   bool? isStarted;
   bool? isCompleted;
   bool? isCancelled;
@@ -1094,7 +1140,8 @@ class BookingDetailModelDataDriverBookingDetailsRiderBookingDetails {
   String? description;
   String? createdAt;
   String? updatedAt;
-  BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsRiderDetails? riderDetails;
+  BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsRiderDetails?
+      riderDetails;
 
   BookingDetailModelDataDriverBookingDetailsRiderBookingDetails({
     this.Id,
@@ -1120,21 +1167,37 @@ class BookingDetailModelDataDriverBookingDetailsRiderBookingDetails {
     this.updatedAt,
     this.riderDetails,
   });
-  BookingDetailModelDataDriverBookingDetailsRiderBookingDetails.fromJson(Map<String, dynamic> json) {
+  BookingDetailModelDataDriverBookingDetailsRiderBookingDetails.fromJson(
+      Map<String, dynamic> json) {
     Id = json['_id']?.toString();
     riderId = json['riderId']?.toString();
-    origin = (json['origin'] != null) ? BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsOrigin.fromJson(json['origin']) : null;
-    destination = (json['destination'] != null) ? BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsDestination.fromJson(json['destination']) : null;
+    origin = (json['origin'] != null)
+        ? BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsOrigin
+            .fromJson(json['origin'])
+        : null;
+    destination = (json['destination'] != null)
+        ? BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsDestination
+            .fromJson(json['destination'])
+        : null;
     price = json['price']?.toInt();
     tripType = json['tripType']?.toString();
-    recurringTrip = (json['recurringTrip'] != null) ? BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsRecurringTrip.fromJson(json['recurringTrip']) : null;
+    recurringTrip = (json['recurringTrip'] != null)
+        ? BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsRecurringTrip
+            .fromJson(json['recurringTrip'])
+        : null;
     date = json['date']?.toString();
     time = json['time']?.toString();
-    returnTrip = (json['returnTrip'] != null) ? BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsReturnTrip.fromJson(json['returnTrip']) : null;
+    returnTrip = (json['returnTrip'] != null)
+        ? BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsReturnTrip
+            .fromJson(json['returnTrip'])
+        : null;
     arrivalDate = json['arrivalDate']?.toString();
     arrivalTime = json['arrivalTime']?.toString();
     seatAvailable = json['seatAvailable']?.toInt();
-    preferences = (json['preferences'] != null) ? BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsPreferences.fromJson(json['preferences']) : null;
+    preferences = (json['preferences'] != null)
+        ? BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsPreferences
+            .fromJson(json['preferences'])
+        : null;
     isStarted = json['isStarted'];
     isCompleted = json['isCompleted'];
     isCancelled = json['isCancelled'];
@@ -1149,7 +1212,10 @@ class BookingDetailModelDataDriverBookingDetailsRiderBookingDetails {
     description = json['description']?.toString();
     createdAt = json['createdAt']?.toString();
     updatedAt = json['updatedAt']?.toString();
-    riderDetails = (json['riderDetails'] != null) ? BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsRiderDetails.fromJson(json['riderDetails']) : null;
+    riderDetails = (json['riderDetails'] != null)
+        ? BookingDetailModelDataDriverBookingDetailsRiderBookingDetailsRiderDetails
+            .fromJson(json['riderDetails'])
+        : null;
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -1209,7 +1275,7 @@ class BookingDetailModelDataDriverBookingDetailsPreferencesOther {
   "CoolingOrHeating": false,
   "BabySeat": false,
   "HeatedSeats": false
-}
+} 
 */
 
   bool? AppreciatesConversation;
@@ -1231,7 +1297,8 @@ class BookingDetailModelDataDriverBookingDetailsPreferencesOther {
     this.BabySeat,
     this.HeatedSeats,
   });
-  BookingDetailModelDataDriverBookingDetailsPreferencesOther.fromJson(Map<String, dynamic> json) {
+  BookingDetailModelDataDriverBookingDetailsPreferencesOther.fromJson(
+      Map<String, dynamic> json) {
     AppreciatesConversation = json['AppreciatesConversation'];
     EnjoysMusic = json['EnjoysMusic'];
     SmokeFree = json['SmokeFree'];
@@ -1269,7 +1336,7 @@ class BookingDetailModelDataDriverBookingDetailsPreferences {
     "BabySeat": false,
     "HeatedSeats": false
   }
-}
+} 
 */
 
   String? luggageType;
@@ -1279,9 +1346,13 @@ class BookingDetailModelDataDriverBookingDetailsPreferences {
     this.luggageType,
     this.other,
   });
-  BookingDetailModelDataDriverBookingDetailsPreferences.fromJson(Map<String, dynamic> json) {
+  BookingDetailModelDataDriverBookingDetailsPreferences.fromJson(
+      Map<String, dynamic> json) {
     luggageType = json['luggageType']?.toString();
-    other = (json['other'] != null) ? BookingDetailModelDataDriverBookingDetailsPreferencesOther.fromJson(json['other']) : null;
+    other = (json['other'] != null)
+        ? BookingDetailModelDataDriverBookingDetailsPreferencesOther.fromJson(
+            json['other'])
+        : null;
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -1299,7 +1370,7 @@ class BookingDetailModelDataDriverBookingDetailsReturnTrip {
   "isReturnTrip": false,
   "returnDate": "null",
   "returnTime": ""
-}
+} 
 */
 
   bool? isReturnTrip;
@@ -1311,7 +1382,8 @@ class BookingDetailModelDataDriverBookingDetailsReturnTrip {
     this.returnDate,
     this.returnTime,
   });
-  BookingDetailModelDataDriverBookingDetailsReturnTrip.fromJson(Map<String, dynamic> json) {
+  BookingDetailModelDataDriverBookingDetailsReturnTrip.fromJson(
+      Map<String, dynamic> json) {
     isReturnTrip = json['isReturnTrip'];
     returnDate = json['returnDate']?.toString();
     returnTime = json['returnTime']?.toString();
@@ -1335,7 +1407,7 @@ class BookingDetailModelDataDriverBookingDetailsRecurringTrip {
     ""
   ],
   "isRecurringTripEnabled": false
-}
+} 
 */
 
   List<int?>? recurringTripDays;
@@ -1347,7 +1419,8 @@ class BookingDetailModelDataDriverBookingDetailsRecurringTrip {
     this.recurringTripIds,
     this.isRecurringTripEnabled,
   });
-  BookingDetailModelDataDriverBookingDetailsRecurringTrip.fromJson(Map<String, dynamic> json) {
+  BookingDetailModelDataDriverBookingDetailsRecurringTrip.fromJson(
+      Map<String, dynamic> json) {
     if (json['recurringTripDays'] != null) {
       final v = json['recurringTripDays'];
       final arr0 = <int>[];
@@ -1395,18 +1468,18 @@ class BookingDetailModelDataDriverBookingDetailsStops {
   "name": "",
   "type": "Point",
   "coordinates": [
-    0
+    -117.7102669
   ],
   "originToStopFair": "null",
   "stopToStopFair": "null",
   "stopTodestinationFair": "null",
   "_id": "664c42ac89279c2826db84a5"
-}
+} 
 */
 
   String? name;
   String? type;
-  List<int?>? coordinates;
+  List<double?>? coordinates;
   String? originToStopFair;
   String? stopToStopFair;
   String? stopTodestinationFair;
@@ -1421,14 +1494,15 @@ class BookingDetailModelDataDriverBookingDetailsStops {
     this.stopTodestinationFair,
     this.Id,
   });
-  BookingDetailModelDataDriverBookingDetailsStops.fromJson(Map<String, dynamic> json) {
+  BookingDetailModelDataDriverBookingDetailsStops.fromJson(
+      Map<String, dynamic> json) {
     name = json['name']?.toString();
     type = json['type']?.toString();
     if (json['coordinates'] != null) {
       final v = json['coordinates'];
-      final arr0 = <int>[];
+      final arr0 = <double>[];
       v.forEach((v) {
-        arr0.add(v.toInt());
+        arr0.add(v.toDouble());
       });
       coordinates = arr0;
     }
@@ -1465,7 +1539,7 @@ class BookingDetailModelDataDriverBookingDetailsDestination {
   "coordinates": [
     -117.5
   ]
-}
+} 
 */
 
   String? name;
@@ -1477,7 +1551,8 @@ class BookingDetailModelDataDriverBookingDetailsDestination {
     this.type,
     this.coordinates,
   });
-  BookingDetailModelDataDriverBookingDetailsDestination.fromJson(Map<String, dynamic> json) {
+  BookingDetailModelDataDriverBookingDetailsDestination.fromJson(
+      Map<String, dynamic> json) {
     name = json['name']?.toString();
     type = json['type']?.toString();
     if (json['coordinates'] != null) {
@@ -1514,7 +1589,7 @@ class BookingDetailModelDataDriverBookingDetailsOrigin {
     -117.7102669
   ],
   "originDestinationFair": "15"
-}
+} 
 */
 
   String? name;
@@ -1528,7 +1603,8 @@ class BookingDetailModelDataDriverBookingDetailsOrigin {
     this.coordinates,
     this.originDestinationFair,
   });
-  BookingDetailModelDataDriverBookingDetailsOrigin.fromJson(Map<String, dynamic> json) {
+  BookingDetailModelDataDriverBookingDetailsOrigin.fromJson(
+      Map<String, dynamic> json) {
     name = json['name']?.toString();
     type = json['type']?.toString();
     if (json['coordinates'] != null) {
@@ -1583,7 +1659,7 @@ class BookingDetailModelDataDriverBookingDetails {
       "name": "",
       "type": "Point",
       "coordinates": [
-        0
+        -117.7102669
       ],
       "originToStopFair": "null",
       "stopToStopFair": "null",
@@ -1736,12 +1812,11 @@ class BookingDetailModelDataDriverBookingDetails {
         "firebaseUid": "QyMqFd92cKb8XmwBZCT8p52himf1",
         "firebaseSignInProvider": "phone",
         "createdAt": "2024-05-20T08:25:51.820Z",
-        "updatedAt": "2024-05-21T13:30:14.381Z",
-        "__v": 0
+        "updatedAt": "2024-05-21T13:30:14.381Z"
       }
     }
   ]
-}
+} 
 */
 
   String? Id;
@@ -1765,7 +1840,8 @@ class BookingDetailModelDataDriverBookingDetails {
   String? description;
   String? createdAt;
   String? updatedAt;
-  List<BookingDetailModelDataDriverBookingDetailsRiderBookingDetails>? riderBookingDetails;
+  List<BookingDetailModelDataDriverBookingDetailsRiderBookingDetails>?
+      riderBookingDetails;
 
   BookingDetailModelDataDriverBookingDetails({
     this.Id,
@@ -1791,11 +1867,18 @@ class BookingDetailModelDataDriverBookingDetails {
     this.updatedAt,
     this.riderBookingDetails,
   });
-  BookingDetailModelDataDriverBookingDetails.fromJson(Map<String, dynamic> json) {
+  BookingDetailModelDataDriverBookingDetails.fromJson(
+      Map<String, dynamic> json) {
     Id = json['_id']?.toString();
     driverId = json['driverId']?.toString();
-    origin = (json['origin'] != null) ? BookingDetailModelDataDriverBookingDetailsOrigin.fromJson(json['origin']) : null;
-    destination = (json['destination'] != null) ? BookingDetailModelDataDriverBookingDetailsDestination.fromJson(json['destination']) : null;
+    origin = (json['origin'] != null)
+        ? BookingDetailModelDataDriverBookingDetailsOrigin.fromJson(
+            json['origin'])
+        : null;
+    destination = (json['destination'] != null)
+        ? BookingDetailModelDataDriverBookingDetailsDestination.fromJson(
+            json['destination'])
+        : null;
     if (json['stops'] != null) {
       final v = json['stops'];
       final arr0 = <BookingDetailModelDataDriverBookingDetailsStops>[];
@@ -1805,14 +1888,23 @@ class BookingDetailModelDataDriverBookingDetails {
       stops = arr0;
     }
     tripType = json['tripType']?.toString();
-    recurringTrip = (json['recurringTrip'] != null) ? BookingDetailModelDataDriverBookingDetailsRecurringTrip.fromJson(json['recurringTrip']) : null;
+    recurringTrip = (json['recurringTrip'] != null)
+        ? BookingDetailModelDataDriverBookingDetailsRecurringTrip.fromJson(
+            json['recurringTrip'])
+        : null;
     date = json['date']?.toString();
     time = json['time']?.toString();
-    returnTrip = (json['returnTrip'] != null) ? BookingDetailModelDataDriverBookingDetailsReturnTrip.fromJson(json['returnTrip']) : null;
+    returnTrip = (json['returnTrip'] != null)
+        ? BookingDetailModelDataDriverBookingDetailsReturnTrip.fromJson(
+            json['returnTrip'])
+        : null;
     arrivalDate = json['arrivalDate']?.toString();
     arrivalTime = json['arrivalTime']?.toString();
     seatAvailable = json['seatAvailable']?.toInt();
-    preferences = (json['preferences'] != null) ? BookingDetailModelDataDriverBookingDetailsPreferences.fromJson(json['preferences']) : null;
+    preferences = (json['preferences'] != null)
+        ? BookingDetailModelDataDriverBookingDetailsPreferences.fromJson(
+            json['preferences'])
+        : null;
     isStarted = json['isStarted'];
     isCompleted = json['isCompleted'];
     isCancelled = json['isCancelled'];
@@ -1829,9 +1921,11 @@ class BookingDetailModelDataDriverBookingDetails {
     updatedAt = json['updatedAt']?.toString();
     if (json['riderBookingDetails'] != null) {
       final v = json['riderBookingDetails'];
-      final arr0 = <BookingDetailModelDataDriverBookingDetailsRiderBookingDetails>[];
+      final arr0 =
+          <BookingDetailModelDataDriverBookingDetailsRiderBookingDetails>[];
       v.forEach((v) {
-        arr0.add(BookingDetailModelDataDriverBookingDetailsRiderBookingDetails.fromJson(v));
+        arr0.add(BookingDetailModelDataDriverBookingDetailsRiderBookingDetails
+            .fromJson(v));
       });
       riderBookingDetails = arr0;
     }
@@ -1899,7 +1993,7 @@ class BookingDetailModelDataDropOffStatus {
 /*
 {
   "isDropOff": false
-}
+} 
 */
 
   bool? isDropOff;
@@ -1921,7 +2015,7 @@ class BookingDetailModelDataPickUpStatus {
 /*
 {
   "isPickUp": false
-}
+} 
 */
 
   bool? isPickUp;
@@ -1961,7 +2055,6 @@ class BookingDetailModelData {
   "price": 0,
   "createdAt": "2024-05-21T11:29:25.604Z",
   "updatedAt": "2024-05-21T13:29:50.089Z",
-  "__v": 0,
   "driverBookingDetails": {
     "_id": "664c42ac89279c2826db84a4",
     "driverId": "65c228fd32f497dc57fdeff8",
@@ -1985,7 +2078,7 @@ class BookingDetailModelData {
         "name": "",
         "type": "Point",
         "coordinates": [
-          0
+          -117.7102669
         ],
         "originToStopFair": "null",
         "stopToStopFair": "null",
@@ -2138,8 +2231,7 @@ class BookingDetailModelData {
           "firebaseUid": "QyMqFd92cKb8XmwBZCT8p52himf1",
           "firebaseSignInProvider": "phone",
           "createdAt": "2024-05-20T08:25:51.820Z",
-          "updatedAt": "2024-05-21T13:30:14.381Z",
-          "__v": 0
+          "updatedAt": "2024-05-21T13:30:14.381Z"
         }
       }
     ]
@@ -2200,7 +2292,7 @@ class BookingDetailModelData {
       "updatedAt": "2024-04-15T04:53:34.316Z"
     }
   }
-}
+} 
 */
 
   String? Id;
@@ -2249,15 +2341,24 @@ class BookingDetailModelData {
     cancelByRider = json['cancelByRider'];
     confirmByRider = json['confirmByRider'];
     confirmByDriver = json['confirmByDriver'];
-    pickUpStatus = (json['pickUpStatus'] != null) ? BookingDetailModelDataPickUpStatus.fromJson(json['pickUpStatus']) : null;
-    dropOffStatus = (json['dropOffStatus'] != null) ? BookingDetailModelDataDropOffStatus.fromJson(json['dropOffStatus']) : null;
+    pickUpStatus = (json['pickUpStatus'] != null)
+        ? BookingDetailModelDataPickUpStatus.fromJson(json['pickUpStatus'])
+        : null;
+    dropOffStatus = (json['dropOffStatus'] != null)
+        ? BookingDetailModelDataDropOffStatus.fromJson(json['dropOffStatus'])
+        : null;
     isCompleted = json['isCompleted'];
     driverId = json['driverId']?.toString();
     price = json['price']?.toInt();
     createdAt = json['createdAt']?.toString();
     updatedAt = json['updatedAt']?.toString();
-    driverBookingDetails = (json['driverBookingDetails'] != null) ? BookingDetailModelDataDriverBookingDetails.fromJson(json['driverBookingDetails']) : null;
-    driverDetails = (json['driverDetails'] != null) ? BookingDetailModelDataDriverDetails.fromJson(json['driverDetails']) : null;
+    driverBookingDetails = (json['driverBookingDetails'] != null)
+        ? BookingDetailModelDataDriverBookingDetails.fromJson(
+            json['driverBookingDetails'])
+        : null;
+    driverDetails = (json['driverDetails'] != null)
+        ? BookingDetailModelDataDriverDetails.fromJson(json['driverDetails'])
+        : null;
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -2315,7 +2416,6 @@ class BookingDetailModel {
     "price": 0,
     "createdAt": "2024-05-21T11:29:25.604Z",
     "updatedAt": "2024-05-21T13:29:50.089Z",
-    "__v": 0,
     "driverBookingDetails": {
       "_id": "664c42ac89279c2826db84a4",
       "driverId": "65c228fd32f497dc57fdeff8",
@@ -2339,7 +2439,7 @@ class BookingDetailModel {
           "name": "",
           "type": "Point",
           "coordinates": [
-            0
+            -117.7102669
           ],
           "originToStopFair": "null",
           "stopToStopFair": "null",
@@ -2492,8 +2592,7 @@ class BookingDetailModel {
             "firebaseUid": "QyMqFd92cKb8XmwBZCT8p52himf1",
             "firebaseSignInProvider": "phone",
             "createdAt": "2024-05-20T08:25:51.820Z",
-            "updatedAt": "2024-05-21T13:30:14.381Z",
-            "__v": 0
+            "updatedAt": "2024-05-21T13:30:14.381Z"
           }
         }
       ]
@@ -2570,7 +2669,9 @@ class BookingDetailModel {
   BookingDetailModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message']?.toString();
-    data = (json['data'] != null) ? BookingDetailModelData.fromJson(json['data']) : null;
+    data = (json['data'] != null)
+        ? BookingDetailModelData.fromJson(json['data'])
+        : null;
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};

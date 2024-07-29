@@ -139,6 +139,8 @@ class MapRiderConfirmBottomsheet extends StatelessWidget {
             const GreenPoolDivider().paddingOnly(bottom: 8.kh),
             OriginToDestination(
                     origin: element.driverRideDetails?.origin?.name ?? "",
+                    stop1: element.driverRideDetails?.stops?[0]?.name ?? "",
+                    stop2: element.driverRideDetails?.stops?[1]?.name ?? "",
                     destination:
                         element.driverRideDetails?.destination?.name ?? "",
                     needPickupText: false)

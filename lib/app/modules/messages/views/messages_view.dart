@@ -22,7 +22,7 @@ class MessagesView extends GetView<MessagesController> {
     controller.getMessageListAPI();
     return Scaffold(
         appBar: GreenPoolAppBar(
-            title: Text(Strings.messages), leading: const SizedBox()),
+            title: Text(Strings.messages), leading: const SizedBox()),        
         body: Obx(
           () => RefreshIndicator(
             backgroundColor: ColorUtil.kWhiteColor,

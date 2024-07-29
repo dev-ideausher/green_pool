@@ -65,7 +65,7 @@ class MyRidesOneTimeController extends GetxController {
         isLoad.value = true;
         final cancelRideResponse =
             await APIManager.riderCancelRide(body: riderRideId);
-        var data = jsonDecode(cancelRideResponse.toString());
+        var data = jsonDecode(cancelRideResponse.toString());        
         await myRidesAPI();
         Get.back();
         isLoad.value = false;

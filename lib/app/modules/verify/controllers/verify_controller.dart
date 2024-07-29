@@ -28,6 +28,8 @@ class VerifyController extends GetxController {
   final Rx<PostRideModel> postRideModel = PostRideModel().obs;
   final Rx<FindRideModel> findRideModel = FindRideModel().obs;
   RxInt seconds = 30.obs;
+  RxInt buttonSeconds = 5.obs;
+  RxBool isActive = false.obs;
   late Timer timer;
 
   @override
@@ -53,6 +55,7 @@ class VerifyController extends GetxController {
       fromNavBar = Get.arguments['fromNavBar'];
     }
     startTimer();
+    startButtonTimer();
   }
 
   // @override
@@ -96,6 +99,17 @@ class VerifyController extends GetxController {
         seconds.value--;
       } else {
         timer.cancel();
+      }
+    });
+  }
+
+  startButtonTimer() {
+    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (buttonSeconds.value > 1) {
+        buttonSeconds.value--;
+      } else {
+        timer.cancel();
+        isActive.value = true;
       }
     });
   }

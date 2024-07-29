@@ -38,6 +38,7 @@ class PaymentController extends GetxController {
   String? stop1 = "";
   String? stop2 = "";
   String? destination = "";
+  String? seatsBooked = "";
 
   @override
   Future<void> onInit() async {
@@ -48,6 +49,7 @@ class PaymentController extends GetxController {
       price = rideData['price'];
       totalAmount = double.parse(rideData['price'].toStringAsFixed(2));
       pricePerSeat = int.parse(Get.arguments['pricePerSeat']);
+      seatsBooked = Get.arguments['seatsBooked'].toString();
       origin = riderSendRequestModelData.origin!.name;
       destination = riderSendRequestModelData.destination!.name;
       stop1 = riderSendRequestModelData.stops?[0]?.name;
@@ -62,10 +64,18 @@ class PaymentController extends GetxController {
             Get.arguments['riderConfirmRequestModelData'];
         pricePerSeat = Get.arguments['pricePerSeat'];
         fromConfirmRequestSection.value = true;
-        origin = riderConfirmRequestModelData?.driverRideDetails?.origin!.name.toString();
-        destination = riderConfirmRequestModelData?.driverRideDetails?.destination!.name.toString();
-        stop1 = riderConfirmRequestModelData?.driverRideDetails?.stops?[0]?.name.toString();
-        stop2 = riderConfirmRequestModelData?.driverRideDetails?.stops?[1]?.name.toString();
+        seatsBooked = riderConfirmRequestModelData
+            .riderRideDetails?.seatAvailable
+            .toString();
+        origin = riderConfirmRequestModelData?.driverRideDetails?.origin!.name
+            .toString();
+        destination = riderConfirmRequestModelData
+            ?.driverRideDetails?.destination!.name
+            .toString();
+        stop1 = riderConfirmRequestModelData?.driverRideDetails?.stops?[0]?.name
+            .toString();
+        stop2 = riderConfirmRequestModelData?.driverRideDetails?.stops?[1]?.name
+            .toString();
       } catch (e) {
         rideData = Get.arguments["rideData"];
         fromDriverDetails.value = true;
@@ -73,6 +83,7 @@ class PaymentController extends GetxController {
         destination =
             rideData['ridesDetails']['destination']['name'].toString();
         price = rideData['ridesDetails']["price"];
+        seatsBooked = rideData['ridesDetails']['seatAvailable'].toString();
         totalAmount =
             double.parse(rideData['ridesDetails']["price"].toStringAsFixed(2));
         pricePerSeat = Get.arguments["pricePerSeat"];

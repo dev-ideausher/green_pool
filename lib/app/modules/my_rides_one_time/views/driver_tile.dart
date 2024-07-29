@@ -65,7 +65,7 @@ class DriverTile extends StatelessWidget {
                 ),
                 trailing: SizedBox(
                   height: 24.kh,
-                  width: 170.kw,
+                  width: 160.kw,
                   child: Align(
                     alignment: Alignment.centerRight,
                     child: ListView.builder(
@@ -75,7 +75,7 @@ class DriverTile extends StatelessWidget {
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index1) {
                         bool isSeatAvailable =
-                            index1 < (myRidesModelData.seatAvailable ?? 0);                        
+                            index1 < (myRidesModelData.seatAvailable ?? 0);
                         return Container(
                           decoration: const BoxDecoration(
                             shape: BoxShape.circle,

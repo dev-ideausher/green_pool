@@ -11,8 +11,7 @@ import '../../../routes/app_pages.dart';
 class MessagesController extends GetxController {
   RxBool refreshPage = true.obs;
   RxBool isLoading = false.obs;
-  final Rx<MessageListModel> messagesModel = MessageListModel().obs;
-  var chatRoomIds;
+  final Rx<MessageListModel> messagesModel = MessageListModel().obs;    
 
   @override
   void onInit() {
@@ -25,10 +24,22 @@ class MessagesController extends GetxController {
       isLoading.value = true;
       final resp = await APIManager.getChatList();
       var data = jsonDecode(resp.toString());
-      messagesModel.value = MessageListModel.fromJson(data);
-      chatRoomIds = messagesModel.value;
-      // chatRoomIds?.sort(
-      //     (a, b) => b.lastMessage.dateTime.compareTo(a.lastMessage.dateTime));
+      messagesModel.value = MessageListModel.fromJson(data);      
+      // messagesModel.value?.chatRoomIds?.sort((a, b) {
+      //   final dateTimeA = a!.lastMessage?.dateTime;
+      //   final dateTimeB = b!.lastMessage?.dateTime;
+
+      //   if (dateTimeA == null && dateTimeB == null) {
+      //     return 0;
+      //   } else if (dateTimeA == null) {
+      //     return 1;
+      //   } else if (dateTimeB == null) {
+      //     return -1;
+      //   } else {
+      //     return dateTimeB.compareTo(dateTimeA);
+      //   }
+      // });
+      messagesModel.refresh();
       isLoading.value = false;
     } catch (e) {
       debugPrint(e.toString());
@@ -43,6 +54,6 @@ class MessagesController extends GetxController {
                 image: message?.user2?.profilePic?.url,
                 deleteUpdateTime: message?.deleteUpdateTime ?? "",
                 name: message?.user2?.fullName))!
-        .then((value) => getMessageListAPI());
+        .then((value)  => getMessageListAPI());
   }
 }

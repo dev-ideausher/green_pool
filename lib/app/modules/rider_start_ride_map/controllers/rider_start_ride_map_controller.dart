@@ -199,6 +199,40 @@ class RiderStartRideMapController extends GetxController {
           "",
           heading,
         );
+        /*if (bookingDetail.value.driverBookingDetails?.stops?[0]?.coordinates !=
+                null ||
+            bookingDetail.value.driverBookingDetails?.stops?[0]?.coordinates !=
+                "") {
+          addMarkers(
+              LatLng(
+                  bookingDetail.value.driverBookingDetails?.stops?[0]
+                          ?.coordinates?.lastOrNull ??
+                      0.0,
+                  bookingDetail.value.driverBookingDetails?.stops?[0]
+                          ?.coordinates?.firstOrNull ??
+                      0.0),
+              "",
+              "Stop",
+              0.0);
+          if (bookingDetail
+                      .value.driverBookingDetails?.stops?[1]?.coordinates !=
+                  null ||
+              bookingDetail
+                      .value.driverBookingDetails?.stops?[1]?.coordinates !=
+                  "") {
+            addMarkers(
+                LatLng(
+                    bookingDetail.value.driverBookingDetails?.stops?[1]
+                            ?.coordinates?.lastOrNull ??
+                        0.0,
+                    bookingDetail.value.driverBookingDetails?.stops?[1]
+                            ?.coordinates?.firstOrNull ??
+                        0.0),
+                "",
+                "Stop",
+                0.0);
+          }
+        }*/
       }
     }, onError: (Object error) {
       debugPrint("Error: $error");

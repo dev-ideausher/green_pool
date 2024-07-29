@@ -55,8 +55,6 @@ class MyRidesRecurringDetailsView
                       ],
                     ).paddingOnly(bottom: 16.kh),
 
-                    const GreenPoolDivider().paddingOnly(bottom: 16.kh),
-
                     //Vehicle details
                     Text(
                       Strings.vehicleDetails,

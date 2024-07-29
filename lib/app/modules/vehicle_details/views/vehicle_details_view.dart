@@ -32,7 +32,7 @@ class VehicleDetailsView extends GetView<VehicleDetailsController> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const RichTextHeading(text: 'Vehicle Photo')
+            RichTextHeading(text: Strings.vehiclePhoto)
                 .paddingOnly(top: 32.kh, bottom: 8.kh),
             GestureDetector(
               onTap: () {
@@ -51,9 +51,9 @@ class VehicleDetailsView extends GetView<VehicleDetailsController> {
                           url:
                               "${controller.vehicleInfoModel!.vehiclePic!.url}"))),
             ).paddingOnly(bottom: 16.kh),
-            const RichTextHeading(text: 'Model').paddingOnly(bottom: 8.kh),
+            RichTextHeading(text: Strings.model).paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
-              hintText: 'Enter Vehicle model',
+              hintText: Strings.enterVehicleModel,
               controller: controller.modelTextController,
               suffix: SvgPicture.asset(ImageConstant.svgProfileEditPen,
                   colorFilter: ColorFilter.mode(
@@ -62,51 +62,51 @@ class VehicleDetailsView extends GetView<VehicleDetailsController> {
                           : ColorUtil.kSecondary01,
                       BlendMode.srcIn)),
             ).paddingOnly(bottom: 16.kh),
-            const RichTextHeading(text: 'Type').paddingOnly(bottom: 8.kh),
+            RichTextHeading(text: Strings.type).paddingOnly(bottom: 8.kh),
             GreenPoolDropDown(
               hintText: '${controller.vehicleInfoModel?.type}',
               color: ColorUtil.kBlack01,
               items: [
                 DropdownMenuItem(
-                    value: "Hatchback",
+                    value: Strings.hatchBack,
                     child: Text(
-                      "Hatchback",
+                      Strings.hatchBack,
                       style: TextStyleUtil.k14Regular(),
                     )),
                 DropdownMenuItem(
-                    value: "Coupe",
+                    value: Strings.coupe,
                     child: Text(
-                      "Coupe",
+                      Strings.coupe,
                       style: TextStyleUtil.k14Regular(),
                     )),
                 DropdownMenuItem(
-                    value: "Convertible",
+                    value: Strings.convertible,
                     child: Text(
-                      "Convertible",
+                      Strings.convertible,
                       style: TextStyleUtil.k14Regular(),
                     )),
                 DropdownMenuItem(
-                    value: "Sedan",
+                    value: Strings.sedan,
                     child: Text(
-                      "Sedan",
+                      Strings.sedan,
                       style: TextStyleUtil.k14Regular(),
                     )),
                 DropdownMenuItem(
-                    value: "SUV",
+                    value: Strings.SUV,
                     child: Text(
-                      "SUV",
+                      Strings.SUV,
                       style: TextStyleUtil.k14Regular(),
                     )),
                 DropdownMenuItem(
-                    value: "Truck",
+                    value: Strings.truck,
                     child: Text(
-                      "Truck",
+                      Strings.truck,
                       style: TextStyleUtil.k14Regular(),
                     )),
                 DropdownMenuItem(
-                    value: "Van",
+                    value: Strings.van,
                     child: Text(
-                      "Van",
+                      Strings.van,
                       style: TextStyleUtil.k14Regular(),
                     )),
               ],
@@ -114,69 +114,69 @@ class VehicleDetailsView extends GetView<VehicleDetailsController> {
                 controller.vehicletypeValue.value = v.toString();
               },
             ).paddingOnly(bottom: 16.kh),
-            const RichTextHeading(text: 'Color').paddingOnly(bottom: 8.kh),
+            RichTextHeading(text: Strings.color).paddingOnly(bottom: 8.kh),
             GreenPoolDropDown(
               hintText: '${controller.vehicleInfoModel?.color}',
               color: ColorUtil.kBlack01,
               items: [
                 DropdownMenuItem(
-                    value: "Silver",
+                    value: Strings.silver,
                     child: Text(
-                      "Silver",
+                      Strings.silver,
                       style: TextStyleUtil.k14Regular(),
                     )),
                 DropdownMenuItem(
-                    value: "Black",
+                    value: Strings.black,
                     child: Text(
-                      "Black",
+                      Strings.black,
                       style: TextStyleUtil.k14Regular(),
                     )),
                 DropdownMenuItem(
-                    value: "White",
+                    value: Strings.white,
                     child: Text(
-                      "White",
+                      Strings.white,
                       style: TextStyleUtil.k14Regular(),
                     )),
                 DropdownMenuItem(
-                    value: "Dark Grey",
+                    value: Strings.darkgrey,
                     child: Text(
-                      "Dark Grey",
+                      Strings.darkgrey,
                       style: TextStyleUtil.k14Regular(),
                     )),
                 DropdownMenuItem(
-                    value: "Light Grey",
+                    value: Strings.lightGrey,
                     child: Text(
-                      "Light Grey",
+                      Strings.lightGrey,
                       style: TextStyleUtil.k14Regular(),
                     )),
                 DropdownMenuItem(
-                    value: "Red",
+                    value: Strings.red,
                     child: Text(
-                      "Red",
+                      Strings.red,
                       style: TextStyleUtil.k14Regular(),
                     )),
                 DropdownMenuItem(
-                    value: "Blue",
+                    value: Strings.blue,
                     child: Text(
-                      "Blue",
+                      Strings.blue,
                       style: TextStyleUtil.k14Regular(),
                     )),
                 DropdownMenuItem(
-                    value: "Light Blue",
+                    value: Strings.lightBlue,
                     child: Text(
-                      "Light Blue",
+                      Strings.lightBlue,
                       style: TextStyleUtil.k14Regular(),
                     )),
                 DropdownMenuItem(
-                    value: "Dark Blue",
+                    value: Strings.darkBlue,
                     child: Text(
-                      "Dark Blue",
+                      Strings.darkBlue,
                       style: TextStyleUtil.k14Regular(),
                     )),
                 DropdownMenuItem(
-                    value: "Brown",
+                    value: Strings.brown,
                     child: Text(
-                      "Brown",
+                      Strings.brown,
                       style: TextStyleUtil.k14Regular(),
                     )),
               ],
@@ -184,9 +184,9 @@ class VehicleDetailsView extends GetView<VehicleDetailsController> {
                 controller.colorValue.value = v.toString();
               },
             ).paddingOnly(bottom: 16.kh),
-            const RichTextHeading(text: 'Year').paddingOnly(bottom: 8.kh),
+            RichTextHeading(text: Strings.year).paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
-              hintText: 'Enter year',
+              hintText: Strings.enterYear,
               controller: controller.yearTextController,
               suffix: SvgPicture.asset(ImageConstant.svgProfileEditPen,
                   colorFilter: ColorFilter.mode(
@@ -195,10 +195,10 @@ class VehicleDetailsView extends GetView<VehicleDetailsController> {
                           : ColorUtil.kSecondary01,
                       BlendMode.srcIn)),
             ).paddingOnly(bottom: 16.kh),
-            const RichTextHeading(text: 'License Plate')
+            RichTextHeading(text: Strings.licensePlate)
                 .paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
-              hintText: 'License plate',
+              hintText: Strings.licensePlate,
               controller: controller.licenseTextController,
               suffix: SvgPicture.asset(ImageConstant.svgProfileEditPen,
                   colorFilter: ColorFilter.mode(
@@ -211,7 +211,7 @@ class VehicleDetailsView extends GetView<VehicleDetailsController> {
               onPressed: () {
                 controller.updateVehicleDetailsAPI();
               },
-              label: 'Save',
+              label: Strings.save,
             ).paddingSymmetric(vertical: 40.kh),
           ],
         ).paddingSymmetric(horizontal: 16.kw),

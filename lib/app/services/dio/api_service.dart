@@ -113,6 +113,10 @@ class APIManager {
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
           .get(Endpoints.helpAndSupport);
 
+  static Future<Response> aboutUs() async =>
+      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false)
+          .get(Endpoints.aboutUs);
+
   static Future<Response> getUserByID() async => await DioClient(
         Dio(),
         showSnakbar: true,

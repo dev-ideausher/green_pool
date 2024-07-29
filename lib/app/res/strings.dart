@@ -85,7 +85,7 @@ class Strings {
 
   static String enterFullName = 'Enter full name';
 
-  static String phoneNumber = 'Phone number';
+  static String phoneNumber = 'Phone Number';
 
   static String enterPhoneNumber = 'Enter phone number';
 
@@ -497,4 +497,172 @@ class Strings {
       "Are you sure you want to delete ride?\nThis will delete all the upcoming rides.";
 
   static var sent = "Sent";
+
+  static String seatsBooked = "Number of seats booked";
+
+  static String amount = "Amount";
+
+  static var enterAmount = "Enter amount";
+
+  static String dollar = "\$";
+
+  static var minimumAdditionAmnt = "Minimum addition amount: \$100";
+
+  static String enterOTP = "Enter OTP";
+
+  static var enterVerificationCode =
+      'Please enter the verification code sent to\n';
+
+  static var didNotGetCode = "Didn't get the code? ";
+
+  static var resend = 'Resend';
+
+  static var sec = "sec";
+
+  static var verify = 'Verify';
+
+  static String woohoo = "Woohoo!";
+
+  static String verificationSuccessfull =
+      "Verification is successful!\nPlease continue to your profile.";
+
+  static String continueAsRiderOrDriver =
+      'You would like to continue as Rider or Driver?';
+
+  static var vehiclePhoto = 'Vehicle Photo';
+
+  static String uploadPhoto = 'Upload Photo';
+
+  static var model = 'Model';
+
+  static var enterVehicleModel = 'Enter vehicle model';
+
+  static var type = 'Type';
+
+  static var selectVehicletype = 'Select vehicle type';
+
+  static var hatchBack = "Hatchback";
+
+  static var coupe = "Coupe";
+
+  static var convertible = "Convertible";
+
+  static var sedan = "Sedan";
+
+  static var SUV = "SUV";
+
+  static var truck = "Truck";
+
+  static var van = "Van";
+
+  static var color = 'Color';
+
+  static var selectVehicleColor = 'Select vehicle color';
+
+  static var silver = "Silver";
+
+  static var black = "Black";
+
+  static var white = "White";
+
+  static var darkgrey = "Dark Grey";
+
+  static var lightGrey = "Light Grey";
+
+  static var red = "Red";
+
+  static var blue = "Blue";
+
+  static var lightBlue = "Light Blue";
+
+  static var darkBlue = "Dark Blue";
+
+  static var brown = "Brown";
+
+  static var year = 'Year';
+
+  static var enterYear = 'Enter year';
+
+  static var licensePlate = 'License Plate';
+
+  static var save = 'Save';
+
+  static String takeOrUploadProfilePic = 'Take or upload profile photo';
+
+  static var emailAddress = 'Email Address';
+
+  static var emailID = 'Email ID';
+
+  static var gender = Strings.phoneNumber;
+
+  static var cityProvince = 'City Province';
+
+  static var selectCity = "Select your City";
+
+  static var dateOfBirth = 'Date of Birth ';
+
+  static var above18 = '(should be above 18)';
+
+  static var dob = 'D.O.B';
+
+  static var idVerification = 'ID Verification';
+
+  static String futureTransactionsWillBeVisibleHere =
+      "Your future transactions will appear here";
+
+  static String fileIfanyPartyCausesAnyIssue =
+      'File a dispute if either party causes any issue to the other party';
+
+  static String enterBookingId = 'Enter Booking Id';
+
+  static String disputeDescription = 'Dispute Description';
+
+  static String uploadImages = 'Upload Images (optional)';
+
+  static var submit = 'Submit';
+
+  static String studentDiscount = 'Student Discounts';
+
+  static String requestSentExclamation = "Request Sent!";
+
+  static String verificationRequestSent = "Verification request has been sent.";
+
+  static var studentReceive = 'Student receive a ';
+
+  static var dollar5 = '“\$5”';
+
+  static var discountAfterVerifyingEmail =
+      ' discount after\nverifying their Email ID';
+
+  static String school = 'School';
+
+  static var searchForSchool = 'Search for school';
+
+  static String studentEmailID = 'Student Email ID';
+
+  static var enterStudentEmail = 'Enter student Email ID';
+
+  static var verifyEmail = 'Verify your email';
+
+  static var addStop1 = 'Add Stop 1';
+
+  static var addStop2 = 'Add Stop 2';
+
+  static String profileSetup = 'Profile Setup';
+
+  static String editProfileDetails = 'Edit your profile details';
+
+  static var enterEmailId = 'Enter Email ID';
+
+  static var selectGender = 'Select your Gender';
+
+  static var male = "Male";
+
+  static var female = "Female";
+
+  static var preferNotToSay = "Prefer not to say";
+
+  static var enterDateOfBirth = 'Enter date of birth';
+
+  static String uploadId = 'Upload ID';
 }

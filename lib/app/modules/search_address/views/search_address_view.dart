@@ -19,23 +19,35 @@ class SearchAddressView extends GetView<SearchAddressController> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: GreenPoolAppBar(
-          title: controller.locationValues.name == LocationValues.origin.name || controller.locationValues.name == LocationValues.findRideOrigin.name
+          title: controller.locationValues.name == LocationValues.origin.name ||
+                  controller.locationValues.name ==
+                      LocationValues.findRideOrigin.name
               ? Text(Strings.pickup)
-              : controller.locationValues.name == LocationValues.destination.name || controller.locationValues.name == LocationValues.findRideDestination.name
-                  ?  Text(Strings.destination)
-                  : const Text('Add Stops'),
+              : controller.locationValues.name ==
+                          LocationValues.destination.name ||
+                      controller.locationValues.name ==
+                          LocationValues.findRideDestination.name
+                  ? Text(Strings.destination)
+                  : Text(Strings.addStops),
         ),
         body: Column(
           children: [
             Obx(
               () => GreenPoolTextField(
-                hintText: controller.locationValues.name == LocationValues.origin.name || controller.locationValues.name == LocationValues.findRideOrigin.name
+                hintText: controller.locationValues.name ==
+                            LocationValues.origin.name ||
+                        controller.locationValues.name ==
+                            LocationValues.findRideOrigin.name
                     ? Strings.enterOrigin
-                    : controller.locationValues.name == LocationValues.destination.name || controller.locationValues.name == LocationValues.findRideDestination.name
+                    : controller.locationValues.name ==
+                                LocationValues.destination.name ||
+                            controller.locationValues.name ==
+                                LocationValues.findRideDestination.name
                         ? Strings.enterDestinationAddress
-                        : controller.locationValues.name == LocationValues.addStop1.name
-                            ? 'Add Stop 1'
-                            : 'Add stop 2',
+                        : controller.locationValues.name ==
+                                LocationValues.addStop1.name
+                            ? Strings.addStop1
+                            : Strings.addStop2,
                 controller: controller.originController,
                 onchanged: (value) {
                   controller.setSessionToken();
@@ -44,7 +56,9 @@ class SearchAddressView extends GetView<SearchAddressController> {
                 prefix: Icon(
                   Icons.location_on,
                   size: 24.kh,
-                  color: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01,
+                  color: Get.find<HomeController>().isPinkModeOn.value
+                      ? ColorUtil.kPrimary3PinkMode
+                      : ColorUtil.kSecondary01,
                 ),
               ).paddingOnly(top: 32.kh, bottom: 16.kh),
             ),
@@ -56,12 +70,19 @@ class SearchAddressView extends GetView<SearchAddressController> {
                         itemCount: controller.addressSugestionList.length,
                         itemBuilder: (context, index) {
                           return Container(
-                            decoration: BoxDecoration(border: Border(bottom: BorderSide(width: 1.kh, color: ColorUtil.kNeutral7)), borderRadius: BorderRadius.circular(8.kh)),
+                            decoration: BoxDecoration(
+                                border: Border(
+                                    bottom: BorderSide(
+                                        width: 1.kh,
+                                        color: ColorUtil.kNeutral7)),
+                                borderRadius: BorderRadius.circular(8.kh)),
                             child: ListTile(
-                              title: Text(controller.addressSugestionList[index]['description']),
+                              title: Text(controller.addressSugestionList[index]
+                                  ['description']),
                               onTap: () async {
                                 await controller.setLocationData(
-                                  controller.addressSugestionList[index]['place_id'],
+                                  controller.addressSugestionList[index]
+                                      ['place_id'],
                                 );
                                 // Get.back(
                                 //     result: controller.postRideModel.value);

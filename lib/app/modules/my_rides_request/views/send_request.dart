@@ -256,7 +256,9 @@ class SendRequest extends GetView<MyRidesRequestController> {
                                         if (controller.sendRequestModel.value
                                                 .data![index].requestSent ??
                                             false) {
-                                              showMySnackbar(msg: "The request has already been sent.");
+                                          showMySnackbar(
+                                              msg:
+                                                  "The request has already been sent.");
                                         } else {
                                           await controller
                                               .sendRequestToRiderAPI(controller

@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/modules/verify/controllers/verify_controller.dart';
+import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
@@ -24,7 +25,7 @@ class VerifyView extends GetView<VerifyController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Enter OTP",
+            Strings.enterOTP,
             style: TextStyleUtil.k32Heading700(),
           ).paddingOnly(bottom: 4.kh),
           80.kheightBox,
@@ -35,7 +36,7 @@ class VerifyView extends GetView<VerifyController> {
                   TextSpan(
                     children: [
                       TextSpan(
-                          text: 'Please enter the verification code sent to\n',
+                          text: Strings.enterVerificationCode,
                           style: TextStyleUtil.k16Regular(
                               color: ColorUtil.kBlack04)),
                       TextSpan(
@@ -88,19 +89,20 @@ class VerifyView extends GetView<VerifyController> {
                     TextSpan(
                       children: [
                         TextSpan(
-                            text: "Didn't get the code? ",
+                            text: Strings.didNotGetCode,
                             style: TextStyleUtil.k14Regular(
                                 color: ColorUtil.kBlack04)),
                         controller.seconds.value == 0
                             ? TextSpan(
-                                text: 'Resend',
+                                text: Strings.resend,
                                 style: TextStyleUtil.k16Semibold(
                                     fontSize: 16.kh,
                                     color: ColorUtil.kSecondary01),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () => controller.otpAuth())
                             : TextSpan(
-                                text: "${controller.seconds.value} sec",
+                                text:
+                                    "${controller.seconds.value} ${Strings.sec}",
                                 style: TextStyleUtil.k16Semibold(
                                     fontSize: 16.kh,
                                     color: ColorUtil.kSecondary01),
@@ -114,13 +116,17 @@ class VerifyView extends GetView<VerifyController> {
             ),
           ),
           const Expanded(child: SizedBox()),
-          GreenPoolButton(
-            onPressed: () async {
-              await controller.verifyOTP();
-            },
-            color: ColorUtil.kPrimary01,
-            label: 'Verify',
-          ).paddingSymmetric(vertical: 40.kh)
+          Obx(
+            () => GreenPoolButton(
+              onPressed: () async {
+                await controller.verifyOTP();
+              },
+              isActive: controller.isActive.value,
+              label: controller.isActive.value
+                  ? Strings.verify
+                  : "${controller.buttonSeconds.value}",
+            ).paddingSymmetric(vertical: 40.kh),
+          )
         ],
       ).paddingSymmetric(horizontal: 16.kw),
     );

@@ -67,8 +67,6 @@ class UserDetailsController extends GetxController {
       showMySnackbar(msg: 'Image selected');
       update();
       isIDPicUpdated.value = true;
-      // isIDPicked.value = true;
-      update();
     } else {
       showMySnackbar(msg: 'No image selected');
     }

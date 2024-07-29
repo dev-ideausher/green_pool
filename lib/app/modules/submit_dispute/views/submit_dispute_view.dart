@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:get/get.dart';
+import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -18,8 +19,8 @@ class SubmitDisputeView extends GetView<SubmitDisputeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const GreenPoolAppBar(
-        title: Text('File Dispute'),
+      appBar:  GreenPoolAppBar(
+        title: Text(Strings.fileDispute),
       ),
       resizeToAvoidBottomInset: false,
       body: SafeArea(
@@ -27,11 +28,11 @@ class SubmitDisputeView extends GetView<SubmitDisputeController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'File a dispute if either party causes any issue to the other party',
+              Strings.fileIfanyPartyCausesAnyIssue,
               style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
             ).paddingOnly(top: 32.kh, bottom: 24.kh),
             Text(
-              'Enter Booking Id',
+              Strings.enterBookingId,
               style: TextStyleUtil.k14Semibold(),
             ).paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
@@ -40,16 +41,16 @@ class SubmitDisputeView extends GetView<SubmitDisputeController> {
               hintColor: ColorUtil.kBlack01,
             ).paddingOnly(bottom: 16.kh),
             Text(
-              'Dispute Description',
+              Strings.disputeDescription,
               style: TextStyleUtil.k14Semibold(),
             ).paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
-              hintText: 'Enter text here',
+              hintText: Strings.enterTextHere,
               controller: controller.descriptionTextController,
               maxLines: 4,
             ).paddingOnly(bottom: 16.kh),
             Text(
-              'Upload Images (optional)',
+              Strings.uploadImages,
               style: TextStyleUtil.k14Semibold(),
             ).paddingOnly(bottom: 16.kh),
             GestureDetector(
@@ -85,7 +86,7 @@ class SubmitDisputeView extends GetView<SubmitDisputeController> {
               onPressed: () {
                 controller.fileDisputeAPI();
               },
-              label: 'Submit',
+              label: Strings.submit,
             ).paddingSymmetric(vertical: 40.kh),
           ],
         ).paddingSymmetric(horizontal: 16.kw),

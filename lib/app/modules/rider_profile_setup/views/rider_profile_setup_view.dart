@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
+import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -36,11 +37,11 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Profile Setup',
+                Strings.profileSetup,
                 style: TextStyleUtil.k32Heading700(),
               ).paddingOnly(bottom: 4.kh, top: 16.kh),
               Text(
-                'Edit your profile details',
+                Strings.editProfileDetails,
                 style: TextStyleUtil.k16Regular(color: ColorUtil.kBlack04),
               ).paddingOnly(bottom: 40.kh),
               Center(
@@ -92,26 +93,25 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
                       ).paddingOnly(bottom: 12.kh),
                     ),
                     Text(
-                      'Take or upload profile photo',
+                      Strings.takeOrUploadProfilePic,
                       style:
                           TextStyleUtil.k16Regular(color: ColorUtil.kNeutral4),
                     ),
                   ],
                 ),
               ).paddingOnly(bottom: 40.kh),
-              const RichTextHeading(text: 'Full Name')
-                  .paddingOnly(bottom: 8.kh),
+              RichTextHeading(text: Strings.fullName).paddingOnly(bottom: 8.kh),
               GreenPoolTextField(
-                hintText: 'Enter name',
+                hintText: Strings.enterName,
                 controller: controller.fullName,
                 validator: (value) => controller.nameValidator(value),
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 suffix: SvgPicture.asset(ImageConstant.svgProfileEditPen),
               ).paddingOnly(bottom: 16.kh),
-              const RichTextHeading(text: 'Email Address')
+              RichTextHeading(text: Strings.emailAddress)
                   .paddingOnly(bottom: 8.kh),
               GreenPoolTextField(
-                hintText: 'Enter Email ID',
+                hintText: Strings.enterEmailId,
                 controller: controller.email,
                 validator: (value) => controller.validateEmail(value),
                 keyboardType: TextInputType.emailAddress,
@@ -121,42 +121,42 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
                     : SvgPicture.asset(ImageConstant.svgProfileEditPen),
                 readOnly: controller.readOnlyEmail,
               ).paddingOnly(bottom: 16.kh),
-              const RichTextHeading(text: 'Phone Number')
+              RichTextHeading(text: Strings.phoneNumber)
                   .paddingOnly(bottom: 8.kh),
               GreenPoolTextField(
-                hintText: 'Enter phone number',
+                hintText: Strings.enterPhoneNumber,
                 controller: controller.phoneNumber,
                 prefix: Text(
-                    "+1",
-                    style: TextStyleUtil.k14Regular(
-                      color: ColorUtil.kBlack03,
-                    ),
+                  "+1",
+                  style: TextStyleUtil.k14Regular(
+                    color: ColorUtil.kBlack03,
                   ),
+                ),
                 validator: (value) => controller.phoneNumberValidator(value),
                 autovalidateMode: AutovalidateMode.onUserInteraction,
               ).paddingOnly(bottom: 16.kh),
-              const RichTextHeading(text: 'Gender').paddingOnly(bottom: 8.kh),
+              RichTextHeading(text: Strings.gender).paddingOnly(bottom: 8.kh),
               GreenPoolDropDown(
-                hintText: 'Select your Gender',
+                hintText: Strings.selectGender,
                 validator: (value) => controller.validateGender(value),
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 items: [
                   DropdownMenuItem(
-                      value: "Male",
+                      value: Strings.male,
                       child: Text(
-                        "Male",
+                        Strings.male,
                         style: TextStyleUtil.k14Regular(),
                       )),
                   DropdownMenuItem(
-                      value: "Female",
+                      value: Strings.female,
                       child: Text(
-                        "Female",
+                        Strings.female,
                         style: TextStyleUtil.k14Regular(),
                       )),
                   DropdownMenuItem(
-                      value: "Prefer not to say",
+                      value: Strings.preferNotToSay,
                       child: Text(
-                        "Prefer not to say",
+                        Strings.preferNotToSay,
                         style: TextStyleUtil.k14Regular(),
                       )),
                 ],
@@ -164,11 +164,11 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
                   controller.gender.text = val.toString();
                 },
               ).paddingOnly(bottom: 16.kh),
-              const RichTextHeading(text: 'City Province')
+              RichTextHeading(text: Strings.cityProvince)
                   .paddingOnly(bottom: 8.kh),
               Obx(
                 () => GreenPoolTextField(
-                  hintText: "Select your City",
+                  hintText: Strings.selectCity,
                   controller: controller.city,
                   suffix: controller.isCityListExpanded.value
                       ? const Icon(Icons.arrow_drop_up)
@@ -216,7 +216,7 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
                 TextSpan(
                   children: [
                     TextSpan(
-                      text: 'Date of Birth ',
+                      text: Strings.dateOfBirth,
                       style: TextStyleUtil.k14Semibold(),
                     ),
                     TextSpan(
@@ -224,7 +224,7 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
                       style: TextStyleUtil.k14Regular(color: ColorUtil.kError3),
                     ),
                     TextSpan(
-                      text: '(should be above 18)',
+                      text: Strings.above18,
                       style:
                           TextStyleUtil.k14Regular(color: ColorUtil.kBlack04),
                     ),
@@ -232,7 +232,7 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
                 ),
               ).paddingOnly(bottom: 8.kh),
               GreenPoolTextField(
-                hintText: 'Enter date of birth',
+                hintText: Strings.enterDateOfBirth,
                 controller: controller.formattedDateOfBirth,
                 readOnly: true,
                 validator: (value) => controller.validateDOB(value),
@@ -240,7 +240,7 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
                 onTap: () => controller.setDate(context),
                 suffix: SvgPicture.asset(ImageConstant.svgIconCalendar),
               ).paddingOnly(bottom: 16.kh),
-              const RichTextHeading(text: 'ID Verification')
+              RichTextHeading(text: Strings.idVerification)
                   .paddingOnly(bottom: 8.kh),
               GestureDetector(
                 onTap: () => Get.to(() => UploadIDView(
@@ -268,7 +268,7 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
                               SvgPicture.asset(ImageConstant.svgIconUpload)
                                   .paddingOnly(right: 8.kw),
                               Text(
-                                'Upload ID',
+                                Strings.uploadId,
                                 style: TextStyleUtil.k14Regular(
                                     color: ColorUtil.kBlack03),
                               ),
@@ -280,7 +280,7 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
               GreenPoolButton(
                 onPressed: () => controller.checkUserValidations(),
                 color: ColorUtil.kPrimary01,
-                label: 'Proceed',
+                label: Strings.proceed,
               ).paddingSymmetric(vertical: 40.kh),
             ],
           ).paddingSymmetric(horizontal: 16.kw),

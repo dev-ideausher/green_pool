@@ -8,7 +8,11 @@ import 'package:green_pool/app/modules/messages/controllers/messages_controller.
 import 'package:green_pool/app/modules/my_rides_request/controllers/my_rides_request_controller.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:permission_handler/permission_handler.dart';
+import '../data/chat_arg.dart';
+import '../data/ride_detail_id.dart';
+import '../modules/my_rides_details/controllers/my_rides_details_controller.dart';
 import '../modules/my_rides_one_time/controllers/my_rides_one_time_controller.dart';
+import 'dio/api_service.dart';
 
 class PushNotificationService {
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
@@ -153,6 +157,7 @@ class PushNotificationService {
     final notificationType = data['notification_type'];
     switch (notificationType) {
       case 'Start Ride':
+      case 'Start_Ride':
       case 'Rider_Pickup_Request':
       case 'Rider_Dropoff_Request':
       case 'Rider_Confirm_Request':
@@ -187,7 +192,7 @@ class PushNotificationService {
     _handleNotificationType(message.data);
   }
 
-  void _handleNotificationClickPayload(String payload) {
+  Future<void> _handleNotificationClickPayload(String payload) async {
     final homeController = Get.find<HomeController>();
     final currentRoute = Get.currentRoute;
 
@@ -202,12 +207,62 @@ class PushNotificationService {
       Get.toNamed(Routes.WALLET);
     }
 
+    Future<void> navigateToChatPage() async {
+      try {
+        final res = await APIManager.getChatRoomId(
+            receiverId: actionData?.data['senderId'] ?? "");
+        Get.toNamed(Routes.CHAT_PAGE,
+            arguments: ChatArg(
+                chatRoomId: res.data["data"]["chatRoomId"] ?? "",
+                deleteUpdateTime: res.data["data"]["deleteUpdateTime"] ?? "",
+                id: actionData?.data['senderId'],
+                name: actionData?.data['name'],
+                image: actionData?.data['profilePic']));
+      } catch (e) {
+        try {
+          Get.toNamed(Routes.CHAT_PAGE,
+              arguments: ChatArg(
+                  chatRoomId: "",
+                  id: actionData?.data['senderId'],
+                  name: actionData?.data['name'],
+                  image: actionData?.data['profilePic']));
+        } catch (e) {
+          debugPrint(e.toString());
+        }
+      }
+    }
+
+    Future<void> navigateToDriversRequestSection() async {
+      //first navigate to bottom navigation
+      //navigate to ride details view
+      try {
+        //navigate to request section
+        await Get.toNamed(Routes.MY_RIDES_REQUEST,
+            arguments: RideDetailId(
+                driverRidId: actionData?.data['rideId'] ?? "", riderRidId: ""));
+      } catch (e) {
+        debugPrint(e.toString());
+      }
+    }
+
     switch (payload) {
       case "Ride_Published":
         homeController.changeTabIndex(1);
         break;
 
       case "Rider New request":
+        if (currentRoute == Routes.BOTTOM_NAVIGATION) {
+          homeController.changeTabIndex(1);
+          await navigateToDriversRequestSection();
+        } else if (currentRoute == Routes.MY_RIDES_REQUEST) {
+          //page will refresh as soon as the notification is received
+          print("refresh confirm rides page");
+        } else {
+          await navigateToBottomNavigation(1);
+          await navigateToDriversRequestSection();
+        }
+        break;
+
       case "Rider Ride Confirmation":
       case "Rider Request Accept":
       case "Rider Ride Cancellation":
@@ -242,6 +297,7 @@ class PushNotificationService {
       // when rider accepts from confirm section
       case "Ride Published":
       case 'Start Ride':
+      case 'Start_Ride':
         // Get.toNamed(Routes.RIDER_START_RIDE_MAP, arguments: actionData?.data);
         // need my rides model data
         if (currentRoute == Routes.BOTTOM_NAVIGATION) {
@@ -272,8 +328,10 @@ class PushNotificationService {
         if (currentRoute != Routes.CHAT_PAGE) {
           if (currentRoute == Routes.BOTTOM_NAVIGATION) {
             homeController.changeTabIndex(2);
+            await navigateToChatPage();
           } else {
             navigateToBottomNavigation(2);
+            await navigateToChatPage();
           }
         }
         break;

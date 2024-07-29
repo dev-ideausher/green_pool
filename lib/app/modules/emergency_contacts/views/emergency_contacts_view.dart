@@ -39,9 +39,6 @@ class EmergencyContactsView extends GetView<EmergencyContactsController> {
           GreenPoolTextField(
             hintText: Strings.enterFullName,
             controller: controller.fullName1,
-            onchanged: (value) {
-              controller.setButtonState();
-            },
           ).paddingOnly(bottom: 16.kh),
           Text(
             Strings.phoneNumber,
@@ -76,6 +73,9 @@ class EmergencyContactsView extends GetView<EmergencyContactsController> {
             hintText: Strings.enterPhoneNumber,
             keyboardType: TextInputType.phone,
             controller: controller.emergencyNumber2,
+            onchanged: (value) {
+              controller.setButtonState();
+            },
           ).paddingOnly(bottom: 24.kh),
           const GreenPoolDivider(),
           const Expanded(child: SizedBox()),

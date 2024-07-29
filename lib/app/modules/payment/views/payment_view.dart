@@ -45,29 +45,6 @@ class PaymentView extends GetView<PaymentController> {
                   //     color: ColorUtil.kGreyColor,
                   //   ),
                   // ).paddingSymmetric(horizontal: 16.kw),
-                  /*Obx(
-                    () => OriginToDestination(
-                            origin: controller.fromDriverDetails.value
-                                ? controller.rideData['ridesDetails']['origin']
-                                        ['name']
-                                    .toString()
-                                : controller.fromConfirmRequestSection.value
-                                    ? "${controller.riderConfirmRequestModelData?.driverRideDetails?.origin!.name.toString()}"
-                                    : controller
-                                        .riderSendRequestModelData.origin!.name
-                                        .toString(),                                                
-                            destination: controller.fromDriverDetails.value
-                                ? controller.rideData['ridesDetails']
-                                        ['destination']['name']
-                                    .toString()
-                                : controller.fromConfirmRequestSection.value
-                                    ? "${controller.riderConfirmRequestModelData?.driverRideDetails?.destination?.name.toString()}"
-                                    : controller.riderSendRequestModelData
-                                        .destination!.name
-                                        .toString(),
-                            needPickupText: false)
-                        .paddingSymmetric(horizontal: 16.kw),
-                  ),*/
                   OriginToDestination(
                           origin: controller.origin ?? "",
                           stop1: controller.stop1 ?? "",
@@ -80,6 +57,24 @@ class PaymentView extends GetView<PaymentController> {
                     Strings.promotions,
                     style: TextStyleUtil.k16Bold(),
                   ).paddingOnly(bottom: 16.kh),
+                  ListTile(
+                    tileColor: ColorUtil.kWhiteColor,
+                    title: Text(
+                      Strings.seatsBooked,
+                      style: TextStyleUtil.k14Semibold(),
+                    ),
+                    leading: Icon(
+                      Icons.person,
+                      color: Get.find<HomeController>().isPinkModeOn.value
+                          ? ColorUtil.kPrimary2PinkMode
+                          : ColorUtil.kPrimary01,
+                      size: 24.kh,
+                    ),
+                    trailing: Text(
+                      controller.seatsBooked ?? "0",
+                      style: TextStyleUtil.k14Semibold(),
+                    ),
+                  ).paddingOnly(bottom: 4.kh),
                   ListTile(
                     tileColor: ColorUtil.kWhiteColor,
                     onTap: () {

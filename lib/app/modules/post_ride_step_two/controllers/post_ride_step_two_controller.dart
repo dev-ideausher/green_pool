@@ -214,14 +214,16 @@ class PostRideStepTwoController extends GetxController {
           MaterialLocalizations.of(context);
       String formattedTime = localizations.formatTimeOfDay(pickedTime,
           alwaysUse24HourFormat: false);
+      selectedRecurringTime.text = formattedTime;
+      setActiveStateCarpoolSchedule();
 
-      if (GpUtil.isAfterCurrentTime(formattedTime)) {
+      /*if (GpUtil.isAfterCurrentTime(formattedTime)) {
         selectedRecurringTime.text = formattedTime;
         setActiveStateCarpoolSchedule();
       } else {
         showMySnackbar(msg: "Please select a valid time");
         selectedRecurringTime.clear();
-      }
+      }*/
     }
   }
 

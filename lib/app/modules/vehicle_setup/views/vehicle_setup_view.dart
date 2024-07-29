@@ -34,7 +34,7 @@ class VehicleSetupView extends GetView<VehicleSetupController> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const RichTextHeading(text: 'Vehicle Photo')
+                RichTextHeading(text: Strings.vehiclePhoto)
                     .paddingOnly(top: 32.kh, bottom: 8.kh),
                 GestureDetector(
                   onTap: () => Get.to(() => VehiclePictureView(
@@ -65,7 +65,7 @@ class VehicleSetupView extends GetView<VehicleSetupController> {
                                 SvgPicture.asset(ImageConstant.svgIconUpload)
                                     .paddingOnly(right: 8.kw),
                                 Text(
-                                  'Upload Photo',
+                                  Strings.uploadPhoto,
                                   style: TextStyleUtil.k14Regular(
                                       color: ColorUtil.kBlack03),
                                 ),
@@ -74,60 +74,59 @@ class VehicleSetupView extends GetView<VehicleSetupController> {
                     ),
                   ),
                 ).paddingOnly(bottom: 16.kh),
-                const RichTextHeading(text: 'Model').paddingOnly(bottom: 8.kh),
+                RichTextHeading(text: Strings.model).paddingOnly(bottom: 8.kh),
                 GreenPoolTextField(
-                  hintText: 'Enter vehicle model',
+                  hintText: Strings.enterVehicleModel,
                   controller: controller.model,
                   validator: (p0) => controller.validateModel(p0),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                 ).paddingOnly(bottom: 16.kh),
-                const RichTextHeading(text: 'Type').paddingOnly(bottom: 8.kh),
+                RichTextHeading(text: Strings.type).paddingOnly(bottom: 8.kh),
                 GreenPoolDropDown(
-                  hintText: 'Select vehicle type',
-                  value: controller.type.value,
+                  hintText: Strings.selectVehicletype,                  
                   validator: (p0) => controller.validateVehicleType(p0),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   items: [
                     DropdownMenuItem(
-                        value: "Hatchback",
+                        value: Strings.hatchBack,
                         child: Text(
-                          "Hatchback",
+                          Strings.hatchBack,
                           style: TextStyleUtil.k14Regular(),
                         )),
                     DropdownMenuItem(
-                        value: "Coupe",
+                        value: Strings.coupe,
                         child: Text(
-                          "Coupe",
+                          Strings.coupe,
                           style: TextStyleUtil.k14Regular(),
                         )),
                     DropdownMenuItem(
-                        value: "Convertible",
+                        value: Strings.convertible,
                         child: Text(
-                          "Convertible",
+                          Strings.convertible,
                           style: TextStyleUtil.k14Regular(),
                         )),
                     DropdownMenuItem(
-                        value: "Sedan",
+                        value: Strings.sedan,
                         child: Text(
-                          "Sedan",
+                          Strings.sedan,
                           style: TextStyleUtil.k14Regular(),
                         )),
                     DropdownMenuItem(
-                        value: "SUV",
+                        value: Strings.SUV,
                         child: Text(
-                          "SUV",
+                          Strings.SUV,
                           style: TextStyleUtil.k14Regular(),
                         )),
                     DropdownMenuItem(
-                        value: "Truck",
+                        value: Strings.truck,
                         child: Text(
-                          "Truck",
+                          Strings.truck,
                           style: TextStyleUtil.k14Regular(),
                         )),
                     DropdownMenuItem(
-                        value: "Van",
+                        value: Strings.van,
                         child: Text(
-                          "Van",
+                          Strings.van,
                           style: TextStyleUtil.k14Regular(),
                         )),
                   ],
@@ -135,71 +134,70 @@ class VehicleSetupView extends GetView<VehicleSetupController> {
                     controller.type.value = val.toString();
                   },
                 ).paddingOnly(bottom: 16.kh),
-                const RichTextHeading(text: 'Color').paddingOnly(bottom: 8.kh),
+                RichTextHeading(text: Strings.color).paddingOnly(bottom: 8.kh),
                 GreenPoolDropDown(
-                  hintText: 'Select vehicle color',
-                  value: controller.color.value,
+                  hintText: Strings.selectVehicleColor,                  
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (p0) => controller.validateColor(p0),
                   items: [
                     DropdownMenuItem(
-                        value: "Silver",
+                        value: Strings.silver,
                         child: Text(
-                          "Silver",
+                          Strings.silver,
                           style: TextStyleUtil.k14Regular(),
                         )),
                     DropdownMenuItem(
-                        value: "Black",
+                        value: Strings.black,
                         child: Text(
-                          "Black",
+                          Strings.black,
                           style: TextStyleUtil.k14Regular(),
                         )),
                     DropdownMenuItem(
-                        value: "White",
+                        value: Strings.white,
                         child: Text(
-                          "White",
+                          Strings.white,
                           style: TextStyleUtil.k14Regular(),
                         )),
                     DropdownMenuItem(
-                        value: "Dark Grey",
+                        value: Strings.darkgrey,
                         child: Text(
-                          "Dark Grey",
+                          Strings.darkgrey,
                           style: TextStyleUtil.k14Regular(),
                         )),
                     DropdownMenuItem(
-                        value: "Light Grey",
+                        value: Strings.lightGrey,
                         child: Text(
-                          "Light Grey",
+                          Strings.lightGrey,
                           style: TextStyleUtil.k14Regular(),
                         )),
                     DropdownMenuItem(
-                        value: "Red",
+                        value: Strings.red,
                         child: Text(
-                          "Red",
+                          Strings.red,
                           style: TextStyleUtil.k14Regular(),
                         )),
                     DropdownMenuItem(
-                        value: "Blue",
+                        value: Strings.blue,
                         child: Text(
-                          "Blue",
+                          Strings.blue,
                           style: TextStyleUtil.k14Regular(),
                         )),
                     DropdownMenuItem(
-                        value: "Light Blue",
+                        value: Strings.lightBlue,
                         child: Text(
-                          "Light Blue",
+                          Strings.lightBlue,
                           style: TextStyleUtil.k14Regular(),
                         )),
                     DropdownMenuItem(
-                        value: "Dark Blue",
+                        value: Strings.darkBlue,
                         child: Text(
-                          "Dark Blue",
+                          Strings.darkBlue,
                           style: TextStyleUtil.k14Regular(),
                         )),
                     DropdownMenuItem(
-                        value: "Brown",
+                        value: Strings.brown,
                         child: Text(
-                          "Brown",
+                          Strings.brown,
                           style: TextStyleUtil.k14Regular(),
                         )),
                   ],
@@ -207,18 +205,18 @@ class VehicleSetupView extends GetView<VehicleSetupController> {
                     controller.color.value = val.toString();
                   },
                 ).paddingOnly(bottom: 16.kh),
-                const RichTextHeading(text: 'Year').paddingOnly(bottom: 8.kh),
+                RichTextHeading(text: Strings.year).paddingOnly(bottom: 8.kh),
                 GreenPoolTextField(
-                  hintText: 'Enter year',
+                  hintText: Strings.enterYear,
                   controller: controller.year,
                   validator: (p0) => controller.validateYear(p0),
                   keyboardType: const TextInputType.numberWithOptions(),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                 ).paddingOnly(bottom: 16.kh),
-                const RichTextHeading(text: 'License Plate')
+                RichTextHeading(text: Strings.licensePlate)
                     .paddingOnly(bottom: 8.kh),
                 GreenPoolTextField(
-                  hintText: 'License plate',
+                  hintText: Strings.licensePlate,
                   controller: controller.licencePlate,
                   validator: (p0) => controller.validateLicensePlate(p0),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -227,7 +225,7 @@ class VehicleSetupView extends GetView<VehicleSetupController> {
                   // onPressed: () async => await controller.vehicleDetailsAPI(),
                   onPressed: () async =>
                       await controller.checkVehicleValidations(),
-                  label: 'Proceed',
+                  label: Strings.proceed,
                 ).paddingSymmetric(vertical: 40.kh),
               ],
             ),

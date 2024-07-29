@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
@@ -17,8 +18,8 @@ class WalletToBankAccView extends GetView<WalletToBankAccController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const GreenPoolAppBar(
-        title: Text("Send Money to Bank Account"),
+      appBar:  GreenPoolAppBar(
+        title: Text(Strings.sendMoneyToBankAccount),
       ),
       resizeToAvoidBottomInset: false,
       body: Column(
@@ -41,7 +42,7 @@ class WalletToBankAccView extends GetView<WalletToBankAccController> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Greenpool Cash",
+                  Strings.greenpoolCash,
                   style: TextStyleUtil.k18Heading600(),
                   textAlign: TextAlign.center,
                 ).paddingOnly(bottom: 16.kh),
@@ -64,17 +65,17 @@ class WalletToBankAccView extends GetView<WalletToBankAccController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Send Money to Bank Account",
+                  Strings.sendMoneyToBankAccount,
                   style: TextStyleUtil.k16Bold(),
                 ).paddingOnly(bottom: 24.kh),
                 Text(
-                  "Amount",
+                  Strings.amount,
                   style: TextStyleUtil.k14Semibold(),
                 ).paddingOnly(bottom: 8.kh),
                 GreenPoolTextField(
-                  hintText: "Enter amount",
+                  hintText: Strings.enterAmount,
                   prefix: Text(
-                    "\$",
+                    Strings.dollar,
                     style: TextStyleUtil.k16Regular(
                       color: ColorUtil.kBlack03,
                     ),
@@ -94,7 +95,7 @@ class WalletToBankAccView extends GetView<WalletToBankAccController> {
               onPressed: () {
                 Get.toNamed(Routes.ADD_BANK_DETAILS);
               },
-              label: "Proceed",
+              label: Strings.proceed,
               isActive: controller.buttonState.value,
             ).paddingSymmetric(vertical: 40.kh),
           ),

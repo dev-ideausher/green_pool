@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:get/get.dart';
+import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../constants/image_constant.dart';
@@ -44,14 +45,14 @@ class VerificationDoneView extends GetView<VerificationDoneController> {
                 Positioned(
                   top: 390.kh,
                   child: Text(
-                    "Woohoo!",
+                    Strings.woohoo,
                     style: TextStyleUtil.k24Heading700(),
                   ),
                 ),
                 Positioned(
                     top: 440.kh,
                     child: Text(
-                      "Verification is successful!\nPlease continue to your profile.",
+                      Strings.verificationSuccessfull,
                       style:
                           TextStyleUtil.k16Regular(color: ColorUtil.kBlack04),
                       textAlign: TextAlign.center,
@@ -92,7 +93,7 @@ class VerificationDoneView extends GetView<VerificationDoneController> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'You would like to continue as Rider or Driver?',
+                                Strings.continueAsRiderOrDriver,
                                 style: TextStyleUtil.k18Bold(
                                   color: ColorUtil.kBlack04,
                                 ),
@@ -113,7 +114,7 @@ class VerificationDoneView extends GetView<VerificationDoneController> {
                                     },
                                     height: 40.kh,
                                     width: 130.kw,
-                                    label: 'Rider',
+                                    label: Strings.rider,
                                     fontSize: 14.kh,
                                     padding: const EdgeInsets.all(8),
                                   ),
@@ -128,7 +129,7 @@ class VerificationDoneView extends GetView<VerificationDoneController> {
                                     },
                                     height: 40.kh,
                                     width: 130.kw,
-                                    label: 'Driver',
+                                    label: Strings.driver,
                                     fontSize: 14.kh,
                                     padding: const EdgeInsets.all(8),
                                   ),
@@ -140,7 +141,7 @@ class VerificationDoneView extends GetView<VerificationDoneController> {
                       ),
                     );
                   },
-            label: "Continue",
+            label: Strings.continueText,
           ).paddingOnly(bottom: 40.kh),
         ],
       ),

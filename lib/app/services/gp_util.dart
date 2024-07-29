@@ -291,7 +291,8 @@ class GpUtil {
       var localDateTime = inputFormat.parse(combinedDateTime);
       var gmtDateTime = localDateTime.toUtc();
 
-      var outputFormat = DateFormat('yyyy-MM-ddTHH:mm');
+      // var outputFormat = DateFormat('yyyy-MM-ddTHH:mm');
+      var outputFormat = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
       return outputFormat.format(gmtDateTime);
     } catch (e) {

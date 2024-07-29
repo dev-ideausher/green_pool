@@ -225,12 +225,13 @@ class RiderMyRideRequestController extends GetxController {
     };
 
     print(
-        "PRICE: ${riderSendRequestModelData.price! * (riderSendRequestModel.value.riderRideDetails!.seatAvailable!)}");
+        "PRICE: ${int.parse(riderSendRequestModelData.price!) * (riderSendRequestModel.value.riderRideDetails!.seatAvailable!)}");
 
     Get.toNamed(Routes.PAYMENT, arguments: {
       'rideData': rideData,
       'riderSendRequestModelData': riderSendRequestModelData,
-      'pricePerSeat': riderSendRequestModelData.price
+      'pricePerSeat': riderSendRequestModelData.price,
+      'seatsBooked': riderSendRequestModel.value.riderRideDetails!.seatAvailable
     });
   }
 

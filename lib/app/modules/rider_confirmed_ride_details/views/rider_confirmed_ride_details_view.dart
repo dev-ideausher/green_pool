@@ -75,7 +75,6 @@ class RiderConfirmedRideDetailsView
                         ),
                       ),
                       title: Text(
-                        // 'Sam Alexander',
                         "${controller.myRidesModel.value.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.driverDetails?[0]?.fullName}",
                         style: TextStyleUtil.k16Bold(),
                       ),
@@ -98,7 +97,7 @@ class RiderConfirmedRideDetailsView
                         ],
                       ),
                       trailing: SizedBox(
-                        width: 80.kw,
+                        width: 120.kw,
                         child: Column(
                           children: [
                             Text.rich(
@@ -132,7 +131,7 @@ class RiderConfirmedRideDetailsView
                                       : ColorUtil.kSecondary01,
                                 ).paddingOnly(right: 8.kw),
                                 Text(
-                                  "${controller.myRidesModel.value.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.seatAvailable} seats",
+                                  "${controller.myRidesModel.value.seatAvailable} seats",
                                   style: TextStyleUtil.k12Regular(
                                       color: ColorUtil.kBlack03),
                                 ),
@@ -171,7 +170,7 @@ class RiderConfirmedRideDetailsView
                     //bottom line
                     const GreenPoolDivider(),
                   ],
-                ).paddingAll(16.kh)
+                )
               ],
             ),
 
@@ -241,7 +240,7 @@ class RiderConfirmedRideDetailsView
                   ],
                 ),
               ],
-            ).paddingOnly(bottom: 8.kh),
+            ).paddingSymmetric(vertical: 8.kh),
 
             const GreenPoolDivider().paddingOnly(bottom: 16.kh),
 

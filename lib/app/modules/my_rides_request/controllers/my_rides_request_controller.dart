@@ -67,9 +67,7 @@ class MyRidesRequestController extends GetxController {
               driverRideData: driverRideData,
             ),
             isScrollControlled: true);
-        showMySnackbar(
-            msg: acceptRiderResponse.data?['message'] ??
-                'Request accepted successfully!');
+        showMySnackbar(msg: 'Request accepted successfully!');
         Get.find<MyRidesOneTimeController>().myRidesAPI();
       } else {
         showMySnackbar(msg: acceptRiderResponse.data?['message'] ?? "");

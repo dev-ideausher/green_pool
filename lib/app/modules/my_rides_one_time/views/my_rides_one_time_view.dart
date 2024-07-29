@@ -66,49 +66,18 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                               Builder(builder: (context) {
                                 bool isListEmpty = false;
                                 if (type == null) {
-                                  // const NoRidePosted();
                                   if (controller.myRidesModelData.isEmpty) {
                                     isListEmpty = true;
                                   } else {
                                     isListEmpty = false;
                                   }
-                                } else if (type == Strings.booked) {
-                                  /*bool containsDriverId = controller
-                                      .myRidesModelData
-                                      .any((obj) => obj.driverId == null);
-                                  if (!containsDriverId) {
-                                    final myList = controller.myRidesModelData
-                                        .where((obj) => obj.driverId == null)
-                                        .toList();
-                                    if (myList.isEmpty) {
-                                      isListEmpty = false;
-                                    } else {
-                                      isListEmpty = true;
-                                    }
-                                  } else {
-                                    isListEmpty = true;
-                                  }*/
+                                } else if (type == Strings.booked) {                                  
                                   if (controller.driverRides.isEmpty) {
                                     isListEmpty = true;
                                   } else {
                                     isListEmpty = false;
                                   }
-                                } else if (type == Strings.published) {
-                                  /*bool containsRiderId = controller
-                                      .myRidesModelData
-                                      .any((obj) => obj.riderId == null);
-                                  if (!containsRiderId) {
-                                    final myList = controller.myRidesModelData
-                                        .where((obj) => obj.riderId == null)
-                                        .toList();
-                                    if (myList.isEmpty) {
-                                      isListEmpty = false;
-                                    } else {
-                                      isListEmpty = true;
-                                    }
-                                  } else {
-                                    isListEmpty = true;
-                                  }*/
+                                } else if (type == Strings.published) {                                  
                                   if (controller.riderRides.isEmpty) {
                                     isListEmpty = true;
                                   } else {

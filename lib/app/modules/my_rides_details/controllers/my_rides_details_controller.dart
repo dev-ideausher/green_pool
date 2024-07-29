@@ -34,10 +34,12 @@ class MyRidesDetailsController extends GetxController {
     }
   }
 
-  void viewMatchingRiders() => Get.toNamed(Routes.MY_RIDES_REQUEST,
-      arguments: RideDetailId(
-          driverRidId: myRidesModelData.value.driverRideId ?? "",
-          riderRidId: myRidesModelData.value.riderRideId ?? ""));
+  viewMatchingRiders() {
+    Get.toNamed(Routes.MY_RIDES_REQUEST,
+        arguments: RideDetailId(
+            driverRidId: myRidesModelData.value.driverRideId ?? "",
+            riderRidId: myRidesModelData.value.riderRideId ?? ""));
+  }
 
   viewOnMap() {
     Get.toNamed(Routes.START_RIDE,

@@ -139,6 +139,8 @@ class RiderRequestSendDriverBottomsheet extends StatelessWidget {
             const GreenPoolDivider().paddingOnly(bottom: 8.kh),
             OriginToDestination(
                     origin: element?.origin?.name ?? "",
+                    stop1: element?.stops?[0]?.name ?? "",
+                    stop2: element?.stops?[1]?.name ?? "",
                     destination: element?.destination?.name ?? "",
                     needPickupText: false)
                 .paddingOnly(bottom: 8.kh),

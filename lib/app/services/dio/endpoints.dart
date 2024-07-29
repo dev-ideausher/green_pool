@@ -76,6 +76,7 @@ class Endpoints {
   static const String transactions = "payment/transactions";
   static const String notifications = "user/notifications";
   static const String helpAndSupport = "company/helpAndSupport";
+  static const String aboutUs = "admin/app/aboutUs";
   static const String welcomeEmail = "email/welComeEmail";
   static const String promoCode = "admin/promoCode/web";
 

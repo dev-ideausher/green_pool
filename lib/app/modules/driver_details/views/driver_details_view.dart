@@ -237,24 +237,47 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
               Strings.coPassengers,
               style: TextStyleUtil.k14Bold(),
             ).paddingOnly(bottom: 16.kh),
-            (controller.matchingRidesModelData.value?.ridersDetatils?.length ??
-                        0) ==
-                    0
-                ? Center(
-                    child: Text(
-                      Strings.noPassengersAvailable,
-                      style: TextStyleUtil.k14Semibold(),
-                    ),
-                  ).paddingOnly(bottom: 16.kh)
-                : CoPassengerList(
-                    itemcount: controller
-                        .matchingRidesModelData.value?.ridersDetatils?.length,
-                    image: CommonImageView(
-                        url:
-                            "${controller.matchingRidesModelData.value.ridersDetatils?[0]?.profilePic?.url}"),
-                    name:
-                        "${controller.matchingRidesModelData.value.ridersDetatils?[0]?.fullName.toString().split(" ").first}\n${controller.matchingRidesModelData.value.ridersDetatils?[0]?.fullName.toString().split(" ").last}",
-                  ).paddingOnly(bottom: 16.kh),
+            SizedBox(
+              height: 96.kh,
+              child: (controller.matchingRidesModelData.value?.ridersDetatils
+                              ?.length ??
+                          0) ==
+                      0
+                  ? Center(
+                      child: Text(
+                        Strings.noPassengersAvailable,
+                        style: TextStyleUtil.k14Semibold(),
+                      ),
+                    ).paddingOnly(bottom: 16.kh)
+                  : ListView.builder(
+                      itemCount: controller.matchingRidesModelData.value
+                              ?.ridersDetatils?.length ??
+                          6,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        return Column(
+                          children: [
+                            Container(
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                              ),
+                              child: ClipOval(
+                                  child: SizedBox.fromSize(
+                                      size: Size.fromRadius(20.kh),
+                                      child: CommonImageView(
+                                          url:
+                                              "${controller.matchingRidesModelData.value.ridersDetatils?[index]?.profilePic?.url}"))),
+                            ).paddingOnly(bottom: 4.kh),
+                            Text(
+                              "${controller.matchingRidesModelData.value.ridersDetatils?[index]?.fullName.toString().split(" ").first}",
+                              style: TextStyleUtil.k12Semibold(),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ).paddingOnly(right: 32.kw);
+                      }),
+            ).paddingOnly(bottom: 16.kh),
+
             const GreenPoolDivider().paddingOnly(bottom: 16.kh),
 
             //Vehicle details
