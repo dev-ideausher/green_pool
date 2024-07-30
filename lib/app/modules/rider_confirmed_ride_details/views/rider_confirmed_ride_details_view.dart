@@ -480,7 +480,7 @@ class RiderConfirmedRideDetailsView
             ).paddingOnly(top: 40.kh, bottom: 16.kh),
             GreenPoolButton(
               onPressed: () async {
-                await Get.find<MyRidesOneTimeController>()
+                await controller
                     .riderCancelRideAPI(controller.myRidesModel.value);
               },
               label: 'Cancel',

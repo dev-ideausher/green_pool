@@ -303,7 +303,7 @@ class APIManager {
       );
 
   static Future<Response> riderCancelRide({required dynamic body}) async =>
-      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false).patch(
+      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).patch(
         Endpoints.riderCancelRide,
         data: body,
       );
