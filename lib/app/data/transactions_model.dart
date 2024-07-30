@@ -14,7 +14,7 @@ class TransactionsModelTransactions {
 
   String? Id;
   String? type;
-  int? amount;
+  double? amount;
   String? createdAt;
   String? reason;
 
@@ -28,7 +28,7 @@ class TransactionsModelTransactions {
   TransactionsModelTransactions.fromJson(Map<String, dynamic> json) {
     Id = json['_id']?.toString();
     type = json['type']?.toString();
-    amount = json['amount']?.toInt();
+    amount = json['amount']?.toDouble();
     createdAt = json['createdAt']?.toString();
     reason = json['reason']?.toString();
   }

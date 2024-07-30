@@ -26,20 +26,13 @@ class RiderStartRideMapView extends GetView<RiderStartRideMapController> {
             ? const GpProgress()
             : GoogleMap(
                 onMapCreated: controller.onMapCreated,
-                initialCameraPosition: CameraPosition(
-                    target: LatLng(controller.currentLat.value,
-                        controller.currentLong.value),
-                    zoom: 14),
+                initialCameraPosition: CameraPosition(target: LatLng(controller.currentLat.value, controller.currentLong.value), zoom: 14),
                 mapType: MapType.terrain,
                 myLocationEnabled: true,
                 markers: Set<Marker>.of(controller.markers),
                 zoomGesturesEnabled: true,
                 polylines: {
-                  Polyline(
-                      polylineId: const PolylineId('polyline'),
-                      points: controller.polylineCoordinates,
-                      width: 4,
-                      color: ColorUtil.kSecondary01),
+                  Polyline(polylineId: const PolylineId('polyline'), points: controller.polylineCoordinates, width: 4, color: ColorUtil.kSecondary01),
                 },
               ).paddingOnly(bottom: 200.kh),
       ),
@@ -52,10 +45,9 @@ class RiderStartRideMapView extends GetView<RiderStartRideMapController> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               FloatingActionButton(
+                heroTag: "btn1",
                 shape: const CircleBorder(),
-                backgroundColor: Get.find<HomeController>().isPinkModeOn.value
-                    ? ColorUtil.kPrimary3PinkMode
-                    : ColorUtil.kSecondary01,
+                backgroundColor: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01,
                 onPressed: () {
                   Get.back();
                 },
@@ -66,17 +58,14 @@ class RiderStartRideMapView extends GetView<RiderStartRideMapController> {
                 ),
               ).paddingOnly(bottom: 4.kh, left: 24.kw),
               FloatingActionButton(
+                      heroTag: "btn2",
                       shape: const CircleBorder(),
-                      backgroundColor:
-                          Get.find<HomeController>().isPinkModeOn.value
-                              ? ColorUtil.kSecondaryPinkMode
-                              : ColorUtil.kPrimary05,
+                      backgroundColor: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kSecondaryPinkMode : ColorUtil.kPrimary05,
                       tooltip: Strings.openGoogleMaps,
                       onPressed: () {
                         controller.openGoogleMaps();
                       },
-                      child:
-                          CommonImageView(svgPath: ImageConstant.svgGooleMaps))
+                      child: CommonImageView(svgPath: ImageConstant.svgGooleMaps))
                   .paddingOnly(bottom: 4.kh),
             ],
           ),

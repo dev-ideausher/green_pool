@@ -120,7 +120,7 @@ class MyRidesRequestController extends GetxController {
         "driverRideId": rideDetailId.value.driverRidId,
         "riderName": driverSendModelData.riderDetails?.fullName,
         "riderNotificationPreferences": riderNotificationPref,
-        "price": driverSendModelData.price
+        "price":( double.parse(driverSendModelData.price??"0.0")*(driverSendModelData.seatAvailable??0)).toString()
       });
       var data = jsonDecode(sendRiderRequestResponse.toString());
       sendRiderRequestModel.value = SendRiderRequestModel.fromJson(data);

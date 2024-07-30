@@ -23,8 +23,7 @@ class RideDetailsView extends GetView<RideDetailsController> {
   @override
   Widget build(BuildContext context) {
     final isRideCancelled = controller.rideHistory.value.rideStatus == "Cancel";
-    final isRideCompleted =
-        controller.rideHistory.value.rideStatus == "Completed";
+    final isRideCompleted = controller.rideHistory.value.rideStatus == "Completed";
     return Scaffold(
       appBar: GreenPoolAppBar(
         title: Text(Strings.rideDetails),
@@ -37,11 +36,7 @@ class RideDetailsView extends GetView<RideDetailsController> {
             visible: isRideCompleted || isRideCancelled,
             child: Container(
               padding: EdgeInsets.all(16.kh),
-              decoration: BoxDecoration(
-                  color: isRideCancelled
-                      ? ColorUtil.kError2
-                      : ColorUtil.kGreenColor,
-                  borderRadius: BorderRadius.circular(8.kh)),
+              decoration: BoxDecoration(color: isRideCancelled ? ColorUtil.kError2 : ColorUtil.kGreenColor, borderRadius: BorderRadius.circular(8.kh)),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -51,11 +46,8 @@ class RideDetailsView extends GetView<RideDetailsController> {
                     color: ColorUtil.kWhiteColor,
                   ).paddingOnly(right: 8.kw),
                   Text(
-                    isRideCancelled
-                        ? "Ride Cancelled"
-                        : 'Completed Successfully',
-                    style:
-                        TextStyleUtil.k14Regular(color: ColorUtil.kWhiteColor),
+                    isRideCancelled ? "Ride Cancelled" : 'Completed Successfully',
+                    style: TextStyleUtil.k14Regular(color: ColorUtil.kWhiteColor),
                   ),
                 ],
               ),
@@ -80,8 +72,7 @@ class RideDetailsView extends GetView<RideDetailsController> {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(8.kh),
                           child: CommonImageView(
-                            url:
-                                "${controller.rideHistory.value.driver?.profilePic?.url}",
+                            url: "${controller.rideHistory.value.driver?.profilePic?.url}",
                           ),
                         ),
                       ).paddingOnly(bottom: 8.kh),
@@ -93,30 +84,19 @@ class RideDetailsView extends GetView<RideDetailsController> {
                           height: 20.kh,
                           padding: EdgeInsets.symmetric(horizontal: 8.kw),
                           decoration: BoxDecoration(
-                              color:
-                                  Get.find<HomeController>().isPinkModeOn.value
-                                      ? ColorUtil.kPrimary3PinkMode
-                                      : ColorUtil.kSecondary01,
+                              color: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01,
                               borderRadius: BorderRadius.circular(16.kh)),
                           child: Row(
                             children: [
                               Icon(
                                 Icons.star,
-                                color: Get.find<HomeController>()
-                                        .isPinkModeOn
-                                        .value
-                                    ? ColorUtil.kWhiteColor
-                                    : ColorUtil.kYellowColor,
+                                color: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kWhiteColor : ColorUtil.kYellowColor,
                                 size: 12.kh,
                               ).paddingOnly(right: 2.kw),
                               Text(
                                 '${controller.rideHistory.value.driver?.rating!.toStringAsFixed(1)}',
                                 style: TextStyleUtil.k12Semibold(
-                                    color: Get.find<HomeController>()
-                                            .isPinkModeOn
-                                            .value
-                                        ? ColorUtil.kBlack02
-                                        : ColorUtil.kWhiteColor),
+                                    color: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kBlack02 : ColorUtil.kWhiteColor),
                               ),
                             ],
                           ),
@@ -141,15 +121,11 @@ class RideDetailsView extends GetView<RideDetailsController> {
                                 children: [
                                   TextSpan(
                                     text: 'Fare: ',
-                                    style: TextStyleUtil.k14Semibold(
-                                        color: ColorUtil.kSecondary01),
+                                    style: TextStyleUtil.k14Semibold(color: ColorUtil.kSecondary01),
                                   ),
                                   TextSpan(
-                                    text:
-                                        '\$ ${controller.rideHistory.value.price}',
-                                    style: TextStyleUtil.k16Semibold(
-                                        fontSize: 16.kh,
-                                        color: ColorUtil.kSecondary01),
+                                    text: '\$ ${controller.rideHistory.value.price}',
+                                    style: TextStyleUtil.k16Semibold(fontSize: 16.kh, color: ColorUtil.kSecondary01),
                                   ),
                                 ],
                               ),
@@ -164,18 +140,12 @@ class RideDetailsView extends GetView<RideDetailsController> {
                                 SvgPicture.asset(
                                   ImageConstant.svgIconCalendarTime,
                                   colorFilter: ColorFilter.mode(
-                                      Get.find<HomeController>()
-                                              .isPinkModeOn
-                                              .value
-                                          ? ColorUtil.kPrimary3PinkMode
-                                          : ColorUtil.kSecondary01,
-                                      BlendMode.srcIn),
+                                      Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01, BlendMode.srcIn),
                                 ).paddingOnly(right: 4.kw),
                                 Text(
                                   // '07 Nov 2023, 3:00pm',
                                   "${GpUtil.getDateFormat(controller.rideHistory.value.time ?? "")} ${GpUtil.convertUtcToLocal(controller.rideHistory.value.time ?? "")}",
-                                  style: TextStyleUtil.k12Regular(
-                                      color: ColorUtil.kBlack03),
+                                  style: TextStyleUtil.k12Regular(color: ColorUtil.kBlack03),
                                 ),
                               ],
                             ),
@@ -184,16 +154,11 @@ class RideDetailsView extends GetView<RideDetailsController> {
                                 Icon(
                                   Icons.time_to_leave,
                                   size: 18.kh,
-                                  color: Get.find<HomeController>()
-                                          .isPinkModeOn
-                                          .value
-                                      ? ColorUtil.kPrimary3PinkMode
-                                      : ColorUtil.kSecondary01,
+                                  color: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01,
                                 ).paddingOnly(right: 8.kw),
                                 Text(
                                   '${controller.rideHistory.value.seatAvailable} seats',
-                                  style: TextStyleUtil.k14Regular(
-                                      color: ColorUtil.kBlack03),
+                                  style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                                 ),
                               ],
                             ),
@@ -210,8 +175,7 @@ class RideDetailsView extends GetView<RideDetailsController> {
                       origin: '${controller.rideHistory.value.origin?.name}',
                       stop1: controller.rideHistory.value.stops?[0]?.name ?? "",
                       stop2: controller.rideHistory.value.stops?[1]?.name ?? "",
-                      destination:
-                          '${controller.rideHistory.value.destination?.name}',
+                      destination: '${controller.rideHistory.value.destination?.name}',
                       needPickupText: true)
                   .paddingOnly(bottom: 8.kh),
               //bottom line
@@ -246,12 +210,10 @@ class RideDetailsView extends GetView<RideDetailsController> {
                             child: ClipOval(
                                 child: SizedBox.fromSize(
                                     size: Size.fromRadius(20.kh),
-                                    child: CommonImageView(
-                                        url:
-                                            "${controller.rideHistory.value.riders?[index]?.profilePic?.url}"))),
+                                    child: CommonImageView(url: "${controller.rideHistory.value.riders?[index]?.profilePic?.url}"))),
                           ).paddingOnly(bottom: 4.kh),
                           Text(
-                            "${controller.rideHistory.value.riders?[index]?.fullName.toString().split(" ").first}\n${controller.rideHistory.value.riders?[index]?.fullName.toString().split(" ").last}",
+                            "${controller.rideHistory.value.riders?[index]?.fullName.toString().split(" ").first}",
                             style: TextStyleUtil.k12Semibold(),
                             textAlign: TextAlign.center,
                           ),
@@ -270,11 +232,7 @@ class RideDetailsView extends GetView<RideDetailsController> {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(8.kh),
-                child: CommonImageView(
-                    height: 64.kh,
-                    width: 64.kw,
-                    url:
-                        "${controller.rideHistory.value.driverVehicle?.vehiclePic?.url}"),
+                child: CommonImageView(height: 64.kh, width: 64.kw, url: "${controller.rideHistory.value.driverVehicle?.vehiclePic?.url}"),
               ).paddingOnly(right: 8.kh),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -287,8 +245,7 @@ class RideDetailsView extends GetView<RideDetailsController> {
                     children: [
                       Text(
                         '${controller.rideHistory.value.driverVehicle?.type}',
-                        style: TextStyleUtil.k14Semibold(
-                            color: ColorUtil.kBlack03),
+                        style: TextStyleUtil.k14Semibold(color: ColorUtil.kBlack03),
                       ),
                       Container(
                         width: 1.kw,
@@ -297,8 +254,7 @@ class RideDetailsView extends GetView<RideDetailsController> {
                       ).paddingSymmetric(vertical: 2.5.kh, horizontal: 8.kw),
                       Text(
                         '${controller.rideHistory.value.driverVehicle?.licencePlate}',
-                        style: TextStyleUtil.k14Semibold(
-                            color: ColorUtil.kBlack03),
+                        style: TextStyleUtil.k14Semibold(color: ColorUtil.kBlack03),
                       ),
                     ],
                   ),
