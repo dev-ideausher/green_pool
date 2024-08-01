@@ -50,6 +50,11 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
                     ? ColorUtil.kPrimary3PinkMode
                     : ColorUtil.kSecondary01,
               ),
+              /*suffix: controller.originTextController.value.text.isNotEmpty
+                  ? InkWell(
+                      onTap: () => controller.removeOrigin(),
+                      child: const Icon(Icons.cancel))
+                  : const SizedBox(),*/
             ).paddingOnly(top: 8.kh, bottom: 16.kh),
             RichTextHeading(text: Strings.destination),
             GreenPoolTextField(
@@ -70,6 +75,11 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
                     ? ColorUtil.kPrimary3PinkMode
                     : ColorUtil.kSecondary01,
               ),
+              /*suffix: controller.destinationTextController.value.text.isNotEmpty
+                  ? InkWell(
+                      onTap: () => controller.removeDestination(),
+                      child: const Icon(Icons.cancel))
+                  : const SizedBox(),*/
             ).paddingOnly(top: 8.kh, bottom: 16.kh),
             Visibility(
               visible: controller.isDestinationAdded.value,

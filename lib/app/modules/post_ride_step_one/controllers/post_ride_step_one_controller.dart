@@ -210,4 +210,16 @@ class PostRideStepOneController extends GetxController {
     stop2Long.value = 0.0;
     isStop2Added.value = false;
   }
+
+  removeOrigin() {
+    originTextController.clear();
+    originLatitude.value = 0.0;
+    originLongitude.value = 0.0;
+  }
+
+  removeDestination() {
+    destinationTextController.clear();
+    destLatitude.value = 0.0;
+    destLongitude.value = 0.0;
+  }
 }

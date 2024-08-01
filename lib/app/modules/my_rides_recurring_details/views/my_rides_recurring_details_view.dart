@@ -216,6 +216,8 @@ class MyRidesRecurringDetailsView
                               ?.recurringRides?.length,
                           physics: const NeverScrollableScrollPhysics(),
                           itemBuilder: (context, index) {
+                            final recurringRides = controller.recurringModel
+                                .value.data?.recurringRides?[index];
                             return Column(
                               children: [
                                 Row(
@@ -223,9 +225,7 @@ class MyRidesRecurringDetailsView
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      // "Monday 4th March",
-                                      //!"${GpUtil.getDateFormat(controller.recurringModel.value.data?.recurringRides?[index]?.date ?? "", controller.recurringModel.value.data?.recurringRides?[index]?.arrivalTime ?? '')}",
-                                      "${controller.recurringModel.value.data?.recurringRides?[index]?.date.toString().split("T").first}",
+                                      "${controller.getDateFormat(recurringRides?.date ?? "")}",
                                       style: TextStyleUtil.k14Semibold(
                                           color: ColorUtil.kBlack02),
                                     ),
@@ -233,26 +233,17 @@ class MyRidesRecurringDetailsView
                                       height: 24.kh,
                                       width: 30.w,
                                       child: ListView.builder(
-                                        itemCount: (controller
-                                                        .recurringModel
-                                                        .value
-                                                        .data
-                                                        ?.recurringRides?[index]
-                                                        ?.riders!
-                                                        .length ??
-                                                    0) ==
-                                                0
-                                            ? 4
-                                            : controller
-                                                .recurringModel
-                                                .value
-                                                .data
-                                                ?.recurringRides?[index]
-                                                ?.riders!
-                                                .length,
+                                        itemCount: ((recurringRides
+                                                    ?.seatAvailable ??
+                                                0) +
+                                            (recurringRides?.riders!.length ??
+                                                0)),
                                         reverse: true,
                                         scrollDirection: Axis.horizontal,
                                         itemBuilder: (context, index1) {
+                                          bool isSeatAvailable = index1 <
+                                              (recurringRides?.seatAvailable ??
+                                                  0);
                                           return Container(
                                             decoration: const BoxDecoration(
                                               shape: BoxShape.circle,
@@ -260,23 +251,14 @@ class MyRidesRecurringDetailsView
                                             child: ClipOval(
                                               child: SizedBox.fromSize(
                                                   size: Size.fromRadius(12.kh),
-                                                  child: (controller
-                                                                  .recurringModel
-                                                                  .value
-                                                                  .data
-                                                                  ?.recurringRides?[
-                                                                      index]
-                                                                  ?.riders!
-                                                                  .length ??
-                                                              0) ==
-                                                          0
+                                                  child: isSeatAvailable
                                                       ? CommonImageView(
                                                           imagePath: ImageConstant
                                                               .pngEmptyPassenger,
                                                         )
                                                       : CommonImageView(
                                                           url:
-                                                              "${controller.recurringModel.value.data?.recurringRides?[index]?.riders?[index1]?.profilePic?.url}",
+                                                              "${recurringRides?.riders?[index1 - (recurringRides?.seatAvailable ?? 0)]?.profilePic?.url}",
                                                         )),
                                             ),
                                           ).paddingOnly(right: 4.kw);
@@ -291,17 +273,13 @@ class MyRidesRecurringDetailsView
                                       label: Strings.viewMatchingRiders,
                                       height: 40.kh,
                                       width: 192.kw,
+                                      fontSize: 14.kh,
                                       padding: const EdgeInsets.all(0),
                                       onPressed: () {
                                         Get.toNamed(Routes.MY_RIDES_REQUEST,
                                             arguments: RideDetailId(
-                                                driverRidId: controller
-                                                        .recurringModel
-                                                        .value
-                                                        .data
-                                                        ?.recurringRides?[index]
-                                                        ?.Id ??
-                                                    "",
+                                                driverRidId:
+                                                    recurringRides?.Id ?? "",
                                                 riderRidId: ""));
                                       }),
                                 )

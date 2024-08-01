@@ -98,14 +98,14 @@ class StartRideController extends GetxController {
         request: PolylineRequest(
             origin:
                 PointLatLng(originCoordinates.last!, originCoordinates.first!),
-            wayPoints: [
-              PolylineWayPoint(
-                  location:
-                      "${stop1Coordinates?.last.toString()},${stop1Coordinates?.first.toString()}"),
-              PolylineWayPoint(
-                  location:
-                      "${stop2Coordinates?.last.toString()},${stop2Coordinates?.first.toString()}")
-            ],
+            // wayPoints: [
+            //   PolylineWayPoint(
+            //       location:
+            //           "${stop1Coordinates?.last.toString()},${stop1Coordinates?.first.toString()}"),
+            //   PolylineWayPoint(
+            //       location:
+            //           "${stop2Coordinates?.last.toString()},${stop2Coordinates?.first.toString()}")
+            // ],
             destination: PointLatLng(
                 destinationCoordinates.last!, destinationCoordinates.first!),
             mode: TravelMode.driving),

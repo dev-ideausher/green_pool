@@ -22,7 +22,7 @@ class MyRideRequestsView extends GetView<MyRidesRequestController> {
     Get.lazyPut(() => MyRidesRequestController());
     return Scaffold(
       appBar: GreenPoolAppBar(
-        title:  Text(Strings.myRides),
+        title: Text(Strings.myRides),
         actions: [
           Obx(
             () => GestureDetector(
@@ -68,7 +68,7 @@ class MyRideRequestsView extends GetView<MyRidesRequestController> {
                   labelColor: Get.find<HomeController>().isPinkModeOn.value
                       ? ColorUtil.kPrimary3PinkMode
                       : ColorUtil.kSecondary01,
-                  tabs:  [
+                  tabs: [
                     Tab(
                       child: Text(
                         Strings.confirmRequests,

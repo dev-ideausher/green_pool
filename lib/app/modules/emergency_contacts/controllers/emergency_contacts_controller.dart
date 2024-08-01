@@ -62,6 +62,7 @@ class EmergencyContactsController extends GetxController {
         isUpdated.value = false;
       }
     }
+    setButtonState();
   }
 
   emergencyContactsAPI() async {

@@ -86,10 +86,11 @@ class RiderRideHistTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Get.toNamed(Routes.RIDE_DETAILS,
-            arguments: controller.rideHistModel.value.data?[index]);
-      },
+      onTap: his?.rideStatus == "NA"
+          ? () {}
+          : () {
+              Get.toNamed(Routes.RIDE_DETAILS, arguments: his);
+            },
       child: Container(
         padding: EdgeInsets.all(16.kh),
         decoration: BoxDecoration(
@@ -274,9 +275,7 @@ class RiderRideHistTile extends StatelessWidget {
                 .paddingOnly(bottom: 8.kh),
             const GreenPoolDivider(),
             Visibility(
-                visible:
-                    controller.rideHistModel.value.data?[index]?.rideStatus ==
-                        "Cancel",
+                visible: his?.rideStatus == "Cancel",
                 child: Container(
                   width: 100.w,
                   alignment: Alignment.center,
@@ -313,8 +312,7 @@ class DriverRideHistTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.toNamed(Routes.RIDE_DETAILS,
-            arguments: controller.rideHistModel.value.data?[index]);
+        Get.toNamed(Routes.RIDE_DETAILS, arguments: his);
       },
       child: Container(
         padding: EdgeInsets.all(16.kh),
@@ -345,12 +343,10 @@ class DriverRideHistTile extends StatelessWidget {
                       "",
                   style: TextStyleUtil.k16Bold()),
               subtitle: Text(
-                // GpUtil.getDateFormat(controller.rideHistModel.value.data?[index]?.date) ??
-                ((controller.rideHistModel.value.data?[index]?.time ?? "") == ""
+                // GpUtil.getDateFormat(his?.date) ??
+                ((his?.time ?? "") == ""
                     ? ""
-                    : GpUtil.convertUtcToLocal(
-                        controller.rideHistModel.value.data?[index]?.time ??
-                            "")),
+                    : GpUtil.convertUtcToLocal(his?.time ?? "")),
                 style: TextStyleUtil.k12Regular(color: ColorUtil.kBlack03),
               ),
               trailing: SizedBox(
@@ -360,15 +356,12 @@ class DriverRideHistTile extends StatelessWidget {
                   alignment: Alignment.centerRight,
                   child: ListView.builder(
                     shrinkWrap: true,
-                    itemCount: (controller.rideHistModel.value.data?[index]
-                                    ?.riders?.length ??
-                                0) ==
-                            0
-                        ? 4
-                        : controller
-                            .rideHistModel.value.data?[index]?.riders?.length,
+                    itemCount: ((his?.seatAvailable ?? 0) +
+                        (his?.riders?.length ?? 0)),
                     scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index1) {
+                    itemBuilder: (context, passengerIndex) {
+                      bool isSeatAvailable =
+                          passengerIndex < (his?.seatAvailable ?? 0);
                       return Container(
                         decoration: const BoxDecoration(
                           shape: BoxShape.circle,
@@ -376,16 +369,13 @@ class DriverRideHistTile extends StatelessWidget {
                         child: ClipOval(
                           child: SizedBox.fromSize(
                             size: Size.fromRadius(12.kh),
-                            child: (controller.rideHistModel.value.data?[index]
-                                            ?.riders?.length ??
-                                        0) ==
-                                    0
+                            child: isSeatAvailable
                                 ? Image.asset(
                                     ImageConstant.pngEmptyPassenger,
                                   )
                                 : CommonImageView(
                                     url:
-                                        "${controller.rideHistModel.value.data?[index]?.riders?[index1]?.profilePic?.url}"),
+                                        "${his?.riders?[passengerIndex - (his?.seatAvailable ?? 0)]?.profilePic?.url}"),
                           ),
                         ),
                       ).paddingOnly(right: 4.kw);
@@ -394,12 +384,12 @@ class DriverRideHistTile extends StatelessWidget {
                 ),
               ),
             ),
-            // Text(controller.rideHistModel.value.data?[index]?.origin?.originDestinationFair??"0", style: TextStyleUtil.k12Regular(color: ColorUtil.kBlack03)),
+            // Text(his?.origin?.originDestinationFair??"0", style: TextStyleUtil.k12Regular(color: ColorUtil.kBlack03)),
 
             12.kheightBox,
             //-------------------- if rider has done "Find a Ride" and has not selected any time ----------------
 
-            controller.rideHistModel.value.data?[index]?.time == ""
+            his?.time == ""
                 ? const SizedBox()
                 : Row(
                     children: [
@@ -412,9 +402,7 @@ class DriverRideHistTile extends StatelessWidget {
                             BlendMode.srcIn),
                       ).paddingOnly(right: 4.kw),
                       Text(
-                        GpUtil.getDateFormat(
-                            controller.rideHistModel.value.data?[index]?.time ??
-                                ""),
+                        GpUtil.getDateFormat(his?.time ?? ""),
                         style:
                             TextStyleUtil.k12Regular(color: ColorUtil.kBlack03),
                       ),
@@ -423,24 +411,14 @@ class DriverRideHistTile extends StatelessWidget {
             const GreenPoolDivider().paddingOnly(bottom: 8.kh),
             OriginToDestination(
               needPickupText: false,
-              origin:
-                  controller.rideHistModel.value.data?[index]?.origin?.name ??
-                      Strings.pickup,
-              stop1: controller
-                      .rideHistModel.value.data?[index]?.stops?[0]?.name ??
-                  "",
-              stop2: controller
-                      .rideHistModel.value.data?[index]?.stops?[1]?.name ??
-                  "",
-              destination: controller
-                      .rideHistModel.value.data?[index]?.destination?.name ??
-                  Strings.destination,
+              origin: his?.origin?.name ?? Strings.pickup,
+              stop1: his?.stops?[0]?.name ?? "",
+              stop2: his?.stops?[1]?.name ?? "",
+              destination: his?.destination?.name ?? Strings.destination,
             ).paddingOnly(bottom: 8.kh),
             const GreenPoolDivider().paddingOnly(bottom: 16.kh),
             Visibility(
-                visible:
-                    controller.rideHistModel.value.data?[index]?.rideStatus ==
-                        "Cancel",
+                visible: his?.rideStatus == "Cancel",
                 child: Container(
                   width: 100.w,
                   alignment: Alignment.center,

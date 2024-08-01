@@ -17,72 +17,74 @@ class RatingBottomSheet extends GetView<ProfileController> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(24.kh),
-      height: 75.h,
+      padding: EdgeInsets.only(top: 24.kh, left: 16.kw, right: 16.kw),
+      height: 70.h,
       width: 100.w,
       decoration: BoxDecoration(
           color: ColorUtil.kWhiteColor,
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(40.kh),
               topRight: Radius.circular(40.kh))),
-      child: Column(
-        children: [
-          Text(
-            'Enjoying Green Pool App ?',
-            style: TextStyleUtil.k18Semibold(),
-          ).paddingOnly(bottom: 8.kh),
-          Image.asset(
-            ImageConstant.gifRateUs,
-            height: 200.kh,
-            width: 200.kw,
-          ),
-          Text(
-            'Support us by giving rate and your\nprecious review !\nIt will take few seconds only.',
-            style: TextStyleUtil.k14Semibold(color: ColorUtil.kBlack04),
-            textAlign: TextAlign.center,
-          ).paddingOnly(bottom: 24.kh),
-          RatingBar(
-            allowHalfRating: false,
-            glow: false,
-            ratingWidget: RatingWidget(
-              full: const Icon(
-                Icons.star,
-                color: Colors.amber,
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            Text(
+              'Enjoying Green Pool App ?',
+              style: TextStyleUtil.k18Semibold(),
+            ).paddingOnly(bottom: 8.kh),
+            Image.asset(
+              ImageConstant.gifRateUs,
+              height: 200.kh,
+              width: 200.kw,
+            ),
+            Text(
+              'Support us by giving rate and your\nprecious review !\nIt will take few seconds only.',
+              style: TextStyleUtil.k14Semibold(color: ColorUtil.kBlack04),
+              textAlign: TextAlign.center,
+            ).paddingOnly(bottom: 24.kh),
+            RatingBar(
+              allowHalfRating: false,
+              glow: false,
+              ratingWidget: RatingWidget(
+                full: const Icon(
+                  Icons.star,
+                  color: Colors.amber,
+                ),
+                half: const Icon(
+                  Icons.star,
+                  color: Colors.amber,
+                ),
+                empty: const Icon(
+                  Icons.star,
+                  color: ColorUtil.kGreyColor,
+                ),
               ),
-              half: const Icon(
-                Icons.star,
-                color: Colors.amber,
-              ),
-              empty: const Icon(
-                Icons.star,
-                color: ColorUtil.kGreyColor,
+              onRatingUpdate: (double? value) {
+                controller.rating.value = value ?? 4;
+              },
+            ).paddingOnly(bottom: 16.kh),
+            GreenPoolTextField(
+              hintText: "Feedback/suggestions",
+              controller: controller.ratingTextController,
+            ).paddingOnly(bottom: 16.kh),
+            TextButton(
+              onPressed: () {
+                controller.submitFeedback();
+              },
+              child: Text(
+                'Submit',
+                style: TextStyleUtil.k16Bold(),
               ),
             ),
-            onRatingUpdate: (double? value) {
-              controller.rating.value = value ?? 4;
-            },
-          ).paddingOnly(bottom: 16.kh),
-          GreenPoolTextField(
-            hintText: "Feedback/suggestions",
-            controller: controller.ratingTextController,
-          ).paddingOnly(bottom: 16.kh),
-          TextButton(
-            onPressed: () {
-              controller.submitFeedback();
-            },
-            child: Text(
-              'Submit',
-              style: TextStyleUtil.k16Bold(),
+            TextButton(
+              onPressed: () => Get.back(),
+              child: Text(
+                'Maybe Later',
+                style: TextStyleUtil.k16Bold(),
+              ),
             ),
-          ),
-          TextButton(
-            onPressed: () => Get.back(),
-            child: Text(
-              'Maybe Later',
-              style: TextStyleUtil.k16Bold(),
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

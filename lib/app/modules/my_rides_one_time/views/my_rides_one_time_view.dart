@@ -37,108 +37,105 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                   onRefresh: () async {
                     await controller.myRidesAPI();
                   },
-                  child: controller.myRidesModelData.isEmpty
-                      ? const NoRidePosted()
-                      : SingleChildScrollView(
-                          physics: const AlwaysScrollableScrollPhysics(),
-                          child: Column(
-                            children: [
-                              Visibility(
-                                visible: type == null,
-                                child: (controller.recurringResp.value.data
-                                            ?.isEmpty ??
-                                        true)
-                                    ? const SizedBox()
-                                    : ListView.builder(
-                                        shrinkWrap: true,
-                                        primary: false,
-                                        itemCount: controller
-                                            .recurringResp.value.data?.length,
-                                        itemBuilder: (context, index) {
-                                          return RecurringTile(
-                                              recurringResp: controller
-                                                  .recurringResp
-                                                  .value
-                                                  .data?[index]);
-                                        },
-                                      ),
-                              ),
-                              Builder(builder: (context) {
-                                bool isListEmpty = false;
-                                if (type == null) {
-                                  if (controller.myRidesModelData.isEmpty) {
-                                    isListEmpty = true;
-                                  } else {
-                                    isListEmpty = false;
-                                  }
-                                } else if (type == Strings.booked) {                                  
-                                  if (controller.driverRides.isEmpty) {
-                                    isListEmpty = true;
-                                  } else {
-                                    isListEmpty = false;
-                                  }
-                                } else if (type == Strings.published) {                                  
-                                  if (controller.riderRides.isEmpty) {
-                                    isListEmpty = true;
-                                  } else {
-                                    isListEmpty = false;
-                                  }
-                                }
-
-                                return isListEmpty
-                                    ? const NoRidePosted()
-                                    : ListView.builder(
-                                        shrinkWrap: true,
-                                        primary: false,
-                                        itemCount:
-                                            controller.myRidesModelData.length,
-                                        itemBuilder: (context, index) {
-                                          if (type == null) {
-                                            if (controller
-                                                    .myRidesModelData[index]
-                                                    .driverId !=
-                                                null) {
-                                              return DriverTile(
-                                                  myRidesModelData: controller
-                                                      .myRidesModelData[index]);
-                                            } else {
-                                              return RiderTile(
-                                                  myRidesModelData: controller
-                                                      .myRidesModelData[index]);
-                                            }
-                                          } else {
-                                            if (type == Strings.booked) {
-                                              if (controller
-                                                      .myRidesModelData[index]
-                                                      .driverId !=
-                                                  null) {
-                                                return DriverTile(
-                                                    myRidesModelData: controller
-                                                            .myRidesModelData[
-                                                        index]);
-                                              } else {
-                                                return const SizedBox();
-                                              }
-                                            } else {
-                                              if (controller
-                                                      .myRidesModelData[index]
-                                                      .driverId !=
-                                                  null) {
-                                                return const SizedBox();
-                                              } else {
-                                                return RiderTile(
-                                                    myRidesModelData: controller
-                                                            .myRidesModelData[
-                                                        index]);
-                                              }
-                                            }
-                                          }
-                                        },
-                                      ).paddingOnly(top: 32.kh);
-                              }),
-                            ],
-                          ).paddingSymmetric(horizontal: 16.kw),
+                  child:
+                      // controller.myRidesModelData.isEmpty
+                      //     ? const NoRidePosted()
+                      SingleChildScrollView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    child: Column(
+                      children: [
+                        Visibility(
+                          visible: type == null,
+                          child:
+                              (controller.recurringResp.value.data?.isEmpty ??
+                                      true)
+                                  ? const SizedBox()
+                                  : ListView.builder(
+                                      shrinkWrap: true,
+                                      primary: false,
+                                      itemCount: controller
+                                          .recurringResp.value.data?.length,
+                                      itemBuilder: (context, index) {
+                                        return RecurringTile(
+                                            recurringResp: controller
+                                                .recurringResp
+                                                .value
+                                                .data?[index]);
+                                      },
+                                    ),
                         ),
+                        Builder(builder: (context) {
+                          bool isListEmpty = false;
+                          if (type == null) {
+                            if (controller.myRidesModelData.isEmpty) {
+                              isListEmpty = true;
+                            } else {
+                              isListEmpty = false;
+                            }
+                          } else if (type == Strings.booked) {
+                            if (controller.driverRides.isEmpty) {
+                              isListEmpty = true;
+                            } else {
+                              isListEmpty = false;
+                            }
+                          } else if (type == Strings.published) {
+                            if (controller.riderRides.isEmpty) {
+                              isListEmpty = true;
+                            } else {
+                              isListEmpty = false;
+                            }
+                          }
+
+                          return isListEmpty
+                              ?  Visibility(
+                                  visible: controller.decideNoRidesVisibilty(type),
+                                  child: const NoRidePosted())
+                              : ListView.builder(
+                                  shrinkWrap: true,
+                                  primary: false,
+                                  itemCount: controller.myRidesModelData.length,
+                                  itemBuilder: (context, index) {
+                                    if (type == null) {
+                                      if (controller.myRidesModelData[index]
+                                              .driverId !=
+                                          null) {
+                                        return DriverTile(
+                                            myRidesModelData: controller
+                                                .myRidesModelData[index]);
+                                      } else {
+                                        return RiderTile(
+                                            myRidesModelData: controller
+                                                .myRidesModelData[index]);
+                                      }
+                                    } else {
+                                      if (type == Strings.booked) {
+                                        if (controller.myRidesModelData[index]
+                                                .driverId !=
+                                            null) {
+                                          return DriverTile(
+                                              myRidesModelData: controller
+                                                  .myRidesModelData[index]);
+                                        } else {
+                                          return const SizedBox();
+                                        }
+                                      } else {
+                                        if (controller.myRidesModelData[index]
+                                                .driverId !=
+                                            null) {
+                                          return const SizedBox();
+                                        } else {
+                                          return RiderTile(
+                                              myRidesModelData: controller
+                                                  .myRidesModelData[index]);
+                                        }
+                                      }
+                                    }
+                                  },
+                                ).paddingOnly(top: 32.kh);
+                        }),
+                      ],
+                    ).paddingSymmetric(horizontal: 16.kw),
+                  ),
                 ),
         ),
       ),

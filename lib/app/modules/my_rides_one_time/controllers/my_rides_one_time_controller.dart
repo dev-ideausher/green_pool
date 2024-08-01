@@ -12,6 +12,7 @@ import 'package:green_pool/app/services/snackbar.dart';
 import '../../../data/booking_detail_model.dart';
 import '../../../data/recurring_rides_model.dart';
 import '../../../data/ride_detail_id.dart';
+import '../../../res/strings.dart';
 import '../../../routes/app_pages.dart';
 
 class MyRidesOneTimeController extends GetxController {
@@ -65,7 +66,7 @@ class MyRidesOneTimeController extends GetxController {
         isLoad.value = true;
         final cancelRideResponse =
             await APIManager.riderCancelRide(body: riderRideId);
-        var data = jsonDecode(cancelRideResponse.toString());        
+        var data = jsonDecode(cancelRideResponse.toString());
         await myRidesAPI();
         Get.back();
         isLoad.value = false;
@@ -238,5 +239,31 @@ class MyRidesOneTimeController extends GetxController {
         }
       },
     );
+  }
+
+  bool decideNoRidesVisibilty(String? type) {
+    bool isNoRidesVisible = false;
+    if (type == null) {
+      if (driverRides.isEmpty &&
+          riderRides.isEmpty &&
+          (recurringResp.value.data?.isEmpty ?? true)) {
+        return isNoRidesVisible = true;
+      } else {
+        return isNoRidesVisible = false;
+      }
+    } else if (type == Strings.booked) {
+      if (driverRides.isEmpty) {
+        return isNoRidesVisible = true;
+      } else {
+        return isNoRidesVisible = false;
+      }
+    } else if (type == Strings.published) {
+      if (riderRides.isEmpty) {
+        return isNoRidesVisible = true;
+      } else {
+        return isNoRidesVisible = false;
+      }
+    }
+    return isNoRidesVisible;
   }
 }

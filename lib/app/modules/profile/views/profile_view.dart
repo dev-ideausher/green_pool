@@ -42,9 +42,15 @@ class ProfileView extends GetView<ProfileController> {
                 child: ClipOval(
                     child: SizedBox.fromSize(
                         size: Size.fromRadius(44.kh),
-                        child: controller.userInfo.value.data?.profilePic?.url == null
-                            ? Icon(Icons.account_circle, size: 84.kh)
-                            : CommonImageView(height: 44.kh, width: 44.kw, url: controller.userInfo.value.data!.profilePic?.url))),
+                        child:
+                            controller.userInfo.value.data?.profilePic?.url ==
+                                    null
+                                ? Icon(Icons.account_circle, size: 84.kh)
+                                : CommonImageView(
+                                    height: 44.kh,
+                                    width: 44.kw,
+                                    url: controller.userInfo.value.data!
+                                        .profilePic?.url))),
               ).paddingOnly(bottom: 8.kh, top: 16.kh),
             ),
             Text(
@@ -68,7 +74,8 @@ class ProfileView extends GetView<ProfileController> {
                                     ),
                                     child: Text(
                                       "Travel with confidence in our 'Pink Mode'\nensuring safety and security with female\nriders and drivers.",
-                                      style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
+                                      style: TextStyleUtil.k14Regular(
+                                          color: ColorUtil.kBlack03),
                                     )),
                               ),
                             ),
@@ -84,49 +91,83 @@ class ProfileView extends GetView<ProfileController> {
                         inactiveTrackColor: ColorUtil.kSecondaryPinkMode,
                         activeTrackColor: ColorUtil.kPrimary2PinkMode,
                         trackOutlineWidth: const MaterialStatePropertyAll(0),
-                        thumbColor: const MaterialStatePropertyAll(ColorUtil.kWhiteColor),
-                        trackOutlineColor: const MaterialStatePropertyAll(ColorUtil.kNeutral1),
+                        thumbColor: const MaterialStatePropertyAll(
+                            ColorUtil.kWhiteColor),
+                        trackOutlineColor:
+                            const MaterialStatePropertyAll(ColorUtil.kNeutral1),
                       ),
                     ),
                   )
                 : const SizedBox(),
-            ProfileContainer(onTap: () => Get.toNamed(Routes.PROFILE_SETTINGS), image: ImageConstant.svgProfileSettings, text: 'Profile Settings'),
-            ProfileContainer(onTap: () => Get.toNamed(Routes.PUSH_NOTIFICATIONS), image: ImageConstant.svgProfileNoti, text: "Notifications"),
-            ProfileContainer(onTap: () => Get.toNamed(Routes.RIDE_HISTORY), image: ImageConstant.svgProfileRideHistory, text: "Ride history")
+            ProfileContainer(
+                onTap: () => Get.toNamed(Routes.PROFILE_SETTINGS),
+                image: ImageConstant.svgProfileSettings,
+                text: 'Profile Settings'),
+            ProfileContainer(
+                onTap: () => Get.toNamed(Routes.PUSH_NOTIFICATIONS),
+                image: ImageConstant.svgProfileNoti,
+                text: "Notifications"),
+            ProfileContainer(
+                    onTap: () => Get.toNamed(Routes.RIDE_HISTORY),
+                    image: ImageConstant.svgProfileRideHistory,
+                    text: "Ride history")
                 .paddingOnly(bottom: 8.kh),
-            ProfileContainer(onTap: () => Get.toNamed(Routes.WALLET), image: ImageConstant.svgProfileWallet, text: "Wallet"),
-            ProfileContainer(onTap: () => Get.toNamed(Routes.STUDENT_DISCOUNTS), image: ImageConstant.svgProfileDiscount, text: "Student Discount"),
+            ProfileContainer(
+                onTap: () => Get.toNamed(Routes.WALLET),
+                image: ImageConstant.svgProfileWallet,
+                text: "Wallet"),
+            ProfileContainer(
+                onTap: () => Get.toNamed(Routes.STUDENT_DISCOUNTS),
+                image: ImageConstant.svgProfileDiscount,
+                text: "Student Discount"),
             ProfileContainer(
                 onTap: () async {
-                  await Share.share("Check this cool app! \nhttps://play.google.com/store/apps/details?id=com.greenpool.app");
+                  await Share.share(
+                      "Check this cool app! \nhttps://play.google.com/store/apps/details?id=com.greenpool.app");
                 },
                 image: ImageConstant.svgProfileRefer,
                 text: "Refer a friend"),
             ProfileContainer(
                     onTap: () {
-                      Get.bottomSheet(RatingBottomSheet(), enableDrag: true, isScrollControlled: true);
+                      Get.bottomSheet(RatingBottomSheet(),
+                          enableDrag: true, isScrollControlled: true);
                     },
                     image: ImageConstant.svgProfileStar,
                     text: "Rate us")
                 .paddingOnly(bottom: 8.kh),
             ProfileContainer(
               image: ImageConstant.svgProfileAbout,
-              text: "About",
+              text: "About us",
               // onTap: () => Get.toNamed(Routes.ABOUT),
               onTap: () async {
-                await launchUrl(Uri.parse("https://green-pool-front-end.vercel.app/aboutus"));
+                await launchUrl(Uri.parse(
+                    "https://green-pool-front-end.vercel.app/aboutus"));
               },
             ),
-            ProfileContainer(onTap: () => Get.toNamed(Routes.FILE_DISPUTE), image: ImageConstant.svgProfileFile, text: "File Dispute"),
-            ProfileContainer(onTap: () => Get.toNamed(Routes.HELP_SUPPORT), image: ImageConstant.svgProfileHelp, text: "Help & Support"),
-            ProfileContainer(onTap: () => Get.toNamed(Routes.TERMS_CONDITIONS), image: ImageConstant.svgProfileTerms, text: "Terms & Conditions"),
+            ProfileContainer(
+                onTap: () => Get.toNamed(Routes.FILE_DISPUTE),
+                image: ImageConstant.svgProfileFile,
+                text: "File Dispute"),
+            ProfileContainer(
+                onTap: () => Get.toNamed(Routes.HELP_SUPPORT),
+                image: ImageConstant.svgProfileHelp,
+                text: "Help & Support"),
+            ProfileContainer(
+                onTap: () => Get.toNamed(Routes.TERMS_CONDITIONS),
+                image: ImageConstant.svgProfileTerms,
+                text: "Terms & Conditions"),
             ProfileContainer(
                 onTap: () async {
-                  await launchUrl(Uri.parse("https://green-pool-front-end.vercel.app/"));
+                  await launchUrl(
+                      Uri.parse("https://green-pool-front-end.vercel.app/"));
                 },
                 image: ImageConstant.svgProfileFollow,
                 text: "Follow us on Social Media"),
-            ProfileContainer(onTap: () => Get.toNamed(Routes.REPORT), image: ImageConstant.svgProfileBug, text: "Report a Bug").paddingOnly(bottom: 8.kh),
+            ProfileContainer(
+                    onTap: () => Get.toNamed(Routes.REPORT),
+                    image: ImageConstant.svgProfileBug,
+                    text: "Report a Bug")
+                .paddingOnly(bottom: 8.kh),
             ProfileContainer(
               onTap: () => Get.dialog(
                 useSafeArea: true,
@@ -167,9 +208,11 @@ class ProfileView extends GetView<ProfileController> {
                             onPressed: () {
                               Get.find<AuthService>().logOutUser();
                               controller.pinkMode.value = false;
-                              Get.find<HomeController>().selectedIndex.value = 0;
+                              Get.find<HomeController>().selectedIndex.value =
+                                  0;
                               Get.offAllNamed(Routes.ONBOARDING);
-                              PushNotificationService.unsubFcm("${controller.userInfo.value.data?.Id}");
+                              PushNotificationService.unsubFcm(
+                                  "${controller.userInfo.value.data?.Id}");
                             },
                             height: 40.kh,
                             width: 144.kw,

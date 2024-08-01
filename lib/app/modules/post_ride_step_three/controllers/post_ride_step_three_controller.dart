@@ -104,25 +104,42 @@ class PostRideStepThreeController extends GetxController {
   }
 
   String? fareValidator(String? value) {
-    // Check if the value is empty
-    if (value == null || value.isEmpty || value == ",") {
+    // Check if the value is empty or contains invalid characters
+    if (value == null ||
+        value.isEmpty ||
+        value == "," ||
+        value == "." ||
+        value == " " ||
+        value == "-") {
       return 'Enter a pricing';
     }
 
-    // Check if the value is greater than 9999
-    if (double.parse(value) > maxFarePrice!) {
+    // Parse the value to a double
+    double? parsedValue = double.tryParse(value);
+    if (parsedValue == null) {
+      return 'Enter a valid pricing';
+    }
+
+    // Check if the value is greater than maxFarePrice
+    if (parsedValue > (maxFarePrice ?? double.infinity)) {
       return 'Cost exceeded';
     }
 
-    if (double.parse(value) < minFarePrice!) {
+    // Check if the value is less than minFarePrice
+    if (parsedValue < (minFarePrice ?? double.negativeInfinity)) {
       return 'Cost under limit';
     }
 
-    // Check if the value contains exactly 10 digits
-    final RegExp phoneExp = RegExp(r'^\d{1,4}\.?\d{0,2}$');
+    // Check if the value contains a decimal point
+    if (value.contains('.')) {
+      return 'Decimal not allowed';
+    }
+
+    // Check if the value is a valid number format without decimals
+    final RegExp phoneExp = RegExp(r'^\d{1,4}$');
 
     if (!phoneExp.hasMatch(value)) {
-      return 'Enter a pricing';
+      return 'Enter a valid pricing';
     }
 
     return null;
@@ -168,6 +185,12 @@ class PostRideStepThreeController extends GetxController {
                 0.0);
         originToStop1Price.text =
             (originToStop1Distance * ratePerKm).round().toString();
+
+        //price should not go less than 5 dollars
+        if (int.parse(originToStop1Price.text) < 5) {
+          originToStop1Price.text = "5";
+        }
+
         final stop1toDestinationDistance = await GpUtil.calculateDistanceInInt(
             startLat:
                 postRideModel.value.ridesDetails?.stops?.first.latitude ?? 0.0,
@@ -179,6 +202,11 @@ class PostRideStepThreeController extends GetxController {
                 0.0);
         Stop1ToDestinationPrice.text =
             (stop1toDestinationDistance * ratePerKm).round().toString();
+
+        //price should not go less than 5 dollars
+        if (int.parse(Stop1ToDestinationPrice.text) < 5) {
+          Stop1ToDestinationPrice.text = "5";
+        }
 
         if (postRideModel.value.ridesDetails?.stops?[1].name?.isNotEmpty ??
             false) {
@@ -222,6 +250,17 @@ class PostRideStepThreeController extends GetxController {
               (stop1toStop2Distance * ratePerKm).round().toString();
           Stop2toDestinationPrice.text =
               (stop2toDestinationDistance * ratePerKm).round().toString();
+
+          //price should not go less than 5 dollars
+          if (int.parse(OriginToStop2Price.text) < 5) {
+            OriginToStop2Price.text = "5";
+          }
+          if (int.parse(Stop1ToStop2Price.text) < 5) {
+            Stop1ToStop2Price.text = "5";
+          }
+          if (int.parse(Stop2toDestinationPrice.text) < 5) {
+            Stop2toDestinationPrice.text = "5";
+          }
         }
       }
     } catch (e) {

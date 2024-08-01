@@ -72,7 +72,9 @@ class TransactionHistoryView extends GetView<TransactionHistoryController> {
                                 );
                               },
                               trailing: Text(
-                                "${Strings.dollar} ${transaction.amount}",
+                                (transaction?.type ?? "") == "Credit"
+                                    ? "+${Strings.dollar} ${transaction.amount}"
+                                    : "-${Strings.dollar} ${transaction.amount}",
                                 style: TextStyleUtil.k16Semibold(
                                     fontSize: 16.kh,
                                     color: (transaction?.type ?? "") == "Credit"

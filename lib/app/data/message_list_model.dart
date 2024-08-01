@@ -13,8 +13,7 @@ class MessageListModelChatRoomIdsUser2ProfilePic {
   MessageListModelChatRoomIdsUser2ProfilePic({
     this.url,
   });
-  MessageListModelChatRoomIdsUser2ProfilePic.fromJson(
-      Map<String, dynamic> json) {
+  MessageListModelChatRoomIdsUser2ProfilePic.fromJson(Map<String, dynamic> json) {
     url = json['url']?.toString();
   }
   Map<String, dynamic> toJson() {
@@ -47,10 +46,7 @@ class MessageListModelChatRoomIdsUser2 {
   MessageListModelChatRoomIdsUser2.fromJson(Map<String, dynamic> json) {
     Id = json['_id']?.toString();
     fullName = json['fullName']?.toString();
-    profilePic = (json['profilePic'] != null)
-        ? MessageListModelChatRoomIdsUser2ProfilePic.fromJson(
-            json['profilePic'])
-        : null;
+    profilePic = (json['profilePic'] != null) ? MessageListModelChatRoomIdsUser2ProfilePic.fromJson(json['profilePic']) : null;
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -77,6 +73,7 @@ class MessageListModelChatRoomIds {
   },
   "chatRoomId": "-NvqdDOYI7ygN2zqiSXy",
   "unReadCount": 2,
+  "updatedAt": "2024-07-31T05:47:15.627Z",
   "deleteUpdateTime": ""
 } 
 */
@@ -86,6 +83,7 @@ class MessageListModelChatRoomIds {
   MessageListModelChatRoomIdsUser2? user2;
   String? chatRoomId;
   int? unReadCount;
+  String? updatedAt;
   String? deleteUpdateTime;
 
   MessageListModelChatRoomIds({
@@ -94,16 +92,16 @@ class MessageListModelChatRoomIds {
     this.user2,
     this.chatRoomId,
     this.unReadCount,
+    this.updatedAt,
     this.deleteUpdateTime,
   });
   MessageListModelChatRoomIds.fromJson(Map<String, dynamic> json) {
     Id = json['_id']?.toString();
     lastMessage = json['lastMessage']?.toString();
-    user2 = (json['user2'] != null)
-        ? MessageListModelChatRoomIdsUser2.fromJson(json['user2'])
-        : null;
+    user2 = (json['user2'] != null) ? MessageListModelChatRoomIdsUser2.fromJson(json['user2']) : null;
     chatRoomId = json['chatRoomId']?.toString();
     unReadCount = json['unReadCount']?.toInt();
+    updatedAt = json['updatedAt']?.toString();
     deleteUpdateTime = json['deleteUpdateTime']?.toString();
   }
   Map<String, dynamic> toJson() {
@@ -115,6 +113,7 @@ class MessageListModelChatRoomIds {
     }
     data['chatRoomId'] = chatRoomId;
     data['unReadCount'] = unReadCount;
+    data['updatedAt'] = updatedAt;
     data['deleteUpdateTime'] = deleteUpdateTime;
     return data;
   }
@@ -136,6 +135,7 @@ class MessageListModel {
       },
       "chatRoomId": "-NvqdDOYI7ygN2zqiSXy",
       "unReadCount": 2,
+      "updatedAt": "2024-07-31T05:47:15.627Z",
       "deleteUpdateTime": ""
     }
   ]
@@ -148,13 +148,13 @@ class MessageListModel {
     this.chatRoomIds,
   });
   MessageListModel.fromJson(Map<String, dynamic> json) {
-    if (json['chatRoomIds'] != null) {
-      final v = json['chatRoomIds'];
-      final arr0 = <MessageListModelChatRoomIds>[];
-      v.forEach((v) {
-        arr0.add(MessageListModelChatRoomIds.fromJson(v));
-      });
-      chatRoomIds = arr0;
+  if (json['chatRoomIds'] != null) {
+  final v = json['chatRoomIds'];
+  final arr0 = <MessageListModelChatRoomIds>[];
+  v.forEach((v) {
+  arr0.add(MessageListModelChatRoomIds.fromJson(v));
+  });
+    chatRoomIds = arr0;
     }
   }
   Map<String, dynamic> toJson() {
@@ -162,9 +162,9 @@ class MessageListModel {
     if (chatRoomIds != null) {
       final v = chatRoomIds;
       final arr0 = [];
-      v!.forEach((v) {
-        arr0.add(v!.toJson());
-      });
+  v!.forEach((v) {
+  arr0.add(v!.toJson());
+  });
       data['chatRoomIds'] = arr0;
     }
     return data;

@@ -46,7 +46,7 @@ class PostRideStepThreeView extends GetView<PostRideStepThreeController> {
                           ).paddingOnly(left: 8.kw),
                         ),
                       ],
-                    ).paddingOnly(top: 32.kh, bottom: 4.kh),
+                    ).paddingOnly(top: 8.kh, bottom: 4.kh),
                     Text(
                       'Specify a reasonable cost per seat covering gas and additional expenses.',
                       style:
@@ -265,7 +265,7 @@ class PostRideStepThreeView extends GetView<PostRideStepThreeController> {
                             ?.description = value;
                       },
                       maxLines: 8,
-                    ).paddingOnly(bottom: 50.kh),
+                    ).paddingOnly(bottom: 30.kh),
                     Obx(
                       () => GreenPoolButton(
                         onPressed: () => controller.moveToGuidelines(),

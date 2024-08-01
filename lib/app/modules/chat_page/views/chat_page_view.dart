@@ -54,7 +54,14 @@ class ChatPageView extends GetView<ChatPageController> {
           ).paddingAll(14.kh),
         ),
         actions: [
-          PopupMenuButton(
+          GestureDetector(
+            onTap: () => controller.deleteChat(),
+            child: const Icon(
+              Icons.delete_forever,
+              color: ColorUtil.kBlack01,
+            ).paddingOnly(right: 14.kh),
+          ),
+          /*PopupMenuButton(
             color: ColorUtil.kWhiteColor,
             itemBuilder: (context) {
               return [
@@ -72,7 +79,7 @@ class ChatPageView extends GetView<ChatPageController> {
               ];
             },
             child: Icon(Icons.more_vert),
-          ).paddingOnly(right: 14.kw),
+          ).paddingOnly(right: 14.kw),*/
         ],
       ),
       body: Obx(

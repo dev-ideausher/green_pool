@@ -6,11 +6,11 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/modules/messages/controllers/messages_controller.dart';
 import 'package:green_pool/app/modules/my_rides_request/controllers/my_rides_request_controller.dart';
+import 'package:green_pool/app/modules/rider_my_ride_request/controllers/rider_my_ride_request_controller.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../data/chat_arg.dart';
 import '../data/ride_detail_id.dart';
-import '../modules/my_rides_details/controllers/my_rides_details_controller.dart';
 import '../modules/my_rides_one_time/controllers/my_rides_one_time_controller.dart';
 import 'dio/api_service.dart';
 
@@ -175,6 +175,9 @@ class PushNotificationService {
       case "Rider Request Declined":
         Get.find<MyRidesOneTimeController>().myRidesAPI();
         break;
+      case "Driver New request":
+        Get.find<RiderMyRideRequestController>().allRiderConfirmRequestAPI();
+        break;
       case 'Chat':
         Get.find<MessagesController>().getMessageListAPI();
         break;
@@ -245,13 +248,29 @@ class PushNotificationService {
       }
     }
 
+    Future<void> navigateToRidersRequestSection() async {
+      try {
+        //navigate to request section
+        Get.toNamed(Routes.RIDER_MY_RIDE_REQUEST,
+            arguments: actionData?.data['rideId'] ?? "");
+      } catch (e) {
+        debugPrint(e.toString());
+      }
+    }
+
     switch (payload) {
       case "Ride_Published":
         homeController.changeTabIndex(1);
         break;
+        
+      case "Driver Ride Cancellation":
+        // when driver itself cancels the ride
+        break;
 
       case "Rider New request":
+      case "Rider Ride Cancellation":
         if (currentRoute == Routes.BOTTOM_NAVIGATION) {
+          //! error with MyridesOneTimeController
           homeController.changeTabIndex(1);
           await navigateToDriversRequestSection();
         } else if (currentRoute == Routes.MY_RIDES_REQUEST) {
@@ -263,10 +282,9 @@ class PushNotificationService {
         }
         break;
 
-      case "Rider Ride Confirmation":
       case "Rider Request Accept":
-      case "Rider Ride Cancellation":
       case "Rider Request Declined":
+      case "Rider Ride Confirmation":
         if (currentRoute == Routes.BOTTOM_NAVIGATION) {
           homeController.changeTabIndex(1);
         } else if (currentRoute == Routes.MY_RIDES_REQUEST) {
@@ -274,11 +292,7 @@ class PushNotificationService {
         } else {
           navigateToBottomNavigation(1);
         }
-        break;
-
-      case "Driver Ride Cancellation":
-        // when driver itself cancels the ride
-        break;
+        break;      
 
       case "Payment Received":
       case "Payment Refund":
@@ -292,9 +306,20 @@ class PushNotificationService {
         break;
 
       case "Driver New request":
+        if (currentRoute == Routes.BOTTOM_NAVIGATION) {
+          homeController.changeTabIndex(1);
+          await navigateToRidersRequestSection();
+        } else if (currentRoute == Routes.MY_RIDES_REQUEST) {
+          //page will refresh as soon as the notification is received
+          print("refresh rider confirm rides page");
+        } else {
+          await navigateToBottomNavigation(1);
+          await navigateToRidersRequestSection();
+        }
+        break;
+
       case "Driver Request Accept":
       case "Driver Ride Confirmation":
-      // when rider accepts from confirm section
       case "Ride Published":
       case 'Start Ride':
       case 'Start_Ride':
