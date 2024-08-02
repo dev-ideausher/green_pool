@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:green_pool/app/modules/my_rides_one_time/controllers/my_rides_one_time_controller.dart';
 
 import '../../messages/controllers/messages_controller.dart';
 import '../../my_rides_page/controllers/my_rides_page_controller.dart';
@@ -12,5 +13,6 @@ class HomeBinding extends Bindings {
     Get.lazyPut<MessagesController>(() => MessagesController());
     Get.lazyPut<MyRidesPageController>(() => MyRidesPageController());
     Get.lazyPut<ProfileController>(() => ProfileController());
+    Get.lazyPut<MyRidesOneTimeController>(() => MyRidesOneTimeController());
   }
 }

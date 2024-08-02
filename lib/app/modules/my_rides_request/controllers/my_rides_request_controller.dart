@@ -85,10 +85,13 @@ class MyRidesRequestController extends GetxController {
     try {
       final rejectRiderResponse =
           await APIManager.patchRejectRiderRequest(body: rideData);
-      var data = jsonDecode(rejectRiderResponse.toString());
-      allConfirmRequestAPI();
-      Get.until((route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
-      showMySnackbar(msg: 'Request rejected successfully!');
+      if (rejectRiderResponse.data['status']) {
+        allConfirmRequestAPI();
+        Get.until((route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
+        showMySnackbar(msg: 'Request rejected successfully!');
+      } else {
+        showMySnackbar(msg: rejectRiderResponse.data['message'].toString());
+      }
     } catch (e) {
       throw Exception(e);
     }
@@ -120,7 +123,9 @@ class MyRidesRequestController extends GetxController {
         "driverRideId": rideDetailId.value.driverRidId,
         "riderName": driverSendModelData.riderDetails?.fullName,
         "riderNotificationPreferences": riderNotificationPref,
-        "price":( double.parse(driverSendModelData.price??"0.0")*(driverSendModelData.seatAvailable??0)).toString()
+        "price": (double.parse(driverSendModelData.price ?? "0.0") *
+                (driverSendModelData.seatAvailable ?? 0))
+            .toString()
       });
       var data = jsonDecode(sendRiderRequestResponse.toString());
       sendRiderRequestModel.value = SendRiderRequestModel.fromJson(data);

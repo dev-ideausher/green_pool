@@ -134,9 +134,14 @@ class RiderMyRideRequestController extends GetxController {
       final response = await APIManager.rejectDriversRequest(body: {
         "ridePostId": riderConfirmRequestModel.value.data?[index]?.Id
       });
-      allRiderConfirmRequestAPI();
-      showMySnackbar(msg: response.data["message"]);
-      Get.back();
+      if (response.data["status"]) {
+        allRiderConfirmRequestAPI();
+        Get.back();
+        showMySnackbar(msg: response.data["message"]);
+      } else {
+        Get.back();
+        showMySnackbar(msg: response.data["message"]);
+      }
     } catch (e) {
       throw Exception(e);
     }

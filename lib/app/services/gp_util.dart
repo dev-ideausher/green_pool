@@ -197,6 +197,40 @@ class GpUtil {
     return DateFormat('dd MMM yyyy').format(localTimestamp);
   }
 
+  static String formatDateddMMMyyyy(String timestamp) {
+    if (timestamp.isEmpty) {
+      return "";
+    }
+
+    try {
+      DateTime utcDateTime = DateTime.parse(timestamp);
+      DateTime localDateTime = utcDateTime.toLocal();
+      String formattedLocalDateTime =
+          DateFormat.yMd().add_jms().format(localDateTime);
+
+      return formattedLocalDateTime;
+    } catch (e) {
+      debugPrint(e.toString());
+      return "";
+    }
+  }
+
+  // static String getEdMyAtHM({String? dateTime}) {
+  //   var outputDate = "";
+  //   if (dateTime != null) {
+  //     try {
+  //       var datetime = DateTime.parse(dateTime);
+  //       var localDate = datetime.toLocal();
+
+  //       var outputFormat = DateFormat('dd MMM yyyy');
+  //       outputDate = outputFormat.format(localDate);
+  //     } catch (e) {
+  //       debugPrint(e.toString());
+  //     }
+  //   }
+  //   return outputDate;
+  // }
+
   static bool isToday(DateTime timestamp) {
     final dateToCheck = timestamp.toLocal();
     DateTime now = DateTime.now();
@@ -271,9 +305,10 @@ class GpUtil {
     return BitmapDescriptor.fromBytes(resizedBytes);
   }
 
-  static Future<void> openGoogleMap(double latitude, double longitude) async {
+  static Future<void> openGoogleMap(double pickupLat, double pickupLng,
+      double destinationLat, double destinationLng) async {
     String googleUrl =
-        'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
+        'https://www.google.com/maps/dir/?api=1&origin=$pickupLat,$pickupLng&destination=$destinationLat,$destinationLng';
     if (await canLaunchUrl(Uri.parse(googleUrl))) {
       await launchUrl(Uri.parse(googleUrl));
     } else {

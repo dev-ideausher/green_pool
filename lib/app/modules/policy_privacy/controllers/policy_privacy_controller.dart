@@ -17,7 +17,6 @@ class PolicyPrivacyController extends GetxController {
   privacyPolicyAPI() async {
     try {
       isLoading.value = true;
-      // final response = await APIManager.getPrivacyPolicy();
       final response = await APIManager.getGuidelines();
       if (response.data["status"]) {
         policyText = response.data['data'][0]['description'].toString();

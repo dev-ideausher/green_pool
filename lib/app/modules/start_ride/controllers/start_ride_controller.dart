@@ -553,6 +553,10 @@ class StartRideController extends GetxController {
 
   void openGoogleMaps() {
     GpUtil.openGoogleMap(
+        myRidesModel.value.driverBookingDetails?.origin?.coordinates?.last ??
+            0.0,
+        myRidesModel.value.driverBookingDetails?.origin?.coordinates?.first ??
+            0.0,
         myRidesModel
                 .value.driverBookingDetails?.destination?.coordinates?.last ??
             0.0,

@@ -63,6 +63,8 @@ class ProfileController extends GetxController {
         showMySnackbar(
             msg:
                 "Thank you for rating our app! Your feedback helps us improve and serve you better.");
+      } else {
+        showMySnackbar(msg: response.data['message'].toString());
       }
     } catch (e) {
       debugPrint(e.toString());

@@ -195,10 +195,14 @@ class UserDetailsController extends GetxController {
 
     try {
       final response = await APIManager.userDetails(body: userData);
-      showMySnackbar(msg: response.data['message']);
-      Get.find<HomeController>().userInfoAPI();
-      Get.find<HomeController>().changeTabIndex(0);
-      Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
+      if (response.data["status"]) {
+        showMySnackbar(msg: response.data['message'].toString());
+        Get.find<HomeController>().userInfoAPI();
+        Get.find<HomeController>().changeTabIndex(0);
+        Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
+      } else {
+        showMySnackbar(msg: response.data['message'].toString());
+      }
     } catch (e) {
       log("updateDetailsAPI error: $e");
     }

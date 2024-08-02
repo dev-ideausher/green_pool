@@ -173,6 +173,7 @@ class PushNotificationService {
       case 'End_Ride':
       case 'Rider New request':
       case "Rider Request Declined":
+      case "Driver Ride Cancellation":
         Get.find<MyRidesOneTimeController>().myRidesAPI();
         break;
       case "Driver New request":
@@ -262,9 +263,14 @@ class PushNotificationService {
       case "Ride_Published":
         homeController.changeTabIndex(1);
         break;
-        
+
       case "Driver Ride Cancellation":
         // when driver itself cancels the ride
+        if (currentRoute == Routes.BOTTOM_NAVIGATION) {
+          homeController.changeTabIndex(1);
+        } else {
+          navigateToBottomNavigation(1);
+        }
         break;
 
       case "Rider New request":
@@ -292,7 +298,7 @@ class PushNotificationService {
         } else {
           navigateToBottomNavigation(1);
         }
-        break;      
+        break;
 
       case "Payment Received":
       case "Payment Refund":
@@ -325,6 +331,7 @@ class PushNotificationService {
       case 'Start_Ride':
         // Get.toNamed(Routes.RIDER_START_RIDE_MAP, arguments: actionData?.data);
         // need my rides model data
+        //? move to where the user can see View Matching Riders Button
         if (currentRoute == Routes.BOTTOM_NAVIGATION) {
           homeController.changeTabIndex(1);
         } else {

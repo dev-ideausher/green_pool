@@ -66,9 +66,12 @@ class MyRidesOneTimeController extends GetxController {
         isLoad.value = true;
         final cancelRideResponse =
             await APIManager.riderCancelRide(body: riderRideId);
-        var data = jsonDecode(cancelRideResponse.toString());
-        await myRidesAPI();
-        Get.back();
+        if (cancelRideResponse.data['status']) {
+          await myRidesAPI();
+          Get.back();
+        } else {
+          showMySnackbar(msg: cancelRideResponse.data['message'].toString());
+        }
         isLoad.value = false;
       } catch (e) {
         throw Exception(e);
@@ -87,8 +90,11 @@ class MyRidesOneTimeController extends GetxController {
           isLoad.value = true;
           final cancelRideResponse =
               await APIManager.cancelRide(body: driverRideId);
-          var data = jsonDecode(cancelRideResponse.toString());
-          await myRidesAPI();
+          if (cancelRideResponse.data['status']) {
+            await myRidesAPI();
+          } else {
+            showMySnackbar(msg: cancelRideResponse.data['message'].toString());
+          }
           isLoad.value = false;
         } catch (e) {
           debugPrint(e.toString());
@@ -230,9 +236,13 @@ class MyRidesOneTimeController extends GetxController {
         Get.back();
         try {
           isLoad.value = true;
-          await APIManager.deleteRecurringRide(rideId: id);
-          showMySnackbar(msg: "Ride deleted successfully!");
-          await myRidesAPI();
+          final res = await APIManager.deleteRecurringRide(rideId: id);
+          if (res.data['status']) {
+            showMySnackbar(msg: "Ride deleted successfully!");
+            await myRidesAPI();
+          } else {
+            showMySnackbar(msg: res.data['message'].toString());
+          }
           isLoad.value = false;
         } catch (e) {
           debugPrint(e.toString());

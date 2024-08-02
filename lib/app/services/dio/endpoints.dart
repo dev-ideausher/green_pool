@@ -39,6 +39,7 @@ class Endpoints {
   static const String studentDiscount = "email/send";
   static const String addAmount = "payment/addAmount";
   static const String appRating = "app/ratingByUser";
+  static const String userSupportsendMessage = "userSupport/user";
 
   //get url
   static const String userLogin = "auth/login";
@@ -53,6 +54,7 @@ class Endpoints {
   static const String allRecurringRides = "driver/recurringRides";
   static const String recurringRideDetails = "driver/recurringRides/";
   static const String rideHistory = "rider/rideHistory";
+  static const String fileDisputeRides = "rider/fileDispute";
   static const String findMatchingDrivers =
       "rider/matchingDrivers"; // to get matching rides according to the Find ride data
   static const String riderAllSendRequests = 'rider/matchingDrivers?rideId=';

@@ -75,6 +75,7 @@ class HelpSupportView extends GetView<HelpSupportController> {
                                 itemCount: group.quesAns?.length,
                                 itemBuilder: (context, itemsIndex) {
                                   final item = group.quesAns![itemsIndex];
+                                  final key = '${index}_$itemsIndex';
                                   return Obx(
                                     () => ListTile(
                                       title: Text(
@@ -82,32 +83,29 @@ class HelpSupportView extends GetView<HelpSupportController> {
                                         style: TextStyleUtil.k18Bold(),
                                       ),
                                       subtitle: Visibility(
-                                        // visible: itemsIndex ==
-                                        //     controller.selectedIndex.value,
                                         visible: controller
-                                            .isExpandedList[itemsIndex].value,
+                                                .isExpandedMap[key]?.value ??
+                                            false,
                                         child: Text(item?.answer ?? ""),
                                       ),
                                       trailing: IconButton(
                                         onPressed: () {
-                                          controller.showHide(itemsIndex);
-                                          controller.isExpandedList[itemsIndex]
-                                                  .value =
-                                              !controller
-                                                  .isExpandedList[itemsIndex]
-                                                  .value;
+                                          controller.showHide(
+                                              index, itemsIndex);
                                         },
-                                        icon: Icon(controller
-                                                .isExpandedList[itemsIndex]
-                                                .value
-                                            ? Icons.keyboard_arrow_up
-                                            : Icons.keyboard_arrow_down),
+                                        icon: Icon(
+                                          controller.isExpandedMap[key]
+                                                      ?.value ??
+                                                  false
+                                              ? Icons.keyboard_arrow_up
+                                              : Icons.keyboard_arrow_down,
+                                        ),
                                       ),
                                       // Add more UI components for displaying additional information if needed
                                     ),
                                   );
                                 },
-                              ).paddingOnly(bottom: 12.kh),
+                              ),
                             ],
                           );
                         },

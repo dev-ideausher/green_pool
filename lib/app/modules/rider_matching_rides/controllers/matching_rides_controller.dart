@@ -67,10 +67,10 @@ class MatchingRidesController extends GetxController {
           MatchingRidesModel.fromJson(jsonDecode(response.toString()));
       if (matchingRidesModel.value.status!) {
         matchingRidesModel.refresh();
-        isLoading.value = false;
       } else {
         showMySnackbar(msg: matchingRidesModel.value.message ?? "");
       }
+      isLoading.value = false;
     } catch (error) {
       debugPrint(error.toString());
     }

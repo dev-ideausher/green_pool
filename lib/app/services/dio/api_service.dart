@@ -67,6 +67,11 @@ class APIManager {
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false)
           .post(Endpoints.sendMessage, data: jsonEncode(body));
 
+  static Future<Response> userSupportSendMessage(
+          {required dynamic body}) async =>
+      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false)
+          .post(Endpoints.userSupportsendMessage, data: jsonEncode(body));
+
   static Future<Response> postStudentDiscount({required dynamic body}) async =>
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
           .post(Endpoints.studentDiscount, data: jsonEncode(body));
@@ -168,6 +173,10 @@ class APIManager {
   static Future<Response> getRideHistory() async =>
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false)
           .get(Endpoints.rideHistory);
+
+  static Future<Response> getFileDisputeRides() async =>
+      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false)
+          .get(Endpoints.fileDisputeRides);
 
   static Future<Response> getAllRecurringRides() async =>
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false)

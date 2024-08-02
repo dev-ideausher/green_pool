@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:green_pool/app/modules/rider_matching_rides/controllers/matching_rides_controller.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../services/colors.dart';
 import '../../../services/text_style_util.dart';
 import '../../home/controllers/home_controller.dart';
-import '../../rider_filter/controllers/rider_filter_controller.dart';
 
-class FilterList extends GetView<RiderFilterController> {
+class FilterList extends GetView<MatchingRidesController> {
   final String image, text;
   final bool value;
   final Function(bool?) onChanged;

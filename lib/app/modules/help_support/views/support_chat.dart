@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:green_pool/app/res/strings.dart';
-import 'package:intl/intl.dart';
 import 'package:get/get.dart';
-import 'package:green_pool/app/components/common_image_view.dart';
-import 'package:green_pool/app/components/greenpool_textfield.dart';
-import 'package:green_pool/app/constants/image_constant.dart';
-import 'package:green_pool/app/services/colors.dart';
+import 'package:green_pool/app/modules/help_support/controllers/help_support_controller.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
-import 'package:green_pool/app/services/storage.dart';
-import 'package:green_pool/app/services/text_style_util.dart';
+import 'package:green_pool/generated/assets.dart';
 
+import '../../../components/common_image_view.dart';
 import '../../../components/gp_progress.dart';
+import '../../../components/greenpool_textfield.dart';
+import '../../../constants/image_constant.dart';
+import '../../../res/strings.dart';
+import '../../../services/colors.dart';
 import '../../../services/gp_util.dart';
+import '../../../services/storage.dart';
+import '../../../services/text_style_util.dart';
 import '../../home/controllers/home_controller.dart';
-import '../controllers/chat_page_controller.dart';
 
-class ChatPageView extends GetView<ChatPageController> {
-  const ChatPageView({super.key});
+class SupportChat extends GetView<HelpSupportController> {
+  const SupportChat({super.key});
 
   @override
   Widget build(BuildContext context) {
+    controller.getChat();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Get.find<HomeController>().isPinkModeOn.value
@@ -31,56 +32,26 @@ class ChatPageView extends GetView<ChatPageController> {
             : ColorUtil.kPrimary01,
         elevation: 1,
         toolbarHeight: 64.kh,
-        title: Obx(
-          () => Row(children: [
-            ClipRRect(
-                borderRadius: BorderRadius.circular(8.kh),
-                child: CommonImageView(
-                  url: controller.chatArg.value.image,
-                  height: 32.kh,
-                  width: 32.kh,
-                )),
-            12.kwidthBox,
-            Text(
-              controller.chatArg.value.name ?? "",
-              style: TextStyleUtil.k14Bold(),
-            )
-          ]),
-        ),
+        title: Row(children: [
+          ClipRRect(
+              borderRadius: BorderRadius.circular(8.kh),
+              child: CommonImageView(
+                imagePath: Assets.iconsLogo,
+                height: 32.kh,
+                width: 32.kh,
+              )),
+          12.kwidthBox,
+          Text(
+            "Greenpool Support",
+            style: TextStyleUtil.k14Bold(),
+          )
+        ]),
         leading: GestureDetector(
           onTap: () => Get.back(),
           child: SvgPicture.asset(
             ImageConstant.svgIconBack,
           ).paddingAll(14.kh),
         ),
-        actions: [
-          GestureDetector(
-            onTap: () => controller.deleteChat(),
-            child: const Icon(
-              Icons.delete_forever,
-              color: ColorUtil.kBlack01,
-            ).paddingOnly(right: 14.kh),
-          ),
-          /*PopupMenuButton(
-            color: ColorUtil.kWhiteColor,
-            itemBuilder: (context) {
-              return [
-                PopupMenuItem(
-                  onTap: () => controller.call(),
-                  value: 1,
-                  child: Text(Strings.call, style: TextStyleUtil.k12Medium()),
-                ),
-                PopupMenuItem(
-                  onTap: () => controller.deleteChat(),
-                  value: 1,
-                  child: Text(Strings.deleteChat,
-                      style: TextStyleUtil.k12Medium()),
-                ),
-              ];
-            },
-            child: Icon(Icons.more_vert),
-          ).paddingOnly(right: 14.kw),*/
-        ],
       ),
       body: Obx(
         () => controller.isLoad.value
@@ -88,7 +59,7 @@ class ChatPageView extends GetView<ChatPageController> {
             : Column(
                 children: [
                   Expanded(
-                    child: ListView.separated(
+                    child: ListView.builder(
                       itemCount: controller.messages.length,
                       padding: const EdgeInsets.only(top: 10, bottom: 10),
                       controller: controller.scrollController,
@@ -118,7 +89,7 @@ class ChatPageView extends GetView<ChatPageController> {
                                         borderRadius:
                                             BorderRadius.circular(100.kh),
                                         child: CommonImageView(
-                                          url: controller.chatArg.value.image,
+                                          imagePath: Assets.iconsLogo,
                                           height: 32.kh,
                                           width: 32.kh,
                                         ),
@@ -235,54 +206,6 @@ class ChatPageView extends GetView<ChatPageController> {
                               ),
                             ],
                           ),
-                        );
-                      },
-                      separatorBuilder: (BuildContext context, int index) {
-                        final message = controller.messages[index];
-                        final messageDate = DateTime(
-                          message.timestamp.year,
-                          message.timestamp.month,
-                          message.timestamp.day,
-                        );
-
-                        bool showDate = true;
-                        if (index < controller.messages.length - 1) {
-                          final nextMessage = controller.messages[index + 1];
-                          final nextMessageDate = DateTime(
-                            nextMessage.timestamp.year,
-                            nextMessage.timestamp.month,
-                            nextMessage.timestamp.day,
-                          );
-
-                          if (messageDate.isAtSameMomentAs(nextMessageDate)) {
-                            showDate = false;
-                          }
-                        }
-                        return Column(
-                          children: [
-                            if (showDate)
-                              Center(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      GpUtil.isToday(message.timestamp)
-                                          ? Strings.today
-                                          : DateFormat.E()
-                                              .format(message.timestamp),
-                                      style: TextStyleUtil.k14Regular(),
-                                    ),
-                                    Text(
-                                      GpUtil.formatDateddMMMyyyy(
-                                          message.timestamp.toString()),
-                                      style: TextStyleUtil.k12Regular(
-                                          color: ColorUtil.kBlack04),
-                                    ),
-                                  ],
-                                ).paddingOnly(top: 8.kh),
-                              ),
-                          ],
                         );
                       },
                     ),

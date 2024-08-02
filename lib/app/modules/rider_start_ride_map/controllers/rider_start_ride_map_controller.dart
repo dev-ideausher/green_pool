@@ -324,7 +324,7 @@ class RiderStartRideMapController extends GetxController {
         snippet: '',
       ),
       rotation: rotation ?? 0.0,
-      // anchor: const Offset(0.5, 0),
+      anchor: const Offset(0.0, 0.5),
       icon: image == ""
           ? BitmapDescriptor.defaultMarker
           : await BitmapDescriptor.asset(
@@ -440,6 +440,7 @@ class RiderStartRideMapController extends GetxController {
   }
 
   void openGoogleMaps() {
-    GpUtil.openGoogleMap(destinationLat.value, destinationLong.value);
+    GpUtil.openGoogleMap(currentLat.value, currentLong.value,
+        destinationLat.value, destinationLong.value);
   }
 }

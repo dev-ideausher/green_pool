@@ -23,7 +23,7 @@ class StudentDiscountsView extends GetView<StudentDiscountsController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:  GreenPoolAppBar(
+      appBar: GreenPoolAppBar(
         title: Text(Strings.studentDiscount),
       ),
       resizeToAvoidBottomInset: false,
@@ -167,6 +167,10 @@ class StudentDiscountsView extends GetView<StudentDiscountsController> {
                                                 controller
                                                     .schoolSugestionList[index]
                                                     .name!;
+                                            controller.emailPostFix = controller
+                                                    .schoolSugestionList[index]
+                                                    .emailPostFix ??
+                                                "";
                                             controller.isSelected.value = true;
                                           },
                                         ),
@@ -180,7 +184,7 @@ class StudentDiscountsView extends GetView<StudentDiscountsController> {
                   ).paddingOnly(bottom: 8.kh),
                   GreenPoolTextField(
                     hintText: Strings.enterStudentEmail,
-                    keyboardType:  TextInputType.emailAddress,
+                    keyboardType: TextInputType.emailAddress,
                     controller: controller.emailTextController,
                     onchanged: (p0) {
                       controller.toggleButton();
@@ -190,7 +194,7 @@ class StudentDiscountsView extends GetView<StudentDiscountsController> {
                   Obx(
                     () => GreenPoolButton(
                       onPressed: () {
-                        controller.studentDiscountAPI();
+                        controller.checkEmailPostFix();
                       },
                       label: Strings.verifyEmail,
                       isActive: controller.isActive.value,

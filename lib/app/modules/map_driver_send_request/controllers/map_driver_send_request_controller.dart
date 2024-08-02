@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:green_pool/app/data/driver_send_request_model.dart';
-import 'package:green_pool/app/modules/map_driver_send_request/views/map_driver_send_bottomsheet.dart';
 
 import '../../../services/dio/endpoints.dart';
 import '../../../services/gp_util.dart';

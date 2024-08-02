@@ -132,7 +132,7 @@ class CreateAccountController extends GetxController {
           await Get.offNamed(Routes.VERIFY, arguments: {
             'isDriver': isDriver,
             'fullName': fullNameController.value.text,
-            'phoneNumber': countryCode + " " + phoneNumberController.value.text,
+            'phoneNumber': "$countryCode ${phoneNumberController.value.text}",
             'fromNavBar': fromNavBar,
             'findRideModel': findRideModel.value
           });
@@ -140,7 +140,7 @@ class CreateAccountController extends GetxController {
           await Get.offNamed(Routes.VERIFY, arguments: {
             'isDriver': isDriver,
             'fullName': fullNameController.value.text,
-            'phoneNumber': countryCode + " " + phoneNumberController.value.text,
+            'phoneNumber': "$countryCode ${phoneNumberController.value.text}",
             'fromNavBar': fromNavBar,
             'postRideModel': postRideModel.value
           });
@@ -149,7 +149,7 @@ class CreateAccountController extends GetxController {
         showMySnackbar(msg: 'Terms and Conditions not accepted');
       }
     } catch (e) {
-      print('error: $e');
+      debugPrint('error: $e');
     }
   }
 

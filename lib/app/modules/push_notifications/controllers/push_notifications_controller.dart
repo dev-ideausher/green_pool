@@ -73,10 +73,13 @@ class PushNotificationsController extends GetxController {
     try {
       final response =
           await APIManager.notificationPreferences(body: notiPrefData);
-      var data = jsonDecode(response.toString());
-      Get.find<HomeController>().userInfoAPI();
-      Get.back();
-      showMySnackbar(msg: "Notification prefernces updated");
+      if (response.data['status']) {
+        Get.find<HomeController>().userInfoAPI();
+        Get.back();
+        showMySnackbar(msg: "Notification prefernces updated");
+      } else {
+        showMySnackbar(msg: response.data["message"].toString());
+      }
     } catch (e) {
       throw Exception(e);
     }

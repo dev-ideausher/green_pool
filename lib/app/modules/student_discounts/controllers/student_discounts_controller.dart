@@ -20,6 +20,7 @@ class StudentDiscountsController extends GetxController {
   TextEditingController searchTextController = TextEditingController();
   var schoolListModel = SchoolListModel().obs;
   final confettiController = ConfettiController();
+  String emailPostFix = "";
 
   // @override
   // void onInit() {
@@ -36,16 +37,20 @@ class StudentDiscountsController extends GetxController {
         isLoading.value = true;
         isSelected.value = false;
         final response = await APIManager.getAllSchools(schoolName: input);
-        var data = jsonDecode(response.toString());
-        schoolListModel.value = SchoolListModel.fromJson(data);
-        if (schoolListModel.value.data!.isNotEmpty) {
-          schoolSugestionList.value = schoolListModel.value.data!;
+        if (response.data["status"]) {
+          var data = jsonDecode(response.toString());
+          schoolListModel.value = SchoolListModel.fromJson(data);
+          if (schoolListModel.value.data!.isNotEmpty) {
+            schoolSugestionList.value = schoolListModel.value.data!;
+          }
+        } else {
+          showMySnackbar(msg: response.data["message"].toString());
         }
         isLoading.value = false;
       } catch (e) {
         throw Exception(e);
       }
-    } else {}
+    }
   }
 
   studentDiscountAPI() async {
@@ -57,6 +62,8 @@ class StudentDiscountsController extends GetxController {
       if (response.data['status']) {
         requestSent.value = true;
         confettiController.play();
+      } else {
+        showMySnackbar(msg: response.data['message'].toString());
       }
     } catch (e) {
       debugPrint(e.toString());
@@ -68,6 +75,17 @@ class StudentDiscountsController extends GetxController {
       isActive.value = true;
     } else {
       return showMySnackbar(msg: "please fill in the required information");
+    }
+  }
+
+  void checkEmailPostFix() {
+    final postFixValue = emailTextController.value.text.split("@").last;
+    if (emailPostFix == postFixValue) {
+      studentDiscountAPI();
+    } else {
+      showMySnackbar(
+          msg:
+              "The provided email does not match the registered university email address.");
     }
   }
 }

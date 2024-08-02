@@ -33,13 +33,17 @@ class RatingRiderSideController extends GetxController {
   myRidesDetailsAPI(String rideId) async {
     try {
       final response = await APIManager.getMyRidesDetails(rideId: rideId);
-      final mData = BookingDetailModel.fromJson(response.data);
-      bookingModelData.value = mData.data!;
-      bookingModelData.value.driverBookingDetails?.riderBookingDetails = mData
-          .data!.driverBookingDetails!.riderBookingDetails!
-          .where((element) => (element.riderDetails?.Id !=
-              Get.find<GetStorageService>().getUserAppId))
-          .toList();
+      if (response.data["status"]) {
+        final mData = BookingDetailModel.fromJson(response.data);
+        bookingModelData.value = mData.data!;
+        bookingModelData.value.driverBookingDetails?.riderBookingDetails = mData
+            .data!.driverBookingDetails!.riderBookingDetails!
+            .where((element) => (element.riderDetails?.Id !=
+                Get.find<GetStorageService>().getUserAppId))
+            .toList();
+      } else {
+        showMySnackbar(msg: response.data["message"].toString());
+      }
       isLoading.value = false;
     } catch (e) {
       debugPrint(e.toString());
@@ -47,9 +51,7 @@ class RatingRiderSideController extends GetxController {
   }
 
   rateDriverAPI(String driverId) async {
-    final Map<String, dynamic> data = {
-      "rating": driverRating.value
-    };
+    final Map<String, dynamic> data = {"rating": driverRating.value};
 
     try {
       final res = await APIManager.postRateUsers(body: data);

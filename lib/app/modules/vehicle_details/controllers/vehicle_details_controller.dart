@@ -132,12 +132,16 @@ class VehicleDetailsController extends GetxController {
 
     try {
       final response = await APIManager.updateVehicleDetails(body: userData);
-      showMySnackbar(msg: response.data['message']);
-      // Refresh user info after update
-      Get.find<HomeController>().changeTabIndex(0);
-      Get.find<HomeController>().userInfoAPI();
-      // Navigate back to home screen
-      Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
+      if (response.data["status"]) {
+        showMySnackbar(msg: response.data['message'].toString());
+        // Refresh user info after update
+        Get.find<HomeController>().changeTabIndex(0);
+        Get.find<HomeController>().userInfoAPI();
+        // Navigate back to home screen
+        Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
+      } else {
+        showMySnackbar(msg: response.data['message'].toString());
+      }
     } catch (error) {
       throw Exception(error);
     }

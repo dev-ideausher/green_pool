@@ -31,13 +31,11 @@ class WebAddPayView extends GetView<WebAddPayController> {
                         },
                         onUrlChange: (change) async {
                           if (change.url!.startsWith(Endpoints.success_url)) {
-                            // Get.back();
                             Get.until(
                               (route) => Get.currentRoute == Routes.WALLET,
                             );
                           } else if (change.url!
                               .startsWith(Endpoints.cancel_url)) {
-                            // Get.back();
                             Get.until(
                               (route) => Get.currentRoute == Routes.WALLET,
                             );

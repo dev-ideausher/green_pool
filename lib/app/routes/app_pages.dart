@@ -95,8 +95,6 @@ import '../modules/ride_history/bindings/ride_history_binding.dart';
 import '../modules/ride_history/views/ride_history_view.dart';
 import '../modules/rider_confirmed_ride_details/bindings/rider_confirmed_ride_details_binding.dart';
 import '../modules/rider_confirmed_ride_details/views/rider_confirmed_ride_details_view.dart';
-import '../modules/rider_filter/bindings/rider_filter_binding.dart';
-import '../modules/rider_filter/views/rider_filter_view.dart';
 import '../modules/rider_matching_rides/bindings/matching_rides_binding.dart';
 import '../modules/rider_matching_rides/views/matching_rides_view.dart';
 import '../modules/rider_my_ride_request/bindings/rider_ride_request_binding.dart';
@@ -318,11 +316,6 @@ class AppPages {
       name: _Paths.RIDER_MY_RIDE_REQUEST,
       page: () => const RiderMyRideRequestView(),
       binding: RiderMyRideRequestBinding(),
-    ),
-    GetPage(
-      name: _Paths.RIDER_FILTER,
-      page: () => const RiderFilterView(),
-      binding: RiderFilterBinding(),
     ),
     GetPage(
       name: _Paths.RIDER_MY_RIDES,

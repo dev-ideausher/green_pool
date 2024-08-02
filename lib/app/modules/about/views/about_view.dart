@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:green_pool/app/components/greenpool_appbar.dart';
-import 'package:green_pool/app/res/strings.dart';
-import 'package:green_pool/app/services/responsive_size.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
-import '../../../components/gp_progress.dart';
-import '../../../services/colors.dart';
-import '../../../services/text_style_util.dart';
 import '../controllers/about_controller.dart';
 
 class AboutView extends GetView<AboutController> {
@@ -15,24 +10,16 @@ class AboutView extends GetView<AboutController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: GreenPoolAppBar(
-        title: Text(Strings.aboutGp),
-      ),
-      body: Obx(
-        () => controller.isLoading.value
-            ? const GpProgress()
-            : SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(                      
-                      controller.aboutText,
-                      style:
-                          TextStyleUtil.k14Regular(color: ColorUtil.kBlack02),
-                    ).paddingOnly(top: 32.kh),
-                  ],
-                ).paddingSymmetric(horizontal: 16.kw),
-              ),
+      // appBar: GreenPoolAppBar(
+      //   title: Text(Strings.aboutGp),
+      // ),
+      body: SafeArea(
+        child: WebViewWidget(
+            key: key,
+            controller: WebViewController()
+              ..loadRequest(Uri.parse(
+                  "https://green-pool-front-end.vercel.app/aboutus" ?? ""))
+              ..setJavaScriptMode(JavaScriptMode.unrestricted)),
       ),
     );
   }

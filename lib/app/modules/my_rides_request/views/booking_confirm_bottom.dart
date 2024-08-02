@@ -187,10 +187,11 @@ class BookingConfirmBottom extends StatelessWidget {
                         await APIManager.patchRejectRiderRequest(
                             body: {"ridePostId": driverRideData?.Id});
                     if (rejectRiderResponse.data["status"]) {
-                      var data = jsonDecode(rejectRiderResponse.toString());
                       Get.back();
                       showMySnackbar(msg: 'Request rejected successfully!');
-                    } 
+                    } else {
+                      showMySnackbar(msg: rejectRiderResponse.data["message"]);
+                    }
                   } catch (e) {
                     throw Exception(e);
                   }

@@ -83,9 +83,12 @@ class SubmitDisputeController extends GetxController {
 
     try {
       final response = await APIManager.postFileDispute(body: disputeData);
-      var data = jsonDecode(response.toString());
-      Get.until((route) => Get.currentRoute == Routes.FILE_DISPUTE);
-      showMySnackbar(msg: data['message']);
+      if (response.data["status"]) {
+        Get.until((route) => Get.currentRoute == Routes.FILE_DISPUTE);
+        showMySnackbar(msg: response.data['message'].toString());
+      } else {
+        showMySnackbar(msg: response.data['message'].toString());
+      }
     } catch (e) {
       throw Exception(e);
     }

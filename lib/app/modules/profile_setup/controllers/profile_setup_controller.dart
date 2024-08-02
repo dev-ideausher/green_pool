@@ -215,12 +215,16 @@ class ProfileSetupController extends GetxController
       ),
     });
     try {
-      final responses = await APIManager.userDetails(body: userData);
-      showMySnackbar(msg: responses.data['message']);
-      storageService.setUserName = fullName.text;
-      storageService.emailId = email.text;
-      storageService.profileStatus = true;
-      tabBarController.index = 1;
+      final response = await APIManager.userDetails(body: userData);
+      if (response.data['status']) {
+        showMySnackbar(msg: response.data['message']);
+        storageService.setUserName = fullName.text;
+        storageService.emailId = email.text;
+        storageService.profileStatus = true;
+        tabBarController.index = 1;
+      } else {
+        showMySnackbar(msg: response.data['message']);
+      }
     } catch (e) {
       throw Exception(e);
     }
@@ -257,17 +261,21 @@ class ProfileSetupController extends GetxController
     if (storageService.profileStatus == true) {
       try {
         await APIManager.postWelcomeEmail(emailId: {"email": email.text});
-        await APIManager.postVehicleDetails(body: vehicleData);
-        showMySnackbar(msg: "Data filled successfully");
-        storageService.isLoggedIn = true;
-        storageService.setDriver = true;
-        Get.offNamed(Routes.EMERGENCY_CONTACTS, arguments: {
-          'fromNavBar': fromNavBar,
-          'postRideModel': postRideModel.value
-        }, parameters: {
-          "profileType": "driver"
-        });
-        homeController.userInfoAPI();
+        final response = await APIManager.postVehicleDetails(body: vehicleData);
+        if (response.data['status']) {
+          showMySnackbar(msg: "Data filled successfully");
+          storageService.isLoggedIn = true;
+          storageService.setDriver = true;
+          Get.offNamed(Routes.EMERGENCY_CONTACTS, arguments: {
+            'fromNavBar': fromNavBar,
+            'postRideModel': postRideModel.value
+          }, parameters: {
+            "profileType": "driver"
+          });
+          homeController.userInfoAPI();
+        } else {
+          showMySnackbar(msg: response.data['message'].toString());
+        }
       } catch (e) {
         throw Exception(e);
       }

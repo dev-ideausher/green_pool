@@ -138,11 +138,7 @@ class ProfileView extends GetView<ProfileController> {
             ProfileContainer(
               image: ImageConstant.svgProfileAbout,
               text: "About us",
-              // onTap: () => Get.toNamed(Routes.ABOUT),
-              onTap: () async {
-                await launchUrl(Uri.parse(
-                    "https://green-pool-front-end.vercel.app/aboutus"));
-              },
+              onTap: () => Get.toNamed(Routes.ABOUT),              
             ),
             ProfileContainer(
                 onTap: () => Get.toNamed(Routes.FILE_DISPUTE),

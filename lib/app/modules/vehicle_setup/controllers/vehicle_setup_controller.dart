@@ -100,21 +100,19 @@ class VehicleSetupController extends GetxController {
         filename: path.basename(pickedVehicleFile.path),
       )
     });
-
-/*    if (Get.find<GetStorageService>().profileStatus == true) {*/
     try {
-      await APIManager.postVehicleDetails(body: vehicleData);
-      showMySnackbar(msg: "Data filled successfully");
-      Get.find<GetStorageService>().setDriver = true;
-      Get.find<HomeController>().userInfoAPI();
-      // Get.offNamed(Routes.CARPOOL_SCHEDULE, arguments: isDriver);
-      Get.offNamed(Routes.POST_RIDE_STEP_TWO, arguments: postRideModel.value);
+      final res = await APIManager.postVehicleDetails(body: vehicleData);
+      if (res.data["status"]) {
+        showMySnackbar(msg: "Data filled successfully");
+        Get.find<GetStorageService>().setDriver = true;
+        Get.find<HomeController>().userInfoAPI();
+        Get.offNamed(Routes.POST_RIDE_STEP_TWO, arguments: postRideModel.value);
+      } else {
+        showMySnackbar(msg: res.data["message"].toString());
+      }
     } catch (e) {
       throw Exception(e);
     }
-    /*} else {
-      showMySnackbar(msg: 'Please fill in all the details');
-    }*/
   }
 
   String? validateModel(String? value) {

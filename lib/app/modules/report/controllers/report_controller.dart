@@ -68,11 +68,14 @@ class ReportController extends GetxController {
 
     try {
       final responses = await APIManager.postBugReport(body: bugReportData);
-      // showMySnackbar(msg: responses.data['message']);
-      Get.back();
-      showMySnackbar(
-          msg:
-              "Thankyou for giving a feedback, our team will get back to you soon!");
+      if (responses.data["status"]) {
+        Get.back();
+        showMySnackbar(
+            msg:
+                "Thankyou for giving a feedback, our team will get back to you soon!");
+      } else {
+        showMySnackbar(msg: responses.data['message'].toString());
+      }
     } catch (error) {
       log("bugReportAPI error: $error");
     }

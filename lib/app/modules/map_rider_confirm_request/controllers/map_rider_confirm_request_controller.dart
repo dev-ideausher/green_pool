@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../data/rider_confirm_request_model.dart';
 import '../../../services/dio/endpoints.dart';

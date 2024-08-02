@@ -80,7 +80,7 @@ class ChatPageController extends GetxController {
   void _scrollToBottom() {
     scrollController.animateTo(
       scrollController.position.maxScrollExtent,
-      duration: Duration(milliseconds: 200),
+      duration: const Duration(milliseconds: 200),
       curve: Curves.easeOut,
     );
   }
