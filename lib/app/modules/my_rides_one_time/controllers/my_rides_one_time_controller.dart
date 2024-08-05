@@ -93,7 +93,7 @@ class MyRidesOneTimeController extends GetxController {
           if (cancelRideResponse.data['status']) {
             await myRidesAPI();
           } else {
-            showMySnackbar(msg: cancelRideResponse.data['message'].toString());
+            showMySnackbar(msg: cancelRideResponse.data["message"].toString());
           }
           isLoad.value = false;
         } catch (e) {
@@ -241,7 +241,7 @@ class MyRidesOneTimeController extends GetxController {
             showMySnackbar(msg: "Ride deleted successfully!");
             await myRidesAPI();
           } else {
-            showMySnackbar(msg: res['message'].toString());
+            showMySnackbar(msg: res["message"].toString());
           }
           isLoad.value = false;
         } catch (e) {

@@ -39,7 +39,6 @@ class ProfileController extends GetxController {
   pinkModeAPI() async {
     try {
       final response = await APIManager.enablePinkMode();
-      var data = jsonDecode(response.toString());
       if (response.data["status"]) {
         log(response.data.toString());
       } else {

@@ -15,6 +15,7 @@ import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../res/strings.dart';
 import '../../../services/text_style_util.dart';
 import '../controllers/profile_controller.dart';
 import 'profile_container.dart';
@@ -26,9 +27,9 @@ class ProfileView extends GetView<ProfileController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const GreenPoolAppBar(
-        title: Text('Profile'),
-        leading: SizedBox(),
+      appBar: GreenPoolAppBar(
+        title: Text(Strings.profile),
+        leading: const SizedBox(),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -138,7 +139,7 @@ class ProfileView extends GetView<ProfileController> {
             ProfileContainer(
               image: ImageConstant.svgProfileAbout,
               text: "About us",
-              onTap: () => Get.toNamed(Routes.ABOUT),              
+              onTap: () => Get.toNamed(Routes.ABOUT),
             ),
             ProfileContainer(
                 onTap: () => Get.toNamed(Routes.FILE_DISPUTE),
@@ -187,12 +188,12 @@ class ProfileView extends GetView<ProfileController> {
                           ),
                         ),
                         Text(
-                          'Confirm Logout',
+                          Strings.confirmLogout,
                           style: TextStyleUtil.k18Semibold(),
                           textAlign: TextAlign.center,
                         ).paddingSymmetric(vertical: 4.kh),
                         Text(
-                          'Are you sure you want to logout?',
+                          Strings.sureWantToLogout,
                           style: TextStyleUtil.k14Regular(
                             color: ColorUtil.kBlack04,
                           ),
@@ -212,7 +213,7 @@ class ProfileView extends GetView<ProfileController> {
                             },
                             height: 40.kh,
                             width: 144.kw,
-                            label: 'Logout',
+                            label: Strings.logout,
                             fontSize: 14.kh,
                             padding: const EdgeInsets.all(8),
                           ),
@@ -223,7 +224,7 @@ class ProfileView extends GetView<ProfileController> {
                 ),
               ),
               image: ImageConstant.svgProfileLogout,
-              text: "Logout",
+              text: Strings.logout,
               border: Border.all(color: ColorUtil.kWhiteColor),
             ).paddingOnly(bottom: 40.kh),
           ],

@@ -1,7 +1,4 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:green_pool/app/services/dio/api_service.dart';
-import 'package:green_pool/app/services/snackbar.dart';
 
 class AboutController extends GetxController {
   RxBool isLoading = false.obs;
@@ -10,10 +7,9 @@ class AboutController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    aboutUsAPI();
   }
 
-  aboutUsAPI() async {
+  /*aboutUsAPI() async {
     try {
       isLoading.value = true;
       final res = await APIManager.aboutUs();
@@ -26,5 +22,5 @@ class AboutController extends GetxController {
     } catch (e) {
       debugPrint(e.toString());
     }
-  }
+  }*/
 }

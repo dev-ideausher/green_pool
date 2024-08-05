@@ -30,11 +30,7 @@ class TermsConditionsController extends GetxController {
     try {
       isLoading.value = true;
       final response = await APIManager.getCompanyDetails();
-      if (response.data["status"]) {
-        termsText = response.data['data'][0]['termsAndContions'].toString();
-      } else {
-        showMySnackbar(msg: response.data["message"].toString());
-      }
+      termsText = response.data['data'][0]['termsAndContions'].toString();
       isLoading.value = false;
     } catch (e) {
       debugPrint(e.toString());

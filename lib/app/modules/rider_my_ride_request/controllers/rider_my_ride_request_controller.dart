@@ -106,28 +106,28 @@ class RiderMyRideRequestController extends GetxController {
     }
   }*/
 
-  // acceptDriversRequestAPI(int index, {bool showAcceptBottom = false}) async {
-  //   try {
-  //     final response = await APIManager.acceptDriversRequest(body: {
-  //       "ridePostId": riderConfirmRequestModel.value.data?[index]?.Id,
-  //       "price":
-  //           (riderConfirmRequestModel.value.data?[index]?.price ?? 0).toString()
-  //     });
-  //     if (response.data['status']) {
-  //       allRiderConfirmRequestAPI();
-  //       if (showAcceptBottom) {
-  //         Get.bottomSheet(RequestAcceptedBottom());
-  //       } else {
-  //         showMySnackbar(msg: "Request accepted!");
-  //         Get.until((route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
-  //       }
-  //     } else {
-  //       showMySnackbar(msg: response.data['message']);
-  //     }
-  //   } catch (e) {
-  //     throw Exception(e);
-  //   }
-  // }
+  /*acceptDriversRequestAPI(int index, {bool showAcceptBottom = false}) async {
+    try {
+      final response = await APIManager.acceptDriversRequest(body: {
+        "ridePostId": riderConfirmRequestModel.value.data?[index]?.Id,
+        "price":
+            (riderConfirmRequestModel.value.data?[index]?.price ?? 0).toString()
+      });
+      if (response.data['status']) {
+        allRiderConfirmRequestAPI();
+        if (showAcceptBottom) {
+          Get.bottomSheet(RequestAcceptedBottom());
+        } else {
+          showMySnackbar(msg: "Request accepted!");
+          Get.until((route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
+        }
+      } else {
+        showMySnackbar(msg: response.data['message']);
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+  }*/
 
   rejectDriversRequestAPI(int index) async {
     try {
@@ -137,7 +137,6 @@ class RiderMyRideRequestController extends GetxController {
       if (response.data["status"]) {
         allRiderConfirmRequestAPI();
         Get.back();
-        showMySnackbar(msg: response.data["message"]);
       } else {
         Get.back();
         showMySnackbar(msg: response.data["message"]);

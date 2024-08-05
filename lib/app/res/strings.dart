@@ -665,4 +665,10 @@ class Strings {
   static var enterDateOfBirth = 'Enter date of birth';
 
   static String uploadId = 'Upload ID';
+
+  static var logout = "Logout";
+
+  static String sureWantToLogout = 'Are you sure you want to logout?';
+
+  static String confirmLogout = 'Confirm Logout';
 }
