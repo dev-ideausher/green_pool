@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:green_pool/app/services/snackbar.dart';
 
 import '../../../data/ride_history_model.dart';
 import '../../../services/dio/api_service.dart';

@@ -39,7 +39,8 @@ class Endpoints {
   static const String studentDiscount = "email/send";
   static const String addAmount = "payment/addAmount";
   static const String appRating = "app/ratingByUser";
-  static const String userSupportsendMessage = "userSupport/user";
+  static const String userSupportSendMessage = "userSupport/user";
+  static const String userSupportFirstMessage = "userSupport/welComeMessage";
 
   //get url
   static const String userLogin = "auth/login";

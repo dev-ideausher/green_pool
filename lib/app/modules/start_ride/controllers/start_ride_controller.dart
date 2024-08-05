@@ -36,6 +36,7 @@ class StartRideController extends GetxController {
   final RxInt selectedRider = 0.obs;
   final RxString btnText = "".obs;
   final RxBool isEndRide = false.obs;
+  List<PolylineWayPoint> wayPoints = [];
 
   @override
   Future<void> onInit() async {
@@ -80,15 +81,33 @@ class StartRideController extends GetxController {
   }
 
   Future<void> getPolyPoints() async {
+    late List<double?> stop1Coordinates = [0.0, 0.0];
+    late List<double?> stop2Coordinates = [0.0, 0.0];
+
+    //add waypoints
+    if (myRidesModel
+            .value.driverBookingDetails?.stops?[0]?.coordinates!.first !=
+        0.0) {
+      stop1Coordinates =
+          myRidesModel.value.driverBookingDetails!.stops![0]!.coordinates!;
+      wayPoints.add(PolylineWayPoint(
+          location:
+              "${stop1Coordinates?.last.toString()},${stop1Coordinates?.first.toString()}"));
+      if (myRidesModel
+              .value.driverBookingDetails?.stops?[1]?.coordinates!.first !=
+          0.0) {
+        stop2Coordinates =
+            myRidesModel.value.driverBookingDetails!.stops![1]!.coordinates!;
+        wayPoints.add(PolylineWayPoint(
+            location:
+                "${stop2Coordinates?.last.toString()},${stop2Coordinates?.first.toString()}"));
+      }
+    } else {
+      print("Waypoints not added");
+    }
     try {
       final List<double?> originCoordinates =
           myRidesModel.value.driverBookingDetails?.origin?.coordinates ??
-              [0.0, 0.0];
-      final List<double?> stop1Coordinates =
-          myRidesModel.value.driverBookingDetails?.stops?[0]?.coordinates ??
-              [0.0, 0.0];
-      final List<double?> stop2Coordinates =
-          myRidesModel.value.driverBookingDetails?.stops?[1]?.coordinates ??
               [0.0, 0.0];
       final List<double?> destinationCoordinates =
           myRidesModel.value.driverBookingDetails?.destination?.coordinates ??
@@ -98,14 +117,7 @@ class StartRideController extends GetxController {
         request: PolylineRequest(
             origin:
                 PointLatLng(originCoordinates.last!, originCoordinates.first!),
-            // wayPoints: [
-            //   PolylineWayPoint(
-            //       location:
-            //           "${stop1Coordinates?.last.toString()},${stop1Coordinates?.first.toString()}"),
-            //   PolylineWayPoint(
-            //       location:
-            //           "${stop2Coordinates?.last.toString()},${stop2Coordinates?.first.toString()}")
-            // ],
+            wayPoints: wayPoints,
             destination: PointLatLng(
                 destinationCoordinates.last!, destinationCoordinates.first!),
             mode: TravelMode.driving),
@@ -119,10 +131,14 @@ class StartRideController extends GetxController {
       markers.clear();
       addMarkers(LatLng(originCoordinates.last!, originCoordinates.first!), "",
           "Origin", 0.0);
-      addMarkers(LatLng(stop1Coordinates.last!, stop1Coordinates.first!), "",
-          "Stop", 0.0);
-      addMarkers(LatLng(stop2Coordinates.last!, stop2Coordinates.first!), "",
-          "Stop", 0.0);
+      if (stop1Coordinates.first != 0.0) {
+        addMarkers(LatLng(stop1Coordinates.last!, stop1Coordinates.first!), "",
+            "Stop", 0.0);
+        if (stop2Coordinates.first != 0.0) {
+          addMarkers(LatLng(stop2Coordinates.last!, stop2Coordinates.first!),
+              "", "Stop", 0.0);
+        }
+      }
       addMarkers(LatLng(originCoordinates.last!, originCoordinates.first!),
           ImageConstant.pngCarPointer, "", 0.0);
       addMarkers(
@@ -213,29 +229,36 @@ class StartRideController extends GetxController {
             "Origin",
             0.0);
 
-        addMarkers(
-            LatLng(
-                myRidesModel.value.driverBookingDetails?.stops?[0]?.coordinates
-                        ?.last ??
-                    0.0,
-                myRidesModel.value.driverBookingDetails?.stops?[0]?.coordinates
-                        ?.first ??
-                    0.0),
-            "",
-            "Stop",
-            0.0);
-
-        addMarkers(
-            LatLng(
-                myRidesModel.value.driverBookingDetails?.stops?[1]?.coordinates
-                        ?.last ??
-                    0.0,
-                myRidesModel.value.driverBookingDetails?.stops?[1]?.coordinates
-                        ?.first ??
-                    0.0),
-            "",
-            "Origin",
-            0.0);
+        if (myRidesModel
+                .value.driverBookingDetails?.stops?[0]?.coordinates?.last !=
+            0.0) {
+          addMarkers(
+              LatLng(
+                  myRidesModel.value.driverBookingDetails?.stops?[0]
+                          ?.coordinates?.last ??
+                      0.0,
+                  myRidesModel.value.driverBookingDetails?.stops?[0]
+                          ?.coordinates?.first ??
+                      0.0),
+              "",
+              "Stop",
+              0.0);
+          if (myRidesModel
+                  .value.driverBookingDetails?.stops?[1]?.coordinates?.last !=
+              0.0) {
+            addMarkers(
+                LatLng(
+                    myRidesModel.value.driverBookingDetails?.stops?[1]
+                            ?.coordinates?.last ??
+                        0.0,
+                    myRidesModel.value.driverBookingDetails?.stops?[1]
+                            ?.coordinates?.first ??
+                        0.0),
+                "",
+                "Stop",
+                0.0);
+          }
+        }
 
         addMarkers(
             LatLng(

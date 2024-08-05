@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
@@ -27,132 +26,164 @@ class OriginToDestination extends StatelessWidget {
           top: 10.kh,
           left: 4.5.kw,
           child: Container(
-            // height: 84.kh,
             height: stop1 == "" && stop2 == ""
-                ? 28.kh
+                ? 48.kh
                 : stop1 != "" && stop2 != ""
-                    ? 84.kh
-                    : 56.kh,
+                    ? 128.kh
+                    : 88.kh,
             width: 1.kw,
             color: ColorUtil.kBlack04,
           ),
         ),
-        Row(
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              height: 10.kh,
-              width: 10.kw,
-              decoration: const BoxDecoration(
-                  shape: BoxShape.circle, color: ColorUtil.kGreenColor),
-            ).paddingOnly(right: 8.kw),
-            needPickupText
-                ? Text(
-                    'Pick up: ',
-                    style: TextStyleUtil.k14Semibold(color: ColorUtil.kBlack02),
-                  ).paddingOnly(right: 8.kw)
-                : const SizedBox(),
-            Expanded(
-              child: Text(
-                origin,
-                style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack02),
-                overflow: TextOverflow.ellipsis,
+            SizedBox(
+              height: 40.kh,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        height: 10.kh,
+                        width: 10.kw,
+                        decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: ColorUtil.kGreenColor),
+                      ).paddingOnly(right: 8.kw),
+                      // needPickupText
+                      //     ?
+                      Text(
+                        'Pick up: ',
+                        style: TextStyleUtil.k14Semibold(
+                            color: ColorUtil.kBlack02),
+                      ).paddingOnly(right: 4.kw)
+                      // : const SizedBox(),
+                    ],
+                  ),
+                  Expanded(
+                    child: Text(
+                      origin,
+                      style:
+                          TextStyleUtil.k14Regular(color: ColorUtil.kBlack02),
+                      softWrap: true,
+                    ),
+                  ),
+                ],
+              ).paddingOnly(bottom: 4.kh),
+            ),
+            Visibility(
+              visible: stop1 != "",
+              child: SizedBox(
+                height: 40.kh,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          height: 10.kh,
+                          width: 10.kw,
+                          decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: ColorUtil.kYellowColor),
+                        ).paddingOnly(right: 8.kw),
+                        // needPickupText
+                        //     ?
+                        Text(
+                          'Stop 1:   ',
+                          style: TextStyleUtil.k14Semibold(
+                              color: ColorUtil.kBlack02),
+                        ).paddingOnly(right: 4.kw)
+                        // : const SizedBox(),
+                      ],
+                    ),
+                    Expanded(
+                      child: Text(
+                        stop1,
+                        style:
+                            TextStyleUtil.k14Regular(color: ColorUtil.kBlack02),
+                        softWrap: true,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ).paddingOnly(bottom: 4.kh),
+            Visibility(
+              visible: stop2 != "",
+              child: SizedBox(
+                height: 40.kh,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          height: 10.kh,
+                          width: 10.kw,
+                          decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: ColorUtil.kYellowColor),
+                        ).paddingOnly(right: 8.kw),
+                        // needPickupText
+                        //     ?
+                        Text(
+                          'Stop 2:   ',
+                          style: TextStyleUtil.k14Semibold(
+                              color: ColorUtil.kBlack02),
+                        ).paddingOnly(right: 4.kw)
+                        // : const SizedBox(),
+                      ],
+                    ),
+                    Expanded(
+                      child: Text(
+                        stop2,
+                        style:
+                            TextStyleUtil.k14Regular(color: ColorUtil.kBlack02),
+                        softWrap: true,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ).paddingOnly(bottom: 4.kh),
+            SizedBox(
+              height: 40.kh,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        height: 10.kh,
+                        width: 10.kw,
+                        decoration: const BoxDecoration(
+                            shape: BoxShape.circle, color: ColorUtil.kError4),
+                      ).paddingOnly(right: 8.kw),
+                      // needPickupText
+                      //     ?
+                      Text(
+                        'Drop off:',
+                        style: TextStyleUtil.k14Semibold(
+                            color: ColorUtil.kBlack02),
+                      ).paddingOnly(right: 4.kw)
+                      // : const SizedBox(),
+                    ],
+                  ),
+                  Expanded(
+                    child: Text(
+                      destination,
+                      style:
+                          TextStyleUtil.k14Regular(color: ColorUtil.kBlack02),
+                      softWrap: true,
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
-        ).paddingOnly(
-            bottom: stop1 == "" && stop2 == ""
-                ? 30.kh
-                : stop1 != "" && stop2 != ""
-                    ? 90.kh
-                    : 60.kh),
-        // ).paddingOnly(bottom: 30),
-        Visibility(
-          visible: stop1 != "",
-          child: Positioned(
-            top: 27.kh,
-            child: Row(
-              children: [
-                Container(
-                  height: 10.kh,
-                  width: 10.kw,
-                  decoration: const BoxDecoration(
-                      shape: BoxShape.circle, color: ColorUtil.kYellowColor),
-                ).paddingOnly(right: 8.kw),
-                needPickupText
-                    ? Text(
-                        'Stop 1: ',
-                        style: TextStyleUtil.k14Semibold(
-                            color: ColorUtil.kBlack02),
-                      ).paddingOnly(right: 8.kw)
-                    : const SizedBox(),
-                Text(
-                  // '681 Chrislea Rd, Woodbridge',
-                  stop1 ?? "",
-                  style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack02),
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
-            ),
-          ),
-        ),
-        Visibility(
-          visible: stop2 != "",
-          child: Positioned(
-            top: 54.kh,
-            child: Row(
-              children: [
-                Container(
-                  height: 10.kh,
-                  width: 10.kw,
-                  decoration: const BoxDecoration(
-                      shape: BoxShape.circle, color: ColorUtil.kYellowColor),
-                ).paddingOnly(right: 8.kw),
-                needPickupText
-                    ? Text(
-                        'Stop 2: ',
-                        style: TextStyleUtil.k14Semibold(
-                            color: ColorUtil.kBlack02),
-                      ).paddingOnly(right: 8.kw)
-                    : const SizedBox(),
-                Text(
-                  // '681 Chrislea Rd, Woodbridge',
-                  stop2 ?? "",
-                  style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack02),
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
-            ),
-          ),
-        ),
-        Positioned(
-          top: stop1 == "" && stop2 == ""
-              ? 27.kh
-              : stop1 != "" && stop2 != ""
-                  ? 81.kh
-                  : 54.kh,
-          child: Row(
-            children: [
-              Container(
-                height: 10.kh,
-                width: 10.kw,
-                decoration: const BoxDecoration(
-                    shape: BoxShape.circle, color: ColorUtil.kError4),
-              ).paddingOnly(right: 8.kw),
-              needPickupText
-                  ? Text(
-                      'Drop off: ',
-                      style:
-                          TextStyleUtil.k14Semibold(color: ColorUtil.kBlack02),
-                    ).paddingOnly(right: 8.kw)
-                  : const SizedBox(),
-              Text(
-                // '681 Chrislea Rd, Woodbridge',
-                destination,
-                style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack02),
-                overflow: TextOverflow.ellipsis,
-              ),
-            ],
-          ),
         ),
       ],
     );

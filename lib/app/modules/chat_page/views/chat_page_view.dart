@@ -246,8 +246,9 @@ class ChatPageView extends GetView<ChatPageController> {
                         );
 
                         bool showDate = true;
+                        final nextMessage = controller.messages[index + 1];
                         if (index < controller.messages.length - 1) {
-                          final nextMessage = controller.messages[index + 1];
+                          // final nextMessage = controller.messages[index + 1];
                           final nextMessageDate = DateTime(
                             nextMessage.timestamp.year,
                             nextMessage.timestamp.month,
@@ -267,15 +268,15 @@ class ChatPageView extends GetView<ChatPageController> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Text(
-                                      GpUtil.isToday(message.timestamp)
+                                      GpUtil.isToday(nextMessage.timestamp)
                                           ? Strings.today
                                           : DateFormat.E()
-                                              .format(message.timestamp),
+                                              .format(nextMessage.timestamp),
                                       style: TextStyleUtil.k14Regular(),
                                     ),
                                     Text(
                                       GpUtil.formatDateddMMMyyyy(
-                                          message.timestamp.toString()),
+                                          nextMessage.timestamp.toString()),
                                       style: TextStyleUtil.k12Regular(
                                           color: ColorUtil.kBlack04),
                                     ),

@@ -130,9 +130,9 @@ class RiderStartRideMapController extends GetxController {
         final heading = liveLocation.heading;
         currentLat.value = liveLocation.latitude ?? 0.0;
         currentLong.value = liveLocation.longitude ?? 0.0;
-        mapController.animateCamera(CameraUpdate.newCameraPosition(
-            CameraPosition(
-                bearing: 270.0,
+        mapController
+            .animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+                // bearing: 270.0,
                 target: LatLng(currentLat.value, currentLong.value),
                 tilt: 30.0,
                 zoom: 17.0)));
@@ -197,42 +197,8 @@ class RiderStartRideMapController extends GetxController {
           LatLng(currentLat.value, currentLong.value),
           ImageConstant.pngCarPointer,
           "",
-          heading,
+          heading ?? 0.0 + 90.0,
         );
-        /*if (bookingDetail.value.driverBookingDetails?.stops?[0]?.coordinates !=
-                null ||
-            bookingDetail.value.driverBookingDetails?.stops?[0]?.coordinates !=
-                "") {
-          addMarkers(
-              LatLng(
-                  bookingDetail.value.driverBookingDetails?.stops?[0]
-                          ?.coordinates?.lastOrNull ??
-                      0.0,
-                  bookingDetail.value.driverBookingDetails?.stops?[0]
-                          ?.coordinates?.firstOrNull ??
-                      0.0),
-              "",
-              "Stop",
-              0.0);
-          if (bookingDetail
-                      .value.driverBookingDetails?.stops?[1]?.coordinates !=
-                  null ||
-              bookingDetail
-                      .value.driverBookingDetails?.stops?[1]?.coordinates !=
-                  "") {
-            addMarkers(
-                LatLng(
-                    bookingDetail.value.driverBookingDetails?.stops?[1]
-                            ?.coordinates?.lastOrNull ??
-                        0.0,
-                    bookingDetail.value.driverBookingDetails?.stops?[1]
-                            ?.coordinates?.firstOrNull ??
-                        0.0),
-                "",
-                "Stop",
-                0.0);
-          }
-        }*/
       }
     }, onError: (Object error) {
       debugPrint("Error: $error");

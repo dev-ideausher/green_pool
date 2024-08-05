@@ -16,8 +16,9 @@ import 'package:http_parser/http_parser.dart';
 
 class SubmitDisputeController extends GetxController {
   String? bookingId = "";
-  Rx<File?> selectedImagePath = Rx<File?>(null);
+  RxList<File> selectedImages = RxList<File>([]);
   RxBool isImageSelected = false.obs;
+  RxBool isActive = false.obs;
   TextEditingController descriptionTextController = TextEditingController();
 
   @override
@@ -35,12 +36,21 @@ class SubmitDisputeController extends GetxController {
   // void onClose() {
   //   super.onClose();
   // }
+  handleButtonState(String value) {
+    if (value.isNotEmpty || value != "") {
+      isActive.value = true;
+    } else {
+      isActive.value = false;
+    }
+  }
 
   getImage(ImageSource imageSource) async {
-    XFile? pickedFile = await GpUtil.compressImage(imageSource);
-    if (pickedFile != null) {
-      selectedImagePath.value = File(pickedFile.path);
-      showMySnackbar(msg: 'Image selected');
+    final List<XFile>? pickedFiles = await GpUtil.compressImages(
+        imageSource); // Ensure this method returns a list of XFile
+    if (pickedFiles != null && pickedFiles.isNotEmpty) {
+      selectedImages.value =
+          pickedFiles.map((file) => File(file.path)).toList();
+      showMySnackbar(msg: '${pickedFiles.length} image(s) selected');
       isImageSelected.value = true;
       update();
     } else {
@@ -52,32 +62,36 @@ class SubmitDisputeController extends GetxController {
     dio.FormData disputeData;
 
     if (isImageSelected.value) {
-      final File? pickedImageFile = selectedImagePath!.value;
-      String extension = pickedImageFile!.path.split('.').last;
-      String mediaType;
+      List<dio.MultipartFile> imageFiles = [];
+      for (File image in selectedImages) {
+        String extension = image.path.split('.').last;
+        String mediaType;
 
-      if (extension == 'jpg' || extension == 'jpeg') {
-        mediaType = 'image/jpeg';
-      } else if (extension == 'png') {
-        mediaType = 'image/png';
-      } else {
-        mediaType = 'application/octet-stream';
+        if (extension == 'jpg' || extension == 'jpeg') {
+          mediaType = 'image/jpeg';
+        } else if (extension == 'png') {
+          mediaType = 'image/png';
+        } else {
+          mediaType = 'application/octet-stream';
+        }
+
+        imageFiles.add(await dio.MultipartFile.fromFile(
+          image.path,
+          contentType: MediaType.parse(mediaType),
+          filename: path.basename(image.path),
+        ));
       }
 
       disputeData = dio.FormData.fromMap({
         'ridePostId': bookingId,
         'description': descriptionTextController.value.text,
-        'fileDisputePic': await dio.MultipartFile.fromFile(
-          pickedImageFile.path,
-          contentType: MediaType.parse(mediaType),
-          filename: path.basename(pickedImageFile.path),
-        )
+        'fileDisputePic': imageFiles
       });
     } else {
       disputeData = dio.FormData.fromMap({
         'ridePostId': bookingId,
         'description': descriptionTextController.value.text,
-        'fileDisputePic': ""
+        'fileDisputePic': []
       });
     }
 

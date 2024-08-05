@@ -36,9 +36,7 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
                   children: [
                     Center(
                       child: Get.find<HomeController>().isPinkModeOn.value
-                          ? CommonImageView(
-                              svgPath: ImageConstant.svgNoRidesPink,
-                            )
+                          ? CommonImageView(svgPath: Assets.svgPinkModegirl)
                           : SvgPicture.asset(ImageConstant.svgNoRides),
                     ),
                     Text(

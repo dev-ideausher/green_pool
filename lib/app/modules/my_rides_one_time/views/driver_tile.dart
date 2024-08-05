@@ -65,7 +65,7 @@ class DriverTile extends StatelessWidget {
                 ),
                 trailing: SizedBox(
                   height: 24.kh,
-                  width: 160.kw,
+                  width: 30.w,
                   child: Align(
                     alignment: Alignment.centerRight,
                     child: ListView.builder(

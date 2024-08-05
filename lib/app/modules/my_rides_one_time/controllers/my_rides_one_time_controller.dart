@@ -237,11 +237,11 @@ class MyRidesOneTimeController extends GetxController {
         try {
           isLoad.value = true;
           final res = await APIManager.deleteRecurringRide(rideId: id);
-          if (res.data['status']) {
+          if (res['status']) {
             showMySnackbar(msg: "Ride deleted successfully!");
             await myRidesAPI();
           } else {
-            showMySnackbar(msg: res.data['message'].toString());
+            showMySnackbar(msg: res['message'].toString());
           }
           isLoad.value = false;
         } catch (e) {

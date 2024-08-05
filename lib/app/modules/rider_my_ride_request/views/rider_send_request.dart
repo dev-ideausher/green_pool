@@ -6,13 +6,13 @@ import 'package:green_pool/app/modules/rider_my_ride_request/controllers/rider_m
 import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
+import '../../../../generated/assets.dart';
 import '../../../components/common_image_view.dart';
 import '../../../components/gp_progress.dart';
 import '../../../components/green_pool_divider.dart';
 import '../../../components/origin_to_destination.dart';
 import '../../../constants/image_constant.dart';
 import '../../../res/strings.dart';
-import '../../../routes/app_pages.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
 import '../../../services/snackbar.dart';
@@ -27,15 +27,13 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
     return Obx(
       () => controller.isLoading.value
           ? const GpProgress()
-          : controller.riderSendRequestModel.value.data!.isEmpty
+          : controller.riderSendRequestModel.value.data?.isEmpty ?? true
               ? Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Center(
                       child: Get.find<HomeController>().isPinkModeOn.value
-                          ? CommonImageView(
-                              svgPath: ImageConstant.svgNoRidesPink,
-                            )
+                          ? CommonImageView(svgPath: Assets.svgPinkModegirl)
                           : SvgPicture.asset(ImageConstant.svgNoRides),
                     ),
                     Text(

@@ -4,7 +4,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/common_image_view.dart';
-import 'package:green_pool/app/modules/my_rides_one_time/controllers/my_rides_one_time_controller.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../components/green_pool_divider.dart';
@@ -99,6 +98,7 @@ class RiderConfirmedRideDetailsView
                       trailing: SizedBox(
                         width: 120.kw,
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Text.rich(
                               TextSpan(
@@ -110,7 +110,7 @@ class RiderConfirmedRideDetailsView
                                   ),
                                   TextSpan(
                                     text:
-                                        '\$ ${controller.myRidesModel.value.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.origin?.originDestinationFair}',
+                                        '\$ ${controller.myRidesModel.value.confirmDriverDetails?[0]?.price}',
                                     style: TextStyleUtil.k16Semibold(
                                         fontSize: 16.kh,
                                         color: ColorUtil.kSecondary01),

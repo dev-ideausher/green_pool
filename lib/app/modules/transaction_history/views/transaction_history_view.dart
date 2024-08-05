@@ -78,11 +78,7 @@ class TransactionHistoryView extends GetView<TransactionHistoryController> {
                                 style: TextStyleUtil.k16Semibold(
                                     fontSize: 16.kh,
                                     color: (transaction?.type ?? "") == "Credit"
-                                        ? Get.find<HomeController>()
-                                                .isPinkModeOn
-                                                .value
-                                            ? ColorUtil.kPrimary2PinkMode
-                                            : ColorUtil.kGreenColor
+                                        ? ColorUtil.kGreenColor
                                         : ColorUtil.kError2),
                               ),
                               subtitle: "Id: #${transaction.Id}")

@@ -25,8 +25,8 @@ class HelpSupportView extends GetView<HelpSupportController> {
         () => controller.isLoad.value
             ? const GpProgress()
             : Padding(
-                padding:
-                    EdgeInsets.only(left: 16.kw, right: 16.kw, bottom: 80.kh),
+                padding: EdgeInsets.only(
+                    left: 16.kw, right: 16.kw, bottom: 80.kh, top: 12.kh),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -68,25 +68,32 @@ class HelpSupportView extends GetView<HelpSupportController> {
                                     ).paddingOnly(left: 8.kw),
                                   ),
                                 ],
-                              ).paddingOnly(bottom: 20.kh),
+                              ).paddingOnly(bottom: 4.kh),
                               ListView.builder(
                                 shrinkWrap: true,
-                                physics: NeverScrollableScrollPhysics(),
+                                physics: const NeverScrollableScrollPhysics(),
                                 itemCount: group.quesAns?.length,
                                 itemBuilder: (context, itemsIndex) {
                                   final item = group.quesAns![itemsIndex];
                                   final key = '${index}_$itemsIndex';
                                   return Obx(
                                     () => ListTile(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8.kh)),
+                                      minVerticalPadding: 12.kh,
                                       title: Text(
                                         item?.question ?? "",
-                                        style: TextStyleUtil.k18Bold(),
+                                        style: TextStyleUtil.k14Bold(),
                                       ),
                                       subtitle: Visibility(
                                         visible: controller
                                                 .isExpandedMap[key]?.value ??
                                             false,
-                                        child: Text(item?.answer ?? ""),
+                                        child: Text(
+                                          item?.answer ?? "",
+                                          style: TextStyleUtil.k14Regular(),
+                                        ),
                                       ),
                                       trailing: IconButton(
                                         onPressed: () {
@@ -102,7 +109,7 @@ class HelpSupportView extends GetView<HelpSupportController> {
                                         ),
                                       ),
                                       // Add more UI components for displaying additional information if needed
-                                    ),
+                                    ).paddingOnly(bottom: 4.kh),
                                   );
                                 },
                               ),

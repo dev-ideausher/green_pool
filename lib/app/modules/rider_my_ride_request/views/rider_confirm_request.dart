@@ -7,6 +7,7 @@ import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
+import '../../../../generated/assets.dart';
 import '../../../components/common_image_view.dart';
 import '../../../components/gp_progress.dart';
 import '../../../components/green_pool_divider.dart';
@@ -32,9 +33,7 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                   children: [
                     Center(
                       child: Get.find<HomeController>().isPinkModeOn.value
-                          ? CommonImageView(
-                              svgPath: ImageConstant.svgNoRidesPink,
-                            )
+                          ? CommonImageView(svgPath: Assets.svgPinkModegirl)
                           : SvgPicture.asset(ImageConstant.svgNoRides),
                     ),
                     Text(
@@ -240,7 +239,7 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                               children: [
                                                 Icon(
                                                   Icons.time_to_leave,
-                                                  size: 18.kh,
+                                                  size: 16.kh,
                                                   color:
                                                       Get.find<HomeController>()
                                                               .isPinkModeOn

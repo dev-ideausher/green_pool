@@ -1,7 +1,4 @@
 import 'package:get/get.dart';
-import 'package:green_pool/app/modules/add_gift/bindings/add_gift_binding.dart';
-import 'package:green_pool/app/modules/add_gift/views/add_gift_view.dart';
-import 'package:green_pool/app/modules/payment/bindings/payment_binding.dart';
 
 import '../modules/about/bindings/about_binding.dart';
 import '../modules/about/views/about_view.dart';
@@ -9,8 +6,12 @@ import '../modules/add_bank_details/bindings/add_bank_details_binding.dart';
 import '../modules/add_bank_details/views/add_bank_details_view.dart';
 import '../modules/add_card/bindings/add_card_binding.dart';
 import '../modules/add_card/views/add_card_view.dart';
+import '../modules/add_gift/bindings/add_gift_binding.dart';
+import '../modules/add_gift/views/add_gift_view.dart';
 import '../modules/chat_page/bindings/chat_page_binding.dart';
 import '../modules/chat_page/views/chat_page_view.dart';
+import '../modules/chat_with_experts/bindings/chat_with_experts_binding.dart';
+import '../modules/chat_with_experts/views/chat_with_experts_view.dart';
 import '../modules/create_account/bindings/create_account_binding.dart';
 import '../modules/create_account/views/create_account_view.dart';
 import '../modules/driver_details/bindings/driver_details_binding.dart';
@@ -58,6 +59,7 @@ import '../modules/origin/bindings/origin_binding.dart';
 import '../modules/origin/views/origin_view.dart';
 import '../modules/password_changed/bindings/password_changed_binding.dart';
 import '../modules/password_changed/views/password_changed_view.dart';
+import '../modules/payment/bindings/payment_binding.dart';
 import '../modules/payment/views/payment_view.dart';
 import '../modules/payment_method/bindings/payment_method_binding.dart';
 import '../modules/payment_method/views/payment_method_view.dart';
@@ -506,6 +508,11 @@ class AppPages {
       name: _Paths.ADD_GIFT,
       page: () => const AddGiftView(),
       binding: AddGiftBinding(),
+    ),
+    GetPage(
+      name: _Paths.CHAT_WITH_EXPERTS,
+      page: () => const ChatWithExpertsView(),
+      binding: ChatWithExpertsBinding(),
     ),
   ];
 }

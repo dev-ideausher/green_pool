@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:green_pool/app/modules/help_support/controllers/help_support_controller.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
-import 'package:green_pool/generated/assets.dart';
 
 import '../../../components/common_image_view.dart';
 import '../../../components/gp_progress.dart';
@@ -15,10 +13,10 @@ import '../../../services/gp_util.dart';
 import '../../../services/storage.dart';
 import '../../../services/text_style_util.dart';
 import '../../home/controllers/home_controller.dart';
+import '../controllers/chat_with_experts_controller.dart';
 
-class SupportChat extends GetView<HelpSupportController> {
-  const SupportChat({super.key});
-
+class ChatWithExpertsView extends GetView<ChatWithExpertsController> {
+  const ChatWithExpertsView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     controller.getChat();
@@ -32,20 +30,10 @@ class SupportChat extends GetView<HelpSupportController> {
             : ColorUtil.kPrimary01,
         elevation: 1,
         toolbarHeight: 64.kh,
-        title: Row(children: [
-          ClipRRect(
-              borderRadius: BorderRadius.circular(8.kh),
-              child: CommonImageView(
-                imagePath: Assets.iconsLogo,
-                height: 32.kh,
-                width: 32.kh,
-              )),
-          12.kwidthBox,
-          Text(
-            "Greenpool Support",
-            style: TextStyleUtil.k14Bold(),
-          )
-        ]),
+        title: Text(
+          "Help & Support",
+          style: TextStyleUtil.k16Bold(),
+        ),
         leading: GestureDetector(
           onTap: () => Get.back(),
           child: SvgPicture.asset(
@@ -69,6 +57,7 @@ class SupportChat extends GetView<HelpSupportController> {
                             Get.find<GetStorageService>().getUserAppId;
                         final isPinkModeOn =
                             Get.find<HomeController>().isPinkModeOn.value;
+                        print(Get.find<GetStorageService>().getUserAppId);
 
                         return Container(
                           padding: EdgeInsets.only(
@@ -81,20 +70,6 @@ class SupportChat extends GetView<HelpSupportController> {
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  if (!isSender)
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(right: 8.0),
-                                      child: ClipRRect(
-                                        borderRadius:
-                                            BorderRadius.circular(100.kh),
-                                        child: CommonImageView(
-                                          imagePath: Assets.iconsLogo,
-                                          height: 32.kh,
-                                          width: 32.kh,
-                                        ),
-                                      ),
-                                    ),
                                   Expanded(
                                     child: Column(
                                       crossAxisAlignment: isSender
@@ -204,6 +179,35 @@ class SupportChat extends GetView<HelpSupportController> {
                                     ),
                                 ],
                               ),
+                              if (index == 0 && !controller.isChatStarted.value)
+                                Visibility(
+                                  visible: true,
+                                  child: Container(
+                                    alignment: Alignment.topLeft,
+                                    width: 60.w,
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        SuggestionsChip(
+                                          topic: "Wallet",
+                                          controller: controller,
+                                        ),
+                                        SuggestionsChip(
+                                          topic: "Refund",
+                                          controller: controller,
+                                        ),
+                                        SuggestionsChip(
+                                          topic: "Ride Related",
+                                          controller: controller,
+                                        ),
+                                        SuggestionsChip(
+                                          topic: "Account Related",
+                                          controller: controller,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ).paddingSymmetric(vertical: 8.kh),
                             ],
                           ),
                         );
@@ -222,6 +226,41 @@ class SupportChat extends GetView<HelpSupportController> {
                 ],
               ).paddingSymmetric(horizontal: 16.kw),
       ),
+    );
+  }
+}
+
+class SuggestionsChip extends StatelessWidget {
+  final String topic;
+  final ChatWithExpertsController controller;
+  const SuggestionsChip({
+    super.key,
+    required this.topic,
+    required this.controller,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: controller.isChatStarted.value
+          ? () {}
+          : () {
+              controller.eMsg.text = topic;
+            },
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 8.kh, horizontal: 12.kw),
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+            border: Border.all(
+                color: Get.find<HomeController>().isPinkModeOn.value
+                    ? ColorUtil.kPrimaryPinkMode
+                    : ColorUtil.kPrimary01),
+            borderRadius: BorderRadius.circular(40.kh)),
+        child: Text(
+          topic,
+          style: TextStyleUtil.k14Regular(),
+        ),
+      ).paddingOnly(bottom: 8.kh),
     );
   }
 }

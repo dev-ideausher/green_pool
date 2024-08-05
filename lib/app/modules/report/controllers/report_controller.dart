@@ -13,9 +13,11 @@ import '../../../services/gp_util.dart';
 import '../../../services/snackbar.dart';
 
 class ReportController extends GetxController {
-  Rx<File?> uploadedPic = Rx<File?>(null);
+  // Rx<File?> uploadedPic = Rx<File?>(null);
+  RxList<File> selectedImages = RxList<File>([]);
   TextEditingController bugController = TextEditingController();
   RxBool picUploaded = false.obs;
+  RxBool isActive = false.obs;
 
   // final count = 0.obs;
   // @override
@@ -32,11 +34,21 @@ class ReportController extends GetxController {
   // void onClose() {
   //   super.onClose();
   // }
+  handleButtonState(String value) {
+    if (value.isNotEmpty || value != "") {
+      isActive.value = true;
+    } else {
+      isActive.value = false;
+    }
+  }
 
   getBugImage(ImageSource imageSource) async {
-    XFile? pickedFile = await GpUtil.compressImage(imageSource);
-    if (pickedFile != null) {
-      uploadedPic.value = File(pickedFile.path);
+    final List<XFile>? pickedFiles = await GpUtil.compressImages(
+        imageSource); // Ensure this method returns a list of XFile
+    if (pickedFiles != null && pickedFiles.isNotEmpty) {
+      selectedImages.value =
+          pickedFiles.map((file) => File(file.path)).toList();
+      showMySnackbar(msg: '${pickedFiles.length} image(s) selected');
       picUploaded.value = true;
       update();
     } else {
@@ -45,39 +57,50 @@ class ReportController extends GetxController {
   }
 
   Future<void> bugReportAPI() async {
-    final File pickedBugImage = File(uploadedPic.value!.path);
-    String extension = pickedBugImage.path.split('.').last;
-    String mediaType;
+    dio.FormData bugReportData;
 
-    if (extension == 'jpg' || extension == 'jpeg') {
-      mediaType = 'image/jpeg';
-    } else if (extension == 'png') {
-      mediaType = 'image/png';
+    if (picUploaded.value) {
+      List<dio.MultipartFile> imageFiles = [];
+      for (File image in selectedImages) {
+        String extension = image.path.split('.').last;
+        String mediaType;
+
+        if (extension == 'jpg' || extension == 'jpeg') {
+          mediaType = 'image/jpeg';
+        } else if (extension == 'png') {
+          mediaType = 'image/png';
+        } else {
+          mediaType = 'application/octet-stream';
+        }
+
+        imageFiles.add(await dio.MultipartFile.fromFile(
+          image.path,
+          contentType: MediaType.parse(mediaType),
+          filename: path.basename(image.path),
+        ));
+      }
+
+      bugReportData = dio.FormData.fromMap({
+        'bugDescription': bugController.value.text,
+        'bugPic': imageFiles,
+      });
     } else {
-      mediaType = 'application/octet-stream';
+      bugReportData = dio.FormData.fromMap(
+          {'bugDescription': bugController.value.text, 'bugPic': []});
     }
-
-    final bugReportData = dio.FormData.fromMap({
-      'bugDescription': bugController.value.text,
-      'bugPic': await dio.MultipartFile.fromFile(
-        pickedBugImage.path,
-        contentType: MediaType.parse(mediaType),
-        filename: path.basename(pickedBugImage.path),
-      )
-    });
 
     try {
       final responses = await APIManager.postBugReport(body: bugReportData);
-      if (responses.data["status"]) {
-        Get.back();
-        showMySnackbar(
-            msg:
-                "Thankyou for giving a feedback, our team will get back to you soon!");
-      } else {
-        showMySnackbar(msg: responses.data['message'].toString());
-      }
+      // if (responses["status"]) {
+      Get.back();
+      showMySnackbar(
+          msg:
+              "Thankyou for giving a feedback, our team will get back to you soon!");
+      // } else {
+      //   showMySnackbar(msg: responses.data['message'].toString());
+      // }
     } catch (error) {
-      log("bugReportAPI error: $error");
+      debugPrint(error.toString());
     }
   }
 }

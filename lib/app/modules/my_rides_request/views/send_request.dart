@@ -5,6 +5,7 @@ import 'package:green_pool/app/modules/map_driver_send_request/controllers/map_d
 import 'package:green_pool/app/modules/map_driver_send_request/views/map_driver_send_request_view.dart';
 import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
+import '../../../../generated/assets.dart';
 import '../../../components/common_image_view.dart';
 import '../../../components/gp_progress.dart';
 import '../../../components/green_pool_divider.dart';
@@ -35,9 +36,7 @@ class SendRequest extends GetView<MyRidesRequestController> {
                   children: [
                     Center(
                       child: Get.find<HomeController>().isPinkModeOn.value
-                          ? CommonImageView(
-                              svgPath: ImageConstant.svgNoRidesPink,
-                            )
+                          ? CommonImageView(svgPath: Assets.svgPinkModegirl)
                           : SvgPicture.asset(ImageConstant.svgNoRides),
                     ),
                     Text(

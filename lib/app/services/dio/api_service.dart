@@ -70,7 +70,12 @@ class APIManager {
   static Future<Response> userSupportSendMessage(
           {required dynamic body}) async =>
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false)
-          .post(Endpoints.userSupportsendMessage, data: jsonEncode(body));
+          .post(Endpoints.userSupportSendMessage, data: jsonEncode(body));
+
+  static Future<Response> userSupportFirstMessage(
+          {required dynamic body}) async =>
+      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false)
+          .post(Endpoints.userSupportFirstMessage, data: jsonEncode(body));
 
   static Future<Response> postStudentDiscount({required dynamic body}) async =>
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)

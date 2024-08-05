@@ -17,7 +17,6 @@ class BottomNavigationView extends GetView<HomeController> {
   const BottomNavigationView({super.key});
   @override
   Widget build(BuildContext context) {
-    final isPinkModeOn = Get.find<HomeController>().isPinkModeOn.value;
     return PopScope(
       canPop: controller.canPop,
       onPopInvoked: (didPop) {
@@ -31,7 +30,7 @@ class BottomNavigationView extends GetView<HomeController> {
       child: Scaffold(
         bottomNavigationBar: Obx(
           () => BottomNavigationBar(
-              selectedLabelStyle: isPinkModeOn
+              selectedLabelStyle: controller.isPinkModeOn.value
                   ? TextStyleUtil.k12Semibold(
                       color: ColorUtil.kPrimary3PinkMode)
                   : TextStyleUtil.k12Semibold(color: ColorUtil.kSecondary01),
@@ -42,7 +41,7 @@ class BottomNavigationView extends GetView<HomeController> {
               currentIndex: controller.selectedIndex.value,
               enableFeedback: true,
               unselectedItemColor: ColorUtil.kBlack05,
-              selectedItemColor: isPinkModeOn
+              selectedItemColor: controller.isPinkModeOn.value
                   ? ColorUtil.kPrimary3PinkMode
                   : ColorUtil.kSecondary01,
               onTap: (index) {
@@ -53,7 +52,7 @@ class BottomNavigationView extends GetView<HomeController> {
                   activeIcon: SvgPicture.asset(
                     ImageConstant.svgNavHomeFilled,
                     colorFilter: ColorFilter.mode(
-                        isPinkModeOn
+                        controller.isPinkModeOn.value
                             ? ColorUtil.kPrimary3PinkMode
                             : ColorUtil.kSecondary01,
                         BlendMode.srcIn),
@@ -65,7 +64,7 @@ class BottomNavigationView extends GetView<HomeController> {
                   activeIcon: SvgPicture.asset(
                     ImageConstant.svgNavCarFilled,
                     colorFilter: ColorFilter.mode(
-                        isPinkModeOn
+                        controller.isPinkModeOn.value
                             ? ColorUtil.kPrimary3PinkMode
                             : ColorUtil.kSecondary01,
                         BlendMode.srcIn),
@@ -77,7 +76,7 @@ class BottomNavigationView extends GetView<HomeController> {
                   activeIcon: SvgPicture.asset(
                     ImageConstant.svgNavMessagesFilled,
                     colorFilter: ColorFilter.mode(
-                        isPinkModeOn
+                        controller.isPinkModeOn.value
                             ? ColorUtil.kPrimary3PinkMode
                             : ColorUtil.kSecondary01,
                         BlendMode.srcIn),
@@ -89,7 +88,7 @@ class BottomNavigationView extends GetView<HomeController> {
                   activeIcon: SvgPicture.asset(
                     ImageConstant.svgNavProfileFilled,
                     colorFilter: ColorFilter.mode(
-                        isPinkModeOn
+                        controller.isPinkModeOn.value
                             ? ColorUtil.kPrimary3PinkMode
                             : ColorUtil.kSecondary01,
                         BlendMode.srcIn),
@@ -116,16 +115,3 @@ class BottomNavigationView extends GetView<HomeController> {
     );
   }
 }
-/*
-Obx(
-          () => IndexedStack(
-            index: controller.selectedIndex.value,
-            children: const [
-              HomeView(),
-              MyRidesPageView(),
-              MessagesView(),
-              ProfileView(),
-            ],
-          ),
-        ),
-*/

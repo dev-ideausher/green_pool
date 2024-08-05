@@ -35,6 +35,42 @@ class GpUtil {
     }
   }
 
+  static Future<List<XFile>?> compressImages(ImageSource imageSource) async {
+    final pickedFiles = await ImagePicker()
+        .pickMultiImage(); // pickMultiImage for multiple images
+    if (pickedFiles == null || pickedFiles.isEmpty) {
+      return null;
+    }
+
+    List<XFile> compressedImages = [];
+
+    for (var pickedFile in pickedFiles) {
+      final originalImage = File(pickedFile.path);
+      final targetPath = originalImage.path;
+      final directory = originalImage
+          .parent; // Get the parent directory of the original image
+      final fileName =
+          'compressed_${originalImage.uri.pathSegments.last}'; // Create a new filename
+      final compressedPath =
+          '${directory.path}/$fileName'; // Ensure it ends with .jpg
+
+      final compressedImage = await FlutterImageCompress.compressAndGetFile(
+        targetPath,
+        compressedPath,
+        quality: 10,
+      );
+
+      if (compressedImage != null) {
+        compressedImages.add(XFile(compressedImage.path));
+      } else {
+        // Handle the case where compression fails for one image
+        print('Compression failed for ${pickedFile.path}');
+      }
+    }
+
+    return compressedImages.isNotEmpty ? compressedImages : null;
+  }
+
   static Future<String> calculateDistance({
     required double startLat,
     required double startLong,
@@ -206,7 +242,7 @@ class GpUtil {
       DateTime utcDateTime = DateTime.parse(timestamp);
       DateTime localDateTime = utcDateTime.toLocal();
       String formattedLocalDateTime =
-          DateFormat.yMd().add_jms().format(localDateTime);
+          DateFormat('dd MMM yyyy').format(localDateTime);
 
       return formattedLocalDateTime;
     } catch (e) {

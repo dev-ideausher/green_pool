@@ -40,7 +40,11 @@ class ProfileController extends GetxController {
     try {
       final response = await APIManager.enablePinkMode();
       var data = jsonDecode(response.toString());
-      log(data.toString());
+      if (response.data["status"]) {
+        log(response.data.toString());
+      } else {
+        showMySnackbar(msg: response.data["message"].toString());
+      }
     } catch (e) {
       debugPrint(e.toString());
     }

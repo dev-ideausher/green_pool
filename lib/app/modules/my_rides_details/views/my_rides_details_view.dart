@@ -134,7 +134,7 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                                         ?.riderBookingDetails
                                         ?.length ??
                                     0) *
-                                115.kh),
+                                135.kh),
                             child: ListView.builder(
                                 itemCount: controller
                                         .myRidesModelData
@@ -186,7 +186,7 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                                   );
                                 }),
                           ),
-                    const GreenPoolDivider().paddingOnly(bottom: 16.kh),
+                    const GreenPoolDivider().paddingSymmetric(vertical: 16.kh),
 
                     //Vehicle details
                     Text(

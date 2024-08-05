@@ -90,6 +90,7 @@ abstract class Routes {
   static const VEHICLE_SETUP = _Paths.VEHICLE_SETUP;
   static const WEB_ADD_PAY = _Paths.WEB_ADD_PAY;
   static const ADD_GIFT = _Paths.ADD_GIFT;
+  static const CHAT_WITH_EXPERTS = _Paths.CHAT_WITH_EXPERTS;
 }
 
 abstract class _Paths {
@@ -178,4 +179,5 @@ abstract class _Paths {
   static const VEHICLE_SETUP = '/vehicle-setup';
   static const WEB_ADD_PAY = '/web-add-pay';
   static const ADD_GIFT = '/add-gift';
+  static const CHAT_WITH_EXPERTS = '/chat-with-experts';
 }

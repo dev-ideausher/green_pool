@@ -237,8 +237,6 @@ class PushNotificationService {
     }
 
     Future<void> navigateToDriversRequestSection() async {
-      //first navigate to bottom navigation
-      //navigate to ride details view
       try {
         //navigate to request section
         await Get.toNamed(Routes.MY_RIDES_REQUEST,
@@ -274,9 +272,9 @@ class PushNotificationService {
         break;
 
       case "Rider New request":
+      case "Rider Request":
       case "Rider Ride Cancellation":
         if (currentRoute == Routes.BOTTOM_NAVIGATION) {
-          //! error with MyridesOneTimeController
           homeController.changeTabIndex(1);
           await navigateToDriversRequestSection();
         } else if (currentRoute == Routes.MY_RIDES_REQUEST) {
