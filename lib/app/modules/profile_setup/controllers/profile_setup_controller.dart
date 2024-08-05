@@ -216,15 +216,11 @@ class ProfileSetupController extends GetxController
     });
     try {
       final response = await APIManager.userDetails(body: userData);
-      if (response.data['status']) {
-        showMySnackbar(msg: response.data['message']);
-        storageService.setUserName = fullName.text;
-        storageService.emailId = email.text;
-        storageService.profileStatus = true;
-        tabBarController.index = 1;
-      } else {
-        showMySnackbar(msg: response.data['message']);
-      }
+      showMySnackbar(msg: response.data['message']);
+      storageService.setUserName = fullName.text;
+      storageService.emailId = email.text;
+      storageService.profileStatus = true;
+      tabBarController.index = 1;
     } catch (e) {
       throw Exception(e);
     }
@@ -262,20 +258,16 @@ class ProfileSetupController extends GetxController
       try {
         await APIManager.postWelcomeEmail(emailId: {"email": email.text});
         final response = await APIManager.postVehicleDetails(body: vehicleData);
-        if (response.data['status']) {
-          showMySnackbar(msg: "Data filled successfully");
-          storageService.isLoggedIn = true;
-          storageService.setDriver = true;
-          Get.offNamed(Routes.EMERGENCY_CONTACTS, arguments: {
-            'fromNavBar': fromNavBar,
-            'postRideModel': postRideModel.value
-          }, parameters: {
-            "profileType": "driver"
-          });
-          homeController.userInfoAPI();
-        } else {
-          showMySnackbar(msg: response.data['message'].toString());
-        }
+        showMySnackbar(msg: "Data filled successfully");
+        storageService.isLoggedIn = true;
+        storageService.setDriver = true;
+        Get.offNamed(Routes.EMERGENCY_CONTACTS, arguments: {
+          'fromNavBar': fromNavBar,
+          'postRideModel': postRideModel.value
+        }, parameters: {
+          "profileType": "driver"
+        });
+        homeController.userInfoAPI();
       } catch (e) {
         throw Exception(e);
       }

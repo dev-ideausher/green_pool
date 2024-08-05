@@ -190,8 +190,7 @@ class RiderProfileSetupController extends GetxController {
 
     try {
       await APIManager.postWelcomeEmail(emailId: {"email": email.text});
-      final response = await APIManager.userDetails(body: userData);
-      if (response.data["status"]) {
+      final response = await APIManager.userDetails(body: userData);      
         storageService.setUserName = fullName.text;
         storageService.isLoggedIn = true;
         storageService.profileStatus = true;
@@ -199,10 +198,7 @@ class RiderProfileSetupController extends GetxController {
             arguments: {'fromNavBar': fromNavBar, 'isDriver': false},
             parameters: {"profileType": "user"});
         showMySnackbar(msg: "Data saved succesfully.");
-        Get.find<HomeController>().userInfoAPI();
-      } else {
-        showMySnackbar(msg: response.data['message'].toString());
-      }
+        Get.find<HomeController>().userInfoAPI();     
     } catch (e) {
       throw Exception(e);
     }
