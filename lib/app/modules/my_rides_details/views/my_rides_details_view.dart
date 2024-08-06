@@ -143,7 +143,7 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                                         ?.riderBookingDetails
                                         ?.length ??
                                     0,
-                                physics: const NeverScrollableScrollPhysics(),
+                                // physics: const NeverScrollableScrollPhysics(),
                                 itemBuilder: (context, index1) {
                                   final rider = controller
                                       .myRidesModelData

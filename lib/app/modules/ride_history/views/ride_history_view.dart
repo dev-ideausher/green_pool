@@ -275,7 +275,7 @@ class RiderRideHistTile extends StatelessWidget {
                 .paddingOnly(bottom: 8.kh),
             const GreenPoolDivider(),
             Visibility(
-                visible: his?.rideStatus == "Cancel",
+                visible: his?.rideStatus == "Cancel" || his?.rideStatus == 'NA',
                 child: Container(
                   width: 100.w,
                   alignment: Alignment.center,
@@ -285,7 +285,9 @@ class RiderRideHistTile extends StatelessWidget {
                   padding:
                       EdgeInsets.symmetric(vertical: 4.kh, horizontal: 24.kw),
                   child: Text(
-                    "Cancelled Ride",
+                    his?.rideStatus == "Cancel"
+                        ? "Cancelled Ride"
+                        : "Incomplete",
                     style: TextStyleUtil.k14Semibold(color: ColorUtil.kError2),
                   ),
                 ).paddingOnly(top: 8.kh))
@@ -418,7 +420,7 @@ class DriverRideHistTile extends StatelessWidget {
             ).paddingOnly(bottom: 8.kh),
             const GreenPoolDivider().paddingOnly(bottom: 16.kh),
             Visibility(
-                visible: his?.rideStatus == "Cancel",
+                visible: his?.rideStatus == "Cancel" || his?.rideStatus == 'NA',
                 child: Container(
                   width: 100.w,
                   alignment: Alignment.center,
@@ -428,7 +430,9 @@ class DriverRideHistTile extends StatelessWidget {
                   padding:
                       EdgeInsets.symmetric(vertical: 4.kh, horizontal: 24.kw),
                   child: Text(
-                    "Cancelled Ride",
+                    his?.rideStatus == "Cancel"
+                        ? "Cancelled Ride"
+                        : "Incomplete",
                     style: TextStyleUtil.k14Semibold(color: ColorUtil.kError2),
                   ),
                 ))

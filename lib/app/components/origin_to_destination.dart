@@ -71,8 +71,8 @@ class OriginToDestination extends StatelessWidget {
                     ),
                   ),
                 ],
-              ).paddingOnly(bottom: 4.kh),
-            ),
+              ),
+            ).paddingOnly(bottom: 4.kh),
             Visibility(
               visible: stop1 != "",
               child: SizedBox(
@@ -109,8 +109,8 @@ class OriginToDestination extends StatelessWidget {
                     ),
                   ],
                 ),
-              ),
-            ).paddingOnly(bottom: 4.kh),
+              ).paddingOnly(bottom: 4.kh),
+            ),
             Visibility(
               visible: stop2 != "",
               child: SizedBox(
@@ -147,8 +147,8 @@ class OriginToDestination extends StatelessWidget {
                     ),
                   ],
                 ),
-              ),
-            ).paddingOnly(bottom: 4.kh),
+              ).paddingOnly(bottom: 4.kh),
+            ),
             SizedBox(
               height: 40.kh,
               child: Row(

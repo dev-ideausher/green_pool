@@ -96,7 +96,7 @@ class RiderConfirmedRideDetailsView
                         ],
                       ),
                       trailing: SizedBox(
-                        width: 120.kw,
+                        width: 110.kw,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
