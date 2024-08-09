@@ -17,7 +17,6 @@ import '../../../services/gp_util.dart';
 import '../../../services/text_style_util.dart';
 import '../../home/controllers/home_controller.dart';
 import '../../post_ride_step_one/views/amenities.dart';
-import '../../ride_details/views/copassenger_list.dart';
 import '../controllers/driver_details_controller.dart';
 
 class DriverDetailsView extends GetView<DriverDetailsController> {
@@ -238,7 +237,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
               style: TextStyleUtil.k14Bold(),
             ).paddingOnly(bottom: 16.kh),
             SizedBox(
-              height: 96.kh,
+              height: 76.kh,
               child: (controller.matchingRidesModelData.value?.ridersDetatils
                               ?.length ??
                           0) ==
@@ -276,7 +275,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                           ],
                         ).paddingOnly(right: 32.kw);
                       }),
-            ).paddingOnly(bottom: 16.kh),
+            ),
 
             const GreenPoolDivider().paddingOnly(bottom: 16.kh),
 
@@ -410,13 +409,20 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                 : const SizedBox(),
 
             const GreenPoolDivider().paddingSymmetric(vertical: 16.kh),
-            GreenPoolButton(
-                    onPressed: () {
-                      controller.chatWithDriver();
-                    },
-                    label: Strings.message,
-                    isBorder: true)
-                .paddingOnly(top: 8.kh),
+            Obx(
+              () => GreenPoolButton(
+                      onPressed: () {
+                        controller.chatWithDriver();
+                      },
+                      isLoading: controller.messageBtnLoading.value,
+                      loadingColor:
+                          Get.find<HomeController>().isPinkModeOn.value
+                              ? ColorUtil.kPrimary2PinkMode
+                              : ColorUtil.kPrimary01,
+                      label: Strings.message,
+                      isBorder: true)
+                  .paddingOnly(top: 8.kh),
+            ),
             GreenPoolButton(
                     onPressed: () => controller.moveToPayment(),
                     label: Strings.requestRide)

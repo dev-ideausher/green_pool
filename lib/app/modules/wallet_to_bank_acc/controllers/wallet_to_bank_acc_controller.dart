@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:green_pool/app/routes/app_pages.dart';
 
 class WalletToBankAccController extends GetxController {
   TextEditingController amountTextController = TextEditingController();
@@ -50,5 +51,10 @@ class WalletToBankAccController extends GetxController {
     } else {
       buttonState.value = true;
     }
+  }
+
+  moveToWebToBankAcc() {
+    Get.toNamed(Routes.WEB_ADD_TO_BANK,
+        arguments: amountTextController.value.text);
   }
 }

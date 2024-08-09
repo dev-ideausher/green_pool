@@ -60,6 +60,7 @@ class StartRideView extends GetView<StartRideController> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               FloatingActionButton(
+                heroTag: "Btn1",
                 shape: const CircleBorder(),
                 backgroundColor: Get.find<HomeController>().isPinkModeOn.value
                     ? ColorUtil.kPrimary3PinkMode
@@ -74,6 +75,7 @@ class StartRideView extends GetView<StartRideController> {
                 ),
               ).paddingOnly(bottom: 4.kh, left: 24.kw),
               FloatingActionButton(
+                  heroTag: "Btn2",
                   shape: const CircleBorder(),
                   backgroundColor: Get.find<HomeController>().isPinkModeOn.value
                       ? ColorUtil.kSecondaryPinkMode

@@ -134,6 +134,7 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
                 ),
                 validator: (value) => controller.phoneNumberValidator(value),
                 autovalidateMode: AutovalidateMode.onUserInteraction,
+                readOnly: !controller.readOnlyEmail,
               ).paddingOnly(bottom: 16.kh),
               RichTextHeading(text: Strings.gender).paddingOnly(bottom: 8.kh),
               GreenPoolDropDown(

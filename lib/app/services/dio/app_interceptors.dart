@@ -29,6 +29,7 @@ class AppInterceptors extends Interceptor {
         options.headers = {
           "Authorization": "Bearer ${Get.find<GetStorageService>().encjwToken}",
           "timezone": currentTimeZone,
+          "Content-Type": "application/json"
         };
         super.onRequest(options, handler);
       },

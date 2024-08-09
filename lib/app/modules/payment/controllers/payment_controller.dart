@@ -39,6 +39,7 @@ class PaymentController extends GetxController {
   String? stop2 = "";
   String? destination = "";
   String? seatsBooked = "";
+  String? promoCodeTitle = "";
 
   @override
   Future<void> onInit() async {
@@ -217,6 +218,7 @@ class PaymentController extends GetxController {
     if (price >= promoCodeModel.value.data![index]!.minAmount!.toInt()) {
       //if price meets minAmnt criteria then apply type of discount accordingly
       discountAvailed.value = true;
+      promoCodeTitle = promoCodeModel.value.data![index]!.promoTitle;
       if (promoCodeModel.value.data![index]!.discountCodeType == "%") {
         final double discountPercent =
             promoCodeModel.value.data![index]!.discountAmount!;

@@ -13,6 +13,7 @@ class DriverDetailsController extends GetxController {
   String driverRideId = '';
   String minStopDistance = '';
   int pricePerSeat = 0;
+  RxBool messageBtnLoading = false.obs;
 
   var requestRideModel = RequestRideByRiderModel().obs;
 
@@ -72,6 +73,7 @@ class DriverDetailsController extends GetxController {
 
   Future<void> chatWithDriver() async {
     try {
+      messageBtnLoading.value = true;
       final res = await APIManager.getChatRoomId(
           receiverId:
               matchingRidesModelData.value.driverDetails?.first?.Id ?? "");
@@ -83,6 +85,7 @@ class DriverDetailsController extends GetxController {
               name: matchingRidesModelData.value.driverDetails?.first?.fullName,
               image: matchingRidesModelData
                   .value.driverDetails?.first?.profilePic?.url));
+      messageBtnLoading.value = false;
     } catch (e) {
       try {
         Get.toNamed(Routes.CHAT_PAGE,
@@ -93,6 +96,7 @@ class DriverDetailsController extends GetxController {
                     matchingRidesModelData.value.driverDetails?.first?.fullName,
                 image: matchingRidesModelData
                     .value.driverDetails?.first?.profilePic?.url));
+        messageBtnLoading.value = true;
       } catch (e) {
         debugPrint(e.toString());
       }

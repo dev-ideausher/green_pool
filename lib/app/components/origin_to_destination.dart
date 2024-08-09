@@ -27,7 +27,7 @@ class OriginToDestination extends StatelessWidget {
           left: 4.5.kw,
           child: Container(
             height: stop1 == "" && stop2 == ""
-                ? 48.kh
+                ? 47.kh
                 : stop1 != "" && stop2 != ""
                     ? 128.kh
                     : 88.kh,

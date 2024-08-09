@@ -260,7 +260,7 @@ class RiderConfirmedRideDetailsView
                     ),
                   ).paddingOnly(bottom: 16.kh)
                 : SizedBox(
-                    height: 96.kh,
+                    height: 76.kh,
                     child: ListView.builder(
                         itemCount: controller
                                 .myRidesModel
@@ -293,7 +293,7 @@ class RiderConfirmedRideDetailsView
                             ],
                           ).paddingOnly(right: 32.kw);
                         }),
-                  ).paddingOnly(bottom: 16.kh),
+                  ),
             const GreenPoolDivider().paddingOnly(bottom: 16.kh),
 
             Text(
@@ -478,14 +478,19 @@ class RiderConfirmedRideDetailsView
               },
               label: Strings.message,
             ).paddingOnly(top: 40.kh, bottom: 16.kh),
-            GreenPoolButton(
-              onPressed: () async {
-                await controller
-                    .riderCancelRideAPI(controller.myRidesModel.value);
-              },
-              label: 'Cancel',
-              isBorder: true,
-            ).paddingOnly(bottom: 40.kh),
+            Obx(
+              () => Visibility(
+                visible: !controller.isRideStarted.value,
+                child: GreenPoolButton(
+                  onPressed: () async {
+                    await controller
+                        .riderCancelRideAPI(controller.myRidesModel.value);
+                  },
+                  label: 'Cancel',
+                  isBorder: true,
+                ).paddingOnly(bottom: 40.kh),
+              ),
+            ),
           ],
         ).paddingSymmetric(horizontal: 16.kw),
       ),

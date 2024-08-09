@@ -91,6 +91,7 @@ abstract class Routes {
   static const WEB_ADD_PAY = _Paths.WEB_ADD_PAY;
   static const ADD_GIFT = _Paths.ADD_GIFT;
   static const CHAT_WITH_EXPERTS = _Paths.CHAT_WITH_EXPERTS;
+  static const WEB_ADD_TO_BANK = _Paths.WEB_ADD_TO_BANK;
 }
 
 abstract class _Paths {
@@ -180,4 +181,5 @@ abstract class _Paths {
   static const WEB_ADD_PAY = '/web-add-pay';
   static const ADD_GIFT = '/add-gift';
   static const CHAT_WITH_EXPERTS = '/chat-with-experts';
+  static const WEB_ADD_TO_BANK = '/web-add-to-bank';
 }

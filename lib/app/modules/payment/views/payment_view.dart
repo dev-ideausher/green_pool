@@ -92,6 +92,38 @@ class PaymentView extends GetView<PaymentController> {
                           : ColorUtil.kPrimary01,
                       size: 24.kh,
                     ),
+                  ).paddingOnly(bottom: 4.kh),
+                  Visibility(
+                    visible: controller.discountAvailed.value,
+                    child: ListTile(
+                      tileColor: ColorUtil.kWhiteColor,
+                      title: Text(
+                        "'${controller.promoCodeTitle}' applied" ?? "",
+                        style: TextStyleUtil.k14Bold(),
+                      ),
+                      leading: Icon(
+                        Icons.discount,
+                        color: Get.find<HomeController>().isPinkModeOn.value
+                            ? ColorUtil.kPrimary2PinkMode
+                            : ColorUtil.kPrimary01,
+                      ),
+                      trailing: GestureDetector(
+                        onTap: () {
+                          controller.discountAvailed.value = false;
+                          controller.totalAmount =
+                              double.parse(controller.price.toString());
+                          controller.promoCodeId = "";
+                        },
+                        child: Text(
+                          "Remove",
+                          style: TextStyleUtil.k12Bold(
+                            color: Get.find<HomeController>().isPinkModeOn.value
+                                ? ColorUtil.kPrimary3PinkMode
+                                : ColorUtil.kSecondary03,
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                   24.kheightBox,
                   ListTile(

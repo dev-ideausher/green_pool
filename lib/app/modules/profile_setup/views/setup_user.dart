@@ -114,6 +114,7 @@ class SetupUser extends GetView<ProfileSetupController> {
               controller: controller.phoneNumber,
               validator: (value) => controller.phoneNumberValidator(value),
               autovalidateMode: AutovalidateMode.onUserInteraction,
+              readOnly: !controller.readOnlyEmail,
             ).paddingOnly(bottom: 16.kh),
             const RichTextHeading(text: 'Gender').paddingOnly(bottom: 8.kh),
             GreenPoolDropDown(

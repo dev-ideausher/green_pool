@@ -37,10 +37,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                   onRefresh: () async {
                     await controller.myRidesAPI();
                   },
-                  child:
-                      // controller.myRidesModelData.isEmpty
-                      //     ? const NoRidePosted()
-                      SingleChildScrollView(
+                  child: SingleChildScrollView(
                     physics: const AlwaysScrollableScrollPhysics(),
                     child: Column(
                       children: [
@@ -87,9 +84,17 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                           }
 
                           return isListEmpty
-                              ?  Visibility(
-                                  visible: controller.decideNoRidesVisibilty(type),
-                                  child: const NoRidePosted())
+                              ? Visibility(
+                                  visible:
+                                      controller.decideNoRidesVisibilty(type),
+                                  child: SizedBox(
+                                    height: MediaQuery.of(context).size.height -
+                                        100,
+                                    child:const Center(
+                                      child:  NoRidePosted(),
+                                    ),
+                                  ),
+                                )
                               : ListView.builder(
                                   shrinkWrap: true,
                                   primary: false,

@@ -10,6 +10,7 @@ import '../../../services/snackbar.dart';
 
 class RiderConfirmedRideDetailsController extends GetxController {
   final Rx<MyRidesModelData> myRidesModel = MyRidesModelData().obs;
+  RxBool isRideStarted = false.obs;
 
   @override
   void onInit() {

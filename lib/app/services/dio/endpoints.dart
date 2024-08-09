@@ -15,6 +15,7 @@ class Endpoints {
 
   // base url
   static const String baseUrl = "https://api.greenpool.ca/v1/";
+  // static const String baseUrl = "https://green-pool-backend.vercel.app/v1/";
 
   // receiveTimeout
   static const int receiveTimeout = 150000;
@@ -41,6 +42,10 @@ class Endpoints {
   static const String appRating = "app/ratingByUser";
   static const String userSupportSendMessage = "userSupport/user";
   static const String userSupportFirstMessage = "userSupport/welComeMessage";
+  static const String authorizeStripeToken = "payment/autherizeStripeToken";
+  static const String transferAmountToWallet = "payment/transferAmountToWallet";
+  static const String stripeBankUrl =
+      "https://connect.stripe.com/oauth/v2/authorize?response_type=code&client_id=ca_PdUqFXZWXjitnEqUgtSHiHKEWonW8gWJ&scope=read_write&redirect_uri=${baseUrl}payment/stripe/callback";
 
   //get url
   static const String userLogin = "auth/login";

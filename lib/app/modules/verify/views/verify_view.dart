@@ -121,6 +121,7 @@ class VerifyView extends GetView<VerifyController> {
               onPressed: () async {
                 await controller.verifyOTP();
               },
+              isLoading: controller.isButtonLoading.value,
               isActive: controller.isActive.value,
               label: controller.isActive.value
                   ? Strings.verify

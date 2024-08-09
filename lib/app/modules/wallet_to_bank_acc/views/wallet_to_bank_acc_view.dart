@@ -11,6 +11,7 @@ import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
 import '../../../services/text_style_util.dart';
 import '../../home/controllers/home_controller.dart';
+import '../../wallet/controllers/wallet_controller.dart';
 import '../controllers/wallet_to_bank_acc_controller.dart';
 
 class WalletToBankAccView extends GetView<WalletToBankAccController> {
@@ -18,7 +19,7 @@ class WalletToBankAccView extends GetView<WalletToBankAccController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:  GreenPoolAppBar(
+      appBar: GreenPoolAppBar(
         title: Text(Strings.sendMoneyToBankAccount),
       ),
       resizeToAvoidBottomInset: false,
@@ -32,11 +33,11 @@ class WalletToBankAccView extends GetView<WalletToBankAccController> {
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16.kh),
                 gradient: Get.find<HomeController>().isPinkModeOn.value
-                    ? LinearGradient(colors: [
+                    ? const LinearGradient(colors: [
                         ColorUtil.kSecondaryPinkMode,
                         ColorUtil.kPrimaryPinkMode
                       ])
-                    : LinearGradient(
+                    : const LinearGradient(
                         colors: [ColorUtil.kPrimary04, ColorUtil.kPrimary01])),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -47,7 +48,7 @@ class WalletToBankAccView extends GetView<WalletToBankAccController> {
                   textAlign: TextAlign.center,
                 ).paddingOnly(bottom: 16.kh),
                 Text(
-                  "\$ 61.11",
+                  "${Strings.dollar} ${Get.find<WalletController>().walletBalance}",
                   style: TextStyleUtil.k32Heading700(
                       color: ColorUtil.kSecondary01),
                   textAlign: TextAlign.center,
@@ -93,7 +94,8 @@ class WalletToBankAccView extends GetView<WalletToBankAccController> {
           Obx(
             () => GreenPoolButton(
               onPressed: () {
-                Get.toNamed(Routes.ADD_BANK_DETAILS);
+                // Get.toNamed(Routes.ADD_BANK_DETAILS);
+                controller.moveToWebToBankAcc();
               },
               label: Strings.proceed,
               isActive: controller.buttonState.value,

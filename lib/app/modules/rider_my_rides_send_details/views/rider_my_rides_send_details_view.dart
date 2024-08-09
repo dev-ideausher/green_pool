@@ -248,7 +248,7 @@ class RiderMyRidesSendDetailsView
                     ),
                   ).paddingOnly(bottom: 16.kh)
                 : SizedBox(
-                    height: 96.kh,
+                    height: 76.kh,
                     child: ListView.builder(
                         itemCount: controller.riderSendRequestModelData
                                 .ridersDetatils?.length ??
@@ -276,7 +276,7 @@ class RiderMyRidesSendDetailsView
                             ],
                           ).paddingOnly(right: 32.kw);
                         }),
-                  ).paddingOnly(bottom: 16.kh),
+                  ),
 
             const GreenPoolDivider().paddingOnly(bottom: 16.kh),
 

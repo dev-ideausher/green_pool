@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/modules/messages/controllers/messages_controller.dart';
 import 'package:green_pool/app/modules/my_rides_request/controllers/my_rides_request_controller.dart';
+import 'package:green_pool/app/modules/rider_confirmed_ride_details/controllers/rider_confirmed_ride_details_controller.dart';
 import 'package:green_pool/app/modules/rider_my_ride_request/controllers/rider_my_ride_request_controller.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -156,8 +157,6 @@ class PushNotificationService {
   void _handleNotificationType(Map<String, dynamic> data) {
     final notificationType = data['notification_type'];
     switch (notificationType) {
-      case 'Start Ride':
-      case 'Start_Ride':
       case 'Rider_Pickup_Request':
       case 'Rider_Dropoff_Request':
       case 'Rider_Confirm_Request':
@@ -169,7 +168,6 @@ class PushNotificationService {
       case 'Rider Request Accept':
       case 'Rider Ride Cancellation':
       case 'Ride Cancellation':
-      case 'End_Ride':
       case "Rider Request Declined":
       case "Driver Ride Cancellation":
         Get.find<MyRidesOneTimeController>().myRidesAPI();
@@ -184,6 +182,24 @@ class PushNotificationService {
       case 'Rider Ride Confirmation':
         Get.find<MyRidesOneTimeController>().myRidesAPI();
         Get.find<MyRidesRequestController>().allConfirmRequestAPI();
+        break;
+      case 'Start Ride':
+      case 'Start_Ride':
+        if (Get.currentRoute == Routes.RIDER_CONFIRMED_RIDE_DETAILS) {
+          Get.find<MyRidesOneTimeController>().myRidesAPI();
+          Get.find<RiderConfirmedRideDetailsController>().isRideStarted.value =
+              true;
+        } else {
+          Get.find<MyRidesOneTimeController>().myRidesAPI();
+        }
+        break;
+      case 'End_Ride':
+        if (Get.currentRoute == Routes.RIDER_START_RIDE_MAP) {
+          Get.find<MyRidesOneTimeController>().myRidesAPI();
+          Get.back();
+        } else {
+          Get.find<MyRidesOneTimeController>().myRidesAPI();
+        }
         break;
       default:
         debugPrint('Unknown notification type: $notificationType');
@@ -273,6 +289,7 @@ class PushNotificationService {
       case "Rider New request":
       case "Rider Request":
       case "Rider Ride Cancellation":
+        //!  "Get.put(MyRidesOneTimeController())" or "Get.lazyPut(()=>MyRidesOneTimeController())"
         if (currentRoute == Routes.BOTTOM_NAVIGATION) {
           homeController.changeTabIndex(1);
           await navigateToDriversRequestSection();

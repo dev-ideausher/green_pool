@@ -240,7 +240,7 @@ class RiderMyRidesConfirmDetailsView
                     ),
                   ).paddingOnly(bottom: 16.kh)
                 : SizedBox(
-                    height: 96.kh,
+                    height: 76.kh,
                     child: ListView.builder(
                         itemCount: controller.riderConfirmRequestModel
                                 .driverRideDetails?.riders?.length ??
@@ -268,7 +268,7 @@ class RiderMyRidesConfirmDetailsView
                             ],
                           ).paddingOnly(right: 32.kw);
                         }),
-                  ).paddingOnly(bottom: 16.kh),
+                  ),
 
             const GreenPoolDivider().paddingOnly(bottom: 16.kh),
 

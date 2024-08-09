@@ -117,6 +117,20 @@ class APIManager {
                 'Content-Type': 'multipart/form-data',
               }));
 
+  static Future<Response> postStripeToBankAcc() async =>
+      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+          .post(Endpoints.stripeBankUrl);
+
+  static Future<Response> postAuthorizeStripeToken(
+          {required dynamic body}) async =>
+      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+          .post(Endpoints.authorizeStripeToken, data: jsonEncode(body));
+
+  static Future<Response> postTransferAmountToWallet(
+          {required dynamic body}) async =>
+      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+          .post(Endpoints.transferAmountToWallet, data: jsonEncode(body));
+
   //--------------------Get api--------------------//
 
   static Future<Response> helpAndSupport() async =>
@@ -189,7 +203,7 @@ class APIManager {
 
   static Future<Response> getRecurringRideDetails(
           {required String rideId}) async =>
-      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false)
           .get(Endpoints.recurringRideDetails + rideId);
 
   static Future<Response> getMyRidesDetails({required String rideId}) async =>

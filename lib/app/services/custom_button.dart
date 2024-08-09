@@ -14,7 +14,7 @@ class GreenPoolButton extends StatelessWidget {
   final double? width, fontSize, height, borderRadius, borderWidth;
   final Function()? onPressed;
   final Widget? child;
-  final Color? color, borderColor, labelColor;
+  final Color? color, borderColor, labelColor, loadingColor;
   final EdgeInsetsGeometry? padding;
   const GreenPoolButton({
     super.key,
@@ -33,6 +33,7 @@ class GreenPoolButton extends StatelessWidget {
     this.isLoading = false,
     this.labelColor,
     this.padding,
+    this.loadingColor,
   });
 
   @override
@@ -72,12 +73,14 @@ class GreenPoolButton extends StatelessWidget {
                 ? SizedBox(
                     height: 20.kh,
                     width: 20.kh,
-                    child: const CircularProgressIndicator(color: Colors.white),
+                    child: CircularProgressIndicator(
+                        color: loadingColor ?? Colors.white),
                   )
                 : SizedBox(
                     height: 20.kh,
                     width: 20.kh,
-                    child: const CircularProgressIndicator(color: Colors.white),
+                    child: CircularProgressIndicator(
+                        color: loadingColor ?? Colors.white),
                   )
             : child ??
                 Text(

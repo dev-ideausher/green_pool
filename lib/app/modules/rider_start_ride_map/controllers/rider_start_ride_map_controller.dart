@@ -39,6 +39,8 @@ class RiderStartRideMapController extends GetxController {
       riderBookingDetail =
       BookingDetailModelDataDriverBookingDetailsRiderBookingDetails().obs;
 
+  StreamSubscription<Position>? driversPositionStream;
+
   @override
   Future<void> onInit() async {
     super.onInit();
@@ -51,6 +53,15 @@ class RiderStartRideMapController extends GetxController {
         myRidesModel.confirmDriverDetails!.firstOrNull?.driverRideId ?? "");
     await drawPolyline();
     isLoad.value = false;
+  }
+
+  @override
+  void onClose() {
+    driversPositionStream?.cancel();
+    mapController.dispose();
+    markers.clear();
+    polylineCoordinates.clear();
+    super.onClose();
   }
 
   myRidesDetailsAPI(String rideId) async {
@@ -113,8 +124,6 @@ class RiderStartRideMapController extends GetxController {
     return LatLngBounds(
         southwest: LatLng(minLat, minLng), northeast: LatLng(maxLat, maxLng));
   }
-
-  StreamSubscription<Position>? driversPositionStream;
 
   void onChangeLocation() {
     FirebaseDatabase.instance

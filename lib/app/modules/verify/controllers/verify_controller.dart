@@ -30,6 +30,7 @@ class VerifyController extends GetxController {
   RxInt seconds = 30.obs;
   RxInt buttonSeconds = 5.obs;
   RxBool isActive = false.obs;
+  RxBool isButtonLoading = false.obs;
   late Timer timer;
 
   @override
@@ -70,6 +71,7 @@ class VerifyController extends GetxController {
 
   verifyOTP() async {
     try {
+      isButtonLoading.value = true;
       await Future.delayed(const Duration(seconds: 2));
       bool isStatus = await Get.find<AuthService>()
           .verifyMobileOtp(otp: otpController.text);
@@ -78,6 +80,7 @@ class VerifyController extends GetxController {
       } else {
         showMySnackbar(msg: "Error saving user data");
       }
+      isButtonLoading.value = false;
     } catch (e) {
       debugPrint('otp error: $e');
     }

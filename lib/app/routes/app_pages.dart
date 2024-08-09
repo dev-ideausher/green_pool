@@ -143,6 +143,8 @@ import '../modules/wallet_to_bank_acc/bindings/wallet_to_bank_acc_binding.dart';
 import '../modules/wallet_to_bank_acc/views/wallet_to_bank_acc_view.dart';
 import '../modules/web_add_pay/bindings/web_add_pay_binding.dart';
 import '../modules/web_add_pay/views/web_add_pay_view.dart';
+import '../modules/web_add_to_bank/bindings/web_add_to_bank_binding.dart';
+import '../modules/web_add_to_bank/views/web_add_to_bank_view.dart';
 
 // ignore_for_file: constant_identifier_names
 
@@ -513,6 +515,11 @@ class AppPages {
       name: _Paths.CHAT_WITH_EXPERTS,
       page: () => const ChatWithExpertsView(),
       binding: ChatWithExpertsBinding(),
+    ),
+    GetPage(
+      name: _Paths.WEB_ADD_TO_BANK,
+      page: () => const WebAddToBankView(),
+      binding: WebAddToBankBinding(),
     ),
   ];
 }
