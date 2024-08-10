@@ -93,6 +93,10 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
                                     ),
                                     subtitle: Row(
                                       mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Row(
                                           mainAxisSize: MainAxisSize.min,
@@ -109,8 +113,7 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
                                                   BlendMode.srcIn),
                                             ).paddingOnly(right: 4.kw),
                                             Text(
-                                              // '07 July 2023, 3:00pm',
-                                              "${GpUtil.getDateFormat( controller.confirmRequestModel.value.data?[index]?.rideDetails?[0]?.time ?? "")}  ${GpUtil.convertUtcToLocal(controller.confirmRequestModel.value.data?[index]?.rideDetails?[0]?.time ?? "")}",
+                                              "${GpUtil.getDateFormat(controller.confirmRequestModel.value.data?[index]?.rideDetails?[0]?.time ?? "")}  ${GpUtil.convertUtcToLocal(controller.confirmRequestModel.value.data?[index]?.rideDetails?[0]?.time ?? "")}",
                                               style: TextStyleUtil.k12Regular(
                                                   color: ColorUtil.kBlack02),
                                             ),
@@ -193,19 +196,6 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
                                             svgPath: Assets.svgChat,
                                           )),
                                     )),
-                                /* Align(
-                                  alignment: Alignment.centerRight,
-                                  child: InkWell(
-                                    onTap: () =>controller.openMessageConfirm(controller.confirmRequestModel.value.data![index] ),
-                                    child: Container(
-                                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(40.kh), border: Border.all(color: ColorUtil.kSecondary01)),
-                                      child: Text(
-                                        Strings.message,
-                                        style: TextStyleUtil.k12Semibold(),
-                                      ).paddingSymmetric(vertical: 4.kh, horizontal: 16.kw),
-                                    ),
-                                  ).paddingSymmetric(vertical: 8.kh),
-                                ),*/
                                 const GreenPoolDivider()
                                     .paddingOnly(bottom: 16.kh),
                                 OriginToDestination(

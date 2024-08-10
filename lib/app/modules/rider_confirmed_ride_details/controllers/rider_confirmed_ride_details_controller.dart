@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../data/chat_arg.dart';
@@ -11,12 +10,13 @@ import '../../../services/snackbar.dart';
 class RiderConfirmedRideDetailsController extends GetxController {
   final Rx<MyRidesModelData> myRidesModel = MyRidesModelData().obs;
   RxBool isRideStarted = false.obs;
+  RxBool messageBtnLoading = false.obs;
 
   @override
   void onInit() {
     super.onInit();
     myRidesModel.value = Get.arguments;
-    print("ride status " + (myRidesModel.value.isStarted ?? false).toString());
+    print("ride status ${myRidesModel.value.isStarted ?? false}");
   }
 
   viewOnMap() {
@@ -25,6 +25,7 @@ class RiderConfirmedRideDetailsController extends GetxController {
 
   openMessage(MyRidesModelData data) async {
     try {
+      messageBtnLoading.value = true;
       final res = await APIManager.getChatRoomId(receiverId: data.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.driverDetails?[0]?.Id ?? "");
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
@@ -33,6 +34,7 @@ class RiderConfirmedRideDetailsController extends GetxController {
               id: data.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.driverDetails?[0]?.Id,
               name: data.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.driverDetails?[0]?.fullName,
               image: data.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.driverDetails?[0]?.profilePic?.url));
+              messageBtnLoading.value = false;
     } catch (e) {
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
@@ -41,6 +43,7 @@ class RiderConfirmedRideDetailsController extends GetxController {
               id: data.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.driverDetails?[0]?.Id,
               name: data.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.driverDetails?[0]?.fullName,
               image: data.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.driverDetails?[0]?.profilePic?.url));
+              messageBtnLoading.value = false;
     }
   }
 

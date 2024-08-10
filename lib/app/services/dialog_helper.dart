@@ -63,7 +63,7 @@ class DialogHelper {
       persistent: true,
       Container(
           padding: EdgeInsets.all(24.kh),
-          // height: 380.kh,
+          height: 380.kh,
           width: 100.w,
           decoration: BoxDecoration(
               color: ColorUtil.kWhiteColor,

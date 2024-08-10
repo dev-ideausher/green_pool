@@ -214,7 +214,6 @@ class SetupVehicle extends GetView<ProfileSetupController> {
               autovalidateMode: AutovalidateMode.onUserInteraction,
             ),
             GreenPoolButton(
-              // onPressed: () async => await controller.vehicleDetailsAPI(),
               onPressed: () async => await controller.checkVehicleValidations(),
               label: 'Proceed',
             ).paddingSymmetric(vertical: 40.kh),

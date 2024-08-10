@@ -214,7 +214,7 @@ class RiderConfirmedRideDetailsView
                   //ride with column
                   children: [
                     Text(
-                      'Ride With',
+                      Strings.totalRides,
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Text(
@@ -472,12 +472,25 @@ class RiderConfirmedRideDetailsView
                 : const SizedBox(),
 
             const GreenPoolDivider().paddingOnly(top: 8.kh),
-            GreenPoolButton(
-              onPressed: () {
-                controller.openMessage(controller.myRidesModel.value);
-              },
-              label: Strings.message,
-            ).paddingOnly(top: 40.kh, bottom: 16.kh),
+            Text(
+              Strings.description,
+              style: TextStyleUtil.k14Semibold(),
+            ).paddingOnly(bottom: 8.kh),
+            Wrap(
+              children: [
+                Text(controller.myRidesModel.value.description ?? "NA")
+              ],
+            ),
+            const GreenPoolDivider().paddingOnly(top: 8.kh),
+            Obx(
+              () => GreenPoolButton(
+                onPressed: () {
+                  controller.openMessage(controller.myRidesModel.value);
+                },
+                isLoading: controller.messageBtnLoading.value,
+                label: Strings.message,
+              ).paddingOnly(top: 40.kh, bottom: 16.kh),
+            ),
             Obx(
               () => Visibility(
                 visible: !controller.isRideStarted.value,

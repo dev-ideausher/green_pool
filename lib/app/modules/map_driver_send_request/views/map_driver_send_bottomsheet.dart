@@ -75,8 +75,7 @@ class MapDriverSendBottomsheet extends StatelessWidget {
                                       BlendMode.srcIn),
                                 ).paddingOnly(right: 4.kw),
                                 Text(
-                                  (GpUtil.getDateFormat(
-                                          element?.time ?? "") +
+                                  (GpUtil.getDateFormat(element?.time ?? "") +
                                       GpUtil.convertUtcToLocal(
                                           element?.time ?? "")),
                                   style: TextStyleUtil.k12Regular(
@@ -98,16 +97,16 @@ class MapDriverSendBottomsheet extends StatelessWidget {
                                 FutureBuilder<String>(
                                   future: GpUtil.calculateDistance(
                                       startLat: Get.find<HomeController>()
-                                        .latitude
-                                        .value,
-                                    startLong: Get.find<HomeController>()
-                                        .longitude
-                                        .value,
+                                          .latitude
+                                          .value,
+                                      startLong: Get.find<HomeController>()
+                                          .longitude
+                                          .value,
                                       endLat: (element?.origin?.coordinates
                                               ?.lastOrNull ??
                                           0.0),
-                                      endLong: (element?.origin
-                                              ?.coordinates?.firstOrNull ??
+                                      endLong: (element?.origin?.coordinates
+                                              ?.firstOrNull ??
                                           0.0)),
                                   builder: (context, snapshot) {
                                     if (snapshot.connectionState ==
@@ -174,12 +173,12 @@ class MapDriverSendBottomsheet extends StatelessWidget {
                       //ride with column
                       children: [
                         Text(
-                          Strings.rideWith,
+                          Strings.totalRides,
                           style: TextStyleUtil.k12Semibold(),
                         ).paddingOnly(bottom: 4.kh),
                         Text(
                           element?.riderDetails?.totalRides.toString() ??
-                              "0" + ' people',
+                              "0",
                           style: TextStyleUtil.k14Regular(
                               color: ColorUtil.kBlack03),
                         ),

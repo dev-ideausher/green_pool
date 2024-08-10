@@ -593,7 +593,7 @@ class Strings {
 
   static var emailID = 'Email ID';
 
-  static var gender = Strings.phoneNumber;
+  static var gender = "Gender";
 
   static var cityProvince = 'City Province';
 
@@ -671,4 +671,6 @@ class Strings {
   static String sureWantToLogout = 'Are you sure you want to logout?';
 
   static String confirmLogout = 'Confirm Logout';
+
+  static String totalRides = "Total Rides";
 }

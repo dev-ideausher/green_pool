@@ -90,8 +90,8 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                   child: SizedBox(
                                     height: MediaQuery.of(context).size.height -
                                         100,
-                                    child:const Center(
-                                      child:  NoRidePosted(),
+                                    child: const Center(
+                                      child: NoRidePosted(),
                                     ),
                                   ),
                                 )

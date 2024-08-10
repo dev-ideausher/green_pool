@@ -204,11 +204,11 @@ class RiderMyRidesSendDetailsView
                   //ride with column
                   children: [
                     Text(
-                      'Ride With',
+                      Strings.totalRides,
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Text(
-                      "${controller.riderSendRequestModelData.driverDetails?[0]?.totalRides} people",
+                      "${controller.riderSendRequestModelData.driverDetails?[0]?.totalRides}",
                       style:
                           TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                     ),
@@ -269,7 +269,7 @@ class RiderMyRidesSendDetailsView
                                                 "${controller.riderSendRequestModelData.ridersDetatils?[index]?.profilePic?.url}"))),
                               ).paddingOnly(bottom: 4.kh),
                               Text(
-                                "${controller.riderSendRequestModelData.ridersDetatils?[index]?.fullName.toString().split(" ").first}\n${controller.riderSendRequestModelData.ridersDetatils?[index]?.fullName.toString().split(" ").last}",
+                                "${controller.riderSendRequestModelData.ridersDetatils?[index]?.fullName.toString().split(" ").first}",
                                 style: TextStyleUtil.k12Semibold(),
                                 textAlign: TextAlign.center,
                               ),
@@ -408,6 +408,16 @@ class RiderMyRidesSendDetailsView
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
 
+            const GreenPoolDivider().paddingOnly(top: 8.kh),
+            Text(
+              Strings.description,
+              style: TextStyleUtil.k14Semibold(),
+            ).paddingOnly(bottom: 8.kh),
+            Wrap(
+              children: [
+                Text(controller.riderSendRequestModelData?.description ?? "NA")
+              ],
+            ),
             const GreenPoolDivider().paddingOnly(top: 8.kh),
             GreenPoolButton(
               onPressed: () {

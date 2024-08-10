@@ -91,7 +91,7 @@ class RecurringTile extends StatelessWidget {
               const GreenPoolDivider().paddingOnly(top: 8.kh, bottom: 8.kh),
               OriginToDestination(
                 needPickupText: false,
-                origin: "${recurringResp?.origin?.name}",                
+                origin: "${recurringResp?.origin?.name}",
                 destination: "${recurringResp?.destination?.name}",
               ).paddingOnly(bottom: 8.kh),
               const GreenPoolDivider().paddingOnly(bottom: 16.kh),
@@ -117,16 +117,19 @@ class RecurringTile extends StatelessWidget {
                             height: 24.kh,
                             width: 170.kw,
                             child: ListView.builder(
-                              itemCount: (recurringResp?.ridesDetails?[index1]
-                                              ?.ridersDetails?.length ??
-                                          0) ==
-                                      0
-                                  ? 3
-                                  : (recurringResp?.ridesDetails?[index1]
-                                      ?.ridersDetails?.length),
+                              itemCount: ((recurringResp?.ridesDetails?[index1]
+                                          ?.seatAvailable ??
+                                      0) +
+                                  (recurringResp?.ridesDetails?[index1]
+                                          ?.ridersDetails?.length ??
+                                      0)),
                               reverse: true,
                               scrollDirection: Axis.horizontal,
                               itemBuilder: (context, index2) {
+                                bool isSeatAvailable = index2 <
+                                    (recurringResp?.ridesDetails?[index1]
+                                            ?.seatAvailable ??
+                                        0);
                                 return Container(
                                   decoration: const BoxDecoration(
                                     shape: BoxShape.circle,
@@ -134,19 +137,14 @@ class RecurringTile extends StatelessWidget {
                                   child: ClipOval(
                                     child: SizedBox.fromSize(
                                         size: Size.fromRadius(12.kh),
-                                        child: (recurringResp
-                                                        ?.ridesDetails?[index1]
-                                                        ?.ridersDetails
-                                                        ?.length ??
-                                                    0) ==
-                                                0
+                                        child: isSeatAvailable
                                             ? CommonImageView(
                                                 imagePath: ImageConstant
                                                     .pngEmptyPassenger,
                                               )
                                             : CommonImageView(
                                                 url:
-                                                    "${recurringResp?.ridesDetails?[index1]?.ridersDetails?[index2]?.profilePic?.url}",
+                                                    "${recurringResp?.ridesDetails?[index1]?.ridersDetails?[index2 - (recurringResp?.ridesDetails?[index1]?.seatAvailable ?? 0)]?.profilePic?.url}",
                                               )),
                                   ),
                                 ).paddingOnly(right: 4.kw);

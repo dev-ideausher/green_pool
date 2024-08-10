@@ -88,6 +88,7 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
                 style: TextStyleUtil.k14Semibold(),
               ),
             ),
+            //stop1
             Visibility(
               visible: controller.isDestinationAdded.value,
               child: GreenPoolTextField(
@@ -98,8 +99,6 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
                     borderSide: const BorderSide(color: ColorUtil.kBlack06),
                     borderRadius: BorderRadius.circular(8.kh)),
                 onTap: () {
-                  // Get.toNamed(Routes.ORIGIN, arguments: LocationValues.addStop1)
-                  //     ?.then((value) => controller.isStop1Added.value = true);
                   controller.moveToSetStop1();
                 },
                 controller: controller.stop1TextController,
@@ -125,6 +124,7 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
                       ),
               ).paddingOnly(top: 8.kh, bottom: 16.kh),
             ),
+            //stop2
             Visibility(
               visible: controller.isStop1Added.value,
               child: GreenPoolTextField(

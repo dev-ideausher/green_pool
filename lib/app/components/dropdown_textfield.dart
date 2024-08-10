@@ -35,6 +35,8 @@ class GreenPoolDropDown extends StatelessWidget {
       menuMaxHeight: 240.kh,
       dropdownColor: ColorUtil.kBackgroundColor,
       autovalidateMode: autovalidateMode,
+      isDense: true,
+      isExpanded: true,
       decoration: InputDecoration(
         contentPadding:
             EdgeInsets.symmetric(vertical: 16.kh, horizontal: 16.kw),

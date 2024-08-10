@@ -186,14 +186,14 @@ class MapRiderConfirmBottomsheet extends StatelessWidget {
                   //ride with column
                   children: [
                     Text(
-                      Strings.rideWith,
+                      Strings.totalRides,
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Text(
                       element?.driverRideDetails?.driverDetails?.firstOrNull
                               ?.totalRides
                               .toString() ??
-                          "0" + ' people',
+                          "0",
                       style:
                           TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                     ),

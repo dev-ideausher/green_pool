@@ -56,7 +56,7 @@ class ChatWithExpertsController extends GetxController {
             senderId: "admin",
             message:
                 "Hi, how can I help you to resolve your queries? Pick a topic to start our chat.",
-            timestamp: DateTime.now().subtract(const Duration(minutes: 2)),
+            timestamp: DateTime.now().subtract(const Duration(minutes: 5)),
           ),
         );
         WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToBottom());
@@ -79,23 +79,27 @@ class ChatWithExpertsController extends GetxController {
     FocusScope.of(Get.context!).unfocus();
     eMsg.clear();
     try {
-      if (isChatStarted.value) {
-        messages.refresh();
-        final res = await APIManager.userSupportSendMessage(
-            body: {"message": msg, "chatRoomId": chatRoomId});
-        eMsg.clear();
-        chatRoomId = res.data["chatRoomId"];
-      } else {
+      if (!isChatStarted.value) {
         messages.refresh();
         final res =
             await APIManager.userSupportFirstMessage(body: {"issueType": msg});
         if (res.data["message"] == "Chat message written successfully.") {
           eMsg.clear();
+          //save the id in storage
           chatRoomId = res.data["chatRoomId"];
           isChatStarted.value = true;
         } else {
           showMySnackbar(msg: res.data["message"]);
         }
+      } else {
+        messages.refresh();
+        final res = await APIManager.userSupportSendMessage(
+            body: {"message": msg, "chatRoomId": chatRoomId});
+        eMsg.clear();
+        //store the id in storage
+        chatRoomId = res.data["chatRoomId"];
+
+        //clear the id from storage when Resolved is coming in response
       }
       getChat();
     } catch (e) {

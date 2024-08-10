@@ -65,7 +65,7 @@ class MapDriverConfirmBottomsheet extends StatelessWidget {
                         BlendMode.srcIn),
                   ).paddingOnly(right: 4.kw),
                   Text(
-                    ("${GpUtil.getDateFormat(element?.rideDetails?.first?.time ?? "" )}, ${GpUtil.convertUtcToLocal(element?.rideDetails?.first?.time ?? "")}"),
+                    ("${GpUtil.getDateFormat(element?.rideDetails?.first?.time ?? "")}, ${GpUtil.convertUtcToLocal(element?.rideDetails?.first?.time ?? "")}"),
                     style: TextStyleUtil.k12Regular(color: ColorUtil.kBlack02),
                   ),
                 ],
@@ -105,12 +105,9 @@ class MapDriverConfirmBottomsheet extends StatelessWidget {
                       ),
                       FutureBuilder<String>(
                         future: GpUtil.calculateDistance(
-                            startLat: Get.find<HomeController>()
-                                        .latitude
-                                        .value,
-                                    startLong: Get.find<HomeController>()
-                                        .longitude
-                                        .value,
+                            startLat: Get.find<HomeController>().latitude.value,
+                            startLong:
+                                Get.find<HomeController>().longitude.value,
                             endLat: (element.rideDetails?.first?.origin
                                     ?.coordinates?.lastOrNull ??
                                 0.0),
@@ -183,14 +180,14 @@ class MapDriverConfirmBottomsheet extends StatelessWidget {
                   //ride with column
                   children: [
                     Text(
-                      Strings.rideWith,
+                      Strings.totalRides,
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Text(
                       element?.rideDetails?.first?.riderDetails?.first
                               ?.totalRides
                               .toString() ??
-                          "0" + ' people',
+                          "0",
                       style:
                           TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                     ),

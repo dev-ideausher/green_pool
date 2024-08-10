@@ -202,11 +202,11 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                   //ride with column
                   children: [
                     Text(
-                      Strings.rideWith,
+                      Strings.totalRides,
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Text(
-                      "${controller.matchingRidesModelData.value.driverDetails?[0]?.totalRides ?? "0"} people",
+                      "${controller.matchingRidesModelData.value.driverDetails?[0]?.totalRides ?? "0"}",
                       style:
                           TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                     ),
@@ -408,6 +408,17 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
 
+            const GreenPoolDivider().paddingSymmetric(vertical: 16.kh),
+            Text(
+              Strings.description,
+              style: TextStyleUtil.k14Semibold(),
+            ).paddingOnly(bottom: 8.kh),
+            Wrap(
+              children: [
+                Text(
+                    controller.matchingRidesModelData.value.description ?? "NA")
+              ],
+            ),
             const GreenPoolDivider().paddingSymmetric(vertical: 16.kh),
             Obx(
               () => GreenPoolButton(

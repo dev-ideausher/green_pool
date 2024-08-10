@@ -57,7 +57,6 @@ class ChatWithExpertsView extends GetView<ChatWithExpertsController> {
                             Get.find<GetStorageService>().getUserAppId;
                         final isPinkModeOn =
                             Get.find<HomeController>().isPinkModeOn.value;
-                        print(Get.find<GetStorageService>().getUserAppId);
 
                         return Container(
                           padding: EdgeInsets.only(
@@ -180,34 +179,39 @@ class ChatWithExpertsView extends GetView<ChatWithExpertsController> {
                                 ],
                               ),
                               if (index == 0 && !controller.isChatStarted.value)
-                                Visibility(
-                                  visible: true,
-                                  child: Container(
-                                    alignment: Alignment.topLeft,
-                                    width: 60.w,
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        SuggestionsChip(
-                                          topic: "Wallet",
-                                          controller: controller,
-                                        ),
-                                        SuggestionsChip(
-                                          topic: "Refund",
-                                          controller: controller,
-                                        ),
-                                        SuggestionsChip(
-                                          topic: "Ride Related",
-                                          controller: controller,
-                                        ),
-                                        SuggestionsChip(
-                                          topic: "Account Related",
-                                          controller: controller,
-                                        ),
-                                      ],
+                                Align(
+                                  alignment: Alignment.topLeft,
+                                  child: Visibility(
+                                    visible: true,
+                                    child: Container(
+                                      alignment: Alignment.topLeft,
+                                      width: 60.w,
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          SuggestionsChip(
+                                            topic: "Wallet",
+                                            controller: controller,
+                                          ),
+                                          SuggestionsChip(
+                                            topic: "Refund",
+                                            controller: controller,
+                                          ),
+                                          SuggestionsChip(
+                                            topic: "Ride Related",
+                                            controller: controller,
+                                          ),
+                                          SuggestionsChip(
+                                            topic: "Account Related",
+                                            controller: controller,
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ).paddingSymmetric(vertical: 8.kh),
+                                  ).paddingSymmetric(vertical: 8.kh),
+                                ),
                             ],
                           ),
                         );
@@ -217,10 +221,17 @@ class ChatWithExpertsView extends GetView<ChatWithExpertsController> {
                   GreenPoolTextField(
                     controller: controller.eMsg,
                     hintText: Strings.writeMsg,
+                    readOnly: !controller.isChatStarted.value,
                     keyboardType: TextInputType.text,
                     textCapitalization: TextCapitalization.words,
                     suffix: InkWell(
-                        onTap: () => controller.sendMsg(),
+                        onTap: controller.eMsg.text.isNotEmpty
+                            ? () {
+                                controller.sendMsg();
+                              }
+                            : () {
+                                debugPrint("btn not active");
+                              },
                         child: SvgPicture.asset(ImageConstant.svgIconSend)),
                   ).paddingOnly(bottom: 40.kh, top: 5.kh)
                 ],
@@ -247,20 +258,22 @@ class SuggestionsChip extends StatelessWidget {
           : () {
               controller.eMsg.text = topic;
             },
-      child: Container(
-        padding: EdgeInsets.symmetric(vertical: 8.kh, horizontal: 12.kw),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-            border: Border.all(
-                color: Get.find<HomeController>().isPinkModeOn.value
-                    ? ColorUtil.kPrimaryPinkMode
-                    : ColorUtil.kPrimary01),
-            borderRadius: BorderRadius.circular(40.kh)),
-        child: Text(
-          topic,
-          style: TextStyleUtil.k14Regular(),
-        ),
-      ).paddingOnly(bottom: 8.kh),
+      child: IntrinsicWidth(
+        child: Container(
+          padding: EdgeInsets.symmetric(vertical: 8.kh, horizontal: 32.kw),
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+              border: Border.all(
+                  color: Get.find<HomeController>().isPinkModeOn.value
+                      ? ColorUtil.kPrimaryPinkMode
+                      : ColorUtil.kPrimary01),
+              borderRadius: BorderRadius.circular(40.kh)),
+          child: Text(
+            topic,
+            style: TextStyleUtil.k14Regular(),
+          ),
+        ).paddingOnly(bottom: 8.kh),
+      ),
     );
   }
 }

@@ -195,11 +195,11 @@ class RiderMyRidesConfirmDetailsView
                   //ride with column
                   children: [
                     Text(
-                      'Ride With',
+                      Strings.totalRides,
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Text(
-                      "${controller.riderConfirmRequestModel.driverRideDetails?.driverDetails?[0]?.totalRides} people",
+                      "${controller.riderConfirmRequestModel.driverRideDetails?.driverDetails?[0]?.totalRides}",
                       style:
                           TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                     ),
@@ -261,7 +261,7 @@ class RiderMyRidesConfirmDetailsView
                                                 "${controller.riderConfirmRequestModel.driverRideDetails?.riders?[index1]?.profilePic?.url}"))),
                               ).paddingOnly(bottom: 4.kh),
                               Text(
-                                "${controller.riderConfirmRequestModel.driverRideDetails?.riders?[index1]?.fullName}",
+                                "${controller.riderConfirmRequestModel.driverRideDetails?.riders?[index1]?.fullName.toString().split(" ").first}",
                                 style: TextStyleUtil.k12Semibold(),
                                 textAlign: TextAlign.center,
                               ),
@@ -399,6 +399,18 @@ class RiderMyRidesConfirmDetailsView
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
 
+            const GreenPoolDivider().paddingSymmetric(vertical: 16.kh),
+            Text(
+              Strings.description,
+              style: TextStyleUtil.k14Semibold(),
+            ).paddingOnly(bottom: 8.kh),
+            Wrap(
+              children: [
+                Text(controller.riderConfirmRequestModel.driverRideDetails
+                        ?.description ??
+                    "NA")
+              ],
+            ),
             const GreenPoolDivider().paddingSymmetric(vertical: 16.kh),
             GreenPoolButton(
               onPressed: () => Get.find<RiderMyRideRequestController>()

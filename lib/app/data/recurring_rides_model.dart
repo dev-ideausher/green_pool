@@ -7,8 +7,8 @@ class RecurringRidesModelDataRidesDetailsRidersDetailsNotificationPreferences {
   "trip": true,
   "alerts": true,
   "payments": true,
-  "transactions": false,
-  "offers": false
+  "transactions": true,
+  "offers": true
 } 
 */
 
@@ -25,8 +25,7 @@ class RecurringRidesModelDataRidesDetailsRidersDetailsNotificationPreferences {
     this.transactions,
     this.offers,
   });
-  RecurringRidesModelDataRidesDetailsRidersDetailsNotificationPreferences.fromJson(
-      Map<String, dynamic> json) {
+  RecurringRidesModelDataRidesDetailsRidersDetailsNotificationPreferences.fromJson(Map<String, dynamic> json) {
     trip = json['trip'];
     alerts = json['alerts'];
     payments = json['payments'];
@@ -44,11 +43,113 @@ class RecurringRidesModelDataRidesDetailsRidersDetailsNotificationPreferences {
   }
 }
 
+class RecurringRidesModelDataRidesDetailsRidersDetailsRideCancellationDetailsSuspensionDetails {
+/*
+{
+  "cancelPolicy": "Driver Cancellation policy",
+  "dateFrom": "2024-07-27T11:43:07.435Z",
+  "dateTo": "2025-01-27T11:43:07.435Z"
+} 
+*/
+
+  String? cancelPolicy;
+  String? dateFrom;
+  String? dateTo;
+
+  RecurringRidesModelDataRidesDetailsRidersDetailsRideCancellationDetailsSuspensionDetails({
+    this.cancelPolicy,
+    this.dateFrom,
+    this.dateTo,
+  });
+  RecurringRidesModelDataRidesDetailsRidersDetailsRideCancellationDetailsSuspensionDetails.fromJson(Map<String, dynamic> json) {
+    cancelPolicy = json['cancelPolicy']?.toString();
+    dateFrom = json['dateFrom']?.toString();
+    dateTo = json['dateTo']?.toString();
+  }
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+    data['cancelPolicy'] = cancelPolicy;
+    data['dateFrom'] = dateFrom;
+    data['dateTo'] = dateTo;
+    return data;
+  }
+}
+
+class RecurringRidesModelDataRidesDetailsRidersDetailsRideCancellationDetails {
+/*
+{
+  "count": 2,
+  "cancellationDate": "2024-07-27T11:43:07.435Z",
+  "suspensionDetails": {
+    "cancelPolicy": "Driver Cancellation policy",
+    "dateFrom": "2024-07-27T11:43:07.435Z",
+    "dateTo": "2025-01-27T11:43:07.435Z"
+  }
+} 
+*/
+
+  int? count;
+  String? cancellationDate;
+  RecurringRidesModelDataRidesDetailsRidersDetailsRideCancellationDetailsSuspensionDetails? suspensionDetails;
+
+  RecurringRidesModelDataRidesDetailsRidersDetailsRideCancellationDetails({
+    this.count,
+    this.cancellationDate,
+    this.suspensionDetails,
+  });
+  RecurringRidesModelDataRidesDetailsRidersDetailsRideCancellationDetails.fromJson(Map<String, dynamic> json) {
+    count = json['count']?.toInt();
+    cancellationDate = json['cancellationDate']?.toString();
+    suspensionDetails = (json['suspensionDetails'] != null) ? RecurringRidesModelDataRidesDetailsRidersDetailsRideCancellationDetailsSuspensionDetails.fromJson(json['suspensionDetails']) : null;
+  }
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+    data['count'] = count;
+    data['cancellationDate'] = cancellationDate;
+    if (suspensionDetails != null) {
+      data['suspensionDetails'] = suspensionDetails!.toJson();
+    }
+    return data;
+  }
+}
+
+class RecurringRidesModelDataRidesDetailsRidersDetailsIdPic {
+/*
+{
+  "key": "idPic/11e6324a-1e74-409c-a220-806dd0581226-Gurpreet.jpg",
+  "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/idPic/11e6324a-1e74-409c-a220-806dd0581226-Gurpreet.jpg",
+  "_id": "66a32e4df75f826da1b6d1ea"
+} 
+*/
+
+  String? key;
+  String? url;
+  String? Id;
+
+  RecurringRidesModelDataRidesDetailsRidersDetailsIdPic({
+    this.key,
+    this.url,
+    this.Id,
+  });
+  RecurringRidesModelDataRidesDetailsRidersDetailsIdPic.fromJson(Map<String, dynamic> json) {
+    key = json['key']?.toString();
+    url = json['url']?.toString();
+    Id = json['_id']?.toString();
+  }
+  Map<String, dynamic> toJson() {
+    final data = <String, dynamic>{};
+    data['key'] = key;
+    data['url'] = url;
+    data['_id'] = Id;
+    return data;
+  }
+}
+
 class RecurringRidesModelDataRidesDetailsRidersDetailsProfilePic {
 /*
 {
-  "key": "usersProfile/4af9abdc-f508-415f-88e1-8968bdd90ca8-1000000036.jpg",
-  "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/4af9abdc-f508-415f-88e1-8968bdd90ca8-1000000036.jpg"
+  "key": "usersProfile/0f143420-9e14-404b-8113-a703b646065f-Gurpreet.jpg",
+  "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/0f143420-9e14-404b-8113-a703b646065f-Gurpreet.jpg"
 } 
 */
 
@@ -59,36 +160,7 @@ class RecurringRidesModelDataRidesDetailsRidersDetailsProfilePic {
     this.key,
     this.url,
   });
-  RecurringRidesModelDataRidesDetailsRidersDetailsProfilePic.fromJson(
-      Map<String, dynamic> json) {
-    key = json['key']?.toString();
-    url = json['url']?.toString();
-  }
-  Map<String, dynamic> toJson() {
-    final data = <String, dynamic>{};
-    data['key'] = key;
-    data['url'] = url;
-    return data;
-  }
-}
-
-class RecurringRidesModelDataRidesDetailsRidersDetailsIdPic {
-/*
-{
-  "key": "idPic/9808bc03-6648-4835-835b-d8b771b7ea24-1000000034.jpg",
-  "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/idPic/9808bc03-6648-4835-835b-d8b771b7ea24-1000000034.jpg"
-} 
-*/
-
-  String? key;
-  String? url;
-
-  RecurringRidesModelDataRidesDetailsRidersDetailsIdPic({
-    this.key,
-    this.url,
-  });
-  RecurringRidesModelDataRidesDetailsRidersDetailsIdPic.fromJson(
-      Map<String, dynamic> json) {
+  RecurringRidesModelDataRidesDetailsRidersDetailsProfilePic.fromJson(Map<String, dynamic> json) {
     key = json['key']?.toString();
     url = json['url']?.toString();
   }
@@ -103,47 +175,68 @@ class RecurringRidesModelDataRidesDetailsRidersDetailsIdPic {
 class RecurringRidesModelDataRidesDetailsRidersDetails {
 /*
 {
-  "_id": "65e03c7246e8a8aa4d62db6c",
-  "fullName": "UserOne",
-  "phone": "+11234512345",
-  "email": "user@test.com",
-  "city": "Mumbai",
-  "dob": "2006-03-05",
-  "gender": "Male",
+  "_id": "66a24c9cccdad87a58c6428d",
+  "isRegister": true,
+  "role": "User",
+  "pinkMode": false,
+  "fullName": "Jaspreet",
+  "phone": "+14444444444",
+  "email": null,
+  "city": "Hisar",
+  "profilePic": {
+    "key": "usersProfile/0f143420-9e14-404b-8113-a703b646065f-Gurpreet.jpg",
+    "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/0f143420-9e14-404b-8113-a703b646065f-Gurpreet.jpg"
+  },
+  "idPic": {
+    "key": "idPic/11e6324a-1e74-409c-a220-806dd0581226-Gurpreet.jpg",
+    "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/idPic/11e6324a-1e74-409c-a220-806dd0581226-Gurpreet.jpg",
+    "_id": "66a32e4df75f826da1b6d1ea"
+  },
+  "dob": "2024-07-25",
+  "gender": "Female",
   "isDriver": true,
-  "referralCode": "Z8375Z0413",
+  "referralCode": "L8555A1312",
   "profileStatus": true,
   "vehicleStatus": true,
-  "status": "active",
+  "status": "suspended",
+  "rideCancellationDetails": {
+    "count": 2,
+    "cancellationDate": "2024-07-27T11:43:07.435Z",
+    "suspensionDetails": {
+      "cancelPolicy": "Driver Cancellation policy",
+      "dateFrom": "2024-07-27T11:43:07.435Z",
+      "dateTo": "2025-01-27T11:43:07.435Z"
+    }
+  },
   "wallet": 0,
-  "firebaseUid": "n9XvgstaJCShxg2V5AmREneUYOE2",
-  "firebaseSignInProvider": "phone",
-  "createdAt": "2024-02-29T08:12:34.805Z",
-  "updatedAt": "2024-04-09T07:48:46.026Z",
-  "idPic": {
-    "key": "idPic/9808bc03-6648-4835-835b-d8b771b7ea24-1000000034.jpg",
-    "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/idPic/9808bc03-6648-4835-835b-d8b771b7ea24-1000000034.jpg"
-  },
-  "profilePic": {
-    "key": "usersProfile/4af9abdc-f508-415f-88e1-8968bdd90ca8-1000000036.jpg",
-    "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/4af9abdc-f508-415f-88e1-8968bdd90ca8-1000000036.jpg"
-  },
-  "pinkMode": false,
+  "connected_account_id": "acct_1Pl862SDQsFXeYIV",
+  "rating": 0,
+  "totalRides": 0,
+  "isRecurringTripEnabled": false,
   "notificationPreferences": {
     "trip": true,
     "alerts": true,
     "payments": true,
-    "transactions": false,
-    "offers": false
-  }
+    "transactions": true,
+    "offers": true
+  },
+  "firebaseUid": "ZQ5rkqoYWLV5AUctnbkcvu1Z2hb2",
+  "firebaseSignInProvider": "phone",
+  "createdAt": "2024-07-25T13:01:16.092Z",
+  "updatedAt": "2024-08-10T08:30:14.430Z"
 } 
 */
 
   String? Id;
+  bool? isRegister;
+  String? role;
+  bool? pinkMode;
   String? fullName;
   String? phone;
   String? email;
   String? city;
+  RecurringRidesModelDataRidesDetailsRidersDetailsProfilePic? profilePic;
+  RecurringRidesModelDataRidesDetailsRidersDetailsIdPic? idPic;
   String? dob;
   String? gender;
   bool? isDriver;
@@ -151,23 +244,29 @@ class RecurringRidesModelDataRidesDetailsRidersDetails {
   bool? profileStatus;
   bool? vehicleStatus;
   String? status;
+  RecurringRidesModelDataRidesDetailsRidersDetailsRideCancellationDetails? rideCancellationDetails;
   int? wallet;
+  String? connectedAccountId;
+  int? rating;
+  int? totalRides;
+  bool? isRecurringTripEnabled;
+  RecurringRidesModelDataRidesDetailsRidersDetailsNotificationPreferences? notificationPreferences;
   String? firebaseUid;
   String? firebaseSignInProvider;
   String? createdAt;
   String? updatedAt;
-  RecurringRidesModelDataRidesDetailsRidersDetailsIdPic? idPic;
-  RecurringRidesModelDataRidesDetailsRidersDetailsProfilePic? profilePic;
-  bool? pinkMode;
-  RecurringRidesModelDataRidesDetailsRidersDetailsNotificationPreferences?
-      notificationPreferences;
 
   RecurringRidesModelDataRidesDetailsRidersDetails({
     this.Id,
+    this.isRegister,
+    this.role,
+    this.pinkMode,
     this.fullName,
     this.phone,
     this.email,
     this.city,
+    this.profilePic,
+    this.idPic,
     this.dob,
     this.gender,
     this.isDriver,
@@ -175,23 +274,29 @@ class RecurringRidesModelDataRidesDetailsRidersDetails {
     this.profileStatus,
     this.vehicleStatus,
     this.status,
+    this.rideCancellationDetails,
     this.wallet,
+    this.connectedAccountId,
+    this.rating,
+    this.totalRides,
+    this.isRecurringTripEnabled,
+    this.notificationPreferences,
     this.firebaseUid,
     this.firebaseSignInProvider,
     this.createdAt,
     this.updatedAt,
-    this.idPic,
-    this.profilePic,
-    this.pinkMode,
-    this.notificationPreferences,
   });
-  RecurringRidesModelDataRidesDetailsRidersDetails.fromJson(
-      Map<String, dynamic> json) {
+  RecurringRidesModelDataRidesDetailsRidersDetails.fromJson(Map<String, dynamic> json) {
     Id = json['_id']?.toString();
+    isRegister = json['isRegister'];
+    role = json['role']?.toString();
+    pinkMode = json['pinkMode'];
     fullName = json['fullName']?.toString();
     phone = json['phone']?.toString();
     email = json['email']?.toString();
     city = json['city']?.toString();
+    profilePic = (json['profilePic'] != null) ? RecurringRidesModelDataRidesDetailsRidersDetailsProfilePic.fromJson(json['profilePic']) : null;
+    idPic = (json['idPic'] != null) ? RecurringRidesModelDataRidesDetailsRidersDetailsIdPic.fromJson(json['idPic']) : null;
     dob = json['dob']?.toString();
     gender = json['gender']?.toString();
     isDriver = json['isDriver'];
@@ -199,32 +304,34 @@ class RecurringRidesModelDataRidesDetailsRidersDetails {
     profileStatus = json['profileStatus'];
     vehicleStatus = json['vehicleStatus'];
     status = json['status']?.toString();
+    rideCancellationDetails = (json['rideCancellationDetails'] != null) ? RecurringRidesModelDataRidesDetailsRidersDetailsRideCancellationDetails.fromJson(json['rideCancellationDetails']) : null;
     wallet = json['wallet']?.toInt();
+    connectedAccountId = json['connected_account_id']?.toString();
+    rating = json['rating']?.toInt();
+    totalRides = json['totalRides']?.toInt();
+    isRecurringTripEnabled = json['isRecurringTripEnabled'];
+    notificationPreferences = (json['notificationPreferences'] != null) ? RecurringRidesModelDataRidesDetailsRidersDetailsNotificationPreferences.fromJson(json['notificationPreferences']) : null;
     firebaseUid = json['firebaseUid']?.toString();
     firebaseSignInProvider = json['firebaseSignInProvider']?.toString();
     createdAt = json['createdAt']?.toString();
     updatedAt = json['updatedAt']?.toString();
-    idPic = (json['idPic'] != null)
-        ? RecurringRidesModelDataRidesDetailsRidersDetailsIdPic.fromJson(
-            json['idPic'])
-        : null;
-    profilePic = (json['profilePic'] != null)
-        ? RecurringRidesModelDataRidesDetailsRidersDetailsProfilePic.fromJson(
-            json['profilePic'])
-        : null;
-    pinkMode = json['pinkMode'];
-    notificationPreferences = (json['notificationPreferences'] != null)
-        ? RecurringRidesModelDataRidesDetailsRidersDetailsNotificationPreferences
-            .fromJson(json['notificationPreferences'])
-        : null;
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['_id'] = Id;
+    data['isRegister'] = isRegister;
+    data['role'] = role;
+    data['pinkMode'] = pinkMode;
     data['fullName'] = fullName;
     data['phone'] = phone;
     data['email'] = email;
     data['city'] = city;
+    if (profilePic != null) {
+      data['profilePic'] = profilePic!.toJson();
+    }
+    if (idPic != null) {
+      data['idPic'] = idPic!.toJson();
+    }
     data['dob'] = dob;
     data['gender'] = gender;
     data['isDriver'] = isDriver;
@@ -232,21 +339,21 @@ class RecurringRidesModelDataRidesDetailsRidersDetails {
     data['profileStatus'] = profileStatus;
     data['vehicleStatus'] = vehicleStatus;
     data['status'] = status;
+    if (rideCancellationDetails != null) {
+      data['rideCancellationDetails'] = rideCancellationDetails!.toJson();
+    }
     data['wallet'] = wallet;
+    data['connected_account_id'] = connectedAccountId;
+    data['rating'] = rating;
+    data['totalRides'] = totalRides;
+    data['isRecurringTripEnabled'] = isRecurringTripEnabled;
+    if (notificationPreferences != null) {
+      data['notificationPreferences'] = notificationPreferences!.toJson();
+    }
     data['firebaseUid'] = firebaseUid;
     data['firebaseSignInProvider'] = firebaseSignInProvider;
     data['createdAt'] = createdAt;
     data['updatedAt'] = updatedAt;
-    if (idPic != null) {
-      data['idPic'] = idPic!.toJson();
-    }
-    if (profilePic != null) {
-      data['profilePic'] = profilePic!.toJson();
-    }
-    data['pinkMode'] = pinkMode;
-    if (notificationPreferences != null) {
-      data['notificationPreferences'] = notificationPreferences!.toJson();
-    }
     return data;
   }
 }
@@ -254,44 +361,62 @@ class RecurringRidesModelDataRidesDetailsRidersDetails {
 class RecurringRidesModelDataRidesDetails {
 /*
 {
-  "date": "2024-04-22T00:00:00.000Z",
-  "dayOfWeek": 2,
-  "day": "Monday",
+  "date": "2024-08-11T00:00:00.000Z",
+  "dayOfWeek": 1,
+  "day": "Sunday",
+  "totalSeatAvailable": 4,
+  "seatAvailable": 4,
   "ridersDetails": [
     {
-      "_id": "65e03c7246e8a8aa4d62db6c",
-      "fullName": "UserOne",
-      "phone": "+11234512345",
-      "email": "user@test.com",
-      "city": "Mumbai",
-      "dob": "2006-03-05",
-      "gender": "Male",
+      "_id": "66a24c9cccdad87a58c6428d",
+      "isRegister": true,
+      "role": "User",
+      "pinkMode": false,
+      "fullName": "Jaspreet",
+      "phone": "+14444444444",
+      "email": null,
+      "city": "Hisar",
+      "profilePic": {
+        "key": "usersProfile/0f143420-9e14-404b-8113-a703b646065f-Gurpreet.jpg",
+        "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/0f143420-9e14-404b-8113-a703b646065f-Gurpreet.jpg"
+      },
+      "idPic": {
+        "key": "idPic/11e6324a-1e74-409c-a220-806dd0581226-Gurpreet.jpg",
+        "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/idPic/11e6324a-1e74-409c-a220-806dd0581226-Gurpreet.jpg",
+        "_id": "66a32e4df75f826da1b6d1ea"
+      },
+      "dob": "2024-07-25",
+      "gender": "Female",
       "isDriver": true,
-      "referralCode": "Z8375Z0413",
+      "referralCode": "L8555A1312",
       "profileStatus": true,
       "vehicleStatus": true,
-      "status": "active",
+      "status": "suspended",
+      "rideCancellationDetails": {
+        "count": 2,
+        "cancellationDate": "2024-07-27T11:43:07.435Z",
+        "suspensionDetails": {
+          "cancelPolicy": "Driver Cancellation policy",
+          "dateFrom": "2024-07-27T11:43:07.435Z",
+          "dateTo": "2025-01-27T11:43:07.435Z"
+        }
+      },
       "wallet": 0,
-      "firebaseUid": "n9XvgstaJCShxg2V5AmREneUYOE2",
-      "firebaseSignInProvider": "phone",
-      "createdAt": "2024-02-29T08:12:34.805Z",
-      "updatedAt": "2024-04-09T07:48:46.026Z",
-      "idPic": {
-        "key": "idPic/9808bc03-6648-4835-835b-d8b771b7ea24-1000000034.jpg",
-        "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/idPic/9808bc03-6648-4835-835b-d8b771b7ea24-1000000034.jpg"
-      },
-      "profilePic": {
-        "key": "usersProfile/4af9abdc-f508-415f-88e1-8968bdd90ca8-1000000036.jpg",
-        "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/4af9abdc-f508-415f-88e1-8968bdd90ca8-1000000036.jpg"
-      },
-      "pinkMode": false,
+      "connected_account_id": "acct_1Pl862SDQsFXeYIV",
+      "rating": 0,
+      "totalRides": 0,
+      "isRecurringTripEnabled": false,
       "notificationPreferences": {
         "trip": true,
         "alerts": true,
         "payments": true,
-        "transactions": false,
-        "offers": false
-      }
+        "transactions": true,
+        "offers": true
+      },
+      "firebaseUid": "ZQ5rkqoYWLV5AUctnbkcvu1Z2hb2",
+      "firebaseSignInProvider": "phone",
+      "createdAt": "2024-07-25T13:01:16.092Z",
+      "updatedAt": "2024-08-10T08:30:14.430Z"
     }
   ]
 } 
@@ -300,25 +425,31 @@ class RecurringRidesModelDataRidesDetails {
   String? date;
   int? dayOfWeek;
   String? day;
+  int? totalSeatAvailable;
+  int? seatAvailable;
   List<RecurringRidesModelDataRidesDetailsRidersDetails?>? ridersDetails;
 
   RecurringRidesModelDataRidesDetails({
     this.date,
     this.dayOfWeek,
     this.day,
+    this.totalSeatAvailable,
+    this.seatAvailable,
     this.ridersDetails,
   });
   RecurringRidesModelDataRidesDetails.fromJson(Map<String, dynamic> json) {
     date = json['date']?.toString();
     dayOfWeek = json['dayOfWeek']?.toInt();
     day = json['day']?.toString();
-    if (json['ridersDetails'] != null) {
-      final v = json['ridersDetails'];
-      final arr0 = <RecurringRidesModelDataRidesDetailsRidersDetails>[];
-      v.forEach((v) {
-        arr0.add(RecurringRidesModelDataRidesDetailsRidersDetails.fromJson(v));
-      });
-      ridersDetails = arr0;
+    totalSeatAvailable = json['totalSeatAvailable']?.toInt();
+    seatAvailable = json['seatAvailable']?.toInt();
+  if (json['ridersDetails'] != null) {
+  final v = json['ridersDetails'];
+  final arr0 = <RecurringRidesModelDataRidesDetailsRidersDetails>[];
+  v.forEach((v) {
+  arr0.add(RecurringRidesModelDataRidesDetailsRidersDetails.fromJson(v));
+  });
+    ridersDetails = arr0;
     }
   }
   Map<String, dynamic> toJson() {
@@ -326,12 +457,14 @@ class RecurringRidesModelDataRidesDetails {
     data['date'] = date;
     data['dayOfWeek'] = dayOfWeek;
     data['day'] = day;
+    data['totalSeatAvailable'] = totalSeatAvailable;
+    data['seatAvailable'] = seatAvailable;
     if (ridersDetails != null) {
       final v = ridersDetails;
       final arr0 = [];
-      v!.forEach((v) {
-        arr0.add(v!.toJson());
-      });
+  v!.forEach((v) {
+  arr0.add(v!.toJson());
+  });
       data['ridersDetails'] = arr0;
     }
     return data;
@@ -342,9 +475,9 @@ class RecurringRidesModelDataPreferencesOther {
 /*
 {
   "AppreciatesConversation": true,
-  "EnjoysMusic": true,
-  "SmokeFree": true,
-  "PetFriendly": true,
+  "EnjoysMusic": false,
+  "SmokeFree": false,
+  "PetFriendly": false,
   "WinterTires": false,
   "CoolingOrHeating": false,
   "BabySeat": false,
@@ -401,9 +534,9 @@ class RecurringRidesModelDataPreferences {
   "luggageType": "S",
   "other": {
     "AppreciatesConversation": true,
-    "EnjoysMusic": true,
-    "SmokeFree": true,
-    "PetFriendly": true,
+    "EnjoysMusic": false,
+    "SmokeFree": false,
+    "PetFriendly": false,
     "WinterTires": false,
     "CoolingOrHeating": false,
     "BabySeat": false,
@@ -421,9 +554,7 @@ class RecurringRidesModelDataPreferences {
   });
   RecurringRidesModelDataPreferences.fromJson(Map<String, dynamic> json) {
     luggageType = json['luggageType']?.toString();
-    other = (json['other'] != null)
-        ? RecurringRidesModelDataPreferencesOther.fromJson(json['other'])
-        : null;
+    other = (json['other'] != null) ? RecurringRidesModelDataPreferencesOther.fromJson(json['other']) : null;
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -438,7 +569,7 @@ class RecurringRidesModelDataPreferences {
 class RecurringRidesModelDataRecurringTrip {
 /*
 {
-  "isRecurringTripEnabled": false
+  "isRecurringTripEnabled": true
 } 
 */
 
@@ -460,10 +591,10 @@ class RecurringRidesModelDataRecurringTrip {
 class RecurringRidesModelDataDestination {
 /*
 {
-  "name": "3R7R+C5H, Mumbai",
+  "name": "Oakville, ON, Canada",
   "type": "Point",
   "coordinates": [
-    72.84047029999999
+    -79.6876659
   ]
 } 
 */
@@ -480,13 +611,13 @@ class RecurringRidesModelDataDestination {
   RecurringRidesModelDataDestination.fromJson(Map<String, dynamic> json) {
     name = json['name']?.toString();
     type = json['type']?.toString();
-    if (json['coordinates'] != null) {
-      final v = json['coordinates'];
-      final arr0 = <double>[];
-      v.forEach((v) {
-        arr0.add(v.toDouble());
-      });
-      coordinates = arr0;
+  if (json['coordinates'] != null) {
+  final v = json['coordinates'];
+  final arr0 = <double>[];
+  v.forEach((v) {
+  arr0.add(v.toDouble());
+  });
+    coordinates = arr0;
     }
   }
   Map<String, dynamic> toJson() {
@@ -496,9 +627,9 @@ class RecurringRidesModelDataDestination {
     if (coordinates != null) {
       final v = coordinates;
       final arr0 = [];
-      v!.forEach((v) {
-        arr0.add(v);
-      });
+  v!.forEach((v) {
+  arr0.add(v);
+  });
       data['coordinates'] = arr0;
     }
     return data;
@@ -508,12 +639,13 @@ class RecurringRidesModelDataDestination {
 class RecurringRidesModelDataOrigin {
 /*
 {
-  "name": "3XFX+Q4V, Navi Mumbai",
+  "name": "Brampton, ON, Canada",
   "type": "Point",
   "coordinates": [
-    72.99778409999999
+    -79.7624177
   ],
-  "originDestinationFair": "12.34"
+  "originDestinationFair": "13",
+  "time": ""
 } 
 */
 
@@ -521,25 +653,28 @@ class RecurringRidesModelDataOrigin {
   String? type;
   List<double?>? coordinates;
   String? originDestinationFair;
+  String? time;
 
   RecurringRidesModelDataOrigin({
     this.name,
     this.type,
     this.coordinates,
     this.originDestinationFair,
+    this.time,
   });
   RecurringRidesModelDataOrigin.fromJson(Map<String, dynamic> json) {
     name = json['name']?.toString();
     type = json['type']?.toString();
-    if (json['coordinates'] != null) {
-      final v = json['coordinates'];
-      final arr0 = <double>[];
-      v.forEach((v) {
-        arr0.add(v.toDouble());
-      });
-      coordinates = arr0;
+  if (json['coordinates'] != null) {
+  final v = json['coordinates'];
+  final arr0 = <double>[];
+  v.forEach((v) {
+  arr0.add(v.toDouble());
+  });
+    coordinates = arr0;
     }
     originDestinationFair = json['originDestinationFair']?.toString();
+    time = json['time']?.toString();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -548,12 +683,13 @@ class RecurringRidesModelDataOrigin {
     if (coordinates != null) {
       final v = coordinates;
       final arr0 = [];
-      v!.forEach((v) {
-        arr0.add(v);
-      });
+  v!.forEach((v) {
+  arr0.add(v);
+  });
       data['coordinates'] = arr0;
     }
     data['originDestinationFair'] = originDestinationFair;
+    data['time'] = time;
     return data;
   }
 }
@@ -561,81 +697,100 @@ class RecurringRidesModelDataOrigin {
 class RecurringRidesModelData {
 /*
 {
-  "_id": "661e1936d6fbf5d15c417388",
+  "_id": "66b724528bcd6f2d8787f96e",
   "origin": {
-    "name": "3XFX+Q4V, Navi Mumbai",
+    "name": "Brampton, ON, Canada",
     "type": "Point",
     "coordinates": [
-      72.99778409999999
+      -79.7624177
     ],
-    "originDestinationFair": "12.34"
+    "originDestinationFair": "13",
+    "time": ""
   },
   "destination": {
-    "name": "3R7R+C5H, Mumbai",
+    "name": "Oakville, ON, Canada",
     "type": "Point",
     "coordinates": [
-      72.84047029999999
+      -79.6876659
     ]
   },
   "recurringTrip": {
-    "isRecurringTripEnabled": false
+    "isRecurringTripEnabled": true
   },
-  "date": null,
-  "time": "",
+  "date": "2024-08-10T00:00:00.000Z",
+  "time": "2024-08-10T10:00:00.000Z",
   "preferences": {
     "luggageType": "S",
     "other": {
       "AppreciatesConversation": true,
-      "EnjoysMusic": true,
-      "SmokeFree": true,
-      "PetFriendly": true,
+      "EnjoysMusic": false,
+      "SmokeFree": false,
+      "PetFriendly": false,
       "WinterTires": false,
       "CoolingOrHeating": false,
       "BabySeat": false,
       "HeatedSeats": false
     }
   },
-  "description": "",
+  "description": "test ride",
   "ridesDetails": [
     {
-      "date": "2024-04-22T00:00:00.000Z",
-      "dayOfWeek": 2,
-      "day": "Monday",
+      "date": "2024-08-11T00:00:00.000Z",
+      "dayOfWeek": 1,
+      "day": "Sunday",
+      "totalSeatAvailable": 4,
+      "seatAvailable": 4,
       "ridersDetails": [
         {
-          "_id": "65e03c7246e8a8aa4d62db6c",
-          "fullName": "UserOne",
-          "phone": "+11234512345",
-          "email": "user@test.com",
-          "city": "Mumbai",
-          "dob": "2006-03-05",
-          "gender": "Male",
+          "_id": "66a24c9cccdad87a58c6428d",
+          "isRegister": true,
+          "role": "User",
+          "pinkMode": false,
+          "fullName": "Jaspreet",
+          "phone": "+14444444444",
+          "email": null,
+          "city": "Hisar",
+          "profilePic": {
+            "key": "usersProfile/0f143420-9e14-404b-8113-a703b646065f-Gurpreet.jpg",
+            "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/0f143420-9e14-404b-8113-a703b646065f-Gurpreet.jpg"
+          },
+          "idPic": {
+            "key": "idPic/11e6324a-1e74-409c-a220-806dd0581226-Gurpreet.jpg",
+            "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/idPic/11e6324a-1e74-409c-a220-806dd0581226-Gurpreet.jpg",
+            "_id": "66a32e4df75f826da1b6d1ea"
+          },
+          "dob": "2024-07-25",
+          "gender": "Female",
           "isDriver": true,
-          "referralCode": "Z8375Z0413",
+          "referralCode": "L8555A1312",
           "profileStatus": true,
           "vehicleStatus": true,
-          "status": "active",
+          "status": "suspended",
+          "rideCancellationDetails": {
+            "count": 2,
+            "cancellationDate": "2024-07-27T11:43:07.435Z",
+            "suspensionDetails": {
+              "cancelPolicy": "Driver Cancellation policy",
+              "dateFrom": "2024-07-27T11:43:07.435Z",
+              "dateTo": "2025-01-27T11:43:07.435Z"
+            }
+          },
           "wallet": 0,
-          "firebaseUid": "n9XvgstaJCShxg2V5AmREneUYOE2",
-          "firebaseSignInProvider": "phone",
-          "createdAt": "2024-02-29T08:12:34.805Z",
-          "updatedAt": "2024-04-09T07:48:46.026Z",
-          "idPic": {
-            "key": "idPic/9808bc03-6648-4835-835b-d8b771b7ea24-1000000034.jpg",
-            "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/idPic/9808bc03-6648-4835-835b-d8b771b7ea24-1000000034.jpg"
-          },
-          "profilePic": {
-            "key": "usersProfile/4af9abdc-f508-415f-88e1-8968bdd90ca8-1000000036.jpg",
-            "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/4af9abdc-f508-415f-88e1-8968bdd90ca8-1000000036.jpg"
-          },
-          "pinkMode": false,
+          "connected_account_id": "acct_1Pl862SDQsFXeYIV",
+          "rating": 0,
+          "totalRides": 0,
+          "isRecurringTripEnabled": false,
           "notificationPreferences": {
             "trip": true,
             "alerts": true,
             "payments": true,
-            "transactions": false,
-            "offers": false
-          }
+            "transactions": true,
+            "offers": true
+          },
+          "firebaseUid": "ZQ5rkqoYWLV5AUctnbkcvu1Z2hb2",
+          "firebaseSignInProvider": "phone",
+          "createdAt": "2024-07-25T13:01:16.092Z",
+          "updatedAt": "2024-08-10T08:30:14.430Z"
         }
       ]
     }
@@ -666,28 +821,20 @@ class RecurringRidesModelData {
   });
   RecurringRidesModelData.fromJson(Map<String, dynamic> json) {
     Id = json['_id']?.toString();
-    origin = (json['origin'] != null)
-        ? RecurringRidesModelDataOrigin.fromJson(json['origin'])
-        : null;
-    destination = (json['destination'] != null)
-        ? RecurringRidesModelDataDestination.fromJson(json['destination'])
-        : null;
-    recurringTrip = (json['recurringTrip'] != null)
-        ? RecurringRidesModelDataRecurringTrip.fromJson(json['recurringTrip'])
-        : null;
+    origin = (json['origin'] != null) ? RecurringRidesModelDataOrigin.fromJson(json['origin']) : null;
+    destination = (json['destination'] != null) ? RecurringRidesModelDataDestination.fromJson(json['destination']) : null;
+    recurringTrip = (json['recurringTrip'] != null) ? RecurringRidesModelDataRecurringTrip.fromJson(json['recurringTrip']) : null;
     date = json['date']?.toString();
     time = json['time']?.toString();
-    preferences = (json['preferences'] != null)
-        ? RecurringRidesModelDataPreferences.fromJson(json['preferences'])
-        : null;
+    preferences = (json['preferences'] != null) ? RecurringRidesModelDataPreferences.fromJson(json['preferences']) : null;
     description = json['description']?.toString();
-    if (json['ridesDetails'] != null) {
-      final v = json['ridesDetails'];
-      final arr0 = <RecurringRidesModelDataRidesDetails>[];
-      v.forEach((v) {
-        arr0.add(RecurringRidesModelDataRidesDetails.fromJson(v));
-      });
-      ridesDetails = arr0;
+  if (json['ridesDetails'] != null) {
+  final v = json['ridesDetails'];
+  final arr0 = <RecurringRidesModelDataRidesDetails>[];
+  v.forEach((v) {
+  arr0.add(RecurringRidesModelDataRidesDetails.fromJson(v));
+  });
+    ridesDetails = arr0;
     }
   }
   Map<String, dynamic> toJson() {
@@ -711,9 +858,9 @@ class RecurringRidesModelData {
     if (ridesDetails != null) {
       final v = ridesDetails;
       final arr0 = [];
-      v!.forEach((v) {
-        arr0.add(v!.toJson());
-      });
+  v!.forEach((v) {
+  arr0.add(v!.toJson());
+  });
       data['ridesDetails'] = arr0;
     }
     return data;
@@ -726,81 +873,100 @@ class RecurringRidesModel {
   "status": true,
   "data": [
     {
-      "_id": "661e1936d6fbf5d15c417388",
+      "_id": "66b724528bcd6f2d8787f96e",
       "origin": {
-        "name": "3XFX+Q4V, Navi Mumbai",
+        "name": "Brampton, ON, Canada",
         "type": "Point",
         "coordinates": [
-          72.99778409999999
+          -79.7624177
         ],
-        "originDestinationFair": "12.34"
+        "originDestinationFair": "13",
+        "time": ""
       },
       "destination": {
-        "name": "3R7R+C5H, Mumbai",
+        "name": "Oakville, ON, Canada",
         "type": "Point",
         "coordinates": [
-          72.84047029999999
+          -79.6876659
         ]
       },
       "recurringTrip": {
-        "isRecurringTripEnabled": false
+        "isRecurringTripEnabled": true
       },
-      "date": null,
-      "time": "",
+      "date": "2024-08-10T00:00:00.000Z",
+      "time": "2024-08-10T10:00:00.000Z",
       "preferences": {
         "luggageType": "S",
         "other": {
           "AppreciatesConversation": true,
-          "EnjoysMusic": true,
-          "SmokeFree": true,
-          "PetFriendly": true,
+          "EnjoysMusic": false,
+          "SmokeFree": false,
+          "PetFriendly": false,
           "WinterTires": false,
           "CoolingOrHeating": false,
           "BabySeat": false,
           "HeatedSeats": false
         }
       },
-      "description": "",
+      "description": "test ride",
       "ridesDetails": [
         {
-          "date": "2024-04-22T00:00:00.000Z",
-          "dayOfWeek": 2,
-          "day": "Monday",
+          "date": "2024-08-11T00:00:00.000Z",
+          "dayOfWeek": 1,
+          "day": "Sunday",
+          "totalSeatAvailable": 4,
+          "seatAvailable": 4,
           "ridersDetails": [
             {
-              "_id": "65e03c7246e8a8aa4d62db6c",
-              "fullName": "UserOne",
-              "phone": "+11234512345",
-              "email": "user@test.com",
-              "city": "Mumbai",
-              "dob": "2006-03-05",
-              "gender": "Male",
+              "_id": "66a24c9cccdad87a58c6428d",
+              "isRegister": true,
+              "role": "User",
+              "pinkMode": false,
+              "fullName": "Jaspreet",
+              "phone": "+14444444444",
+              "email": null,
+              "city": "Hisar",
+              "profilePic": {
+                "key": "usersProfile/0f143420-9e14-404b-8113-a703b646065f-Gurpreet.jpg",
+                "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/0f143420-9e14-404b-8113-a703b646065f-Gurpreet.jpg"
+              },
+              "idPic": {
+                "key": "idPic/11e6324a-1e74-409c-a220-806dd0581226-Gurpreet.jpg",
+                "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/idPic/11e6324a-1e74-409c-a220-806dd0581226-Gurpreet.jpg",
+                "_id": "66a32e4df75f826da1b6d1ea"
+              },
+              "dob": "2024-07-25",
+              "gender": "Female",
               "isDriver": true,
-              "referralCode": "Z8375Z0413",
+              "referralCode": "L8555A1312",
               "profileStatus": true,
               "vehicleStatus": true,
-              "status": "active",
+              "status": "suspended",
+              "rideCancellationDetails": {
+                "count": 2,
+                "cancellationDate": "2024-07-27T11:43:07.435Z",
+                "suspensionDetails": {
+                  "cancelPolicy": "Driver Cancellation policy",
+                  "dateFrom": "2024-07-27T11:43:07.435Z",
+                  "dateTo": "2025-01-27T11:43:07.435Z"
+                }
+              },
               "wallet": 0,
-              "firebaseUid": "n9XvgstaJCShxg2V5AmREneUYOE2",
-              "firebaseSignInProvider": "phone",
-              "createdAt": "2024-02-29T08:12:34.805Z",
-              "updatedAt": "2024-04-09T07:48:46.026Z",
-              "idPic": {
-                "key": "idPic/9808bc03-6648-4835-835b-d8b771b7ea24-1000000034.jpg",
-                "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/idPic/9808bc03-6648-4835-835b-d8b771b7ea24-1000000034.jpg"
-              },
-              "profilePic": {
-                "key": "usersProfile/4af9abdc-f508-415f-88e1-8968bdd90ca8-1000000036.jpg",
-                "url": "https://green-pool-bucket.s3.ca-central-1.amazonaws.com/usersProfile/4af9abdc-f508-415f-88e1-8968bdd90ca8-1000000036.jpg"
-              },
-              "pinkMode": false,
+              "connected_account_id": "acct_1Pl862SDQsFXeYIV",
+              "rating": 0,
+              "totalRides": 0,
+              "isRecurringTripEnabled": false,
               "notificationPreferences": {
                 "trip": true,
                 "alerts": true,
                 "payments": true,
-                "transactions": false,
-                "offers": false
-              }
+                "transactions": true,
+                "offers": true
+              },
+              "firebaseUid": "ZQ5rkqoYWLV5AUctnbkcvu1Z2hb2",
+              "firebaseSignInProvider": "phone",
+              "createdAt": "2024-07-25T13:01:16.092Z",
+              "updatedAt": "2024-08-10T08:30:14.430Z"
             }
           ]
         }
@@ -822,13 +988,13 @@ class RecurringRidesModel {
   });
   RecurringRidesModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
-    if (json['data'] != null) {
-      final v = json['data'];
-      final arr0 = <RecurringRidesModelData>[];
-      v.forEach((v) {
-        arr0.add(RecurringRidesModelData.fromJson(v));
-      });
-      this.data = arr0;
+  if (json['data'] != null) {
+  final v = json['data'];
+  final arr0 = <RecurringRidesModelData>[];
+  v.forEach((v) {
+  arr0.add(RecurringRidesModelData.fromJson(v));
+  });
+    this.data = arr0;
     }
     message = json['message']?.toString();
   }
@@ -838,9 +1004,9 @@ class RecurringRidesModel {
     if (this.data != null) {
       final v = this.data;
       final arr0 = [];
-      v!.forEach((v) {
-        arr0.add(v!.toJson());
-      });
+  v!.forEach((v) {
+  arr0.add(v!.toJson());
+  });
       data['data'] = arr0;
     }
     data['message'] = message;

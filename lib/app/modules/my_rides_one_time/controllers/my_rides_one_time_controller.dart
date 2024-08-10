@@ -39,6 +39,7 @@ class MyRidesOneTimeController extends GetxController {
       isLoad.value = true;
       final response = await APIManager.getAllMyRides();
       final mData = MyRidesModel.fromJson(response.data);
+      await allRecurringRidesAPI();
       myRidesModelData.value = mData.data!
           .where((element) => !(element.isCancelled ?? false))
           .toList();
@@ -46,13 +47,9 @@ class MyRidesOneTimeController extends GetxController {
           myRidesModelData.where((item) => (item.driverId != null)).toList();
       riderRides.value =
           myRidesModelData.where((item) => (item.riderId != null)).toList();
-      await allRecurringRidesAPI();
     } catch (e) {
       debugPrint(e.toString());
     }
-    // if (isRecurring) {
-    //   await allRecurringRidesAPI();
-    // }
     isLoad.value = false;
   }
 
@@ -118,27 +115,27 @@ class MyRidesOneTimeController extends GetxController {
       if (myRidesModelData.rideStatus == "Confirmed") {
         Get.toNamed(Routes.RIDER_CONFIRMED_RIDE_DETAILS,
                 arguments: myRidesModelData)
-            ?.then((v) => myRidesAPI);
+            ?.then((v) => myRidesAPI());
       } else {
         Get.toNamed(Routes.RIDER_MY_RIDE_REQUEST,
                 arguments: myRidesModelData.Id)
-            ?.then((v) => myRidesAPI);
+            ?.then((v) => myRidesAPI());
       }
     } else {
       if (myRidesModelData.confirmDriverDetails?.first?.driverPostsDetails
               ?.first?.isStarted ??
           false) {
         Get.toNamed(Routes.RIDER_START_RIDE_MAP, arguments: myRidesModelData)
-            ?.then((v) => myRidesAPI);
+            ?.then((v) => myRidesAPI());
       } else {
         if (myRidesModelData.rideStatus == "Confirmed") {
           Get.toNamed(Routes.RIDER_CONFIRMED_RIDE_DETAILS,
                   arguments: myRidesModelData)
-              ?.then((v) => myRidesAPI);
+              ?.then((v) => myRidesAPI());
         } else {
           Get.toNamed(Routes.RIDER_MY_RIDE_REQUEST,
                   arguments: myRidesModelData.Id)
-              ?.then((v) => myRidesAPI);
+              ?.then((v) => myRidesAPI());
         }
       }
     }
@@ -147,12 +144,12 @@ class MyRidesOneTimeController extends GetxController {
   Future<void> startRide(MyRidesModelData value) async {
     if (value.postsInfo?.isEmpty ?? false) {
       // openMyRideDetail(value);
-      moveToRequests(value).then((v) => myRidesAPI);
+      moveToRequests(value).then((v) => myRidesAPI());
     } else {
       if (value.postsInfo!.isNotEmpty) {
         Get.toNamed(Routes.START_RIDE,
                 arguments: value.postsInfo?[0]?.driverRideId)
-            ?.then((v) => myRidesAPI);
+            ?.then((v) => myRidesAPI());
       } else {
         showMySnackbar(msg: "You have no riders at the moment");
       }
@@ -227,7 +224,7 @@ class MyRidesOneTimeController extends GetxController {
                 driverRidId: value?.Id ?? "",
                 // riderRidId: myRidesModelData.value.riderRideId ?? ""
                 riderRidId: ""))
-        ?.then((v) => myRidesAPI);
+        ?.then((v) => myRidesAPI());
   }
 
   void deleteRecurringride(String id) {

@@ -134,7 +134,7 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                                         ?.riderBookingDetails
                                         ?.length ??
                                     0) *
-                                135.kh),
+                                140.kh),
                             child: ListView.builder(
                                 itemCount: controller
                                         .myRidesModelData
