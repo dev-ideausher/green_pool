@@ -229,46 +229,53 @@ class RiderMyRidesConfirmDetailsView
               Strings.coPassengers,
               style: TextStyleUtil.k14Bold(),
             ).paddingOnly(bottom: 16.kh),
-            (controller.riderConfirmRequestModel?.driverRideDetails?.riders
-                            ?.length ??
-                        0) ==
-                    0
-                ? Center(
-                    child: Text(
-                      Strings.noPassengersAvailable,
-                      style: TextStyleUtil.k14Semibold(),
-                    ),
-                  ).paddingOnly(bottom: 16.kh)
-                : SizedBox(
-                    height: 76.kh,
-                    child: ListView.builder(
-                        itemCount: controller.riderConfirmRequestModel
-                                .driverRideDetails?.riders?.length ??
-                            6,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index1) {
-                          return Column(
-                            children: [
-                              Container(
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                ),
-                                child: ClipOval(
-                                    child: SizedBox.fromSize(
-                                        size: Size.fromRadius(20.kh),
-                                        child: CommonImageView(
-                                            url:
-                                                "${controller.riderConfirmRequestModel.driverRideDetails?.riders?[index1]?.profilePic?.url}"))),
-                              ).paddingOnly(bottom: 4.kh),
-                              Text(
-                                "${controller.riderConfirmRequestModel.driverRideDetails?.riders?[index1]?.fullName.toString().split(" ").first}",
-                                style: TextStyleUtil.k12Semibold(),
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
-                          ).paddingOnly(right: 32.kw);
-                        }),
-                  ),
+            SizedBox(
+              height: 76.kh,
+              child: ListView.builder(
+                itemCount: ((controller.riderConfirmRequestModel
+                            .driverRideDetails?.riders?.length ??
+                        0) +
+                    (controller.riderConfirmRequestModel.driverRideDetails
+                            ?.seatAvailable ??
+                        0)),
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, passengerIndex) {
+                  int ridersCount = controller.riderConfirmRequestModel
+                          .driverRideDetails?.riders?.length ??
+                      0;
+                  bool isRider = passengerIndex < ridersCount;
+
+                  return Column(
+                    children: [
+                      Container(
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                        ),
+                        child: ClipOval(
+                          child: SizedBox.fromSize(
+                            size: Size.fromRadius(20.kh),
+                            child: isRider
+                                ? CommonImageView(
+                                    url:
+                                        "${controller.riderConfirmRequestModel.driverRideDetails?.riders?[passengerIndex]?.profilePic?.url}")
+                                : CommonImageView(
+                                    imagePath: ImageConstant.pngEmptyPassenger,
+                                  ),
+                          ),
+                        ),
+                      ).paddingOnly(bottom: 4.kh),
+                      Text(
+                        isRider
+                            ? "${controller.riderConfirmRequestModel.driverRideDetails?.riders?[passengerIndex]?.fullName.toString().split(" ").first}"
+                            : "Empty Seat",
+                        style: TextStyleUtil.k12Semibold(),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ).paddingOnly(right: 18.kw);
+                },
+              ),
+            ),
 
             const GreenPoolDivider().paddingOnly(bottom: 16.kh),
 

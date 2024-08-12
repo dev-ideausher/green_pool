@@ -251,22 +251,6 @@ class GpUtil {
     }
   }
 
-  // static String getEdMyAtHM({String? dateTime}) {
-  //   var outputDate = "";
-  //   if (dateTime != null) {
-  //     try {
-  //       var datetime = DateTime.parse(dateTime);
-  //       var localDate = datetime.toLocal();
-
-  //       var outputFormat = DateFormat('dd MMM yyyy');
-  //       outputDate = outputFormat.format(localDate);
-  //     } catch (e) {
-  //       debugPrint(e.toString());
-  //     }
-  //   }
-  //   return outputDate;
-  // }
-
   static bool isToday(DateTime timestamp) {
     final dateToCheck = timestamp.toLocal();
     DateTime now = DateTime.now();

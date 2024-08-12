@@ -120,24 +120,26 @@ class EmergencyContactsController extends GetxController {
         final res = await APIManager.emergencyContactsUpdate(
             body: emergencyModelUpdate.toJson());
         Get.find<HomeController>().userInfoAPI();
-        // Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
-        Get.until((route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
+        Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
+        // Get.until((route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
         showMySnackbar(msg: "Emergency contact updated");
       }
       await APIManager.postEmergencyDetails(body: emergencyModel.toJson());
       if (isProfileSetup) {
         if (isUser) {
           if (fromNavBar) {
+            Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
             Get.find<HomeController>().userInfoAPI();
-            Get.until((route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
+            // Get.until((route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
             showMySnackbar(msg: "Emergency contact updated");
           } else {
             Get.until((route) => Get.currentRoute == Routes.FIND_RIDE);
           }
         } else {
           if (fromNavBar) {
+            Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
             Get.find<HomeController>().userInfoAPI();
-            Get.until((route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
+            // Get.until((route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
             showMySnackbar(msg: "Emergency contact updated");
           } else {
             Get.offNamed(Routes.POST_RIDE_STEP_TWO,

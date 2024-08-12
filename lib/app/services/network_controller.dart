@@ -1,7 +1,10 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
+import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/storage.dart';
+import 'package:green_pool/app/services/text_style_util.dart';
 
 import '../routes/app_pages.dart';
 
@@ -46,8 +49,8 @@ class NetworkController extends GetxController {
       showCupertinoDialog<bool>(
         context: Get.context!,
         builder: (context) => CupertinoAlertDialog(
-          title: Text("Sorry"),
-          content: Text("Check your internet connection and try again."),
+          title: const Text("Sorry"),
+          content: const Text("Check your internet connection and try again."),
           actions: _buildDialogActions(),
         ),
       );
@@ -63,27 +66,31 @@ class NetworkController extends GetxController {
 
   Widget _buildCancelButton() {
     return CupertinoButton(
+      onPressed: () => Get.back(),
       child: Text(
         "Cancel",
         textAlign: TextAlign.center,
+        style: TextStyleUtil.k14Regular(),
       ),
-      onPressed: () => Get.back(),
     );
   }
 
   Widget _buildRetryButton() {
     return CupertinoButton(
-      child: Text(
-        "Retry",
-        textAlign: TextAlign.center,
-      ),
-      onPressed: () {
+      onPressed: () async {
         if (Get.find<GetStorageService>().isLoggedIn) {
           Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
+          await Future.delayed(const Duration(seconds: 1))
+              .then((value) => Get.find<HomeController>().changeTabIndex(0));
         } else {
           Get.back();
         }
       },
+      child: Text(
+        "Retry",
+        textAlign: TextAlign.center,
+        style: TextStyleUtil.k14Regular(),
+      ),
     );
   }
 

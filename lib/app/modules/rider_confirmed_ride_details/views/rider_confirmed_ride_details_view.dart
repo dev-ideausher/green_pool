@@ -249,51 +249,63 @@ class RiderConfirmedRideDetailsView
               Strings.coPassengers,
               style: TextStyleUtil.k14Bold(),
             ).paddingOnly(bottom: 16.kh),
-            (controller.myRidesModel.value.confirmDriverDetails?[0]
-                            ?.driverPostsDetails?[0]?.ridersDetails!.length ??
-                        0) ==
-                    0
-                ? Center(
-                    child: Text(
-                      Strings.noPassengersAvailable,
-                      style: TextStyleUtil.k14Semibold(),
-                    ),
-                  ).paddingOnly(bottom: 16.kh)
-                : SizedBox(
-                    height: 76.kh,
-                    child: ListView.builder(
-                        itemCount: controller
-                                .myRidesModel
-                                .value
-                                .confirmDriverDetails?[0]
-                                ?.driverPostsDetails?[0]
-                                ?.ridersDetails
-                                ?.length ??
-                            6,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index) {
-                          return Column(
-                            children: [
-                              Container(
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                ),
-                                child: ClipOval(
-                                    child: SizedBox.fromSize(
-                                        size: Size.fromRadius(20.kh),
-                                        child: CommonImageView(
-                                            url:
-                                                "${controller.myRidesModel.value.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.ridersDetails?[index]?.profilePic?.url}"))),
-                              ).paddingOnly(bottom: 4.kh),
-                              Text(
-                                "${controller.myRidesModel.value.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.ridersDetails?[index]?.fullName.toString().split(" ").first}",
-                                style: TextStyleUtil.k12Semibold(),
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
-                          ).paddingOnly(right: 32.kw);
-                        }),
-                  ),
+            SizedBox(
+              height: 76.kh,
+              child: ListView.builder(
+                itemCount: ((controller
+                            .myRidesModel
+                            .value
+                            .confirmDriverDetails?[0]
+                            ?.driverPostsDetails?[0]
+                            ?.ridersDetails
+                            ?.length ??
+                        0) +
+                    (controller.myRidesModel.value.confirmDriverDetails?[0]
+                            ?.driverPostsDetails?[0]?.seatAvailable ??
+                        0)),
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, passengerIndex) {
+                  int ridersCount = controller
+                          .myRidesModel
+                          .value
+                          .confirmDriverDetails?[0]
+                          ?.driverPostsDetails?[0]
+                          ?.ridersDetails
+                          ?.length ??
+                      0;
+                  bool isRider = passengerIndex < ridersCount;
+
+                  return Column(
+                    children: [
+                      Container(
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                        ),
+                        child: ClipOval(
+                          child: SizedBox.fromSize(
+                            size: Size.fromRadius(20.kh),
+                            child: isRider
+                                ? CommonImageView(
+                                    url:
+                                        "${controller.myRidesModel.value.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.ridersDetails?[passengerIndex]?.profilePic?.url}")
+                                : CommonImageView(
+                                    imagePath: ImageConstant.pngEmptyPassenger,
+                                  ),
+                          ),
+                        ),
+                      ).paddingOnly(bottom: 4.kh),
+                      Text(
+                        isRider
+                            ? "${controller.myRidesModel.value.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.ridersDetails?[passengerIndex]?.fullName.toString().split(" ").first}"
+                            : "Empty Seat",
+                        style: TextStyleUtil.k12Semibold(),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ).paddingOnly(right: 18.kw);
+                },
+              ),
+            ),
             const GreenPoolDivider().paddingOnly(bottom: 16.kh),
 
             Text(
@@ -471,7 +483,7 @@ class RiderConfirmedRideDetailsView
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
 
-            const GreenPoolDivider().paddingOnly(top: 8.kh),
+            const GreenPoolDivider().paddingOnly(top: 8.kh, bottom: 16.kh),
             Text(
               Strings.description,
               style: TextStyleUtil.k14Semibold(),

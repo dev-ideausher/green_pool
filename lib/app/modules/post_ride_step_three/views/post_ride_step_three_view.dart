@@ -260,6 +260,7 @@ class PostRideStepThreeView extends GetView<PostRideStepThreeController> {
                     GreenPoolTextField(
                       hintText: 'Enter text here',
                       controller: controller.descriptionTextController,
+                      textCapitalization: TextCapitalization.sentences,
                       onchanged: (value) {
                         controller.postRideModel.value.ridesDetails
                             ?.description = value;

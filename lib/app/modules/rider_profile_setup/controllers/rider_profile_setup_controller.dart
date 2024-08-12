@@ -23,6 +23,7 @@ import 'city_list.dart';
 
 class RiderProfileSetupController extends GetxController {
   RxBool isPicked = false.obs;
+  RxBool isBtnLoading = false.obs;
   bool fromNavBar = false;
   bool readOnlyEmail = false;
   RxList<String> cityNames = <String>[].obs;
@@ -45,6 +46,9 @@ class RiderProfileSetupController extends GetxController {
           .split("+1")
           .last);
   TextEditingController gender = TextEditingController();
+  RxBool isGenderListExpanded = false.obs;
+  RxList<String> genderList =
+      <String>["Male", "Female", "Prefer not to say"].obs;
 
   TextEditingController dateOfBirth = TextEditingController();
   TextEditingController formattedDateOfBirth = TextEditingController();
@@ -154,6 +158,7 @@ class RiderProfileSetupController extends GetxController {
 
   //
   Future<void> userDetailsAPI() async {
+    isBtnLoading.value = true;
     final storageService = Get.find<GetStorageService>();
     final File pickedImageFile = File(selectedProfileImagePath.value!.path);
     final File pickedIDFile = File(selectedIDImagePath.value!.path);
@@ -190,16 +195,18 @@ class RiderProfileSetupController extends GetxController {
 
     try {
       await APIManager.postWelcomeEmail(emailId: {"email": email.text});
-      final response = await APIManager.userDetails(body: userData);      
-        storageService.setUserName = fullName.text;
-        storageService.isLoggedIn = true;
-        storageService.profileStatus = true;
-        Get.offNamed(Routes.EMERGENCY_CONTACTS,
-            arguments: {'fromNavBar': fromNavBar, 'isDriver': false},
-            parameters: {"profileType": "user"});
-        showMySnackbar(msg: "Data saved succesfully.");
-        Get.find<HomeController>().userInfoAPI();     
+      final response = await APIManager.userDetails(body: userData);
+      storageService.setUserName = fullName.text;
+      storageService.isLoggedIn = true;
+      storageService.profileStatus = true;
+      Get.offNamed(Routes.EMERGENCY_CONTACTS,
+          arguments: {'fromNavBar': fromNavBar, 'isDriver': false},
+          parameters: {"profileType": "user"});
+      showMySnackbar(msg: "Data saved succesfully.");
+      isBtnLoading.value = false;
+      Get.find<HomeController>().userInfoAPI();
     } catch (e) {
+      isBtnLoading.value = false;
       throw Exception(e);
     }
   }
@@ -243,15 +250,15 @@ class RiderProfileSetupController extends GetxController {
     return null; // Return null if the value is valid
   }
 
-  String? validateGender(Object? value) {
-    if (value == null) {
+  String? validateGender(String? value) {
+    if (value == null || value.isEmpty) {
       return 'Please select your gender';
     }
     return null;
   }
 
-  String? validateCity(Object? value) {
-    if (value == null) {
+  String? validateCity(String? value) {
+    if (value == null || value.isEmpty) {
       return 'Please select your city';
     }
     return null;

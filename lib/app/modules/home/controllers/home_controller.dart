@@ -9,6 +9,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:green_pool/app/modules/home/views/noti_bottomsheet.dart';
 import 'package:green_pool/app/modules/home/views/permissions_location.dart';
 import 'package:green_pool/app/res/strings.dart';
+import 'package:green_pool/app/services/dialog_helper.dart';
 import 'package:green_pool/app/services/location_service.dart';
 import 'package:green_pool/app/services/push_notification_service.dart';
 import 'package:green_pool/app/services/storage.dart';
@@ -183,10 +184,21 @@ class HomeController extends GetxController {
   }
 
   onTapBottomNavigation(index) {
-    if (Get.find<GetStorageService>().isLoggedIn) {
-      if (Get.find<GetStorageService>().profileStatus) {
-        changeTabIndex(index);
-        userInfo.refresh();
+    final storageService = Get.find<GetStorageService>();
+
+    if (storageService.isLoggedIn) {
+      if (storageService.profileStatus) {
+        final userStatus = userInfo.value.data?.status;
+        if (userStatus == "suspended" && (index == 1 || index == 2)) {
+          DialogHelper.accSuspendedDialog(() {
+            Get.back();
+            changeTabIndex(3);
+            Get.toNamed(Routes.HELP_SUPPORT);
+          });
+        } else {
+          changeTabIndex(index);
+          userInfo.refresh();
+        }
       } else {
         if (index != 0) {
           Get.toNamed(Routes.RIDER_PROFILE_SETUP,
@@ -197,7 +209,7 @@ class HomeController extends GetxController {
     } else {
       if (index != 0) {
         print(
-            "GET STORAGE IS LOGGED IN: ${Get.find<GetStorageService>().isLoggedIn.toString()}");
+            "GET STORAGE IS LOGGED IN: ${storageService.isLoggedIn.toString()}");
         Get.toNamed(Routes.LOGIN,
             arguments: {'isDriver': false, 'fromNavBar': true});
       }

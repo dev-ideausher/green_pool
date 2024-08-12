@@ -21,6 +21,7 @@ class VehicleSetupController extends GetxController {
 
   // TextEditingController color = TextEditingController();
   // TextEditingController type = TextEditingController();
+  RxBool isVehicleBtnLoading = false.obs;
   RxBool isVehicleImagePicked = false.obs;
   RxBool vehicleImageNotUploaded = false.obs;
   RxString color = "Silver".obs;
@@ -101,11 +102,13 @@ class VehicleSetupController extends GetxController {
       )
     });
     try {
+      isVehicleBtnLoading.value = true;
       final res = await APIManager.postVehicleDetails(body: vehicleData);
       if (res.data["status"]) {
         showMySnackbar(msg: "Data filled successfully");
         Get.find<GetStorageService>().setDriver = true;
         Get.find<HomeController>().userInfoAPI();
+        isVehicleBtnLoading.value = false;
         Get.offNamed(Routes.POST_RIDE_STEP_TWO, arguments: postRideModel.value);
       } else {
         showMySnackbar(msg: res.data["message"].toString());

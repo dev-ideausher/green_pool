@@ -238,18 +238,52 @@ class RiderMyRidesSendDetailsView
               Strings.coPassengers,
               style: TextStyleUtil.k14Bold(),
             ).paddingOnly(bottom: 16.kh),
-            (controller.riderSendRequestModelData.ridersDetatils?.length ??
-                        0) ==
-                    0
-                ? Center(
-                    child: Text(
-                      Strings.noPassengersAvailable,
-                      style: TextStyleUtil.k14Semibold(),
-                    ),
-                  ).paddingOnly(bottom: 16.kh)
-                : SizedBox(
-                    height: 76.kh,
-                    child: ListView.builder(
+            SizedBox(
+              height: 76.kh,
+              child: ListView.builder(
+                itemCount: ((controller
+                            .riderSendRequestModelData.ridersDetatils?.length ??
+                        0) +
+                    (controller.riderSendRequestModelData.seatAvailable ?? 0)),
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, passengerIndex) {
+                  int ridersCount = controller
+                          .riderSendRequestModelData.ridersDetatils?.length ??
+                      0;
+                  bool isRider = passengerIndex < ridersCount;
+
+                  return Column(
+                    children: [
+                      Container(
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                        ),
+                        child: ClipOval(
+                          child: SizedBox.fromSize(
+                            size: Size.fromRadius(20.kh),
+                            child: isRider
+                                ? CommonImageView(
+                                    url:
+                                        "${controller.riderSendRequestModelData.ridersDetatils?[passengerIndex]?.profilePic?.url}")
+                                : CommonImageView(
+                                    imagePath: ImageConstant.pngEmptyPassenger,
+                                  ),
+                          ),
+                        ),
+                      ).paddingOnly(bottom: 4.kh),
+                      Text(
+                        isRider
+                            ? "${controller.riderSendRequestModelData.ridersDetatils?[passengerIndex]?.fullName.toString().split(" ").first}"
+                            : "Empty Seat",
+                        style: TextStyleUtil.k12Semibold(),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ).paddingOnly(right: 18.kw);
+                },
+              ),
+
+              /*ListView.builder(
                         itemCount: controller.riderSendRequestModelData
                                 .ridersDetatils?.length ??
                             6,
@@ -275,8 +309,8 @@ class RiderMyRidesSendDetailsView
                               ),
                             ],
                           ).paddingOnly(right: 32.kw);
-                        }),
-                  ),
+                        }),*/
+            ),
 
             const GreenPoolDivider().paddingOnly(bottom: 16.kh),
 

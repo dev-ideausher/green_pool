@@ -110,7 +110,7 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                       ],
                     ).paddingOnly(bottom: 16.kh),
 
-                    //co passengers
+                    //co passengers drivers view
                     Text(
                       Strings.coPassengers,
                       style: TextStyleUtil.k14Bold(),

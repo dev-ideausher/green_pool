@@ -13,6 +13,7 @@ class ChatWithExpertsController extends GetxController {
   final TextEditingController eMsg = TextEditingController();
   final RxBool isLoad = true.obs;
   final RxBool isChatStarted = false.obs;
+  final RxBool isBtnActive = false.obs;
 
   @override
   void onInit() {

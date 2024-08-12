@@ -11,7 +11,6 @@ import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../../components/dropdown_textfield.dart';
 import '../../../components/upload_add_picture.dart';
 import '../../../components/richtext_heading.dart';
 import '../controllers/profile_setup_controller.dart';
@@ -117,40 +116,60 @@ class SetupUser extends GetView<ProfileSetupController> {
               readOnly: !controller.readOnlyEmail,
             ).paddingOnly(bottom: 16.kh),
             const RichTextHeading(text: 'Gender').paddingOnly(bottom: 8.kh),
-            GreenPoolDropDown(
-              hintText: 'Select your Gender',
-              items: [
-                DropdownMenuItem(
-                    value: "Male",
-                    child: Text(
-                      "Male",
-                      style: TextStyleUtil.k14Regular(),
-                    )),
-                DropdownMenuItem(
-                    value: "Female",
-                    child: Text(
-                      "Female",
-                      style: TextStyleUtil.k14Regular(),
-                    )),
-                DropdownMenuItem(
-                    value: "Prefer not to say",
-                    child: Text(
-                      "Prefer not to say",
-                      style: TextStyleUtil.k14Regular(),
-                    )),
-              ],
-              onChanged: (value) {
-                controller.gender.text = value.toString();
-              },
-              validator: (value) => controller.validateGender(value),
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-            ).paddingOnly(bottom: 16.kh),
+            Obx(
+              () => GreenPoolTextField(
+                hintText: "Select your Gender",
+                controller: controller.gender,
+                validator: (value) => controller.validateGender(value),
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                readOnly: true,
+                suffix: controller.isGenderListExpanded.value
+                    ? const Icon(Icons.arrow_drop_up)
+                    : const Icon(Icons.arrow_drop_down),
+                // onPressedSuffix: () {
+                //   controller.isGenderListExpanded.toggle();
+                // },
+                onTap: () {
+                  controller.isGenderListExpanded.toggle();
+                },
+              ).paddingOnly(
+                  bottom: controller.isGenderListExpanded.value ? 4.kh : 16.kh),
+            ),
+            Obx(
+              () => Visibility(
+                visible: controller.isGenderListExpanded.value,
+                child: SizedBox(
+                  height: 120.kh,
+                  child: ListView.builder(
+                      itemCount: 3,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          decoration: BoxDecoration(
+                              border: Border(
+                                  bottom: BorderSide(
+                                      width: 1.kh, color: ColorUtil.kNeutral7)),
+                              borderRadius: BorderRadius.circular(8.kh)),
+                          child: ListTile(
+                            title: Text(controller.genderList[index]),
+                            onTap: () {
+                              controller.gender.text =
+                                  controller.genderList[index];
+                              controller.isGenderListExpanded.value = false;
+                            },
+                          ),
+                        );
+                      }),
+                ).paddingOnly(bottom: 16.kh),
+              ),
+            ),
             const RichTextHeading(text: 'City Province')
                 .paddingOnly(bottom: 8.kh),
             Obx(
               () => GreenPoolTextField(
                 hintText: "Select your City",
                 controller: controller.city,
+                validator: (value) => controller.validateCity(value),
+                autovalidateMode: AutovalidateMode.onUserInteraction,
                 suffix: controller.isCityListExpanded.value
                     ? const Icon(Icons.arrow_drop_up)
                     : const Icon(Icons.arrow_drop_down),
@@ -192,24 +211,6 @@ class SetupUser extends GetView<ProfileSetupController> {
                 ).paddingOnly(bottom: 16.kh),
               ),
             ),
-            /*GreenPoolDropDown(
-              hintText: 'Select your City',
-              // value: controller.selectedCity.value,
-              items: CityList.cityNames
-                  .map((e) => DropdownMenuItem<Object>(
-                        value: e,
-                        child: Text(
-                          e,
-                          style: TextStyleUtil.k14Regular(),
-                        ),
-                      ))
-                  .toList(),
-              onChanged: (value) {
-                controller.selectedCity.value = value.toString();
-              },
-              validator: (value) => controller.validateCity(value),
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-            ).paddingOnly(bottom: 16.kh),*/
             Text.rich(
               TextSpan(
                 children: [
@@ -255,9 +256,11 @@ class SetupUser extends GetView<ProfileSetupController> {
                   padding:
                       EdgeInsets.symmetric(vertical: 68.kh, horizontal: 76.kw),
                   decoration: BoxDecoration(
-                      border: controller.imageNotUploaded.value
-                          ? Border.all(color: ColorUtil.kError2)
-                          : null,
+                      border: controller.isIDPicked.value
+                          ? null
+                          : controller.imageNotUploaded.value
+                              ? Border.all(color: ColorUtil.kError2)
+                              : null,
                       color: ColorUtil.kGreyColor,
                       borderRadius: BorderRadius.circular(8.kh)),
                   child: controller.isIDPicked.value

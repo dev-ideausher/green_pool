@@ -218,22 +218,24 @@ class ChatWithExpertsView extends GetView<ChatWithExpertsController> {
                       },
                     ),
                   ),
-                  GreenPoolTextField(
-                    controller: controller.eMsg,
-                    hintText: Strings.writeMsg,
-                    readOnly: !controller.isChatStarted.value,
-                    keyboardType: TextInputType.text,
-                    textCapitalization: TextCapitalization.words,
-                    suffix: InkWell(
-                        onTap: controller.eMsg.text.isNotEmpty
-                            ? () {
-                                controller.sendMsg();
-                              }
-                            : () {
-                                debugPrint("btn not active");
-                              },
-                        child: SvgPicture.asset(ImageConstant.svgIconSend)),
-                  ).paddingOnly(bottom: 40.kh, top: 5.kh)
+                  Obx(
+                    () => GreenPoolTextField(
+                      controller: controller.eMsg,
+                      hintText: Strings.writeMsg,
+                      readOnly: !controller.isChatStarted.value,
+                      keyboardType: TextInputType.text,
+                      textCapitalization: TextCapitalization.words,
+                      suffix: InkWell(
+                          onTap: controller.isBtnActive.value
+                              ? () {
+                                  controller.sendMsg();
+                                }
+                              : () {
+                                  debugPrint("btn not active");
+                                },
+                          child: SvgPicture.asset(ImageConstant.svgIconSend)),
+                    ).paddingOnly(bottom: 40.kh, top: 5.kh),
+                  )
                 ],
               ).paddingSymmetric(horizontal: 16.kw),
       ),
@@ -257,6 +259,7 @@ class SuggestionsChip extends StatelessWidget {
           ? () {}
           : () {
               controller.eMsg.text = topic;
+              controller.isBtnActive.value = true;
             },
       child: IntrinsicWidth(
         child: Container(

@@ -22,7 +22,35 @@ import '../../../services/gp_util.dart';
 class ProfileSetupController extends GetxController
     with GetSingleTickerProviderStateMixin {
   bool fromNavBar = false;
+  bool userDetailsFilled = false;
   RxBool isCityListExpanded = false.obs;
+  RxBool isVehicleBtnLoading = false.obs;
+  RxBool isGenderListExpanded = false.obs;
+  RxList<String> genderList =
+      <String>["Male", "Female", "Prefer not to say"].obs;
+  RxBool isTypeListExpanded = false.obs;
+  RxList<String> typeList = <String>[
+    "Hatchback",
+    "Coupe",
+    "Convertible",
+    "Sedan",
+    "SUV",
+    "Truck",
+    "Van"
+  ].obs;
+  RxBool isColorListExpanded = false.obs;
+  RxList<String> colorList = <String>[
+    "Silver",
+    "Black",
+    "White",
+    "Dark Grey",
+    "Light Grey",
+    "Red",
+    "Blue",
+    "Light Blue",
+    "Dark Blue",
+    "Brown"
+  ].obs;
   RxList<String> cityNames = <String>[].obs;
   final debouncer = Debouncer(delay: const Duration(milliseconds: 50));
   final pageIndex = 0.obs;
@@ -54,12 +82,10 @@ class ProfileSetupController extends GetxController
   //for vehicle
   Rx<File?> selectedVehicleImagePath = Rx<File?>(null);
   TextEditingController model = TextEditingController();
-  // TextEditingController color = TextEditingController();
-  // TextEditingController type = TextEditingController();
+  TextEditingController color = TextEditingController();
+  TextEditingController type = TextEditingController();
   RxBool isVehicleImagePicked = false.obs;
   RxBool vehicleImageNotUploaded = false.obs;
-  RxString color = "Silver".obs;
-  RxString type = "Sedan".obs;
   TextEditingController year = TextEditingController();
   TextEditingController licencePlate = TextEditingController();
 
@@ -100,28 +126,21 @@ class ProfileSetupController extends GetxController
       initialDate: initialDate,
       builder: (BuildContext context, Widget? child) {
         return Theme(
-          // Define the custom theme for the date picker
           data: ThemeData(
-            // Define the primary color
             primaryColor: Get.find<HomeController>().isPinkModeOn.value
                 ? ColorUtil.kPrimaryPinkMode
                 : ColorUtil.kPrimary01,
-            // Define the color scheme for the date picker
             colorScheme: ColorScheme.light(
-              // Define the primary color for the date picker
               primary: Get.find<HomeController>().isPinkModeOn.value
                   ? ColorUtil.kPrimaryPinkMode
                   : ColorUtil.kPrimary01,
-              // Define the background color for the date picker
               surface: ColorUtil.kWhiteColor,
-              // Define the on-primary color for the date picker
               onPrimary: ColorUtil.kBlack01,
               secondary: Get.find<HomeController>().isPinkModeOn.value
                   ? ColorUtil.kPrimaryPinkMode
                   : ColorUtil.kPrimary01,
             ),
           ),
-          // Apply the custom theme to the child widget
           child: child!,
         );
       },
@@ -215,13 +234,15 @@ class ProfileSetupController extends GetxController
       ),
     });
     try {
+      isVehicleBtnLoading.value = true;
       final response = await APIManager.userDetails(body: userData);
-      showMySnackbar(msg: response.data['message']);
+      // showMySnackbar(msg: response.data['message']);
       storageService.setUserName = fullName.text;
       storageService.emailId = email.text;
       storageService.profileStatus = true;
-      tabBarController.index = 1;
+      await vehicleDetailsAPI();
     } catch (e) {
+      isVehicleBtnLoading.value = false;
       throw Exception(e);
     }
   }
@@ -267,11 +288,14 @@ class ProfileSetupController extends GetxController
         }, parameters: {
           "profileType": "driver"
         });
+        isVehicleBtnLoading.value = false;
         homeController.userInfoAPI();
       } catch (e) {
+        isVehicleBtnLoading.value = false;
         throw Exception(e);
       }
     } else {
+      isVehicleBtnLoading.value = false;
       showMySnackbar(msg: 'Please fill in user details');
     }
   }
@@ -315,15 +339,15 @@ class ProfileSetupController extends GetxController
     return null; // Return null if the value is valid
   }
 
-  String? validateGender(Object? value) {
-    if (value == null) {
+  String? validateGender(String? value) {
+    if (value == null || value.isEmpty) {
       return 'Please select your gender';
     }
     return null;
   }
 
-  String? validateCity(Object? value) {
-    if (value == null) {
+  String? validateCity(String? value) {
+    if (value == null || value.isEmpty) {
       return 'Please select your city';
     }
     return null;
@@ -350,15 +374,15 @@ class ProfileSetupController extends GetxController
     return null;
   }
 
-  String? validateVehicleType(Object? value) {
-    if (value == null) {
+  String? validateVehicleType(String? value) {
+    if (value == null || value.isEmpty) {
       return 'Please select your Vehicle type';
     }
     return null;
   }
 
-  String? validateColor(Object? value) {
-    if (value == null) {
+  String? validateColor(String? value) {
+    if (value == null || value.isEmpty) {
       return 'Please select your Vehicle colour';
     }
     return null;
@@ -416,7 +440,8 @@ class ProfileSetupController extends GetxController
       } else {
         imageNotUploaded.value = false;
         userFormKey.currentState!.save();
-        await userDetailsAPI();
+        userDetailsFilled = true;
+        tabBarController.index = 1;
       }
     }
   }
@@ -434,7 +459,7 @@ class ProfileSetupController extends GetxController
       } else {
         vehicleImageNotUploaded.value = false;
         vehicleFormKey.currentState!.save();
-        await vehicleDetailsAPI();
+        await userDetailsAPI();
       }
     }
   }

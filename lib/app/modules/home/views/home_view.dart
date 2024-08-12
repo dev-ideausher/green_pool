@@ -7,6 +7,7 @@ import 'package:green_pool/app/modules/home/views/welcome_tile.dart';
 import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/colors.dart';
+import 'package:green_pool/app/services/dialog_helper.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
@@ -26,10 +27,18 @@ class HomeView extends GetView<HomeController> {
             const WelcomeTile(),
             Obx(
               () => GestureDetector(
-                onTap: () {
-                  Get.toNamed(Routes.POST_RIDE_STEP_ONE, arguments: true);
-                  controller.findingRide.value = false;
-                },
+                onTap: controller.userInfo.value.data?.status == "suspended"
+                    ? () {
+                        DialogHelper.accSuspendedDialog(() {
+                          Get.back();
+                          controller.changeTabIndex(3);
+                          Get.toNamed(Routes.HELP_SUPPORT);
+                        });
+                      }
+                    : () {
+                        Get.toNamed(Routes.POST_RIDE_STEP_ONE, arguments: true);
+                        controller.findingRide.value = false;
+                      },
                 child: Container(
                   width: 100.w,
                   height: 149.kh,
@@ -86,10 +95,18 @@ class HomeView extends GetView<HomeController> {
               ),
             ),
             GestureDetector(
-              onTap: () {
-                Get.toNamed(Routes.FIND_RIDE, arguments: false);
-                controller.findingRide.value = true;
-              },
+              onTap: controller.userInfo.value.data?.status == "suspended"
+                  ? () {
+                      DialogHelper.accSuspendedDialog(() {
+                        Get.back();
+                        controller.changeTabIndex(3);
+                        Get.toNamed(Routes.HELP_SUPPORT);
+                      });
+                    }
+                  : () {
+                      Get.toNamed(Routes.FIND_RIDE, arguments: false);
+                      controller.findingRide.value = true;
+                    },
               child: Container(
                 width: 100.w,
                 height: 149.kh,

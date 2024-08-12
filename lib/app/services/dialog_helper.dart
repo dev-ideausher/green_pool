@@ -205,4 +205,56 @@ class DialogHelper {
       ),
     );
   }
+
+  static void accSuspendedDialog(Function() onPressed) {
+    Get.dialog(
+      useSafeArea: true,
+      Center(
+        child: Container(
+          padding: EdgeInsets.all(16.kh),
+          height: 212.kh,
+          width: 80.w,
+          decoration: BoxDecoration(
+            color: ColorUtil.kWhiteColor,
+            borderRadius: BorderRadius.circular(8.kh),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              GestureDetector(
+                onTap: () => Get.back(),
+                child: Container(
+                  alignment: Alignment.centerRight,
+                  child: const Icon(Icons.close),
+                ),
+              ),
+              Text(
+                "Account Suspended",
+                style: TextStyleUtil.k18Semibold(),
+                textAlign: TextAlign.left,
+              ).paddingSymmetric(vertical: 4.kh),
+              Text(
+                "You cannot perform this action because your account was suspended.",
+                style: TextStyleUtil.k14Regular(
+                  color: ColorUtil.kBlack04,
+                ),
+                textAlign: TextAlign.left,
+              ).paddingOnly(bottom: 40.kh),
+              Container(
+                alignment: Alignment.centerRight,
+                child: GreenPoolButton(
+                  onPressed: onPressed,
+                  height: 40.kh,
+                  width: 144.kw,
+                  label: "Contact Us",
+                  fontSize: 14.kh,
+                  padding: const EdgeInsets.all(8),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }

@@ -292,7 +292,7 @@ class ChatPageView extends GetView<ChatPageController> {
                     controller: controller.eMsg,
                     hintText: Strings.writeMsg,
                     keyboardType: TextInputType.text,
-                    textCapitalization: TextCapitalization.words,
+                    textCapitalization: TextCapitalization.sentences,
                     suffix: InkWell(
                         onTap: () => controller.sendMsg(),
                         child: SvgPicture.asset(ImageConstant.svgIconSend)),

@@ -137,40 +137,62 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
                 readOnly: !controller.readOnlyEmail,
               ).paddingOnly(bottom: 16.kh),
               RichTextHeading(text: Strings.gender).paddingOnly(bottom: 8.kh),
-              GreenPoolDropDown(
-                hintText: Strings.selectGender,
-                validator: (value) => controller.validateGender(value),
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                items: [
-                  DropdownMenuItem(
-                      value: Strings.male,
-                      child: Text(
-                        Strings.male,
-                        style: TextStyleUtil.k14Regular(),
-                      )),
-                  DropdownMenuItem(
-                      value: Strings.female,
-                      child: Text(
-                        Strings.female,
-                        style: TextStyleUtil.k14Regular(),
-                      )),
-                  DropdownMenuItem(
-                      value: Strings.preferNotToSay,
-                      child: Text(
-                        Strings.preferNotToSay,
-                        style: TextStyleUtil.k14Regular(),
-                      )),
-                ],
-                onChanged: (val) {
-                  controller.gender.text = val.toString();
-                },
-              ).paddingOnly(bottom: 16.kh),
+              Obx(
+                () => GreenPoolTextField(
+                  hintText: "Select your Gender",
+                  controller: controller.gender,
+                  validator: (value) => controller.validateGender(value),
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  readOnly: true,
+                  suffix: controller.isGenderListExpanded.value
+                      ? const Icon(Icons.arrow_drop_up)
+                      : const Icon(Icons.arrow_drop_down),
+                  // onPressedSuffix: () {
+                  //   controller.isGenderListExpanded.toggle();
+                  // },
+                  onTap: () {
+                    controller.isGenderListExpanded.toggle();
+                  },
+                ).paddingOnly(
+                    bottom:
+                        controller.isGenderListExpanded.value ? 4.kh : 16.kh),
+              ),
+              Obx(
+                () => Visibility(
+                  visible: controller.isGenderListExpanded.value,
+                  child: SizedBox(
+                    height: 120.kh,
+                    child: ListView.builder(
+                        itemCount: 3,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            decoration: BoxDecoration(
+                                border: Border(
+                                    bottom: BorderSide(
+                                        width: 1.kh,
+                                        color: ColorUtil.kNeutral7)),
+                                borderRadius: BorderRadius.circular(8.kh)),
+                            child: ListTile(
+                              title: Text(controller.genderList[index]),
+                              onTap: () {
+                                controller.gender.text =
+                                    controller.genderList[index];
+                                controller.isGenderListExpanded.value = false;
+                              },
+                            ),
+                          );
+                        }),
+                  ).paddingOnly(bottom: 16.kh),
+                ),
+              ),
               RichTextHeading(text: Strings.cityProvince)
                   .paddingOnly(bottom: 8.kh),
               Obx(
                 () => GreenPoolTextField(
                   hintText: Strings.selectCity,
                   controller: controller.city,
+                  validator: (value) => controller.validateCity(value),
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   suffix: controller.isCityListExpanded.value
                       ? const Icon(Icons.arrow_drop_up)
                       : const Icon(Icons.arrow_drop_down),
@@ -252,37 +274,49 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
                         controller.getIDImage(ImageSource.camera);
                       },
                     )),
-                child: Container(
-                  padding:
-                      EdgeInsets.symmetric(vertical: 68.kh, horizontal: 76.kw),
-                  decoration: BoxDecoration(
-                      color: ColorUtil.kGreyColor,
-                      borderRadius: BorderRadius.circular(8.kh)),
-                  child: Obx(
-                    () => controller.isIDPicked.value
-                        ? Image.file(
-                            controller.selectedIDImagePath.value!,
-                          )
-                        : Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SvgPicture.asset(ImageConstant.svgIconUpload)
-                                  .paddingOnly(right: 8.kw),
-                              Text(
-                                Strings.uploadId,
-                                style: TextStyleUtil.k14Regular(
-                                    color: ColorUtil.kBlack03),
-                              ),
-                            ],
-                          ),
+                child: Obx(
+                  () => Container(
+                    padding: EdgeInsets.symmetric(
+                        vertical: 68.kh, horizontal: 76.kw),
+                    decoration: BoxDecoration(
+                        color: ColorUtil.kGreyColor,
+                        border: Border.all(
+                          color: !controller.isIDPicked.value &&
+                                  (controller.selectedIDImagePath.value?.path ??
+                                          "")
+                                      .isEmpty
+                              ? Colors.red
+                              : Colors.transparent,
+                        ),
+                        borderRadius: BorderRadius.circular(8.kh)),
+                    child: Obx(
+                      () => controller.isIDPicked.value
+                          ? Image.file(
+                              controller.selectedIDImagePath.value!,
+                            )
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SvgPicture.asset(ImageConstant.svgIconUpload)
+                                    .paddingOnly(right: 8.kw),
+                                Text(
+                                  Strings.uploadId,
+                                  style: TextStyleUtil.k14Regular(
+                                      color: ColorUtil.kBlack03),
+                                ),
+                              ],
+                            ),
+                    ),
                   ),
                 ),
               ),
-              GreenPoolButton(
-                onPressed: () => controller.checkUserValidations(),
-                color: ColorUtil.kPrimary01,
-                label: Strings.proceed,
-              ).paddingSymmetric(vertical: 40.kh),
+              Obx(
+                () => GreenPoolButton(
+                  onPressed: () => controller.checkUserValidations(),
+                  label: Strings.proceed,
+                  isLoading: controller.isBtnLoading.value,
+                ).paddingSymmetric(vertical: 40.kh),
+              ),
             ],
           ).paddingSymmetric(horizontal: 16.kw),
         ),

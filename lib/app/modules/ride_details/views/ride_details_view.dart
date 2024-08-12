@@ -226,38 +226,45 @@ class RideDetailsView extends GetView<RideDetailsController> {
           ).paddingOnly(bottom: 16.kh),
           SizedBox(
             height: 76.kh,
-            child: (controller.rideHistory.value.riders?.length ?? 0) == 0
-                ? Center(
-                    child: Text(
-                      Strings.noPassengersAvailable,
-                      style: TextStyleUtil.k14Semibold(),
+            child: ListView.builder(
+              itemCount: ((controller.rideHistory.value.riders?.length ?? 0) +
+                  (controller.rideHistory.value.seatAvailable ?? 0)),
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (context, passengerIndex) {
+                int ridersCount =
+                    controller.rideHistory.value.riders?.length ?? 0;
+                bool isRider = passengerIndex < ridersCount;
+
+                return Column(
+                  children: [
+                    Container(
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                      ),
+                      child: ClipOval(
+                        child: SizedBox.fromSize(
+                          size: Size.fromRadius(20.kh),
+                          child: isRider
+                              ? CommonImageView(
+                                  url:
+                                      "${controller.rideHistory.value.riders?[passengerIndex]?.profilePic?.url}")
+                              : CommonImageView(
+                                  imagePath: ImageConstant.pngEmptyPassenger,
+                                ),
+                        ),
+                      ),
+                    ).paddingOnly(bottom: 4.kh),
+                    Text(
+                      isRider
+                          ? "${controller.rideHistory.value.riders?[passengerIndex]?.fullName.toString().split(" ").first}"
+                          : "Empty Seat",
+                      style: TextStyleUtil.k12Semibold(),
+                      textAlign: TextAlign.center,
                     ),
-                  ).paddingOnly(bottom: 16.kh)
-                : ListView.builder(
-                    itemCount: controller.rideHistory.value.riders?.length ?? 6,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      return Column(
-                        children: [
-                          Container(
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                            ),
-                            child: ClipOval(
-                                child: SizedBox.fromSize(
-                                    size: Size.fromRadius(20.kh),
-                                    child: CommonImageView(
-                                        url:
-                                            "${controller.rideHistory.value.riders?[index]?.profilePic?.url}"))),
-                          ).paddingOnly(bottom: 4.kh),
-                          Text(
-                            "${controller.rideHistory.value.riders?[index]?.fullName.toString().split(" ").first}",
-                            style: TextStyleUtil.k12Semibold(),
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
-                      ).paddingOnly(right: 32.kw);
-                    }),
+                  ],
+                ).paddingOnly(right: 18.kw);
+              },
+            ),
           ),
           const GreenPoolDivider().paddingOnly(bottom: 16.kh),
 
