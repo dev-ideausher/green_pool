@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
+
+import '../../../services/dio/api_service.dart';
+import '../../../services/snackbar.dart';
+import '../../wallet/controllers/wallet_controller.dart';
 
 class WalletToBankAccController extends GetxController {
   TextEditingController amountTextController = TextEditingController();
@@ -54,7 +59,38 @@ class WalletToBankAccController extends GetxController {
   }
 
   moveToWebToBankAcc() {
-    Get.toNamed(Routes.WEB_ADD_TO_BANK,
-        arguments: amountTextController.value.text);
+    //refresh user info from home controller
+    final code =
+        Get.find<HomeController>().userInfo?.value?.data?.connectedAccountId;
+
+    if (code == "") {
+      Get.toNamed(Routes.WEB_ADD_TO_BANK,
+          arguments: amountTextController.value.text);
+    } else {
+      transferToBankAccount();
+    }
+  }
+
+  Future<void> transferToBankAccount() async {
+    try {
+      final res = await APIManager.postTransferAmountToWallet(
+          body: {"amount": amountTextController.value.text});
+      if (res.data["status"]) {
+        Get.find<WalletController>().getWallet();
+        Get.until(
+          (route) => Get.currentRoute == Routes.WALLET,
+        );
+      } else {
+        Get.until(
+          (route) => Get.currentRoute == Routes.WALLET,
+        );
+        showMySnackbar(msg: res.data["message"].toString());
+      }
+    } catch (e) {
+      Get.until(
+        (route) => Get.currentRoute == Routes.WALLET,
+      );
+      debugPrint("ERROR: $e");
+    }
   }
 }

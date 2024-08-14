@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:green_pool/app/services/snackbar.dart';
+import 'package:green_pool/app/services/storage.dart';
 import '../../../data/message_model.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -9,10 +10,10 @@ import '../../../services/dio/api_service.dart';
 class ChatWithExpertsController extends GetxController {
   final RxList<MessageModel> messages = <MessageModel>[].obs;
   final ScrollController scrollController = ScrollController();
-  String chatRoomId = "";
+  String chatRoomId = Get.find<GetStorageService>().getSupportChatRoomId;
   final TextEditingController eMsg = TextEditingController();
   final RxBool isLoad = true.obs;
-  final RxBool isChatStarted = false.obs;
+  final RxBool isChatStarted = true.obs;
   final RxBool isBtnActive = false.obs;
 
   @override
@@ -23,15 +24,20 @@ class ChatWithExpertsController extends GetxController {
 
   void addInitialMessage() {
     Future.delayed(const Duration(milliseconds: 50), () {
-      messages.add(
-        MessageModel(
-          id: "admin",
-          senderId: "admin",
-          message:
-              "Hi, how can I help you to resolve your queries? Pick a topic to start our chat.",
-          timestamp: DateTime.now().subtract(const Duration(minutes: 2)),
-        ),
-      );
+      if (chatRoomId.isEmpty || chatRoomId == '') {
+        isChatStarted.value = false;
+        messages.add(
+          MessageModel(
+            id: "admin",
+            senderId: "admin",
+            message:
+                "Hi, how can I help you to resolve your queries? Pick a topic to start our chat.",
+            timestamp: DateTime.now().subtract(const Duration(minutes: 2)),
+          ),
+        );
+      } else {
+        getChat();
+      }
       isLoad.value = false;
     });
   }
@@ -60,7 +66,7 @@ class ChatWithExpertsController extends GetxController {
             timestamp: DateTime.now().subtract(const Duration(minutes: 5)),
           ),
         );
-        WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToBottom());
+        // WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToBottom());
       }
     }, onError: (Object error) {
       debugPrint("Error: $error");
@@ -77,29 +83,43 @@ class ChatWithExpertsController extends GetxController {
 
   Future<void> sendMsg() async {
     final msg = eMsg.text;
-    FocusScope.of(Get.context!).unfocus();
     eMsg.clear();
+    final timestamp = DateTime.now().toUtc();
     try {
       if (!isChatStarted.value) {
+        isChatStarted.value = true;
+        messages.value.add(MessageModel(
+            id: chatRoomId,
+            message: msg,
+            senderId: Get.find<GetStorageService>().getUserAppId ?? "",
+            timestamp: timestamp));
         messages.refresh();
         final res =
             await APIManager.userSupportFirstMessage(body: {"issueType": msg});
         if (res.data["message"] == "Chat message written successfully.") {
           eMsg.clear();
-          //save the id in storage
           chatRoomId = res.data["chatRoomId"];
-          isChatStarted.value = true;
+          Get.find<GetStorageService>().setSupportChatRoomId =
+              res.data["chatRoomId"];
         } else {
           showMySnackbar(msg: res.data["message"]);
         }
       } else {
+        messages.value.add(MessageModel(
+            id: chatRoomId,
+            message: msg,
+            senderId: Get.find<GetStorageService>().getUserAppId ?? "",
+            timestamp: timestamp));
         messages.refresh();
+        WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToBottom());
+        print("SENDING MSG");
         final res = await APIManager.userSupportSendMessage(
             body: {"message": msg, "chatRoomId": chatRoomId});
         eMsg.clear();
-        //store the id in storage
         chatRoomId = res.data["chatRoomId"];
-
+        Get.find<GetStorageService>().setSupportChatRoomId =
+            res.data["chatRoomId"];
+        print("MSG SENT");
         //clear the id from storage when Resolved is coming in response
       }
       getChat();

@@ -33,6 +33,7 @@ class RiderProfileSetupController extends GetxController {
   RxBool isProfileImagePicked = false.obs;
   RxBool isProfileImagePickedCheck = false.obs;
   RxBool isIDPicked = false.obs;
+  RxBool isIDPickedCheck = false.obs;
   TextEditingController fullName = TextEditingController(
       text: Get.find<AuthService>().auth.currentUser?.displayName);
   TextEditingController email = TextEditingController(
@@ -194,7 +195,6 @@ class RiderProfileSetupController extends GetxController {
     log("profile setup user data: $userData");
 
     try {
-      await APIManager.postWelcomeEmail(emailId: {"email": email.text});
       final response = await APIManager.userDetails(body: userData);
       storageService.setUserName = fullName.text;
       storageService.isLoggedIn = true;
@@ -276,9 +276,12 @@ class RiderProfileSetupController extends GetxController {
 
     if (!isValid) {
       isProfileImagePickedCheck.value = true;
+      isIDPickedCheck.value = true;
       return showMySnackbar(msg: 'Please fill in all the details');
     } else {
       if (isProfileImagePicked.value != true || isIDPicked.value != true) {
+        isProfileImagePickedCheck.value = true;
+        isIDPickedCheck.value = true;
         return showMySnackbar(msg: 'Please upload the required images');
       } else {
         userFormKey.currentState!.save();

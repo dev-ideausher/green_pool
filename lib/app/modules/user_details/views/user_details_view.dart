@@ -16,7 +16,6 @@ import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
 import '../../../services/text_style_util.dart';
 import '../../home/controllers/home_controller.dart';
-import '../../profile/controllers/profile_controller.dart';
 import '../controllers/user_details_controller.dart';
 
 class UserDetailsView extends GetView<UserDetailsController> {
@@ -64,7 +63,7 @@ class UserDetailsView extends GetView<UserDetailsController> {
                                           child: CommonImageView(
                                             height: 50.kh,
                                             width: 50.kw,
-                                            url: Get.find<ProfileController>()
+                                            url: Get.find<HomeController>()
                                                     .userInfo
                                                     .value
                                                     .data
@@ -112,6 +111,15 @@ class UserDetailsView extends GetView<UserDetailsController> {
               hintText: Strings.emailID,
               keyboardType: TextInputType.emailAddress,
               controller: controller.emailTextController,
+              suffix: SvgPicture.asset(
+                ImageConstant.svgProfileEditPen,
+                colorFilter: ColorFilter.mode(
+                  Get.find<HomeController>().isPinkModeOn.value
+                      ? ColorUtil.kPrimary3PinkMode
+                      : ColorUtil.kSecondary01,
+                  BlendMode.srcIn,
+                ),
+              ),
             ).paddingOnly(bottom: 16.kh),
             RichTextHeading(text: Strings.phoneNumber)
                 .paddingOnly(bottom: 8.kh),
@@ -210,7 +218,7 @@ class UserDetailsView extends GetView<UserDetailsController> {
                       ? Image.file(
                           controller.selectedIDImagePath?.value ?? File(''))
                       : CommonImageView(
-                          url: Get.find<ProfileController>()
+                          url: Get.find<HomeController>()
                                   .userInfo
                                   .value
                                   .data
@@ -221,12 +229,15 @@ class UserDetailsView extends GetView<UserDetailsController> {
                 ),
               ),
             ),
-            GreenPoolButton(
-              onPressed: () {
-                controller.updateDetailsAPI();
-              },
-              label: Strings.save,
-            ).paddingOnly(top: 40.kh, bottom: 16.kh),
+            Obx(
+              () => GreenPoolButton(
+                onPressed: () {
+                  controller.updateDetailsAPI();
+                },
+                isLoading: controller.saveBtnLoading.value,
+                label: Strings.save,
+              ).paddingOnly(top: 40.kh, bottom: 16.kh),
+            ),
             GreenPoolButton(
               onPressed: () => controller.deleteAccountAPI(),
               isBorder: true,

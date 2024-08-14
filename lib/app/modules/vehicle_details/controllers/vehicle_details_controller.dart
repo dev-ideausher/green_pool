@@ -10,23 +10,22 @@ import '../../../routes/app_pages.dart';
 import '../../../services/gp_util.dart';
 import '../../../services/snackbar.dart';
 import '../../home/controllers/home_controller.dart';
-import '../../profile/controllers/profile_controller.dart';
 
 import 'package:dio/dio.dart' as dio;
 import 'package:path/path.dart' as path;
 
 class VehicleDetailsController extends GetxController {
   var vehicleInfoModel =
-      Get.find<ProfileController>().userInfo.value.data?.vehicleDetails?[0];
+      Get.find<HomeController>().userInfo.value.data?.vehicleDetails?[0];
   TextEditingController modelTextController = TextEditingController(
-      text: Get.find<ProfileController>()
+      text: Get.find<HomeController>()
           .userInfo
           .value
           .data
           ?.vehicleDetails?[0]
           ?.model);
   TextEditingController yearTextController = TextEditingController(
-      text: Get.find<ProfileController>()
+      text: Get.find<HomeController>()
           .userInfo
           .value
           .data
@@ -34,31 +33,52 @@ class VehicleDetailsController extends GetxController {
           ?.year
           .toString());
   TextEditingController licenseTextController = TextEditingController(
-      text: Get.find<ProfileController>()
+      text: Get.find<HomeController>()
           .userInfo
           .value
           .data
           ?.vehicleDetails?[0]
           ?.licencePlate);
-  RxString vehicletypeValue = "".obs;
-  RxString colorValue = "".obs;
+  TextEditingController type = TextEditingController(
+      text: Get.find<HomeController>()
+          .userInfo
+          .value
+          .data
+          ?.vehicleDetails?[0]
+          ?.type);
+  TextEditingController color = TextEditingController(
+      text: Get.find<HomeController>()
+          .userInfo
+          .value
+          .data
+          ?.vehicleDetails?[0]
+          ?.color);
   Rx<File?>? selectedVehicleImagePath = Rx<File?>(null);
   RxBool isVehiclePicUpdated = false.obs;
-
-  // @override
-  // void onInit() {
-  //   super.onInit();
-  // }
-
-  // @override
-  // void onReady() {
-  //   super.onReady();
-  // }
-
-  // @override
-  // void onClose() {
-  //   super.onClose();
-  // }
+  RxBool isTypeListExpanded = false.obs;
+  RxList<String> typeList = <String>[
+    "Hatchback",
+    "Coupe",
+    "Convertible",
+    "Sedan",
+    "SUV",
+    "Truck",
+    "Van"
+  ].obs;
+  RxBool isColorListExpanded = false.obs;
+  RxList<String> colorList = <String>[
+    "Silver",
+    "Black",
+    "White",
+    "Dark Grey",
+    "Light Grey",
+    "Red",
+    "Blue",
+    "Light Blue",
+    "Dark Blue",
+    "Brown"
+  ].obs;
+  RxBool btnLoading = false.obs;
 
   getProfileImage(ImageSource imageSource) async {
     XFile? pickedFile = await GpUtil.compressImage(imageSource);
@@ -73,6 +93,7 @@ class VehicleDetailsController extends GetxController {
   }
 
   Future<void> updateVehicleDetailsAPI() async {
+    btnLoading.value = true;
     final File? pickedImageFile = selectedVehicleImagePath!.value;
 
     String imageExtension = pickedImageFile?.path.split('.').last ?? '';
@@ -93,11 +114,10 @@ class VehicleDetailsController extends GetxController {
         "model": modelTextController.value.text.isEmpty
             ? vehicleInfoModel?.model
             : modelTextController.value.text,
-        "type": vehicletypeValue.value == ""
-            ? vehicleInfoModel?.type
-            : vehicletypeValue.value,
+        "type":
+            type.value.text == "" ? vehicleInfoModel?.type : type.value.text,
         "color":
-            colorValue.value == "" ? vehicleInfoModel?.color : colorValue.value,
+            color.value.text == "" ? vehicleInfoModel?.color : color.value.text,
         "year": yearTextController.value.text.isEmpty
             ? vehicleInfoModel?.year
             : yearTextController.value.text,
@@ -116,11 +136,10 @@ class VehicleDetailsController extends GetxController {
         "model": modelTextController.value.text.isEmpty
             ? vehicleInfoModel?.model
             : modelTextController.value.text,
-        "type": vehicletypeValue.value == ""
-            ? vehicleInfoModel?.type
-            : vehicletypeValue.value,
+        "type":
+            type.value.text == "" ? vehicleInfoModel?.type : type.value.text,
         "color":
-            colorValue.value == "" ? vehicleInfoModel?.color : colorValue.value,
+            color.value.text == "" ? vehicleInfoModel?.color : color.value.text,
         "year": yearTextController.value.text.isEmpty
             ? vehicleInfoModel?.year
             : yearTextController.value.text,
@@ -138,7 +157,9 @@ class VehicleDetailsController extends GetxController {
       Get.find<HomeController>().userInfoAPI();
       // Navigate back to home screen
       Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
+      btnLoading.value = false;
     } catch (error) {
+      btnLoading.value = false;
       throw Exception(error);
     }
   }

@@ -436,4 +436,59 @@ class GpUtil {
     }
     return false;
   }
+
+  /*static bool checkSixMonthsDuration(String prevCancellationDate) {
+    DateTime prevDateUtc = DateTime.parse(prevCancellationDate);
+
+    DateTime prevDateLocal = prevDateUtc.toLocal();
+
+    DateTime currentDate = DateTime.now();
+
+    DateTime sixMonthsAgo = DateTime(
+      currentDate.year,
+      currentDate.month - 6,
+      currentDate.day,
+      currentDate.hour,
+      currentDate.minute,
+      currentDate.second,
+      currentDate.millisecond,
+      currentDate.microsecond,
+    );
+    return prevDateLocal.isAfter(sixMonthsAgo);
+  }*/
+  static bool checkSixMonthsDuration(String prevCancellationDate) {
+    DateTime prevDateUtc = DateTime.parse(prevCancellationDate);
+
+    DateTime prevDateLocal = prevDateUtc.toLocal();
+
+    DateTime currentDate = DateTime.now();
+
+    // Calculate six months ago
+    DateTime sixMonthsAgo = DateTime(
+      currentDate.year,
+      currentDate.month - 6,
+      currentDate.day,
+      currentDate.hour,
+      currentDate.minute,
+      currentDate.second,
+      currentDate.millisecond,
+      currentDate.microsecond,
+    );
+
+    // Handle the case where month subtraction leads to a negative or zero month
+    if (sixMonthsAgo.month <= 0) {
+      sixMonthsAgo = DateTime(
+        currentDate.year - 1,
+        sixMonthsAgo.month + 12,
+        currentDate.day,
+        currentDate.hour,
+        currentDate.minute,
+        currentDate.second,
+        currentDate.millisecond,
+        currentDate.microsecond,
+      );
+    }
+
+    return prevDateLocal.isAfter(sixMonthsAgo);
+  }
 }

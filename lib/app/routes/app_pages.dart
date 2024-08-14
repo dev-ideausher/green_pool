@@ -101,8 +101,6 @@ import '../modules/rider_matching_rides/bindings/matching_rides_binding.dart';
 import '../modules/rider_matching_rides/views/matching_rides_view.dart';
 import '../modules/rider_my_ride_request/bindings/rider_ride_request_binding.dart';
 import '../modules/rider_my_ride_request/views/rider_my_ride_request_view.dart';
-import '../modules/rider_my_rides/bindings/rider_my_rides_binding.dart';
-import '../modules/rider_my_rides/views/rider_my_rides_view.dart';
 import '../modules/rider_my_rides_confirm_details/bindings/rider_my_rides_confirm_details_binding.dart';
 import '../modules/rider_my_rides_confirm_details/views/rider_my_rides_confirm_details_view.dart';
 import '../modules/rider_my_rides_send_details/bindings/rider_my_rides_send_details_binding.dart';
@@ -320,11 +318,6 @@ class AppPages {
       name: _Paths.RIDER_MY_RIDE_REQUEST,
       page: () => const RiderMyRideRequestView(),
       binding: RiderMyRideRequestBinding(),
-    ),
-    GetPage(
-      name: _Paths.RIDER_MY_RIDES,
-      page: () => const RiderMyRidesView(),
-      binding: RiderMyRidesBinding(),
     ),
     GetPage(
       name: _Paths.MY_RIDES_RECURRING,

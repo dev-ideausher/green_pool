@@ -36,11 +36,13 @@ class RideDetailsView extends GetView<RideDetailsController> {
           Visibility(
             visible: isRideCompleted || isRideCancelled,
             child: Container(
-              padding: EdgeInsets.all(16.kh),
+              padding: EdgeInsets.symmetric(vertical: 8.kh, horizontal: 16.kw),
               decoration: BoxDecoration(
                   color: isRideCancelled
                       ? ColorUtil.kError2
-                      : ColorUtil.kGreenColor,
+                      : Get.find<HomeController>().isPinkModeOn.value
+                          ? ColorUtil.kSecondaryPinkMode
+                          : ColorUtil.kSecondary07,
                   borderRadius: BorderRadius.circular(8.kh)),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -48,14 +50,13 @@ class RideDetailsView extends GetView<RideDetailsController> {
                   Icon(
                     isRideCancelled ? Icons.block : Icons.check,
                     size: 20.kh,
-                    color: ColorUtil.kWhiteColor,
+                    color: ColorUtil.kBlack01,
                   ).paddingOnly(right: 8.kw),
                   Text(
                     isRideCancelled
                         ? "Ride Cancelled"
                         : 'Completed Successfully',
-                    style:
-                        TextStyleUtil.k14Regular(color: ColorUtil.kWhiteColor),
+                    style: TextStyleUtil.k14Regular(),
                   ),
                 ],
               ),

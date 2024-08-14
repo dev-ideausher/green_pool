@@ -5,8 +5,10 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/data/driver_cofirm_request_model.dart';
 
 import 'package:green_pool/app/data/my_rides_model.dart';
+import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/services/dialog_helper.dart';
 import 'package:green_pool/app/services/dio/api_service.dart';
+import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/snackbar.dart';
 
 import '../../../data/booking_detail_model.dart';
@@ -77,27 +79,56 @@ class MyRidesOneTimeController extends GetxController {
   }
 
   cancelRideAPI(MyRidesModelData myRidesModelData) async {
-    DialogHelper.cancelRideDialog(
-      () async {
-        Get.back();
-        final Map<String, dynamic> driverRideId = {
-          "driverRideId": myRidesModelData.Id,
-        };
-        try {
-          isLoad.value = true;
-          final cancelRideResponse =
-              await APIManager.cancelRide(body: driverRideId);
-          if (cancelRideResponse.data['status']) {
-            await myRidesAPI();
-          } else {
-            showMySnackbar(msg: cancelRideResponse.data["message"].toString());
+    final userInfo = Get.find<HomeController>().userInfo.value.data;
+    if ((userInfo?.rideCancellationDetails?.count ?? 0) >= 2 &&
+        GpUtil.checkSixMonthsDuration(
+            userInfo!.rideCancellationDetails!.cancellationDate!)) {
+      DialogHelper.accSuspensionWarningDialog(() {
+        () async {
+          Get.back();
+          final Map<String, dynamic> driverRideId = {
+            "driverRideId": myRidesModelData.Id,
+          };
+          try {
+            isLoad.value = true;
+            final cancelRideResponse =
+                await APIManager.cancelRide(body: driverRideId);
+            if (cancelRideResponse.data['status']) {
+              await myRidesAPI();
+            } else {
+              showMySnackbar(
+                  msg: cancelRideResponse.data["message"].toString());
+            }
+            isLoad.value = false;
+          } catch (e) {
+            debugPrint(e.toString());
           }
-          isLoad.value = false;
-        } catch (e) {
-          debugPrint(e.toString());
-        }
-      },
-    );
+        };
+      });
+    } else {
+      DialogHelper.cancelRideDialog(
+        () async {
+          Get.back();
+          final Map<String, dynamic> driverRideId = {
+            "driverRideId": myRidesModelData.Id,
+          };
+          try {
+            isLoad.value = true;
+            final cancelRideResponse =
+                await APIManager.cancelRide(body: driverRideId);
+            if (cancelRideResponse.data['status']) {
+              await myRidesAPI();
+            } else {
+              showMySnackbar(
+                  msg: cancelRideResponse.data["message"].toString());
+            }
+            isLoad.value = false;
+          } catch (e) {
+            debugPrint(e.toString());
+          }
+        },
+      );
+    }
   }
 
   void viewDetails(MyRidesModelData myRidesModelData) {

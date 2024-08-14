@@ -7,7 +7,6 @@ import 'package:green_pool/app/constants/image_constant.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../../components/dropdown_textfield.dart';
 import '../../../components/greenpool_textfield.dart';
 import '../../../components/richtext_heading.dart';
 import '../../../components/upload_vehicle_picture.dart';
@@ -82,129 +81,97 @@ class VehicleSetupView extends GetView<VehicleSetupController> {
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                 ).paddingOnly(bottom: 16.kh),
                 RichTextHeading(text: Strings.type).paddingOnly(bottom: 8.kh),
-                GreenPoolDropDown(
-                  hintText: Strings.selectVehicletype,                  
-                  validator: (p0) => controller.validateVehicleType(p0),
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  items: [
-                    DropdownMenuItem(
-                        value: Strings.hatchBack,
-                        child: Text(
-                          Strings.hatchBack,
-                          style: TextStyleUtil.k14Regular(),
-                        )),
-                    DropdownMenuItem(
-                        value: Strings.coupe,
-                        child: Text(
-                          Strings.coupe,
-                          style: TextStyleUtil.k14Regular(),
-                        )),
-                    DropdownMenuItem(
-                        value: Strings.convertible,
-                        child: Text(
-                          Strings.convertible,
-                          style: TextStyleUtil.k14Regular(),
-                        )),
-                    DropdownMenuItem(
-                        value: Strings.sedan,
-                        child: Text(
-                          Strings.sedan,
-                          style: TextStyleUtil.k14Regular(),
-                        )),
-                    DropdownMenuItem(
-                        value: Strings.SUV,
-                        child: Text(
-                          Strings.SUV,
-                          style: TextStyleUtil.k14Regular(),
-                        )),
-                    DropdownMenuItem(
-                        value: Strings.truck,
-                        child: Text(
-                          Strings.truck,
-                          style: TextStyleUtil.k14Regular(),
-                        )),
-                    DropdownMenuItem(
-                        value: Strings.van,
-                        child: Text(
-                          Strings.van,
-                          style: TextStyleUtil.k14Regular(),
-                        )),
-                  ],
-                  onChanged: (val) {
-                    controller.type.value = val.toString();
-                  },
-                ).paddingOnly(bottom: 16.kh),
+                Obx(
+                  () => GreenPoolTextField(
+                    hintText: "Select Vehicle Type",
+                    controller: controller.type,
+                    validator: (value) => controller.validateVehicleType(value),
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    suffix: controller.isTypeListExpanded.value
+                        ? const Icon(Icons.arrow_drop_up)
+                        : const Icon(Icons.arrow_drop_down),
+                    readOnly: true,
+                    onTap: () {
+                      controller.isTypeListExpanded.toggle();
+                    },
+                  ).paddingOnly(
+                      bottom:
+                          controller.isTypeListExpanded.value ? 4.kh : 16.kh),
+                ),
+                Obx(
+                  () => Visibility(
+                    visible: controller.isTypeListExpanded.value,
+                    child: SizedBox(
+                      height: 120.kh,
+                      child: ListView.builder(
+                          itemCount: 7,
+                          itemBuilder: (context, index) {
+                            return Container(
+                              decoration: BoxDecoration(
+                                  border: Border(
+                                      bottom: BorderSide(
+                                          width: 1.kh,
+                                          color: ColorUtil.kNeutral7)),
+                                  borderRadius: BorderRadius.circular(8.kh)),
+                              child: ListTile(
+                                title: Text(controller.typeList[index]),
+                                onTap: () {
+                                  controller.type.text =
+                                      controller.typeList[index];
+                                  controller.isTypeListExpanded.value = false;
+                                },
+                              ),
+                            );
+                          }),
+                    ).paddingOnly(bottom: 16.kh),
+                  ),
+                ),
                 RichTextHeading(text: Strings.color).paddingOnly(bottom: 8.kh),
-                GreenPoolDropDown(
-                  hintText: Strings.selectVehicleColor,                  
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  validator: (p0) => controller.validateColor(p0),
-                  items: [
-                    DropdownMenuItem(
-                        value: Strings.silver,
-                        child: Text(
-                          Strings.silver,
-                          style: TextStyleUtil.k14Regular(),
-                        )),
-                    DropdownMenuItem(
-                        value: Strings.black,
-                        child: Text(
-                          Strings.black,
-                          style: TextStyleUtil.k14Regular(),
-                        )),
-                    DropdownMenuItem(
-                        value: Strings.white,
-                        child: Text(
-                          Strings.white,
-                          style: TextStyleUtil.k14Regular(),
-                        )),
-                    DropdownMenuItem(
-                        value: Strings.darkgrey,
-                        child: Text(
-                          Strings.darkgrey,
-                          style: TextStyleUtil.k14Regular(),
-                        )),
-                    DropdownMenuItem(
-                        value: Strings.lightGrey,
-                        child: Text(
-                          Strings.lightGrey,
-                          style: TextStyleUtil.k14Regular(),
-                        )),
-                    DropdownMenuItem(
-                        value: Strings.red,
-                        child: Text(
-                          Strings.red,
-                          style: TextStyleUtil.k14Regular(),
-                        )),
-                    DropdownMenuItem(
-                        value: Strings.blue,
-                        child: Text(
-                          Strings.blue,
-                          style: TextStyleUtil.k14Regular(),
-                        )),
-                    DropdownMenuItem(
-                        value: Strings.lightBlue,
-                        child: Text(
-                          Strings.lightBlue,
-                          style: TextStyleUtil.k14Regular(),
-                        )),
-                    DropdownMenuItem(
-                        value: Strings.darkBlue,
-                        child: Text(
-                          Strings.darkBlue,
-                          style: TextStyleUtil.k14Regular(),
-                        )),
-                    DropdownMenuItem(
-                        value: Strings.brown,
-                        child: Text(
-                          Strings.brown,
-                          style: TextStyleUtil.k14Regular(),
-                        )),
-                  ],
-                  onChanged: (val) {
-                    controller.color.value = val.toString();
-                  },
-                ).paddingOnly(bottom: 16.kh),
+                Obx(
+                  () => GreenPoolTextField(
+                    hintText: "Select Vehicle Color",
+                    controller: controller.color,
+                    validator: (value) => controller.validateColor(value),
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    suffix: controller.isColorListExpanded.value
+                        ? const Icon(Icons.arrow_drop_up)
+                        : const Icon(Icons.arrow_drop_down),
+                    readOnly: true,
+                    onTap: () {
+                      controller.isColorListExpanded.toggle();
+                    },
+                  ).paddingOnly(
+                      bottom:
+                          controller.isColorListExpanded.value ? 4.kh : 16.kh),
+                ),
+                Obx(
+                  () => Visibility(
+                    visible: controller.isColorListExpanded.value,
+                    child: SizedBox(
+                      height: 120.kh,
+                      child: ListView.builder(
+                          itemCount: 7,
+                          itemBuilder: (context, index) {
+                            return Container(
+                              decoration: BoxDecoration(
+                                  border: Border(
+                                      bottom: BorderSide(
+                                          width: 1.kh,
+                                          color: ColorUtil.kNeutral7)),
+                                  borderRadius: BorderRadius.circular(8.kh)),
+                              child: ListTile(
+                                title: Text(controller.colorList[index]),
+                                onTap: () {
+                                  controller.color.text =
+                                      controller.colorList[index];
+                                  controller.isColorListExpanded.value = false;
+                                },
+                              ),
+                            );
+                          }),
+                    ).paddingOnly(bottom: 16.kh),
+                  ),
+                ),
                 RichTextHeading(text: Strings.year).paddingOnly(bottom: 8.kh),
                 GreenPoolTextField(
                   hintText: Strings.enterYear,

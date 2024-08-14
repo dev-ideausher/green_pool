@@ -27,7 +27,6 @@ class ChatPageController extends GetxController {
     chatArg.value = Get.arguments;
     if (chatArg.value.chatRoomId != null) {
       getChat();
-      readMsg();
     }
 
     isLoad.value = false;
@@ -66,6 +65,7 @@ class ChatPageController extends GetxController {
         }
         WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToBottom());
       }
+      readMsg();
     }, onError: (Object error) {
       debugPrint("Error: $error");
     });
@@ -95,7 +95,6 @@ class ChatPageController extends GetxController {
 
   Future<void> setMessageInApi() async {
     final msg = eMsg.text;
-    FocusScope.of(Get.context!).unfocus();
     eMsg.clear();
     final timestamp = DateTime.now().toUtc();
     final senderId = Get.find<GetStorageService>().getUserAppId;
@@ -106,6 +105,7 @@ class ChatPageController extends GetxController {
           senderId: senderId ?? "",
           timestamp: timestamp));
       messages.refresh();
+      WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToBottom());
       final res = await APIManager.sendMessage(
           body: {"message": msg, "receiverId": chatArg.value.id});
       eMsg.clear();

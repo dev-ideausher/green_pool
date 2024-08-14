@@ -12,7 +12,6 @@ import 'package:green_pool/app/services/snackbar.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../../components/dropdown_textfield.dart';
 import '../controllers/profile_setup_controller.dart';
 
 class SetupVehicle extends GetView<ProfileSetupController> {

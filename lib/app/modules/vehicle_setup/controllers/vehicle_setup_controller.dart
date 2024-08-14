@@ -18,14 +18,9 @@ import 'package:path/path.dart' as path;
 class VehicleSetupController extends GetxController {
   Rx<File?> selectedVehicleImagePath = Rx<File?>(null);
   TextEditingController model = TextEditingController();
-
-  // TextEditingController color = TextEditingController();
-  // TextEditingController type = TextEditingController();
   RxBool isVehicleBtnLoading = false.obs;
   RxBool isVehicleImagePicked = false.obs;
   RxBool vehicleImageNotUploaded = false.obs;
-  RxString color = "Silver".obs;
-  RxString type = "Sedan".obs;
   TextEditingController year = TextEditingController();
   TextEditingController licencePlate = TextEditingController();
 
@@ -35,6 +30,31 @@ class VehicleSetupController extends GetxController {
   final Rx<PostRideModel> postRideModel = PostRideModel().obs;
 
   final count = 0.obs;
+  TextEditingController type = TextEditingController();
+  RxBool isTypeListExpanded = false.obs;
+  RxList<String> typeList = <String>[
+    "Hatchback",
+    "Coupe",
+    "Convertible",
+    "Sedan",
+    "SUV",
+    "Truck",
+    "Van"
+  ].obs;
+  TextEditingController color = TextEditingController();
+  RxBool isColorListExpanded = false.obs;
+  RxList<String> colorList = <String>[
+    "Silver",
+    "Black",
+    "White",
+    "Dark Grey",
+    "Light Grey",
+    "Red",
+    "Blue",
+    "Light Blue",
+    "Dark Blue",
+    "Brown"
+  ].obs;
 
   @override
   void onInit() {
@@ -91,8 +111,8 @@ class VehicleSetupController extends GetxController {
 
     final vehicleData = dio.FormData.fromMap({
       'model': model.text,
-      'type': type.value,
-      'color': color.value,
+      'type': type.value.text,
+      'color': color.value.text,
       'year': year.text,
       'licencePlate': licencePlate.text,
       'vehiclePic': await dio.MultipartFile.fromFile(
@@ -132,15 +152,15 @@ class VehicleSetupController extends GetxController {
     return null;
   }
 
-  String? validateVehicleType(Object? value) {
-    if (value == null) {
+  String? validateVehicleType(String? value) {
+    if (value == null || value.isEmpty) {
       return 'Please select your Vehicle type';
     }
     return null;
   }
 
-  String? validateColor(Object? value) {
-    if (value == null) {
+  String? validateColor(String? value) {
+    if (value == null || value.isEmpty) {
       return 'Please select your Vehicle colour';
     }
     return null;

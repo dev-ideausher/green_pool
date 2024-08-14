@@ -7,7 +7,6 @@ import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/modules/messages/controllers/messages_controller.dart';
 import 'package:green_pool/app/modules/my_rides_request/controllers/my_rides_request_controller.dart';
 import 'package:green_pool/app/modules/rider_confirmed_ride_details/controllers/rider_confirmed_ride_details_controller.dart';
-import 'package:green_pool/app/modules/rider_my_ride_request/controllers/rider_my_ride_request_controller.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../data/chat_arg.dart';
@@ -54,9 +53,28 @@ class PushNotificationService {
         .resolvePlatformSpecificImplementation<
             AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(channel);
-
-    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-
+    const AndroidInitializationSettings androidSettings =
+        AndroidInitializationSettings('logo');
+    const DarwinInitializationSettings iOSSettings =
+        DarwinInitializationSettings(
+            requestSoundPermission: true,
+            requestBadgePermission: true,
+            requestAlertPermission: true);
+    const InitializationSettings initSettings =
+        InitializationSettings(android: androidSettings, iOS: iOSSettings);
+    flutterLocalNotificationsPlugin.initialize(
+      initSettings,
+      onDidReceiveNotificationResponse: (NotificationResponse details) {
+        _handleNotificationClickPayload(actionData!.data['notification_type']);
+        debugPrint("NotificationResponse: $details");
+      },
+    );
+    try {
+      FirebaseMessaging.onBackgroundMessage(
+          _firebaseMessagingBackgroundHandler);
+    } catch (e) {
+      debugPrint(e.toString());
+    }
     FirebaseMessaging.onMessage.listen((RemoteMessage? message) {
       if (message == null) return;
 
@@ -66,41 +84,21 @@ class PushNotificationService {
 
       if (notification != null && android != null) {
         flutterLocalNotificationsPlugin.show(
-          notification.hashCode,
-          notification.title,
-          notification.body,
-          NotificationDetails(
-            android: AndroidNotificationDetails(
+            notification.hashCode,
+            notification.title,
+            notification.body,
+            NotificationDetails(
+                android: AndroidNotificationDetails(
               channel.id,
               channel.name,
               channelDescription: channel.description,
               icon: "logo",
               color: Get.context!.theme.primaryColor,
-            ),
-          ),
-          payload: message.data[
-              'notification_type'], // Adding payload for notification click handling
-        );
+            )),
+            payload: message.data['notification_type']);
         saveNotification(message);
       }
     });
-
-    flutterLocalNotificationsPlugin.initialize(
-      InitializationSettings(
-        android: const AndroidInitializationSettings(
-            'logo'), // Ensure 'app_icon' exists
-        iOS: DarwinInitializationSettings(
-          onDidReceiveLocalNotification: (id, title, body, payload) async {
-            // Handle local notification on iOS
-          },
-        ),
-      ),
-      onDidReceiveNotificationResponse: (NotificationResponse response) async {
-        if (response.payload != null) {
-          _handleNotificationClickPayload(response.payload!);
-        }
-      },
-    );
   }
 
   Future<void> enableIOSNotifications() async {
@@ -132,18 +130,24 @@ class PushNotificationService {
 
   AndroidNotificationChannel androidNotificationChannel() =>
       const AndroidNotificationChannel(
-        'high_importance_channel',
-        'High Importance Notifications',
-        description: 'This channel is used for important notifications.',
+        'high_importance_channel', // id
+        'High Importance Notifications', // title
+        description:
+            'This channel is used for important notifications.', // description
         importance: Importance.max,
       );
 
-  static Future<void> _firebaseMessagingBackgroundHandler(
+  Future<void> _firebaseMessagingBackgroundHandler(
       RemoteMessage message) async {
     await Firebase.initializeApp();
-    debugPrint('Handling background message: ${message.messageId}');
-    PushNotificationService(FlutterLocalNotificationsPlugin())
-        .saveNotification(message);
+    debugPrint("Background Message Handler Working...");
+
+    try {
+      await Future.delayed(const Duration(seconds: 2));
+      _handleNotificationClickPayload(message.data['notification_type']);
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 
   void saveNotification(RemoteMessage message) {
@@ -214,7 +218,7 @@ class PushNotificationService {
 
   void _handleNotificationClick(RemoteMessage message) {
     debugPrint('Notification clicked with data: ${message.data}');
-    _handleNotificationType(message.data);
+    _handleNotificationClickPayload(message.data['notification_type']);
   }
 
   Future<void> _handleNotificationClickPayload(String payload) async {
@@ -310,7 +314,6 @@ class PushNotificationService {
       case "New Rider Request!":
       case "Ride Cancelled by Rider":
       case "Request Declined":
-        //!  "Get.put(MyRidesOneTimeController())" or "Get.lazyPut(()=>MyRidesOneTimeController())"
         if (currentRoute == Routes.BOTTOM_NAVIGATION) {
           homeController.changeTabIndex(1);
           await navigateToDriversRequestSection();
@@ -371,7 +374,6 @@ class PushNotificationService {
         }
         break;
 
-      //++++++++++++++++++++++++++++++++++++
       case "Ride_Published":
       case 'Start_Ride':
         if (currentRoute == Routes.BOTTOM_NAVIGATION) {

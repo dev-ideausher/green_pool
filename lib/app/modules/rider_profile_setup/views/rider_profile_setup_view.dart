@@ -7,7 +7,6 @@ import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../../components/dropdown_textfield.dart';
 import '../../../components/greenpool_textfield.dart';
 import '../../../components/richtext_heading.dart';
 import '../../../components/upload_id.dart';
@@ -281,7 +280,7 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
                     decoration: BoxDecoration(
                         color: ColorUtil.kGreyColor,
                         border: Border.all(
-                          color: !controller.isIDPicked.value &&
+                          color: controller.isIDPickedCheck.value &&
                                   (controller.selectedIDImagePath.value?.path ??
                                           "")
                                       .isEmpty

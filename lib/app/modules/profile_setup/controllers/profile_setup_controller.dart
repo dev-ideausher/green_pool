@@ -219,7 +219,7 @@ class ProfileSetupController extends GetxController
       'fullName': fullName.text,
       'email': email.text,
       'phone': phoneNumber.text,
-      'gender': gender.text,
+      'gender': gender.value.text,
       'city': city.value.text,
       'dob': dateOfBirth.text,
       'profilePic': await dio.MultipartFile.fromFile(
@@ -264,8 +264,8 @@ class ProfileSetupController extends GetxController
 
     final vehicleData = dio.FormData.fromMap({
       'model': model.text,
-      'type': type.value,
-      'color': color.value,
+      'type': type.value.text,
+      'color': color.value.text,
       'year': year.text,
       'licencePlate': licencePlate.text,
       'vehiclePic': await dio.MultipartFile.fromFile(
@@ -277,7 +277,6 @@ class ProfileSetupController extends GetxController
 
     if (storageService.profileStatus == true) {
       try {
-        await APIManager.postWelcomeEmail(emailId: {"email": email.text});
         final response = await APIManager.postVehicleDetails(body: vehicleData);
         showMySnackbar(msg: "Data filled successfully");
         storageService.isLoggedIn = true;

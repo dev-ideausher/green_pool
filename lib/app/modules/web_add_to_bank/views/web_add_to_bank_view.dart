@@ -25,9 +25,6 @@ class WebAddToBankView extends GetView<WebAddToBankController> {
                     ..loadRequest(Uri.parse(Endpoints.stripeBankUrl ?? ""))
                     ..setJavaScriptMode(JavaScriptMode.unrestricted)
                     ..setNavigationDelegate(NavigationDelegate(
-                      onPageFinished: (url) {
-                        // controller.isLoading.value = false;
-                      },
                       onUrlChange: (change) async {
                         if (change.url!.startsWith(
                             "https://api.greenpool.ca/v1/payment/stripe/callback?scope=read_write&code=")) {

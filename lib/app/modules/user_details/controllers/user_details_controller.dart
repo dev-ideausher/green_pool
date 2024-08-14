@@ -47,6 +47,7 @@ class UserDetailsController extends GetxController {
   RxBool isIDPicUpdated = false.obs;
   RxBool isCityListExpanded = false.obs;
   RxList<String> cityNames = <String>[].obs;
+  RxBool saveBtnLoading = false.obs;
 
   getProfileImage(ImageSource imageSource) async {
     XFile? pickedFile = await GpUtil.compressImage(imageSource);
@@ -73,6 +74,7 @@ class UserDetailsController extends GetxController {
   }
 
   Future<void> updateDetailsAPI() async {
+    saveBtnLoading.value = true;
     final File? pickedImageFile = selectedProfileImagePath!.value;
     final File? pickedIDFile = selectedIDImagePath!.value;
 
@@ -199,7 +201,9 @@ class UserDetailsController extends GetxController {
       Get.find<HomeController>().userInfoAPI();
       Get.find<HomeController>().changeTabIndex(0);
       Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
+      saveBtnLoading.value = false;
     } catch (e) {
+      saveBtnLoading.value = false;
       log("updateDetailsAPI error: $e");
     }
   }

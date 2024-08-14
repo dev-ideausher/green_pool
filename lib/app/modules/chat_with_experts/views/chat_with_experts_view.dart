@@ -224,7 +224,7 @@ class ChatWithExpertsView extends GetView<ChatWithExpertsController> {
                       hintText: Strings.writeMsg,
                       readOnly: !controller.isChatStarted.value,
                       keyboardType: TextInputType.text,
-                      textCapitalization: TextCapitalization.words,
+                      textCapitalization: TextCapitalization.sentences,
                       suffix: InkWell(
                           onTap: controller.isBtnActive.value
                               ? () {

@@ -206,6 +206,60 @@ class DialogHelper {
     );
   }
 
+  static void accSuspensionWarningDialog(Function() onPressed) {
+    Get.dialog(
+      useSafeArea: true,
+      Center(
+        child: Container(
+          padding: EdgeInsets.all(16.kh),
+          height: 246.kh,
+          width: 80.w,
+          decoration: BoxDecoration(
+            color: ColorUtil.kWhiteColor,
+            borderRadius: BorderRadius.circular(8.kh),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              GestureDetector(
+                onTap: () => Get.back(),
+                child: Container(
+                  alignment: Alignment.centerRight,
+                  child: const Icon(Icons.close),
+                ),
+              ),
+              Text(
+                "Account Suspension",
+                style: TextStyleUtil.k18Semibold(),
+                textAlign: TextAlign.left,
+              ).paddingSymmetric(vertical: 4.kh),
+              Text(
+                "Please note, you've canceled two rides in the past six months. If you cancel another ride, your account may be temporarily suspended.",
+                style: TextStyleUtil.k14Regular(
+                  color: ColorUtil.kBlack04,
+                ),
+                textAlign: TextAlign.left,
+              ).paddingOnly(bottom: 40.kh),
+              Container(
+                alignment: Alignment.centerRight,
+                child: GreenPoolButton(
+                  onPressed: onPressed,
+                  color: ColorUtil.kError2,
+                  height: 40.kh,
+                  width: 144.kw,
+                  label: "Cancel Ride",
+                  fontSize: 14.kh,
+                  labelColor: ColorUtil.kWhiteColor,
+                  padding: const EdgeInsets.all(8),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   static void accSuspendedDialog(Function() onPressed) {
     Get.dialog(
       useSafeArea: true,

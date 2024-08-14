@@ -48,7 +48,7 @@ class GetStorageService extends GetxService {
 
   String get getUserName => _runData.read('userName') ?? '';
   set setUserName(String val) => _runData.write('userName', val);
-  
+
   String get emailId => _runData.read('emailId') ?? '';
   set emailId(String val) => _runData.write('emailId', val);
 
@@ -57,6 +57,10 @@ class GetStorageService extends GetxService {
 
   String? get profilePicUrl => _runData.read('profilePicUrl') ?? '';
   set profilePicUrl(String? val) => _runData.write('profilePicUrl', val);
+
+  String get getSupportChatRoomId => _runData.read('supportChatRoomId') ?? '';
+  set setSupportChatRoomId(String val) =>
+      _runData.write('supportChatRoomId', val);
 
 //!
   File? get profilePic =>

@@ -30,7 +30,7 @@ class HelpSupportView extends GetView<HelpSupportController> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    /*Text(
                       Strings.getYourAnsHere,
                       style: TextStyleUtil.k16Bold(),
                     ).paddingOnly(bottom: 8.kh),
@@ -44,7 +44,7 @@ class HelpSupportView extends GetView<HelpSupportController> {
                         Icons.search,
                         color: ColorUtil.kBlack02,
                       ),
-                    ).paddingOnly(bottom: 8.kh),
+                    ).paddingOnly(bottom: 8.kh),*/
                     Expanded(
                       child: ListView.builder(
                         itemCount: controller.helpModel.length,
