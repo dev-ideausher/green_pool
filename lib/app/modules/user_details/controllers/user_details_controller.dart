@@ -35,8 +35,6 @@ class UserDetailsController extends GetxController {
       text: Get.find<HomeController>().userInfo.value.data?.phone);
   TextEditingController city = TextEditingController(
       text: Get.find<HomeController>().userInfo.value.data?.city);
-  // RxString selectedCity =
-  //     (Get.find<HomeController>().userInfo.value.data?.city ?? 'Brampton').obs;
   TextEditingController genderTextController = TextEditingController(
       text: Get.find<HomeController>().userInfo.value.data?.gender);
   TextEditingController dobTextController = TextEditingController(

@@ -14,6 +14,7 @@ import '../../../components/richtext_heading.dart';
 import '../../../res/strings.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
+import '../../../services/storage.dart';
 import '../../../services/text_style_util.dart';
 import '../../home/controllers/home_controller.dart';
 import '../controllers/user_details_controller.dart';
@@ -63,12 +64,8 @@ class UserDetailsView extends GetView<UserDetailsController> {
                                           child: CommonImageView(
                                             height: 50.kh,
                                             width: 50.kw,
-                                            url: Get.find<HomeController>()
-                                                    .userInfo
-                                                    .value
-                                                    .data
-                                                    ?.profilePic
-                                                    ?.url ??
+                                            url: Get.find<GetStorageService>()
+                                                    .profilePicUrl ??
                                                 '',
                                           ),
                                         ),

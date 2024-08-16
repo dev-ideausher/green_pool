@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 
 import '../controllers/my_rides_one_time_controller.dart';
 
-class MyRidesOneTImeBinding extends Bindings {
+class MyRidesOneTimeBinding extends Bindings {
   @override
   void dependencies() {
     // Get.put(() => MyRidesOneTimeController());

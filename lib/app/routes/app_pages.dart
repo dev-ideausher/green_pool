@@ -41,7 +41,7 @@ import '../modules/messages/bindings/messages_binding.dart';
 import '../modules/messages/views/messages_view.dart';
 import '../modules/my_rides_details/bindings/my_rides_details_binding.dart';
 import '../modules/my_rides_details/views/my_rides_details_view.dart';
-import '../modules/my_rides_one_time/bindings/my_rides_binding.dart';
+import '../modules/my_rides_one_time/bindings/my_rides_one_time_binding.dart';
 import '../modules/my_rides_one_time/views/my_rides_one_time_view.dart';
 import '../modules/my_rides_page/bindings/my_rides_page_binding.dart';
 import '../modules/my_rides_page/views/my_rides_page_view.dart';

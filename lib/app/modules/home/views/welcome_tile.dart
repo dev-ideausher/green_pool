@@ -34,7 +34,8 @@ class WelcomeTile extends StatelessWidget {
                       TextSpan(
                         text: storageService.isLoggedIn &&
                                 storageService.profileStatus
-                            ? " ${controller.userInfo.value.data?.fullName ?? "..."}"
+                            ? " ${Get.find<GetStorageService>().getUserName ?? "..."}"
+                            // ? " ${controller.userInfo.value.data?.fullName ?? "..."}"
                             : "",
                         style: TextStyleUtil.k24Heading700(
                             color: storageService.isPinkMode

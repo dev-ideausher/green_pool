@@ -31,7 +31,7 @@ class FileDisputeView extends GetView<FileDisputeController> {
       body: Obx(
         () => controller.isLoading.value
             ? const GpProgress()
-            : controller.rideHistModel.value.data!.isEmpty
+            : controller.fileDisputeModel.value.data!.isEmpty
                 ? Center(
                     child: Text(
                       Strings.noRideHistory,
@@ -43,7 +43,7 @@ class FileDisputeView extends GetView<FileDisputeController> {
                       Expanded(
                         child: ListView.builder(
                           itemCount:
-                              controller.rideHistModel.value.data?.length,
+                              controller.fileDisputeModel.value.data?.length,
                           itemBuilder: (context, index) {
                             return Container(
                               padding: EdgeInsets.all(16.kh),
@@ -64,7 +64,7 @@ class FileDisputeView extends GetView<FileDisputeController> {
                                             BorderRadius.circular(8.kh),
                                         child: CommonImageView(
                                           url:
-                                              "${controller.rideHistModel.value.data?[index]?.driver?.profilePic?.url}",
+                                              "${controller.fileDisputeModel.value.data?[index]?.driver?.profilePic?.url}",
                                           height: 46.kh,
                                           width: 46.kw,
                                         ),
@@ -74,7 +74,7 @@ class FileDisputeView extends GetView<FileDisputeController> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            "${controller.rideHistModel.value.data?[index]?.driver?.fullName}",
+                                            "${controller.fileDisputeModel.value.data?[index]?.driver?.fullName}",
                                             style: TextStyleUtil.k16Bold(),
                                           ),
                                           12.kheightBox,
@@ -94,18 +94,17 @@ class FileDisputeView extends GetView<FileDisputeController> {
                                                     BlendMode.srcIn),
                                               ).paddingOnly(right: 4.kw),
                                               Text(
-                                                GpUtil.getDateFormat(
-                                                    controller
-                                                            .rideHistModel
-                                                            .value
-                                                            .data?[index]
-                                                            ?.time ??
-                                                        ""),
+                                                GpUtil.getDateFormat(controller
+                                                        .fileDisputeModel
+                                                        .value
+                                                        .data?[index]
+                                                        ?.time ??
+                                                    ""),
                                                 style: TextStyleUtil.k12Regular(
                                                     color: ColorUtil.kBlack03),
                                               ),
                                               /*Text(
-                                                "${controller.rideHistModel.value.data?[index]?.time}",
+                                                "${controller.fileDisputeModel.value.data?[index]?.time}",
                                                 style: TextStyleUtil.k12Regular(
                                                     color: ColorUtil.kBlack03),
                                               ).paddingOnly(left: 8.kw),*/
@@ -123,7 +122,7 @@ class FileDisputeView extends GetView<FileDisputeController> {
                                             child: ListView.builder(
                                               shrinkWrap: true,
                                               itemCount: controller
-                                                  .rideHistModel
+                                                  .fileDisputeModel
                                                   .value
                                                   .data?[index]
                                                   ?.riders
@@ -140,7 +139,7 @@ class FileDisputeView extends GetView<FileDisputeController> {
                                                       size: Size.fromRadius(
                                                           12.kh),
                                                       child: (controller
-                                                                      .rideHistModel
+                                                                      .fileDisputeModel
                                                                       .value
                                                                       .data?[
                                                                           index]
@@ -154,7 +153,7 @@ class FileDisputeView extends GetView<FileDisputeController> {
                                                             )
                                                           : CommonImageView(
                                                               url: controller
-                                                                      .rideHistModel
+                                                                      .fileDisputeModel
                                                                       .value
                                                                       .data?[
                                                                           index]!
@@ -177,35 +176,77 @@ class FileDisputeView extends GetView<FileDisputeController> {
                                   OriginToDestination(
                                           needPickupText: false,
                                           origin:
-                                              "${controller.rideHistModel.value.data?[index]?.origin?.name}",
-                                          stop1: controller.rideHistModel.value.data?[index]?.stops?[0]?.name ?? "",    
-                                          stop2: controller.rideHistModel.value.data?[index]?.stops?[1]?.name ?? "",    
+                                              "${controller.fileDisputeModel.value.data?[index]?.origin?.name}",
+                                          stop1: controller
+                                                  .fileDisputeModel
+                                                  .value
+                                                  .data?[index]
+                                                  ?.stops?[0]
+                                                  ?.name ??
+                                              "",
+                                          stop2: controller
+                                                  .fileDisputeModel
+                                                  .value
+                                                  .data?[index]
+                                                  ?.stops?[1]
+                                                  ?.name ??
+                                              "",
                                           destination:
-                                              "${controller.rideHistModel.value.data?[index]?.destination?.name}")
+                                              "${controller.fileDisputeModel.value.data?[index]?.destination?.name}")
                                       .paddingSymmetric(vertical: 8.kh),
                                   const GreenPoolDivider()
                                       .paddingOnly(bottom: 16.kh),
-                                  GreenPoolButton(
-                                    onPressed: () {
-                                      Get.toNamed(Routes.SUBMIT_DISPUTE,
-                                          arguments: controller.rideHistModel
-                                              .value.data?[index]?.Id);
-                                    },
-                                    isBorder: true,
-                                    height: 40.kh,
-                                    padding: EdgeInsets.all(8.kh),
-                                    fontSize: 14.kh,
-                                    borderColor: Get.find<HomeController>()
-                                            .isPinkModeOn
-                                            .value
-                                        ? ColorUtil.kPrimary3PinkMode
-                                        : ColorUtil.kSecondary01,
-                                    labelColor: Get.find<HomeController>()
-                                            .isPinkModeOn
-                                            .value
-                                        ? ColorUtil.kPrimary3PinkMode
-                                        : ColorUtil.kSecondary01,
-                                    label: Strings.fileDispute,
+                                  Obx(
+                                    () => controller.fileDisputeModel.value
+                                                .data?[index]?.status ==
+                                            "raised"
+                                        ? Container(
+                                            width: 100.w,
+                                            alignment: Alignment.center,
+                                            decoration: BoxDecoration(
+                                                color: ColorUtil.kNeutral1,
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        8.kh)),
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: 4.kh,
+                                                horizontal: 24.kw),
+                                            child: Text(
+                                              "Filed a dispute",
+                                              style: TextStyleUtil.k14Semibold(
+                                                  color: ColorUtil.kError2),
+                                            ),
+                                          )
+                                        : GreenPoolButton(
+                                            onPressed: () {
+                                              controller.moveToSubmitDispute(
+                                                  controller
+                                                          .fileDisputeModel
+                                                          .value
+                                                          .data?[index]
+                                                          ?.Id ??
+                                                      "");
+                                            },
+                                            isBorder: true,
+                                            height: 40.kh,
+                                            padding: EdgeInsets.all(8.kh),
+                                            fontSize: 14.kh,
+                                            borderColor:
+                                                Get.find<HomeController>()
+                                                        .isPinkModeOn
+                                                        .value
+                                                    ? ColorUtil
+                                                        .kPrimary3PinkMode
+                                                    : ColorUtil.kSecondary01,
+                                            labelColor:
+                                                Get.find<HomeController>()
+                                                        .isPinkModeOn
+                                                        .value
+                                                    ? ColorUtil
+                                                        .kPrimary3PinkMode
+                                                    : ColorUtil.kSecondary01,
+                                            label: Strings.fileDispute,
+                                          ),
                                   ),
                                 ],
                               ),

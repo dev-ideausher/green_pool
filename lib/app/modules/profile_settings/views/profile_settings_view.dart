@@ -10,6 +10,7 @@ import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../constants/image_constant.dart';
+import '../../../services/storage.dart';
 import '../../../services/text_style_util.dart';
 import '../controllers/profile_settings_controller.dart';
 
@@ -32,10 +33,10 @@ class ProfileSettingsView extends GetView<ProfileSettingsController> {
                         height: 44.kh,
                         width: 44.kw,
                         url:
-                            "${Get.find<HomeController>().userInfo.value.data?.profilePic?.url}"))),
+                            "${Get.find<GetStorageService>().profilePicUrl}"))),
           ).paddingOnly(bottom: 8.kh, top: 16.kh),
           Text(
-            Get.find<HomeController>().userInfo.value.data?.fullName ?? "User",
+            Get.find<GetStorageService>().getUserName ?? "User",
             style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
           ).paddingOnly(bottom: 24.kh),
           ProfileContainer(

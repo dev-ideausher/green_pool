@@ -108,7 +108,6 @@ class ChatPageController extends GetxController {
       WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToBottom());
       final res = await APIManager.sendMessage(
           body: {"message": msg, "receiverId": chatArg.value.id});
-      eMsg.clear();
       chatArg.value.chatRoomId = res.data["chatRoomId"];
       getChat();
     } catch (e) {

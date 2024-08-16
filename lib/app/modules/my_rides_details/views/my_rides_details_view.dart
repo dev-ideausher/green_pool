@@ -111,10 +111,21 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                     ).paddingOnly(bottom: 16.kh),
 
                     //co passengers drivers view
-                    Text(
-                      Strings.coPassengers,
-                      style: TextStyleUtil.k14Bold(),
-                    ).paddingOnly(bottom: 16.kh),
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          Strings.coPassengers,
+                          style: TextStyleUtil.k14Bold(),
+                        ),
+                        Text(
+                          "${controller.myRidesModelData.value.driverBookingDetails?.seatAvailable} seats left",
+                          style: TextStyleUtil.k14Semibold(),
+                        ),
+                      ],
+                    ),
+                    16.kheightBox,
 
                     (controller.myRidesModelData.value.driverBookingDetails
                                     ?.riderBookingDetails?.length ??

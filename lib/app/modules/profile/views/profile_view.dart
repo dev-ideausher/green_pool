@@ -16,6 +16,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../res/strings.dart';
+import '../../../services/storage.dart';
 import '../../../services/text_style_util.dart';
 import '../controllers/profile_controller.dart';
 import 'profile_container.dart';
@@ -43,19 +44,15 @@ class ProfileView extends GetView<ProfileController> {
                 child: ClipOval(
                     child: SizedBox.fromSize(
                         size: Size.fromRadius(44.kh),
-                        child:
-                            controller.userInfo.value.data?.profilePic?.url ==
-                                    null
-                                ? Icon(Icons.account_circle, size: 84.kh)
-                                : CommonImageView(
-                                    height: 44.kh,
-                                    width: 44.kw,
-                                    url: controller.userInfo.value.data!
-                                        .profilePic?.url))),
+                        child: CommonImageView(
+                            height: 44.kh,
+                            width: 44.kw,
+                            url:
+                                "${Get.find<GetStorageService>().profilePicUrl}"))),
               ).paddingOnly(bottom: 8.kh, top: 16.kh),
             ),
             Text(
-              controller.userInfo.value.data?.fullName ?? 'User',
+              Get.find<GetStorageService>().getUserName ?? 'User',
               style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
             ).paddingOnly(bottom: 24.kh),
             controller.userInfo.value.data?.gender == "Female"

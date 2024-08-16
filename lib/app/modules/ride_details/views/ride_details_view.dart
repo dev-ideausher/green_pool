@@ -50,13 +50,18 @@ class RideDetailsView extends GetView<RideDetailsController> {
                   Icon(
                     isRideCancelled ? Icons.block : Icons.check,
                     size: 20.kh,
-                    color: ColorUtil.kBlack01,
+                    color: isRideCancelled
+                        ? ColorUtil.kWhiteColor
+                        : ColorUtil.kBlack01,
                   ).paddingOnly(right: 8.kw),
                   Text(
                     isRideCancelled
                         ? "Ride Cancelled"
                         : 'Completed Successfully',
-                    style: TextStyleUtil.k14Regular(),
+                    style: TextStyleUtil.k14Regular(
+                        color: isRideCancelled
+                            ? ColorUtil.kWhiteColor
+                            : ColorUtil.kBlack01),
                   ),
                 ],
               ),

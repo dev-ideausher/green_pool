@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
 
 //test
 import 'package:flutter/material.dart';
@@ -15,7 +14,6 @@ import 'package:green_pool/app/services/dio/api_service.dart';
 import 'package:green_pool/app/services/dio/endpoints.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/snackbar.dart';
-import 'package:path/path.dart';
 
 import '../../../data/booking_detail_model.dart';
 import '../../../data/chat_arg.dart';

@@ -92,11 +92,12 @@ class DriverDetailsController extends GetxController {
             arguments: ChatArg(
                 chatRoomId: "",
                 id: matchingRidesModelData.value.driverDetails?.first?.Id,
+                deleteUpdateTime: "",
                 name:
                     matchingRidesModelData.value.driverDetails?.first?.fullName,
                 image: matchingRidesModelData
                     .value.driverDetails?.first?.profilePic?.url));
-        messageBtnLoading.value = true;
+        messageBtnLoading.value = false;
       } catch (e) {
         debugPrint(e.toString());
       }

@@ -83,7 +83,7 @@ class MyRidesOneTimeController extends GetxController {
     if ((userInfo?.rideCancellationDetails?.count ?? 0) >= 2 &&
         GpUtil.checkSixMonthsDuration(
             userInfo!.rideCancellationDetails!.cancellationDate!)) {
-      DialogHelper.accSuspensionWarningDialog(() {
+      DialogHelper.accSuspensionWarningDialog(
         () async {
           Get.back();
           final Map<String, dynamic> driverRideId = {
@@ -95,6 +95,9 @@ class MyRidesOneTimeController extends GetxController {
                 await APIManager.cancelRide(body: driverRideId);
             if (cancelRideResponse.data['status']) {
               await myRidesAPI();
+              Get.find<HomeController>().changeTabIndex(0);
+              await Get.find<HomeController>().userInfoAPI();
+              Get.find<HomeController>().changeTabIndex(0);
             } else {
               showMySnackbar(
                   msg: cancelRideResponse.data["message"].toString());
@@ -103,8 +106,8 @@ class MyRidesOneTimeController extends GetxController {
           } catch (e) {
             debugPrint(e.toString());
           }
-        };
-      });
+        },
+      );
     } else {
       DialogHelper.cancelRideDialog(
         () async {
@@ -206,6 +209,7 @@ class MyRidesOneTimeController extends GetxController {
               date: myRidesModelData.date,
               time: myRidesModelData.time,
               description: myRidesModelData.description,
+              seatAvailable: myRidesModelData.seatAvailable,
               preferences: BookingDetailModelDataDriverBookingDetailsPreferences(
                   other:
                       BookingDetailModelDataDriverBookingDetailsPreferencesOther(

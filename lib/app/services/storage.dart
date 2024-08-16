@@ -62,6 +62,9 @@ class GetStorageService extends GetxService {
   set setSupportChatRoomId(String val) =>
       _runData.write('supportChatRoomId', val);
 
+  bool get accSuspended => _runData.read('accSuspended') ?? false;
+  set accSuspended(bool val) => _runData.write('accSuspended', val);
+
 //!
   File? get profilePic =>
       _runData.read('userAppId') ?? File(ImageConstant.svgSetupProfilePic);

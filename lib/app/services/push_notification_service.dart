@@ -8,6 +8,7 @@ import 'package:green_pool/app/modules/messages/controllers/messages_controller.
 import 'package:green_pool/app/modules/my_rides_request/controllers/my_rides_request_controller.dart';
 import 'package:green_pool/app/modules/rider_confirmed_ride_details/controllers/rider_confirmed_ride_details_controller.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
+import 'package:green_pool/app/services/storage.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../data/chat_arg.dart';
 import '../data/ride_detail_id.dart';
@@ -65,7 +66,8 @@ class PushNotificationService {
     flutterLocalNotificationsPlugin.initialize(
       initSettings,
       onDidReceiveNotificationResponse: (NotificationResponse details) {
-        _handleNotificationClickPayload(actionData!.data['notification_type']);
+        _handleNotificationClickPayload(
+            actionData!.data['notification_type'] ?? "");
         debugPrint("NotificationResponse: $details");
       },
     );
@@ -73,7 +75,7 @@ class PushNotificationService {
       FirebaseMessaging.onBackgroundMessage(
           _firebaseMessagingBackgroundHandler);
     } catch (e) {
-      debugPrint(e.toString());
+      debugPrint("onBackgroundMessage error: $e");
     }
     FirebaseMessaging.onMessage.listen((RemoteMessage? message) {
       if (message == null) return;
@@ -95,7 +97,7 @@ class PushNotificationService {
               icon: "logo",
               color: Get.context!.theme.primaryColor,
             )),
-            payload: message.data['notification_type']);
+            payload: message.data['notification_type'] ?? "");
         saveNotification(message);
       }
     });
@@ -146,7 +148,7 @@ class PushNotificationService {
       await Future.delayed(const Duration(seconds: 2));
       _handleNotificationClickPayload(message.data['notification_type']);
     } catch (e) {
-      debugPrint(e.toString());
+      debugPrint("_firebaseMessagingBackgroundHandler error: $e");
     }
   }
 
@@ -195,13 +197,16 @@ class PushNotificationService {
         }
         break;
 
+      case "Account Suspended":
+        Get.find<GetStorageService>().accSuspended = true;
+        break;
       //
 
       case 'Chat':
         Get.find<MessagesController>().getMessageListAPI();
         break;
 
-      // case 'Start Ride':
+      case 'Start Ride':
       case 'Start_Ride':
         if (Get.currentRoute == Routes.RIDER_CONFIRMED_RIDE_DETAILS) {
           Get.find<MyRidesOneTimeController>().myRidesAPI();
@@ -218,7 +223,7 @@ class PushNotificationService {
 
   void _handleNotificationClick(RemoteMessage message) {
     debugPrint('Notification clicked with data: ${message.data}');
-    _handleNotificationClickPayload(message.data['notification_type']);
+    _handleNotificationClickPayload(message.data['notification_type'] ?? "");
   }
 
   Future<void> _handleNotificationClickPayload(String payload) async {
@@ -264,9 +269,14 @@ class PushNotificationService {
     Future<void> navigateToDriversRequestSection() async {
       try {
         //navigate to request section
-        await Get.toNamed(Routes.MY_RIDES_REQUEST,
-            arguments: RideDetailId(
-                driverRidId: actionData?.data['rideId'] ?? "", riderRidId: ""));
+        Future.delayed(const Duration(seconds: 1)).then(
+          (value) async {
+            await Get.toNamed(Routes.MY_RIDES_REQUEST,
+                arguments: RideDetailId(
+                    driverRidId: actionData?.data['rideId'] ?? "",
+                    riderRidId: ""));
+          },
+        );
       } catch (e) {
         debugPrint(e.toString());
       }
@@ -312,6 +322,22 @@ class PushNotificationService {
 
       //for drivers
       case "New Rider Request!":
+        if (currentRoute == Routes.BOTTOM_NAVIGATION) {
+          homeController.changeTabIndex(1);
+          await navigateToDriversRequestSection();
+        } else if (currentRoute == Routes.MY_RIDES_REQUEST) {
+          //page will refresh as soon as the notification is received
+          print("refresh confirm rides page");
+        } else if (currentRoute == Routes.MY_RIDES_DETAILS) {
+          await Get.toNamed(Routes.MY_RIDES_REQUEST,
+              arguments: RideDetailId(
+                  driverRidId: actionData?.data['rideId'] ?? "",
+                  riderRidId: ""));
+        } else {
+          await navigateToBottomNavigation(1);
+          await navigateToDriversRequestSection();
+        }
+        break;
       case "Ride Cancelled by Rider":
       case "Request Declined":
         if (currentRoute == Routes.BOTTOM_NAVIGATION) {
@@ -375,6 +401,7 @@ class PushNotificationService {
         break;
 
       case "Ride_Published":
+      case 'Start Ride':
       case 'Start_Ride':
         if (currentRoute == Routes.BOTTOM_NAVIGATION) {
           homeController.changeTabIndex(1);

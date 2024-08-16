@@ -96,8 +96,7 @@ class ChatWithExpertsController extends GetxController {
         messages.refresh();
         final res =
             await APIManager.userSupportFirstMessage(body: {"issueType": msg});
-        if (res.data["message"] == "Chat message written successfully.") {
-          eMsg.clear();
+        if (res.data["message"] == "Chat message written successfully.") {          
           chatRoomId = res.data["chatRoomId"];
           Get.find<GetStorageService>().setSupportChatRoomId =
               res.data["chatRoomId"];
@@ -114,8 +113,7 @@ class ChatWithExpertsController extends GetxController {
         WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToBottom());
         print("SENDING MSG");
         final res = await APIManager.userSupportSendMessage(
-            body: {"message": msg, "chatRoomId": chatRoomId});
-        eMsg.clear();
+            body: {"message": msg, "chatRoomId": chatRoomId});        
         chatRoomId = res.data["chatRoomId"];
         Get.find<GetStorageService>().setSupportChatRoomId =
             res.data["chatRoomId"];
