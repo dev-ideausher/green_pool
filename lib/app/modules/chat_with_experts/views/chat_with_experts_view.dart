@@ -226,13 +226,9 @@ class ChatWithExpertsView extends GetView<ChatWithExpertsController> {
                       keyboardType: TextInputType.text,
                       textCapitalization: TextCapitalization.sentences,
                       suffix: InkWell(
-                          onTap: controller.isBtnActive.value
-                              ? () {
-                                  controller.sendMsg();
-                                }
-                              : () {
-                                  debugPrint("btn not active");
-                                },
+                          onTap: () {
+                            controller.sendMsg();
+                          },
                           child: SvgPicture.asset(ImageConstant.svgIconSend)),
                     ).paddingOnly(bottom: 40.kh, top: 5.kh),
                   )
@@ -259,7 +255,6 @@ class SuggestionsChip extends StatelessWidget {
           ? () {}
           : () {
               controller.eMsg.text = topic;
-              controller.isBtnActive.value = true;
             },
       child: IntrinsicWidth(
         child: Container(

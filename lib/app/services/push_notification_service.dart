@@ -257,6 +257,7 @@ class PushNotificationService {
           Get.toNamed(Routes.CHAT_PAGE,
               arguments: ChatArg(
                   chatRoomId: "",
+                  deleteUpdateTime: "",
                   id: actionData?.data['senderId'],
                   name: actionData?.data['name'],
                   image: actionData?.data['profilePic']));
@@ -299,6 +300,7 @@ class PushNotificationService {
       case "Your Driver Has Arrived":
       case "Ride Request Accepted":
       case "Request Cancelled":
+      case "Ride Cancelled by Rider":
         if (currentRoute == Routes.BOTTOM_NAVIGATION) {
           homeController.changeTabIndex(1);
         } else {
@@ -338,7 +340,7 @@ class PushNotificationService {
           await navigateToDriversRequestSection();
         }
         break;
-      case "Ride Cancelled by Rider":
+
       case "Request Declined":
         if (currentRoute == Routes.BOTTOM_NAVIGATION) {
           homeController.changeTabIndex(1);

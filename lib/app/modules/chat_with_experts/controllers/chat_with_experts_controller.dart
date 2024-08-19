@@ -14,7 +14,6 @@ class ChatWithExpertsController extends GetxController {
   final TextEditingController eMsg = TextEditingController();
   final RxBool isLoad = true.obs;
   final RxBool isChatStarted = true.obs;
-  final RxBool isBtnActive = false.obs;
 
   @override
   void onInit() {
@@ -81,7 +80,15 @@ class ChatWithExpertsController extends GetxController {
     );
   }
 
-  Future<void> sendMsg() async {
+  sendMsg() async {
+    if (eMsg.text.trim().isEmpty) {
+      return;
+    } else {
+      await setMessageInApi();
+    }
+  }
+
+  Future<void> setMessageInApi() async {
     final msg = eMsg.text;
     eMsg.clear();
     final timestamp = DateTime.now().toUtc();
@@ -96,7 +103,7 @@ class ChatWithExpertsController extends GetxController {
         messages.refresh();
         final res =
             await APIManager.userSupportFirstMessage(body: {"issueType": msg});
-        if (res.data["message"] == "Chat message written successfully.") {          
+        if (res.data["message"] == "Chat message written successfully.") {
           chatRoomId = res.data["chatRoomId"];
           Get.find<GetStorageService>().setSupportChatRoomId =
               res.data["chatRoomId"];
@@ -111,13 +118,11 @@ class ChatWithExpertsController extends GetxController {
             timestamp: timestamp));
         messages.refresh();
         WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToBottom());
-        print("SENDING MSG");
         final res = await APIManager.userSupportSendMessage(
-            body: {"message": msg, "chatRoomId": chatRoomId});        
+            body: {"message": msg, "chatRoomId": chatRoomId});
         chatRoomId = res.data["chatRoomId"];
         Get.find<GetStorageService>().setSupportChatRoomId =
             res.data["chatRoomId"];
-        print("MSG SENT");
         //clear the id from storage when Resolved is coming in response
       }
       getChat();
