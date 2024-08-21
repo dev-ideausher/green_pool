@@ -202,11 +202,11 @@ class ProfileView extends GetView<ProfileController> {
                             onPressed: () {
                               Get.find<AuthService>().logOutUser();
                               controller.pinkMode.value = false;
+                              PushNotificationService.unsubFcm(
+                                  "${controller.userInfo.value.data?.Id}");
                               Get.find<HomeController>().selectedIndex.value =
                                   0;
                               Get.offAllNamed(Routes.ONBOARDING);
-                              PushNotificationService.unsubFcm(
-                                  "${controller.userInfo.value.data?.Id}");
                             },
                             height: 40.kh,
                             width: 144.kw,

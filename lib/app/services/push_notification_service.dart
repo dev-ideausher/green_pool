@@ -304,8 +304,12 @@ class PushNotificationService {
     Future<void> navigateToRidersRequestSection() async {
       try {
         //navigate to request section
-        Get.toNamed(Routes.RIDER_MY_RIDE_REQUEST,
-            arguments: actionData?.data['rideId'] ?? "");
+        Future.delayed(const Duration(seconds: 1)).then(
+          (value) async {
+            await Get.toNamed(Routes.RIDER_MY_RIDE_REQUEST,
+                arguments: actionData?.data['rideId'] ?? "");
+          },
+        );
       } catch (e) {
         debugPrint(e.toString());
       }
@@ -386,7 +390,8 @@ class PushNotificationService {
       case "Ride Completed":
         if (currentRoute == Routes.RIDER_START_RIDE_MAP) {
           Get.offNamed(Routes.RATING_RIDER_SIDE, arguments: actionData?.data);
-        } else if (currentRoute == Routes.START_RIDE) {
+        } else if (currentRoute == Routes.START_RIDE ||
+            currentRoute == Routes.RATING_DRIVER_SIDE) {
           print("ride ended");
         } else {
           Get.toNamed(Routes.RATING_RIDER_SIDE, arguments: actionData?.data);
@@ -427,7 +432,8 @@ class PushNotificationService {
       case "Ride_Published":
       case 'Start Ride':
       case 'Start_Ride':
-        if (currentRoute == Routes.BOTTOM_NAVIGATION) {
+        if (currentRoute == Routes.BOTTOM_NAVIGATION ||
+            currentRoute == Routes.START_RIDE) {
           homeController.changeTabIndex(1);
         } else {
           navigateToBottomNavigation(1);

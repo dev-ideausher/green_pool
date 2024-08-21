@@ -217,36 +217,70 @@ class FileDisputeView extends GetView<FileDisputeController> {
                                                   color: ColorUtil.kError2),
                                             ),
                                           )
-                                        : GreenPoolButton(
-                                            onPressed: () {
-                                              controller.moveToSubmitDispute(
-                                                  controller
-                                                          .fileDisputeModel
-                                                          .value
-                                                          .data?[index]
-                                                          ?.Id ??
-                                                      "");
-                                            },
-                                            isBorder: true,
-                                            height: 40.kh,
-                                            padding: EdgeInsets.all(8.kh),
-                                            fontSize: 14.kh,
-                                            borderColor:
-                                                Get.find<HomeController>()
-                                                        .isPinkModeOn
-                                                        .value
-                                                    ? ColorUtil
-                                                        .kPrimary3PinkMode
-                                                    : ColorUtil.kSecondary01,
-                                            labelColor:
-                                                Get.find<HomeController>()
-                                                        .isPinkModeOn
-                                                        .value
-                                                    ? ColorUtil
-                                                        .kPrimary3PinkMode
-                                                    : ColorUtil.kSecondary01,
-                                            label: Strings.fileDispute,
-                                          ),
+                                        : controller.fileDisputeModel.value
+                                                    .data?[index]?.status ==
+                                                "resolved"
+                                            ? Container(
+                                                padding: EdgeInsets.symmetric(
+                                                    vertical: 8.kh,
+                                                    horizontal: 16.kw),
+                                                decoration: BoxDecoration(
+                                                    color:
+                                                        ColorUtil.kSecondary07,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8.kh)),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Icon(
+                                                      Icons.check,
+                                                      size: 20.kh,
+                                                      color: ColorUtil.kBlack01,
+                                                    ).paddingOnly(right: 8.kw),
+                                                    Text(
+                                                      'Resolved',
+                                                      style: TextStyleUtil
+                                                          .k14Regular(
+                                                              color: ColorUtil
+                                                                  .kBlack01),
+                                                    ),
+                                                  ],
+                                                ),
+                                              )
+                                            : GreenPoolButton(
+                                                onPressed: () {
+                                                  controller.moveToSubmitDispute(
+                                                      controller
+                                                              .fileDisputeModel
+                                                              .value
+                                                              .data?[index]
+                                                              ?.Id ??
+                                                          "");
+                                                },
+                                                isBorder: true,
+                                                height: 40.kh,
+                                                padding: EdgeInsets.all(8.kh),
+                                                fontSize: 14.kh,
+                                                borderColor:
+                                                    Get.find<HomeController>()
+                                                            .isPinkModeOn
+                                                            .value
+                                                        ? ColorUtil
+                                                            .kPrimary3PinkMode
+                                                        : ColorUtil
+                                                            .kSecondary01,
+                                                labelColor:
+                                                    Get.find<HomeController>()
+                                                            .isPinkModeOn
+                                                            .value
+                                                        ? ColorUtil
+                                                            .kPrimary3PinkMode
+                                                        : ColorUtil
+                                                            .kSecondary01,
+                                                label: Strings.fileDispute,
+                                              ),
                                   ),
                                 ],
                               ),

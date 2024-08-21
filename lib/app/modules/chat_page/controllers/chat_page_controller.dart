@@ -96,7 +96,7 @@ class ChatPageController extends GetxController {
     String msg = eMsg.text;
     eMsg.clear();
     final RegExp phoneRegex = RegExp(
-      r'(\+?\d[\d\-\.\s\(\)]{7,}\d)',
+      r'(\+?\d[\d\-\.\s\(\)]{3,}\d)',
     );
     msg = msg.replaceAll(phoneRegex, '(Phone Number Hidden)');
     final timestamp = DateTime.now().toUtc();
