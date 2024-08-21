@@ -293,9 +293,6 @@ class VerifyController extends GetxController {
           'isDriver': false,
           'fullName': fullName
         });
-        // showMySnackbar(
-        //     msg:
-        //         "Account not found. A new account has been successfully created.");
       } else {
         //user will have post/find ride data which needs to be transferred
         //check if driver or rider
@@ -307,9 +304,6 @@ class VerifyController extends GetxController {
             'isDriver': false,
             'fullName': fullName
           });
-          // showMySnackbar(
-          //     msg:
-          //         "Account not found. A new account has been successfully created.");
         } else {
           //driver
           Get.offNamed(Routes.VERIFICATION_DONE, arguments: {
@@ -318,9 +312,6 @@ class VerifyController extends GetxController {
             'isDriver': true,
             'fullName': fullName
           });
-          showMySnackbar(
-              msg:
-                  "Account not found. A new account has been successfully created.");
         }
       }
     }

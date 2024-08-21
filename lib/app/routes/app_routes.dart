@@ -11,7 +11,6 @@ abstract class Routes {
   static const MY_RIDES_REQUEST = _Paths.MY_RIDES_REQUEST;
   static const MESSAGES = _Paths.MESSAGES;
   static const PROFILE = _Paths.PROFILE;
-  static const POST_RIDE = _Paths.POST_RIDE;
   static const NOTIFICATIONS = _Paths.NOTIFICATIONS;
   static const ORIGIN = _Paths.ORIGIN;
   static const DESTINATION = _Paths.DESTINATION;
@@ -92,6 +91,7 @@ abstract class Routes {
   static const ADD_GIFT = _Paths.ADD_GIFT;
   static const CHAT_WITH_EXPERTS = _Paths.CHAT_WITH_EXPERTS;
   static const WEB_ADD_TO_BANK = _Paths.WEB_ADD_TO_BANK;
+  static const MY_RIDES_CONFIRM_DETAILS = _Paths.MY_RIDES_CONFIRM_DETAILS;
 }
 
 abstract class _Paths {
@@ -102,7 +102,6 @@ abstract class _Paths {
   static const ONBOARDING = '/onboarding';
   static const MESSAGES = '/messages';
   static const PROFILE = '/profile';
-  static const POST_RIDE = '/post-ride';
   static const NOTIFICATIONS = '/notifications';
   static const ORIGIN = '/origin';
   static const DESTINATION = '/destination';
@@ -182,4 +181,5 @@ abstract class _Paths {
   static const ADD_GIFT = '/add-gift';
   static const CHAT_WITH_EXPERTS = '/chat-with-experts';
   static const WEB_ADD_TO_BANK = '/web-add-to-bank';
+  static const MY_RIDES_CONFIRM_DETAILS = '/my-rides-confirm-details';
 }

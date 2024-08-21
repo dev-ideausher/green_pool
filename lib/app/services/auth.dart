@@ -107,7 +107,10 @@ class AuthService extends GetxService {
         }
       });
     } catch (error) {
-      showMySnackbar(msg: error.toString());
+      showMySnackbar(
+          msg:
+              "Verification Error: Unable to verify your mobile number. Please try again");
+      // showMySnackbar(msg: error.toString());
       completer.completeError(error);
     }
 

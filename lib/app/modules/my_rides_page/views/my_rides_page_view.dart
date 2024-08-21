@@ -40,8 +40,8 @@ class MyRidesPageView extends GetView<MyRidesPageController> {
                               await Get.find<MyRidesOneTimeController>()
                                   .myRidesAPI(isRecurring: true);
                             } else {
-                              await Get.find<MyRidesOneTimeController>()
-                                  .myRidesAPI();
+                              // await Get.find<MyRidesOneTimeController>()
+                              //     .myRidesAPI();
                             }
                           },
                           indicatorSize: TabBarIndicatorSize.tab,

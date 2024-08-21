@@ -103,6 +103,7 @@ class PostRideStepThreeView extends GetView<PostRideStepThreeController> {
                             child: Text(
                               "${controller.postRideModel.value.ridesDetails?.origin?.name.toString().split(",").first} to ${controller.postRideModel.value.ridesDetails?.destination?.name.toString().split(",").first}",
                               style: TextStyleUtil.k14Semibold(),
+                              textAlign: TextAlign.end,
                             ),
                           ),
                         ),
@@ -173,7 +174,7 @@ class PostRideStepThreeView extends GetView<PostRideStepThreeController> {
                                       validator: (v) =>
                                           controller.fareValidator(v),
                                       trallingText:
-                                          "${"${controller.postRideModel.value.ridesDetails?.origin?.name.toString().split(",").first} to ${controller.postRideModel.value.ridesDetails?.stops?[1]?.name.toString().split(",").first}"}",
+                                          "${controller.postRideModel.value.ridesDetails?.origin?.name.toString().split(",").first} to ${controller.postRideModel.value.ridesDetails?.stops?[1]?.name.toString().split(",").first}",
                                       txtController:
                                           controller.OriginToStop2Price,
                                     )

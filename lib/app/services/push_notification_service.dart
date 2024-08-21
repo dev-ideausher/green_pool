@@ -170,7 +170,6 @@ class PushNotificationService {
       case "Ride Request Declined":
       case "New Ride Request!":
       case "Request Cancelled":
-      case "New Rider Request!":
       case "Ride Cancelled by Rider":
       case "Request Declined":
       case "Upcoming Ride Reminder":
@@ -179,16 +178,25 @@ class PushNotificationService {
       case "Refund Issued":
       case "Ride Confirmed!":
         Get.find<MyRidesOneTimeController>().myRidesAPI();
+        Get.find<HomeController>().newMsgReceived.value = true;
         break;
       case "Request Accepted!":
+        Get.find<HomeController>().newMsgReceived.value = true;
         if (Get.currentRoute == Routes.MY_RIDES_REQUEST) {
           Get.find<MyRidesRequestController>().allConfirmRequestAPI();
           Get.find<MyRidesRequestController>().allSendRequestAPI();
         } else {
           Get.find<MyRidesOneTimeController>().myRidesAPI();
         }
+        break;
+      case "New Rider Request!":
+        Get.find<HomeController>().newMsgReceived.value = true;
+        Get.find<MyRidesOneTimeController>().myRidesAPI();
+        Get.find<MyRidesRequestController>().allConfirmRequestAPI();
+        break;
 
       case "Ride Completed":
+        Get.find<HomeController>().newMsgReceived.value = true;
         if (Get.currentRoute == Routes.RIDER_START_RIDE_MAP) {
           Get.find<MyRidesOneTimeController>().myRidesAPI();
           Get.back();
@@ -198,16 +206,25 @@ class PushNotificationService {
         break;
 
       case "Account Suspended":
+        Get.find<HomeController>().newMsgReceived.value = true;
         Get.find<GetStorageService>().accSuspended = true;
+        Get.find<HomeController>().userInfoAPI();
         break;
       //
 
       case 'Chat':
+        Get.find<HomeController>().newMsgReceived.value = true;
         Get.find<MessagesController>().getMessageListAPI();
+        break;
+
+      case "ChatResolved":
+        Get.find<HomeController>().newMsgReceived.value = true;
+        Get.find<GetStorageService>().setSupportChatRoomId = "";
         break;
 
       case 'Start Ride':
       case 'Start_Ride':
+        Get.find<HomeController>().newMsgReceived.value = true;
         if (Get.currentRoute == Routes.RIDER_CONFIRMED_RIDE_DETAILS) {
           Get.find<MyRidesOneTimeController>().myRidesAPI();
           Get.find<RiderConfirmedRideDetailsController>().isRideStarted.value =
@@ -242,6 +259,7 @@ class PushNotificationService {
     }
 
     Future<void> navigateToChatPage() async {
+      //"chatRoomId" -> "-O4Oour1mIpoIWZsvoHz"
       try {
         final res = await APIManager.getChatRoomId(
             receiverId: actionData?.data['senderId'] ?? "");
@@ -396,10 +414,14 @@ class PushNotificationService {
             homeController.changeTabIndex(2);
             await navigateToChatPage();
           } else {
-            navigateToBottomNavigation(2);
+            await navigateToBottomNavigation(2);
             await navigateToChatPage();
           }
         }
+        break;
+
+      case "ChatResolved":
+        Get.find<GetStorageService>().setSupportChatRoomId = "";
         break;
 
       case "Ride_Published":

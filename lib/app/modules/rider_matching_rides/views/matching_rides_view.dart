@@ -228,41 +228,44 @@ class MatchingRidesView extends GetView<MatchingRidesController> {
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
                                                                   .spaceBetween,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .end,
                                                           children: [
-                                                            Row(
-                                                              children: [
-                                                                SvgPicture
-                                                                    .asset(
-                                                                  ImageConstant
-                                                                      .svgIconCalendarTime,
-                                                                  colorFilter: ColorFilter.mode(
-                                                                      Get.find<HomeController>()
-                                                                              .isPinkModeOn
-                                                                              .value
-                                                                          ? ColorUtil
-                                                                              .kPrimary3PinkMode
-                                                                          : ColorUtil
-                                                                              .kSecondary01,
-                                                                      BlendMode
-                                                                          .srcIn),
-                                                                ).paddingOnly(
-                                                                    right:
-                                                                        4.kw),
-                                                                Text(
-                                                                  "${GpUtil.getDateFormat(controller.matchingRidesModel.value.data![index]?.time ?? "")} ${GpUtil.convertUtcToLocal(controller.matchingRidesModel.value.data![index]?.time ?? "")}",
-                                                                  style: TextStyleUtil
-                                                                      .k12Regular(
-                                                                          color:
-                                                                              ColorUtil.kBlack03),
-                                                                ),
-                                                              ],
+                                                            Expanded(
+                                                              child: Row(
+                                                                children: [
+                                                                  SvgPicture
+                                                                      .asset(
+                                                                    ImageConstant
+                                                                        .svgIconCalendarTime,
+                                                                    colorFilter: ColorFilter.mode(
+                                                                        Get.find<HomeController>().isPinkModeOn.value
+                                                                            ? ColorUtil
+                                                                                .kPrimary3PinkMode
+                                                                            : ColorUtil
+                                                                                .kSecondary01,
+                                                                        BlendMode
+                                                                            .srcIn),
+                                                                  ).paddingOnly(
+                                                                      right:
+                                                                          4.kw),
+                                                                  Text(
+                                                                    "${GpUtil.getDateFormat(controller.matchingRidesModel.value.data![index]?.time ?? "")} ${GpUtil.convertUtcToLocal(controller.matchingRidesModel.value.data![index]?.time ?? "")}",
+                                                                    style: TextStyleUtil
+                                                                        .k12Regular(
+                                                                            color:
+                                                                                ColorUtil.kBlack03),
+                                                                  ),
+                                                                ],
+                                                              ),
                                                             ),
                                                             Row(
                                                               children: [
                                                                 Icon(
                                                                   Icons
                                                                       .time_to_leave,
-                                                                  size: 18.kh,
+                                                                  size: 16.kh,
                                                                   color: Get.find<
                                                                               HomeController>()
                                                                           .isPinkModeOn
@@ -273,7 +276,7 @@ class MatchingRidesView extends GetView<MatchingRidesController> {
                                                                           .kSecondary01,
                                                                 ).paddingOnly(
                                                                     right:
-                                                                        8.kw),
+                                                                        4.kw),
                                                                 Text(
                                                                   '${controller.matchingRidesModel.value.data![index]?.seatAvailable ?? "0"} seats',
                                                                   style: TextStyleUtil

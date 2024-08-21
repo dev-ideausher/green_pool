@@ -128,7 +128,7 @@ class WalletTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 68.kh,
+      // height: 68.kh,
       child: ListTile(
         tileColor: ColorUtil.kWhiteColor,
         onTap: onTap,

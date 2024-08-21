@@ -22,7 +22,7 @@ class MessagesView extends GetView<MessagesController> {
     controller.getMessageListAPI();
     return Scaffold(
         appBar: GreenPoolAppBar(
-            title: Text(Strings.messages), leading: const SizedBox()),        
+            title: Text(Strings.messages), leading: const SizedBox()),
         body: Obx(
           () => RefreshIndicator(
             backgroundColor: ColorUtil.kWhiteColor,
@@ -37,7 +37,7 @@ class MessagesView extends GetView<MessagesController> {
                     itemCount: 5,
                     itemBuilder: (context, index) {
                       return SizedBox(
-                        height: 78.kh,
+                        // height: 78.kh,
                         child: ListTile(
                           tileColor: ColorUtil.kWhiteColor,
                           onTap: () {},
@@ -71,9 +71,9 @@ class MessagesView extends GetView<MessagesController> {
                           trailing:
                               SvgPicture.asset(ImageConstant.svgIconRightArrow),
                         ),
-                      );
+                      ).paddingOnly(top: 8.kh);
                     },
-                  )
+                  ).paddingOnly(left: 16.kw, right: 16.kw, top: 8.kh)
                 : controller.messagesModel.value.chatRoomIds!.isEmpty
                     ? Center(
                         child: Text(
@@ -161,7 +161,7 @@ class MessageTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 78.kh,
+      // height: 78.kh,
       child: ListTile(
         tileColor: ColorUtil.kWhiteColor,
         onTap: onTap,

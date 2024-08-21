@@ -443,7 +443,9 @@ class RiderMyRidesConfirmDetailsView
                   label: 'Accept',
                 ),
                 GreenPoolButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    controller.rejectDriversRequestAPI();
+                  },
                   width: 162.kw,
                   label: 'Reject',
                   isBorder: true,

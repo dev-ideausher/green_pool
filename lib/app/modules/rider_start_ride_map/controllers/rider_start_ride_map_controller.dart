@@ -30,6 +30,7 @@ class RiderStartRideMapController extends GetxController {
 
   final RxDouble currentLat = Endpoints.canadaLat.obs;
   final RxDouble currentLong = Endpoints.canadaLong.obs;
+  List<PolylineWayPoint> wayPoints = [];
 
   final RxDouble destinationLat = Endpoints.canadaLat.obs;
   final RxDouble destinationLong = Endpoints.canadaLong.obs;
@@ -208,6 +209,36 @@ class RiderStartRideMapController extends GetxController {
           "",
           heading ?? 0.0 + 90.0,
         );
+        if (bookingDetail
+                .value.driverBookingDetails?.stops?[0]?.coordinates?.last !=
+            0.0) {
+          addMarkers(
+              LatLng(
+                  bookingDetail.value.driverBookingDetails?.stops?[0]
+                          ?.coordinates?.last ??
+                      0.0,
+                  bookingDetail.value.driverBookingDetails?.stops?[0]
+                          ?.coordinates?.first ??
+                      0.0),
+              "",
+              "Stop",
+              0.0);
+          if (bookingDetail
+                  .value.driverBookingDetails?.stops?[1]?.coordinates?.last !=
+              0.0) {
+            addMarkers(
+                LatLng(
+                    bookingDetail.value.driverBookingDetails?.stops?[1]
+                            ?.coordinates?.last ??
+                        0.0,
+                    bookingDetail.value.driverBookingDetails?.stops?[1]
+                            ?.coordinates?.first ??
+                        0.0),
+                "",
+                "Stop",
+                0.0);
+          }
+        }
       }
     }, onError: (Object error) {
       debugPrint("Error: $error");
@@ -215,6 +246,30 @@ class RiderStartRideMapController extends GetxController {
   }
 
   drawPolyline() async {
+    late List<double?> stop1Coordinates = [0.0, 0.0];
+    late List<double?> stop2Coordinates = [0.0, 0.0];
+
+    //add waypoints
+    if (bookingDetail
+            .value.driverBookingDetails?.stops?[0]?.coordinates!.first !=
+        0.0) {
+      stop1Coordinates =
+          bookingDetail.value.driverBookingDetails!.stops![0]!.coordinates!;
+      wayPoints.add(PolylineWayPoint(
+          location:
+              "${stop1Coordinates?.last.toString()},${stop1Coordinates?.first.toString()}"));
+      if (bookingDetail
+              .value.driverBookingDetails?.stops?[1]?.coordinates!.first !=
+          0.0) {
+        stop2Coordinates =
+            bookingDetail.value.driverBookingDetails!.stops![1]!.coordinates!;
+        wayPoints.add(PolylineWayPoint(
+            location:
+                "${stop2Coordinates?.last.toString()},${stop2Coordinates?.first.toString()}"));
+      }
+    } else {
+      print("Waypoints not added");
+    }
     try {
       markers.clear();
 
@@ -222,6 +277,7 @@ class RiderStartRideMapController extends GetxController {
           googleApiKey: Endpoints.googleApiKey,
           request: PolylineRequest(
               origin: PointLatLng(currentLat.value, currentLong.value),
+              wayPoints: wayPoints,
               destination:
                   PointLatLng(destinationLat.value, destinationLong.value),
               mode: TravelMode.driving));
@@ -229,11 +285,6 @@ class RiderStartRideMapController extends GetxController {
         polylineCoordinates.assignAll(result.points
             .map((PointLatLng point) => LatLng(point.latitude, point.longitude))
             .toList());
-        // addVehicleMarker(
-        //     polylineCoordinates.first,
-        //     bookingDetail
-        //             .value.driverDetails?.vehicleDetails?.vehiclePic?.url ??
-        //         "");
 
         addMarkers(
             LatLng(
@@ -268,6 +319,14 @@ class RiderStartRideMapController extends GetxController {
             "",
             "Destination",
             0.0);
+        if (stop1Coordinates.first != 0.0) {
+          addMarkers(LatLng(stop1Coordinates.last!, stop1Coordinates.first!),
+              "", "Stop", 0.0);
+          if (stop2Coordinates.first != 0.0) {
+            addMarkers(LatLng(stop2Coordinates.last!, stop2Coordinates.first!),
+                "", "Stop", 0.0);
+          }
+        }
 
         mapController.animateCamera(CameraUpdate.newLatLngBounds(
             GpUtil.boundsFromLatLngList(polylineCoordinates), 70));

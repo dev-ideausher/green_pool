@@ -140,6 +140,7 @@ class RiderTile extends StatelessWidget {
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
                                   Row(
                                     children: [
@@ -164,13 +165,13 @@ class RiderTile extends StatelessWidget {
                                     children: [
                                       Icon(
                                         Icons.time_to_leave,
-                                        size: 18.kh,
+                                        size: 16.kh,
                                         color: Get.find<HomeController>()
                                                 .isPinkModeOn
                                                 .value
                                             ? ColorUtil.kPrimary3PinkMode
                                             : ColorUtil.kSecondary01,
-                                      ).paddingOnly(right: 8.kw),
+                                      ).paddingOnly(right: 4.kw),
                                       Text(
                                         '${myRidesModelData?.seatAvailable} seats',
                                         style: TextStyleUtil.k14Regular(

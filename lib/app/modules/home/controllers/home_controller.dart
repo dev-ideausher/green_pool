@@ -30,6 +30,7 @@ class HomeController extends GetxController {
   RxString welcomeText = Strings.welcome.obs;
   RxBool isPinkModeOn = false.obs;
   bool canPop = false;
+  final RxBool newMsgReceived = false.obs;
 
   void changeTabIndex(int index) {
     pageController.animateToPage(
@@ -189,6 +190,8 @@ class HomeController extends GetxController {
     if (storageService.isLoggedIn) {
       if (storageService.profileStatus) {
         final userStatus = userInfo.value.data?.status;
+        // final isUserSuspended = Get.find<GetStorageService>().accSuspended;
+        // if (isUserSuspended && (index == 1 || index == 2)) {
         if (userStatus == "suspended" && (index == 1 || index == 2)) {
           DialogHelper.accSuspendedDialog(() {
             Get.back();

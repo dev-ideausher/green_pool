@@ -19,6 +19,7 @@ class HomeView extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
+    // final isUserSuspended = Get.find<GetStorageService>().accSuspended;
     Get.lazyPut(() => ProfileController());
     return Scaffold(
       body: SafeArea(

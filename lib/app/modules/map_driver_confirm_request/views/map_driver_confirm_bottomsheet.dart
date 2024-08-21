@@ -216,6 +216,7 @@ class MapDriverConfirmBottomsheet extends StatelessWidget {
                 children: [
                   GreenPoolButton(
                     onPressed: () async {
+                      Get.back();
                       await controller.acceptRidersRequestAPI(element);
                     },
                     label: Strings.accept,
@@ -226,6 +227,7 @@ class MapDriverConfirmBottomsheet extends StatelessWidget {
                   ),
                   GreenPoolButton(
                     onPressed: () async {
+                      Get.back();
                       await controller.rejectRidersRequestAPI(0);
                     },
                     isBorder: true,

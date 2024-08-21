@@ -28,7 +28,7 @@ class SendRequest extends GetView<MyRidesRequestController> {
       () => MapDriverSendRequestController(),
     );
     return Obx(
-      () => controller.sendRequestModel.value.data == null
+      () => controller.isSendPageLoading.value
           ? const GpProgress()
           : controller.sendRequestModel.value.data!.isEmpty
               ? Column(

@@ -181,8 +181,7 @@ class BookingConfirmBottom extends StatelessWidget {
             GreenPoolButton(
               label: Strings.continueText,
               onPressed: () {
-                Get.until(
-                    (route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
+                Get.back();
               },
             ),
             GreenPoolButton(

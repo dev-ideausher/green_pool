@@ -329,6 +329,13 @@ class GpUtil {
       double destinationLat, double destinationLng) async {
     String googleUrl =
         'https://www.google.com/maps/dir/?api=1&origin=$pickupLat,$pickupLng&destination=$destinationLat,$destinationLng';
+    //if stops added List<Map<String, double>> stops
+    /*if (stops.isNotEmpty) {
+      String waypoints =
+          stops.map((stop) => '${stop['lat']},${stop['lng']}').join('|');
+      googleUrl =
+          'https://www.google.com/maps/dir/?api=1&origin=$pickupLat,$pickupLng&destination=$destinationLat,$destinationLng&waypoints=$waypoints';
+    }*/
     if (await canLaunchUrl(Uri.parse(googleUrl))) {
       await launchUrl(Uri.parse(googleUrl));
     } else {
@@ -437,25 +444,6 @@ class GpUtil {
     return false;
   }
 
-  /*static bool checkSixMonthsDuration(String prevCancellationDate) {
-    DateTime prevDateUtc = DateTime.parse(prevCancellationDate);
-
-    DateTime prevDateLocal = prevDateUtc.toLocal();
-
-    DateTime currentDate = DateTime.now();
-
-    DateTime sixMonthsAgo = DateTime(
-      currentDate.year,
-      currentDate.month - 6,
-      currentDate.day,
-      currentDate.hour,
-      currentDate.minute,
-      currentDate.second,
-      currentDate.millisecond,
-      currentDate.microsecond,
-    );
-    return prevDateLocal.isAfter(sixMonthsAgo);
-  }*/
   static bool checkSixMonthsDuration(String prevCancellationDate) {
     DateTime prevDateUtc = DateTime.parse(prevCancellationDate);
 

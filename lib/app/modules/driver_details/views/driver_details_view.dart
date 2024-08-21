@@ -100,6 +100,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                           ).paddingOnly(bottom: 8.kh, top: 4.kh),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Row(
                                 children: [

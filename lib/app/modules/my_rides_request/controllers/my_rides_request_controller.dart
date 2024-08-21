@@ -20,6 +20,7 @@ class MyRidesRequestController extends GetxController {
   double latitude = Get.find<HomeController>().latitude.value;
   double longitude = Get.find<HomeController>().longitude.value;
   RxBool isLoading = true.obs;
+  RxBool isSendPageLoading = false.obs;
   final Rx<DriverSendRequestModel> sendRequestModel =
       DriverSendRequestModel().obs;
   final Rx<DriverConfirmRequestModel> confirmRequestModel =
@@ -44,12 +45,12 @@ class MyRidesRequestController extends GetxController {
   allConfirmRequestAPI() async {
     // this api will show all the confirmed rides (which the customer has confrimed that they will go with the particular driver)
     try {
-      // need driver id which will come from confirm ride by rider
+      isLoading.value = true;
       final confirmReqResponse = await APIManager.getAllDriverConfirmRequest(
           driverRideId: rideDetailId.value.driverRidId ?? "");
       var data = jsonDecode(confirmReqResponse.toString());
       confirmRequestModel.value = DriverConfirmRequestModel.fromJson(data);
-      isLoading = false.obs;
+      isLoading.value = false;
     } catch (e) {
       throw Exception(e);
     }
@@ -87,7 +88,7 @@ class MyRidesRequestController extends GetxController {
           await APIManager.patchRejectRiderRequest(body: rideData);
       if (rejectRiderResponse.data['status']) {
         allConfirmRequestAPI();
-        Get.until((route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
+        Get.back();
         showMySnackbar(msg: 'Request rejected successfully!');
       } else {
         showMySnackbar(msg: rejectRiderResponse.data['message'].toString());
@@ -99,12 +100,12 @@ class MyRidesRequestController extends GetxController {
 
   allSendRequestAPI() async {
     try {
-      isLoading = true.obs;
+      isSendPageLoading.value = true;
       final sendReqResponse = await APIManager.getAllDriverSendRequest(
           driverId: rideDetailId.value.driverRidId ?? "");
       var data = jsonDecode(sendReqResponse.toString());
       sendRequestModel.value = DriverSendRequestModel.fromJson(data);
-      isLoading = false.obs;
+      isSendPageLoading.value = false;
     } catch (e) {
       throw Exception(e);
     }

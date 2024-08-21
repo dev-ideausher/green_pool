@@ -78,60 +78,67 @@ class MyRidesOneTimeController extends GetxController {
     });
   }
 
-  cancelRideAPI(MyRidesModelData myRidesModelData) async {
+  checkCancellationCount(MyRidesModelData myRidesModelData) async {
     final userInfo = Get.find<HomeController>().userInfo.value.data;
-    if ((userInfo?.rideCancellationDetails?.count ?? 0) >= 2 &&
-        GpUtil.checkSixMonthsDuration(
-            userInfo!.rideCancellationDetails!.cancellationDate!)) {
-      DialogHelper.accSuspensionWarningDialog(
-        () async {
-          Get.back();
-          final Map<String, dynamic> driverRideId = {
-            "driverRideId": myRidesModelData.Id,
-          };
-          try {
-            isLoad.value = true;
-            final cancelRideResponse =
-                await APIManager.cancelRide(body: driverRideId);
-            if (cancelRideResponse.data['status']) {
-              await myRidesAPI();
-              Get.find<HomeController>().changeTabIndex(0);
-              await Get.find<HomeController>().userInfoAPI();
-              Get.find<HomeController>().changeTabIndex(0);
-            } else {
-              showMySnackbar(
-                  msg: cancelRideResponse.data["message"].toString());
-            }
-            isLoad.value = false;
-          } catch (e) {
-            debugPrint(e.toString());
-          }
-        },
-      );
+    if (myRidesModelData.postsInfo?.isEmpty ?? true) {
+      cancelRideAPI(myRidesModelData);
     } else {
-      DialogHelper.cancelRideDialog(
-        () async {
-          Get.back();
-          final Map<String, dynamic> driverRideId = {
-            "driverRideId": myRidesModelData.Id,
-          };
-          try {
-            isLoad.value = true;
-            final cancelRideResponse =
-                await APIManager.cancelRide(body: driverRideId);
-            if (cancelRideResponse.data['status']) {
-              await myRidesAPI();
-            } else {
-              showMySnackbar(
-                  msg: cancelRideResponse.data["message"].toString());
+      if ((userInfo?.rideCancellationDetails?.count ?? 0) >= 2 &&
+          GpUtil.checkSixMonthsDuration(
+              userInfo!.rideCancellationDetails!.cancellationDate!)) {
+        DialogHelper.accSuspensionWarningDialog(
+          () async {
+            Get.back();
+            final Map<String, dynamic> driverRideId = {
+              "driverRideId": myRidesModelData.Id,
+            };
+            try {
+              isLoad.value = true;
+              final cancelRideResponse =
+                  await APIManager.cancelRide(body: driverRideId);
+              if (cancelRideResponse.data['status']) {
+                await myRidesAPI();
+                Get.find<HomeController>().changeTabIndex(0);
+                await Get.find<HomeController>().userInfoAPI();
+                Get.find<HomeController>().changeTabIndex(0);
+              } else {
+                showMySnackbar(
+                    msg: cancelRideResponse.data["message"].toString());
+              }
+              isLoad.value = false;
+            } catch (e) {
+              debugPrint(e.toString());
             }
-            isLoad.value = false;
-          } catch (e) {
-            debugPrint(e.toString());
-          }
-        },
-      );
+          },
+        );
+      } else {
+        cancelRideAPI(myRidesModelData);
+      }
     }
+  }
+
+  cancelRideAPI(MyRidesModelData myRidesModelData) {
+    DialogHelper.cancelRideDialog(
+      () async {
+        Get.back();
+        final Map<String, dynamic> driverRideId = {
+          "driverRideId": myRidesModelData.Id,
+        };
+        try {
+          isLoad.value = true;
+          final cancelRideResponse =
+              await APIManager.cancelRide(body: driverRideId);
+          if (cancelRideResponse.data['status']) {
+            await myRidesAPI();
+          } else {
+            showMySnackbar(msg: cancelRideResponse.data["message"].toString());
+          }
+          isLoad.value = false;
+        } catch (e) {
+          debugPrint(e.toString());
+        }
+      },
+    );
   }
 
   void viewDetails(MyRidesModelData myRidesModelData) {

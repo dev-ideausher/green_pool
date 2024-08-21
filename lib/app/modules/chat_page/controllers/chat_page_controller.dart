@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/data/message_model.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
-import 'package:green_pool/app/services/snackbar.dart';
 import 'package:green_pool/app/services/storage.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
@@ -94,8 +93,12 @@ class ChatPageController extends GetxController {
   }
 
   Future<void> setMessageInApi() async {
-    final msg = eMsg.text;
+    String msg = eMsg.text;
     eMsg.clear();
+    final RegExp phoneRegex = RegExp(
+      r'(\+?\d[\d\-\.\s\(\)]{7,}\d)',
+    );
+    msg = msg.replaceAll(phoneRegex, '(Phone Number Hidden)');
     final timestamp = DateTime.now().toUtc();
     final senderId = Get.find<GetStorageService>().getUserAppId;
     try {

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/modules/map_driver_confirm_request/controllers/map_driver_confirm_request_controller.dart';
 import 'package:green_pool/app/modules/map_driver_confirm_request/views/map_driver_confirm_request_view.dart';
 import 'package:green_pool/app/res/strings.dart';
+import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/generated/assets.dart';
@@ -28,7 +29,7 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
       () => MapDriverConfirmRequestController(),
     );
     return Obx(
-      () => controller.confirmRequestModel.value.data == null
+      () => controller.isLoading.value
           ? const GpProgress()
           : controller.confirmRequestModel.value.data!.isEmpty
               ? Column(
@@ -59,7 +60,11 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
                           controller.confirmRequestModel.value.data?.length,
                       itemBuilder: (context, index) {
                         return GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            // Get.toNamed(Routes.MY_RIDES_CONFIRM_DETAILS,
+                            //     arguments: controller
+                            //         .confirmRequestModel.value.data?[index]);
+                          },
                           child: Container(
                             padding: EdgeInsets.all(16.kh),
                             decoration: BoxDecoration(
@@ -113,7 +118,7 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
                                                   BlendMode.srcIn),
                                             ).paddingOnly(right: 4.kw),
                                             Text(
-                                              "${GpUtil.getDateFormat(controller.confirmRequestModel.value.data?[index]?.rideDetails?[0]?.time ?? "")}  ${GpUtil.convertUtcToLocal(controller.confirmRequestModel.value.data?[index]?.rideDetails?[0]?.time ?? "")}",
+                                              "${GpUtil.getDateFormat(controller.confirmRequestModel.value.data?[index]?.rideDetails?[0]?.time ?? "")} ${GpUtil.convertUtcToLocal(controller.confirmRequestModel.value.data?[index]?.rideDetails?[0]?.time ?? "")}",
                                               style: TextStyleUtil.k12Regular(
                                                   color: ColorUtil.kBlack02),
                                             ),

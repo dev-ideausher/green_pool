@@ -70,12 +70,15 @@ class DriverTile extends StatelessWidget {
                     alignment: Alignment.centerRight,
                     child: ListView.builder(
                       shrinkWrap: true,
-                      itemCount: (myRidesModelData.seatAvailable ?? 0) +
-                          (myRidesModelData.postsInfo?.length ?? 0),
+                      itemCount: (myRidesModelData.postsInfo?.length ?? 0) +
+                          (myRidesModelData.seatAvailable ?? 0),
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index1) {
-                        bool isSeatAvailable =
-                            index1 < (myRidesModelData.seatAvailable ?? 0);
+                        int profilePicCount =
+                            myRidesModelData.postsInfo?.length ?? 0;
+
+                        bool isProfilePic = index1 < profilePicCount;
+
                         return Container(
                           decoration: const BoxDecoration(
                             shape: BoxShape.circle,
@@ -83,21 +86,18 @@ class DriverTile extends StatelessWidget {
                           child: ClipOval(
                             child: SizedBox.fromSize(
                               size: Size.fromRadius(12.kh),
-                              child: isSeatAvailable
-                                  ? Image.asset(
-                                      ImageConstant.pngEmptyPassenger,
-                                    )
-                                  : CommonImageView(
+                              child: isProfilePic
+                                  ? CommonImageView(
                                       url: myRidesModelData
-                                              .postsInfo?[index1 -
-                                                  (myRidesModelData
-                                                          .seatAvailable ??
-                                                      0)]
+                                              .postsInfo?[index1]
                                               ?.riderPostsDetails?[0]
                                               ?.ridersDetails?[0]
                                               ?.profilePic
                                               ?.url ??
                                           "",
+                                    )
+                                  : Image.asset(
+                                      ImageConstant.pngEmptyPassenger,
                                     ),
                             ),
                           ),
@@ -179,7 +179,8 @@ class DriverTile extends StatelessWidget {
                             ),
                             GreenPoolButton(
                               onPressed: () {
-                                controller.cancelRideAPI(myRidesModelData);
+                                controller
+                                    .checkCancellationCount(myRidesModelData);
                               },
                               width: 144.kw,
                               height: 40.kh,
@@ -224,7 +225,8 @@ class DriverTile extends StatelessWidget {
                                                 : Strings.startRide),
                                 GreenPoolButton(
                                   onPressed: () {
-                                    controller.cancelRideAPI(myRidesModelData);
+                                    controller.checkCancellationCount(
+                                        myRidesModelData);
                                   },
                                   width: 144.kw,
                                   height: 40.kh,
@@ -327,7 +329,7 @@ class RequestAndCancelButtons extends StatelessWidget {
         ),
         GreenPoolButton(
           onPressed: () {
-            controller.cancelRideAPI(myRidesModelData);
+            controller.checkCancellationCount(myRidesModelData);
           },
           width: 144.kw,
           height: 40.kh,

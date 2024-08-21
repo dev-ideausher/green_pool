@@ -135,7 +135,7 @@ class PostRideStepFourView extends GetView<PostRideStepFourController> {
                 ).paddingSymmetric(vertical: 40.kh),
               ),
             ],
-          ).paddingSymmetric(horizontal: 16.kw),
+          ).paddingSymmetric(horizontal: 14.kw),
         ),
       ),
     );

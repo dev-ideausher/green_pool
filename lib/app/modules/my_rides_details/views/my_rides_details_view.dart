@@ -119,9 +119,15 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                           Strings.coPassengers,
                           style: TextStyleUtil.k14Bold(),
                         ),
-                        Text(
-                          "${controller.myRidesModelData.value.driverBookingDetails?.seatAvailable} seats left",
-                          style: TextStyleUtil.k14Semibold(),
+                        Visibility(
+                          visible: (controller.myRidesModelData.value
+                                      .driverBookingDetails?.seatAvailable ??
+                                  0) >
+                              0,
+                          child: Text(
+                            "${controller.myRidesModelData.value.driverBookingDetails?.seatAvailable} seats left",
+                            style: TextStyleUtil.k14Semibold(),
+                          ),
                         ),
                       ],
                     ),
@@ -182,6 +188,11 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                                           Text(
                                             rider?.riderDetails?.fullName ?? "",
                                             style: TextStyleUtil.k14Semibold(),
+                                          ),
+                                          const Expanded(child: SizedBox()),
+                                          Text(
+                                            "X ${rider?.seatAvailable.toString() ?? ""} seat(s)",
+                                            style: TextStyleUtil.k12Semibold(),
                                           ),
                                         ],
                                       ).paddingOnly(bottom: 12.kh),

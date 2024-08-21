@@ -47,7 +47,7 @@ class PriceTile extends StatelessWidget {
             height: 10.h,
             child: Text(
               (trallingText ?? ""),
-              textAlign: TextAlign.center,
+              textAlign: TextAlign.end,
               style: TextStyleUtil.k14Semibold(),
             ),
           ),

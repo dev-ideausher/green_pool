@@ -53,20 +53,23 @@ class WelcomeTile extends StatelessWidget {
             child: GestureDetector(
                 onTap: () {
                   Get.toNamed(Routes.NOTIFICATIONS);
+                  controller.newMsgReceived.value = false;
                 },
                 child: Stack(
                   alignment: Alignment.topRight,
                   children: [
-                    Visibility(
-                      visible: false, // controller.unReadCount.value > 0,
-                      child: Container(
-                        height: 10.kh,
-                        width: 10.kw,
-                        decoration: const BoxDecoration(
-                            shape: BoxShape.circle, color: ColorUtil.kError2),
+                    SvgPicture.asset(ImageConstant.svgIconNoti),
+                    Obx(
+                      () => Visibility(
+                        visible: controller.newMsgReceived.value,
+                        child: Container(
+                          height: 10.kh,
+                          width: 10.kw,
+                          decoration: const BoxDecoration(
+                              shape: BoxShape.circle, color: ColorUtil.kError2),
+                        ),
                       ),
                     ),
-                    SvgPicture.asset(ImageConstant.svgIconNoti),
                   ],
                 )),
           ),
