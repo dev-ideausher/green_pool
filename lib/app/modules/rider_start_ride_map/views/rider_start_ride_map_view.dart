@@ -19,7 +19,6 @@ class RiderStartRideMapView extends GetView<RiderStartRideMapController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: const GreenPoolAppBar(),
       body: Obx(
         () => controller.isLoad.value
             ? const GpProgress()

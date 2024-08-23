@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../constants/image_constant.dart';
@@ -26,7 +27,7 @@ class CreateRideAlertBottomsheet extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(
-                          'Request Alert Created\nSuccessfully!',
+                          Strings.requestAlertCreatedSuccessfully,
                           style: TextStyleUtil.k18Heading600(),
                           textAlign: TextAlign.center,
                         ).paddingOnly(bottom: 24.kh),
@@ -36,17 +37,17 @@ class CreateRideAlertBottomsheet extends StatelessWidget {
                           width: 64.kw,
                         ).paddingOnly(bottom: 16.kh),
                         Text(
-                          "Ride alert created succesfully!",
+                          Strings.rideAlertCreatedSuccessfully,
                           textAlign: TextAlign.center,
                           style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
                         ).paddingOnly(bottom: 4.kh),
                         Text(
-                          "The matching ride alert will be sent to you shortly.",
+                          Strings.theMatchingRideAlertWillBeSentToYouShortly,
                           textAlign: TextAlign.center,
                           style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
                         ).paddingOnly(bottom: 40.kh),
                         GreenPoolButton(
-                            label: 'Continue',
+                            label: Strings.continueText,
                             onPressed: () {
                               Get.until((route) =>
                                   Get.currentRoute == Routes.BOTTOM_NAVIGATION);

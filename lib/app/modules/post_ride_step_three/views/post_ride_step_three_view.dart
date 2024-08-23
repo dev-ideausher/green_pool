@@ -36,7 +36,7 @@ class PostRideStepThreeView extends GetView<PostRideStepThreeController> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         RichTextHeading(
-                          text: 'Pricing',
+                          text: Strings.pricing,
                           style: TextStyleUtil.k18Bold(),
                         ),
                         Expanded(
@@ -48,17 +48,17 @@ class PostRideStepThreeView extends GetView<PostRideStepThreeController> {
                       ],
                     ).paddingOnly(top: 8.kh, bottom: 4.kh),
                     Text(
-                      'Specify a reasonable cost per seat covering gas and additional expenses.',
+                      Strings.specifyAReasonableCost,
                       style:
                           TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                     ).paddingOnly(bottom: 24.kh),
                     Text(
-                      'Price per seat (Recommended)',
+                      Strings.pricePerSeat,
                       style:
                           TextStyleUtil.k14Semibold(color: ColorUtil.kBlack01),
                     ).paddingOnly(bottom: 4.kh),
                     Text(
-                      'This pricing strategy ensures a competitive trip, maximizing your opportunities for passenger bookings.',
+                      Strings.thisPricingStrategy,
                       style:
                           TextStyleUtil.k14Semibold(color: ColorUtil.kBlack04),
                     ),
@@ -121,13 +121,13 @@ class PostRideStepThreeView extends GetView<PostRideStepThreeController> {
                       child: Obx(
                         () => controller.viewPrice.value
                             ? Text(
-                                "See less",
+                                Strings.seeLess,
                                 style: TextStyleUtil.k14Semibold(
                                     color: ColorUtil.kSecondary01,
                                     textDecoration: TextDecoration.underline),
                               ).paddingOnly(bottom: 12.kh)
                             : Text(
-                                "View price of each stop",
+                                Strings.viewPriceOfEachStop,
                                 style: TextStyleUtil.k14Semibold(
                                     color: ColorUtil.kSecondary01,
                                     textDecoration: TextDecoration.underline),
@@ -242,7 +242,7 @@ class PostRideStepThreeView extends GetView<PostRideStepThreeController> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Description',
+                          Strings.description,
                           style: TextStyleUtil.k18Bold(),
                         ),
                         Expanded(
@@ -254,12 +254,12 @@ class PostRideStepThreeView extends GetView<PostRideStepThreeController> {
                       ],
                     ).paddingOnly(top: 12.kh, bottom: 4.kh),
                     Text(
-                      'Include key trip details for informed bookings.',
+                      Strings.includeKeyTripDetails,
                       style:
                           TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                     ).paddingOnly(bottom: 24.kh),
                     GreenPoolTextField(
-                      hintText: 'Enter text here',
+                      hintText: Strings.enterTextHere,
                       controller: controller.descriptionTextController,
                       textCapitalization: TextCapitalization.sentences,
                       onchanged: (value) {
@@ -272,7 +272,7 @@ class PostRideStepThreeView extends GetView<PostRideStepThreeController> {
                       () => GreenPoolButton(
                         onPressed: () => controller.moveToGuidelines(),
                         isActive: controller.isActivePricingButton.value,
-                        label: 'Next',
+                        label: Strings.next,
                       ).paddingOnly(bottom: 40.kh),
                     ),
                   ],

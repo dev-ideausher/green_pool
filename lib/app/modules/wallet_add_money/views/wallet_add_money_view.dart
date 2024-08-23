@@ -33,11 +33,11 @@ class WalletAddMoneyView extends GetView<WalletAddMoneyController> {
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(16.kh),
                 gradient: Get.find<HomeController>().isPinkModeOn.value
-                    ? LinearGradient(colors: [
+                    ? const LinearGradient(colors: [
                         ColorUtil.kSecondaryPinkMode,
                         ColorUtil.kPrimaryPinkMode
                       ])
-                    : LinearGradient(
+                    : const LinearGradient(
                         colors: [ColorUtil.kPrimary04, ColorUtil.kPrimary01])),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

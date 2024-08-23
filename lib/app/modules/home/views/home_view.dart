@@ -11,6 +11,7 @@ import 'package:green_pool/app/services/dialog_helper.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
+import '../../../services/storage.dart';
 import '../../profile/controllers/profile_controller.dart';
 import '../controllers/home_controller.dart';
 
@@ -19,7 +20,7 @@ class HomeView extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    // final isUserSuspended = Get.find<GetStorageService>().accSuspended;
+    final isUserSuspended = Get.find<GetStorageService>().accSuspended;
     Get.lazyPut(() => ProfileController());
     return Scaffold(
       body: SafeArea(
@@ -28,7 +29,7 @@ class HomeView extends GetView<HomeController> {
             const WelcomeTile(),
             Obx(
               () => GestureDetector(
-                onTap: controller.userInfo.value.data?.status == "suspended"
+                onTap: isUserSuspended
                     ? () {
                         DialogHelper.accSuspendedDialog(() {
                           Get.back();
@@ -97,7 +98,7 @@ class HomeView extends GetView<HomeController> {
             ),
             Obx(
               () => GestureDetector(
-                onTap: controller.userInfo.value.data?.status == "suspended"
+                onTap: isUserSuspended
                     ? () {
                         DialogHelper.accSuspendedDialog(() {
                           Get.back();
@@ -128,8 +129,7 @@ class HomeView extends GetView<HomeController> {
                   ),
                   child: Stack(
                     children: [
-                      Obx(
-                        () => Positioned(
+                      Positioned(
                             right: 0.kw,
                             left: Get.find<HomeController>().isPinkModeOn.value
                                 ? 0
@@ -143,7 +143,7 @@ class HomeView extends GetView<HomeController> {
                                 : SvgPicture.asset(
                                     ImageConstant.svgFindRide,
                                   )),
-                      ),
+                      
                       Positioned(
                         left: 16.kw,
                         top: 48.kh,

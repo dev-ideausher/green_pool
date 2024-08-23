@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,9 +9,7 @@ import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/snackbar.dart';
 
-import '../../../data/find_ride_response_model.dart';
 import '../../../routes/app_pages.dart';
-import '../../../services/dio/api_service.dart';
 import '../../../services/storage.dart';
 
 class FindRideController extends GetxController {

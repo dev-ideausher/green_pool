@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/services/dio/api_service.dart';
 import 'package:green_pool/app/services/snackbar.dart';
+import '../../../res/strings.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/storage.dart';
 
@@ -65,7 +66,8 @@ class ProfileController extends GetxController {
         Get.back();
         showMySnackbar(
             msg:
-                "Thank you for rating our app! Your feedback helps us improve and serve you better.");
+                Strings.thankyouForRatingTheApp);
+        ratingTextController.clear();
       } else {
         showMySnackbar(msg: response.data['message'].toString());
       }

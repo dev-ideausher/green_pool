@@ -107,7 +107,6 @@ class DriverTile extends StatelessWidget {
                   ),
                 ),
               ),
-              // Text(myRidesModelData.origin?.originDestinationFair??"0", style: TextStyleUtil.k12Regular(color: ColorUtil.kBlack03)),
 
               12.kheightBox,
               //-------------------- if rider has done "Find a Ride" and has not selected any time ----------------

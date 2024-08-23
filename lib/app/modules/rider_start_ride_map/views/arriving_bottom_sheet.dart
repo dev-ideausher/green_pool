@@ -18,7 +18,7 @@ class ArrivingBottomSheet extends StatelessWidget {
     return GetBuilder<RiderStartRideMapController>(builder: (controller) {
       return Obx(
         () => controller.isLoad.value
-            ? GpProgress()
+            ? const GpProgress()
             : Container(
                 color: ColorUtil.kWhiteColor,
                 child: Column(

@@ -41,7 +41,7 @@ class RequestAcceptedBottom extends StatelessWidget {
               style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
             ).paddingOnly(bottom: 40.kh),
             GreenPoolButton(
-                label: 'Continue',
+                label: Strings.continueText,
                 onPressed: () {
                   Get.until(
                       (route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);

@@ -1,4 +1,3 @@
-//! contains matching drivers after Find A Ride page
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -26,7 +25,7 @@ class MatchingRidesView extends GetView<MatchingRidesController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: GreenPoolAppBar(
-        title: const Text('Matching Rides'),
+        title:  Text(Strings.matchingRides),
         actions: [
           GestureDetector(
             onTap: () {
@@ -65,7 +64,7 @@ class MatchingRidesView extends GetView<MatchingRidesController> {
                             MediaQuery.of(context).size.height - kToolbarHeight,
                         alignment: Alignment.center,
                         child: Text(
-                          'No rides available',
+                          Strings.noRidesAvailable,
                           style: TextStyleUtil.k18Heading600(),
                         ),
                       ),
@@ -212,7 +211,7 @@ class MatchingRidesView extends GetView<MatchingRidesController> {
                                                                   TextSpan(
                                                                     // text: '\$3.50',
                                                                     text:
-                                                                        "\$ ${controller.matchingRidesModel.value.data![index]?.price}",
+                                                                        "${Strings.dollar} ${controller.matchingRidesModel.value.data![index]?.price}",
                                                                     style: TextStyleUtil
                                                                         .k16Bold(
                                                                             color:

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
-import '../../../constants/image_constant.dart';
 import '../../../services/colors.dart';
 import '../../../services/text_style_util.dart';
 import '../controllers/create_account_controller.dart';

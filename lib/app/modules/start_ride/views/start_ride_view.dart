@@ -23,8 +23,7 @@ class StartRideView extends GetView<StartRideController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      // appBar: const GreenPoolAppBar(),
+    return Scaffold(      
       body: Obx(
         () => controller.isLoad.value
             ? const GpProgress()

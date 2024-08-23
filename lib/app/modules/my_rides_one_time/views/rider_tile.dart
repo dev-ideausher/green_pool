@@ -233,7 +233,7 @@ class RiderTile extends StatelessWidget {
                         color: ColorUtil.kBlack01,
                       ).paddingOnly(right: 8.kw),
                       Text(
-                        "Ongoing Ride",
+                        Strings.ongoingRide,
                         style: TextStyleUtil.k14Regular(),
                       ),
                     ],

@@ -15,7 +15,7 @@ class RatingRiderSideController extends GetxController {
   final Rx<BookingDetailModelData> bookingModelData =
       BookingDetailModelData().obs;
   Map<String, dynamic> msgData = {};
-  int numberOfRiders = 3;
+  // int numberOfRiders = 3;
   RxDouble rating = 4.0.obs;
   RxDouble driverRating = 4.0.obs;
   final debouncer = Debouncer(delay: const Duration(milliseconds: 50));

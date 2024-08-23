@@ -21,23 +21,23 @@ class ReportView extends GetView<ReportController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const GreenPoolAppBar(
-        title: Text('Report a bug'),
+      appBar:  GreenPoolAppBar(
+        title: Text(Strings.reportABug),
       ),
       resizeToAvoidBottomInset: false,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Make it easy to tell us about problems so we\ncan fix them quickly and make things better\nfor you!',
+            Strings.makeItEasyToTellUsAboutProblems,
             style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
           ).paddingOnly(bottom: 24.kh, top: 32.kh),
           RichTextHeading(
-            text: 'Bug/Feedback',
+            text: Strings.bugslashfeedback,
             style: TextStyleUtil.k14Semibold(),
           ).paddingOnly(bottom: 8.kh),
           GreenPoolTextField(
-            hintText: 'Enter here',
+            hintText: Strings.enterHere,
             controller: controller.bugController,
             onchanged: (val) {
               controller.bugController.text = val.toString();
@@ -45,7 +45,7 @@ class ReportView extends GetView<ReportController> {
             },
           ).paddingOnly(bottom: 16.kh),
           Text(
-            'Upload Images (optional)',
+            Strings.uploadImagesOptional,
             style: TextStyleUtil.k14Semibold(),
           ).paddingOnly(bottom: 16.kh),
           GestureDetector(

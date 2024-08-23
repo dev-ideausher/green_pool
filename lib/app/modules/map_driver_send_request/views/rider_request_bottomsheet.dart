@@ -203,7 +203,7 @@ class RiderRequestBottomsheet extends StatelessWidget {
             GreenPoolButton(
               onPressed: () {
                 if (element?.requestSent ?? false) {
-                  showMySnackbar(msg: "The request has already been sent.");
+                  showMySnackbar(msg: Strings.reqHasAlreadySent);
                 } else {
                   Get.find<MyRidesRequestController>()
                       .sendRequestToRiderAPI(element!);

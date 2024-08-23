@@ -9,6 +9,7 @@ import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
 import '../../../constants/image_constant.dart';
+import '../../../res/strings.dart';
 import '../../rider_matching_rides/views/filter_list.dart';
 import '../controllers/matching_rides_controller.dart';
 
@@ -18,20 +19,20 @@ class FilterRide extends GetView<MatchingRidesController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const GreenPoolAppBar(
-        title: Text('Filter'),
+      appBar:  GreenPoolAppBar(
+        title: Text(Strings.filter),
       ),
       body: Obx(
         () => Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Sort by',
+              Strings.sortBy,
               style: TextStyleUtil.k16Bold(),
             ).paddingOnly(top: 24.kh, bottom: 16.kh),
             FilterList(
               image: ImageConstant.svgIconTime,
-              text: 'Early departure',
+              text: Strings.earlyDeparture,
               onChanged: (value) {
                 controller.earlyDeparture.value = value!;
               },
@@ -39,7 +40,7 @@ class FilterRide extends GetView<MatchingRidesController> {
             ),
             FilterList(
               image: ImageConstant.svgAmenities10,
-              text: 'Lowest price',
+              text: Strings.lowestPrice,
               onChanged: (value) {
                 controller.lowestPrice.value = value!;
               },
@@ -47,7 +48,7 @@ class FilterRide extends GetView<MatchingRidesController> {
             ),
             FilterList(
               image: ImageConstant.svgAmenities9,
-              text: 'Close to departure point',
+              text: Strings.closeToDeparture,
               onChanged: (value) {
                 controller.closeToDeparture.value = value!;
               },
@@ -55,7 +56,7 @@ class FilterRide extends GetView<MatchingRidesController> {
             ),
             FilterList(
               image: ImageConstant.svgAmenities9,
-              text: 'Close to arrival',
+              text: Strings.closeToArrival,
               onChanged: (value) {
                 controller.closeToArrival.value = value!;
               },
@@ -63,12 +64,12 @@ class FilterRide extends GetView<MatchingRidesController> {
             ),
             const GreenPoolDivider().paddingSymmetric(vertical: 16.kh),
             Text(
-              'Preferences',
+              Strings.preferences,
               style: TextStyleUtil.k16Bold(),
             ).paddingOnly(bottom: 16.kh),
             FilterList(
               image: ImageConstant.svgAmenities1,
-              text: 'Appreciates Conversations',
+              text: Strings.appreciatesConversation,
               onChanged: (value) {
                 controller.appreciatesConvo.value = value!;
               },
@@ -76,7 +77,7 @@ class FilterRide extends GetView<MatchingRidesController> {
             ),
             FilterList(
               image: ImageConstant.svgAmenities2,
-              text: 'Enjoys music',
+              text: Strings.enjoysMusic,
               onChanged: (value) {
                 controller.enjoysMusic.value = value!;
               },
@@ -84,7 +85,7 @@ class FilterRide extends GetView<MatchingRidesController> {
             ),
             FilterList(
               image: ImageConstant.svgAmenities3,
-              text: 'Smoke-free',
+              text: Strings.smokeFree,
               onChanged: (value) {
                 controller.smokeFree.value = value!;
               },
@@ -92,7 +93,7 @@ class FilterRide extends GetView<MatchingRidesController> {
             ),
             FilterList(
               image: ImageConstant.svgAmenities4,
-              text: 'Pet-friendly',
+              text: Strings.petFriendly,
               onChanged: (value) {
                 controller.petFriendly.value = value!;
               },
@@ -100,7 +101,7 @@ class FilterRide extends GetView<MatchingRidesController> {
             ),
             FilterList(
               image: ImageConstant.svgAmenities5,
-              text: 'Winter Tires',
+              text: Strings.winterTires,
               onChanged: (value) {
                 controller.winterTires.value = value!;
               },
@@ -108,7 +109,7 @@ class FilterRide extends GetView<MatchingRidesController> {
             ),
             FilterList(
               image: ImageConstant.svgAmenities6,
-              text: 'Cooling or Heating',
+              text: Strings.coolingOrHeating,
               onChanged: (value) {
                 controller.coolOrHeat.value = value!;
               },
@@ -116,7 +117,7 @@ class FilterRide extends GetView<MatchingRidesController> {
             ),
             FilterList(
               image: ImageConstant.svgAmenities7,
-              text: 'Baby Seat',
+              text: Strings.babySeat,
               onChanged: (value) {
                 controller.babySeat.value = value!;
               },
@@ -124,7 +125,7 @@ class FilterRide extends GetView<MatchingRidesController> {
             ),
             FilterList(
               image: ImageConstant.svgAmenities8,
-              text: 'Heated Seats',
+              text: Strings.heatedSeats,
               onChanged: (value) {
                 controller.heatedSeats.value = value!;
               },
@@ -138,7 +139,7 @@ class FilterRide extends GetView<MatchingRidesController> {
                   onPressed: () {
                     controller.filterRideAPI();
                   },
-                  label: 'Filter',
+                  label: Strings.filter,
                   width: 156.kw,
                   height: 56.kh,
                 ),
@@ -146,7 +147,7 @@ class FilterRide extends GetView<MatchingRidesController> {
                   onPressed: () {
                     controller.clearAll();
                   },
-                  label: 'Clear All',
+                  label: Strings.clearAll,
                   isBorder: true,
                   borderColor: ColorUtil.kSecondary01,
                   width: 156.kw,

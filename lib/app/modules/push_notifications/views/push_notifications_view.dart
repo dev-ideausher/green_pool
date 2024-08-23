@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
+import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
@@ -15,21 +16,21 @@ class PushNotificationsView extends GetView<PushNotificationsController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const GreenPoolAppBar(
-          title: Text('Notifications'),
+        appBar:  GreenPoolAppBar(
+          title: Text(Strings.notifications),
         ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Push notifications',
+              Strings.pushNotifications,
               style: TextStyleUtil.k18Bold(),
             ).paddingOnly(top: 32.kh, bottom: 24.kh),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Trips',
+                  Strings.trips,
                   style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                 ),
                 SizedBox(
@@ -59,7 +60,7 @@ class PushNotificationsView extends GetView<PushNotificationsController> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Alerts',
+                  Strings.alerts,
                   style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                 ),
                 SizedBox(
@@ -89,7 +90,7 @@ class PushNotificationsView extends GetView<PushNotificationsController> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Payments',
+                  Strings.payments,
                   style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                 ),
                 SizedBox(
@@ -119,7 +120,7 @@ class PushNotificationsView extends GetView<PushNotificationsController> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Transactions',
+                  Strings.transactions,
                   style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                 ),
                 SizedBox(
@@ -149,7 +150,7 @@ class PushNotificationsView extends GetView<PushNotificationsController> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Offers',
+                  Strings.offers,
                   style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                 ),
                 SizedBox(
@@ -180,7 +181,7 @@ class PushNotificationsView extends GetView<PushNotificationsController> {
               onPressed: () {
                 controller.notificationPreferencesAPI();
               },
-              label: "Save",
+              label: Strings.save,
             ).paddingSymmetric(vertical: 40.kh),
           ],
         ).paddingSymmetric(horizontal: 16.kw));

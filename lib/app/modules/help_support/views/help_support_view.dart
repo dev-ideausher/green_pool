@@ -3,7 +3,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/gp_progress.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
-import 'package:green_pool/app/components/greenpool_textfield.dart';
 import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/responsive_size.dart';

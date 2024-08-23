@@ -1,4 +1,3 @@
-//! this page comes after tapping on confirmed rider tile in my_rides_view
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -96,7 +95,7 @@ class RiderConfirmedRideDetailsView
                         ],
                       ),
                       trailing: SizedBox(
-                        width: 110.kw,
+                        width: 100.kw,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
@@ -110,7 +109,7 @@ class RiderConfirmedRideDetailsView
                                   ),
                                   TextSpan(
                                     text:
-                                        '\$ ${controller.myRidesModel.value.confirmDriverDetails?[0]?.price}',
+                                        '${Strings.dollar} ${controller.myRidesModel.value.confirmDriverDetails?[0]?.price}',
                                     style: TextStyleUtil.k16Semibold(
                                         fontSize: 16.kh,
                                         color: ColorUtil.kSecondary01),
@@ -123,13 +122,13 @@ class RiderConfirmedRideDetailsView
                               children: [
                                 Icon(
                                   Icons.time_to_leave,
-                                  size: 18.kh,
+                                  size: 16.kh,
                                   color: Get.find<HomeController>()
                                           .isPinkModeOn
                                           .value
                                       ? ColorUtil.kPrimary3PinkMode
                                       : ColorUtil.kSecondary01,
-                                ).paddingOnly(right: 8.kw),
+                                ).paddingOnly(right: 4.kw),
                                 Text(
                                   "${controller.myRidesModel.value.seatAvailable} seats",
                                   style: TextStyleUtil.k12Regular(
@@ -181,7 +180,7 @@ class RiderConfirmedRideDetailsView
                   //rating column
                   children: [
                     Text(
-                      'Rating',
+                      Strings.rating,
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Container(
@@ -229,11 +228,11 @@ class RiderConfirmedRideDetailsView
                   //joined in column
                   children: [
                     Text(
-                      'Joined',
+                      Strings.joined,
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Text(
-                      'in ${controller.myRidesModel.value.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.driverDetails?[0]?.createdAt.toString().split("-")[0]}',
+                      '${Strings.inA} ${controller.myRidesModel.value.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.driverDetails?[0]?.createdAt.toString().split("-")[0]}',
                       style:
                           TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                     ),
@@ -297,7 +296,7 @@ class RiderConfirmedRideDetailsView
                       Text(
                         isRider
                             ? "${controller.myRidesModel.value.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.ridersDetails?[passengerIndex]?.fullName.toString().split(" ").first}"
-                            : "Empty Seat",
+                            : Strings.emptySeat,
                         style: TextStyleUtil.k12Semibold(),
                         textAlign: TextAlign.center,
                       ),
@@ -358,7 +357,7 @@ class RiderConfirmedRideDetailsView
 
             //Features available
             Text(
-              'Features available',
+              Strings.featuresAvailable,
               style: TextStyleUtil.k14Bold(),
             ).paddingOnly(bottom: 16.kh),
 
@@ -373,7 +372,7 @@ class RiderConfirmedRideDetailsView
                     true
                 ? Amenities(
                         toggleSwitch: false,
-                        text: "Appreciates Conversation",
+                        text: Strings.appreciatesConversation,
                         image: ImageConstant.svgAmenities1)
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
@@ -388,7 +387,7 @@ class RiderConfirmedRideDetailsView
                     true
                 ? Amenities(
                         toggleSwitch: false,
-                        text: "Enjoys Music",
+                        text: Strings.enjoysMusic,
                         image: ImageConstant.svgAmenities2)
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
@@ -403,7 +402,7 @@ class RiderConfirmedRideDetailsView
                     true
                 ? Amenities(
                         toggleSwitch: false,
-                        text: "Smoke-Free",
+                        text: Strings.smokeFree,
                         image: ImageConstant.svgAmenities3)
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
@@ -418,7 +417,7 @@ class RiderConfirmedRideDetailsView
                     true
                 ? Amenities(
                         toggleSwitch: false,
-                        text: "Pet-friendly",
+                        text: Strings.petFriendly,
                         image: ImageConstant.svgAmenities4)
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
@@ -433,7 +432,7 @@ class RiderConfirmedRideDetailsView
                     true
                 ? Amenities(
                         toggleSwitch: false,
-                        text: "Winter Tires",
+                        text: Strings.winterTires,
                         image: ImageConstant.svgAmenities5)
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
@@ -448,7 +447,7 @@ class RiderConfirmedRideDetailsView
                     true
                 ? Amenities(
                         toggleSwitch: false,
-                        text: "Cooling or Heating",
+                        text: Strings.coolingOrHeating,
                         image: ImageConstant.svgAmenities6)
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
@@ -463,7 +462,7 @@ class RiderConfirmedRideDetailsView
                     true
                 ? Amenities(
                         toggleSwitch: false,
-                        text: "Baby Seats",
+                        text: Strings.babySeat,
                         image: ImageConstant.svgAmenities7)
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
@@ -478,7 +477,7 @@ class RiderConfirmedRideDetailsView
                     true
                 ? Amenities(
                         toggleSwitch: false,
-                        text: "Heated Seats",
+                        text: Strings.heatedSeats,
                         image: ImageConstant.svgAmenities8)
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
@@ -511,7 +510,7 @@ class RiderConfirmedRideDetailsView
                     await controller
                         .riderCancelRideAPI(controller.myRidesModel.value);
                   },
-                  label: 'Cancel',
+                  label: Strings.cancel,
                   isBorder: true,
                 ).paddingOnly(bottom: 40.kh),
               ),

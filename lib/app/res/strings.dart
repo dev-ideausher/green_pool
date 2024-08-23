@@ -673,4 +673,223 @@ class Strings {
   static String confirmLogout = 'Confirm Logout';
 
   static String totalRides = "Total Rides";
+
+  static var refund = "Refund";
+
+  static var rideRelated = "Ride Related";
+
+  static var accRelated = "Account Related";
+
+  static String filedAdispute = "Filed a dispute";
+
+  static String resolved = 'Resolved';
+
+  static var reqHasAlreadySent = "The request has already been sent.";
+
+  static String yourFutureMsgsWillApearHere =
+      "Your future messages will appear here";
+
+  static var seatsLeft = "seats left";
+
+  static String ongoingRide = "Ongoing Ride";
+
+  static var reqRejectedSuccessfully = 'Request rejected successfully!';
+
+  static String yourFutureNotificationsWillAppearHere =
+      "Your future notifications will appear here";
+
+  static String remove = "Remove";
+
+  static String promoCode = "Promo Codes";
+
+  static String apply = "Apply";
+
+  static String guidelinesForSharingARide = 'Guidelines for sharing\na ride';
+
+  static var noCash = 'No Cash';
+
+  static var allFaresAreSettledElectronically =
+      'All fares are settled electronically,\nand payouts occur every Friday.';
+
+  static var beTrustworthy = 'Be Trustworthy';
+
+  static var onlyCreateATripIfYouareCertain =
+      'Only create a trip listing if you are\ncertain you will drive and can arrive\non time.';
+
+  static var practiceSafeDriving = 'Practice safe driving';
+
+  static var complyWithTrafficRules =
+      'Comply with traffic rules, stay\nfocused, eliminate distractions and\nsecure your seatbelts.';
+
+  static var iConsentToTheseGuidelines = 'I consent to these guidelines, the ';
+
+  static var driverCancellationPolicyf = 'Driver Cancellation Policy, ';
+
+  static var termsOfService = 'Terms of Service,';
+
+  static var privacyPolicyf = 'Privacy policy. ';
+
+  static var iAcknowledgeThatMyAccMayFaceSuspension =
+      'I acknowledge that my account may face suspension for any violations of these rules.';
+
+  static var publishRide = 'Publish Ride';
+
+  static var pricing = 'Pricing';
+
+  static String specifyAReasonableCost =
+      'Specify a reasonable cost per seat covering gas and additional expenses.';
+
+  static String pricePerSeat = 'Price per seat (Recommended)';
+
+  static String thisPricingStrategy =
+      'This pricing strategy ensures a competitive trip, maximizing your opportunities for passenger bookings.';
+
+  static String seeLess = "See less";
+
+  static String viewPriceOfEachStop = "View price of each stop";
+
+  static String includeKeyTripDetails =
+      'Include key trip details for informed bookings.';
+
+  static String selectTheDaysAndTime =
+      'Select the days and time, specifying  am (morning) or pm (afternoon)';
+
+  static var day = 'Day';
+
+  static var mon = 'Mon';
+
+  static var tue = 'Tue';
+
+  static var wed = 'Wed';
+
+  static var thu = 'Thu';
+
+  static var fri = 'Fri ';
+
+  static var sat = 'Sat';
+
+  static var sun = 'Sun';
+
+  static var user = 'User';
+
+  static var activatePinkMode = 'Activate Pink Mode';
+
+  static String travelWithConfidenceWithOurPinkMode =
+      "Travel with confidence in our 'Pink Mode'\nensuring safety and security with female\nriders and drivers.";
+
+  static var profileSettings = 'Profile Settings';
+
+  static var ridehistory = "Ride history";
+
+  static var referAFriend = "Refer a friend";
+
+  static var rateUs = "Rate us";
+
+  static var aboutUs = "About us";
+
+  static var termsAmbersentConditions = "Terms & Conditions";
+
+  static var followUsOnSocialMedia = "Follow us on Social Media";
+
+  static var reportABug = "Report a Bug";
+
+  static String enjoyingCarpoollApp = 'Enjoying Carpooll.com app?';
+
+  static String supportUsByGivingRate =
+      'Support us by giving rate and your\nprecious review !\nIt will take few seconds only.';
+
+  static var feedbackOrSuggestions = "Feedback/suggestions";
+
+  static String maybeLater = 'Maybe Later';
+
+  static String enterYourProfileDetails = 'Enter your profile details';
+
+  static String reviewPicture = 'Review Picture';
+
+  static String pleaseReviewYourPicture =
+      'Please review your picture and make sure that people can clearly see your face.';
+
+  static var done = 'Done';
+
+  static var retakePhoto = 'Retake photo';
+
+  static var selectYourDateOfBirth = 'Select your date of birth';
+
+  static var selectVehicleType = "Select Vehicle Type";
+
+  static var licenseplate = 'License plate';
+
+  static var pleaseFillInUserDetails = "Please fill in user details";
+
+  static String pushNotifications = 'Push notifications';
+
+  static String alerts = 'Alerts';
+
+  static String transactions = 'Transactions';
+
+  static String offers = 'Offers';
+
+  static String hopeYouHadGreatExperience =
+      "Hope you had a great car pooling\nexperience!";
+
+  static String rateRiders = "Rate Riders";
+
+  static String rateDriver = "Rate Driver";
+
+  static String rateYourCarpoolCompanions = "Rate your Carpool Companions";
+
+  static String makeItEasyToTellUsAboutProblems =
+      'Make it easy to tell us about problems so we\ncan fix them quickly and make things better\nfor you!';
+
+  static var bugslashfeedback = 'Bug/Feedback';
+
+  static String uploadImagesOptional = 'Upload Images (optional)';
+
+  static var rideCancelled = "Ride Cancelled";
+
+  static var completedSuccesfully = 'Completed Successfully';
+
+  static var emptySeat = "Empty Seat";
+
+  static var cancelledRide = "Cancelled Ride";
+
+  static var incomplete = "Incomplete";
+
+  static String requestAlertCreatedSuccessfully =
+      'Request Alert Created\nSuccessfully!';
+
+  static String rideAlertCreatedSuccessfully =
+      "Ride alert created succesfully!";
+
+  static String theMatchingRideAlertWillBeSentToYouShortly =
+      "The matching ride alert will be sent to you shortly.";
+
+  static String filter = 'Filter';
+
+  static String sortBy = 'Sort by';
+
+  static var earlyDeparture = 'Early departure';
+
+  static var lowestPrice = 'Lowest price';
+
+  static var closeToDeparture = 'Close to departure point';
+
+  static var closeToArrival = 'Close to arrival';
+
+  static var clearAll = 'Clear All';
+
+  static String matchingRides = 'Matching Rides';
+
+  static String noRidesAvailable = 'No rides available';
+
+  static String paymentSuccessfulRequestHasBeenSentToRider =
+      "Payment Successful!\nRide request has been sent to the rider";
+
+  static String thereAreNoRidesBetweenTheseCities =
+      "There are no rides between these two cities";
+
+  static String pleaseTryAgainAfterFewDays = "Please try again after few days.";
+
+  static var thankyouForRatingTheApp =
+      "Thank you for rating our app! Your feedback helps us improve and serve you better.";
 }

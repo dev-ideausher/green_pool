@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../components/greenpool_textfield.dart';
@@ -18,11 +19,11 @@ class RecurringTripView extends GetView<PostRideStepTwoController> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Select the days and time, specifying  am (morning) or pm (afternoon)',
+          Strings.selectTheDaysAndTime,
           style: TextStyleUtil.k16Semibold(
               fontSize: 16.kh, color: ColorUtil.kBlack02),
         ).paddingOnly(top: 24.kh, bottom: 16.kh),
-        const RichTextHeading(text: 'Day').paddingOnly(bottom: 8.kh),
+         RichTextHeading(text: Strings.day).paddingOnly(bottom: 8.kh),
         Obx(
           () => Row(
             // recurring days selection
@@ -34,7 +35,7 @@ class RecurringTripView extends GetView<PostRideStepTwoController> {
                   label: const SizedBox(),
                   textPadding: 0.0.kh,
                   padding: EdgeInsets.all(0.kh),
-                  labelText: 'Mon',
+                  labelText: Strings.mon,
                   selected: controller.isMonday.value,
                   onPressed: () {
                     controller.isMonday.value = !controller.isMonday.value;
@@ -49,7 +50,7 @@ class RecurringTripView extends GetView<PostRideStepTwoController> {
                   label: const SizedBox(),
                   textPadding: 0.0.kh,
                   padding: EdgeInsets.all(0.kh),
-                  labelText: 'Tue',
+                  labelText: Strings.tue,
                   selected: controller.isTuesday.value,
                   onPressed: () {
                     controller.isTuesday.value = !controller.isTuesday.value;
@@ -64,7 +65,7 @@ class RecurringTripView extends GetView<PostRideStepTwoController> {
                   label: const SizedBox(),
                   textPadding: 0.0.kh,
                   padding: EdgeInsets.all(0.kh),
-                  labelText: 'Wed',
+                  labelText: Strings.wed,
                   selected: controller.isWednesday.value,
                   onPressed: () {
                     controller.isWednesday.value =
@@ -80,7 +81,7 @@ class RecurringTripView extends GetView<PostRideStepTwoController> {
                   label: const SizedBox(),
                   textPadding: 0.0.kh,
                   padding: EdgeInsets.all(0.kh),
-                  labelText: 'Thu',
+                  labelText: Strings.thu,
                   selected: controller.isThursDay.value,
                   onPressed: () {
                     controller.isThursDay.value = !controller.isThursDay.value;
@@ -95,7 +96,7 @@ class RecurringTripView extends GetView<PostRideStepTwoController> {
                   label: const SizedBox(),
                   textPadding: 0.0.kh,
                   padding: EdgeInsets.all(0.kh),
-                  labelText: 'Fri ',
+                  labelText: Strings.fri,
                   selected: controller.isFriday.value,
                   onPressed: () {
                     controller.isFriday.value = !controller.isFriday.value;
@@ -110,7 +111,7 @@ class RecurringTripView extends GetView<PostRideStepTwoController> {
                   label: const SizedBox(),
                   textPadding: 0.0.kh,
                   padding: EdgeInsets.all(0.kh),
-                  labelText: 'Sat',
+                  labelText: Strings.sat,
                   selected: controller.isSaturday.value,
                   onPressed: () {
                     controller.isSaturday.value = !controller.isSaturday.value;
@@ -125,7 +126,7 @@ class RecurringTripView extends GetView<PostRideStepTwoController> {
                   label: const SizedBox(),
                   textPadding: 0.0.kh,
                   padding: EdgeInsets.all(0.kh),
-                  labelText: 'Sun',
+                  labelText: Strings.sun,
                   selected: controller.isSunday.value,
                   onPressed: () {
                     controller.isSunday.value = !controller.isSunday.value;
@@ -137,9 +138,9 @@ class RecurringTripView extends GetView<PostRideStepTwoController> {
             ],
           ).paddingOnly(bottom: 8.kh),
         ),
-        const RichTextHeading(text: "Time"),
+         RichTextHeading(text: Strings.time),
         GreenPoolTextField(
-          hintText: 'Select Time',
+          hintText: Strings.selectTime,
           controller: controller.selectedRecurringTime,
           onTap: () {
             controller.setRecurringTime(context);

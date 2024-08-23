@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../constants/image_constant.dart';
+import '../../../res/strings.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
@@ -26,7 +27,7 @@ class RequestSentBottom extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              'Request Sent',
+              Strings.requestSent,
               style: TextStyleUtil.k18Heading600(),
             ).paddingOnly(bottom: 24.kh),
             SvgPicture.asset(
@@ -35,18 +36,18 @@ class RequestSentBottom extends StatelessWidget {
               width: 64.kw,
             ).paddingOnly(bottom: 16.kh),
             Text(
-              "Payment Successful!\nRide request has been sent to the rider",
+              Strings.paymentSuccessfulRequestHasBeenSentToRider,
               textAlign: TextAlign.center,
               style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
             ).paddingOnly(bottom: 40.kh),
             GreenPoolButton(
-                label: 'Continue',
+                label: Strings.continueText,
                 onPressed: () {
                   Get.until(
                       (route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
                 }),
             GreenPoolButton(
-                label: 'Cancel Request',
+                label: Strings.cancelRequest,
                 isBorder: true,
                 onPressed: () {
                   Get.until(

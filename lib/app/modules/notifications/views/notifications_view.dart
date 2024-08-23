@@ -27,7 +27,7 @@ class NotificationsView extends GetView<NotificationsController> {
             : controller.notifications.isEmpty
                 ? Center(
                     child: Text(
-                      "Your future notifications will appear here",
+                      Strings.yourFutureNotificationsWillAppearHere,
                       style: TextStyleUtil.k24Heading600(),
                       textAlign: TextAlign.center,
                     ),

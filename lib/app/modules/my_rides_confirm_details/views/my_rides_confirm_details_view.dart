@@ -23,8 +23,8 @@ class MyRidesConfirmDetailsView
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const GreenPoolAppBar(
-        title: Text('Rider Details'),
+      appBar: GreenPoolAppBar(
+        title: Text(Strings.riderDetails),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -156,7 +156,7 @@ class MyRidesConfirmDetailsView
                 //rating column
                 children: [
                   Text(
-                    'Rating',
+                    Strings.rating,
                     style: TextStyleUtil.k12Semibold(),
                   ).paddingOnly(bottom: 4.kh),
                   Container(
@@ -201,11 +201,11 @@ class MyRidesConfirmDetailsView
                 //joined in column
                 children: [
                   Text(
-                    'Joined',
+                    Strings.joined,
                     style: TextStyleUtil.k12Semibold(),
                   ).paddingOnly(bottom: 4.kh),
                   Text(
-                    'in ${controller.riderRideDetails.rideDetails?.first?.riderDetails?.first?.createdAt.toString().split("-")[0]}',
+                    '${Strings.inA} ${controller.riderRideDetails.rideDetails?.first?.riderDetails?.first?.createdAt.toString().split("-")[0]}',
                     style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                   ),
                 ],
@@ -236,7 +236,7 @@ class MyRidesConfirmDetailsView
                       .acceptRidersRequestAPI(controller.riderRideDetails);
                 },
                 width: 162.kw,
-                label: 'Accept',
+                label: Strings.accept,
               ),
               GreenPoolButton(
                 onPressed: () {
@@ -244,7 +244,7 @@ class MyRidesConfirmDetailsView
                       .rejectRidersRequestAPI(controller.riderRideDetails);
                 },
                 width: 162.kw,
-                label: 'Reject',
+                label: Strings.reject,
                 isBorder: true,
               ),
             ],

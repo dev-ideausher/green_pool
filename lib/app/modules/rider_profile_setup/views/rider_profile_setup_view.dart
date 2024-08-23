@@ -22,7 +22,6 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
 
   @override
   Widget build(BuildContext context) {
-    print(controller.isProfileImagePickedCheck.value);
     Get.lazyPut(() => RiderProfileSetupController());
     return Scaffold(
       appBar: GreenPoolAppBar(
@@ -138,7 +137,7 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
               RichTextHeading(text: Strings.gender).paddingOnly(bottom: 8.kh),
               Obx(
                 () => GreenPoolTextField(
-                  hintText: "Select your Gender",
+                  hintText: Strings.selectGender,
                   controller: controller.gender,
                   validator: (value) => controller.validateGender(value),
                   autovalidateMode: AutovalidateMode.onUserInteraction,

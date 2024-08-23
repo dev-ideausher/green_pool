@@ -1,4 +1,3 @@
-//! ride details after ride history in profile
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -56,8 +55,8 @@ class RideDetailsView extends GetView<RideDetailsController> {
                   ).paddingOnly(right: 8.kw),
                   Text(
                     isRideCancelled
-                        ? "Ride Cancelled"
-                        : 'Completed Successfully',
+                        ? Strings.rideCancelled
+                        : Strings.completedSuccesfully,
                     style: TextStyleUtil.k14Regular(
                         color: isRideCancelled
                             ? ColorUtil.kWhiteColor
@@ -146,13 +145,13 @@ class RideDetailsView extends GetView<RideDetailsController> {
                               TextSpan(
                                 children: [
                                   TextSpan(
-                                    text: 'Fare: ',
+                                    text: Strings.fare,
                                     style: TextStyleUtil.k14Semibold(
                                         color: ColorUtil.kSecondary01),
                                   ),
                                   TextSpan(
                                     text:
-                                        '\$ ${controller.rideHistory.value.price}',
+                                        '${Strings.dollar} ${controller.rideHistory.value.price}',
                                     style: TextStyleUtil.k16Semibold(
                                         fontSize: 16.kh,
                                         color: ColorUtil.kSecondary01),
@@ -197,7 +196,7 @@ class RideDetailsView extends GetView<RideDetailsController> {
                                       : ColorUtil.kSecondary01,
                                 ).paddingOnly(right: 8.kw),
                                 Text(
-                                  '${controller.rideHistory.value.seatAvailable} seats',
+                                  '${controller.rideHistory.value.totalSeatAvailable ?? 0} seats',
                                   style: TextStyleUtil.k14Regular(
                                       color: ColorUtil.kBlack03),
                                 ),
@@ -263,7 +262,7 @@ class RideDetailsView extends GetView<RideDetailsController> {
                     Text(
                       isRider
                           ? "${controller.rideHistory.value.riders?[passengerIndex]?.fullName.toString().split(" ").first}"
-                          : "Empty Seat",
+                          : Strings.emptySeat,
                       style: TextStyleUtil.k12Semibold(),
                       textAlign: TextAlign.center,
                     ),

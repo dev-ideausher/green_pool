@@ -5,6 +5,7 @@ import 'package:green_pool/app/components/greenpool_textfield.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
 import 'package:green_pool/app/components/richtext_heading.dart';
 import 'package:green_pool/app/components/upload_vehicle_picture.dart';
+import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
@@ -26,7 +27,7 @@ class SetupVehicle extends GetView<ProfileSetupController> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const RichTextHeading(text: 'Vehicle Photo')
+             RichTextHeading(text: Strings.vehiclePhoto)
                 .paddingOnly(top: 32.kh, bottom: 8.kh),
             GestureDetector(
               onTap: () => Get.to(() => VehiclePictureView(
@@ -59,7 +60,7 @@ class SetupVehicle extends GetView<ProfileSetupController> {
                             SvgPicture.asset(ImageConstant.svgIconUpload)
                                 .paddingOnly(right: 8.kw),
                             Text(
-                              'Upload Photo',
+                              Strings.uploadPhoto,
                               style: TextStyleUtil.k14Regular(
                                   color: ColorUtil.kBlack03),
                             ),
@@ -68,17 +69,17 @@ class SetupVehicle extends GetView<ProfileSetupController> {
                 ),
               ),
             ).paddingOnly(bottom: 16.kh),
-            const RichTextHeading(text: 'Model').paddingOnly(bottom: 8.kh),
+            RichTextHeading(text: Strings.model).paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
-              hintText: 'Enter vehicle model',
+              hintText: Strings.enterVehicleModel,
               controller: controller.model,
               validator: (value) => controller.validateModel(value),
               autovalidateMode: AutovalidateMode.onUserInteraction,
             ).paddingOnly(bottom: 16.kh),
-            const RichTextHeading(text: 'Type').paddingOnly(bottom: 8.kh),
+            RichTextHeading(text: Strings.type).paddingOnly(bottom: 8.kh),
             Obx(
               () => GreenPoolTextField(
-                hintText: "Select Vehicle Type",
+                hintText: Strings.selectVehicleType,
                 controller: controller.type,
                 validator: (value) => controller.validateVehicleType(value),
                 autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -118,10 +119,10 @@ class SetupVehicle extends GetView<ProfileSetupController> {
                 ).paddingOnly(bottom: 16.kh),
               ),
             ),
-            const RichTextHeading(text: 'Color').paddingOnly(bottom: 8.kh),
+            RichTextHeading(text: Strings.color).paddingOnly(bottom: 8.kh),
             Obx(
               () => GreenPoolTextField(
-                hintText: "Select Vehicle Color",
+                hintText: Strings.selectVehicleColor,
                 controller: controller.color,
                 validator: (value) => controller.validateColor(value),
                 autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -162,18 +163,18 @@ class SetupVehicle extends GetView<ProfileSetupController> {
                 ).paddingOnly(bottom: 16.kh),
               ),
             ),
-            const RichTextHeading(text: 'Year').paddingOnly(bottom: 8.kh),
+            RichTextHeading(text: Strings.year).paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
-              hintText: 'Enter year',
+              hintText: Strings.enterYear,
               controller: controller.year,
               validator: (p0) => controller.validateYear(p0),
               keyboardType: const TextInputType.numberWithOptions(),
               autovalidateMode: AutovalidateMode.onUserInteraction,
             ).paddingOnly(bottom: 16.kh),
-            const RichTextHeading(text: 'License Plate')
+             RichTextHeading(text: Strings.licensePlate)
                 .paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
-              hintText: 'License plate',
+              hintText: Strings.licenseplate,
               controller: controller.licencePlate,
               validator: (p0) => controller.validateLicensePlate(p0),
               autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -185,10 +186,10 @@ class SetupVehicle extends GetView<ProfileSetupController> {
                     controller.checkVehicleValidations();
                   } else {
                     controller.tabBarController.index = 0;
-                    showMySnackbar(msg: "Please fill in user details");
+                    showMySnackbar(msg: Strings.pleaseFillInUserDetails);
                   }
                 },
-                label: 'Proceed',
+                label: Strings.proceed,
                 isLoading: controller.isVehicleBtnLoading.value,
               ).paddingSymmetric(vertical: 40.kh),
             ),

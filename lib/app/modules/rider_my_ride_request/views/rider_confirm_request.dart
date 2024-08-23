@@ -37,12 +37,12 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                           : SvgPicture.asset(ImageConstant.svgNoRides),
                     ),
                     Text(
-                      "There are no rides between these two cities",
+                      Strings.thereAreNoRidesBetweenTheseCities,
                       style: TextStyleUtil.k24Heading600(),
                       textAlign: TextAlign.center,
                     ).paddingOnly(bottom: 16.kh),
                     Text(
-                      "Please try again after few days.",
+                      Strings.pleaseTryAgainAfterFewDays,
                       style:
                           TextStyleUtil.k18Regular(color: ColorUtil.kBlack04),
                       textAlign: TextAlign.center,
@@ -121,8 +121,6 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                                   size: 12.kh,
                                                 ).paddingOnly(right: 2.kw),
                                                 Text(
-                                                  // '0.0',
-                                                  //TODO: rating
                                                   controller
                                                           .riderConfirmRequestModel
                                                           .value
@@ -168,7 +166,7 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                                 children: [
                                                   TextSpan(
                                                     text:
-                                                        "\$ ${(controller.riderConfirmRequestModel.value.data![index]?.price ?? 0)}",
+                                                        "${Strings.dollar} ${(controller.riderConfirmRequestModel.value.data![index]?.price ?? 0)}",
                                                     style:
                                                         TextStyleUtil.k16Bold(
                                                             color: ColorUtil
@@ -302,7 +300,6 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                       fontSize: 14.kh,
                                       label: Strings.accept,
                                       onPressed: () async {
-                                        // await controller.acceptDriversRequestAPI(index,showAcceptBottom: true);
                                         controller
                                             .moveToPaymentFromConfirmSection(
                                                 controller
@@ -331,7 +328,7 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                               .value
                                           ? ColorUtil.kPrimary3PinkMode
                                           : ColorUtil.kSecondary01,
-                                      label: 'Reject',
+                                      label: Strings.reject,
                                     ),
                                   ],
                                 ),

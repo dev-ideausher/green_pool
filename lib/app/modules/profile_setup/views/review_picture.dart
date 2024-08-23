@@ -7,6 +7,7 @@ import 'package:green_pool/app/constants/image_constant.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
+import '../../../res/strings.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
@@ -31,11 +32,11 @@ class ReviewPictureView extends GetView<ProfileSetupController> {
               child: SvgPicture.asset(ImageConstant.svgIconBack30),
             ).paddingOnly(top: 16.kh, bottom: 8.kh),
             Text(
-              'Review Picture',
+              Strings.reviewPicture,
               style: TextStyleUtil.k32Heading700(),
             ).paddingOnly(bottom: 4.kh),
             Text(
-              'Please review your picture and make sure that people can clearly see your face.',
+              Strings.pleaseReviewYourPicture,
               style: TextStyleUtil.k16Regular(color: ColorUtil.kBlack04),
             ).paddingOnly(bottom: 74.kh),
             Center(
@@ -57,13 +58,13 @@ class ReviewPictureView extends GetView<ProfileSetupController> {
                 Get.until((route) => Get.currentRoute == Routes.PROFILE_SETUP);
                 controller.isProfileImagePicked.value = true;
               },
-              label: 'Done',
+              label: Strings.done,
             ),
             GreenPoolButton(
               onPressed: () => Get.back(),
               isBorder: true,
               borderColor: ColorUtil.kSecondary01,
-              label: 'Retake photo',
+              label: Strings.retakePhoto,
               labelColor: ColorUtil.kSecondary01,
               borderWidth: 2.kh,
             ).paddingOnly(top: 16.kh, bottom: 24.kh),

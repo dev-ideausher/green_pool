@@ -50,7 +50,7 @@ class RecurringTile extends StatelessWidget {
                     onPressed: () {
                       controller.deleteRecurringride(recurringResp?.Id ?? "");
                     },
-                    label: "Delete",
+                    label: Strings.delete,
                     isBorder: true,
                     padding: const EdgeInsets.all(0),
                     fontSize: 12.kh,

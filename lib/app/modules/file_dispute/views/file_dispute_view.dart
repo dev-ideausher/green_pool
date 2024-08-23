@@ -7,7 +7,6 @@ import 'package:green_pool/app/components/gp_progress.dart';
 import 'package:green_pool/app/components/green_pool_divider.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
-import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/gp_util.dart';
@@ -212,7 +211,7 @@ class FileDisputeView extends GetView<FileDisputeController> {
                                                 vertical: 4.kh,
                                                 horizontal: 24.kw),
                                             child: Text(
-                                              "Filed a dispute",
+                                              Strings.filedAdispute,
                                               style: TextStyleUtil.k14Semibold(
                                                   color: ColorUtil.kError2),
                                             ),
@@ -240,7 +239,7 @@ class FileDisputeView extends GetView<FileDisputeController> {
                                                       color: ColorUtil.kBlack01,
                                                     ).paddingOnly(right: 8.kw),
                                                     Text(
-                                                      'Resolved',
+                                                      Strings.resolved,
                                                       style: TextStyleUtil
                                                           .k14Regular(
                                                               color: ColorUtil

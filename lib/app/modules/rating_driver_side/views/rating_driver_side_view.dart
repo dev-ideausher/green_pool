@@ -12,6 +12,7 @@ import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
+import '../../../res/strings.dart';
 import '../controllers/rating_driver_side_controller.dart';
 
 class RatingDriverSideView extends GetView<RatingDriverSideController> {
@@ -26,12 +27,12 @@ class RatingDriverSideView extends GetView<RatingDriverSideController> {
             SvgPicture.asset(ImageConstant.svgRideCompleted)
                 .paddingOnly(top: 40.kh, bottom: 24.kh),
             Text(
-              "Ride Completed!",
+              Strings.rideCompleted,
               style: TextStyleUtil.k24Heading600(),
               textAlign: TextAlign.center,
             ).paddingOnly(bottom: 8.kh),
             Text(
-              "Hope you had a great car pooling\nexperience!",
+              Strings.hopeYouHadGreatExperience,
               style: TextStyleUtil.k16Regular(color: ColorUtil.kBlack04),
               textAlign: TextAlign.center,
             ),
@@ -47,7 +48,7 @@ class RatingDriverSideView extends GetView<RatingDriverSideController> {
                   children: [
                     Center(
                       child: Text(
-                        "Rate Riders",
+                        Strings.rateRiders,
                         style: TextStyleUtil.k18Heading600(),
                       ).paddingOnly(top: 40.kh),
                     ),
@@ -131,7 +132,7 @@ class RatingDriverSideView extends GetView<RatingDriverSideController> {
                         Get.until((route) =>
                             Get.currentRoute == Routes.BOTTOM_NAVIGATION);
                       },
-                      label: "Continue",
+                      label: Strings.continueText,
                     ).paddingOnly(top: 40.kh, bottom: 10.kh),
                     12.kheightBox,
                   ],

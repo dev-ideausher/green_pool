@@ -1,4 +1,3 @@
-//! contains requests view after tapping on the rider tile in my rides
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';

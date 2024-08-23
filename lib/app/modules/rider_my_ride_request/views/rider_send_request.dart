@@ -37,12 +37,12 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                           : SvgPicture.asset(ImageConstant.svgNoRides),
                     ),
                     Text(
-                      "There are no rides between these two cities",
+                      Strings.thereAreNoRidesBetweenTheseCities,
                       style: TextStyleUtil.k24Heading600(),
                       textAlign: TextAlign.center,
                     ).paddingOnly(bottom: 16.kh),
                     Text(
-                      "Please try again after few days.",
+                      Strings.pleaseTryAgainAfterFewDays,
                       style:
                           TextStyleUtil.k18Regular(color: ColorUtil.kBlack04),
                       textAlign: TextAlign.center,
@@ -165,7 +165,7 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                                   children: [
                                                     TextSpan(
                                                       text:
-                                                          "\$ ${rideDetails?.price ?? "0"}",
+                                                          "${Strings.dollar} ${rideDetails?.price ?? "0"}",
                                                       style:
                                                           TextStyleUtil.k16Bold(
                                                               color: ColorUtil
@@ -309,7 +309,7 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                             false) {
                                           showMySnackbar(
                                               msg:
-                                                  "The request has already been sent.");
+                                                  Strings.reqHasAlreadySent);
                                         } else {
                                           controller
                                               .moveToPaymentFromSendRequest(

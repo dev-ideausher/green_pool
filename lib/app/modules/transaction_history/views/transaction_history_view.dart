@@ -130,7 +130,7 @@ class TransactionTile extends StatelessWidget {
             width: 40.kw,
           ),
         ),
-        trailing: trailing ?? SizedBox(),
+        trailing: trailing ?? const SizedBox(),
       ),
     );
   }

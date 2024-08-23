@@ -8,6 +8,7 @@ import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
+import '../../../res/strings.dart';
 import '../controllers/payment_controller.dart';
 
 class PromoCode extends GetView<PaymentController> {
@@ -16,8 +17,8 @@ class PromoCode extends GetView<PaymentController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const GreenPoolAppBar(
-        title: Text("Promo Codes"),
+      appBar:  GreenPoolAppBar(
+        title: Text(Strings.promoCode),
       ),
       body: Obx(
         () => controller.isPromoLoading.value
@@ -74,7 +75,7 @@ class PromoCode extends GetView<PaymentController> {
                           controller.applyDiscount(index);
                         },
                         child: Text(
-                          "Apply",
+                          Strings.apply,
                           style: TextStyleUtil.k14Semibold(
                               textDecoration: TextDecoration.underline,
                               color:

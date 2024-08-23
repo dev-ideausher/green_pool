@@ -1,4 +1,3 @@
-//! contains the view after tapping the search tiles in post A Ride and find A Ride
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -34,8 +33,8 @@ class OriginView extends GetView<OriginController> {
                     : controller.locationValues.name == LocationValues.destination.name || controller.locationValues.name == LocationValues.findRideDestination.name
                         ? Strings.enterDestinationAddress
                         : controller.locationValues.name == LocationValues.addStop1.name
-                            ? 'Add Stop 1'
-                            : 'Add stop 2',
+                            ? Strings.addStop1
+                            : Strings.addStop2,
                 controller: controller.originController,
                 onchanged: (value) {
                   controller.setSessionToken();

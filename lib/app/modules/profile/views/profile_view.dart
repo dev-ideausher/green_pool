@@ -52,13 +52,13 @@ class ProfileView extends GetView<ProfileController> {
               ).paddingOnly(bottom: 8.kh, top: 16.kh),
             ),
             Text(
-              Get.find<GetStorageService>().getUserName ?? 'User',
+              Get.find<GetStorageService>().getUserName ?? Strings.user,
               style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
             ).paddingOnly(bottom: 24.kh),
             controller.userInfo.value.data?.gender == "Female"
                 ? ProfileContainer(
                     image: ImageConstant.svgProfileShieldPink,
-                    text: 'Activate Pink Mode',
+                    text: Strings.activatePinkMode,
                     info: GestureDetector(
                         onTap: () => Get.dialog(
                               useSafeArea: true,
@@ -71,7 +71,7 @@ class ProfileView extends GetView<ProfileController> {
                                       borderRadius: BorderRadius.circular(8.kh),
                                     ),
                                     child: Text(
-                                      "Travel with confidence in our 'Pink Mode'\nensuring safety and security with female\nriders and drivers.",
+                                      Strings.travelWithConfidenceWithOurPinkMode,
                                       style: TextStyleUtil.k14Regular(
                                           color: ColorUtil.kBlack03),
                                     )),
@@ -100,67 +100,67 @@ class ProfileView extends GetView<ProfileController> {
             ProfileContainer(
                 onTap: () => Get.toNamed(Routes.PROFILE_SETTINGS),
                 image: ImageConstant.svgProfileSettings,
-                text: 'Profile Settings'),
+                text: Strings.profileSettings),
             ProfileContainer(
                 onTap: () => Get.toNamed(Routes.PUSH_NOTIFICATIONS),
                 image: ImageConstant.svgProfileNoti,
-                text: "Notifications"),
+                text: Strings.notifications),
             ProfileContainer(
                     onTap: () => Get.toNamed(Routes.RIDE_HISTORY),
                     image: ImageConstant.svgProfileRideHistory,
-                    text: "Ride history")
+                    text: Strings.ridehistory)
                 .paddingOnly(bottom: 8.kh),
             ProfileContainer(
                 onTap: () => Get.toNamed(Routes.WALLET),
                 image: ImageConstant.svgProfileWallet,
-                text: "Wallet"),
+                text: Strings.wallet),
             ProfileContainer(
                 onTap: () => Get.toNamed(Routes.STUDENT_DISCOUNTS),
                 image: ImageConstant.svgProfileDiscount,
-                text: "Student Discount"),
+                text: Strings.studentDiscount),
             ProfileContainer(
                 onTap: () async {
                   await Share.share(
                       "Check this cool app! \nhttps://play.google.com/store/apps/details?id=com.greenpool.app");
                 },
                 image: ImageConstant.svgProfileRefer,
-                text: "Refer a friend"),
+                text: Strings.referAFriend),
             ProfileContainer(
                     onTap: () {
-                      Get.bottomSheet(RatingBottomSheet(),
+                      Get.bottomSheet(const RatingBottomSheet(),
                           enableDrag: true, isScrollControlled: true);
                     },
                     image: ImageConstant.svgProfileStar,
-                    text: "Rate us")
+                    text: Strings.rateUs)
                 .paddingOnly(bottom: 8.kh),
             ProfileContainer(
               image: ImageConstant.svgProfileAbout,
-              text: "About us",
+              text: Strings.aboutUs,
               onTap: () => Get.toNamed(Routes.ABOUT),
             ),
             ProfileContainer(
                 onTap: () => Get.toNamed(Routes.FILE_DISPUTE),
                 image: ImageConstant.svgProfileFile,
-                text: "File Dispute"),
+                text: Strings.fileDispute),
             ProfileContainer(
                 onTap: () => Get.toNamed(Routes.HELP_SUPPORT),
                 image: ImageConstant.svgProfileHelp,
-                text: "Help & Support"),
+                text: Strings.helpAndSupport),
             ProfileContainer(
                 onTap: () => Get.toNamed(Routes.TERMS_CONDITIONS),
                 image: ImageConstant.svgProfileTerms,
-                text: "Terms & Conditions"),
+                text: Strings.termsAmbersentConditions),
             ProfileContainer(
                 onTap: () async {
                   await launchUrl(
                       Uri.parse("https://green-pool-front-end.vercel.app/"));
                 },
                 image: ImageConstant.svgProfileFollow,
-                text: "Follow us on Social Media"),
+                text: Strings.followUsOnSocialMedia),
             ProfileContainer(
                     onTap: () => Get.toNamed(Routes.REPORT),
                     image: ImageConstant.svgProfileBug,
-                    text: "Report a Bug")
+                    text: Strings.reportABug)
                 .paddingOnly(bottom: 8.kh),
             ProfileContainer(
               onTap: () => Get.dialog(

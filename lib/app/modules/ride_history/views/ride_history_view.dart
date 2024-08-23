@@ -35,7 +35,7 @@ class RideHistoryView extends GetView<RideHistoryController> {
             : controller.rideHistModel.value.data!.isEmpty
                 ? Center(
                     child: Text(
-                      "No ride history from past 7 days",
+                      Strings.noRideHistory,
                       style: TextStyleUtil.k18Heading600(),
                     ),
                   )
@@ -48,8 +48,6 @@ class RideHistoryView extends GetView<RideHistoryController> {
                             itemBuilder: (context, index) {
                               final his =
                                   controller.rideHistModel.value.data?[index];
-                              print(
-                                  Get.find<GetStorageService>().getFirebaseUid);
                               return ((his?.driver?.firebaseUid ?? "") ==
                                       Get.find<GetStorageService>()
                                           .getFirebaseUid)
@@ -145,7 +143,7 @@ class RiderRideHistTile extends StatelessWidget {
                                 size: 12.kh,
                               ).paddingOnly(right: 2.kw),
                               Text(
-                                '${his?.driver?.rating?.toStringAsFixed(1) ?? "0"}',
+                                his?.driver?.rating?.toStringAsFixed(1) ?? "0",
                                 style: TextStyleUtil.k12Semibold(
                                     color: Get.find<HomeController>()
                                             .isPinkModeOn
@@ -175,12 +173,12 @@ class RiderRideHistTile extends StatelessWidget {
                               TextSpan(
                                 children: [
                                   TextSpan(
-                                    text: 'Fare: ',
+                                    text: Strings.fare,
                                     style: TextStyleUtil.k14Semibold(
                                         color: ColorUtil.kSecondary01),
                                   ),
                                   TextSpan(
-                                    text: '\$ ${his?.price}',
+                                    text: '${Strings.dollar} ${his?.price}',
                                     style: TextStyleUtil.k16Semibold(
                                         fontSize: 16.kh,
                                         color: ColorUtil.kSecondary01),
@@ -192,6 +190,7 @@ class RiderRideHistTile extends StatelessWidget {
                         ).paddingOnly(bottom: 8.kh),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Row(
                               children: [
@@ -206,7 +205,6 @@ class RiderRideHistTile extends StatelessWidget {
                                       BlendMode.srcIn),
                                 ).paddingOnly(right: 4.kw),
                                 Text(
-                                  // '07 Nov 2023, 3:00pm',
                                   "${GpUtil.getDateFormat(his?.time ?? "")} ${GpUtil.convertUtcToLocal(his?.time ?? "")}",
                                   style: TextStyleUtil.k12Regular(
                                       color: ColorUtil.kBlack03),
@@ -217,15 +215,15 @@ class RiderRideHistTile extends StatelessWidget {
                               children: [
                                 Icon(
                                   Icons.time_to_leave,
-                                  size: 18.kh,
+                                  size: 16.kh,
                                   color: Get.find<HomeController>()
                                           .isPinkModeOn
                                           .value
                                       ? ColorUtil.kPrimary3PinkMode
                                       : ColorUtil.kSecondary01,
-                                ).paddingOnly(right: 8.kw),
+                                ).paddingOnly(right: 4.kw),
                                 Text(
-                                  '${his?.seatAvailable} seats',
+                                  '${his?.totalSeatAvailable} seats',
                                   style: TextStyleUtil.k14Regular(
                                       color: ColorUtil.kBlack03),
                                 ),
@@ -286,8 +284,8 @@ class RiderRideHistTile extends StatelessWidget {
                       EdgeInsets.symmetric(vertical: 4.kh, horizontal: 24.kw),
                   child: Text(
                     his?.rideStatus == "Cancel"
-                        ? "Cancelled Ride"
-                        : "Incomplete",
+                        ? Strings.cancelledRide
+                        : Strings.incomplete,
                     style: TextStyleUtil.k14Semibold(color: ColorUtil.kError2),
                   ),
                 ).paddingOnly(top: 8.kh))
@@ -431,8 +429,8 @@ class DriverRideHistTile extends StatelessWidget {
                       EdgeInsets.symmetric(vertical: 4.kh, horizontal: 24.kw),
                   child: Text(
                     his?.rideStatus == "Cancel"
-                        ? "Cancelled Ride"
-                        : "Incomplete",
+                        ? Strings.cancelledRide
+                        : Strings.incomplete,
                     style: TextStyleUtil.k14Semibold(color: ColorUtil.kError2),
                   ),
                 ))

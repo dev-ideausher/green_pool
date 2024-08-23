@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:get/get.dart';
+import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../constants/image_constant.dart';
@@ -28,32 +29,32 @@ class PostRideStepFourView extends GetView<PostRideStepFourController> {
                 child: SvgPicture.asset(ImageConstant.svgIconBack30),
               ).paddingOnly(top: 16.kh, bottom: 8.kh),
               Text(
-                'Guidelines for sharing\na ride',
+                Strings.guidelinesForSharingARide,
                 style: TextStyleUtil.k32Heading700(),
               ).paddingOnly(bottom: 36.kh),
               Guidelines(
                 image: Get.find<HomeController>().isPinkModeOn.value
                     ? ImageConstant.svgPinkGuideline1
                     : ImageConstant.svgGuideline1,
-                title: 'No Cash',
+                title: Strings.noCash,
                 body:
-                    'All fares are settled electronically,\nand payouts occur every Friday.',
+                    Strings.allFaresAreSettledElectronically,
               ),
               Guidelines(
                 image: Get.find<HomeController>().isPinkModeOn.value
                     ? ImageConstant.svgPinkGuideline2
                     : ImageConstant.svgGuideline2,
-                title: 'Be Trustworthy',
+                title: Strings.beTrustworthy,
                 body:
-                    'Only create a trip listing if you are\ncertain you will drive and can arrive\non time.',
+                    Strings.onlyCreateATripIfYouareCertain,
               ),
               Guidelines(
                 image: Get.find<HomeController>().isPinkModeOn.value
                     ? ImageConstant.svgPinkGuideline3
                     : ImageConstant.svgGuideline3,
-                title: 'Practice safe driving',
+                title: Strings.practiceSafeDriving,
                 body:
-                    'Comply with traffic rules, stay\nfocused, eliminate distractions and\nsecure your seatbelts.',
+                    Strings.complyWithTrafficRules,
               ).paddingOnly(bottom: 18.kh),
               Row(
                 children: [
@@ -73,11 +74,11 @@ class PostRideStepFourView extends GetView<PostRideStepFourController> {
                       TextSpan(
                         children: [
                           TextSpan(
-                            text: 'I consent to these guidelines, the ',
+                            text: Strings.iConsentToTheseGuidelines,
                             style: TextStyleUtil.k12Regular(),
                           ),
                           TextSpan(
-                            text: 'Driver Cancellation Policy, ',
+                            text: Strings.driverCancellationPolicyf,
                             style: TextStyleUtil.k12Semibold(
                                 color: Get.find<HomeController>()
                                         .isPinkModeOn
@@ -89,7 +90,7 @@ class PostRideStepFourView extends GetView<PostRideStepFourController> {
                                   () => Get.toNamed(Routes.POLICY_CANCELLATION),
                           ),
                           TextSpan(
-                            text: 'Terms of Service,',
+                            text: Strings.termsOfService,
                             style: TextStyleUtil.k12Semibold(
                                 color: Get.find<HomeController>()
                                         .isPinkModeOn
@@ -101,11 +102,11 @@ class PostRideStepFourView extends GetView<PostRideStepFourController> {
                                   () => Get.toNamed(Routes.TERMS_CONDITIONS),
                           ),
                           TextSpan(
-                            text: ' and ',
+                            text: Strings.and,
                             style: TextStyleUtil.k12Regular(),
                           ),
                           TextSpan(
-                            text: 'Privacy policy. ',
+                            text: Strings.privacyPolicyf,
                             style: TextStyleUtil.k12Semibold(
                                 color: Get.find<HomeController>()
                                         .isPinkModeOn
@@ -118,7 +119,7 @@ class PostRideStepFourView extends GetView<PostRideStepFourController> {
                           ),
                           TextSpan(
                             text:
-                                'I acknowledge that my account may face suspension for any violations of these rules.',
+                                Strings.iAcknowledgeThatMyAccMayFaceSuspension,
                             style: TextStyleUtil.k12Regular(),
                           ),
                         ],
@@ -131,7 +132,7 @@ class PostRideStepFourView extends GetView<PostRideStepFourController> {
                 () => GreenPoolButton(
                   onPressed: () => controller.setGuideLines(),
                   isActive: controller.isChecked.value,
-                  label: 'Publish Ride',
+                  label: Strings.publishRide,
                 ).paddingSymmetric(vertical: 40.kh),
               ),
             ],

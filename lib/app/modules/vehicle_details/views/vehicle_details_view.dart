@@ -63,7 +63,7 @@ class VehicleDetailsView extends GetView<VehicleDetailsController> {
             RichTextHeading(text: Strings.type).paddingOnly(bottom: 8.kh),
             Obx(
               () => GreenPoolTextField(
-                hintText: "Select Vehicle Type",
+                hintText: Strings.selectVehicleType,
                 controller: controller.type,
                 suffix: controller.isTypeListExpanded.value
                     ? const Icon(Icons.arrow_drop_up)
@@ -104,7 +104,7 @@ class VehicleDetailsView extends GetView<VehicleDetailsController> {
             RichTextHeading(text: Strings.color).paddingOnly(bottom: 8.kh),
             Obx(
               () => GreenPoolTextField(
-                hintText: "Select Vehicle Color",
+                hintText: Strings.selectVehicleColor,
                 controller: controller.color,
                 suffix: controller.isColorListExpanded.value
                     ? const Icon(Icons.arrow_drop_up)

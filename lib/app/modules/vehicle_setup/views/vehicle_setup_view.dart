@@ -83,7 +83,7 @@ class VehicleSetupView extends GetView<VehicleSetupController> {
                 RichTextHeading(text: Strings.type).paddingOnly(bottom: 8.kh),
                 Obx(
                   () => GreenPoolTextField(
-                    hintText: "Select Vehicle Type",
+                    hintText: Strings.selectVehicleType,
                     controller: controller.type,
                     validator: (value) => controller.validateVehicleType(value),
                     autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -129,7 +129,7 @@ class VehicleSetupView extends GetView<VehicleSetupController> {
                 RichTextHeading(text: Strings.color).paddingOnly(bottom: 8.kh),
                 Obx(
                   () => GreenPoolTextField(
-                    hintText: "Select Vehicle Color",
+                    hintText: Strings.selectVehicleColor,
                     controller: controller.color,
                     validator: (value) => controller.validateColor(value),
                     autovalidateMode: AutovalidateMode.onUserInteraction,

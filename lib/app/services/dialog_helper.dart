@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import '../components/gp_progress.dart';
 import '../constants/image_constant.dart';
-import '../modules/home/controllers/home_controller.dart';
 import '../res/strings.dart';
 import '../routes/app_pages.dart';
 import 'colors.dart';
@@ -12,6 +12,31 @@ import 'text_style_util.dart';
 
 class DialogHelper {
   static void showLoading([String? message]) {
+    Get.dialog(
+      WillPopScope(
+        child: Center(
+          // Ensures the dialog is centered on the screen
+          child: Container(
+              height: 80.kh,
+              width: 80.kh,
+              decoration: BoxDecoration(
+                color: ColorUtil.kWhiteColor,
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(20.0.kh),
+                ),
+              ),
+              padding: EdgeInsets.all(12.kh),
+              child: const GpProgress()),
+        ),
+        onWillPop: () => Future.value(false),
+      ),
+      barrierDismissible: false,
+      barrierColor: const Color(0xff141A31).withOpacity(.4),
+      useSafeArea: true,
+    );
+  }
+  /*static void showLoading([String? message]) {
     Get.dialog(
       WillPopScope(
         child: SizedBox(
@@ -50,7 +75,7 @@ class DialogHelper {
       barrierColor: const Color(0xff141A31).withOpacity(.4),
       useSafeArea: true,
     );
-  }
+  }*/
 
   //hide loading
   static Future<void> hideDialog() async {

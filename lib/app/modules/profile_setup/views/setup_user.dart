@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/components/greenpool_textfield.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
 import 'package:green_pool/app/components/upload_id.dart';
+import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
@@ -73,24 +74,24 @@ class SetupUser extends GetView<ProfileSetupController> {
                     ).paddingOnly(bottom: 12.kh, top: 32.kh),
                   ),
                   Text(
-                    'Take or upload profile photo',
+                    Strings.takeOrUploadProfilePic,
                     style: TextStyleUtil.k16Regular(color: ColorUtil.kNeutral4),
                   ),
                 ],
               ),
             ).paddingOnly(bottom: 40.kh),
-            const RichTextHeading(text: 'Full Name').paddingOnly(bottom: 8.kh),
+            RichTextHeading(text: Strings.fullName).paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
-              hintText: 'Enter name',
+              hintText: Strings.enterName,
               controller: controller.fullName,
               validator: (value) => controller.nameValidator(value),
               autovalidateMode: AutovalidateMode.onUserInteraction,
               suffix: SvgPicture.asset(ImageConstant.svgProfileEditPen),
             ).paddingOnly(bottom: 16.kh),
-            const RichTextHeading(text: 'Email Address')
+            RichTextHeading(text: Strings.emailAddress)
                 .paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
-              hintText: 'Email ID',
+              hintText: Strings.emailID,
               controller: controller.email,
               keyboardType: TextInputType.emailAddress,
               validator: (value) => controller.validateEmail(value),
@@ -100,10 +101,10 @@ class SetupUser extends GetView<ProfileSetupController> {
                   : SvgPicture.asset(ImageConstant.svgProfileEditPen),
               readOnly: controller.readOnlyEmail,
             ).paddingOnly(bottom: 16.kh),
-            const RichTextHeading(text: 'Phone Number')
+            RichTextHeading(text: Strings.phoneNumber)
                 .paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
-              hintText: 'Enter phone number',
+              hintText: Strings.enterPhoneNumber,
               prefix: Text(
                 "+1",
                 style: TextStyleUtil.k14Regular(
@@ -115,10 +116,10 @@ class SetupUser extends GetView<ProfileSetupController> {
               autovalidateMode: AutovalidateMode.onUserInteraction,
               readOnly: !controller.readOnlyEmail,
             ).paddingOnly(bottom: 16.kh),
-            const RichTextHeading(text: 'Gender').paddingOnly(bottom: 8.kh),
+            RichTextHeading(text: Strings.gender).paddingOnly(bottom: 8.kh),
             Obx(
               () => GreenPoolTextField(
-                hintText: "Select your Gender",
+                hintText: Strings.selectGender,
                 controller: controller.gender,
                 validator: (value) => controller.validateGender(value),
                 autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -162,11 +163,11 @@ class SetupUser extends GetView<ProfileSetupController> {
                 ).paddingOnly(bottom: 16.kh),
               ),
             ),
-            const RichTextHeading(text: 'City Province')
+            RichTextHeading(text: Strings.cityProvince)
                 .paddingOnly(bottom: 8.kh),
             Obx(
               () => GreenPoolTextField(
-                hintText: "Select your City",
+                hintText: Strings.selectCity,
                 controller: controller.city,
                 validator: (value) => controller.validateCity(value),
                 autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -215,7 +216,7 @@ class SetupUser extends GetView<ProfileSetupController> {
               TextSpan(
                 children: [
                   TextSpan(
-                    text: 'Date of Birth ',
+                    text: Strings.dateOfBirth,
                     style: TextStyleUtil.k14Semibold(),
                   ),
                   TextSpan(
@@ -223,14 +224,14 @@ class SetupUser extends GetView<ProfileSetupController> {
                     style: TextStyleUtil.k14Regular(color: ColorUtil.kError3),
                   ),
                   TextSpan(
-                    text: '(should be above 18)',
+                    text: Strings.above18,
                     style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack04),
                   ),
                 ],
               ),
             ).paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
-              hintText: 'Select your date of birth',
+              hintText: Strings.selectYourDateOfBirth,
               suffix: SvgPicture.asset(ImageConstant.svgIconCalendar),
               controller: controller.formattedDateOfBirth,
               readOnly: true,
@@ -240,7 +241,7 @@ class SetupUser extends GetView<ProfileSetupController> {
               validator: (value) => controller.validateDOB(value),
               autovalidateMode: AutovalidateMode.onUserInteraction,
             ).paddingOnly(bottom: 16.kh),
-            const RichTextHeading(text: 'ID Verification')
+            RichTextHeading(text: Strings.idVerification)
                 .paddingOnly(bottom: 8.kh),
             GestureDetector(
               onTap: () => Get.to(() => UploadIDView(
@@ -273,7 +274,7 @@ class SetupUser extends GetView<ProfileSetupController> {
                             SvgPicture.asset(ImageConstant.svgIconUpload)
                                 .paddingOnly(right: 8.kw),
                             Text(
-                              'Upload ID',
+                              Strings.uploadId,
                               style: TextStyleUtil.k14Regular(
                                   color: ColorUtil.kBlack03),
                             ),
@@ -284,7 +285,7 @@ class SetupUser extends GetView<ProfileSetupController> {
             ),
             GreenPoolButton(
               onPressed: () => controller.checkUserValidations(),
-              label: 'Proceed',
+              label: Strings.proceed,
             ).paddingSymmetric(vertical: 40.kh),
           ],
         ),

@@ -1,4 +1,3 @@
-//! comes after tapping on the driver tile in My Rides
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -56,8 +55,6 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                                       BlendMode.srcIn),
                                 ).paddingOnly(right: 8.kw),
                                 Text(
-                                  // "7 July 2023, 3:00pm",
-
                                   "${GpUtil.getDateFormat(controller.myRidesModelData.value.driverBookingDetails?.time ?? "")}  ${GpUtil.convertUtcToLocal(controller.myRidesModelData.value.driverBookingDetails?.time ?? "")}",
                                   style: TextStyleUtil.k16Bold(
                                       color: ColorUtil.kBlack02),
@@ -125,7 +122,7 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                                   0) >
                               0,
                           child: Text(
-                            "${controller.myRidesModelData.value.driverBookingDetails?.seatAvailable} seats left",
+                            "${controller.myRidesModelData.value.driverBookingDetails?.seatAvailable} ${Strings.seatsLeft}",
                             style: TextStyleUtil.k14Semibold(),
                           ),
                         ),

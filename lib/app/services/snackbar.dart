@@ -6,6 +6,6 @@ void showMySnackbar({String? title, required String msg}) {
       : Get.rawSnackbar(
           title: title,
           message: msg,
-          duration: const Duration(milliseconds: 3000),
+          duration: const Duration(milliseconds: 2000),
         );
 }

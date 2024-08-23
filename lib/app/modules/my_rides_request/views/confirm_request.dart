@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/modules/map_driver_confirm_request/controllers/map_driver_confirm_request_controller.dart';
 import 'package:green_pool/app/modules/map_driver_confirm_request/views/map_driver_confirm_request_view.dart';
 import 'package:green_pool/app/res/strings.dart';
-import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/generated/assets.dart';

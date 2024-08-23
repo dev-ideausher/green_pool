@@ -77,7 +77,7 @@ class MessagesView extends GetView<MessagesController> {
                 : controller.messagesModel.value.chatRoomIds!.isEmpty
                     ? Center(
                         child: Text(
-                          "Your future messages will appear here",
+                          Strings.yourFutureMsgsWillApearHere,
                           style: TextStyleUtil.k24Heading600(),
                           textAlign: TextAlign.center,
                         ),

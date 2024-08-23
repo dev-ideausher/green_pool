@@ -22,8 +22,8 @@ class PostRideStepTwoView extends GetView<PostRideStepTwoController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const GreenPoolAppBar(
-        title: Text('Post a Ride'),
+      appBar:  GreenPoolAppBar(
+        title: Text(Strings.postARide),
       ),
       body: SingleChildScrollView(
         child: DefaultTabController(

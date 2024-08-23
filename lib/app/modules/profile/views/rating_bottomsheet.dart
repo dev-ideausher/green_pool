@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/greenpool_textfield.dart';
+import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../constants/image_constant.dart';
@@ -29,7 +30,7 @@ class RatingBottomSheet extends GetView<ProfileController> {
         child: Column(
           children: [
             Text(
-              'Enjoying Green Pool App ?',
+              Strings.enjoyingCarpoollApp,
               style: TextStyleUtil.k18Semibold(),
             ).paddingOnly(bottom: 8.kh),
             Image.asset(
@@ -38,7 +39,7 @@ class RatingBottomSheet extends GetView<ProfileController> {
               width: 200.kw,
             ),
             Text(
-              'Support us by giving rate and your\nprecious review !\nIt will take few seconds only.',
+              Strings.supportUsByGivingRate,
               style: TextStyleUtil.k14Semibold(color: ColorUtil.kBlack04),
               textAlign: TextAlign.center,
             ).paddingOnly(bottom: 24.kh),
@@ -64,7 +65,7 @@ class RatingBottomSheet extends GetView<ProfileController> {
               },
             ).paddingOnly(bottom: 16.kh),
             GreenPoolTextField(
-              hintText: "Feedback/suggestions",
+              hintText: Strings.feedbackOrSuggestions,
               controller: controller.ratingTextController,
             ).paddingOnly(bottom: 16.kh),
             TextButton(
@@ -72,14 +73,14 @@ class RatingBottomSheet extends GetView<ProfileController> {
                 controller.submitFeedback();
               },
               child: Text(
-                'Submit',
+                Strings.submit,
                 style: TextStyleUtil.k16Bold(),
               ),
             ),
             TextButton(
               onPressed: () => Get.back(),
               child: Text(
-                'Maybe Later',
+                Strings.maybeLater,
                 style: TextStyleUtil.k16Bold(),
               ),
             ),

@@ -21,11 +21,11 @@ class ProfileSetupView extends GetView<ProfileSetupController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Profile Setup',
+              Strings.profileSetup,
               style: TextStyleUtil.k32Heading700(),
             ).paddingOnly(bottom: 4.kh, top: 42.kh),
             Text(
-              'Enter your profile details',
+              Strings.enterYourProfileDetails,
               style: TextStyleUtil.k16Regular(color: ColorUtil.kNeutral4),
             ).paddingOnly(bottom: 24.kh),
             TabBar(

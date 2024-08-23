@@ -1,5 +1,3 @@
-//! comes when tapped on send tiles after tapping on rider tiles in my_rides_view
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -29,8 +27,8 @@ class RiderMyRidesSendDetailsView
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const GreenPoolAppBar(
-        title: Text('Driver Details'),
+      appBar:  GreenPoolAppBar(
+        title: Text(Strings.driverDetails),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -76,13 +74,13 @@ class RiderMyRidesSendDetailsView
                                 TextSpan(
                                   children: [
                                     TextSpan(
-                                      text: 'Fare: ',
+                                      text: Strings.fare,
                                       style: TextStyleUtil.k14Semibold(
                                           color: ColorUtil.kSecondary01),
                                     ),
                                     TextSpan(
                                       text:
-                                          '\$ ${controller.riderSendRequestModelData.origin?.originDestinationFair}',
+                                          '${Strings.dollar} ${controller.riderSendRequestModelData.origin?.originDestinationFair}',
                                       style: TextStyleUtil.k16Semibold(
                                           fontSize: 16.kh,
                                           color: ColorUtil.kSecondary01),
@@ -172,7 +170,7 @@ class RiderMyRidesSendDetailsView
                   //rating column
                   children: [
                     Text(
-                      'Rating',
+                      Strings.rating,
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Container(
@@ -218,11 +216,11 @@ class RiderMyRidesSendDetailsView
                   //joined in column
                   children: [
                     Text(
-                      'Joined',
+                      Strings.joined,
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Text(
-                      'in ${controller.riderSendRequestModelData.createdAt.toString().split("-")[0]}',
+                      '${Strings.inA} ${controller.riderSendRequestModelData.createdAt.toString().split("-")[0]}',
                       style:
                           TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                     ),
@@ -274,7 +272,7 @@ class RiderMyRidesSendDetailsView
                       Text(
                         isRider
                             ? "${controller.riderSendRequestModelData.ridersDetatils?[passengerIndex]?.fullName.toString().split(" ").first}"
-                            : "Empty Seat",
+                            : Strings.emptySeat,
                         style: TextStyleUtil.k12Semibold(),
                         textAlign: TextAlign.center,
                       ),
@@ -333,14 +331,12 @@ class RiderMyRidesSendDetailsView
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      // 'Toyota Corolla',
                       "${controller.riderSendRequestModelData.driverDetails?[0]?.vehicleDetails?[0]?.model}",
                       style: TextStyleUtil.k16Bold(color: ColorUtil.kBlack02),
                     ).paddingOnly(bottom: 4.kh),
                     Row(
                       children: [
                         Text(
-                          // 'Sedan',
                           "${controller.riderSendRequestModelData.driverDetails?[0]?.vehicleDetails?[0]?.type}",
                           style: TextStyleUtil.k14Semibold(
                               color: ColorUtil.kBlack03),
@@ -366,7 +362,7 @@ class RiderMyRidesSendDetailsView
             //Features available
 
             Text(
-              'Features available',
+              Strings.featuresAvailable,
               style: TextStyleUtil.k14Bold(),
             ).paddingOnly(bottom: 16.kh),
 
@@ -375,7 +371,7 @@ class RiderMyRidesSendDetailsView
                     true
                 ? Amenities(
                         toggleSwitch: false,
-                        text: "Appreciates Conversation",
+                        text: Strings.appreciatesConversation,
                         image: ImageConstant.svgAmenities1)
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
@@ -384,7 +380,7 @@ class RiderMyRidesSendDetailsView
                     true
                 ? Amenities(
                         toggleSwitch: false,
-                        text: "Enjoys Music",
+                        text: Strings.enjoysMusic,
                         image: ImageConstant.svgAmenities2)
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
@@ -393,7 +389,7 @@ class RiderMyRidesSendDetailsView
                     true
                 ? Amenities(
                         toggleSwitch: false,
-                        text: "Some-Free",
+                        text: Strings.smokeFree,
                         image: ImageConstant.svgAmenities3)
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
@@ -402,7 +398,7 @@ class RiderMyRidesSendDetailsView
                     true
                 ? Amenities(
                         toggleSwitch: false,
-                        text: "Pet-friendly",
+                        text: Strings.petFriendly,
                         image: ImageConstant.svgAmenities4)
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
@@ -411,7 +407,7 @@ class RiderMyRidesSendDetailsView
                     true
                 ? Amenities(
                         toggleSwitch: false,
-                        text: "Winter Tires",
+                        text: Strings.winterTires,
                         image: ImageConstant.svgAmenities5)
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
@@ -420,7 +416,7 @@ class RiderMyRidesSendDetailsView
                     true
                 ? Amenities(
                         toggleSwitch: false,
-                        text: "Cooling or Heating",
+                        text: Strings.coolingOrHeating,
                         image: ImageConstant.svgAmenities6)
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
@@ -428,7 +424,7 @@ class RiderMyRidesSendDetailsView
                     true
                 ? Amenities(
                         toggleSwitch: false,
-                        text: "Baby Seats",
+                        text: Strings.babySeat,
                         image: ImageConstant.svgAmenities7)
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
@@ -437,7 +433,7 @@ class RiderMyRidesSendDetailsView
                     true
                 ? Amenities(
                         toggleSwitch: false,
-                        text: "Heated Seats",
+                        text: Strings.heatedSeats,
                         image: ImageConstant.svgAmenities8)
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),

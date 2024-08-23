@@ -7,7 +7,6 @@ import 'package:green_pool/app/components/richtext_heading.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
 import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
-import 'package:green_pool/app/services/storage.dart';
 
 import '../../../components/greenpool_textfield.dart';
 
@@ -185,7 +184,6 @@ class FindRideView extends GetView<FindRideController> {
                     child: ListView.builder(
                         itemCount: controller.locationModelNames.length,
                         itemBuilder: (context, index) {
-                          final storageService = Get.find<GetStorageService>();
                           return Container(
                             decoration: BoxDecoration(
                                 color: ColorUtil.kNeutral7.withOpacity(0.5),
@@ -201,8 +199,7 @@ class FindRideView extends GetView<FindRideController> {
                                 color: ColorUtil.kNeutral4,
                               ),
                               title: Text(
-                                "${controller.locationModelNames?[index]?.originLocation?.nameOfLocation.toString().split(",").first} to ${controller.locationModelNames?[index]?.destinationLocation?.nameOfLocation.toString().split(",").first}" ??
-                                    "",
+                                "${controller.locationModelNames[index].originLocation?.nameOfLocation.toString().split(",").first} to ${controller.locationModelNames[index].destinationLocation?.nameOfLocation.toString().split(",").first}",
                                 style: TextStyleUtil.k12Bold(),
                               ),
                               onTap: () {

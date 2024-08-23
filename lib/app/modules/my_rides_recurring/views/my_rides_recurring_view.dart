@@ -1,4 +1,3 @@
-//! contains recurring ride view in my rides
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -79,7 +78,6 @@ class MyRidesRecurringView extends GetView<MyRidesRecurringController> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          //TODO: toggle switch
                                           Text(
                                             GpUtil.convertUtcToLocal(controller
                                                     .recurringResp
@@ -193,14 +191,16 @@ class MyRidesRecurringView extends GetView<MyRidesRecurringController> {
                                                     height: 24.kh,
                                                     width: 170.kw,
                                                     child: ListView.builder(
-                                                      itemCount: controller
-                                                                  .recurringResp
-                                                                  .value
-                                                                  .data?[index]
-                                                                  ?.ridesDetails?[
-                                                                      index1]
-                                                                  ?.ridersDetails
-                                                                  ?.length ==
+                                                      itemCount: (controller
+                                                                      .recurringResp
+                                                                      .value
+                                                                      .data?[
+                                                                          index]
+                                                                      ?.ridesDetails?[
+                                                                          index1]
+                                                                      ?.ridersDetails
+                                                                      ?.length ??
+                                                                  0) ==
                                                               0
                                                           ? 4
                                                           : (controller

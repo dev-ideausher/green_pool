@@ -115,7 +115,7 @@ class PaymentView extends GetView<PaymentController> {
                           controller.promoCodeId = "";
                         },
                         child: Text(
-                          "Remove",
+                          Strings.remove,
                           style: TextStyleUtil.k12Bold(
                             color: Get.find<HomeController>().isPinkModeOn.value
                                 ? ColorUtil.kPrimary3PinkMode

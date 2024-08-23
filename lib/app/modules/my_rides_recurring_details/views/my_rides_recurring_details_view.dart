@@ -185,27 +185,21 @@ class MyRidesRecurringDetailsView
                         : const SizedBox(),
 
                     const GreenPoolDivider().paddingSymmetric(vertical: 16.kh),
-                    controller.recurringModel.value.data?.driverRideDetails?[0]
-                                ?.description ==
-                            null
-                        ? const SizedBox()
-                        : Text(
-                            Strings.description,
-                            style: TextStyleUtil.k14Semibold(),
-                          ).paddingOnly(bottom: 8.kh),
-                    controller.recurringModel.value.data?.driverRideDetails?[0]
-                                ?.description ==
-                            null
-                        ? const SizedBox()
-                        : Wrap(
-                            children: [
-                              Text(
-                                "${controller.recurringModel.value.data?.driverRideDetails?[0]?.description}",
-                                style: TextStyleUtil.k14Regular(
-                                    color: ColorUtil.kBlack02),
-                              )
-                            ],
-                          ),
+                    Text(
+                      Strings.description,
+                      style: TextStyleUtil.k14Semibold(),
+                    ).paddingOnly(bottom: 8.kh),
+                    Wrap(
+                      children: [
+                        Text(
+                          controller.recurringModel.value.data
+                                  ?.driverRideDetails?[0]?.description ??
+                              "NA",
+                          style: TextStyleUtil.k14Regular(
+                              color: ColorUtil.kBlack02),
+                        )
+                      ],
+                    ),
                     const GreenPoolDivider().paddingSymmetric(vertical: 16.kh),
                     SizedBox(
                       height: controller.recurringModel.value.data!

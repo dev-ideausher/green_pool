@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/auth.dart';
-import 'package:green_pool/app/services/storage.dart';
 
 import '../../../data/find_ride_model.dart';
 import '../../../data/post_ride_model.dart';

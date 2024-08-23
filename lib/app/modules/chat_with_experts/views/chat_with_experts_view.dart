@@ -31,7 +31,7 @@ class ChatWithExpertsView extends GetView<ChatWithExpertsController> {
         elevation: 1,
         toolbarHeight: 64.kh,
         title: Text(
-          "Help & Support",
+          Strings.helpAndSupport,
           style: TextStyleUtil.k16Bold(),
         ),
         leading: GestureDetector(
@@ -192,19 +192,19 @@ class ChatWithExpertsView extends GetView<ChatWithExpertsController> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           SuggestionsChip(
-                                            topic: "Wallet",
+                                            topic: Strings.wallet,
                                             controller: controller,
                                           ),
                                           SuggestionsChip(
-                                            topic: "Refund",
+                                            topic: Strings.refund,
                                             controller: controller,
                                           ),
                                           SuggestionsChip(
-                                            topic: "Ride Related",
+                                            topic: Strings.rideRelated,
                                             controller: controller,
                                           ),
                                           SuggestionsChip(
-                                            topic: "Account Related",
+                                            topic: Strings.accRelated,
                                             controller: controller,
                                           ),
                                         ],

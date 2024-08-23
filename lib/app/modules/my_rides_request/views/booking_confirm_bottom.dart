@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -11,7 +9,6 @@ import '../../../components/green_pool_divider.dart';
 import '../../../components/origin_to_destination.dart';
 import '../../../constants/image_constant.dart';
 import '../../../res/strings.dart';
-import '../../../routes/app_pages.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
 import '../../../services/dio/api_service.dart';
@@ -195,7 +192,7 @@ class BookingConfirmBottom extends StatelessWidget {
                   );
                   if (rejectRiderResponse.data["status"]) {
                     Get.back();
-                    showMySnackbar(msg: 'Request rejected successfully!');
+                    showMySnackbar(msg: Strings.reqRejectedSuccessfully);
                   } else {
                     showMySnackbar(msg: rejectRiderResponse.data["message"]);
                   }

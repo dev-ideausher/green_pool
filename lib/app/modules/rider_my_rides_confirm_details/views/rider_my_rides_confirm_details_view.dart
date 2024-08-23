@@ -1,4 +1,3 @@
-//! comes when tapped on confirm tiles after tapping on rider tiles in my_rides_view
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -27,8 +26,8 @@ class RiderMyRidesConfirmDetailsView
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const GreenPoolAppBar(
-        title: Text('Driver Details'),
+      appBar: GreenPoolAppBar(
+        title: Text(Strings.driverDetails),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -73,13 +72,13 @@ class RiderMyRidesConfirmDetailsView
                                 TextSpan(
                                   children: [
                                     TextSpan(
-                                      text: 'Fare: ',
+                                      text: Strings.fare,
                                       style: TextStyleUtil.k14Semibold(
                                           color: ColorUtil.kSecondary01),
                                     ),
                                     TextSpan(
                                       text:
-                                          '\$ ${controller.riderConfirmRequestModel.price}',
+                                          '${Strings.dollar} ${controller.riderConfirmRequestModel.price}',
                                       style: TextStyleUtil.k16Semibold(
                                           fontSize: 16.kh,
                                           color: ColorUtil.kSecondary01),
@@ -163,7 +162,7 @@ class RiderMyRidesConfirmDetailsView
                   //rating column
                   children: [
                     Text(
-                      'Rating',
+                      Strings.rating,
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Container(
@@ -209,11 +208,11 @@ class RiderMyRidesConfirmDetailsView
                   //joined in column
                   children: [
                     Text(
-                      'Joined',
+                      Strings.joined,
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Text(
-                      'in ${controller.riderConfirmRequestModel.driverRideDetails?.createdAt.toString().split("-")[0]}',
+                      '${Strings.inA} ${controller.riderConfirmRequestModel.driverRideDetails?.createdAt.toString().split("-")[0]}',
                       style:
                           TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                     ),
@@ -267,7 +266,7 @@ class RiderMyRidesConfirmDetailsView
                       Text(
                         isRider
                             ? "${controller.riderConfirmRequestModel.driverRideDetails?.riders?[passengerIndex]?.fullName.toString().split(" ").first}"
-                            : "Empty Seat",
+                            : Strings.emptySeat,
                         style: TextStyleUtil.k12Semibold(),
                         textAlign: TextAlign.center,
                       ),
@@ -329,7 +328,7 @@ class RiderMyRidesConfirmDetailsView
             //Features available
 
             Text(
-              'Features available',
+              Strings.featuresAvailable,
               style: TextStyleUtil.k14Bold(),
             ).paddingOnly(bottom: 16.kh),
 
@@ -338,7 +337,7 @@ class RiderMyRidesConfirmDetailsView
                     true
                 ? Amenities(
                         toggleSwitch: false,
-                        text: "Appreciates Conversation",
+                        text: Strings.appreciatesConversation,
                         image: ImageConstant.svgAmenities1)
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
@@ -347,7 +346,7 @@ class RiderMyRidesConfirmDetailsView
                     true
                 ? Amenities(
                         toggleSwitch: false,
-                        text: "Enjoys Music",
+                        text: Strings.enjoysMusic,
                         image: ImageConstant.svgAmenities2)
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
@@ -356,7 +355,7 @@ class RiderMyRidesConfirmDetailsView
                     true
                 ? Amenities(
                         toggleSwitch: false,
-                        text: "Smoke-Free",
+                        text: Strings.smokeFree,
                         image: ImageConstant.svgAmenities3)
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
@@ -365,7 +364,7 @@ class RiderMyRidesConfirmDetailsView
                     true
                 ? Amenities(
                         toggleSwitch: false,
-                        text: "Pet-friendly",
+                        text: Strings.petFriendly,
                         image: ImageConstant.svgAmenities4)
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
@@ -374,7 +373,7 @@ class RiderMyRidesConfirmDetailsView
                     true
                 ? Amenities(
                         toggleSwitch: false,
-                        text: "Winter Tires",
+                        text: Strings.winterTires,
                         image: ImageConstant.svgAmenities5)
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
@@ -383,7 +382,7 @@ class RiderMyRidesConfirmDetailsView
                     true
                 ? Amenities(
                         toggleSwitch: false,
-                        text: "Cooling or Heating",
+                        text: Strings.coolingOrHeating,
                         image: ImageConstant.svgAmenities6)
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
@@ -392,7 +391,7 @@ class RiderMyRidesConfirmDetailsView
                     true
                 ? Amenities(
                         toggleSwitch: false,
-                        text: "Baby Seats",
+                        text: Strings.babySeat,
                         image: ImageConstant.svgAmenities7)
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
@@ -401,7 +400,7 @@ class RiderMyRidesConfirmDetailsView
                     true
                 ? Amenities(
                         toggleSwitch: false,
-                        text: "Heated Seats",
+                        text: Strings.heatedSeats,
                         image: ImageConstant.svgAmenities8)
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
@@ -440,14 +439,14 @@ class RiderMyRidesConfirmDetailsView
                     }
                   },
                   width: 162.kw,
-                  label: 'Accept',
+                  label: Strings.accept,
                 ),
                 GreenPoolButton(
                   onPressed: () {
                     controller.rejectDriversRequestAPI();
                   },
                   width: 162.kw,
-                  label: 'Reject',
+                  label: Strings.reject,
                   isBorder: true,
                 ),
               ],

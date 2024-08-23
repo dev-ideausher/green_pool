@@ -19,8 +19,8 @@ class ProfileSettingsView extends GetView<ProfileSettingsController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const GreenPoolAppBar(
-        title: Text('Profile'),
+      appBar:  GreenPoolAppBar(
+        title: Text(Strings.profile),
       ),
       body: Column(
         children: [
@@ -36,13 +36,13 @@ class ProfileSettingsView extends GetView<ProfileSettingsController> {
                             "${Get.find<GetStorageService>().profilePicUrl}"))),
           ).paddingOnly(bottom: 8.kh, top: 16.kh),
           Text(
-            Get.find<GetStorageService>().getUserName ?? "User",
+            Get.find<GetStorageService>().getUserName ?? Strings.user,
             style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
           ).paddingOnly(bottom: 24.kh),
           ProfileContainer(
               onTap: () => Get.toNamed(Routes.USER_DETAILS),
               image: ImageConstant.svgProfileDetails,
-              text: 'User Details'),
+              text: Strings.userDetails),
           Get.find<HomeController>().userInfo.value.data?.vehicleStatus == true
               ? ProfileContainer(
                   onTap: () => Get.toNamed(Routes.VEHICLE_DETAILS),
@@ -56,7 +56,7 @@ class ProfileSettingsView extends GetView<ProfileSettingsController> {
           ProfileContainer(
               onTap: () => Get.toNamed(Routes.EMERGENCY_CONTACTS),
               image: ImageConstant.svgProfileCall,
-              text: 'Emergency Contacts'),
+              text: Strings.emergencyContacts),
         ],
       ).paddingSymmetric(horizontal: 16.kw),
     );

@@ -5,6 +5,7 @@ import 'package:green_pool/app/modules/post_ride_step_two/controllers/post_ride_
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../constants/image_constant.dart';
+import '../../../res/strings.dart';
 import '../../../services/colors.dart';
 import '../../../services/text_style_util.dart';
 
@@ -18,14 +19,14 @@ class AmenitiesList extends GetView<PostRideStepTwoController> {
         () => Column(
           children: [
             AmenityTile(
-                text: 'Appreciates Conversation',
+                text: Strings.appreciatesConversation,
                 image: ImageConstant.svgAmenities1,
                 value: controller.appreciatesConversation.value,
                 onChanged: (val) {
                   controller.appreciatesConversation.value = val;
                 }),
             AmenityTile(
-              text: 'Enjoys Music',
+              text: Strings.enjoysMusic,
               image: ImageConstant.svgAmenities2,
               value: controller.enjoysMusic.value,
               onChanged: (val) {
@@ -33,7 +34,7 @@ class AmenitiesList extends GetView<PostRideStepTwoController> {
               },
             ),
             AmenityTile(
-              text: 'Smoke-free',
+              text: Strings.smokeFree,
               image: ImageConstant.svgAmenities3,
               value: controller.smokeFree.value,
               onChanged: (val) {
@@ -41,7 +42,7 @@ class AmenitiesList extends GetView<PostRideStepTwoController> {
               },
             ),
             AmenityTile(
-              text: 'Pet-friendly',
+              text: Strings.petFriendly,
               image: ImageConstant.svgAmenities4,
               value: controller.petFriendly.value,
               onChanged: (val) {
@@ -49,7 +50,7 @@ class AmenitiesList extends GetView<PostRideStepTwoController> {
               },
             ),
             AmenityTile(
-              text: 'Winter Tires',
+              text: Strings.winterTires,
               image: ImageConstant.svgAmenities5,
               value: controller.winterTires.value,
               onChanged: (val) {
@@ -57,7 +58,7 @@ class AmenitiesList extends GetView<PostRideStepTwoController> {
               },
             ),
             AmenityTile(
-              text: 'Cooling or Heating',
+              text: Strings.coolingOrHeating,
               image: ImageConstant.svgAmenities6,
               value: controller.coolingOrHeating.value,
               onChanged: (val) {
@@ -65,7 +66,7 @@ class AmenitiesList extends GetView<PostRideStepTwoController> {
               },
             ),
             AmenityTile(
-              text: 'Baby Seat',
+              text: Strings.babySeat,
               image: ImageConstant.svgAmenities7,
               value: controller.babySeat.value,
               onChanged: (val) {
@@ -73,7 +74,7 @@ class AmenitiesList extends GetView<PostRideStepTwoController> {
               },
             ),
             AmenityTile(
-              text: 'Heated Seats',
+              text: Strings.heatedSeats,
               image: ImageConstant.svgAmenities8,
               value: controller.heatedSeats.value,
               onChanged: (val) {

@@ -10,6 +10,7 @@ import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../components/green_pool_divider.dart';
 import '../../../constants/image_constant.dart';
+import '../../../res/strings.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
 import '../../../services/text_style_util.dart';
@@ -36,7 +37,7 @@ class RatingRiderSideView extends GetView<RatingRiderSideController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Rate Driver",
+                        Strings.rateDriver,
                         style: TextStyleUtil.k18Heading600(),
                       ).paddingOnly(top: 40.kh, bottom: 16.kh),
                       Row(
@@ -82,7 +83,7 @@ class RatingRiderSideView extends GetView<RatingRiderSideController> {
                       const GreenPoolDivider()
                           .paddingOnly(top: 16.kh, bottom: 24.kh),
                       Text(
-                        "Rate your Carpool Companions",
+                        Strings.rateYourCarpoolCompanions,
                         style: TextStyleUtil.k18Heading600(),
                       ).paddingOnly(bottom: 16.kh),
                       SizedBox(
@@ -169,7 +170,7 @@ class RatingRiderSideView extends GetView<RatingRiderSideController> {
                           Get.until((route) =>
                               Get.currentRoute == Routes.BOTTOM_NAVIGATION);
                         },
-                        label: "Continue",
+                        label: Strings.continueText,
                       ).paddingOnly(top: 20.kh, bottom: 10.kh),
                     ],
                   ).paddingSymmetric(horizontal: 16.kw),
@@ -185,12 +186,12 @@ class RatingRiderSideView extends GetView<RatingRiderSideController> {
                     SvgPicture.asset(ImageConstant.svgRideCompleted)
                         .paddingOnly(top: 40.kh, bottom: 24.kh),
                     Text(
-                      "Ride Completed!",
+                      Strings.rideCompleted,
                       style: TextStyleUtil.k24Heading600(),
                       textAlign: TextAlign.center,
                     ).paddingOnly(bottom: 8.kh),
                     Text(
-                      "Hope you had a great car pooling\nexperience!",
+                      Strings.hopeYouHadGreatExperience,
                       style:
                           TextStyleUtil.k16Regular(color: ColorUtil.kBlack04),
                       textAlign: TextAlign.center,

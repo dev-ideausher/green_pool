@@ -16,7 +16,7 @@ class TermsAndConditionsView extends GetView<TermsConditionsController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:  GreenPoolAppBar(
-        title: Text(Strings.termsAndConditions), //'Terms & Conditions'
+        title: Text(Strings.termsAmbersentConditions),
       ),
       body: Obx(
         () => controller.isLoading.value

@@ -1,4 +1,3 @@
-//! contains tab bar for One time view and recurring view
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -23,9 +22,9 @@ class MyRidesPageView extends GetView<MyRidesPageController> {
     Get.put(MyRidesRecurringController());
     Get.lazyPut(() => MyRidesPageController());
     return Scaffold(
-        appBar: const GreenPoolAppBar(
-          title: Text('My Rides'),
-          leading: SizedBox(),
+        appBar:  GreenPoolAppBar(
+          title: Text(Strings.myRides),
+          leading: const SizedBox(),
         ),
         body: SafeArea(
           child: Get.find<HomeController>().userInfo.value.data?.isDriver ??
@@ -93,7 +92,7 @@ class MyRidesPageView extends GetView<MyRidesPageController> {
                           ]).paddingSymmetric(horizontal: 16.kw),
                       Expanded(
                         child: TabBarView(
-                          physics: NeverScrollableScrollPhysics(),
+                          physics: const NeverScrollableScrollPhysics(),
                           children: [
                             MyRidesOneTimeView(),
                             MyRidesOneTimeView(type: Strings.booked),

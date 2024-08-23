@@ -21,10 +21,9 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
 
   @override
   Widget build(BuildContext context) {
-    print(Get.find<HomeController>().userInfo.value.data?.Id ?? "");
     return Scaffold(
-      appBar: const GreenPoolAppBar(
-        title: Text('Post a Ride'),
+      appBar:  GreenPoolAppBar(
+        title: Text(Strings.postARide),
       ),
       resizeToAvoidBottomInset: false,
       body: Obx(
@@ -84,7 +83,7 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
             Visibility(
               visible: controller.isDestinationAdded.value,
               child: Text(
-                'Add stops',
+                Strings.addStops,
                 style: TextStyleUtil.k14Semibold(),
               ),
             ),
@@ -92,7 +91,7 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
             Visibility(
               visible: controller.isDestinationAdded.value,
               child: GreenPoolTextField(
-                hintText: 'Add stops',
+                hintText: Strings.addStops,
                 keyboardType: TextInputType.streetAddress,
                 fillColor: Colors.transparent,
                 border: OutlineInputBorder(
@@ -128,7 +127,7 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
             Visibility(
               visible: controller.isStop1Added.value,
               child: GreenPoolTextField(
-                hintText: 'Add stops',
+                hintText: Strings.addStops,
                 keyboardType: TextInputType.streetAddress,
                 fillColor: Colors.transparent,
                 border: OutlineInputBorder(
@@ -169,7 +168,7 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
                     onPressed: () => controller.decideRouting(),
                     padding: const EdgeInsets.all(0),
                     isActive: controller.isActive.value,
-                    label: 'Next',
+                    label: Strings.next,
                     fontSize: 14.kh,
                     width: 120.kw,
                     height: 40.kh,
