@@ -66,17 +66,27 @@ class RatingRiderSideView extends GetView<RatingRiderSideController> {
                               Icons.star,
                               color: Colors.amber,
                             ),
-                            half: const Icon(
+                            half: Icon(
                               Icons.star,
-                              color: Colors.red,
+                              color: Colors.amber.withOpacity(0.5),
                             ),
                             empty: const Icon(
                               Icons.star,
                               color: ColorUtil.kGreyColor,
                             ),
                           ),
-                          onRatingUpdate: (double value) {
-                            controller.driverRating.value = value;
+                          onRatingUpdate: (double? value) {
+                            double rating = value ?? 4;
+                            String id =
+                                "${controller.bookingModelData.value?.driverDetails?.Id}";
+                            int index = controller.ratingList.indexWhere(
+                                (element) => element["ratedTo"] == id);
+
+                            if (index != -1) {
+                              controller.ratingList[index]["rating"] = rating;
+                            } else {
+                              controller.addRating(id, rating);
+                            }
                           },
                         ),
                       ),
@@ -149,10 +159,19 @@ class RatingRiderSideView extends GetView<RatingRiderSideController> {
                                           color: ColorUtil.kGreyColor,
                                         ),
                                       ),
-                                      onRatingUpdate: (double value) {
-                                        controller.rating.value = value;                                        
-                                        controller.debouncer(() => controller
-                                            .rateUserAPI("${rider?.Id}"));
+                                      onRatingUpdate: (double? value) {
+                                        double rating = value ?? 4;
+                                        String id = "${rider?.Id}";
+                                        int index = controller.ratingList
+                                            .indexWhere((element) =>
+                                                element["ratedTo"] == id);
+
+                                        if (index != -1) {
+                                          controller.ratingList[index]
+                                              ["rating"] = rating;
+                                        } else {
+                                          controller.addRating(id, rating);
+                                        }
                                       },
                                     ),
                                   ),
@@ -164,11 +183,7 @@ class RatingRiderSideView extends GetView<RatingRiderSideController> {
                       ),
                       GreenPoolButton(
                         onPressed: () {
-                          controller.rateDriverAPI(
-                              "${controller.bookingModelData.value?.driverBookingDetails?.driverId}");
-                          Get.find<HomeController>().changeTabIndex(0);
-                          Get.until((route) =>
-                              Get.currentRoute == Routes.BOTTOM_NAVIGATION);
+                          controller.rateUserAPI();
                         },
                         label: Strings.continueText,
                       ).paddingOnly(top: 20.kh, bottom: 10.kh),

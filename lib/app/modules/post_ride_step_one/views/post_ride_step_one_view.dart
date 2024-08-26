@@ -22,7 +22,7 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:  GreenPoolAppBar(
+      appBar: GreenPoolAppBar(
         title: Text(Strings.postARide),
       ),
       resizeToAvoidBottomInset: false,

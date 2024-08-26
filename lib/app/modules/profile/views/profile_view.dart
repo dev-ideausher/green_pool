@@ -39,17 +39,21 @@ class ProfileView extends GetView<ProfileController> {
               onTap: () {
                 Get.toNamed(Routes.USER_DETAILS);
               },
-              child: Container(
-                decoration: const BoxDecoration(shape: BoxShape.circle),
-                child: ClipOval(
-                    child: SizedBox.fromSize(
-                        size: Size.fromRadius(44.kh),
-                        child: CommonImageView(
-                            height: 44.kh,
-                            width: 44.kw,
-                            url:
-                                "${Get.find<GetStorageService>().profilePicUrl}"))),
-              ).paddingOnly(bottom: 8.kh, top: 16.kh),
+              child: Hero(
+                tag: "profilePic",
+                transitionOnUserGestures: true,
+                child: Container(
+                  decoration: const BoxDecoration(shape: BoxShape.circle),
+                  child: ClipOval(
+                      child: SizedBox.fromSize(
+                          size: Size.fromRadius(44.kh),
+                          child: CommonImageView(
+                              height: 44.kh,
+                              width: 44.kw,
+                              url:
+                                  "${Get.find<GetStorageService>().profilePicUrl}"))),
+                ).paddingOnly(bottom: 8.kh, top: 16.kh),
+              ),
             ),
             Text(
               Get.find<GetStorageService>().getUserName ?? Strings.user,

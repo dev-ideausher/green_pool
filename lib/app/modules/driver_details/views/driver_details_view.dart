@@ -435,7 +435,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                       isLoading: controller.messageBtnLoading.value,
                       loadingColor:
                           Get.find<HomeController>().isPinkModeOn.value
-                              ? ColorUtil.kPrimary2PinkMode
+                              ? ColorUtil.kPrimary3PinkMode
                               : ColorUtil.kPrimary01,
                       label: Strings.message,
                       isBorder: true)

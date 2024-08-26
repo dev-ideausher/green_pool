@@ -145,7 +145,9 @@ class PushNotificationService {
     debugPrint("Background Message Handler Working...");
 
     try {
+      actionData = message;
       await Future.delayed(const Duration(seconds: 2));
+      saveNotification(message);
       _handleNotificationClickPayload(message.data['notification_type']);
     } catch (e) {
       debugPrint("_firebaseMessagingBackgroundHandler error: $e");
@@ -154,6 +156,7 @@ class PushNotificationService {
 
   void saveNotification(RemoteMessage message) {
     actionData = message;
+    print("ACTION DATA: ${actionData!.data.toString()}");
     if (actionData != null) {
       debugPrint('Notification data: ${actionData!.data}');
       _handleNotificationType(actionData!.data);
@@ -173,7 +176,6 @@ class PushNotificationService {
       case "Ride Cancelled by Rider":
       case "Request Declined":
       case "Upcoming Ride Reminder":
-      case "Payment Received!":
       case "Refund Processed":
       case "Refund Issued":
       case "Ride Confirmed!":
@@ -193,6 +195,9 @@ class PushNotificationService {
         Get.find<HomeController>().newMsgReceived.value = true;
         Get.find<MyRidesOneTimeController>().myRidesAPI();
         Get.find<MyRidesRequestController>().allConfirmRequestAPI();
+        break;
+
+      case "Payment Received!":
         break;
 
       case "Ride Completed":
@@ -240,6 +245,7 @@ class PushNotificationService {
 
   void _handleNotificationClick(RemoteMessage message) {
     debugPrint('Notification clicked with data: ${message.data}');
+    actionData = message;
     _handleNotificationClickPayload(message.data['notification_type'] ?? "");
   }
 
@@ -389,12 +395,16 @@ class PushNotificationService {
 
       case "Ride Completed":
         if (currentRoute == Routes.RIDER_START_RIDE_MAP) {
-          Get.offNamed(Routes.RATING_RIDER_SIDE, arguments: actionData?.data);
+          Get.offNamed(Routes.RATING_RIDER_SIDE, arguments: actionData!.data);
         } else if (currentRoute == Routes.START_RIDE ||
             currentRoute == Routes.RATING_DRIVER_SIDE) {
           print("ride ended");
         } else {
-          Get.toNamed(Routes.RATING_RIDER_SIDE, arguments: actionData?.data);
+          await navigateToBottomNavigation(1);
+          await Future.delayed(const Duration(seconds: 1)).then((value) async {
+            await Get.toNamed(Routes.RATING_RIDER_SIDE,
+                arguments: actionData!.data);
+          });
         }
         break;
 

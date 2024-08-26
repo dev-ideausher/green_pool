@@ -75,7 +75,7 @@ class MyRidesConfirmDetailsView
                                 loadingColor: Get.find<HomeController>()
                                         .isPinkModeOn
                                         .value
-                                    ? ColorUtil.kPrimary2PinkMode
+                                    ? ColorUtil.kPrimary3PinkMode
                                     : ColorUtil.kPrimary01,
                                 isBorder: true,
                                 width: 96.kw,

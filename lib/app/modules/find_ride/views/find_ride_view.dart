@@ -180,7 +180,7 @@ class FindRideView extends GetView<FindRideController> {
               () => Visibility(
                   visible: controller.locationModelNames.isNotEmpty,
                   child: SizedBox(
-                    height: 155.kh,
+                    height: 165.kh,
                     child: ListView.builder(
                         itemCount: controller.locationModelNames.length,
                         itemBuilder: (context, index) {

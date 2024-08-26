@@ -7,6 +7,7 @@ import 'package:green_pool/app/constants/image_constant.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
+import '../../../components/common_image_view.dart';
 import '../../../res/strings.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/colors.dart';
@@ -47,7 +48,9 @@ class ReviewPictureView extends GetView<ProfileSetupController> {
                 child: ClipOval(
                   child: SizedBox.fromSize(
                     size: Size.fromRadius(100.kh),
-                    child: Image.file(imagePath),
+                    child: CommonImageView(
+                      file: imagePath,
+                    ),
                   ),
                 ),
               ),

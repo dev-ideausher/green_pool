@@ -418,13 +418,18 @@ class RiderMyRidesConfirmDetailsView
               ],
             ),
             const GreenPoolDivider().paddingSymmetric(vertical: 16.kh),
-            GreenPoolButton(
-              onPressed: () => Get.find<RiderMyRideRequestController>()
-                  .openMessageFromConfirm(
-                      controller.riderConfirmRequestModel.driverRideDetails),
-              label: Strings.message,
-              isBorder: true,
-            ).paddingOnly(top: 8.kh),
+            Obx(
+              () => GreenPoolButton(
+                onPressed: () => controller.openMessageFromConfirm(
+                    controller.riderConfirmRequestModel.driverRideDetails),
+                label: Strings.message,
+                isLoading: controller.isBtnLoading.value,
+                loadingColor: Get.find<HomeController>().isPinkModeOn.value
+                    ? ColorUtil.kPrimary3PinkMode
+                    : ColorUtil.kPrimary01,
+                isBorder: true,
+              ).paddingOnly(top: 8.kh),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

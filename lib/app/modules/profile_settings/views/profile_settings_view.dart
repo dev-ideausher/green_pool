@@ -19,22 +19,26 @@ class ProfileSettingsView extends GetView<ProfileSettingsController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:  GreenPoolAppBar(
+      appBar: GreenPoolAppBar(
         title: Text(Strings.profile),
       ),
       body: Column(
         children: [
-          Container(
-            decoration: const BoxDecoration(shape: BoxShape.circle),
-            child: ClipOval(
-                child: SizedBox.fromSize(
-                    size: Size.fromRadius(44.kh),
-                    child: CommonImageView(
-                        height: 44.kh,
-                        width: 44.kw,
-                        url:
-                            "${Get.find<GetStorageService>().profilePicUrl}"))),
-          ).paddingOnly(bottom: 8.kh, top: 16.kh),
+          Hero(
+            tag: "profilePic",
+            transitionOnUserGestures: true,
+            child: Container(
+              decoration: const BoxDecoration(shape: BoxShape.circle),
+              child: ClipOval(
+                  child: SizedBox.fromSize(
+                      size: Size.fromRadius(44.kh),
+                      child: CommonImageView(
+                          height: 44.kh,
+                          width: 44.kw,
+                          url:
+                              "${Get.find<GetStorageService>().profilePicUrl}"))),
+            ).paddingOnly(bottom: 8.kh, top: 16.kh),
+          ),
           Text(
             Get.find<GetStorageService>().getUserName ?? Strings.user,
             style: TextStyleUtil.k16Semibold(fontSize: 16.kh),

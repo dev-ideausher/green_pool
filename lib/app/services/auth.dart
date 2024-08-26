@@ -47,8 +47,9 @@ class AuthService extends GetxService {
     return status;
   }
 
-  apple() async {
+  Future<bool> apple() async {
     //TODO: do the required setup mentioned in https://pub.dev/packages/sign_in_with_apple
+    bool status = false;
     final result = await auth
         .signInWithApple(
             //TODO: add your own handler id from firebase console
@@ -57,9 +58,11 @@ class AuthService extends GetxService {
             appleClientId: '')
         .then((value) async {
       await handleGetContact();
+      status = true;
     });
     Get.find<GetStorageService>().setUserName = result.user?.fullName;
     print('Apple : ${await result.user?.getIdToken()}');
+    return status;
   }
 
   loginEmailPass({required String email, required String pass}) async {

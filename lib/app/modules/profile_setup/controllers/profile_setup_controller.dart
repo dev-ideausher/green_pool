@@ -72,7 +72,7 @@ class ProfileSetupController extends GetxController
           ?.phoneNumber
           .toString()
           .split("+1")
-          .last);
+          .last ?? "");
   TextEditingController gender = TextEditingController();
   TextEditingController city = TextEditingController();
   TextEditingController dateOfBirth = TextEditingController();

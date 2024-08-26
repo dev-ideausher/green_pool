@@ -12,6 +12,7 @@ import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../components/common_image_view.dart';
 import '../../../components/upload_add_picture.dart';
 import '../../../components/richtext_heading.dart';
 import '../controllers/profile_setup_controller.dart';
@@ -52,8 +53,8 @@ class SetupUser extends GetView<ProfileSetupController> {
                                   child: ClipOval(
                                     child: SizedBox.fromSize(
                                       size: Size.fromRadius(44.kh),
-                                      child: Image.file(
-                                        controller
+                                      child: CommonImageView(
+                                        file: controller
                                             .selectedProfileImagePath.value!,
                                       ),
                                     ),

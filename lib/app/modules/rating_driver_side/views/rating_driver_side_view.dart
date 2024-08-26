@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/components/common_image_view.dart';
 import 'package:green_pool/app/components/green_pool_divider.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
-import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
@@ -113,9 +112,18 @@ class RatingDriverSideView extends GetView<RatingDriverSideController> {
                                     ),
                                   ),
                                   onRatingUpdate: (double? value) {
-                                    controller.rating.value = value ?? 4;
-                                    controller.debouncer(() => controller
-                                        .rateUserAPI("${riderDetails?.Id}"));
+                                    double rating = value ?? 4;
+                                    String id = "${riderDetails?.Id}";
+                                    int index = controller.ratingList
+                                        .indexWhere((element) =>
+                                            element["ratedTo"] == id);
+
+                                    if (index != -1) {
+                                      controller.ratingList[index]["rating"] =
+                                          rating;
+                                    } else {
+                                      controller.addRating(id, rating);
+                                    }
                                   },
                                 ),
                                 const GreenPoolDivider()
@@ -126,11 +134,7 @@ class RatingDriverSideView extends GetView<RatingDriverSideController> {
                     ),
                     GreenPoolButton(
                       onPressed: () {
-                        //?index in riders
-                        // controller.rateUserAPI(
-                        //     "${controller.myRidesModel.value.driverBookingDetails!.riders?[0]}");
-                        Get.until((route) =>
-                            Get.currentRoute == Routes.BOTTOM_NAVIGATION);
+                        controller.rateUserAPI();
                       },
                       label: Strings.continueText,
                     ).paddingOnly(top: 40.kh, bottom: 10.kh),

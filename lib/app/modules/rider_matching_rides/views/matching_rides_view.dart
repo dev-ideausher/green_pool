@@ -25,7 +25,7 @@ class MatchingRidesView extends GetView<MatchingRidesController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: GreenPoolAppBar(
-        title:  Text(Strings.matchingRides),
+        title: Text(Strings.matchingRides),
         actions: [
           GestureDetector(
             onTap: () {
@@ -36,15 +36,21 @@ class MatchingRidesView extends GetView<MatchingRidesController> {
           ),
         ],
       ),
-      bottomSheet: Container(
-        color: ColorUtil.kBackgroundColor,
-        child: GreenPoolButton(
-          onPressed: () async {
-            controller.createRideAlert();
-          },
-          label: Strings.createRideAlert,
-        ).paddingOnly(bottom: 24.kh),
+      floatingActionButton: GreenPoolButton(
+        onPressed: () async {
+          controller.createRideAlert();
+        },
+        label: Strings.createRideAlert,
       ),
+      // bottomSheet: Container(
+      //   color: ColorUtil.kWhiteColor,
+      //   child: GreenPoolButton(
+      //     onPressed: () async {
+      //       controller.createRideAlert();
+      //     },
+      //     label: Strings.createRideAlert,
+      //   ).paddingOnly(bottom: 24.kh),
+      // ),
       body: Obx(
         () => RefreshIndicator(
           backgroundColor: ColorUtil.kWhiteColor,
@@ -308,7 +314,7 @@ class MatchingRidesView extends GetView<MatchingRidesController> {
                                           ),
                                         ).paddingOnly(bottom: 16.kh),
                                       );
-                              }).paddingOnly(top: 32.kh),
+                              }).paddingOnly(top: 12.kh),
                         ),
                       ],
                     ).paddingOnly(left: 16.kw, right: 16.kw, bottom: 80.kh),

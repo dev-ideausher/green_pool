@@ -96,7 +96,23 @@ class ChatPageController extends GetxController {
     String msg = eMsg.text;
     eMsg.clear();
     final RegExp phoneRegex = RegExp(
-      r'(\+?\d[\d\-\.\s\(\)]{3,}\d)',
+      r'(?<!\w)'
+      r'('
+      r'(\+?\d{1,3})?[\s\-\.]?'
+      r'\(?[\dOIl]{1,4}\)?[\s\-\.]?'
+      r'[\dOIl]{1,4}[\s\-\.]?'
+      r'[\dOIl]{1,4}'
+      r'([\s\-\.]?[\dOIl]{1,9})?'
+      r'|'
+      r'(\+?(zero|one|two|three|four|five|six|seven|eight|nine|oh|eye|won){1,3})?[\s\-\.]?\(?'
+      r'(zero|one|two|three|four|five|six|seven|eight|nine|oh|eye|won){1,4}\)?[\s\-\.]?'
+      r'(zero|one|two|three|four|five|six|seven|eight|nine|oh|eye|won){1,4}[\s\-\.]?'
+      r'(zero|one|two|three|four|five|six|seven|eight|nine|oh|eye|won){1,4}'
+      r'([\s\-\.]?(zero|one|two|three|four|five|six|seven|eight|nine|oh|eye|won){1,9})?'
+      r')'
+      r'([\s\-\.]?(ext|x|extension)[\s\-\.]?\d{1,5})?'
+      r'(?!\w)',
+      caseSensitive: false,
     );
     msg = msg.replaceAll(phoneRegex, '(Phone Number Hidden)');
     final timestamp = DateTime.now().toUtc();

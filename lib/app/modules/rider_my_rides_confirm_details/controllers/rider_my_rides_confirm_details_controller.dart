@@ -1,12 +1,15 @@
 import 'package:get/get.dart';
 import 'package:green_pool/app/data/rider_confirm_request_model.dart';
 
+import '../../../data/chat_arg.dart';
+import '../../../routes/app_pages.dart';
 import '../../../services/dio/api_service.dart';
 import '../../../services/snackbar.dart';
 import '../../rider_my_ride_request/controllers/rider_my_ride_request_controller.dart';
 
 class RiderMyRidesConfirmDetailsController extends GetxController {
   var riderConfirmRequestModel = RiderConfirmRequestModelData();
+  RxBool isBtnLoading = false.obs;
 
   @override
   void onInit() {
@@ -47,6 +50,32 @@ class RiderMyRidesConfirmDetailsController extends GetxController {
       }
     } catch (e) {
       throw Exception(e);
+    }
+  }
+
+  openMessageFromConfirm(
+      RiderConfirmRequestModelDataDriverRideDetails? data) async {
+    try {
+      isBtnLoading.value = true;
+      final res = await APIManager.getChatRoomId(
+          receiverId: data?.driverDetails?.firstOrNull?.Id ?? "");
+      Get.toNamed(Routes.CHAT_PAGE,
+          arguments: ChatArg(
+              chatRoomId: res.data["data"]["chatRoomId"] ?? "",
+              deleteUpdateTime: res.data["data"]["deleteUpdateTime"] ?? "",
+              id: data?.driverDetails?.firstOrNull?.Id,
+              name: data?.driverDetails?.firstOrNull?.fullName ?? "",
+              image: data?.driverDetails?.firstOrNull?.profilePic?.url));
+      isBtnLoading.value = false;
+    } catch (e) {
+      Get.toNamed(Routes.CHAT_PAGE,
+          arguments: ChatArg(
+              chatRoomId: "",
+              deleteUpdateTime: "",
+              id: data?.driverDetails?.firstOrNull?.Id,
+              name: data?.driverDetails?.firstOrNull?.fullName ?? "",
+              image: data?.driverDetails?.firstOrNull?.profilePic?.url));
+      isBtnLoading.value = false;
     }
   }
 

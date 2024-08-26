@@ -6,6 +6,7 @@ import 'package:get/get_rx/src/rx_workers/utils/debouncer.dart';
 import 'package:green_pool/app/services/storage.dart';
 
 import '../../../data/booking_detail_model.dart';
+import '../../../routes/app_pages.dart';
 import '../../../services/dio/api_service.dart';
 import '../../../services/snackbar.dart';
 import '../../home/controllers/home_controller.dart';
@@ -20,6 +21,7 @@ class RatingRiderSideController extends GetxController {
   RxDouble driverRating = 4.0.obs;
   final debouncer = Debouncer(delay: const Duration(milliseconds: 50));
   RxBool isLoading = true.obs;
+  var ratingList = <Map<String, dynamic>>[].obs;
 
   @override
   void onInit() async {
@@ -27,7 +29,7 @@ class RatingRiderSideController extends GetxController {
     msgData = Get.arguments;
     rideId = msgData['rideId'].toString();
     await myRidesDetailsAPI(rideId);
-    print(msgData['rideId'].toString());
+    print("RIDE ID FOR RATING: ${msgData['rideId'].toString()}");
   }
 
   myRidesDetailsAPI(String rideId) async {
@@ -42,6 +44,7 @@ class RatingRiderSideController extends GetxController {
                 Get.find<GetStorageService>().getUserAppId))
             .toList();
       } else {
+        Get.back();
         showMySnackbar(msg: response.data["message"].toString());
       }
       isLoading.value = false;
@@ -50,30 +53,20 @@ class RatingRiderSideController extends GetxController {
     }
   }
 
-  rateDriverAPI(String driverId) async {
-    final Map<String, dynamic> data = {"rating": driverRating.value};
-
-    try {
-      final res = await APIManager.postRateUsers(body: data);
-      if (res.data['status']) {
-        showMySnackbar(msg: "Thankyou for rating!");
-        Get.find<HomeController>().changeTabIndex(0);
-        // Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
-      } else {
-        showMySnackbar(msg: res.data['message']);
-      }
-    } catch (e) {
-      debugPrint(e.toString());
-    }
+  void addRating(String id, double userRating) {
+    ratingList.add({"ratedTo": id, "rating": userRating});
   }
 
-  rateUserAPI(String Id) async {
-    final Map<String, dynamic> data = {"ratedTo": Id, "rating": rating.value};
+  Future<void> rateUserAPI() async {
+    final Map<String, dynamic> data = {"userRating": ratingList.value};
+    print("DATA: ${data.toString()}");
 
     try {
       final res = await APIManager.postRateUsers(body: data);
       if (res.data['status']) {
-        showMySnackbar(msg: "Thankyou for rating!");
+        showMySnackbar(msg: "Thank you for rating!");
+        Get.find<HomeController>().changeTabIndex(0);
+        Get.until((route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
       } else {
         showMySnackbar(msg: res.data['message']);
       }

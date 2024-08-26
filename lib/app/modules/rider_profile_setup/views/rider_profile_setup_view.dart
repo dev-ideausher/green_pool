@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
+import 'package:green_pool/app/components/common_image_view.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
@@ -75,12 +76,12 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
                               child: controller.isProfileImagePicked.value
                                   ? ClipOval(
                                       child: SizedBox.fromSize(
-                                        size: Size.fromRadius(44.kh),
-                                        child: Image.file(
-                                          controller
-                                              .selectedProfileImagePath.value!,
-                                        ),
-                                      ),
+                                          size: Size.fromRadius(44.kh),
+                                          child: CommonImageView(
+                                            file: controller
+                                                .selectedProfileImagePath
+                                                .value!,
+                                          )),
                                     )
                                   : SvgPicture.asset(
                                       ImageConstant.svgSetupProfilePic),

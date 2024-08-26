@@ -39,47 +39,51 @@ class UserDetailsView extends GetView<UserDetailsController> {
                     onTap: () {
                       controller.getProfileImage(ImageSource.gallery);
                     },
-                    child: Stack(
-                      alignment: Alignment.bottomRight,
-                      children: [
-                        Obx(
-                          () => Container(
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                            ),
-                            child:
-                                controller.isProfilePicUpdated?.value ?? false
-                                    ? ClipOval(
-                                        child: SizedBox.fromSize(
-                                          size: Size.fromRadius(50.kh),
-                                          child: Image.file(controller
-                                                  .selectedProfileImagePath
-                                                  ?.value ??
-                                              File('')),
-                                        ),
-                                      )
-                                    : ClipOval(
-                                        child: SizedBox.fromSize(
-                                          size: Size.fromRadius(50.kh),
-                                          child: CommonImageView(
-                                            height: 50.kh,
-                                            width: 50.kw,
-                                            url: Get.find<GetStorageService>()
-                                                    .profilePicUrl ??
-                                                '',
+                    child: Hero(
+                      tag: "profilePic",
+                      transitionOnUserGestures: true,
+                      child: Stack(
+                        alignment: Alignment.bottomRight,
+                        children: [
+                          Obx(
+                            () => Container(
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                              ),
+                              child:
+                                  controller.isProfilePicUpdated?.value ?? false
+                                      ? ClipOval(
+                                          child: SizedBox.fromSize(
+                                            size: Size.fromRadius(50.kh),
+                                            child: Image.file(controller
+                                                    .selectedProfileImagePath
+                                                    ?.value ??
+                                                File('')),
+                                          ),
+                                        )
+                                      : ClipOval(
+                                          child: SizedBox.fromSize(
+                                            size: Size.fromRadius(50.kh),
+                                            child: CommonImageView(
+                                              height: 50.kh,
+                                              width: 50.kw,
+                                              url: Get.find<GetStorageService>()
+                                                      .profilePicUrl ??
+                                                  '',
+                                            ),
                                           ),
                                         ),
-                                      ),
+                            ),
                           ),
-                        ),
-                        SvgPicture.asset(
-                          Get.find<HomeController>().isPinkModeOn?.value ??
-                                  false
-                              ? ImageConstant.svgPinkSetupAdd
-                              : ImageConstant.svgSetupAdd,
-                        ),
-                      ],
-                    ).paddingOnly(bottom: 12.kh, top: 32.kh),
+                          SvgPicture.asset(
+                            Get.find<HomeController>().isPinkModeOn?.value ??
+                                    false
+                                ? ImageConstant.svgPinkSetupAdd
+                                : ImageConstant.svgSetupAdd,
+                          ),
+                        ],
+                      ).paddingOnly(bottom: 12.kh, top: 32.kh),
+                    ),
                   ),
                   Text(
                     Strings.takeOrUploadProfilePic,

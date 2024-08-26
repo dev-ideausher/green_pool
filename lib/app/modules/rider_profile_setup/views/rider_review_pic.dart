@@ -10,12 +10,14 @@ import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
+import '../../../components/common_image_view.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
 
 class RiderReviewPictureView extends GetView<RiderProfileSetupController> {
   final File imagePath;
-  const RiderReviewPictureView({super.key, 
+  const RiderReviewPictureView({
+    super.key,
     required this.imagePath,
   });
 
@@ -45,9 +47,10 @@ class RiderReviewPictureView extends GetView<RiderProfileSetupController> {
                 ),
                 child: ClipOval(
                   child: SizedBox.fromSize(
-                    size: Size.fromRadius(100.kh),
-                    child: Image.file(imagePath),
-                  ),
+                      size: Size.fromRadius(100.kh),
+                      child: CommonImageView(
+                        file: controller.selectedProfileImagePath.value!,
+                      )),
                 ),
               ),
             ),
@@ -58,7 +61,6 @@ class RiderReviewPictureView extends GetView<RiderProfileSetupController> {
                     (route) => Get.currentRoute == Routes.RIDER_PROFILE_SETUP);
                 controller.isProfileImagePicked.value = true;
                 controller.isProfileImagePickedCheck.value = false;
-
               },
               label: Strings.done,
             ),

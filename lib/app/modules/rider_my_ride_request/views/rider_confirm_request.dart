@@ -225,14 +225,14 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                                       BlendMode.srcIn),
                                                 ).paddingOnly(right: 4.kw),
                                                 Text(
-                                                  "${GpUtil.getDateFormat(controller.riderConfirmRequestModel.value.data?[index]?.driverRideDetails?.time ?? "")}  ${GpUtil.convertUtcToLocal(controller.riderConfirmRequestModel.value.data?[index]?.driverRideDetails?.time ?? "")}",
+                                                  "${GpUtil.getDateFormat(controller.riderConfirmRequestModel.value.data?[index]?.driverRideDetails?.time ?? "")} ${GpUtil.convertUtcToLocal(controller.riderConfirmRequestModel.value.data?[index]?.driverRideDetails?.time ?? "")}",
                                                   style:
                                                       TextStyleUtil.k12Regular(
                                                           color: ColorUtil
                                                               .kBlack02),
                                                 ),
                                               ],
-                                            ).paddingOnly(right: 10.kw),
+                                            ).paddingOnly(right: 2.kw),
                                             Row(
                                               children: [
                                                 Icon(
@@ -246,7 +246,7 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                                               .kPrimary3PinkMode
                                                           : ColorUtil
                                                               .kSecondary01,
-                                                ).paddingOnly(right: 5.kw),
+                                                ).paddingOnly(right: 4.kw),
                                                 Text(
                                                   '${controller.riderConfirmRequestModel.value.data![index]?.driverRideDetails?.seatAvailable} seats',
                                                   style:

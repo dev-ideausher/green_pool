@@ -40,12 +40,13 @@ class RiderProfileSetupController extends GetxController {
       text: Get.find<AuthService>().auth.currentUser?.email);
   TextEditingController phoneNumber = TextEditingController(
       text: Get.find<AuthService>()
-          .auth
-          .currentUser
-          ?.phoneNumber
-          .toString()
-          .split("+1")
-          .last);
+              .auth
+              .currentUser
+              ?.phoneNumber
+              .toString()
+              .split("+1")
+              .last ??
+          "");
   TextEditingController gender = TextEditingController();
   RxBool isGenderListExpanded = false.obs;
   RxList<String> genderList =

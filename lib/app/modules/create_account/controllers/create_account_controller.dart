@@ -177,15 +177,19 @@ class CreateAccountController extends GetxController {
   Future<void> appleAuth() async {
     try {
       Get.lazyPut(() => VerifyController());
-      await Get.find<AuthService>().apple();
-      Get.find<VerifyController>().fullName =
-          Get.find<GetStorageService>().getUserName;
-      if (postRideModel.value != null) {
-        Get.find<VerifyController>().postRideModel.value = postRideModel.value;
-      } else if (findRideModel.value != null) {
-        Get.find<VerifyController>().findRideModel.value = findRideModel.value;
+      final isStatus = await Get.find<AuthService>().apple();
+      if (isStatus) {
+        Get.find<VerifyController>().fullName =
+            Get.find<GetStorageService>().getUserName;
+        if (postRideModel.value != null) {
+          Get.find<VerifyController>().postRideModel.value =
+              postRideModel.value;
+        } else if (findRideModel.value != null) {
+          Get.find<VerifyController>().findRideModel.value =
+              findRideModel.value;
+        }
+        await Get.find<VerifyController>().loginAPI();
       }
-      await Get.find<VerifyController>().loginAPI();
     } catch (error) {
       log("$error");
     }
