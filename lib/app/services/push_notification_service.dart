@@ -215,6 +215,12 @@ class PushNotificationService {
         Get.find<GetStorageService>().accSuspended = true;
         Get.find<HomeController>().userInfoAPI();
         break;
+
+      case "Account Active":
+        Get.find<HomeController>().newMsgReceived.value = true;
+        Get.find<GetStorageService>().accSuspended = false;
+        Get.find<HomeController>().userInfoAPI();
+        break;
       //
 
       case 'Chat':
@@ -399,6 +405,11 @@ class PushNotificationService {
         } else if (currentRoute == Routes.START_RIDE ||
             currentRoute == Routes.RATING_DRIVER_SIDE) {
           print("ride ended");
+        } else if (currentRoute == Routes.BOTTOM_NAVIGATION) {
+          await Future.delayed(const Duration(seconds: 1)).then((value) async {
+            await Get.toNamed(Routes.RATING_RIDER_SIDE,
+                arguments: actionData!.data);
+          });
         } else {
           await navigateToBottomNavigation(1);
           await Future.delayed(const Duration(seconds: 1)).then((value) async {

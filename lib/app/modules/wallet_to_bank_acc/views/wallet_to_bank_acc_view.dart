@@ -42,7 +42,7 @@ class WalletToBankAccView extends GetView<WalletToBankAccController> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  Strings.greenpoolCash,
+                  Strings.carpoollCash,
                   style: TextStyleUtil.k18Heading600(),
                   textAlign: TextAlign.center,
                 ).paddingOnly(bottom: 16.kh),

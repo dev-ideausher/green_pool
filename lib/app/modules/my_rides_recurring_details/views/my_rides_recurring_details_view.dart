@@ -187,7 +187,7 @@ class MyRidesRecurringDetailsView
                     const GreenPoolDivider().paddingSymmetric(vertical: 16.kh),
                     Text(
                       Strings.description,
-                      style: TextStyleUtil.k14Semibold(),
+                      style: TextStyleUtil.k14Bold(),
                     ).paddingOnly(bottom: 8.kh),
                     Wrap(
                       children: [
@@ -195,8 +195,7 @@ class MyRidesRecurringDetailsView
                           controller.recurringModel.value.data
                                   ?.driverRideDetails?[0]?.description ??
                               "NA",
-                          style: TextStyleUtil.k14Regular(
-                              color: ColorUtil.kBlack02),
+                          style: TextStyleUtil.k14Semibold(),
                         )
                       ],
                     ),

@@ -34,7 +34,7 @@ class WelcomeTile extends StatelessWidget {
                       TextSpan(
                         text: storageService.isLoggedIn &&
                                 storageService.profileStatus
-                            ? " ${Get.find<GetStorageService>().getUserName ?? "..."}"
+                            ? " ${Get.find<GetStorageService>().getUserName ?? "..."},"
                             // ? " ${controller.userInfo.value.data?.fullName ?? "..."}"
                             : "",
                         style: TextStyleUtil.k24Heading700(
@@ -45,7 +45,9 @@ class WelcomeTile extends StatelessWidget {
                     ],
                   ),
                 ).paddingOnly(bottom: 4.kh),
-              )
+              ),
+              Text("What would you like to do today?",
+                  style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack04))
             ],
           ),
           Visibility(

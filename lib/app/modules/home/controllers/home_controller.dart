@@ -96,6 +96,11 @@ class HomeController extends GetxController {
         storageService.setUserName = userInfo.value.data?.fullName ?? "";
         storageService.profilePicUrl = userInfo.value.data?.profilePic?.url;
         storageService.setFirebaseUid = userInfo.value.data?.firebaseUid ?? "";
+        if (userInfo.value.data?.status == "active") {
+          storageService.accSuspended = false;
+        } else {
+          storageService.accSuspended = true;
+        }
         userInfo.refresh();
 
         // Subscribe to FCM notifications using the user ID
@@ -189,10 +194,8 @@ class HomeController extends GetxController {
 
     if (storageService.isLoggedIn) {
       if (storageService.profileStatus) {
-        final userStatus = userInfo.value.data?.status;
-        // final isUserSuspended = Get.find<GetStorageService>().accSuspended;
-        // if (isUserSuspended && (index == 1 || index == 2)) {
-        if (userStatus == "suspended" && (index == 1 || index == 2)) {
+        final isUserSuspended = Get.find<GetStorageService>().accSuspended;
+        if (isUserSuspended && (index == 1 || index == 2)) {
           DialogHelper.accSuspendedDialog(() {
             Get.back();
             changeTabIndex(3);

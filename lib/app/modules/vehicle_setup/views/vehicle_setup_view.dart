@@ -49,9 +49,11 @@ class VehicleSetupView extends GetView<VehicleSetupController> {
                       padding: EdgeInsets.symmetric(
                           vertical: 68.kh, horizontal: 76.kw),
                       decoration: BoxDecoration(
-                          border: controller.vehicleImageNotUploaded.value
-                              ? Border.all(color: ColorUtil.kError2)
-                              : null,
+                          border: controller.isVehicleImagePicked.value
+                              ? null
+                              : controller.vehicleImageNotUploaded.value
+                                  ? Border.all(color: ColorUtil.kError2)
+                                  : null,
                           color: ColorUtil.kGreyColor,
                           borderRadius: BorderRadius.circular(8.kh)),
                       child: controller.isVehicleImagePicked.value
@@ -103,26 +105,40 @@ class VehicleSetupView extends GetView<VehicleSetupController> {
                     visible: controller.isTypeListExpanded.value,
                     child: SizedBox(
                       height: 120.kh,
-                      child: ListView.builder(
-                          itemCount: 7,
-                          itemBuilder: (context, index) {
-                            return Container(
-                              decoration: BoxDecoration(
-                                  border: Border(
-                                      bottom: BorderSide(
-                                          width: 1.kh,
-                                          color: ColorUtil.kNeutral7)),
-                                  borderRadius: BorderRadius.circular(8.kh)),
-                              child: ListTile(
-                                title: Text(controller.typeList[index]),
-                                onTap: () {
-                                  controller.type.text =
-                                      controller.typeList[index];
-                                  controller.isTypeListExpanded.value = false;
-                                },
-                              ),
-                            );
-                          }),
+                      child: Card(
+                        elevation: 4.0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.kh),
+                        ),
+                        color: ColorUtil.kGreyColor,
+                        child: ListView.builder(
+                            itemCount: 7,
+                            itemBuilder: (context, index) {
+                              return Container(
+                                decoration: BoxDecoration(
+                                    border: Border(
+                                        bottom: BorderSide(
+                                            width: 1.kh,
+                                            color: ColorUtil.kNeutral7)),
+                                    borderRadius: BorderRadius.circular(8.kh)),
+                                child: RadioListTile<String>(
+                                  title: Text(controller.typeList[index]),
+                                  value: controller.typeList[index],
+                                  groupValue: controller.type.text,
+                                  fillColor: const WidgetStatePropertyAll(
+                                      ColorUtil.kSecondary01),
+                                  onChanged: (value) {
+                                    if (value != null) {
+                                      controller.type.text =
+                                          controller.typeList[index];
+                                      controller.isTypeListExpanded.value =
+                                          false;
+                                    }
+                                  },
+                                ),
+                              );
+                            }),
+                      ),
                     ).paddingOnly(bottom: 16.kh),
                   ),
                 ),
@@ -149,26 +165,40 @@ class VehicleSetupView extends GetView<VehicleSetupController> {
                     visible: controller.isColorListExpanded.value,
                     child: SizedBox(
                       height: 120.kh,
-                      child: ListView.builder(
-                          itemCount: 7,
-                          itemBuilder: (context, index) {
-                            return Container(
-                              decoration: BoxDecoration(
-                                  border: Border(
-                                      bottom: BorderSide(
-                                          width: 1.kh,
-                                          color: ColorUtil.kNeutral7)),
-                                  borderRadius: BorderRadius.circular(8.kh)),
-                              child: ListTile(
-                                title: Text(controller.colorList[index]),
-                                onTap: () {
-                                  controller.color.text =
-                                      controller.colorList[index];
-                                  controller.isColorListExpanded.value = false;
-                                },
-                              ),
-                            );
-                          }),
+                      child: Card(
+                        elevation: 4.0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.kh),
+                        ),
+                        color: ColorUtil.kGreyColor,
+                        child: ListView.builder(
+                            itemCount: 7,
+                            itemBuilder: (context, index) {
+                              return Container(
+                                decoration: BoxDecoration(
+                                    border: Border(
+                                        bottom: BorderSide(
+                                            width: 1.kh,
+                                            color: ColorUtil.kNeutral7)),
+                                    borderRadius: BorderRadius.circular(8.kh)),
+                                child: RadioListTile<String>(
+                                  title: Text(controller.colorList[index]),
+                                  value: controller.colorList[index],
+                                  groupValue: controller.color.text,
+                                  fillColor: const WidgetStatePropertyAll(
+                                      ColorUtil.kSecondary01),
+                                  onChanged: (value) {
+                                    if (value != null) {
+                                      controller.color.text =
+                                          controller.colorList[index];
+                                      controller.isColorListExpanded.value =
+                                          false;
+                                    }
+                                  },
+                                ),
+                              );
+                            }),
+                      ),
                     ).paddingOnly(bottom: 16.kh),
                   ),
                 ),

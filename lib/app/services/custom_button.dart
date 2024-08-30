@@ -43,6 +43,17 @@ class GreenPoolButton extends StatelessWidget {
       width: width,
       child: ElevatedButton(
         onPressed: isLoading || !isActive ? () {} : onPressed,
+        /*Get.find<GetStorageService>().accSuspended
+            ? () {
+                DialogHelper.accSuspendedDialog(() async {
+                  Get.back();
+                  Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
+                  await Future.delayed(const Duration(seconds: 1)).then(
+                      (value) => Get.find<HomeController>().changeTabIndex(3));
+                  Get.toNamed(Routes.HELP_SUPPORT);
+                });
+              }
+            :*/
         style: ElevatedButton.styleFrom(
           foregroundColor: ColorUtil.kWhiteColor,
           surfaceTintColor: ColorUtil.kSecondary07,

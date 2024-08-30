@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -128,9 +129,6 @@ class SetupUser extends GetView<ProfileSetupController> {
                 suffix: controller.isGenderListExpanded.value
                     ? const Icon(Icons.arrow_drop_up)
                     : const Icon(Icons.arrow_drop_down),
-                // onPressedSuffix: () {
-                //   controller.isGenderListExpanded.toggle();
-                // },
                 onTap: () {
                   controller.isGenderListExpanded.toggle();
                 },
@@ -142,8 +140,15 @@ class SetupUser extends GetView<ProfileSetupController> {
                 visible: controller.isGenderListExpanded.value,
                 child: SizedBox(
                   height: 120.kh,
-                  child: ListView.builder(
-                      itemCount: 3,
+                  child: Card(
+                    elevation: 4.0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.kh),
+                    ),
+                    color: ColorUtil.kGreyColor,
+                    child: ListView.builder(
+                      padding: EdgeInsets.zero,
+                      itemCount: controller.genderList.length,
                       itemBuilder: (context, index) {
                         return Container(
                           decoration: BoxDecoration(
@@ -151,16 +156,25 @@ class SetupUser extends GetView<ProfileSetupController> {
                                   bottom: BorderSide(
                                       width: 1.kh, color: ColorUtil.kNeutral7)),
                               borderRadius: BorderRadius.circular(8.kh)),
-                          child: ListTile(
-                            title: Text(controller.genderList[index]),
-                            onTap: () {
-                              controller.gender.text =
-                                  controller.genderList[index];
-                              controller.isGenderListExpanded.value = false;
-                            },
-                          ),
+                          child: RadioListTile<String>(
+                                  title: Text(controller.genderList[index]),
+                                  value: controller.genderList[index],
+                                  groupValue: controller.gender.text,
+                                  fillColor: const WidgetStatePropertyAll(
+                                      ColorUtil.kSecondary01),
+                                  onChanged: (value) {
+                                    if (value != null) {
+                                      controller.gender.text = value;
+                                      controller.isGenderListExpanded.value =
+                                          false;
+                                    }
+                                  })
+                              .paddingSymmetric(
+                                  horizontal: 8.kh, vertical: 4.kh),
                         );
-                      }),
+                      },
+                    ),
+                  ),
                 ).paddingOnly(bottom: 16.kh),
               ),
             ),
@@ -177,7 +191,7 @@ class SetupUser extends GetView<ProfileSetupController> {
                     : const Icon(Icons.arrow_drop_down),
                 onPressedSuffix: () {
                   controller.isCityListExpanded.toggle();
-                  controller.addCityNames(controller.city.value.text);
+                  controller.addCityNames(controller.city.text);
                 },
                 onchanged: (value) {
                   controller.addCityNames(value ?? "");
@@ -189,28 +203,41 @@ class SetupUser extends GetView<ProfileSetupController> {
               () => Visibility(
                 visible: controller.isCityListExpanded.value,
                 child: SizedBox(
-                  height: 120.kh,
-                  child: ListView.builder(
-                      itemCount: controller.cityNames.length ?? 0,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          decoration: BoxDecoration(
-                              border: Border(
-                                  bottom: BorderSide(
-                                      width: 1.kh, color: ColorUtil.kNeutral7)),
-                              borderRadius: BorderRadius.circular(8.kh)),
-                          child: ListTile(
-                            title: Text(controller.cityNames[index]),
-                            selectedColor: ColorUtil.kPrimary01,
-                            onTap: () {
-                              controller.city.text =
-                                  controller.cityNames[index];
-                              controller.isCityListExpanded.value = false;
-                            },
-                          ),
-                        );
-                      }),
-                ).paddingOnly(bottom: 16.kh),
+                    height: 120.kh,
+                    child: Card(
+                      elevation: 4.0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.kh),
+                      ),
+                      color: ColorUtil.kGreyColor,
+                      child: ListView.builder(
+                          padding: EdgeInsets.zero,
+                          itemCount: controller.cityNames.length ?? 0,
+                          itemBuilder: (context, index) {
+                            return Container(
+                              decoration: BoxDecoration(
+                                  border: Border(
+                                      bottom: BorderSide(
+                                          width: 1.kh,
+                                          color: ColorUtil.kNeutral7)),
+                                  borderRadius: BorderRadius.circular(8.kh)),
+                              child: RadioListTile<String>(
+                                  title: Text(controller.cityNames[index]),
+                                  groupValue: controller.city.text,
+                                  value: controller.cityNames[index],
+                                  fillColor: const WidgetStatePropertyAll(
+                                      ColorUtil.kSecondary01),
+                                  onChanged: (value) {
+                                    if (value != null) {
+                                      controller.city.text =
+                                          controller.cityNames[index];
+                                      controller.isCityListExpanded.value =
+                                          false;
+                                    }
+                                  }),
+                            );
+                          }),
+                    )).paddingOnly(bottom: 16.kh),
               ),
             ),
             Text.rich(

@@ -27,7 +27,7 @@ class RiderMyRidesSendDetailsView
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:  GreenPoolAppBar(
+      appBar: GreenPoolAppBar(
         title: Text(Strings.driverDetails),
       ),
       body: SingleChildScrollView(
@@ -441,11 +441,14 @@ class RiderMyRidesSendDetailsView
             const GreenPoolDivider().paddingOnly(top: 8.kh),
             Text(
               Strings.description,
-              style: TextStyleUtil.k14Semibold(),
+              style: TextStyleUtil.k14Bold(),
             ).paddingOnly(bottom: 8.kh),
             Wrap(
               children: [
-                Text(controller.riderSendRequestModelData?.description ?? "NA")
+                Text(
+                  controller.riderSendRequestModelData?.description ?? "NA",
+                  style: TextStyleUtil.k14Semibold(),
+                )
               ],
             ),
             const GreenPoolDivider().paddingOnly(top: 8.kh),

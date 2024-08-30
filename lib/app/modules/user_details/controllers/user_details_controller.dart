@@ -195,10 +195,10 @@ class UserDetailsController extends GetxController {
 
     try {
       final response = await APIManager.userDetails(body: userData);
-      showMySnackbar(msg: response.data['message'].toString());
-      Get.find<HomeController>().userInfoAPI();
+      await Get.find<HomeController>().userInfoAPI();
       Get.find<HomeController>().changeTabIndex(0);
       Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
+      showMySnackbar(msg: response.data['message'].toString());
       saveBtnLoading.value = false;
     } catch (e) {
       saveBtnLoading.value = false;

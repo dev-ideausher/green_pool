@@ -11,9 +11,7 @@ import '../../../constants/image_constant.dart';
 import '../../../res/strings.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
-import '../../../services/dio/api_service.dart';
 import '../../../services/gp_util.dart';
-import '../../../services/snackbar.dart';
 import '../../../services/text_style_util.dart';
 import '../../home/controllers/home_controller.dart';
 
@@ -174,14 +172,14 @@ class BookingConfirmBottom extends StatelessWidget {
                   "${driverRideData?.rideDetails?[0]?.destination?.name}",
               needPickupText: false,
             ).paddingOnly(bottom: 8.kh),
-            const GreenPoolDivider().paddingOnly(top: 8.kh, bottom: 40.kh),
+            const GreenPoolDivider().paddingOnly(top: 8.kh, bottom: 20.kh),
             GreenPoolButton(
               label: Strings.continueText,
               onPressed: () {
                 Get.back();
               },
             ),
-            GreenPoolButton(
+            /*GreenPoolButton(
               label: Strings.cancelRequest,
               isBorder: true,
               onPressed: () async {
@@ -200,7 +198,7 @@ class BookingConfirmBottom extends StatelessWidget {
                   throw Exception(e);
                 }
               },
-            ).paddingOnly(top: 16.kh),
+            ).paddingOnly(top: 16.kh),*/
           ],
         ),
       ),

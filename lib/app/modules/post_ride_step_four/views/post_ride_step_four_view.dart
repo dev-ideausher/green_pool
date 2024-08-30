@@ -51,7 +51,7 @@ class PostRideStepFourView extends GetView<PostRideStepFourController> {
                   : ImageConstant.svgGuideline3,
               title: Strings.practiceSafeDriving,
               body: Strings.complyWithTrafficRules,
-            ).paddingOnly(bottom: 14.kh),
+            ).paddingOnly(bottom: 8.kh),
             Row(
               children: [
                 Obx(
@@ -125,7 +125,7 @@ class PostRideStepFourView extends GetView<PostRideStepFourController> {
                 onPressed: () => controller.setGuideLines(),
                 isActive: controller.isChecked.value,
                 label: Strings.publishRide,
-              ).paddingOnly(bottom: 40.kh),
+              ).paddingSymmetric(vertical: 40.kh),
             ),
           ],
         ).paddingSymmetric(horizontal: 14.kw),

@@ -174,12 +174,18 @@ class RiderProfileSetupController extends GetxController {
     } else {
       mediaType = 'application/octet-stream';
     }
+    String genderValue = "";
+    if (gender.text == "Prefer not to say") {
+      genderValue = "Other";
+    } else {
+      genderValue = gender.value.text;
+    }
 
     final userData = dio.FormData.fromMap({
       'fullName': fullName.text,
       'email': email.text,
       'phone': phoneNumber.text,
-      'gender': gender.text,
+      'gender': genderValue,
       'city': city.value.text,
       'dob': dateOfBirth.text,
       'profilePic': await dio.MultipartFile.fromFile(

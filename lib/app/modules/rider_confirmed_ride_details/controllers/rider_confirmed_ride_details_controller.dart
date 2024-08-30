@@ -48,7 +48,7 @@ class RiderConfirmedRideDetailsController extends GetxController {
   }
 
   riderCancelRideAPI(MyRidesModelData myRidesModelData) async {
-    DialogHelper.cancelRideDialog(() async {
+    DialogHelper.riderCancelRideDialog(() async {
       Get.back();
       final Map<String, dynamic> riderRideId = {"riderRideId": myRidesModelData.Id};
       try {

@@ -12,8 +12,10 @@ class Endpoints {
   static const String baseUrl = "https://api.greenpool.ca/v1/";
   // static const String baseUrl = "https://green-pool-backend.vercel.app/v1/";
 
-  static String success_url = "${baseUrl}payment/paymentSuccess";
-  static String cancel_url = "${baseUrl}payment/paymentCancelled";
+  static String success_url =
+      "http://api.greenpool.ca/v1/payment/paymentSuccess";
+  static String cancel_url =
+      "http://api.greenpool.ca/v1/payment/paymentCancelled";
 
   // receiveTimeout
   static const int receiveTimeout = 150000;

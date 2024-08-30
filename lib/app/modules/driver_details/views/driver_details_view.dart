@@ -1,4 +1,3 @@
-//! driver details after matching rides page
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -418,12 +417,14 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
             const GreenPoolDivider().paddingSymmetric(vertical: 16.kh),
             Text(
               Strings.description,
-              style: TextStyleUtil.k14Semibold(),
+              style: TextStyleUtil.k14Bold(),
             ).paddingOnly(bottom: 8.kh),
             Wrap(
               children: [
                 Text(
-                    controller.matchingRidesModelData.value.description ?? "NA")
+                  controller.matchingRidesModelData.value.description ?? "NA",
+                  style: TextStyleUtil.k14Semibold(),
+                )
               ],
             ),
             const GreenPoolDivider().paddingSymmetric(vertical: 16.kh),

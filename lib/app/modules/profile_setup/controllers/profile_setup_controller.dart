@@ -26,6 +26,7 @@ class ProfileSetupController extends GetxController
   RxBool isCityListExpanded = false.obs;
   RxBool isVehicleBtnLoading = false.obs;
   RxBool isGenderListExpanded = false.obs;
+  RxString genderText = "".obs;
   RxList<String> genderList =
       <String>["Male", "Female", "Prefer not to say"].obs;
   RxBool isTypeListExpanded = false.obs;
@@ -67,12 +68,13 @@ class ProfileSetupController extends GetxController
       TextEditingController(text: Get.find<GetStorageService>().emailId ?? "");
   TextEditingController phoneNumber = TextEditingController(
       text: Get.find<AuthService>()
-          .auth
-          .currentUser
-          ?.phoneNumber
-          .toString()
-          .split("+1")
-          .last ?? "");
+              .auth
+              .currentUser
+              ?.phoneNumber
+              .toString()
+              .split("+1")
+              .last ??
+          "");
   TextEditingController gender = TextEditingController();
   TextEditingController city = TextEditingController();
   TextEditingController dateOfBirth = TextEditingController();
@@ -214,12 +216,18 @@ class ProfileSetupController extends GetxController
     } else {
       idMediaType = 'application/octet-stream';
     }
+    String genderValue = "";
+    if (gender.text == "Prefer not to say") {
+      genderValue = "Other";
+    } else {
+      genderValue = gender.value.text;
+    }
 
     final userData = dio.FormData.fromMap({
       'fullName': fullName.text,
       'email': email.text,
       'phone': phoneNumber.text,
-      'gender': gender.value.text,
+      'gender': genderValue,
       'city': city.value.text,
       'dob': dateOfBirth.text,
       'profilePic': await dio.MultipartFile.fromFile(

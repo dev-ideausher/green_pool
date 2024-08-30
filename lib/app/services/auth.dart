@@ -60,8 +60,6 @@ class AuthService extends GetxService {
       await handleGetContact();
       status = true;
     });
-    Get.find<GetStorageService>().setUserName = result.user?.fullName;
-    print('Apple : ${await result.user?.getIdToken()}');
     return status;
   }
 

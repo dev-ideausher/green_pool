@@ -24,6 +24,7 @@ class PaymentController extends GetxController {
   var promoCodeModel = PromoCodeModel().obs;
   final RxString walletBalance = "0.0".obs;
   final RxBool isLoading = true.obs;
+  final RxBool isBtnLoading = true.obs;
   final RxBool isPromoLoading = true.obs;
   final RxBool discountAvailed = false.obs;
   final RxBool fromDriverDetails = false.obs;
@@ -129,6 +130,7 @@ class PaymentController extends GetxController {
 
     if (double.parse(walletBalance.value) >= totalAmount) {
       try {
+        isBtnLoading.value = true;
         final response = await APIManager.postCreateAlert(body: {
           "ridesDetails": rideData['ridesDetails'],
           "driverRideId": rideData['driverRideId'],
@@ -142,6 +144,7 @@ class PaymentController extends GetxController {
         } else {
           showMySnackbar(msg: response.data['message'].toString() ?? "");
         }
+        isBtnLoading.value = false;
       } catch (e) {
         debugPrint(e.toString());
       }
@@ -153,6 +156,7 @@ class PaymentController extends GetxController {
   Future<void> sendRequesttoDriverAPI() async {
     if (double.parse(walletBalance.value) >= totalAmount) {
       try {
+        isBtnLoading.value = true;
         final response = await APIManager.postSendRequestToDriver(body: {
           "riderRideId": rideData['riderRideId'],
           "driverRideId": rideData['driverRideId'],
@@ -170,6 +174,7 @@ class PaymentController extends GetxController {
         } else {
           showMySnackbar(msg: response.data['message'].toString() ?? "");
         }
+        isBtnLoading.value = false;
       } catch (e) {
         throw Exception(e);
       }
@@ -181,6 +186,7 @@ class PaymentController extends GetxController {
   Future<void> confirmRequestOfDriverAPI() async {
     if (double.parse(walletBalance.value) >= totalAmount) {
       try {
+        isBtnLoading.value = true;
         final response = await APIManager.acceptDriversRequest(body: {
           "ridePostId": ridePostId,
           "price": price,
@@ -193,6 +199,7 @@ class PaymentController extends GetxController {
         } else {
           showMySnackbar(msg: response.data['message'].toString() ?? "");
         }
+        isBtnLoading.value = false;
       } catch (e) {
         throw Exception(e);
       }

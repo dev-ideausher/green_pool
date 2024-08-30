@@ -32,6 +32,7 @@ class WalletView extends GetView<WalletController> {
                       padding: EdgeInsets.symmetric(
                           horizontal: 16.kw, vertical: 24.kh),
                       width: 100.w,
+                      height: 188.kh,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(16.kh),
                           gradient:
@@ -48,7 +49,7 @@ class WalletView extends GetView<WalletController> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            Strings.greenpoolCash,
+                            Strings.carpoollCash,
                             style: TextStyleUtil.k18Heading600(),
                           ).paddingOnly(bottom: 16.kh),
                           Text(

@@ -231,16 +231,16 @@ class Strings {
   static String getStarted2 =
       "Let's make environment greener and\ncommuting smarter together!";
 
-  static String onboard1text1 = 'Find carpool effortlessly\nwith Greenpool';
+  static String onboard1text1 = 'Find carpool effortlessly\nwith Carpooll.com';
 
   static String onboard1text2 =
-      "Discover the convenience of sharing rides\nwith Greenpool. Whether you're a driver\nlooking to share your journey or a rider in\nneed of a ride, we've got you covered.";
+      "Discover the convenience of sharing rides\nwith Carpooll.com. Whether you're a driver\nlooking to share your journey or a rider in\nneed of a ride, we've got you covered.";
 
   static String onboard2text1 =
       'Introducing Pinkpool exclusively for female users.';
 
   static String onboard2text2 =
-      'Greenpool ensures safety for female\ncommuters with female drivers and SOS\nfeature, empowering journeys with\nconfidence and security.';
+      'Carpooll.com ensures safety for female\ncommuters with female drivers and SOS\nfeature, empowering journeys with\nconfidence and security.';
 
   static String onboard3text1 = 'Seamless ride sharing platform.';
 
@@ -288,7 +288,7 @@ class Strings {
 
   static var addMoneyToWallet = "Add money to wallet";
 
-  static String greenpoolCash = "Greenpool Cash";
+  static String carpoollCash = "Carpooll.com Cash";
 
   static var deleteAccount = "Delete Account";
 
@@ -364,7 +364,7 @@ class Strings {
   static String enableLocation = "Enable Location";
 
   static String allowLocationAccess =
-      "Please allow Greenpool access to location services.";
+      "Please allow Carpooll.com access to location services.";
 
   static var allowAccess = "Allow Access";
 
@@ -892,4 +892,60 @@ class Strings {
 
   static var thankyouForRatingTheApp =
       "Thank you for rating our app! Your feedback helps us improve and serve you better.";
+
+  static String youAreAllowedUpto6Cancellation =
+      "You are allowed up to two cancellations of approved rides within a 6-month period.";
+
+  static String exceedingThisMayResultSuspension =
+      "Exceeding this limit may result in the suspension of your profile.";
+
+  static String driverCancellationpolicy = 'Driver Cancellation policy';
+
+  static String riderCancellationpolicy = 'Rider Cancellation policy';
+
+  static var withdrawalBookingReqorExpiration =
+      'Withdrawal of a Booking Request or Expiration:';
+
+  static var ifYouWithdrawBookingReqOrExpires =
+      'If you withdraw a booking request or it expires, you are entitled to a 100% refund, including the booking fee.';
+
+  static var cancellationLessThan12Hours =
+      'Cancellation Less than 12 Hours Before Departure:';
+
+  static var ifYouCancelBookingLessThan12HoursBeforeTheScheduledDeparture =
+      'If you cancel a booking less than 12 hours before the scheduled departure, you will receive a 50% refund of the seat price, excluding the booking fee.';
+
+  static var theDriverIsEntitledToReceiveHalfOfThePriceSeat =
+      'The driver is entitled to receive 50% of the seat price as compensation.';
+
+  static String riderCancellationNote =
+      'Note: In the event that the driver subsequently cancels the trip, you will be eligible for an additional refund of the remaining 50% of the seat price, excluding the booking fee.';
+
+  static var cancellationMoreThan12hours =
+      'Cancellation More than 12 Hours Before Departure:';
+
+  static var ifYouCancelBookingMoreThan12HoursBeforeScheduledDeparture =
+      'If you cancel a booking more than 12 hours before the scheduled departure, you are entitled to a full refund of the seat price, excluding the booking fee.';
+
+  static var failureToShowUp = 'Failure to Show Up:';
+
+  static var ifYouFailToShowUpforTheRide =
+      'If you fail to show up for the trip, you forfeit your right to a refund.';
+
+  static var driverInitiiatedCancellation = 'Driver-Initiated Cancellation:';
+
+  static var inTheEventThatTheDriverCancellsTheTrip =
+      'In the event that the driver cancels the trip, you are entitled to a 100% refund of the seat price, including the booking fee.';
+
+  static String accountSuspension = "Account Suspension";
+
+  static String pleaseNoteYouHaveCancelledTwoRidesInPastSixMonths =
+      "Please note, you've canceled two rides in the past six months. If you cancel another ride, your account may be temporarily suspended.";
+
+  static String accountSuspended = "Account Suspended";
+
+  static String youCannotPerformThisAction =
+      "You cannot perform this action because your account was suspended.";
+
+  static var contactUs = "Contact Us";
 }

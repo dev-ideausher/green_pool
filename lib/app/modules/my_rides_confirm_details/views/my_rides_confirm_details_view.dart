@@ -217,13 +217,15 @@ class MyRidesConfirmDetailsView
 
           Text(
             Strings.description,
-            style: TextStyleUtil.k14Semibold(),
+            style: TextStyleUtil.k14Bold(),
           ).paddingOnly(bottom: 8.kh),
           Wrap(
             children: [
               Text(
-                  controller.riderRideDetails.rideDetails?.first?.description ??
-                      "NA")
+                controller.riderRideDetails.rideDetails?.first?.description ??
+                    "NA",
+                style: TextStyleUtil.k14Semibold(),
+              )
             ],
           ),
           const Expanded(child: SizedBox()),

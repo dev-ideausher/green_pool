@@ -210,7 +210,7 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                                 children: [
                                                   Icon(
                                                     Icons.time_to_leave,
-                                                    size: 18.kh,
+                                                    size: 16.kh,
                                                     color: Get.find<
                                                                 HomeController>()
                                                             .isPinkModeOn
@@ -219,7 +219,7 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                                             .kPrimary3PinkMode
                                                         : ColorUtil
                                                             .kSecondary01,
-                                                  ).paddingOnly(right: 8.kw),
+                                                  ).paddingOnly(right: 4.kw),
                                                   Text(
                                                     '${rideDetails?.seatAvailable ?? "0"} seats',
                                                     style: TextStyleUtil
@@ -308,8 +308,7 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                                 .requestSent ??
                                             false) {
                                           showMySnackbar(
-                                              msg:
-                                                  Strings.reqHasAlreadySent);
+                                              msg: Strings.reqHasAlreadySent);
                                         } else {
                                           controller
                                               .moveToPaymentFromSendRequest(

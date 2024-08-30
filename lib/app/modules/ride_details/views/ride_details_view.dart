@@ -321,10 +321,15 @@ class RideDetailsView extends GetView<RideDetailsController> {
           const GreenPoolDivider().paddingSymmetric(vertical: 16.kh),
           Text(
             Strings.description,
-            style: TextStyleUtil.k14Semibold(),
+            style: TextStyleUtil.k14Bold(),
           ).paddingOnly(bottom: 8.kh),
           Wrap(
-            children: [Text(controller.rideHistory.value.description ?? "NA")],
+            children: [
+              Text(
+                controller.rideHistory.value.description ?? "NA",
+                style: TextStyleUtil.k14Semibold(),
+              )
+            ],
           ),
         ],
       ).paddingSymmetric(horizontal: 16.kw),

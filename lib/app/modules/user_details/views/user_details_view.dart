@@ -127,6 +127,12 @@ class UserDetailsView extends GetView<UserDetailsController> {
             GreenPoolTextField(
               hintText: Strings.phoneNumber,
               controller: controller.phoneTextController,
+              prefix: Text(
+                "+1",
+                style: TextStyleUtil.k14Regular(
+                  color: ColorUtil.kBlack03,
+                ),
+              ),
               readOnly: true,
             ).paddingOnly(bottom: 16.kh),
             RichTextHeading(text: Strings.gender).paddingOnly(bottom: 8.kh),
@@ -159,26 +165,41 @@ class UserDetailsView extends GetView<UserDetailsController> {
                 visible: controller.isCityListExpanded.value,
                 child: SizedBox(
                   height: 120.kh,
-                  child: ListView.builder(
-                      itemCount: controller.cityNames.length ?? 0,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          decoration: BoxDecoration(
-                              border: Border(
-                                  bottom: BorderSide(
-                                      width: 1.kh, color: ColorUtil.kNeutral7)),
-                              borderRadius: BorderRadius.circular(8.kh)),
-                          child: ListTile(
-                            title: Text(controller.cityNames[index]),
-                            selectedColor: ColorUtil.kPrimary01,
-                            onTap: () {
-                              controller.city.text =
-                                  controller.cityNames[index];
-                              controller.isCityListExpanded.value = false;
-                            },
-                          ),
-                        );
-                      }),
+                  child: Card(
+                    elevation: 4.0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.kh),
+                    ),
+                    color: ColorUtil.kGreyColor,
+                    child: ListView.builder(
+                        itemCount: controller.cityNames.length ?? 0,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            decoration: BoxDecoration(
+                                border: Border(
+                                    bottom: BorderSide(
+                                        width: 1.kh,
+                                        color: ColorUtil.kNeutral7)),
+                                borderRadius: BorderRadius.circular(8.kh)),
+                            child: RadioListTile<String>(
+                              title: Text(controller.cityNames[index]),
+                              groupValue: controller.city.text,
+                              value: controller.cityNames[index],
+                              fillColor: WidgetStatePropertyAll(
+                                  Get.find<HomeController>().isPinkModeOn.value
+                                      ? ColorUtil.kPrimary2PinkMode
+                                      : ColorUtil.kSecondary01),
+                              onChanged: (value) {
+                                if (value != null) {
+                                  controller.city.text =
+                                      controller.cityNames[index];
+                                  controller.isCityListExpanded.value = false;
+                                }
+                              },
+                            ),
+                          );
+                        }),
+                  ),
                 ).paddingOnly(bottom: 16.kh),
               ),
             ),

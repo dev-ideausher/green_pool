@@ -23,7 +23,6 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
   @override
   Widget build(BuildContext context) {
     Get.lazyPut(() => MyRidesOneTimeController());
-    controller.myRidesAPI();
     return Scaffold(
       body: SafeArea(
         child: Obx(
@@ -89,7 +88,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                       controller.decideNoRidesVisibilty(type),
                                   child: SizedBox(
                                     height: MediaQuery.of(context).size.height -
-                                        100,
+                                        200,
                                     child: const Center(
                                       child: NoRidePosted(),
                                     ),
@@ -162,6 +161,7 @@ class NoRidePosted extends StatelessWidget {
             child: Get.find<HomeController>().isPinkModeOn.value
                 ? CommonImageView(svgPath: Assets.svgPinkModegirl)
                 : SvgPicture.asset(ImageConstant.svgNoRides)),
+        20.kheightBox,
         Text(
           Strings.youHavePostedNoRides,
           style: TextStyleUtil.k24Heading600(),

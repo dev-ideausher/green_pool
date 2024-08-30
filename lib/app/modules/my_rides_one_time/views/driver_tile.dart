@@ -198,54 +198,59 @@ class DriverTile extends StatelessWidget {
                             ),
                           ],
                         )
-                      // : isToday(myRidesModelData.date ?? "")
-                      : isWithinTimeRange(myRidesModelData.time ?? "")
-                          ? Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                GreenPoolButton(
-                                    onPressed: myRidesModelData.isCompleted!
-                                        ? () {}
-                                        : () {
-                                            controller
-                                                .startRide(myRidesModelData);
-                                          },
-                                    width: 144.kw,
-                                    height: 40.kh,
-                                    padding: EdgeInsets.all(8.kh),
-                                    fontSize: 14.kh,
-                                    label:
-                                        (myRidesModelData.isCompleted ?? false)
+                      : isToday(myRidesModelData.date ?? "")
+                          ? isWithinTimeRange(myRidesModelData.time ?? "")
+                              ? Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    GreenPoolButton(
+                                        onPressed: myRidesModelData.isCompleted!
+                                            ? () {}
+                                            : () {
+                                                controller.startRide(
+                                                    myRidesModelData);
+                                              },
+                                        width: 144.kw,
+                                        height: 40.kh,
+                                        padding: EdgeInsets.all(8.kh),
+                                        fontSize: 14.kh,
+                                        label: (myRidesModelData.isCompleted ??
+                                                false)
                                             ? Strings.rideCompleted
                                             : (myRidesModelData
                                                         .postsInfo?.isEmpty ??
                                                     false)
                                                 ? Strings.requests
                                                 : Strings.startRide),
-                                GreenPoolButton(
-                                  onPressed: () {
-                                    controller.checkCancellationCount(
-                                        myRidesModelData);
-                                  },
-                                  width: 144.kw,
-                                  height: 40.kh,
-                                  padding: EdgeInsets.all(8.kh),
-                                  fontSize: 14.kh,
-                                  isBorder: true,
-                                  borderColor: Get.find<HomeController>()
-                                          .isPinkModeOn
-                                          .value
-                                      ? ColorUtil.kPrimary3PinkMode
-                                      : ColorUtil.kSecondary01,
-                                  labelColor: Get.find<HomeController>()
-                                          .isPinkModeOn
-                                          .value
-                                      ? ColorUtil.kPrimary3PinkMode
-                                      : ColorUtil.kSecondary01,
-                                  label: Strings.cancelRide,
-                                ),
-                              ],
-                            )
+                                    GreenPoolButton(
+                                      onPressed: () {
+                                        controller.checkCancellationCount(
+                                            myRidesModelData);
+                                      },
+                                      width: 144.kw,
+                                      height: 40.kh,
+                                      padding: EdgeInsets.all(8.kh),
+                                      fontSize: 14.kh,
+                                      isBorder: true,
+                                      borderColor: Get.find<HomeController>()
+                                              .isPinkModeOn
+                                              .value
+                                          ? ColorUtil.kPrimary3PinkMode
+                                          : ColorUtil.kSecondary01,
+                                      labelColor: Get.find<HomeController>()
+                                              .isPinkModeOn
+                                              .value
+                                          ? ColorUtil.kPrimary3PinkMode
+                                          : ColorUtil.kSecondary01,
+                                      label: Strings.cancelRide,
+                                    ),
+                                  ],
+                                )
+                              : RequestAndCancelButtons(
+                                  myRidesModelData: myRidesModelData,
+                                  controller: controller,
+                                )
                           : RequestAndCancelButtons(
                               myRidesModelData: myRidesModelData,
                               controller: controller,
