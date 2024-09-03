@@ -23,16 +23,23 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.523344243189-6fp5otgbsfl1erueb8qvp93sj833d217</string>
+				<dict>
+					<key>CFBundleTypeRole</key>
+					<string>Editor</string>
+					<key>CFBundleURLSchemes</key>
+					<array>
+						<string>fb450193784603516</string>
+						<string>com.googleusercontent.apps.523344243189-6fp5otgbsfl1erueb8qvp93sj833d217</string>
+					</array>
+				</dict>
 			</array>
-		</dict>
-	</array>
+		<key>FacebookAppID</key>
+        <string>450193784603516</string>
+        <key>FacebookClientToken</key>
+        <string>c705ae591a580a1985bc82aa4fd5de56</string>
+        <key>FacebookDisplayName</key>
+        <string>Carpooll.com</string>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>

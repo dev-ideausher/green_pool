@@ -23,6 +23,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
   @override
   Widget build(BuildContext context) {
     Get.lazyPut(() => MyRidesOneTimeController());
+    controller.myRidesAPI();
     return Scaffold(
       body: SafeArea(
         child: Obx(

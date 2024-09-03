@@ -32,8 +32,6 @@ class MyRidesOneTimeController extends GetxController {
   Future<void> onReady() async {
     super.onReady();
     await myRidesAPI();
-
-    isLoad.value = false;
   }
 
   myRidesAPI({bool isRecurring = false}) async {

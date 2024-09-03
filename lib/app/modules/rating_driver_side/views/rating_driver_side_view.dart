@@ -112,7 +112,7 @@ class RatingDriverSideView extends GetView<RatingDriverSideController> {
                                     ),
                                   ),
                                   onRatingUpdate: (double? value) {
-                                    double rating = value ?? 4;
+                                    double rating = value ?? 0;
                                     String id = "${riderDetails?.Id}";
                                     int index = controller.ratingList
                                         .indexWhere((element) =>

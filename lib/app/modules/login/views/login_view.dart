@@ -146,6 +146,9 @@ class LoginView extends GetView<LoginController> {
                   onPressedGoogle: () {
                     controller.googleAuth();
                   },
+                  onPressedFacebook: () {
+                    controller.facebookAuth();
+                  },
                   onPressedApple: () {
                     controller.appleAuth();
                   },

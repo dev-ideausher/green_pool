@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_workers/utils/debouncer.dart';
@@ -17,8 +15,8 @@ class RatingRiderSideController extends GetxController {
       BookingDetailModelData().obs;
   Map<String, dynamic> msgData = {};
   // int numberOfRiders = 3;
-  RxDouble rating = 4.0.obs;
-  RxDouble driverRating = 4.0.obs;
+  RxDouble rating = 0.0.obs;
+  RxDouble driverRating = 0.0.obs;
   final debouncer = Debouncer(delay: const Duration(milliseconds: 50));
   RxBool isLoading = true.obs;
   var ratingList = <Map<String, dynamic>>[].obs;

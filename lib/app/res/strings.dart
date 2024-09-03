@@ -385,7 +385,7 @@ class Strings {
 
   static String addPromoCode = "Add promo code";
 
-  static String walletBalance = "Wallet  Balance";
+  static String walletBalance = "Wallet Balance";
 
   static String subtotal = "Subtotal";
 

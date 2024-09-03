@@ -119,12 +119,14 @@ class AuthService extends GetxService {
     return status;
   }
 
-  facebook() async {
+  Future<bool> facebook() async {
     //TODO: do the required setup mentioned in https://pub.dev/packages/flutter_facebook_auth
+    bool status = false;
     final result = await signInWithFacebook().then((value) async {
       await handleGetContact();
+      status = true;
     });
-    print('Facebook : ${await result.user?.getIdToken()}');
+    return status;
   }
 
   Future<FirebaseAuthenticationResult> signInWithFacebook() async {

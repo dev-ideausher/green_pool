@@ -10,7 +10,7 @@ import '../../home/controllers/home_controller.dart';
 
 class RatingDriverSideController extends GetxController {
   final Rx<BookingDetailModelData> myRidesModel = BookingDetailModelData().obs;
-  RxDouble rating = 3.0.obs;
+  RxDouble rating = 0.0.obs;
   final debouncer = Debouncer(delay: const Duration(milliseconds: 50));
   var ratingList = <Map<String, dynamic>>[].obs;
 

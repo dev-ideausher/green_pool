@@ -5,12 +5,9 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/components/common_image_view.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
-import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
-import 'package:green_pool/app/services/auth.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/custom_button.dart';
-import 'package:green_pool/app/services/push_notification_service.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -75,7 +72,8 @@ class ProfileView extends GetView<ProfileController> {
                                       borderRadius: BorderRadius.circular(8.kh),
                                     ),
                                     child: Text(
-                                      Strings.travelWithConfidenceWithOurPinkMode,
+                                      Strings
+                                          .travelWithConfidenceWithOurPinkMode,
                                       style: TextStyleUtil.k14Regular(
                                           color: ColorUtil.kBlack03),
                                     )),
@@ -204,13 +202,7 @@ class ProfileView extends GetView<ProfileController> {
                           alignment: Alignment.centerRight,
                           child: GreenPoolButton(
                             onPressed: () {
-                              Get.find<AuthService>().logOutUser();
-                              controller.pinkMode.value = false;
-                              PushNotificationService.unsubFcm(
-                                  "${controller.userInfo.value.data?.Id}");
-                              Get.find<HomeController>().selectedIndex.value =
-                                  0;
-                              Get.offAllNamed(Routes.ONBOARDING);
+                              controller.logoutUser();
                             },
                             height: 40.kh,
                             width: 144.kw,

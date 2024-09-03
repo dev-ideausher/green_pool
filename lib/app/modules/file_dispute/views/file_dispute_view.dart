@@ -256,6 +256,12 @@ class FileDisputeView extends GetView<FileDisputeController> {
                                                               .value
                                                               .data?[index]
                                                               ?.Id ??
+                                                          "",
+                                                      controller
+                                                              .fileDisputeModel
+                                                              .value
+                                                              .data?[index]
+                                                              ?.price ??
                                                           "");
                                                 },
                                                 isBorder: true,

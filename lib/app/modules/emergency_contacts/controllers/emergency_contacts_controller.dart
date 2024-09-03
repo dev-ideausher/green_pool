@@ -148,6 +148,9 @@ class EmergencyContactsController extends GetxController {
         }
       } else {
         Get.back();
+        Get.find<HomeController>().userInfoAPI();
+        // Get.until((route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
+        showMySnackbar(msg: "Emergency contact updated");
       }
     } catch (e) {
       debugPrint(e.toString());

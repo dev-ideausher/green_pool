@@ -5,7 +5,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/common_image_view.dart';
 import 'package:green_pool/app/components/gp_progress.dart';
-import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../components/green_pool_divider.dart';
@@ -14,7 +13,6 @@ import '../../../res/strings.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
 import '../../../services/text_style_util.dart';
-import '../../home/controllers/home_controller.dart';
 import '../controllers/rating_rider_side_controller.dart';
 
 class RatingRiderSideView extends GetView<RatingRiderSideController> {
@@ -76,7 +74,7 @@ class RatingRiderSideView extends GetView<RatingRiderSideController> {
                             ),
                           ),
                           onRatingUpdate: (double? value) {
-                            double rating = value ?? 4;
+                            double rating = value ?? 0;
                             String id =
                                 "${controller.bookingModelData.value?.driverDetails?.Id}";
                             int index = controller.ratingList.indexWhere(
@@ -160,7 +158,7 @@ class RatingRiderSideView extends GetView<RatingRiderSideController> {
                                         ),
                                       ),
                                       onRatingUpdate: (double? value) {
-                                        double rating = value ?? 4;
+                                        double rating = value ?? 0;
                                         String id = "${rider?.Id}";
                                         int index = controller.ratingList
                                             .indexWhere((element) =>

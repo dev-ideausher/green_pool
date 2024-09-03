@@ -3,6 +3,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
+import 'package:green_pool/app/modules/chat_with_experts/controllers/chat_with_experts_controller.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/modules/messages/controllers/messages_controller.dart';
 import 'package:green_pool/app/modules/my_rides_request/controllers/my_rides_request_controller.dart';
@@ -67,7 +68,7 @@ class PushNotificationService {
       initSettings,
       onDidReceiveNotificationResponse: (NotificationResponse details) {
         _handleNotificationClickPayload(
-            actionData!.data['notification_type'] ?? "");
+            actionData?.data['notification_type'] ?? "");
         debugPrint("NotificationResponse: $details");
       },
     );
@@ -231,6 +232,9 @@ class PushNotificationService {
       case "ChatResolved":
         Get.find<HomeController>().newMsgReceived.value = true;
         Get.find<GetStorageService>().setSupportChatRoomId = "";
+        if (Get.currentRoute == Routes.CHAT_WITH_EXPERTS) {
+          Get.find<ChatWithExpertsController>().isChatStarted.value = false;
+        }
         break;
 
       case 'Start Ride':

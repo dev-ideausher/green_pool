@@ -159,9 +159,9 @@ class LoginController extends GetxController {
     try {
       Get.lazyPut(() => VerifyController());
       bool isStatus = await Get.find<AuthService>().google();
-      if(isStatus){
+      if (isStatus) {
         await Get.find<VerifyController>().loginAPI();
-      }      
+      }
     } catch (error) {
       log("$error");
     }
@@ -170,10 +170,24 @@ class LoginController extends GetxController {
   Future<void> appleAuth() async {
     try {
       Get.lazyPut(() => VerifyController());
-      await Get.find<AuthService>().apple();
-      await Get.find<VerifyController>().loginAPI();
+      bool isStatus = await Get.find<AuthService>().apple();
+      if (isStatus) {
+        await Get.find<VerifyController>().loginAPI();
+      }
     } catch (error) {
       log("$error");
+    }
+  }
+
+  Future<void> facebookAuth() async {
+    try {
+      Get.lazyPut(() => VerifyController());
+      bool isStatus = await Get.find<AuthService>().facebook();
+      if (isStatus) {
+        await Get.find<VerifyController>().loginAPI();
+      }
+    } catch (e) {
+      log(e.toString());
     }
   }
 }

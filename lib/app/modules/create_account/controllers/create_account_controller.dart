@@ -194,6 +194,26 @@ class CreateAccountController extends GetxController {
       log("$error");
     }
   }
+  Future<void> facebookAuth() async {
+    try {
+      Get.lazyPut(() => VerifyController());
+      final isStatus = await Get.find<AuthService>().facebook();
+      if (isStatus) {
+        Get.find<VerifyController>().fullName =
+            Get.find<GetStorageService>().getUserName;
+        if (postRideModel.value != null) {
+          Get.find<VerifyController>().postRideModel.value =
+              postRideModel.value;
+        } else if (findRideModel.value != null) {
+          Get.find<VerifyController>().findRideModel.value =
+              findRideModel.value;
+        }
+        await Get.find<VerifyController>().loginAPI();
+      }
+    } catch (error) {
+      log("$error");
+    }
+  }
 
   /*String? passwordValidator(String? value) {
     // Check if the value is empty

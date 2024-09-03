@@ -22,6 +22,7 @@ import 'package:dio/dio.dart' as dio;
 import 'package:path/path.dart' as path;
 
 import '../../../services/text_style_util.dart';
+import '../../emergency_contacts/controllers/emergency_contacts_controller.dart';
 import '../../rider_profile_setup/controllers/city_list.dart';
 
 class UserDetailsController extends GetxController {
@@ -263,6 +264,10 @@ class UserDetailsController extends GetxController {
                         Get.find<AuthService>().logOutUser();
                         Get.find<HomeController>().userInfoAPI();
                         Get.find<HomeController>().changeTabIndex(0);
+                        Get.find<EmergencyContactsController>().emergencyNumber1.clear();
+                        Get.find<EmergencyContactsController>().emergencyNumber2.clear();
+                        Get.find<EmergencyContactsController>().fullName1.clear();
+                        Get.find<EmergencyContactsController>().fullName2.clear();
                         Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
                       },
                       height: 40.kh,

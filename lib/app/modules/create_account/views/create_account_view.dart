@@ -196,6 +196,9 @@ class CreateAccountView extends GetView<CreateAccountController> {
                 onPressedGoogle: () {
                   controller.googleAuth();
                 },
+                onPressedFacebook: () {
+                  controller.facebookAuth();
+                },
                 onPressedApple: () {
                   controller.appleAuth();
                 },

@@ -31,8 +31,11 @@ class FileDisputeController extends GetxController {
     }
   }
 
-  void moveToSubmitDispute(String rideId) {
-    Get.toNamed(Routes.SUBMIT_DISPUTE, arguments: rideId)?.then(
+  void moveToSubmitDispute(String rideId, String price) {
+    Get.toNamed(Routes.SUBMIT_DISPUTE, arguments: {
+      'bookingId': rideId,
+      'price': price
+    })?.then(
       (value) => fileDisputeAPI(),
     );
   }

@@ -8,7 +8,10 @@ import 'package:green_pool/app/services/dio/api_service.dart';
 import 'package:green_pool/app/services/snackbar.dart';
 import '../../../res/strings.dart';
 import '../../../routes/app_pages.dart';
+import '../../../services/auth.dart';
+import '../../../services/push_notification_service.dart';
 import '../../../services/storage.dart';
+import '../../emergency_contacts/controllers/emergency_contacts_controller.dart';
 
 class ProfileController extends GetxController {
   RxBool pinkMode = Get.find<HomeController>().isPinkModeOn;
@@ -64,9 +67,7 @@ class ProfileController extends GetxController {
       });
       if (response.statusMessage == "OK") {
         Get.back();
-        showMySnackbar(
-            msg:
-                Strings.thankyouForRatingTheApp);
+        showMySnackbar(msg: Strings.thankyouForRatingTheApp);
         ratingTextController.clear();
       } else {
         showMySnackbar(msg: response.data['message'].toString());
@@ -74,5 +75,17 @@ class ProfileController extends GetxController {
     } catch (e) {
       debugPrint(e.toString());
     }
+  }
+
+  void logoutUser() {
+    Get.find<AuthService>().logOutUser();
+    pinkMode.value = false;
+    PushNotificationService.unsubFcm("${userInfo.value.data?.Id}");
+    Get.find<HomeController>().changeTabIndex(0);
+    Get.find<EmergencyContactsController>().emergencyNumber1.clear();
+    Get.find<EmergencyContactsController>().emergencyNumber2.clear();
+    Get.find<EmergencyContactsController>().fullName1.clear();
+    Get.find<EmergencyContactsController>().fullName2.clear();
+    Get.offAllNamed(Routes.ONBOARDING);
   }
 }

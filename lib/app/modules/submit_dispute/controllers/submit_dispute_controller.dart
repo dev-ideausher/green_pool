@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -8,7 +7,6 @@ import '../../../services/dio/api_service.dart';
 import '../../../services/gp_util.dart';
 import '../../../services/snackbar.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:ffi';
 
 import 'package:dio/dio.dart' as dio;
 import 'package:path/path.dart' as path;
@@ -16,6 +14,7 @@ import 'package:http_parser/http_parser.dart';
 
 class SubmitDisputeController extends GetxController {
   String? bookingId = "";
+  String? price = "";
   RxList<File> selectedImages = RxList<File>([]);
   RxBool isImageSelected = false.obs;
   RxBool isActive = false.obs;
@@ -24,7 +23,8 @@ class SubmitDisputeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    bookingId = Get.arguments;
+    bookingId = Get.arguments['bookingId'];
+    price = Get.arguments['price'];
   }
 
   // @override
@@ -85,12 +85,14 @@ class SubmitDisputeController extends GetxController {
       disputeData = dio.FormData.fromMap({
         'ridePostId': bookingId,
         'description': descriptionTextController.value.text,
+        'price': price,
         'fileDisputePic': imageFiles
       });
     } else {
       disputeData = dio.FormData.fromMap({
         'ridePostId': bookingId,
         'description': descriptionTextController.value.text,
+        'price': price,
         'fileDisputePic': []
       });
     }

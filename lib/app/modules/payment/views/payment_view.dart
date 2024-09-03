@@ -98,7 +98,7 @@ class PaymentView extends GetView<PaymentController> {
                     child: ListTile(
                       tileColor: ColorUtil.kWhiteColor,
                       title: Text(
-                        "'${controller.promoCodeTitle}' applied" ?? "",
+                        "'${controller.promoCodeTitle}' applied",
                         style: TextStyleUtil.k14Bold(),
                       ),
                       leading: Icon(

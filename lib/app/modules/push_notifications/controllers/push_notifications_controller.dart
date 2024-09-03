@@ -76,7 +76,7 @@ class PushNotificationsController extends GetxController {
       if (response.data['status']) {
         Get.find<HomeController>().userInfoAPI();
         Get.back();
-        showMySnackbar(msg: "Notification prefernces updated");
+        showMySnackbar(msg: "Notification preferences updated");
       } else {
         showMySnackbar(msg: response.data["message"].toString());
       }
