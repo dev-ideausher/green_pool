@@ -119,8 +119,10 @@ class EmergencyContactsController extends GetxController {
 
         final res = await APIManager.emergencyContactsUpdate(
             body: emergencyModelUpdate.toJson());
-        Get.find<HomeController>().userInfoAPI();
         Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
+        await Future.delayed(const Duration(seconds: 1))
+            .then((value) => Get.find<HomeController>().changeTabIndex(0));
+        Get.find<HomeController>().userInfoAPI();
         // Get.until((route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
         showMySnackbar(msg: "Emergency contact updated");
       }
@@ -129,6 +131,8 @@ class EmergencyContactsController extends GetxController {
         if (isUser) {
           if (fromNavBar) {
             Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
+            await Future.delayed(const Duration(seconds: 1))
+                .then((value) => Get.find<HomeController>().changeTabIndex(0));
             Get.find<HomeController>().userInfoAPI();
             // Get.until((route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
             showMySnackbar(msg: "Emergency contact updated");
@@ -138,6 +142,8 @@ class EmergencyContactsController extends GetxController {
         } else {
           if (fromNavBar) {
             Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
+            await Future.delayed(const Duration(seconds: 1))
+                .then((value) => Get.find<HomeController>().changeTabIndex(0));
             Get.find<HomeController>().userInfoAPI();
             // Get.until((route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
             showMySnackbar(msg: "Emergency contact updated");
@@ -148,9 +154,6 @@ class EmergencyContactsController extends GetxController {
         }
       } else {
         Get.back();
-        Get.find<HomeController>().userInfoAPI();
-        // Get.until((route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
-        showMySnackbar(msg: "Emergency contact updated");
       }
     } catch (e) {
       debugPrint(e.toString());

@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -11,7 +10,6 @@ import '../../../routes/app_pages.dart';
 import '../../../services/auth.dart';
 import '../../../services/push_notification_service.dart';
 import '../../../services/storage.dart';
-import '../../emergency_contacts/controllers/emergency_contacts_controller.dart';
 
 class ProfileController extends GetxController {
   RxBool pinkMode = Get.find<HomeController>().isPinkModeOn;
@@ -82,10 +80,8 @@ class ProfileController extends GetxController {
     pinkMode.value = false;
     PushNotificationService.unsubFcm("${userInfo.value.data?.Id}");
     Get.find<HomeController>().changeTabIndex(0);
-    Get.find<EmergencyContactsController>().emergencyNumber1.clear();
-    Get.find<EmergencyContactsController>().emergencyNumber2.clear();
-    Get.find<EmergencyContactsController>().fullName1.clear();
-    Get.find<EmergencyContactsController>().fullName2.clear();
+    Get.find<HomeController>().userInfo.value.data?.emergencyContactDetails =
+        [];
     Get.offAllNamed(Routes.ONBOARDING);
   }
 }

@@ -157,7 +157,6 @@ class PushNotificationService {
 
   void saveNotification(RemoteMessage message) {
     actionData = message;
-    print("ACTION DATA: ${actionData!.data.toString()}");
     if (actionData != null) {
       debugPrint('Notification data: ${actionData!.data}');
       _handleNotificationType(actionData!.data);

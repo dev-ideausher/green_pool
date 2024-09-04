@@ -775,7 +775,7 @@ class Strings {
   static var activatePinkMode = 'Activate Pink Mode';
 
   static String travelWithConfidenceWithOurPinkMode =
-      "Travel with confidence in our 'Pink Mode'\nensuring safety and security with female\nriders and drivers.";
+      "Travel with confidence in our 'Pink Mode' ensuring safety and security with female riders and drivers.";
 
   static var profileSettings = 'Profile Settings';
 

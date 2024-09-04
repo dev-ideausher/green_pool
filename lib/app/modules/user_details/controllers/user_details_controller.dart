@@ -264,10 +264,7 @@ class UserDetailsController extends GetxController {
                         Get.find<AuthService>().logOutUser();
                         Get.find<HomeController>().userInfoAPI();
                         Get.find<HomeController>().changeTabIndex(0);
-                        Get.find<EmergencyContactsController>().emergencyNumber1.clear();
-                        Get.find<EmergencyContactsController>().emergencyNumber2.clear();
-                        Get.find<EmergencyContactsController>().fullName1.clear();
-                        Get.find<EmergencyContactsController>().fullName2.clear();
+                        Get.find<HomeController>().userInfo.value.data?.emergencyContactDetails = [];
                         Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
                       },
                       height: 40.kh,
