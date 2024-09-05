@@ -141,14 +141,14 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                             ),
                           ).paddingOnly(bottom: 16.kh)
                         : SizedBox(
-                            height: ((controller
-                                        .myRidesModelData
-                                        .value
-                                        .driverBookingDetails
-                                        ?.riderBookingDetails
-                                        ?.length ??
-                                    0) *
-                                140.kh),
+                            // height: ((controller
+                            //             .myRidesModelData
+                            //             .value
+                            //             .driverBookingDetails
+                            //             ?.riderBookingDetails
+                            //             ?.length ??
+                            //         0) *
+                            //     140.kh),
                             child: ListView.builder(
                                 itemCount: controller
                                         .myRidesModelData
@@ -157,7 +157,10 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                                         ?.riderBookingDetails
                                         ?.length ??
                                     0,
-                                // physics: const NeverScrollableScrollPhysics(),
+                                shrinkWrap:
+                                    true, // Allows ListView to shrink to fit its content
+                                physics:
+                                    NeverScrollableScrollPhysics(), // Prevents ListView from scrolling
                                 itemBuilder: (context, index1) {
                                   final rider = controller
                                       .myRidesModelData

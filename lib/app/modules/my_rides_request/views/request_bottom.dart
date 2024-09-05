@@ -43,8 +43,7 @@ class RequestBottom extends StatelessWidget {
             GreenPoolButton(
                 label: Strings.continueText,
                 onPressed: () {
-                  Get.until(
-                      (route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
+                  Get.back();
                 }).paddingOnly(bottom: 16.kh),
             /*GreenPoolButton(
                 label: Strings.cancelRequest,
