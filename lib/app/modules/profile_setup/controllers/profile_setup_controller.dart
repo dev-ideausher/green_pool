@@ -67,10 +67,8 @@ class ProfileSetupController extends GetxController
   TextEditingController email =
       TextEditingController(text: Get.find<GetStorageService>().emailId ?? "");
   TextEditingController phoneNumber = TextEditingController(
-      text: Get.find<AuthService>()
-              .auth
-              .currentUser
-              ?.phoneNumber
+      text: Get.find<GetStorageService>()
+              .phoneNumber
               .toString()
               .split("+1")
               .last ??
@@ -244,11 +242,16 @@ class ProfileSetupController extends GetxController
     try {
       isVehicleBtnLoading.value = true;
       final response = await APIManager.userDetails(body: userData);
-      // showMySnackbar(msg: response.data['message']);
-      storageService.setUserName = fullName.text;
-      storageService.emailId = email.text;
-      storageService.profileStatus = true;
-      await vehicleDetailsAPI();
+      if (response.data['status'] == true) {
+        storageService.setUserName = fullName.text;
+        storageService.emailId = email.text;
+        storageService.profileStatus = true;
+        await vehicleDetailsAPI();
+      } else {
+        showMySnackbar(msg: response.data['message'].toString());
+        await checkUserValidations();
+        isVehicleBtnLoading.value = false;
+      }
     } catch (e) {
       isVehicleBtnLoading.value = false;
       throw Exception(e);

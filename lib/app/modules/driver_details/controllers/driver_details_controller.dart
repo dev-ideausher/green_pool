@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/data/chat_arg.dart';
 import 'package:green_pool/app/data/matching_rides_model.dart';
-import 'package:green_pool/app/data/request_ride_by_rider_model.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 
 import '../../../services/dio/api_service.dart';
@@ -14,8 +13,6 @@ class DriverDetailsController extends GetxController {
   String minStopDistance = '';
   int pricePerSeat = 0;
   RxBool messageBtnLoading = false.obs;
-
-  var requestRideModel = RequestRideByRiderModel().obs;
 
   @override
   void onInit() {

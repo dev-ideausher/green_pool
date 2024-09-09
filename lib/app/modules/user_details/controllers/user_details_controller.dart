@@ -22,7 +22,6 @@ import 'package:dio/dio.dart' as dio;
 import 'package:path/path.dart' as path;
 
 import '../../../services/text_style_util.dart';
-import '../../emergency_contacts/controllers/emergency_contacts_controller.dart';
 import '../../rider_profile_setup/controllers/city_list.dart';
 
 class UserDetailsController extends GetxController {

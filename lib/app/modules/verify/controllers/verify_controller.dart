@@ -126,9 +126,14 @@ class VerifyController extends GetxController {
       try {
         final response =
             await APIManager.postRegisterAcc(body: {"fullName": fullName});
-        final userInfo = UserInfoModel.fromJson(response.data);
-
-        _handleNewUser(userInfo, authService, homeController, storageService);
+        if (response.data['status'] == true) {
+          final userInfo = UserInfoModel.fromJson(response.data);
+          _handleNewUser(userInfo, authService, homeController, storageService);
+        } else {
+          showMySnackbar(msg: response.statusMessage.toString() ?? "");
+          Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
+          Get.find<HomeController>().changeTabIndex(0);
+        }
       } catch (e) {
         _handleError(e);
       }
@@ -136,9 +141,15 @@ class VerifyController extends GetxController {
       //USER LOGIN
       try {
         final response = await APIManager.postLogin();
-        final userInfo = UserInfoModel.fromJson(response.data);
-
-        _handleUserLogin(userInfo, authService, homeController, storageService);
+        if (response.data['status'] == true) {
+          final userInfo = UserInfoModel.fromJson(response.data);
+          _handleUserLogin(
+              userInfo, authService, homeController, storageService);
+        } else {
+          showMySnackbar(msg: response.statusMessage.toString() ?? "");
+          Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
+          Get.find<HomeController>().changeTabIndex(0);
+        }
       } catch (e) {
         _handleError(e);
       }

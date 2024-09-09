@@ -95,11 +95,11 @@ class PostRideStepOneController extends GetxController {
     final homeController = Get.find<HomeController>();
     // Decides if the user is logged in and redirects accordingly
     if (storageService.isLoggedIn) {
-      if (storageService.profileStatus == false &&
-          homeController.userInfo.value.data?.vehicleStatus == false) {
+      if (storageService.profileStatus == false) {
         showMySnackbar(msg: Strings.pleaseCompleteProfileSetup);
         Get.toNamed(Routes.PROFILE_SETUP, arguments: {
           'fromNavBar': false,
+          'fullName': Get.find<GetStorageService>().getUserName ?? "",
           'postRideModel': PostRideModel(
               ridesDetails: PostRideModelRidesDetails(
                   origin: PostRideModelRidesDetailsOrigin(

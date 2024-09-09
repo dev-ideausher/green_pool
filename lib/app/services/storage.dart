@@ -51,6 +51,9 @@ class GetStorageService extends GetxService {
 
   String get emailId => _runData.read('emailId') ?? '';
   set emailId(String val) => _runData.write('emailId', val);
+  
+  String get phoneNumber => _runData.read('phoneNumber') ?? '';
+  set phoneNumber(String val) => _runData.write('phoneNumber', val);
 
   String? get getUserAppId => _runData.read('userAppId') ?? '';
   set setUserAppId(String? val) => _runData.write('userAppId', val);

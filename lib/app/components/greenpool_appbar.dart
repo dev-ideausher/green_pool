@@ -28,7 +28,7 @@ class GreenPoolAppBar extends StatelessWidget implements PreferredSizeWidget {
       toolbarHeight: appBarSize ?? 46.kh,
       backgroundColor: Colors.transparent,
       foregroundColor: Colors.transparent,
-      surfaceTintColor: Colors.transparent,
+      surfaceTintColor: Colors.white,
       systemOverlayStyle: const SystemUiOverlayStyle(
         statusBarIconBrightness: Brightness.dark, // For Android (dark icons)
         statusBarBrightness: Brightness.light, //For iOS (dark icons)

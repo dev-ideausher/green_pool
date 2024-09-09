@@ -27,7 +27,6 @@ class RiderProfileSetupController extends GetxController {
   bool fromNavBar = false;
   bool readOnlyEmail = false;
   RxList<String> cityNames = <String>[].obs;
-  String name = '';
   Rx<File?> selectedProfileImagePath = Rx<File?>(null);
   Rx<File?> selectedIDImagePath = Rx<File?>(null);
   RxBool isProfileImagePicked = false.obs;
@@ -39,10 +38,8 @@ class RiderProfileSetupController extends GetxController {
   TextEditingController email = TextEditingController(
       text: Get.find<AuthService>().auth.currentUser?.email);
   TextEditingController phoneNumber = TextEditingController(
-      text: Get.find<AuthService>()
-              .auth
-              .currentUser
-              ?.phoneNumber
+      text: Get.find<GetStorageService>()
+              .phoneNumber
               .toString()
               .split("+1")
               .last ??
@@ -203,15 +200,21 @@ class RiderProfileSetupController extends GetxController {
 
     try {
       final response = await APIManager.userDetails(body: userData);
-      storageService.setUserName = fullName.text;
-      storageService.isLoggedIn = true;
-      storageService.profileStatus = true;
-      Get.offNamed(Routes.EMERGENCY_CONTACTS,
-          arguments: {'fromNavBar': fromNavBar, 'isDriver': false},
-          parameters: {"profileType": "user"});
-      showMySnackbar(msg: "Data saved succesfully.");
-      isBtnLoading.value = false;
-      Get.find<HomeController>().userInfoAPI();
+      if (response.data['status'] == true) {
+        storageService.setUserName = fullName.text;
+        storageService.isLoggedIn = true;
+        storageService.profileStatus = true;
+        Get.offNamed(Routes.EMERGENCY_CONTACTS,
+            arguments: {'fromNavBar': fromNavBar, 'isDriver': false},
+            parameters: {"profileType": "user"});
+        showMySnackbar(msg: "Data saved succesfully.");
+        isBtnLoading.value = false;
+        Get.find<HomeController>().userInfoAPI();
+      } else {
+        showMySnackbar(msg: response.data['message'].toString());
+        await checkUserValidations();
+        isBtnLoading.value = false;
+      }
     } catch (e) {
       isBtnLoading.value = false;
       throw Exception(e);

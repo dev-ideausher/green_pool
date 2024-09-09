@@ -100,7 +100,11 @@ class FindRideController extends GetxController {
         _storePreviousLocations();
         Get.toNamed(Routes.MATCHING_RIDES, arguments: rideDetails.toJson());
       } else {
-        Get.toNamed(Routes.RIDER_PROFILE_SETUP, arguments: false);
+        Get.toNamed(Routes.RIDER_PROFILE_SETUP, arguments: {
+          "fromNavBar": false,
+          "fullName": Get.find<GetStorageService>().getUserName ?? "",
+          "findRideModel": rideDetails
+        });
       }
     } else {
       final rideDetails = _getRideDetails();

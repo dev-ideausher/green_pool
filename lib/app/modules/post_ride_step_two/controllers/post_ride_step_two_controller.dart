@@ -120,7 +120,6 @@ class PostRideStepTwoController extends GetxController {
       initialTime: TimeOfDay.now(),
       initialEntryMode: TimePickerEntryMode.dial,
     );
-    if (pickedTime != null) {}
     if (pickedTime != null) {
       // Use MaterialLocalizations to format the time in 24-hour format
       final MaterialLocalizations localizations =
