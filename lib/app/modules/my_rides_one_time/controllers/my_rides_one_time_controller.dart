@@ -49,8 +49,9 @@ class MyRidesOneTimeController extends GetxController {
           myRidesModelData.where((item) => (item.riderId != null)).toList();
     } catch (e) {
       debugPrint(e.toString());
+    } finally {
+      isLoad.value = false;
     }
-    isLoad.value = false;
   }
 
   riderCancelRideAPI(MyRidesModelData myRidesModelData) async {

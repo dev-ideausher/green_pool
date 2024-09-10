@@ -490,9 +490,13 @@ class RiderConfirmedRideDetailsView
             Wrap(
               children: [
                 Text(
-                  controller.myRidesModel.value.description == ""
+                  controller.myRidesModel.value.confirmDriverDetails?.first
+                              ?.driverPostsDetails?.first?.description ==
+                          ""
                       ? "NA"
-                      : controller.myRidesModel.value.description ?? "NA",
+                      : controller.myRidesModel.value.confirmDriverDetails
+                              ?.first?.driverPostsDetails?.first?.description ??
+                          "NA",
                   style: TextStyleUtil.k14Semibold(),
                 )
               ],

@@ -10,7 +10,7 @@ import '../../../services/dio/api_service.dart';
 class ChatWithExpertsController extends GetxController {
   final RxList<MessageModel> messages = <MessageModel>[].obs;
   final ScrollController scrollController = ScrollController();
-  String chatRoomId = Get.find<GetStorageService>().getSupportChatRoomId;
+  String chatRoomId = "";
   final TextEditingController eMsg = TextEditingController();
   final RxBool isLoad = true.obs;
   final RxBool isChatStarted = true.obs;
@@ -18,6 +18,7 @@ class ChatWithExpertsController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    chatRoomId = Get.find<GetStorageService>().getSupportChatRoomId;
     addInitialMessage();
   }
 

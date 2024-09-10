@@ -7,6 +7,7 @@ import 'package:green_pool/app/services/auth.dart';
 
 import '../../../data/find_ride_model.dart';
 import '../../../data/post_ride_model.dart';
+import '../../../services/snackbar.dart';
 import '../../home/controllers/home_controller.dart';
 import '../../verify/controllers/verify_controller.dart';
 
@@ -173,6 +174,11 @@ class LoginController extends GetxController {
       bool isStatus = await Get.find<AuthService>().apple();
       if (isStatus) {
         await Get.find<VerifyController>().loginAPI();
+      } else {
+        Get.back();
+        showMySnackbar(
+            msg:
+                "Unable to connect to Apple services. Please try again later.");
       }
     } catch (error) {
       log("$error");
@@ -185,6 +191,11 @@ class LoginController extends GetxController {
       bool isStatus = await Get.find<AuthService>().facebook();
       if (isStatus) {
         await Get.find<VerifyController>().loginAPI();
+      } else {
+        Get.back();
+        showMySnackbar(
+            msg:
+                "Unable to connect to Facebook services. Please try again later.");
       }
     } catch (e) {
       log(e.toString());

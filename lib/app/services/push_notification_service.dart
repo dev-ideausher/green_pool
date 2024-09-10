@@ -273,8 +273,12 @@ class PushNotificationService {
       Get.toNamed(Routes.WALLET);
     }
 
+    Future<void> navigateToHelpSupport() async {
+      homeController.changeTabIndex(3);
+      await Get.toNamed(Routes.HELP_SUPPORT);
+    }
+
     Future<void> navigateToChatPage() async {
-      //"chatRoomId" -> "-O4Oour1mIpoIWZsvoHz"
       try {
         final res = await APIManager.getChatRoomId(
             receiverId: actionData?.data['senderId'] ?? "");
@@ -434,6 +438,18 @@ class PushNotificationService {
         } else {
           navigateToBottomNavigation(3);
           navigateToWallet();
+        }
+        break;
+
+      case "AdminChat":
+        if (currentRoute == Routes.BOTTOM_NAVIGATION) {
+          navigateToHelpSupport();
+        } else if (currentRoute == Routes.HELP_SUPPORT ||
+            currentRoute == Routes.CHAT_WITH_EXPERTS) {
+          print("AdminChat");
+        } else {
+          navigateToBottomNavigation(3);
+          navigateToHelpSupport();
         }
         break;
 

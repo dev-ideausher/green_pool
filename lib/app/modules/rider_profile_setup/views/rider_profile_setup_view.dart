@@ -223,7 +223,10 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
                 () => Visibility(
                   visible: controller.isCityListExpanded.value,
                   child: SizedBox(
-                    height: 120.kh,
+                    height: controller.cityNames.length == 1
+                        ? 70.kh
+                        : (controller.cityNames.length * 70.kh)
+                            .clamp(70.kh, 120.kh),
                     child: Card(
                       elevation: 4.0,
                       shape: RoundedRectangleBorder(

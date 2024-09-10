@@ -7,6 +7,7 @@ import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
+import 'package:green_pool/app/services/storage.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -26,19 +27,18 @@ import '../../rider_profile_setup/controllers/city_list.dart';
 
 class UserDetailsController extends GetxController {
   RxString genderValue = "".obs;
-  var userInformation = Get.find<HomeController>().userInfo.value.data;
-  TextEditingController nameTextController = TextEditingController(
-      text: Get.find<HomeController>().userInfo.value.data?.fullName);
-  TextEditingController emailTextController = TextEditingController(
-      text: Get.find<HomeController>().userInfo.value.data?.email);
-  TextEditingController phoneTextController = TextEditingController(
-      text: Get.find<HomeController>().userInfo.value.data?.phone);
-  TextEditingController city = TextEditingController(
-      text: Get.find<HomeController>().userInfo.value.data?.city);
-  TextEditingController genderTextController = TextEditingController(
-      text: Get.find<HomeController>().userInfo.value.data?.gender);
-  TextEditingController dobTextController = TextEditingController(
-      text: Get.find<HomeController>().userInfo.value.data?.dob);
+  TextEditingController nameTextController =
+      TextEditingController(text: Get.find<GetStorageService>().getUserName);
+  TextEditingController emailTextController =
+      TextEditingController(text: Get.find<GetStorageService>().emailId);
+  TextEditingController phoneTextController =
+      TextEditingController(text: Get.find<GetStorageService>().phoneNumber);
+  TextEditingController city =
+      TextEditingController(text: Get.find<GetStorageService>().city);
+  TextEditingController genderTextController =
+      TextEditingController(text: Get.find<GetStorageService>().gender);
+  TextEditingController dobTextController =
+      TextEditingController(text: Get.find<GetStorageService>().dateOfBirth);
   Rx<File?>? selectedProfileImagePath = Rx<File?>(null);
   Rx<File?>? selectedIDImagePath = Rx<File?>(null);
   RxBool isProfilePicUpdated = false.obs;
@@ -73,136 +73,80 @@ class UserDetailsController extends GetxController {
 
   Future<void> updateDetailsAPI() async {
     saveBtnLoading.value = true;
-    final File? pickedImageFile = selectedProfileImagePath!.value;
-    final File? pickedIDFile = selectedIDImagePath!.value;
+    final storageService = Get.find<GetStorageService>();
+
+    final pickedImageFile = selectedProfileImagePath!.value;
+    final pickedIDFile = selectedIDImagePath!.value;
+
+    String getMediaType(String? extension) {
+      switch (extension) {
+        case 'jpg':
+        case 'jpeg':
+          return 'image/jpeg';
+        case 'png':
+          return 'image/png';
+        default:
+          return 'application/octet-stream';
+      }
+    }
 
     String profileExtension = pickedImageFile?.path.split('.').last ?? '';
-    String verificationIDExtension = pickedIDFile?.path.split('.').last ?? '';
-    String mediaType;
-    String idMediaType;
+    String idExtension = pickedIDFile?.path.split('.').last ?? '';
+    String mediaType = getMediaType(profileExtension);
+    String idMediaType = getMediaType(idExtension);
 
-    if (profileExtension == 'jpg' || profileExtension == 'jpeg') {
-      mediaType = 'image/jpeg';
-    } else if (profileExtension == 'png') {
-      mediaType = 'image/png';
-    } else {
-      mediaType = 'application/octet-stream';
-    }
+    bool isFullNameEdited = nameTextController.value.text !=
+        Get.find<GetStorageService>().getUserName;
+    bool isEmailEdited =
+        emailTextController.value.text != Get.find<GetStorageService>().emailId;
+    bool isCityEdited = city.value.text != Get.find<GetStorageService>().city;
+    bool isDOBEdited = dobTextController.value.text !=
+        Get.find<GetStorageService>().dateOfBirth;
 
-    if (verificationIDExtension == 'jpg' || verificationIDExtension == 'jpeg') {
-      idMediaType = 'image/jpeg';
-    } else if (verificationIDExtension == 'png') {
-      idMediaType = 'image/png';
-    } else {
-      idMediaType = 'application/octet-stream';
-    }
-
-    dio.FormData userData;
-
-    if (isProfilePicUpdated.value == true && isIDPicUpdated.value == true) {
-      userData = dio.FormData.fromMap({
-        'fullName': nameTextController.value.text.isEmpty
-            ? userInformation?.fullName
-            : nameTextController.value.text,
-        'email': emailTextController.value.text.isEmpty
-            ? userInformation?.email
-            : emailTextController.value.text,
-        'phone': userInformation?.phone,
-        'gender': genderValue.value == ""
-            ? userInformation?.gender
-            : genderValue.value,
-        'city': city.value.text,
-        'dob': dobTextController.value.text.isEmpty
-            ? userInformation?.dob
-            : dobTextController.value.text,
-        if (pickedIDFile != null)
-          'idPic': await dio.MultipartFile.fromFile(
+    Map<String, dynamic> buildFormData() {
+      return {
+        if (isFullNameEdited) 'fullName': nameTextController.value.text,
+        if (isCityEdited) 'city': city.value.text,
+        if (isDOBEdited) 'dob': dobTextController.value.text,
+        if (isEmailEdited) 'email': emailTextController.value.text,
+        if (pickedIDFile != null && isIDPicUpdated.value)
+          'idPic': dio.MultipartFile.fromFileSync(
             pickedIDFile.path,
             contentType: MediaType.parse(idMediaType),
             filename: path.basename(pickedIDFile.path),
           ),
-        if (pickedImageFile != null)
-          'profilePic': await dio.MultipartFile.fromFile(
+        if (pickedImageFile != null && isProfilePicUpdated.value)
+          'profilePic': dio.MultipartFile.fromFileSync(
             pickedImageFile.path,
             contentType: MediaType.parse(mediaType),
             filename: path.basename(pickedImageFile.path),
           ),
-      });
-    } else if (isIDPicUpdated.value == true) {
-      userData = dio.FormData.fromMap({
-        'fullName': nameTextController.value.text.isEmpty
-            ? userInformation?.fullName
-            : nameTextController.value.text,
-        'email': emailTextController.value.text.isEmpty
-            ? userInformation?.email
-            : emailTextController.value.text,
-        'phone': userInformation?.phone,
-        'gender': genderValue.value == ""
-            ? userInformation?.gender
-            : genderValue.value,
-        'city': city.value.text,
-        'dob': dobTextController.value.text.isEmpty
-            ? userInformation?.dob
-            : dobTextController.value.text,
-        if (pickedIDFile != null)
-          'idPic': await dio.MultipartFile.fromFile(
-            pickedIDFile.path,
-            contentType: MediaType.parse(idMediaType),
-            filename: path.basename(pickedIDFile.path),
-          ),
-      });
-    } else if (isProfilePicUpdated.value == true) {
-      userData = dio.FormData.fromMap({
-        'fullName': nameTextController.value.text.isEmpty
-            ? userInformation?.fullName
-            : nameTextController.value.text,
-        'email': emailTextController.value.text.isEmpty
-            ? userInformation?.email
-            : emailTextController.value.text,
-        'phone': userInformation?.phone,
-        'gender': genderValue.value == ""
-            ? userInformation?.gender
-            : genderValue.value,
-        'city': city.value.text,
-        'dob': dobTextController.value.text.isEmpty
-            ? userInformation?.dob
-            : dobTextController.value.text,
-        if (pickedImageFile != null)
-          'profilePic': await dio.MultipartFile.fromFile(
-            pickedImageFile.path,
-            contentType: MediaType.parse(mediaType),
-            filename: path.basename(pickedImageFile.path),
-          ),
-      });
-    } else {
-      userData = dio.FormData.fromMap({
-        'fullName': nameTextController.value.text.isEmpty
-            ? userInformation?.fullName
-            : nameTextController.value.text,
-        'email': emailTextController.value.text.isEmpty
-            ? userInformation?.email
-            : emailTextController.value.text,
-        'phone': userInformation?.phone,
-        'gender': genderValue.value == ""
-            ? userInformation?.gender
-            : genderValue.value,
-        'city': city.value.text,
-        'dob': dobTextController.value.text.isEmpty
-            ? userInformation?.dob
-            : dobTextController.value.text,
-      });
+      };
     }
 
     try {
+      final dio.FormData userData = dio.FormData.fromMap(buildFormData());
       final response = await APIManager.userDetails(body: userData);
-      await Get.find<HomeController>().userInfoAPI();
-      Get.find<HomeController>().changeTabIndex(0);
-      Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
-      showMySnackbar(msg: response.data['message'].toString());
-      saveBtnLoading.value = false;
+
+      final message = response.data['message'].toString();
+      if (response.data['status']) {
+        Get.until((route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
+        storageService.profilePicUrl =
+            response.data?['data']['profilePic']['url'] ?? "";
+        storageService.setUserName = response.data?['data']['fullName'] ?? "";
+        storageService.emailId = response.data?['data']['email'] ?? "";
+        storageService.city = response.data?['data']['city'] ?? "";
+        storageService.dateOfBirth = response.data?['data']['dob'] ?? "";
+        storageService.idVerificationPicUrl =
+            response.data?['data']['idPic']['url'] ?? "";
+        showMySnackbar(msg: message);
+      } else {
+        showMySnackbar(msg: message);
+      }
     } catch (e) {
-      saveBtnLoading.value = false;
       log("updateDetailsAPI error: $e");
+    } finally {
+      saveBtnLoading.value = false;
     }
   }
 
@@ -263,7 +207,11 @@ class UserDetailsController extends GetxController {
                         Get.find<AuthService>().logOutUser();
                         Get.find<HomeController>().userInfoAPI();
                         Get.find<HomeController>().changeTabIndex(0);
-                        Get.find<HomeController>().userInfo.value.data?.emergencyContactDetails = [];
+                        Get.find<HomeController>()
+                            .userInfo
+                            .value
+                            .data
+                            ?.emergencyContactDetails = [];
                         Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
                       },
                       height: 40.kh,

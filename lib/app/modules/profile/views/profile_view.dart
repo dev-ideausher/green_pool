@@ -32,30 +32,33 @@ class ProfileView extends GetView<ProfileController> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            GestureDetector(
-              onTap: () {
-                Get.toNamed(Routes.USER_DETAILS);
-              },
-              child: Hero(
-                tag: "profilePic",
-                transitionOnUserGestures: true,
-                child: Container(
-                  decoration: const BoxDecoration(shape: BoxShape.circle),
-                  child: ClipOval(
-                      child: SizedBox.fromSize(
-                          size: Size.fromRadius(44.kh),
-                          child: CommonImageView(
-                              height: 44.kh,
-                              width: 44.kw,
-                              url:
-                                  "${Get.find<GetStorageService>().profilePicUrl}"))),
-                ).paddingOnly(bottom: 8.kh, top: 16.kh),
+            Obx(
+              () => GestureDetector(
+                onTap: () => Get.toNamed(Routes.USER_DETAILS)?.then(
+                  (value) => controller.updateInfo(),
+                ),
+                child: Hero(
+                  tag: "profilePic",
+                  transitionOnUserGestures: true,
+                  child: Container(
+                    decoration: const BoxDecoration(shape: BoxShape.circle),
+                    child: ClipOval(
+                        child: SizedBox.fromSize(
+                            size: Size.fromRadius(44.kh),
+                            child: CommonImageView(
+                                height: 44.kh,
+                                width: 44.kw,
+                                url: controller.profilePic.value))),
+                  ).paddingOnly(bottom: 8.kh, top: 16.kh),
+                ),
               ),
             ),
-            Text(
-              Get.find<GetStorageService>().getUserName ?? Strings.user,
-              style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
-            ).paddingOnly(bottom: 24.kh),
+            Obx(
+              () => Text(
+                controller.fullName.value ?? Strings.user,
+                style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
+              ).paddingOnly(bottom: 24.kh),
+            ),
             controller.userInfo.value.data?.gender == "Female"
                 ? ProfileContainer(
                     image: ImageConstant.svgProfileShieldPink,
@@ -100,7 +103,9 @@ class ProfileView extends GetView<ProfileController> {
                   )
                 : const SizedBox(),
             ProfileContainer(
-                onTap: () => Get.toNamed(Routes.PROFILE_SETTINGS),
+                onTap: () => Get.toNamed(Routes.PROFILE_SETTINGS)?.then(
+                      (value) => controller.updateInfo(),
+                    ),
                 image: ImageConstant.svgProfileSettings,
                 text: Strings.profileSettings),
             ProfileContainer(

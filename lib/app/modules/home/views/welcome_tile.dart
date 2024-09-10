@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
+import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../constants/image_constant.dart';
@@ -35,7 +36,6 @@ class WelcomeTile extends StatelessWidget {
                         text: storageService.isLoggedIn &&
                                 storageService.profileStatus
                             ? " ${Get.find<GetStorageService>().getUserName ?? "..."},"
-                            // ? " ${controller.userInfo.value.data?.fullName ?? "..."}"
                             : "",
                         style: TextStyleUtil.k24Heading700(
                             color: storageService.isPinkMode
@@ -46,7 +46,7 @@ class WelcomeTile extends StatelessWidget {
                   ),
                 ).paddingOnly(bottom: 4.kh),
               ),
-              Text("What would you like to do today?",
+              Text(Strings.whatWouldYouLikeToDoToday,
                   style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack04))
             ],
           ),

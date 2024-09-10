@@ -51,6 +51,7 @@ class VerifyController extends GetxController {
         fullName = Get.arguments['fullName'];
       }
     } catch (e) {
+      //when user comes from nav bar
       isDriver = Get.arguments['isDriver'];
       phoneNumber = Get.arguments['phoneNumber'] ?? "";
       fromNavBar = Get.arguments['fromNavBar'];
@@ -130,9 +131,8 @@ class VerifyController extends GetxController {
           final userInfo = UserInfoModel.fromJson(response.data);
           _handleNewUser(userInfo, authService, homeController, storageService);
         } else {
+          Get.back();
           showMySnackbar(msg: response.statusMessage.toString() ?? "");
-          Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
-          Get.find<HomeController>().changeTabIndex(0);
         }
       } catch (e) {
         _handleError(e);
@@ -146,9 +146,8 @@ class VerifyController extends GetxController {
           _handleUserLogin(
               userInfo, authService, homeController, storageService);
         } else {
+          Get.back();
           showMySnackbar(msg: response.statusMessage.toString() ?? "");
-          Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
-          Get.find<HomeController>().changeTabIndex(0);
         }
       } catch (e) {
         _handleError(e);

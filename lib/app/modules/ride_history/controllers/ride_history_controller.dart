@@ -29,9 +29,10 @@ class RideHistoryController extends GetxController {
       final response = await APIManager.getRideHistory();
       var data = jsonDecode(response.toString());
       rideHistModel.value = RideHistoryModel.fromJson(data);
-      isLoading.value = false;
     } catch (e) {
       throw Exception(e);
+    } finally {
+      isLoading.value = false;
     }
   }
 }

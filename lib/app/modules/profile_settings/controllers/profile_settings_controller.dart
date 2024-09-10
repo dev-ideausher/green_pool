@@ -1,23 +1,19 @@
 import 'package:get/get.dart';
 
+import '../../../services/storage.dart';
+
 class ProfileSettingsController extends GetxController {
-  
+  RxString profilePic = "".obs;
+  RxString fullName = "".obs;
 
-  // final count = 0.obs;
-  // @override
-  // void onInit() {
-  //   super.onInit();
-  // }
+  @override
+  void onInit() {
+    super.onInit();
+    updateInfo();
+  }
 
-  // @override
-  // void onReady() {
-  //   super.onReady();
-  // }
-
-  // @override
-  // void onClose() {
-  //   super.onClose();
-  // }
-
-  // void increment() => count.value++;
+  void updateInfo() {
+    profilePic.value = Get.find<GetStorageService>().profilePicUrl ?? "";
+    fullName.value = Get.find<GetStorageService>().getUserName ?? "";
+  }
 }

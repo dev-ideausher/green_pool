@@ -44,6 +44,8 @@ class RiderProfileSetupController extends GetxController {
               .split("+1")
               .last ??
           "");
+  TextEditingController phoneNumberWithCountryCode = TextEditingController(
+      text: Get.find<GetStorageService>().phoneNumber ?? "");
   TextEditingController gender = TextEditingController();
   RxBool isGenderListExpanded = false.obs;
   RxList<String> genderList =
@@ -181,7 +183,7 @@ class RiderProfileSetupController extends GetxController {
     final userData = dio.FormData.fromMap({
       'fullName': fullName.text,
       'email': email.text,
-      'phone': phoneNumber.text,
+      'phone': phoneNumberWithCountryCode.text,
       'gender': genderValue,
       'city': city.value.text,
       'dob': dateOfBirth.text,
@@ -212,7 +214,6 @@ class RiderProfileSetupController extends GetxController {
         Get.find<HomeController>().userInfoAPI();
       } else {
         showMySnackbar(msg: response.data['message'].toString());
-        await checkUserValidations();
         isBtnLoading.value = false;
       }
     } catch (e) {

@@ -93,9 +93,19 @@ class HomeController extends GetxController {
 
         //store values
         storageService.setUserAppId = userInfo.value.data?.Id;
-        storageService.setUserName = userInfo.value.data?.fullName ?? "";
-        storageService.profilePicUrl = userInfo.value.data?.profilePic?.url;
         storageService.setFirebaseUid = userInfo.value.data?.firebaseUid ?? "";
+
+        storageService.profilePicUrl =
+            userInfo.value.data?.profilePic?.url ?? "";
+        storageService.setUserName = userInfo.value.data?.fullName ?? "";
+        storageService.emailId = userInfo.value.data?.email ?? "";
+        storageService.phoneNumber = userInfo.value.data?.phone ?? "";
+        storageService.gender = userInfo.value.data?.gender ?? "";
+        storageService.city = userInfo.value.data?.city ?? "";
+        storageService.dateOfBirth = userInfo.value.data?.dob ?? "";
+        storageService.idVerificationPicUrl =
+            userInfo.value.data?.idPic?.url ?? "";
+
         if (userInfo.value.data?.status == "active") {
           storageService.accSuspended = false;
         } else {

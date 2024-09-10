@@ -51,15 +51,29 @@ class GetStorageService extends GetxService {
 
   String get emailId => _runData.read('emailId') ?? '';
   set emailId(String val) => _runData.write('emailId', val);
-  
+
+  String get city => _runData.read('city') ?? '';
+  set city(String val) => _runData.write('city', val);
+
+  String get gender => _runData.read('gender') ?? '';
+  set gender(String val) => _runData.write('gender', val);
+
+  String get dateOfBirth => _runData.read('dateOfBirth') ?? '';
+  set dateOfBirth(String val) => _runData.write('dateOfBirth', val);
+
   String get phoneNumber => _runData.read('phoneNumber') ?? '';
   set phoneNumber(String val) => _runData.write('phoneNumber', val);
 
+  String get profilePicUrl => _runData.read('profilePicUrl') ?? '';
+  set profilePicUrl(String val) => _runData.write('profilePicUrl', val);
+
+  String get idVerificationPicUrl =>
+      _runData.read('idVerificationPicUrl') ?? '';
+  set idVerificationPicUrl(String val) =>
+      _runData.write('idVerificationPicUrl', val);
+
   String? get getUserAppId => _runData.read('userAppId') ?? '';
   set setUserAppId(String? val) => _runData.write('userAppId', val);
-
-  String? get profilePicUrl => _runData.read('profilePicUrl') ?? '';
-  set profilePicUrl(String? val) => _runData.write('profilePicUrl', val);
 
   String get getSupportChatRoomId => _runData.read('supportChatRoomId') ?? '';
   set setSupportChatRoomId(String val) =>

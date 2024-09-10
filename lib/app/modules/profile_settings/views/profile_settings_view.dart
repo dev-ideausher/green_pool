@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/components/common_image_view.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
+import 'package:green_pool/app/modules/profile/controllers/profile_controller.dart';
 import 'package:green_pool/app/modules/profile/views/profile_container.dart';
 import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
@@ -24,27 +25,32 @@ class ProfileSettingsView extends GetView<ProfileSettingsController> {
       ),
       body: Column(
         children: [
-          Hero(
-            tag: "profilePic",
-            transitionOnUserGestures: true,
-            child: Container(
-              decoration: const BoxDecoration(shape: BoxShape.circle),
-              child: ClipOval(
-                  child: SizedBox.fromSize(
-                      size: Size.fromRadius(44.kh),
-                      child: CommonImageView(
-                          height: 44.kh,
-                          width: 44.kw,
-                          url:
-                              "${Get.find<GetStorageService>().profilePicUrl}"))),
-            ).paddingOnly(bottom: 8.kh, top: 16.kh),
+          Obx(
+            () => Hero(
+              tag: "profilePic",
+              transitionOnUserGestures: true,
+              child: Container(
+                decoration: const BoxDecoration(shape: BoxShape.circle),
+                child: ClipOval(
+                    child: SizedBox.fromSize(
+                        size: Size.fromRadius(44.kh),
+                        child: CommonImageView(
+                            height: 44.kh,
+                            width: 44.kw,
+                            url: controller.profilePic.value))),
+              ).paddingOnly(bottom: 8.kh, top: 16.kh),
+            ),
           ),
-          Text(
-            Get.find<GetStorageService>().getUserName ?? Strings.user,
-            style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
-          ).paddingOnly(bottom: 24.kh),
+          Obx(
+            () => Text(
+              controller.fullName.value ?? Strings.user,
+              style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
+            ).paddingOnly(bottom: 24.kh),
+          ),
           ProfileContainer(
-              onTap: () => Get.toNamed(Routes.USER_DETAILS),
+              onTap: () => Get.toNamed(Routes.USER_DETAILS)?.then(
+                    (value) => controller.updateInfo(),
+                  ),
               image: ImageConstant.svgProfileDetails,
               text: Strings.userDetails),
           Get.find<HomeController>().userInfo.value.data?.vehicleStatus == true

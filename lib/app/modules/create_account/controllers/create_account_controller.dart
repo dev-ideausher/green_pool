@@ -189,11 +189,17 @@ class CreateAccountController extends GetxController {
               findRideModel.value;
         }
         await Get.find<VerifyController>().loginAPI();
+      } else {
+        Get.back();
+        showMySnackbar(
+            msg:
+                "Unable to connect to Apple services. Please try again later.");
       }
     } catch (error) {
       log("$error");
     }
   }
+
   Future<void> facebookAuth() async {
     try {
       Get.lazyPut(() => VerifyController());
@@ -209,6 +215,11 @@ class CreateAccountController extends GetxController {
               findRideModel.value;
         }
         await Get.find<VerifyController>().loginAPI();
+      } else {
+        Get.back();
+        showMySnackbar(
+            msg:
+                "Unable to connect to Facebook services. Please try again later.");
       }
     } catch (error) {
       log("$error");

@@ -123,8 +123,10 @@ class AuthService extends GetxService {
     //TODO: do the required setup mentioned in https://pub.dev/packages/flutter_facebook_auth
     bool status = false;
     final result = await signInWithFacebook().then((value) async {
-      await handleGetContact();
-      status = true;
+      if (value.user != null) {
+        await handleGetContact();
+        status = true;
+      }
     });
     return status;
   }

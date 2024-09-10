@@ -16,11 +16,14 @@ class ProfileController extends GetxController {
   var userInfo = Get.find<HomeController>().userInfo;
   TextEditingController ratingTextController = TextEditingController();
   RxDouble rating = 4.0.obs;
+  RxString profilePic = "".obs;
+  RxString fullName = "".obs;
 
-  // @override
-  // void onInit() {
-  //   super.onInit();
-  // }
+  @override
+  void onInit() {
+    super.onInit();
+    updateInfo();
+  }
 
   // @override
   // void onReady() {
@@ -83,5 +86,10 @@ class ProfileController extends GetxController {
     Get.find<HomeController>().userInfo.value.data?.emergencyContactDetails =
         [];
     Get.offAllNamed(Routes.ONBOARDING);
+  }
+
+  void updateInfo() {
+    profilePic.value = Get.find<GetStorageService>().profilePicUrl ?? "";
+    fullName.value = Get.find<GetStorageService>().getUserName ?? "";
   }
 }

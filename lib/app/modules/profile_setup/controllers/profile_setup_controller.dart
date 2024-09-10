@@ -14,7 +14,6 @@ import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:path/path.dart' as path;
-import '../../../services/auth.dart';
 import '../../../services/colors.dart';
 import '../../../services/dio/api_service.dart';
 import '../../../services/gp_util.dart';
@@ -73,6 +72,8 @@ class ProfileSetupController extends GetxController
               .split("+1")
               .last ??
           "");
+  TextEditingController phoneNumberWithCountryCode = TextEditingController(
+      text: Get.find<GetStorageService>().phoneNumber ?? "");
   TextEditingController gender = TextEditingController();
   TextEditingController city = TextEditingController();
   TextEditingController dateOfBirth = TextEditingController();
@@ -224,7 +225,7 @@ class ProfileSetupController extends GetxController
     final userData = dio.FormData.fromMap({
       'fullName': fullName.text,
       'email': email.text,
-      'phone': phoneNumber.text,
+      'phone': phoneNumberWithCountryCode.text,
       'gender': genderValue,
       'city': city.value.text,
       'dob': dateOfBirth.text,
@@ -249,7 +250,6 @@ class ProfileSetupController extends GetxController
         await vehicleDetailsAPI();
       } else {
         showMySnackbar(msg: response.data['message'].toString());
-        await checkUserValidations();
         isVehicleBtnLoading.value = false;
       }
     } catch (e) {
