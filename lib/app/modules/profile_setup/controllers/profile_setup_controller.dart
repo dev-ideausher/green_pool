@@ -292,12 +292,13 @@ class ProfileSetupController extends GetxController
         showMySnackbar(msg: "Data filled successfully");
         storageService.isLoggedIn = true;
         storageService.setDriver = true;
-        Get.offNamed(Routes.EMERGENCY_CONTACTS, arguments: {
+        decideRoutingAfterSignUp();
+        /*Get.offNamed(Routes.EMERGENCY_CONTACTS, arguments: {
           'fromNavBar': fromNavBar,
           'postRideModel': postRideModel.value
         }, parameters: {
           "profileType": "driver"
-        });
+        });*/
         isVehicleBtnLoading.value = false;
         homeController.userInfoAPI();
       } catch (e) {
@@ -307,6 +308,17 @@ class ProfileSetupController extends GetxController
     } else {
       isVehicleBtnLoading.value = false;
       showMySnackbar(msg: 'Please fill in user details');
+    }
+  }
+
+  Future<void> decideRoutingAfterSignUp() async {
+    if (fromNavBar) {
+      Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
+      await Future.delayed(const Duration(seconds: 1))
+          .then((value) => Get.find<HomeController>().changeTabIndex(0));
+      Get.find<HomeController>().userInfoAPI();
+    } else {
+      Get.offNamed(Routes.POST_RIDE_STEP_TWO, arguments: postRideModel.value);
     }
   }
 

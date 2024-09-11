@@ -6,6 +6,7 @@ import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
+import 'package:green_pool/app/services/snackbar.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
 import '../../../res/strings.dart';
@@ -17,7 +18,7 @@ class PromoCode extends GetView<PaymentController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:  GreenPoolAppBar(
+      appBar: GreenPoolAppBar(
         title: Text(Strings.promoCode),
       ),
       body: Obx(
@@ -29,8 +30,9 @@ class PromoCode extends GetView<PaymentController> {
                   final promoCode =
                       controller.promoCodeModel.value.data?[index];
                   return ListTile(
-                    shape: BeveledRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.kh)),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.kh),
+                        side: const BorderSide(color: ColorUtil.kGreyColor)),
                     tileColor: ColorUtil.kWhiteColor,
                     title: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -71,9 +73,13 @@ class PromoCode extends GetView<PaymentController> {
                           TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                     ),
                     trailing: TextButton(
-                        onPressed: () {
-                          controller.applyDiscount(index);
-                        },
+                        onPressed: promoCode?.status ?? false
+                            ? () {
+                                showMySnackbar(msg: Strings.alreadyUsedCoupon);
+                              }
+                            : () {
+                                controller.applyDiscount(index);
+                              },
                         child: Text(
                           Strings.apply,
                           style: TextStyleUtil.k14Semibold(

@@ -948,4 +948,9 @@ class Strings {
       "You cannot perform this action because your account was suspended.";
 
   static var contactUs = "Contact Us";
+
+  static String platformFees = "Platform fees";
+
+  static var alreadyUsedCoupon =
+      "It looks like you've already used this coupon! Feel free to explore other offers.";
 }

@@ -31,8 +31,8 @@ class UserDetailsController extends GetxController {
       TextEditingController(text: Get.find<GetStorageService>().getUserName);
   TextEditingController emailTextController =
       TextEditingController(text: Get.find<GetStorageService>().emailId);
-  TextEditingController phoneTextController =
-      TextEditingController(text: Get.find<GetStorageService>().phoneNumber);
+  TextEditingController phoneTextController = TextEditingController(
+      text: Get.find<GetStorageService>().phoneNumber.split("+1").last);
   TextEditingController city =
       TextEditingController(text: Get.find<GetStorageService>().city);
   TextEditingController genderTextController =

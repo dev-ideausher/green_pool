@@ -225,7 +225,7 @@ class FindRideView extends GetView<FindRideController> {
               onPressed: () => controller.decideRouting(),
               isActive: controller.isActive.value,
               label: Strings.findMatchingRides,
-            ).paddingOnly(bottom: 30.kh, top: 10.kh),
+            ).paddingOnly(bottom: 30.kh),
           ],
         ).paddingSymmetric(horizontal: 16.kw),
       ),

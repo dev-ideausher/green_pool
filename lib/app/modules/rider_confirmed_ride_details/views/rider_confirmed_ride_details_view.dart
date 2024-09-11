@@ -146,7 +146,7 @@ class RiderConfirmedRideDetailsView
                     OriginToDestination(
                             needPickupText: true,
                             origin:
-                                "${controller.myRidesModel.value.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.origin?.name}",
+                                "${controller.myRidesModel.value.origin?.name}",
                             stop1: controller
                                     .myRidesModel
                                     .value
@@ -164,7 +164,7 @@ class RiderConfirmedRideDetailsView
                                     ?.name ??
                                 "",
                             destination:
-                                "${controller.myRidesModel.value.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.destination?.name}")
+                                "${controller.myRidesModel.value.destination?.name}")
                         .paddingOnly(bottom: 8.kh),
                     //bottom line
                     const GreenPoolDivider(),

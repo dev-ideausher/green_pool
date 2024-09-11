@@ -173,7 +173,22 @@ class PaymentView extends GetView<PaymentController> {
                               style: TextStyleUtil.k14Regular(
                                   color: ColorUtil.kBlack03),
                             ),
-                            Text("\$${controller.price}",
+                            Text("\$${controller.price.toStringAsFixed(2)}",
+                                style: TextStyleUtil.k14Regular(
+                                    color: ColorUtil.kBlack03))
+                          ],
+                        ),
+                        4.kheightBox,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              Strings.platformFees,
+                              style: TextStyleUtil.k14Regular(
+                                  color: ColorUtil.kBlack03),
+                            ),
+                            Text(
+                                "\$${controller.platformFees.toStringAsFixed(2)}",
                                 style: TextStyleUtil.k14Regular(
                                     color: ColorUtil.kBlack03))
                           ],
@@ -204,7 +219,10 @@ class PaymentView extends GetView<PaymentController> {
                               style: TextStyleUtil.k14Bold(
                                   color: ColorUtil.kBlack02),
                             ),
-                            Text("\$${controller.totalAmount}",
+                            Text(
+                                controller.discountAvailed.value
+                                    ? "\$${controller.totalAmount + controller.platformFees}"
+                                    : "\$${controller.totalAmount}",
                                 style: TextStyleUtil.k14Bold(
                                     color: ColorUtil.kBlack02))
                           ],

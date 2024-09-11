@@ -206,9 +206,10 @@ class RiderProfileSetupController extends GetxController {
         storageService.setUserName = fullName.text;
         storageService.isLoggedIn = true;
         storageService.profileStatus = true;
-        Get.offNamed(Routes.EMERGENCY_CONTACTS,
+        decideRoutingAfterSignUp();
+        /*Get.offNamed(Routes.EMERGENCY_CONTACTS,
             arguments: {'fromNavBar': fromNavBar, 'isDriver': false},
-            parameters: {"profileType": "user"});
+            parameters: {"profileType": "user"});*/
         showMySnackbar(msg: "Data saved succesfully.");
         isBtnLoading.value = false;
         Get.find<HomeController>().userInfoAPI();
@@ -219,6 +220,17 @@ class RiderProfileSetupController extends GetxController {
     } catch (e) {
       isBtnLoading.value = false;
       throw Exception(e);
+    }
+  }
+
+  Future<void> decideRoutingAfterSignUp() async {
+    if (fromNavBar) {
+      Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
+      await Future.delayed(const Duration(seconds: 1))
+          .then((value) => Get.find<HomeController>().changeTabIndex(0));
+      Get.find<HomeController>().userInfoAPI();
+    } else {
+      Get.until((route) => Get.currentRoute == Routes.FIND_RIDE);
     }
   }
 

@@ -32,6 +32,7 @@ class PaymentController extends GetxController {
   String ridePostId = "";
   String promoCodeId = "";
   int price = 0;
+  double platformFees = 0.0;
   double discountProvided = 0.0;
   double totalAmount = 0.0;
   int pricePerSeat = 0;
@@ -49,7 +50,9 @@ class PaymentController extends GetxController {
       rideData = Get.arguments['rideData'];
       riderSendRequestModelData = Get.arguments['riderSendRequestModelData'];
       price = rideData['price'];
-      totalAmount = double.parse(rideData['price'].toStringAsFixed(2));
+      platformFees = (price * 1 / 10);
+      totalAmount = (price.toDouble() + platformFees);
+      // totalAmount = double.parse(rideData['price'].toStringAsFixed(2));
       pricePerSeat = int.parse(Get.arguments['pricePerSeat']);
       seatsBooked = Get.arguments['seatsBooked'].toString();
       origin = riderSendRequestModelData.origin!.name;
@@ -60,8 +63,9 @@ class PaymentController extends GetxController {
       try {
         ridePostId = Get.arguments['ridePostId'];
         price = int.parse(Get.arguments['price']);
-        totalAmount =
-            double.parse(int.parse(Get.arguments['price']).toStringAsFixed(2));
+        platformFees = (price * 1 / 10);
+        totalAmount = (price.toDouble() + platformFees);
+        // totalAmount = double.parse(int.parse(Get.arguments['price']).toStringAsFixed(2));
         riderConfirmRequestModelData =
             Get.arguments['riderConfirmRequestModelData'];
         pricePerSeat = Get.arguments['pricePerSeat'];
@@ -85,9 +89,10 @@ class PaymentController extends GetxController {
         destination =
             rideData['ridesDetails']['destination']['name'].toString();
         price = rideData['ridesDetails']["price"];
+        platformFees = (price * 1 / 10);
+        totalAmount = (price.toDouble() + platformFees);
         seatsBooked = rideData['ridesDetails']['seatAvailable'].toString();
-        totalAmount =
-            double.parse(rideData['ridesDetails']["price"].toStringAsFixed(2));
+        // totalAmount = double.parse(rideData['ridesDetails']["price"].toStringAsFixed(2));
         pricePerSeat = Get.arguments["pricePerSeat"];
       }
     }
