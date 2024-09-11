@@ -179,6 +179,7 @@ class RiderProfileSetupController extends GetxController {
     } else {
       genderValue = gender.value.text;
     }
+    _handlePhoneNumber();
 
     final userData = dio.FormData.fromMap({
       'fullName': fullName.text,
@@ -220,6 +221,12 @@ class RiderProfileSetupController extends GetxController {
     } catch (e) {
       isBtnLoading.value = false;
       throw Exception(e);
+    }
+  }
+
+  void _handlePhoneNumber() {
+    if (phoneNumberWithCountryCode.text.isEmpty) {
+      phoneNumberWithCountryCode.text = "+1${phoneNumber.text}";
     }
   }
 
