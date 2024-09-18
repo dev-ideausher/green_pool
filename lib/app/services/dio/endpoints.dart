@@ -46,6 +46,10 @@ class Endpoints {
   static const String transferAmountToWallet = "payment/transferAmountToWallet";
   static const String stripeBankUrl =
       "https://connect.stripe.com/oauth/v2/authorize?response_type=code&client_id=ca_PdUqFXZWXjitnEqUgtSHiHKEWonW8gWJ&scope=read_write&redirect_uri=${baseUrl}payment/stripe/callback";
+  static const String createStripeAccount = "stripe/accounts";
+  static const String stripeOnboarding = "stripe/accounts/onboard";
+  static const String transferWalletBalance =
+      "stripe/accounts/transfer-wallet-balance";
 
   //get url
   static const String userLogin = "auth/login";

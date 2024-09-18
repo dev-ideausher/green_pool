@@ -79,6 +79,7 @@ class VehicleDetailsController extends GetxController {
     "Brown"
   ].obs;
   RxBool btnLoading = false.obs;
+  RxBool isBtnActive = false.obs;
 
   getProfileImage(ImageSource imageSource) async {
     XFile? pickedFile = await GpUtil.compressImage(imageSource);
@@ -87,6 +88,7 @@ class VehicleDetailsController extends GetxController {
       showMySnackbar(msg: 'Image selected');
       update();
       isVehiclePicUpdated.value = true;
+      isBtnActive.value = true;
     } else {
       showMySnackbar(msg: 'No image selected');
     }

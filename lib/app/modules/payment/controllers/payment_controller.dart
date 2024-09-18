@@ -26,9 +26,9 @@ class PaymentController extends GetxController {
   final RxBool isLoading = true.obs;
   final RxBool isBtnLoading = true.obs;
   final RxBool isPromoLoading = true.obs;
-  final RxBool discountAvailed = false.obs;
   final RxBool fromDriverDetails = false.obs;
   final RxBool fromConfirmRequestSection = false.obs;
+  RxBool discountAvailed = false.obs;
   String ridePostId = "";
   String promoCodeId = "";
   int price = 0;
@@ -47,12 +47,12 @@ class PaymentController extends GetxController {
   Future<void> onInit() async {
     super.onInit();
     try {
+      //from send request section
       rideData = Get.arguments['rideData'];
       riderSendRequestModelData = Get.arguments['riderSendRequestModelData'];
       price = rideData['price'];
-      platformFees = (price * 1 / 10);
+      platformFees = (price * 1 / 5);
       totalAmount = (price.toDouble() + platformFees);
-      // totalAmount = double.parse(rideData['price'].toStringAsFixed(2));
       pricePerSeat = int.parse(Get.arguments['pricePerSeat']);
       seatsBooked = Get.arguments['seatsBooked'].toString();
       origin = riderSendRequestModelData.origin!.name;
@@ -61,11 +61,11 @@ class PaymentController extends GetxController {
       stop2 = riderSendRequestModelData.stops?[1]?.name;
     } catch (e) {
       try {
+        //from confirm request section
         ridePostId = Get.arguments['ridePostId'];
         price = int.parse(Get.arguments['price']);
-        platformFees = (price * 1 / 10);
+        platformFees = (price * 1 / 5);
         totalAmount = (price.toDouble() + platformFees);
-        // totalAmount = double.parse(int.parse(Get.arguments['price']).toStringAsFixed(2));
         riderConfirmRequestModelData =
             Get.arguments['riderConfirmRequestModelData'];
         pricePerSeat = Get.arguments['pricePerSeat'];
@@ -83,16 +83,16 @@ class PaymentController extends GetxController {
         stop2 = riderConfirmRequestModelData?.driverRideDetails?.stops?[1]?.name
             .toString();
       } catch (e) {
+        //from matching rides
         rideData = Get.arguments["rideData"];
         fromDriverDetails.value = true;
         origin = rideData['ridesDetails']['origin']['name'].toString();
         destination =
             rideData['ridesDetails']['destination']['name'].toString();
         price = rideData['ridesDetails']["price"];
-        platformFees = (price * 1 / 10);
+        platformFees = (price * 1 / 5);
         totalAmount = (price.toDouble() + platformFees);
         seatsBooked = rideData['ridesDetails']['seatAvailable'].toString();
-        // totalAmount = double.parse(rideData['ridesDetails']["price"].toStringAsFixed(2));
         pricePerSeat = Get.arguments["pricePerSeat"];
       }
     }
@@ -126,14 +126,20 @@ class PaymentController extends GetxController {
     } else if (fromConfirmRequestSection.value) {
       confirmRequestOfDriverAPI();
     } else {
-      sendRequesttoDriverAPI();
+      sendRequestToDriverAPI();
     }
   }
 
   createRideAlert() async {
     rideData!['ridesDetails']!['price'] = price;
+    double totalAmountToBePaid = 0.0;
+    if (discountAvailed.value) {
+      totalAmountToBePaid = totalAmount + platformFees;
+    } else {
+      totalAmountToBePaid = totalAmount;
+    }
 
-    if (double.parse(walletBalance.value) >= totalAmount) {
+    if (double.parse(walletBalance.value) >= totalAmountToBePaid) {
       try {
         isBtnLoading.value = true;
         final response = await APIManager.postCreateAlert(body: {
@@ -158,8 +164,45 @@ class PaymentController extends GetxController {
     }
   }
 
-  Future<void> sendRequesttoDriverAPI() async {
-    if (double.parse(walletBalance.value) >= totalAmount) {
+  Future<void> confirmRequestOfDriverAPI() async {
+    double totalAmountToBePaid = 0.0;
+    if (discountAvailed.value) {
+      totalAmountToBePaid = totalAmount + platformFees;
+    } else {
+      totalAmountToBePaid = totalAmount;
+    }
+    if (double.parse(walletBalance.value) >= totalAmountToBePaid) {
+      try {
+        isBtnLoading.value = true;
+        final response = await APIManager.acceptDriversRequest(body: {
+          "ridePostId": ridePostId,
+          "price": price,
+          "promoCodeId": promoCodeId
+        });
+        if (response.data['status']) {
+          Get.bottomSheet(const RequestAcceptedBottom());
+          Get.find<RiderMyRideRequestController>().allRiderConfirmRequestAPI();
+          Get.find<MyRidesOneTimeController>().myRidesAPI();
+        } else {
+          showMySnackbar(msg: response.data['message'].toString() ?? "");
+        }
+        isBtnLoading.value = false;
+      } catch (e) {
+        throw Exception(e);
+      }
+    } else {
+      Get.bottomSheet(const InsufficientBalanceSheet());
+    }
+  }
+
+  Future<void> sendRequestToDriverAPI() async {
+    double totalAmountToBePaid = 0.0;
+    if (discountAvailed.value) {
+      totalAmountToBePaid = totalAmount + platformFees;
+    } else {
+      totalAmountToBePaid = totalAmount;
+    }
+    if (double.parse(walletBalance.value) >= totalAmountToBePaid) {
       try {
         isBtnLoading.value = true;
         final response = await APIManager.postSendRequestToDriver(body: {
@@ -176,31 +219,6 @@ class PaymentController extends GetxController {
           DialogHelper.paymentSuccessfull();
           Get.find<MyRidesOneTimeController>().myRidesAPI();
           Get.find<RiderMyRideRequestController>().allRiderSendRequestAPI();
-        } else {
-          showMySnackbar(msg: response.data['message'].toString() ?? "");
-        }
-        isBtnLoading.value = false;
-      } catch (e) {
-        throw Exception(e);
-      }
-    } else {
-      Get.bottomSheet(const InsufficientBalanceSheet());
-    }
-  }
-
-  Future<void> confirmRequestOfDriverAPI() async {
-    if (double.parse(walletBalance.value) >= totalAmount) {
-      try {
-        isBtnLoading.value = true;
-        final response = await APIManager.acceptDriversRequest(body: {
-          "ridePostId": ridePostId,
-          "price": price,
-          "promoCodeId": promoCodeId
-        });
-        if (response.data['status']) {
-          Get.bottomSheet(const RequestAcceptedBottom());
-          Get.find<RiderMyRideRequestController>().allRiderConfirmRequestAPI();
-          Get.find<MyRidesOneTimeController>().myRidesAPI();
         } else {
           showMySnackbar(msg: response.data['message'].toString() ?? "");
         }
@@ -230,7 +248,7 @@ class PaymentController extends GetxController {
     if (price >= promoCodeModel.value.data![index]!.minAmount!.toInt()) {
       //if price meets minAmnt criteria then apply type of discount accordingly
       discountAvailed.value = true;
-      promoCodeTitle = promoCodeModel.value.data![index]!.promoTitle;
+      promoCodeTitle = promoCodeModel.value.data![index]!.promoCode;
       if (promoCodeModel.value.data![index]!.discountCodeType == "%") {
         final double discountPercent =
             promoCodeModel.value.data![index]!.discountAmount!;

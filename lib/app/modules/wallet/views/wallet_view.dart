@@ -100,7 +100,7 @@ class WalletView extends GetView<WalletController> {
                       onTap: () => controller.addMoney(),
                     ).paddingOnly(bottom: 8.kh),
                     WalletTile(
-                      title: Strings.sendMoneyToBankAccount,
+                      title: Strings.payout,
                       path: ImageConstant.svgSendMoney,
                       onTap: () => controller.sendMoney(),
                     ).paddingOnly(bottom: 8.kh),

@@ -38,7 +38,7 @@ class PromoCode extends GetView<PaymentController> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          "${promoCode?.promoTitle}",
+                          "${promoCode?.promoCode}",
                           style: TextStyleUtil.k16Bold(),
                         ),
                         2.kwidthBox,

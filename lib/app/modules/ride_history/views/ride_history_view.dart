@@ -29,41 +29,50 @@ class RideHistoryView extends GetView<RideHistoryController> {
       appBar: GreenPoolAppBar(
         title: Text(Strings.rideHistory),
       ),
-      body: Obx(
-        () => controller.isLoading.value
-            ? const GpProgress()
-            : controller.rideHistModel.value.data!.isEmpty
-                ? Center(
-                    child: Text(
-                      Strings.noRideHistory,
-                      style: TextStyleUtil.k18Heading600(),
-                    ),
-                  )
-                : Column(
-                    children: [
-                      Expanded(
-                        child: ListView.builder(
-                            itemCount:
-                                controller.rideHistModel.value.data?.length,
-                            itemBuilder: (context, index) {
-                              final his =
-                                  controller.rideHistModel.value.data?[index];
-                              return ((his?.driver?.firebaseUid ?? "") ==
-                                      Get.find<GetStorageService>()
-                                          .getFirebaseUid)
-                                  ? DriverRideHistTile(
-                                      controller: controller,
-                                      his: his,
-                                      index: index,
-                                    )
-                                  : RiderRideHistTile(
-                                      controller: controller,
-                                      his: his,
-                                      index: index);
-                            }).paddingOnly(top: 8.kh),
+      body: RefreshIndicator(
+        backgroundColor: ColorUtil.kWhiteColor,
+        color: Get.find<HomeController>().isPinkModeOn.value
+            ? ColorUtil.kPrimary3PinkMode
+            : ColorUtil.kPrimary01,
+        onRefresh: () async {
+          await controller.rideHistoryAPI();
+        },
+        child: Obx(
+          () => controller.isLoading.value
+              ? const GpProgress()
+              : controller.rideHistModel.value.data!.isEmpty
+                  ? Center(
+                      child: Text(
+                        Strings.noRideHistory,
+                        style: TextStyleUtil.k18Heading600(),
                       ),
-                    ],
-                  ).paddingSymmetric(horizontal: 16.kw),
+                    )
+                  : Column(
+                      children: [
+                        Expanded(
+                          child: ListView.builder(
+                              itemCount:
+                                  controller.rideHistModel.value.data?.length,
+                              itemBuilder: (context, index) {
+                                final his =
+                                    controller.rideHistModel.value.data?[index];
+                                return ((his?.driver?.firebaseUid ?? "") ==
+                                        Get.find<GetStorageService>()
+                                            .getFirebaseUid)
+                                    ? DriverRideHistTile(
+                                        controller: controller,
+                                        his: his,
+                                        index: index,
+                                      )
+                                    : RiderRideHistTile(
+                                        controller: controller,
+                                        his: his,
+                                        index: index);
+                              }).paddingOnly(top: 8.kh),
+                        ),
+                      ],
+                    ).paddingSymmetric(horizontal: 16.kw),
+        ),
       ),
     );
   }

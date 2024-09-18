@@ -127,6 +127,10 @@ class APIManager {
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
           .post(Endpoints.transferAmountToWallet, data: jsonEncode(body));
 
+  static Future<Response> postTransferWalletBalance() async =>
+      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+          .post(Endpoints.transferWalletBalance);
+
   //--------------------Get api--------------------//
 
   static Future<Response> helpAndSupport() async =>
@@ -246,6 +250,10 @@ class APIManager {
   static Future<Response> getAllSchools({required String schoolName}) async =>
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false)
           .get(Endpoints.searchSchools + schoolName);
+
+  static Future<Response> getStripeOnboarding() async =>
+      await DioClient(Dio(), showSnakbar: false, isOverlayLoader: false)
+          .get(Endpoints.stripeOnboarding);
 
   //--------------------patch--------------------//
   static Future<Response> userDetails({required dynamic body}) async =>
@@ -368,4 +376,10 @@ class APIManager {
       // driver will reject the request send by a rider
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
           .patch(Endpoints.rejectRidersRequest, data: jsonEncode(body));
+
+  //--------------------put api--------------------//
+
+  static Future<Response> putCreateStripeAccount() async =>
+      await DioClient(Dio(), showSnakbar: false, isOverlayLoader: false)
+          .put(Endpoints.createStripeAccount);
 }

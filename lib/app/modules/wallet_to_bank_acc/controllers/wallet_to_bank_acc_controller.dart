@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
+import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
+import 'package:green_pool/app/services/dialog_helper.dart';
 
 import '../../../services/dio/api_service.dart';
 import '../../../services/snackbar.dart';
@@ -36,11 +37,10 @@ class WalletToBankAccController extends GetxController {
     try {
       int fare = int.parse(input);
 
-      // Check if fare is between 5 and 500
-      if (fare >= 5 && fare <= 500) {
+      if (fare >= 25) {
         return null;
       } else {
-        return "Fare must be between 5 and 500";
+        return "Fare must be greater than 25";
       }
     } catch (e) {
       return "Invalid input. Please enter a valid integer fare";
@@ -48,34 +48,70 @@ class WalletToBankAccController extends GetxController {
   }
 
   setButtonState(String value) {
+    final walletBalance =
+        double.parse(Get.find<WalletController>().walletBalance.value);
     if (value.isEmpty ||
         value == "" ||
-        int.parse(value) < 5 ||
-        int.parse(value) > 500) {
+        int.parse(value) < 25 ||
+        walletBalance <= 0.0 ||
+        int.parse(value) > walletBalance) {
       buttonState.value = false;
     } else {
       buttonState.value = true;
     }
   }
 
-  moveToWebToBankAcc() {
-    //refresh user info from home controller
-    final code =
-        Get.find<HomeController>().userInfo?.value?.data?.connectedAccountId;
+  moveToWebToBankAcc() async {
+    final hasCompletedOnboarding =
+        Get.find<WalletController>().hasCompletedOnboarding.value;
 
-    if (code == "") {
-      Get.toNamed(Routes.WEB_ADD_TO_BANK,
-          arguments: amountTextController.value.text);
+    if (!hasCompletedOnboarding) {
+      await getStripeRedirectLink();
     } else {
       transferToBankAccount();
     }
   }
 
+  Future<void> getStripeRedirectLink() async {
+    try {
+      DialogHelper.showLoading();
+      final response = await APIManager.putCreateStripeAccount();
+      if (response.data['status']) {
+        print(response.data['data']['link']['url']);
+        DialogHelper.hideDialog();
+        Get.toNamed(Routes.WEB_ADD_TO_BANK,
+                arguments: response.data['data']['link']['url'])
+            ?.then(
+          (value) {
+            Get.find<WalletController>().getWallet();
+            transferToBankAccount();
+          },
+        );
+      } else {
+        print(response.data['data']['url']);
+        DialogHelper.hideDialog();
+        Get.toNamed(Routes.WEB_ADD_TO_BANK,
+                arguments: response.data['data']['url'])
+            ?.then(
+          (value) {
+            Get.find<WalletController>().getWallet();
+            transferToBankAccount();
+          },
+        );
+      }
+    } catch (e) {
+      showMySnackbar(msg: Strings.somethingWentWrong);
+      debugPrint("ERROR: $e");
+    } finally {
+      DialogHelper.hideDialog();
+    }
+  }
+
   Future<void> transferToBankAccount() async {
     try {
-      final res = await APIManager.postTransferAmountToWallet(
-          body: {"amount": amountTextController.value.text});
+      final res = await APIManager.postTransferWalletBalance();
       if (res.data["status"]) {
+        showMySnackbar(msg: Strings.moneyHasBeenTransferred);
         Get.find<WalletController>().getWallet();
         Get.until(
           (route) => Get.currentRoute == Routes.WALLET,

@@ -41,8 +41,7 @@ class NotificationsView extends GetView<NotificationsController> {
                         decoration: BoxDecoration(
                             color: ColorUtil.kWhiteColor,
                             borderRadius: BorderRadius.circular(8.kh)),
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 8.kw, vertical: 16.kh),
+                        padding: EdgeInsets.symmetric(horizontal: 2.kw),
                         child: Obx(
                           () => ListTile(
                             leading: Container(

@@ -136,7 +136,7 @@ class RiderMyRideRequestController extends GetxController {
       });
       if (response.data["status"]) {
         allRiderConfirmRequestAPI();
-        Get.back();
+        showMySnackbar(msg: "The ride request has been successfully declined.");        
       } else {
         Get.back();
         showMySnackbar(msg: response.data["message"]);

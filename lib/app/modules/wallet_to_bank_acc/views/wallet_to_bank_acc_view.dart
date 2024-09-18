@@ -19,7 +19,7 @@ class WalletToBankAccView extends GetView<WalletToBankAccController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: GreenPoolAppBar(
-        title: Text(Strings.sendMoneyToBankAccount),
+        title: Text(Strings.payout),
       ),
       resizeToAvoidBottomInset: false,
       body: Column(

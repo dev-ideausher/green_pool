@@ -288,7 +288,7 @@ class DriverTile extends StatelessWidget {
       );
 
       DateTime startTime =
-          inputTimeWithCurrentDate.subtract(const Duration(minutes: 15));
+          inputTimeWithCurrentDate.subtract(const Duration(minutes: 60));
       DateTime endTime =
           inputTimeWithCurrentDate.add(const Duration(minutes: 30));
 

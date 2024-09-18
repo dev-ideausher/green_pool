@@ -91,17 +91,19 @@ class SetupVehicle extends GetView<ProfileSetupController> {
                   controller.isTypeListExpanded.toggle();
                 },
               ).paddingOnly(
-                  bottom: controller.isTypeListExpanded.value ? 4.kh : 16.kh),
+                  bottom: controller.isTypeListExpanded.value ? 0 : 16.kh),
             ),
             Obx(
               () => Visibility(
                 visible: controller.isTypeListExpanded.value,
                 child: SizedBox(
-                  height: 120.kh,
+                  height: 240.kh,
                   child: Card(
                     elevation: 4.0,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.kh),
+                      borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(8.kh),
+                          bottomRight: Radius.circular(8.kh)),
                     ),
                     color: ColorUtil.kGreyColor,
                     child: ListView.builder(
@@ -150,17 +152,19 @@ class SetupVehicle extends GetView<ProfileSetupController> {
                   controller.isColorListExpanded.toggle();
                 },
               ).paddingOnly(
-                  bottom: controller.isColorListExpanded.value ? 4.kh : 16.kh),
+                  bottom: controller.isColorListExpanded.value ? 0 : 16.kh),
             ),
             Obx(
               () => Visibility(
                 visible: controller.isColorListExpanded.value,
                 child: SizedBox(
-                  height: 120.kh,
+                  height: 240.kh,
                   child: Card(
                     elevation: 4.0,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.kh),
+                      borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(8.kh),
+                          bottomRight: Radius.circular(8.kh)),
                     ),
                     color: ColorUtil.kGreyColor,
                     child: ListView.builder(

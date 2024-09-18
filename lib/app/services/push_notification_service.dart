@@ -8,6 +8,7 @@ import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/modules/messages/controllers/messages_controller.dart';
 import 'package:green_pool/app/modules/my_rides_request/controllers/my_rides_request_controller.dart';
 import 'package:green_pool/app/modules/rider_confirmed_ride_details/controllers/rider_confirmed_ride_details_controller.dart';
+import 'package:green_pool/app/modules/rider_my_ride_request/controllers/rider_my_ride_request_controller.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/storage.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -171,13 +172,10 @@ class PushNotificationService {
       case "Your Driver Has Arrived":
       case "Ride Request Accepted":
       case "Ride Request Declined":
-      case "New Ride Request!":
       case "Request Cancelled":
       case "Ride Cancelled by Rider":
       case "Request Declined":
       case "Upcoming Ride Reminder":
-      case "Refund Processed":
-      case "Refund Issued":
       case "Ride Confirmed!":
         Get.find<MyRidesOneTimeController>().myRidesAPI();
         Get.find<HomeController>().newMsgReceived.value = true;
@@ -192,12 +190,21 @@ class PushNotificationService {
         }
         break;
       case "New Rider Request!":
-        Get.find<HomeController>().newMsgReceived.value = true;
-        Get.find<MyRidesOneTimeController>().myRidesAPI();
-        Get.find<MyRidesRequestController>().allConfirmRequestAPI();
+        if (Get.currentRoute == Routes.MY_RIDES_REQUEST) {
+          Get.find<HomeController>().newMsgReceived.value = true;
+          Get.find<MyRidesRequestController>().allConfirmRequestAPI();
+        }
         break;
 
       case "Payment Received!":
+      case "Refund Processed":
+      case "Refund Issued":
+        break;
+
+      case "New Ride Request!":
+        if (Get.currentRoute == Routes.RIDER_MY_RIDE_REQUEST) {
+          Get.find<RiderMyRideRequestController>().allRiderConfirmRequestAPI();
+        }
         break;
 
       case "Ride Completed":
@@ -283,21 +290,26 @@ class PushNotificationService {
         final res = await APIManager.getChatRoomId(
             receiverId: actionData?.data['senderId'] ?? "");
         Get.toNamed(Routes.CHAT_PAGE,
-            arguments: ChatArg(
-                chatRoomId: res.data["data"]["chatRoomId"] ?? "",
-                deleteUpdateTime: res.data["data"]["deleteUpdateTime"] ?? "",
-                id: actionData?.data['senderId'],
-                name: actionData?.data['name'],
-                image: actionData?.data['profilePic']));
+                arguments: ChatArg(
+                    chatRoomId: res.data["data"]["chatRoomId"] ?? "",
+                    deleteUpdateTime:
+                        res.data["data"]["deleteUpdateTime"] ?? "",
+                    id: actionData?.data['senderId'],
+                    name: actionData?.data['name'],
+                    image: actionData?.data['profilePic']))
+            ?.then(
+                (value) => Get.find<MessagesController>().getMessageListAPI());
       } catch (e) {
         try {
           Get.toNamed(Routes.CHAT_PAGE,
-              arguments: ChatArg(
-                  chatRoomId: "",
-                  deleteUpdateTime: "",
-                  id: actionData?.data['senderId'],
-                  name: actionData?.data['name'],
-                  image: actionData?.data['profilePic']));
+                  arguments: ChatArg(
+                      chatRoomId: "",
+                      deleteUpdateTime: "",
+                      id: actionData?.data['senderId'],
+                      name: actionData?.data['name'],
+                      image: actionData?.data['profilePic']))
+              ?.then((value) =>
+                  Get.find<MessagesController>().getMessageListAPI());
         } catch (e) {
           debugPrint(e.toString());
         }
@@ -453,7 +465,7 @@ class PushNotificationService {
         }
         break;
 
-      case "Chat":
+      case 'Chat':
         if (currentRoute != Routes.CHAT_PAGE) {
           if (currentRoute == Routes.BOTTOM_NAVIGATION) {
             homeController.changeTabIndex(2);

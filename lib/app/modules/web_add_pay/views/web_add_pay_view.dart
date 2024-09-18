@@ -17,36 +17,40 @@ class WebAddPayView extends GetView<WebAddPayController> {
       body: Obx(
         () => controller.isLoad.value
             ? const GpProgress()
-            : Stack(
-                children: [
-                  WebViewWidget(
-                    key: key,
-                    controller: WebViewController()
-                      ..loadRequest(
-                          Uri.parse(controller.addAmountModel.value.url ?? ""))
-                      ..setJavaScriptMode(JavaScriptMode.unrestricted)
-                      ..setNavigationDelegate(NavigationDelegate(
-                        onPageFinished: (url) {
-                          controller.isLoading.value = false;
-                        },
-                        onUrlChange: (change) async {
-                          if (change.url!.startsWith(Endpoints.success_url)) {
-                            Get.until(
-                              (route) => Get.currentRoute == Routes.WALLET,
-                            );
-                          } else if (change.url!
-                              .startsWith(Endpoints.cancel_url)) {
-                            Get.until(
-                              (route) => Get.currentRoute == Routes.WALLET,
-                            );
-                          }
-                        },
-                      )),
-                  ),
-                  controller.isLoading.value
-                      ? const GpProgress()
-                      : const Stack(),
-                ],
+            : SafeArea(
+                child: Stack(
+                  children: [
+                    WebViewWidget(
+                      key: key,
+                      controller: WebViewController()
+                        ..loadRequest(Uri.parse(
+                            controller.addAmountModel.value.url ?? ""))
+                        ..setJavaScriptMode(JavaScriptMode.unrestricted)
+                        ..setNavigationDelegate(NavigationDelegate(
+                          onPageFinished: (url) {
+                            controller.isLoading.value = false;
+                          },
+                          onUrlChange: (change) async {
+                            if (change.url!.endsWith("paymentSuccess") ||
+                                change.url!.endsWith(
+                                    "profile-settings?tab=wallet-details")) {
+                              Get.until(
+                                (route) => Get.currentRoute == Routes.WALLET,
+                              );
+                            } else if (change.url!
+                                .startsWith("paymentCancelled")) {
+                              Get.until(
+                                (route) => Get.currentRoute == Routes.WALLET,
+                              );
+                            }
+                          },
+                        )),
+                    ),
+                    controller.isLoading.value
+                        ? const GpProgress()
+                        : const Stack(),
+                  ],
+                ),
               ),
       ),
     );

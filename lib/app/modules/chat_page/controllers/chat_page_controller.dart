@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -19,6 +21,7 @@ class ChatPageController extends GetxController {
   final TextEditingController eMsg = TextEditingController();
   final RxList<MessageModel> messages = <MessageModel>[].obs;
   final ScrollController scrollController = ScrollController();
+  StreamSubscription<DatabaseEvent>? _chatSubscription;
 
   @override
   void onInit() {
@@ -34,13 +37,15 @@ class ChatPageController extends GetxController {
   void readMsg() async {
     try {
       await APIManager.getChatRoomId(receiverId: chatArg.value.id!);
+      print(
+          "++++++++++++++++++++++++++++++++READ MESSAGE API CALLED+++++++++++++++++++++++++++++++++++++");
     } catch (e) {
       debugPrint(e.toString());
     }
   }
 
   void getChat() async {
-    FirebaseDatabase.instance
+    _chatSubscription = FirebaseDatabase.instance
         .ref()
         .child('chats')
         .child(chatArg.value.chatRoomId ?? "")
@@ -71,9 +76,10 @@ class ChatPageController extends GetxController {
   }
 
   @override
-  void dispose() {
+  void onClose() {
+    _chatSubscription?.cancel();
     scrollController.dispose();
-    super.dispose();
+    super.onClose();
   }
 
   void _scrollToBottom() {

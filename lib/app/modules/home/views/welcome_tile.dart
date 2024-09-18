@@ -24,27 +24,31 @@ class WelcomeTile extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Obx(
-                () => Text.rich(
-                  TextSpan(
-                    children: [
-                      TextSpan(
-                        text: controller.welcomeText.value,
-                        style: TextStyleUtil.k24Heading700(),
-                      ),
-                      TextSpan(
-                        text: storageService.isLoggedIn &&
-                                storageService.profileStatus
-                            ? " ${Get.find<GetStorageService>().getUserName.split(" ").first ?? "..."},"
-                            : "",
-                        style: TextStyleUtil.k24Heading700(
-                            color: storageService.isPinkMode
-                                ? ColorUtil.kPrimaryPinkMode
-                                : ColorUtil.kPrimary01),
-                      ),
-                    ],
-                  ),
-                ).paddingOnly(bottom: 4.kh),
+              SizedBox(
+                width: 75.w,
+                child: Obx(
+                  () => Text.rich(
+                    overflow: TextOverflow.ellipsis,
+                    TextSpan(
+                      children: [
+                        TextSpan(
+                          text: controller.welcomeText.value,
+                          style: TextStyleUtil.k24Heading700(),
+                        ),
+                        TextSpan(
+                          text: storageService.isLoggedIn &&
+                                  storageService.profileStatus
+                              ? " ${Get.find<GetStorageService>().getUserName.split(" ").first ?? "..."},"
+                              : "",
+                          style: TextStyleUtil.k24Heading700(
+                              color: storageService.isPinkMode
+                                  ? ColorUtil.kPrimaryPinkMode
+                                  : ColorUtil.kPrimary01),
+                        ),
+                      ],
+                    ),
+                  ).paddingOnly(bottom: 4.kh),
+                ),
               ),
               Text(Strings.whatWouldYouLikeToDoToday,
                   style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack04))

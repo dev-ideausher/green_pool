@@ -54,12 +54,13 @@ class UserDetailsView extends GetView<UserDetailsController> {
                                   controller.isProfilePicUpdated?.value ?? false
                                       ? ClipOval(
                                           child: SizedBox.fromSize(
-                                            size: Size.fromRadius(50.kh),
-                                            child: Image.file(controller
-                                                    .selectedProfileImagePath
-                                                    ?.value ??
-                                                File('')),
-                                          ),
+                                              size: Size.fromRadius(50.kh),
+                                              child: CommonImageView(
+                                                file: controller
+                                                        .selectedProfileImagePath
+                                                        ?.value ??
+                                                    File(''),
+                                              )),
                                         )
                                       : ClipOval(
                                           child: SizedBox.fromSize(
@@ -96,6 +97,11 @@ class UserDetailsView extends GetView<UserDetailsController> {
             GreenPoolTextField(
               hintText: Strings.fullName,
               controller: controller.nameTextController,
+              onchanged: (value) {
+                if (value != null) {
+                  controller.isBtnActive.value = true;
+                }
+              },
               suffix: SvgPicture.asset(
                 ImageConstant.svgProfileEditPen,
                 colorFilter: ColorFilter.mode(
@@ -112,6 +118,11 @@ class UserDetailsView extends GetView<UserDetailsController> {
               hintText: Strings.emailID,
               keyboardType: TextInputType.emailAddress,
               controller: controller.emailTextController,
+              onchanged: (value) {
+                if (value != null) {
+                  controller.isBtnActive.value = true;
+                }
+              },
               suffix: SvgPicture.asset(
                 ImageConstant.svgProfileEditPen,
                 colorFilter: ColorFilter.mode(
@@ -156,9 +167,10 @@ class UserDetailsView extends GetView<UserDetailsController> {
                 },
                 onchanged: (value) {
                   controller.addCityNames(value ?? "");
+                  controller.isBtnActive.value = true;
                 },
               ).paddingOnly(
-                  bottom: controller.isCityListExpanded.value ? 4.kh : 16.kh),
+                  bottom: controller.isCityListExpanded.value ? 0 : 16.kh),
             ),
             Obx(
               () => Visibility(
@@ -167,11 +179,13 @@ class UserDetailsView extends GetView<UserDetailsController> {
                   height: controller.cityNames.length == 1
                       ? 70.kh
                       : (controller.cityNames.length * 70.kh)
-                          .clamp(70.kh, 120.kh),
+                          .clamp(70.kh, 240.kh),
                   child: Card(
                     elevation: 4.0,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.kh),
+                      borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(8.kh),
+                          bottomRight: Radius.circular(8.kh)),
                     ),
                     color: ColorUtil.kGreyColor,
                     child: ListView.builder(
@@ -197,6 +211,7 @@ class UserDetailsView extends GetView<UserDetailsController> {
                                   controller.city.text =
                                       controller.cityNames[index];
                                   controller.isCityListExpanded.value = false;
+                                  controller.isBtnActive.value = true;
                                 }
                               },
                             ),
@@ -259,6 +274,7 @@ class UserDetailsView extends GetView<UserDetailsController> {
                 onPressed: () {
                   controller.updateDetailsAPI();
                 },
+                isActive: controller.isBtnActive.value,
                 isLoading: controller.saveBtnLoading.value,
                 label: Strings.save,
               ).paddingOnly(top: 40.kh, bottom: 16.kh),

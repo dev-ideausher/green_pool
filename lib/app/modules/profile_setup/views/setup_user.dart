@@ -114,6 +114,7 @@ class SetupUser extends GetView<ProfileSetupController> {
                 ),
               ),
               controller: controller.phoneNumber,
+              keyboardType: TextInputType.number,
               validator: (value) => controller.phoneNumberValidator(value),
               autovalidateMode: AutovalidateMode.onUserInteraction,
               readOnly: !controller.readOnlyEmail,
@@ -133,45 +134,45 @@ class SetupUser extends GetView<ProfileSetupController> {
                   controller.isGenderListExpanded.toggle();
                 },
               ).paddingOnly(
-                  bottom: controller.isGenderListExpanded.value ? 4.kh : 16.kh),
+                  bottom: controller.isGenderListExpanded.value ? 0 : 16.kh),
             ),
             Obx(
               () => Visibility(
                 visible: controller.isGenderListExpanded.value,
                 child: SizedBox(
-                  height: 120.kh,
                   child: Card(
                     elevation: 4.0,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.kh),
+                      borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(8.kh),
+                          bottomRight: Radius.circular(8.kh)),
                     ),
                     color: ColorUtil.kGreyColor,
                     child: ListView.builder(
                       padding: EdgeInsets.zero,
                       itemCount: controller.genderList.length,
+                      shrinkWrap: true,
                       itemBuilder: (context, index) {
                         return Container(
-                          decoration: BoxDecoration(
-                              border: Border(
-                                  bottom: BorderSide(
-                                      width: 1.kh, color: ColorUtil.kNeutral7)),
-                              borderRadius: BorderRadius.circular(8.kh)),
-                          child: RadioListTile<String>(
-                                  title: Text(controller.genderList[index]),
-                                  value: controller.genderList[index],
-                                  groupValue: controller.gender.text,
-                                  fillColor: const WidgetStatePropertyAll(
-                                      ColorUtil.kSecondary01),
-                                  onChanged: (value) {
-                                    if (value != null) {
-                                      controller.gender.text = value;
-                                      controller.isGenderListExpanded.value =
-                                          false;
-                                    }
-                                  })
-                              .paddingSymmetric(
-                                  horizontal: 8.kh, vertical: 4.kh),
-                        );
+                            decoration: BoxDecoration(
+                                border: Border(
+                                    bottom: BorderSide(
+                                        width: 1.kh,
+                                        color: ColorUtil.kNeutral7)),
+                                borderRadius: BorderRadius.circular(8.kh)),
+                            child: RadioListTile<String>(
+                                title: Text(controller.genderList[index]),
+                                value: controller.genderList[index],
+                                groupValue: controller.gender.text,
+                                fillColor: const WidgetStatePropertyAll(
+                                    ColorUtil.kSecondary01),
+                                onChanged: (value) {
+                                  if (value != null) {
+                                    controller.gender.text = value;
+                                    controller.isGenderListExpanded.value =
+                                        false;
+                                  }
+                                }));
                       },
                     ),
                   ),
@@ -197,7 +198,7 @@ class SetupUser extends GetView<ProfileSetupController> {
                   controller.addCityNames(value ?? "");
                 },
               ).paddingOnly(
-                  bottom: controller.isCityListExpanded.value ? 4.kh : 16.kh),
+                  bottom: controller.isCityListExpanded.value ? 0 : 16.kh),
             ),
             Obx(
               () => Visibility(
@@ -206,11 +207,13 @@ class SetupUser extends GetView<ProfileSetupController> {
                     height: controller.cityNames.length == 1
                         ? 70.kh
                         : (controller.cityNames.length * 70.kh)
-                            .clamp(70.kh, 120.kh),
+                            .clamp(70.kh, 240.kh),
                     child: Card(
                       elevation: 4.0,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.kh),
+                        borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(8.kh),
+                            bottomRight: Radius.circular(8.kh)),
                       ),
                       color: ColorUtil.kGreyColor,
                       child: ListView.builder(

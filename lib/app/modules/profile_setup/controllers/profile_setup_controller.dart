@@ -72,8 +72,6 @@ class ProfileSetupController extends GetxController
               .split("+1")
               .last ??
           "");
-  TextEditingController phoneNumberWithCountryCode = TextEditingController(
-      text: Get.find<GetStorageService>().phoneNumber ?? "");
   TextEditingController gender = TextEditingController();
   TextEditingController city = TextEditingController();
   TextEditingController dateOfBirth = TextEditingController();
@@ -221,12 +219,11 @@ class ProfileSetupController extends GetxController
     } else {
       genderValue = gender.value.text;
     }
-    _handlePhoneNumber();
 
     final userData = dio.FormData.fromMap({
       'fullName': fullName.text,
       'email': email.text,
-      'phone': phoneNumberWithCountryCode.text,
+      'phone': "+1${phoneNumber.text}",
       'gender': genderValue,
       'city': city.value.text,
       'dob': dateOfBirth.text,
@@ -256,12 +253,6 @@ class ProfileSetupController extends GetxController
     } catch (e) {
       isVehicleBtnLoading.value = false;
       throw Exception(e);
-    }
-  }
-
-  void _handlePhoneNumber() {
-    if (phoneNumberWithCountryCode.text.isEmpty) {
-      phoneNumberWithCountryCode.text = "+1${phoneNumber.text}";
     }
   }
 

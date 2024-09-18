@@ -953,4 +953,11 @@ class Strings {
 
   static var alreadyUsedCoupon =
       "It looks like you've already used this coupon! Feel free to explore other offers.";
+
+  static var payout = "Payout";
+
+  static var moneyHasBeenTransferred =
+      "Your money has been successfully transferred to your bank account.";
+
+  static var somethingWentWrong = "Oops! Something went wrong";
 }

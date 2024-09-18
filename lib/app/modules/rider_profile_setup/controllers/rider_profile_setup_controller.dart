@@ -44,8 +44,6 @@ class RiderProfileSetupController extends GetxController {
               .split("+1")
               .last ??
           "");
-  TextEditingController phoneNumberWithCountryCode = TextEditingController(
-      text: Get.find<GetStorageService>().phoneNumber ?? "");
   TextEditingController gender = TextEditingController();
   RxBool isGenderListExpanded = false.obs;
   RxList<String> genderList =
@@ -179,12 +177,11 @@ class RiderProfileSetupController extends GetxController {
     } else {
       genderValue = gender.value.text;
     }
-    _handlePhoneNumber();
 
     final userData = dio.FormData.fromMap({
       'fullName': fullName.text,
       'email': email.text,
-      'phone': phoneNumberWithCountryCode.text,
+      'phone': "+1${phoneNumber.text}",
       'gender': genderValue,
       'city': city.value.text,
       'dob': dateOfBirth.text,
@@ -199,7 +196,6 @@ class RiderProfileSetupController extends GetxController {
         filename: path.basename(pickedIDFile.path),
       ),
     });
-    log("profile setup user data: $userData");
 
     try {
       final response = await APIManager.userDetails(body: userData);
@@ -221,12 +217,6 @@ class RiderProfileSetupController extends GetxController {
     } catch (e) {
       isBtnLoading.value = false;
       throw Exception(e);
-    }
-  }
-
-  void _handlePhoneNumber() {
-    if (phoneNumberWithCountryCode.text.isEmpty) {
-      phoneNumberWithCountryCode.text = "+1${phoneNumber.text}";
     }
   }
 

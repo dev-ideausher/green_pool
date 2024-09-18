@@ -51,7 +51,7 @@ class TransactionHistoryView extends GetView<TransactionHistoryController> {
                                       ?.profilePic
                                       ?.url ??
                                   "",
-                              onLongPress: () {
+                              onTap: () {
                                 Get.dialog(
                                   useSafeArea: true,
                                   Center(
@@ -63,10 +63,54 @@ class TransactionHistoryView extends GetView<TransactionHistoryController> {
                                           borderRadius:
                                               BorderRadius.circular(8.kh),
                                         ),
-                                        child: Text(
-                                          "Id: #${transaction.Id}",
-                                          style: TextStyleUtil.k14Regular(
-                                              color: ColorUtil.kBlack03),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text.rich(
+                                              TextSpan(
+                                                children: [
+                                                  TextSpan(
+                                                    text: "Reason: ",
+                                                    style:
+                                                        TextStyleUtil.k14Bold(
+                                                            color: ColorUtil
+                                                                .kBlack01),
+                                                  ),
+                                                  TextSpan(
+                                                    text:
+                                                        "${transaction.reason}",
+                                                    style: TextStyleUtil
+                                                        .k14Regular(
+                                                            color: ColorUtil
+                                                                .kBlack03),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            4.kheightBox,
+                                            Text.rich(
+                                              TextSpan(
+                                                children: [
+                                                  TextSpan(
+                                                    text: "Id: ",
+                                                    style:
+                                                        TextStyleUtil.k14Bold(
+                                                            color: ColorUtil
+                                                                .kBlack01),
+                                                  ),
+                                                  TextSpan(
+                                                    text: "${transaction.Id}",
+                                                    style: TextStyleUtil
+                                                        .k14Regular(
+                                                            color: ColorUtil
+                                                                .kBlack03),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
                                         )),
                                   ),
                                 );
@@ -91,14 +135,14 @@ class TransactionHistoryView extends GetView<TransactionHistoryController> {
 
 class TransactionTile extends StatelessWidget {
   final String title, path, subtitle;
-  final Function() onLongPress;
+  final Function() onTap;
   final Widget? trailing;
 
   const TransactionTile({
     super.key,
     required this.title,
     required this.path,
-    required this.onLongPress,
+    required this.onTap,
     this.trailing,
     required this.subtitle,
   });
@@ -109,7 +153,7 @@ class TransactionTile extends StatelessWidget {
       height: 78.kh,
       child: ListTile(
         tileColor: ColorUtil.kWhiteColor,
-        onLongPress: onLongPress,
+        onTap: onTap,
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.kh)),
         title: Text(

@@ -7,6 +7,8 @@ import '../../../routes/app_pages.dart';
 class WalletController extends GetxController {
   final RxBool isLoad = true.obs;
   final RxString walletBalance = "0.0".obs;
+  final RxString stripeAccountId = "".obs;
+  final RxBool hasCompletedOnboarding = false.obs;
 
   @override
   Future<void> onInit() async {
@@ -20,6 +22,11 @@ class WalletController extends GetxController {
       final res = await APIManager.walletBalance();
       walletBalance.value = res.data['wallet'] ?? 0;
       walletBalance.refresh();
+      stripeAccountId.value = res.data['stripeAccountId'] ?? "";
+      stripeAccountId.refresh();
+      hasCompletedOnboarding.value =
+          res.data['hasCompletedOnboarding'] ?? false;
+      hasCompletedOnboarding.refresh();
     } catch (e) {
       debugPrint(e.toString());
     }

@@ -88,8 +88,7 @@ class MyRidesRequestController extends GetxController {
           await APIManager.patchRejectRiderRequest(body: rideData);
       if (rejectRiderResponse.data['status']) {
         allConfirmRequestAPI();
-        Get.back();
-        showMySnackbar(msg: 'Request rejected successfully!');
+        showMySnackbar(msg: "The ride request has been successfully declined.");
       } else {
         showMySnackbar(msg: rejectRiderResponse.data['message'].toString());
       }

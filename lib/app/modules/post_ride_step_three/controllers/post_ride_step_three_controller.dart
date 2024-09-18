@@ -24,18 +24,6 @@ class PostRideStepThreeController extends GetxController {
   double maxFarePrice = 0.0;
   double minFarePrice = 0.0;
 
-  @override
-  void onClose() {
-    super.onClose();
-    totalPrice.dispose();
-    originToStop1Price.dispose();
-    OriginToStop2Price.dispose();
-    Stop1ToStop2Price.dispose();
-    Stop1ToDestinationPrice.dispose();
-    Stop2toDestinationPrice.dispose();
-    descriptionTextController.dispose();
-  }
-
   num totalDistance = 0;
 
   @override
@@ -44,6 +32,18 @@ class PostRideStepThreeController extends GetxController {
     postRideModel.value = Get.arguments;
     await getRideFareAPI();
     isLoading.value = false;
+  }
+
+  @override
+  void onClose() {
+    totalPrice.dispose();
+    originToStop1Price.dispose();
+    OriginToStop2Price.dispose();
+    Stop1ToStop2Price.dispose();
+    Stop1ToDestinationPrice.dispose();
+    Stop2toDestinationPrice.dispose();
+    descriptionTextController.dispose();
+    super.onClose();
   }
 
   getRideFareAPI() async {

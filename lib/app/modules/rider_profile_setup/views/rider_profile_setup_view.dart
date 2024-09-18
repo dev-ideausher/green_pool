@@ -131,6 +131,7 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
                     color: ColorUtil.kBlack03,
                   ),
                 ),
+                keyboardType: TextInputType.number,
                 validator: (value) => controller.phoneNumberValidator(value),
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 readOnly: !controller.readOnlyEmail,
@@ -146,31 +147,30 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
                   suffix: controller.isGenderListExpanded.value
                       ? const Icon(Icons.arrow_drop_up)
                       : const Icon(Icons.arrow_drop_down),
-                  // onPressedSuffix: () {
-                  //   controller.isGenderListExpanded.toggle();
-                  // },
                   onTap: () {
                     controller.isGenderListExpanded.toggle();
                   },
                 ).paddingOnly(
-                    bottom:
-                        controller.isGenderListExpanded.value ? 4.kh : 16.kh),
+                    bottom: controller.isGenderListExpanded.value ? 0 : 16.kh),
               ),
               Obx(
                 () => Visibility(
                   visible: controller.isGenderListExpanded.value,
                   child: SizedBox(
-                    height: 120.kh,
                     child: Card(
                       elevation: 4.0,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.kh),
+                        borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(8.kh),
+                            bottomRight: Radius.circular(8.kh)),
                       ),
                       color: ColorUtil.kGreyColor,
                       child: ListView.builder(
-                          itemCount: 3,
-                          itemBuilder: (context, index) {
-                            return Container(
+                        padding: EdgeInsets.zero,
+                        itemCount: controller.genderList.length,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          return Container(
                               decoration: BoxDecoration(
                                   border: Border(
                                       bottom: BorderSide(
@@ -178,22 +178,20 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
                                           color: ColorUtil.kNeutral7)),
                                   borderRadius: BorderRadius.circular(8.kh)),
                               child: RadioListTile<String>(
-                                title: Text(controller.genderList[index]),
-                                value: controller.genderList[index],
-                                groupValue: controller.gender.text,
-                                fillColor: const WidgetStatePropertyAll(
-                                    ColorUtil.kSecondary01),
-                                onChanged: (value) {
-                                  if (value != null) {
-                                    controller.gender.text =
-                                        controller.genderList[index];
-                                    controller.isGenderListExpanded.value =
-                                        false;
-                                  }
-                                },
-                              ),
-                            );
-                          }),
+                                  title: Text(controller.genderList[index]),
+                                  value: controller.genderList[index],
+                                  groupValue: controller.gender.text,
+                                  fillColor: const WidgetStatePropertyAll(
+                                      ColorUtil.kSecondary01),
+                                  onChanged: (value) {
+                                    if (value != null) {
+                                      controller.gender.text = value;
+                                      controller.isGenderListExpanded.value =
+                                          false;
+                                    }
+                                  }));
+                        },
+                      ),
                     ),
                   ).paddingOnly(bottom: 16.kh),
                 ),
@@ -211,56 +209,58 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
                       : const Icon(Icons.arrow_drop_down),
                   onPressedSuffix: () {
                     controller.isCityListExpanded.toggle();
-                    controller.addCityNames(controller.city.value.text);
+                    controller.addCityNames(controller.city.text);
                   },
                   onchanged: (value) {
                     controller.addCityNames(value ?? "");
                   },
                 ).paddingOnly(
-                    bottom: controller.isCityListExpanded.value ? 4.kh : 16.kh),
+                    bottom: controller.isCityListExpanded.value ? 0 : 16.kh),
               ),
               Obx(
                 () => Visibility(
                   visible: controller.isCityListExpanded.value,
                   child: SizedBox(
-                    height: controller.cityNames.length == 1
-                        ? 70.kh
-                        : (controller.cityNames.length * 70.kh)
-                            .clamp(70.kh, 120.kh),
-                    child: Card(
-                      elevation: 4.0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.kh),
-                      ),
-                      color: ColorUtil.kGreyColor,
-                      child: ListView.builder(
-                          itemCount: controller.cityNames.length ?? 0,
-                          itemBuilder: (context, index) {
-                            return Container(
-                              decoration: BoxDecoration(
-                                  border: Border(
-                                      bottom: BorderSide(
-                                          width: 1.kh,
-                                          color: ColorUtil.kNeutral7)),
-                                  borderRadius: BorderRadius.circular(8.kh)),
-                              child: RadioListTile<String>(
-                                title: Text(controller.cityNames[index]),
-                                groupValue: controller.city.text,
-                                value: controller.cityNames[index],
-                                fillColor: const WidgetStatePropertyAll(
-                                    ColorUtil.kSecondary01),
-                                onChanged: (value) {
-                                  if (value != null) {
-                                    controller.city.text =
-                                        controller.cityNames[index];
-                                    controller.isCityListExpanded.value = false;
-                                  }
-                                },
-                              ),
-                            );
-                          }),
-                    ),
-                  ).paddingOnly(bottom: 16.kh),
+                      height: controller.cityNames.length == 1
+                          ? 70.kh
+                          : (controller.cityNames.length * 70.kh)
+                              .clamp(70.kh, 240.kh),
+                      child: Card(
+                        elevation: 4.0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(8.kh),
+                              bottomRight: Radius.circular(8.kh)),
+                        ),
+                        color: ColorUtil.kGreyColor,
+                        child: ListView.builder(
+                            padding: EdgeInsets.zero,
+                            itemCount: controller.cityNames.length ?? 0,
+                            itemBuilder: (context, index) {
+                              return Container(
+                                decoration: BoxDecoration(
+                                    border: Border(
+                                        bottom: BorderSide(
+                                            width: 1.kh,
+                                            color: ColorUtil.kNeutral7)),
+                                    borderRadius: BorderRadius.circular(8.kh)),
+                                child: RadioListTile<String>(
+                                    title: Text(controller.cityNames[index]),
+                                    groupValue: controller.city.text,
+                                    value: controller.cityNames[index],
+                                    fillColor: const WidgetStatePropertyAll(
+                                        ColorUtil.kSecondary01),
+                                    onChanged: (value) {
+                                      if (value != null) {
+                                        controller.city.text =
+                                            controller.cityNames[index];
+                                        controller.isCityListExpanded.value =
+                                            false;
+                                      }
+                                    }),
+                              );
+                            }),
+                      )).paddingOnly(bottom: 16.kh),
                 ),
               ),
               Text.rich(

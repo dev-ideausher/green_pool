@@ -5,7 +5,6 @@ import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../constants/image_constant.dart';
 import '../../../res/strings.dart';
-import '../../../routes/app_pages.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
 import '../../../services/text_style_util.dart';
@@ -17,7 +16,6 @@ class RequestBottom extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         padding: EdgeInsets.all(24.kh),
-        height: 400.kh,
         width: 100.w,
         decoration: BoxDecoration(
             color: ColorUtil.kWhiteColor,
@@ -25,6 +23,7 @@ class RequestBottom extends StatelessWidget {
                 topLeft: Radius.circular(40.kh),
                 topRight: Radius.circular(40.kh))),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
             Text(
               Strings.requestSent,

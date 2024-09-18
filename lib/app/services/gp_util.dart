@@ -479,4 +479,40 @@ class GpUtil {
 
     return prevDateLocal.isAfter(sixMonthsAgo);
   }
+
+  static String getArrivalTimeOfDriver(DateTime rideDateTime) {
+    DateTime now = DateTime.now();
+    final Duration diff = rideDateTime.difference(now);
+    String displayTime;
+
+    // Define constants for duration thresholds
+    const int millisecondsPerSecond = 1000;
+    const int millisecondsPerMinute = 60 * millisecondsPerSecond;
+    const int millisecondsPerHour = 60 * millisecondsPerMinute;
+    const int millisecondsPerDay = 24 * millisecondsPerHour;
+    const int millisecondsPerWeek = 7 * millisecondsPerDay;
+
+    // Determine the format based on the difference
+    if (diff.inMilliseconds < millisecondsPerMinute) {
+      displayTime =
+          (diff.inSeconds > 0) ? '${diff.inSeconds} seconds' : '0 seconds';
+    } else if (diff.inMilliseconds < millisecondsPerHour) {
+      displayTime = '${diff.inMinutes} minutes';
+    } else if (diff.inMilliseconds < millisecondsPerDay) {
+      displayTime = '${diff.inHours} hours';
+    } else if (diff.inMilliseconds < 5 * millisecondsPerDay) {
+      displayTime = '${diff.inDays} days';
+    } else {
+      final DateFormat dateFormat = DateFormat('dd MMMM yyyy, h:mm a');
+      displayTime = dateFormat.format(rideDateTime);
+    }
+
+    if (displayTime == "0 seconds") {
+      displayTime = "Get ready, your ride is just seconds away.";
+    } else {
+      displayTime = "Ride is arriving in $displayTime";
+    }
+
+    return displayTime;
+  }
 }

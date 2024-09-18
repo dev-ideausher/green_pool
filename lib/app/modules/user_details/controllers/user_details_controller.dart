@@ -46,6 +46,7 @@ class UserDetailsController extends GetxController {
   RxBool isCityListExpanded = false.obs;
   RxList<String> cityNames = <String>[].obs;
   RxBool saveBtnLoading = false.obs;
+  RxBool isBtnActive = false.obs;
 
   getProfileImage(ImageSource imageSource) async {
     XFile? pickedFile = await GpUtil.compressImage(imageSource);
@@ -54,6 +55,7 @@ class UserDetailsController extends GetxController {
       showMySnackbar(msg: 'Image selected');
       update();
       isProfilePicUpdated.value = true;
+      isBtnActive.value = true;
     } else {
       showMySnackbar(msg: 'No image selected');
     }
@@ -66,6 +68,7 @@ class UserDetailsController extends GetxController {
       showMySnackbar(msg: 'Image selected');
       update();
       isIDPicUpdated.value = true;
+      isBtnActive.value = true;
     } else {
       showMySnackbar(msg: 'No image selected');
     }

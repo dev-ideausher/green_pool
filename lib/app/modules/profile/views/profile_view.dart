@@ -54,10 +54,15 @@ class ProfileView extends GetView<ProfileController> {
               ),
             ),
             Obx(
-              () => Text(
-                controller.fullName.value ?? Strings.user,
-                style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
-              ).paddingOnly(bottom: 24.kh),
+              () => SizedBox(
+                width: 50.w,
+                child: Text(
+                  controller.fullName.value ?? Strings.user,
+                  style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                ).paddingOnly(bottom: 24.kh),
+              ),
             ),
             controller.userInfo.value.data?.gender == "Female"
                 ? ProfileContainer(
