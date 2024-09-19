@@ -30,17 +30,11 @@ class WebAddToBankView extends GetView<WebAddToBankController> {
                             Uri.parse(controller.stripeRedirectUrl ?? ""))
                         ..setJavaScriptMode(JavaScriptMode.unrestricted)
                         ..setNavigationDelegate(NavigationDelegate(
-                          onPageFinished: (url) {
-                            controller.isPageLoaded.value = false;
-                          },
                           onUrlChange: (change) async {
                             if (change.url!.endsWith("onBoardingSuccess") ||
                                 change.url!.endsWith(
                                     "tab=wallet-details&active=addToBank")) {
                               print("CHANGE URL: ${change.url}");
-                              Get.until(
-                                  (route) => Get.currentRoute == Routes.WALLET);
-                            } else if (change.url!.endsWith("link-expiry")) {
                               Get.until(
                                   (route) => Get.currentRoute == Routes.WALLET);
                             }

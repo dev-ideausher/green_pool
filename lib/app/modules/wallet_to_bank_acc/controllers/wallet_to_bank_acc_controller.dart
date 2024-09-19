@@ -86,9 +86,9 @@ class WalletToBankAccController extends GetxController {
             try {
               DialogHelper.showLoading();
               Get.find<WalletController>().getWallet();
+              await Future.delayed(const Duration(seconds: 2));
               final hasCompletedOnboarding =
                   Get.find<WalletController>().hasCompletedOnboarding.value;
-              await Future.delayed(const Duration(seconds: 1));
               if (hasCompletedOnboarding) {
                 transferToBankAccount();
               }
@@ -109,9 +109,10 @@ class WalletToBankAccController extends GetxController {
             try {
               DialogHelper.showLoading();
               Get.find<WalletController>().getWallet();
+
+              await Future.delayed(const Duration(seconds: 2));
               final hasCompletedOnboarding =
                   Get.find<WalletController>().hasCompletedOnboarding.value;
-              await Future.delayed(const Duration(seconds: 1));
               if (hasCompletedOnboarding) {
                 transferToBankAccount();
               }

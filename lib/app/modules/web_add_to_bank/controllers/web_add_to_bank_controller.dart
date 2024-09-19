@@ -10,6 +10,12 @@ class WebAddToBankController extends GetxController {
     super.onInit();
     stripeRedirectUrl = Get.arguments;
     isLoading.value = false;
+    pageLoading();
+  }
+
+  void pageLoading() {
+    Future.delayed(const Duration(seconds: 2));
+    isPageLoaded.value = false;
   }
 
   /*@override
