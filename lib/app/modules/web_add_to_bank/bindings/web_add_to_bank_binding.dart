@@ -5,8 +5,6 @@ import '../controllers/web_add_to_bank_controller.dart';
 class WebAddToBankBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<WebAddToBankController>(
-      () => WebAddToBankController(),
-    );
+    Get.put(WebAddToBankController());
   }
 }

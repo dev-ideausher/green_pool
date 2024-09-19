@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
@@ -154,6 +155,12 @@ class FindRideView extends GetView<FindRideController> {
             GreenPoolTextField(
               hintText: Strings.enterNumberOfSeats,
               controller: controller.seatAvailable,
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(
+                    RegExp(r'[0-9]')), // Only allow digits (0-9)
+                FilteringTextInputFormatter.deny(
+                    RegExp(r'[^\w\s]')), // Deny all special characters
+              ],
               keyboardType: TextInputType.number,
               autovalidateMode: AutovalidateMode.onUserInteraction,
               validator: (value) => controller.seatsValidator(value),

@@ -232,6 +232,7 @@ class RiderRequestSendDriverBottomsheet extends StatelessWidget {
                 if (element.requestSent ?? false) {
                   showMySnackbar(msg: Strings.reqHasAlreadySent);
                 } else {
+                  Get.back();
                   Get.find<RiderMyRideRequestController>()
                       .moveToPaymentFromSendRequest(element!);
                 }

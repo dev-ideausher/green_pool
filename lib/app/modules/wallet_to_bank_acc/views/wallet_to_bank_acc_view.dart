@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
 import 'package:green_pool/app/res/strings.dart';
@@ -81,6 +82,12 @@ class WalletToBankAccView extends GetView<WalletToBankAccController> {
                     ),
                   ),
                   controller: controller.amountTextController,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(
+                        RegExp(r'[0-9]')), // Only allow digits (0-9)
+                    FilteringTextInputFormatter.deny(
+                        RegExp(r'[^\w\s]')), // Deny all special characters
+                  ],
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   keyboardType: const TextInputType.numberWithOptions(),
                   validator: (p0) => controller.fareValidator(p0 ?? '0'),

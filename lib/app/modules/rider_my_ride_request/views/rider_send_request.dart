@@ -25,7 +25,7 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => controller.isLoading.value
+      () => controller.sendRequestPageLoading.value
           ? const GpProgress()
           : controller.riderSendRequestModel.value.data?.isEmpty ?? true
               ? Column(

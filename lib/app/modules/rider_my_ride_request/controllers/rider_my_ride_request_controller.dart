@@ -16,6 +16,7 @@ class RiderMyRideRequestController extends GetxController {
   var confirmRideByRiderModel = ConfirmRideByRiderModel().obs;
   String rideIdFromMyRides = '';
   RxBool isLoading = false.obs;
+  RxBool sendRequestPageLoading = false.obs;
   RxBool mapViewType = false.obs;
 
   @override
@@ -64,12 +65,12 @@ class RiderMyRideRequestController extends GetxController {
   allRiderSendRequestAPI() async {
     // to view list of drivers available on same route in SendRequest View (riders side)
     try {
-      isLoading.value = true;
+      sendRequestPageLoading.value = true;
       final response =
           await APIManager.postAllRiderSendRequest(rideId: rideIdFromMyRides);
       var data = jsonDecode(response.toString());
       riderSendRequestModel.value = RiderSendRequestModel.fromJson(data);
-      isLoading.value = false;
+      sendRequestPageLoading.value = false;
     } catch (e) {
       throw Exception(e);
     }
@@ -135,8 +136,9 @@ class RiderMyRideRequestController extends GetxController {
         "ridePostId": riderConfirmRequestModel.value.data?[index]?.Id
       });
       if (response.data["status"]) {
+        Get.back();
         allRiderConfirmRequestAPI();
-        showMySnackbar(msg: "The ride request has been successfully declined.");        
+        showMySnackbar(msg: "The ride request has been successfully declined.");
       } else {
         Get.back();
         showMySnackbar(msg: response.data["message"]);

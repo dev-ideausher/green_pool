@@ -112,7 +112,8 @@ class PaymentView extends GetView<PaymentController> {
                           onTap: () {
                             controller.discountAvailed.value = false;
                             controller.totalAmount =
-                                double.parse(controller.price.toString());
+                                (double.parse(controller.price.toString()) +
+                                    controller.platformFees);
                             controller.promoCodeId = "";
                           },
                           child: Text(

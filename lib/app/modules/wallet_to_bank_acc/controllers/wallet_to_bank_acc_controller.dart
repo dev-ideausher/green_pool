@@ -77,25 +77,49 @@ class WalletToBankAccController extends GetxController {
       DialogHelper.showLoading();
       final response = await APIManager.putCreateStripeAccount();
       if (response.data['status']) {
-        print(response.data['data']['link']['url']);
+        print("STRIPE LINK: ${response.data['data']['link']['url']}");
         DialogHelper.hideDialog();
         Get.toNamed(Routes.WEB_ADD_TO_BANK,
                 arguments: response.data['data']['link']['url'])
             ?.then(
-          (value) {
-            Get.find<WalletController>().getWallet();
-            transferToBankAccount();
+          (value) async {
+            try {
+              DialogHelper.showLoading();
+              Get.find<WalletController>().getWallet();
+              final hasCompletedOnboarding =
+                  Get.find<WalletController>().hasCompletedOnboarding.value;
+              await Future.delayed(const Duration(seconds: 1));
+              if (hasCompletedOnboarding) {
+                transferToBankAccount();
+              }
+              DialogHelper.hideDialog();
+            } catch (e) {
+              DialogHelper.hideDialog();
+              debugPrint(e.toString());
+            }
           },
         );
       } else {
-        print(response.data['data']['url']);
+        print("STRIPE LINK: ${response.data['data']['url']}");
         DialogHelper.hideDialog();
         Get.toNamed(Routes.WEB_ADD_TO_BANK,
                 arguments: response.data['data']['url'])
             ?.then(
-          (value) {
-            Get.find<WalletController>().getWallet();
-            transferToBankAccount();
+          (value) async {
+            try {
+              DialogHelper.showLoading();
+              Get.find<WalletController>().getWallet();
+              final hasCompletedOnboarding =
+                  Get.find<WalletController>().hasCompletedOnboarding.value;
+              await Future.delayed(const Duration(seconds: 1));
+              if (hasCompletedOnboarding) {
+                transferToBankAccount();
+              }
+              DialogHelper.hideDialog();
+            } catch (e) {
+              DialogHelper.hideDialog();
+              debugPrint(e.toString());
+            }
           },
         );
       }
@@ -109,7 +133,8 @@ class WalletToBankAccController extends GetxController {
 
   Future<void> transferToBankAccount() async {
     try {
-      final res = await APIManager.postTransferWalletBalance();
+      final res = await APIManager.postTransferWalletBalance(
+          body: {"amount": double.parse(amountTextController.text.trim())});
       if (res.data["status"]) {
         showMySnackbar(msg: Strings.moneyHasBeenTransferred);
         Get.find<WalletController>().getWallet();

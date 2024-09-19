@@ -1,5 +1,5 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
@@ -86,6 +86,10 @@ class SetupUser extends GetView<ProfileSetupController> {
             GreenPoolTextField(
               hintText: Strings.enterName,
               controller: controller.fullName,
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(
+                    RegExp(r'[a-zA-Z\s]')), // Allow only alphabets and spaces
+              ],
               validator: (value) => controller.nameValidator(value),
               autovalidateMode: AutovalidateMode.onUserInteraction,
               suffix: SvgPicture.asset(ImageConstant.svgProfileEditPen),
@@ -107,6 +111,12 @@ class SetupUser extends GetView<ProfileSetupController> {
                 .paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
               hintText: Strings.enterPhoneNumber,
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(
+                    RegExp(r'[0-9]')), // Only allow digits (0-9)
+                FilteringTextInputFormatter.deny(
+                    RegExp(r'[^\w\s]')), // Deny all special characters
+              ],
               prefix: Text(
                 "+1",
                 style: TextStyleUtil.k14Regular(
@@ -192,7 +202,7 @@ class SetupUser extends GetView<ProfileSetupController> {
                     : const Icon(Icons.arrow_drop_down),
                 onPressedSuffix: () {
                   controller.isCityListExpanded.toggle();
-                  controller.addCityNames(controller.city.text);
+                  controller.addCityNames("");
                 },
                 onchanged: (value) {
                   controller.addCityNames(value ?? "");

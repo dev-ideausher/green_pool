@@ -1,6 +1,7 @@
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
 import 'package:green_pool/app/res/strings.dart';
@@ -44,6 +45,12 @@ class LoginView extends GetView<LoginController> {
                 GreenPoolTextField(
                   hintText: Strings.enterHere,
                   controller: controller.phoneNumberController,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(
+                        RegExp(r'[0-9]')), // Only allow digits (0-9)
+                    FilteringTextInputFormatter.deny(
+                        RegExp(r'[^\w\s]')), // Deny all special characters
+                  ],
                   keyboardType: TextInputType.phone,
                   validator: (value) => controller.phoneNumberValidator(value),
                   onchanged: (v) {},

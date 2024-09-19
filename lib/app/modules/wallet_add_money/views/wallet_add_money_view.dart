@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
@@ -84,6 +85,12 @@ class WalletAddMoneyView extends GetView<WalletAddMoneyController> {
                     ),
                   ),
                   controller: controller.amountTextController,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(
+                        RegExp(r'[0-9]')), // Only allow digits (0-9)
+                    FilteringTextInputFormatter.deny(
+                        RegExp(r'[^\w\s]')), // Deny all special characters
+                  ],
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   keyboardType: const TextInputType.numberWithOptions(),
                   onchanged: (value) {

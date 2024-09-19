@@ -273,6 +273,10 @@ class PaymentController extends GetxController {
     } else {
       //if price does not meet minAmnt criteria
       isLoading.value = false;
+      promoCodeId = "";
+      discountAvailed.value = false;
+      totalAmount = price + platformFees;
+      discountAvailed.refresh();
       showMySnackbar(
           msg:
               "The minimum ride amount to avail this offer is \$${promoCodeModel.value.data![index]!.minAmount!}");

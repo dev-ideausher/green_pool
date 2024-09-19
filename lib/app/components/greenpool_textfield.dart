@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../services/colors.dart';
@@ -20,6 +21,7 @@ class GreenPoolTextField extends StatelessWidget {
   final Widget? prefix, suffix;
   final Function()? onTap, onPressedSuffix;
   final AutovalidateMode? autovalidateMode;
+  final List<TextInputFormatter>? inputFormatters;
 
   const GreenPoolTextField(
       {super.key,
@@ -43,12 +45,14 @@ class GreenPoolTextField extends StatelessWidget {
       this.border,
       this.isSuffixNeeded,
       this.hintColor,
-      this.textCapitalization = TextCapitalization.none});
+      this.textCapitalization = TextCapitalization.none,
+      this.inputFormatters});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       enabled: enabled,
+      inputFormatters: inputFormatters,
       style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack01),
       maxLines: maxLines ?? 1,
       onTap: onTap,

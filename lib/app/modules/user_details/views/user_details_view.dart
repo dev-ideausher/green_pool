@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/common_image_view.dart';
@@ -97,6 +98,10 @@ class UserDetailsView extends GetView<UserDetailsController> {
             GreenPoolTextField(
               hintText: Strings.fullName,
               controller: controller.nameTextController,
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(
+                    RegExp(r'[a-zA-Z\s]')), // Allow only alphabets and spaces
+              ],
               onchanged: (value) {
                 if (value != null) {
                   controller.isBtnActive.value = true;

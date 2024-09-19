@@ -222,25 +222,17 @@ class SendRequest extends GetView<MyRidesRequestController> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  InkWell(
-                                    onTap: () => controller.openMessage(
+                                  GreenPoolButton(
+                                    onPressed: () => controller.openMessage(
                                         controller.sendRequestModel.value
                                             .data![index]!),
-                                    child: Container(
-                                      height: 38.kh,
-                                      width: 134.kw,
-                                      alignment: Alignment.center,
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(40.kh),
-                                          border: Border.all(
-                                              color: ColorUtil.kSecondary01)),
-                                      child: Text(
-                                        Strings.message,
-                                        style: TextStyleUtil.k12Semibold(),
-                                      ),
-                                    ),
-                                  ).paddingAll(8.kh),
+                                    width: 144.kw,
+                                    height: 40.kh,
+                                    fontSize: 14.kh,
+                                    isBorder: true,
+                                    padding: const EdgeInsets.all(0),
+                                    label: Strings.message,
+                                  ),
                                   GreenPoolButton(
                                       width: 144.kw,
                                       height: 40.kh,
@@ -256,8 +248,7 @@ class SendRequest extends GetView<MyRidesRequestController> {
                                                 .data![index].requestSent ??
                                             false) {
                                           showMySnackbar(
-                                              msg:
-                                                  Strings.reqHasAlreadySent);
+                                              msg: Strings.reqHasAlreadySent);
                                         } else {
                                           await controller
                                               .sendRequestToRiderAPI(controller

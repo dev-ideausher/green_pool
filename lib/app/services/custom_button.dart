@@ -74,7 +74,7 @@ class GreenPoolButton extends StatelessWidget {
           shape: RoundedRectangleBorder(
               side: isBorder
                   ? BorderSide(
-                      color: borderColor ?? Colors.black,
+                      color: borderColor ?? ColorUtil.kSecondary01,
                       width: borderWidth ?? 1.kh)
                   : BorderSide.none,
               borderRadius: BorderRadius.circular(borderRadius ?? 100.kh)),
@@ -99,7 +99,9 @@ class GreenPoolButton extends StatelessWidget {
                   style: TextStyleUtil.k16Semibold(
                       fontSize: fontSize ?? 16.kh,
                       color: isActive
-                          ? labelColor ?? ColorUtil.kBlack01
+                          ? isBorder
+                              ? labelColor ?? ColorUtil.kSecondary01
+                              : labelColor ?? ColorUtil.kBlack01
                           : labelColor ?? ColorUtil.kBlack05),
                 ),
       ),

@@ -127,9 +127,10 @@ class APIManager {
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
           .post(Endpoints.transferAmountToWallet, data: jsonEncode(body));
 
-  static Future<Response> postTransferWalletBalance() async =>
+  static Future<Response> postTransferWalletBalance(
+          {required dynamic body}) async =>
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
-          .post(Endpoints.transferWalletBalance);
+          .post(Endpoints.transferWalletBalance, data: jsonEncode(body));
 
   //--------------------Get api--------------------//
 

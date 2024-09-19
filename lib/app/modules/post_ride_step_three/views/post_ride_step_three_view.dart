@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/gp_progress.dart';
@@ -80,6 +81,12 @@ class PostRideStepThreeView extends GetView<PostRideStepThreeController> {
                               isSuffixNeeded: false,
                               keyboardType:
                                   const TextInputType.numberWithOptions(),
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(RegExp(
+                                    r'[0-9]')), // Only allow digits (0-9)
+                                FilteringTextInputFormatter.deny(RegExp(
+                                    r'[^\w\s]')), // Deny all special characters
+                              ],
                               onchanged: (val) {
                                 controller.setActiveStatePricing();
                                 controller.postRideModel.value.ridesDetails

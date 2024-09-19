@@ -501,7 +501,7 @@ class GpUtil {
     } else if (diff.inMilliseconds < millisecondsPerDay) {
       displayTime = '${diff.inHours} hours';
     } else if (diff.inMilliseconds < 5 * millisecondsPerDay) {
-      displayTime = '${diff.inDays} days';
+      displayTime = '${diff.inDays} day(s)';
     } else {
       final DateFormat dateFormat = DateFormat('dd MMMM yyyy, h:mm a');
       displayTime = dateFormat.format(rideDateTime);

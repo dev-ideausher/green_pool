@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
@@ -103,6 +104,10 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
               GreenPoolTextField(
                 hintText: Strings.enterName,
                 controller: controller.fullName,
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(
+                      RegExp(r'[a-zA-Z\s]')), // Allow only alphabets and spaces
+                ],
                 validator: (value) => controller.nameValidator(value),
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 suffix: SvgPicture.asset(ImageConstant.svgProfileEditPen),
@@ -209,7 +214,7 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
                       : const Icon(Icons.arrow_drop_down),
                   onPressedSuffix: () {
                     controller.isCityListExpanded.toggle();
-                    controller.addCityNames(controller.city.text);
+                    controller.addCityNames("");
                   },
                   onchanged: (value) {
                     controller.addCityNames(value ?? "");

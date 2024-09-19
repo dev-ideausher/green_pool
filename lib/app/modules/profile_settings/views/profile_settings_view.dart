@@ -64,14 +64,14 @@ class ProfileSettingsView extends GetView<ProfileSettingsController> {
                   image: ImageConstant.svgProfileCar,
                   text: Strings.vehicleDetails)
               : const SizedBox(),
-          // ProfileContainer(
-          //     onTap: () => Get.toNamed(Routes.CHANGE_PASSWORD),
-          //     image: ImageConstant.svgProfileLock,
-          //     text: 'Change Password'),
+          /*ProfileContainer(
+              onTap: () => Get.toNamed(Routes.CHANGE_PASSWORD),
+              image: ImageConstant.svgProfileLock,
+              text: 'Change Password'),
           ProfileContainer(
               onTap: () => Get.toNamed(Routes.EMERGENCY_CONTACTS),
               image: ImageConstant.svgProfileCall,
-              text: Strings.emergencyContacts),
+              text: Strings.emergencyContacts),*/
         ],
       ).paddingSymmetric(horizontal: 16.kw),
     );

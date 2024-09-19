@@ -176,8 +176,7 @@ class RiderRequestBottomsheet extends StatelessWidget {
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Text(
-                      element?.riderDetails?.totalRides.toString() ??
-                          "0",
+                      element?.riderDetails?.totalRides.toString() ?? "0",
                       style:
                           TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                     ),
@@ -205,6 +204,7 @@ class RiderRequestBottomsheet extends StatelessWidget {
                 if (element?.requestSent ?? false) {
                   showMySnackbar(msg: Strings.reqHasAlreadySent);
                 } else {
+                  Get.back();
                   Get.find<MyRidesRequestController>()
                       .sendRequestToRiderAPI(element!);
                 }
