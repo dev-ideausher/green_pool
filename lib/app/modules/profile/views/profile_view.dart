@@ -13,7 +13,6 @@ import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../res/strings.dart';
-import '../../../services/storage.dart';
 import '../../../services/text_style_util.dart';
 import '../controllers/profile_controller.dart';
 import 'profile_container.dart';
@@ -164,8 +163,7 @@ class ProfileView extends GetView<ProfileController> {
                 text: Strings.termsAmbersentConditions),
             ProfileContainer(
                 onTap: () async {
-                  await launchUrl(
-                      Uri.parse("https://green-pool-front-end.vercel.app/"));
+                  await launchUrl(Uri.parse("https://web-carpooll.vercel.app"));
                 },
                 image: ImageConstant.svgProfileFollow,
                 text: Strings.followUsOnSocialMedia),

@@ -17,7 +17,8 @@ class AboutView extends GetView<AboutController> {
         child: WebViewWidget(
             key: key,
             controller: WebViewController()
-              ..loadRequest(Uri.parse("https://carpooll.com/aboutus" ?? ""))
+              ..loadRequest(
+                  Uri.parse("https://web-carpooll.vercel.app/aboutus" ?? ""))
               ..setJavaScriptMode(JavaScriptMode.unrestricted)),
       ),
     );

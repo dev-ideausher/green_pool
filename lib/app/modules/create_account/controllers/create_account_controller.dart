@@ -116,7 +116,7 @@ class CreateAccountController extends GetxController {
     } else {
       Get.offNamed(Routes.LOGIN, arguments: {
         'isDriver': isDriver,
-        'fromNavBar': false,
+        'fromNavBar': fromNavBar,
         'postRideModel': postRideModel.value
       });
     }

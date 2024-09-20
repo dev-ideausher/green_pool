@@ -18,7 +18,7 @@ class PostRideStepThreeController extends GetxController {
   TextEditingController Stop2toDestinationPrice = TextEditingController();
   TextEditingController descriptionTextController = TextEditingController();
 
-  RxBool isActivePricingButton = true.obs;
+  RxBool isActivePricingButton = false.obs;
   RxBool viewPrice = false.obs;
   RxBool isLoading = true.obs;
   double maxFarePrice = 0.0;

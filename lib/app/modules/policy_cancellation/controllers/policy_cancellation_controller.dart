@@ -1,19 +1,16 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../../services/dio/api_service.dart';
 
 class PolicyCancellationController extends GetxController {
   RxBool isLoading = false.obs;
+  RxBool isLoad = false.obs;
   String policyText = '';
 
   @override
   void onInit() {
     super.onInit();
-    driverCancellationPolicyAPI();
   }
 
-  driverCancellationPolicyAPI() async {
+  /*driverCancellationPolicyAPI() async {
     try {
       isLoading.value = true;
       final response = await APIManager.getCancelRefundPolicy();
@@ -22,5 +19,5 @@ class PolicyCancellationController extends GetxController {
     } catch (e) {
       debugPrint(e.toString());
     }
-  }
+  }*/
 }

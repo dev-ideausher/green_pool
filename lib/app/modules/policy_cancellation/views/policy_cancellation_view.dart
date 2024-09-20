@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:green_pool/app/services/responsive_size.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../../components/gp_progress.dart';
 import '../../../components/greenpool_appbar.dart';
 import '../../../res/strings.dart';
-import '../../../services/colors.dart';
-import '../../../services/text_style_util.dart';
 import '../controllers/policy_cancellation_controller.dart';
 
 class PolicyCancellationView extends GetView<PolicyCancellationController> {
@@ -19,17 +17,30 @@ class PolicyCancellationView extends GetView<PolicyCancellationController> {
         title: Text(Strings.driverCancellationPolicy),
       ),
       body: Obx(
-        () => controller.isLoading.value
+        () => controller.isLoad.value
             ? const GpProgress()
-            : Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(                    
-                    controller.policyText,
-                    style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack02),
-                  ).paddingOnly(top: 32.kh),
-                ],
-              ).paddingSymmetric(horizontal: 16.kw),
+            : SafeArea(
+                child: Stack(
+                  children: [
+                    WebViewWidget(
+                      key: key,
+                      controller: WebViewController()
+                        ..loadRequest(Uri.parse(
+                            "https://web-carpooll.vercel.app/cancellation-policy" ??
+                                ""))
+                        ..setJavaScriptMode(JavaScriptMode.unrestricted)
+                        ..setNavigationDelegate(NavigationDelegate(
+                            onPageFinished: (url) {
+                              controller.isLoading.value = false;
+                            },
+                            onUrlChange: (change) async {})),
+                    ),
+                    controller.isLoading.value
+                        ? const GpProgress()
+                        : const Stack(),
+                  ],
+                ),
+              ),
       ),
     );
   }
