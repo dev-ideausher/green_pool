@@ -85,6 +85,9 @@ class VerifyController extends GetxController {
     } catch (e) {
       debugPrint('otp error: $e');
     }
+    finally {
+      isButtonLoading.value = false;
+    }
   }
 
   otpAuth() async {

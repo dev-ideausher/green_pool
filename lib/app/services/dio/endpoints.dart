@@ -9,7 +9,7 @@ class Endpoints {
       : 'AIzaSyBq5jpn2f8NAb4pb562ejP2YCg47uX1_nU';
 
   // base url
-  static const String baseUrl = "https://api.greenpool.ca/v1/";
+  static const String baseUrl = "https://api.carpooll.com/v1/";
   // static const String baseUrl = "https://green-pool-backend.vercel.app/v1/";
 
   static String success_url =

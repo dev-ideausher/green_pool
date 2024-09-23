@@ -56,6 +56,31 @@ class MessagesController extends GetxController {
                 image: message?.user2?.profilePic?.url,
                 deleteUpdateTime: message?.deleteUpdateTime ?? "",
                 name: message?.user2?.fullName))!
-        .then((value) => getMessageListAPI());
+        .then((value) async {
+      if (value != true) {
+        final resp = await APIManager.getChatList();
+        var data = jsonDecode(resp.toString());
+        messagesModel.value = MessageListModel.fromJson(data);
+        messagesModel.value?.chatRoomIds?.sort((a, b) {
+          final dateTimeA =
+              DateTime.parse(a!.updatedAt ?? "2024-01-01T00:00:00.000Z");
+          final dateTimeB =
+              DateTime.parse(b!.updatedAt ?? "2024-01-01T00:00:00.000Z");
+
+          if (dateTimeA == null && dateTimeB == null) {
+            return 0;
+          } else if (dateTimeA == null) {
+            return 1;
+          } else if (dateTimeB == null) {
+            return -1;
+          } else {
+            return dateTimeB.compareTo(dateTimeA);
+          }
+        });
+        messagesModel.refresh();
+      } else {
+        getMessageListAPI();
+      }
+    });
   }
 }

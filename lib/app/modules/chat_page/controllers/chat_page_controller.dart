@@ -211,7 +211,7 @@ class ChatPageController extends GetxController {
   Future<void> deleteChatApi() async {
     try {
       await APIManager.deleteChat(chatRoomId: chatArg.value.chatRoomId ?? "");
-      Get.back();
+      Get.back(result: true);
     } catch (e) {
       debugPrint(e.toString());
     }
