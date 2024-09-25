@@ -151,7 +151,23 @@ class MyRidesOneTimeController extends GetxController {
   }
 
   void riderPagePageOpen(MyRidesModelData myRidesModelData) {
-    if (myRidesModelData.confirmDriverDetails!.isEmpty) {
+    if (myRidesModelData.rideStatus == "Confirmed") {
+      if (myRidesModelData.confirmDriverDetails?.first?.driverPostsDetails
+              ?.first?.isStarted ??
+          false) {
+        Get.toNamed(Routes.RIDER_START_RIDE_MAP, arguments: myRidesModelData)
+            ?.then((v) => myRidesAPI());
+      } else {
+        Get.toNamed(Routes.RIDER_CONFIRMED_RIDE_DETAILS,
+                arguments: myRidesModelData)
+            ?.then((v) => myRidesAPI());
+      }
+    } else if (myRidesModelData.rideStatus == "NA") {
+      Get.toNamed(Routes.RIDER_MY_RIDE_REQUEST, arguments: myRidesModelData.Id)
+          ?.then((v) => myRidesAPI());
+    }
+
+    /*if (myRidesModelData.confirmDriverDetails!.isEmpty) {
       if (myRidesModelData.rideStatus == "Confirmed") {
         Get.toNamed(Routes.RIDER_CONFIRMED_RIDE_DETAILS,
                 arguments: myRidesModelData)
@@ -178,7 +194,7 @@ class MyRidesOneTimeController extends GetxController {
               ?.then((v) => myRidesAPI());
         }
       }
-    }
+    }*/
   }
 
   Future<void> startRide(MyRidesModelData value) async {

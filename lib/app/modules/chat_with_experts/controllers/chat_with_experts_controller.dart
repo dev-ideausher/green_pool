@@ -95,7 +95,6 @@ class ChatWithExpertsController extends GetxController {
     final timestamp = DateTime.now().toUtc();
     try {
       if (!isChatStarted.value) {
-        isChatStarted.value = true;
         messages.value.add(MessageModel(
             id: chatRoomId,
             message: msg,
@@ -111,6 +110,7 @@ class ChatWithExpertsController extends GetxController {
         } else {
           showMySnackbar(msg: res.data["message"]);
         }
+        isChatStarted.value = true;
       } else {
         messages.value.add(MessageModel(
             id: chatRoomId,

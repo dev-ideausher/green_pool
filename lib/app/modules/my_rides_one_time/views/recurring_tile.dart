@@ -115,7 +115,6 @@ class RecurringTile extends StatelessWidget {
                           ),
                           SizedBox(
                             height: 24.kh,
-                            width: 170.kw,
                             child: ListView.builder(
                               itemCount: ((recurringResp?.ridesDetails?[index1]
                                           ?.seatAvailable ??
@@ -124,6 +123,7 @@ class RecurringTile extends StatelessWidget {
                                           ?.ridersDetails?.length ??
                                       0)),
                               reverse: true,
+                              shrinkWrap: true,
                               scrollDirection: Axis.horizontal,
                               itemBuilder: (context, index2) {
                                 bool isSeatAvailable = index2 <

@@ -84,8 +84,7 @@ class VerifyController extends GetxController {
       isButtonLoading.value = false;
     } catch (e) {
       debugPrint('otp error: $e');
-    }
-    finally {
+    } finally {
       isButtonLoading.value = false;
     }
   }
@@ -135,7 +134,15 @@ class VerifyController extends GetxController {
           _handleNewUser(userInfo, authService, homeController, storageService);
         } else {
           Get.back();
-          showMySnackbar(msg: response.statusMessage.toString() ?? "");
+          storageService.profileStatus = false;
+          storageService.isLoggedIn = false;
+          storageService.encjwToken = "";
+          storageService.setFirebaseUid = "";
+          storageService.setUserName = "";
+          storageService.emailId = "";
+          storageService.phoneNumber = "";
+          Get.find<AuthService>().logOutUser();
+          showMySnackbar(msg: response.data['message'].toString() ?? "");
         }
       } catch (e) {
         _handleError(e);
@@ -150,7 +157,15 @@ class VerifyController extends GetxController {
               userInfo, authService, homeController, storageService);
         } else {
           Get.back();
-          showMySnackbar(msg: response.statusMessage.toString() ?? "");
+          storageService.profileStatus = false;
+          storageService.isLoggedIn = false;
+          storageService.encjwToken = "";
+          storageService.setFirebaseUid = "";
+          storageService.setUserName = "";
+          storageService.emailId = "";
+          storageService.phoneNumber = "";
+          Get.find<AuthService>().logOutUser();
+          showMySnackbar(msg: response.data['message'].toString() ?? "");
         }
       } catch (e) {
         _handleError(e);

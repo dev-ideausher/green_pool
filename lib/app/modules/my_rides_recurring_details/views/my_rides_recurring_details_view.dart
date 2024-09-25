@@ -224,7 +224,6 @@ class MyRidesRecurringDetailsView
                                     ),
                                     SizedBox(
                                       height: 24.kh,
-                                      width: 30.w,
                                       child: ListView.builder(
                                         itemCount: ((recurringRides
                                                     ?.seatAvailable ??
@@ -232,6 +231,7 @@ class MyRidesRecurringDetailsView
                                             (recurringRides?.riders!.length ??
                                                 0)),
                                         reverse: true,
+                                        shrinkWrap: true,
                                         scrollDirection: Axis.horizontal,
                                         itemBuilder: (context, index1) {
                                           bool isSeatAvailable = index1 <

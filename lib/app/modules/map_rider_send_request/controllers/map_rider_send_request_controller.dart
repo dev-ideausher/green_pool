@@ -115,4 +115,12 @@ class MapRiderSendRequestController extends GetxController {
     drawPolyline();
     isLoading.value = false;
   }
+
+  @override
+  void onClose() {
+    mapController.dispose();
+    markers.clear();
+    polylineCoordinates.clear();
+    super.onClose();
+  }
 }

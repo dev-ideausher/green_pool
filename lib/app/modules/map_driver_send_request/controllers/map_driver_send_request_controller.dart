@@ -96,4 +96,12 @@ class MapDriverSendRequestController extends GetxController {
 
     isLoading.value = false;
   }
+
+  @override
+  void onClose() {
+    mapController.dispose();
+    markers.clear();
+    polylineCoordinates.clear();
+    super.onClose();
+  }
 }

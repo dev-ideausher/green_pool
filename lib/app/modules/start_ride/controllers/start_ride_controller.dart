@@ -401,6 +401,9 @@ class StartRideController extends GetxController {
   @override
   void onClose() {
     positionStream?.cancel();
+    mapController.dispose();
+    markers.clear();
+    polylineCoordinates.clear();
     super.onClose();
   }
 

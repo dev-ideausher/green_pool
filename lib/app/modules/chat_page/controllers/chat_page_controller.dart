@@ -20,12 +20,13 @@ class ChatPageController extends GetxController {
   final RxBool sendingMsg = false.obs;
   final TextEditingController eMsg = TextEditingController();
   final RxList<MessageModel> messages = <MessageModel>[].obs;
-  final ScrollController scrollController = ScrollController();
+  late ScrollController scrollController;
   StreamSubscription<DatabaseEvent>? _chatSubscription;
 
   @override
   void onInit() {
     super.onInit();
+    scrollController = ScrollController();
     chatArg.value = Get.arguments;
     if (chatArg.value.chatRoomId != null) {
       getChat();
@@ -79,6 +80,7 @@ class ChatPageController extends GetxController {
   void onClose() {
     _chatSubscription?.cancel();
     scrollController.dispose();
+    Get.delete<ChatPageController>();
     super.onClose();
   }
 
