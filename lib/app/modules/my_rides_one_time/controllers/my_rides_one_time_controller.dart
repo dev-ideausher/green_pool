@@ -55,26 +55,30 @@ class MyRidesOneTimeController extends GetxController {
   }
 
   riderCancelRideAPI(MyRidesModelData myRidesModelData) async {
-    DialogHelper.riderCancelRideDialog(() async {
-      Get.back();
-      final Map<String, dynamic> riderRideId = {
-        "riderRideId": myRidesModelData.Id
-      };
-      try {
-        isLoad.value = true;
-        final cancelRideResponse =
-            await APIManager.riderCancelRide(body: riderRideId);
-        if (cancelRideResponse.data['status']) {
-          await myRidesAPI();
-          Get.back();
-        } else {
-          showMySnackbar(msg: cancelRideResponse.data['message'].toString());
+    if (myRidesModelData.confirmDriverDetails?.first?.driverPostsDetails?.first
+            ?.isStarted !=
+        false) {
+      DialogHelper.riderCancelRideDialog(() async {
+        Get.back();
+        final Map<String, dynamic> riderRideId = {
+          "riderRideId": myRidesModelData.Id
+        };
+        try {
+          isLoad.value = true;
+          final cancelRideResponse =
+              await APIManager.riderCancelRide(body: riderRideId);
+          if (cancelRideResponse.data['status']) {
+            await myRidesAPI();
+            Get.back();
+          } else {
+            showMySnackbar(msg: cancelRideResponse.data['message'].toString());
+          }
+          isLoad.value = false;
+        } catch (e) {
+          throw Exception(e);
         }
-        isLoad.value = false;
-      } catch (e) {
-        throw Exception(e);
-      }
-    });
+      });
+    }
   }
 
   checkCancellationCount(MyRidesModelData myRidesModelData) async {

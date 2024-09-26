@@ -154,7 +154,7 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                             children: [
                                               Expanded(
                                                 child: Text(
-                                                  "${rideDetails!.driverDetails![0]!.fullName}  ",
+                                                  "${rideDetails!.driverDetails![0]!.fullName.toString().split(" ").first}  ",
                                                   style:
                                                       TextStyleUtil.k16Semibold(
                                                           fontSize: 16.kh),

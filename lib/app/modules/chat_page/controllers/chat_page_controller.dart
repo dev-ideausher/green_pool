@@ -46,34 +46,37 @@ class ChatPageController extends GetxController {
   }
 
   void getChat() async {
-    _chatSubscription = FirebaseDatabase.instance
-        .ref()
-        .child('chats')
-        .child(chatArg.value.chatRoomId ?? "")
-        .child("messages")
-        .onValue
-        .listen((event) async {
-      var data = event.snapshot.value;
-      if (data is Map) {
-        final liveLocation =
-            DataMsgModel.fromMap(Map<String, dynamic>.from(data));
-        messages.value = liveLocation.messages;
-        messages.value.sort((a, b) => a.timestamp!.compareTo(b.timestamp!));
-        try {
-          if (chatArg.value.deleteUpdateTime != null ||
-              chatArg.value.deleteUpdateTime != "") {
-            messages.value.removeWhere((item) => item.timestamp.isBefore(
-                DateTime.parse(chatArg.value.deleteUpdateTime ?? "")));
+    if (!isClosed) {
+      _chatSubscription = FirebaseDatabase.instance
+          .ref()
+          .child('chats')
+          .child(chatArg.value.chatRoomId ?? "")
+          .child("messages")
+          .onValue
+          .listen((event) async {
+        var data = event.snapshot.value;
+        if (data is Map) {
+          final liveLocation =
+              DataMsgModel.fromMap(Map<String, dynamic>.from(data));
+          messages.value = liveLocation.messages;
+          messages.value.sort((a, b) => a.timestamp!.compareTo(b.timestamp!));
+          try {
+            if (chatArg.value.deleteUpdateTime != null ||
+                chatArg.value.deleteUpdateTime != "") {
+              messages.value.removeWhere((item) => item.timestamp.isBefore(
+                  DateTime.parse(chatArg.value.deleteUpdateTime ?? "")));
+            }
+          } catch (e) {
+            debugPrint(e.toString());
           }
-        } catch (e) {
-          debugPrint(e.toString());
+          WidgetsBinding.instance
+              .addPostFrameCallback((_) => _scrollToBottom());
         }
-        WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToBottom());
-      }
-      readMsg();
-    }, onError: (Object error) {
-      debugPrint("Error: $error");
-    });
+        readMsg();
+      }, onError: (Object error) {
+        debugPrint("Error: $error");
+      });
+    }
   }
 
   @override

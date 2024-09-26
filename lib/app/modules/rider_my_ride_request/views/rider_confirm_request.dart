@@ -155,24 +155,33 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Text(
-                                              "${controller.riderConfirmRequestModel.value.data?[index]?.driverRideDetails?.driverDetails?[0]?.fullName}",
-                                              style: TextStyleUtil.k16Semibold(
-                                                  fontSize: 16.kh),
+                                            SizedBox(
+                                              width: 75.kw,
+                                              child: Text(
+                                                "${controller.riderConfirmRequestModel.value.data?[index]?.driverRideDetails?.driverDetails?[0]?.fullName.toString().split(" ").first}",
+                                                style:
+                                                    TextStyleUtil.k16Semibold(
+                                                        fontSize: 16.kh),
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
                                             ),
                                             8.kwidthBox,
-                                            Text.rich(
-                                              TextSpan(
-                                                children: [
-                                                  TextSpan(
-                                                    text:
-                                                        "${Strings.dollar} ${(controller.riderConfirmRequestModel.value.data![index]?.price ?? 0)}",
-                                                    style:
-                                                        TextStyleUtil.k16Bold(
-                                                            color: ColorUtil
-                                                                .kSecondary01),
-                                                  ),
-                                                ],
+                                            SizedBox(
+                                              width: 50.kw,
+                                              child: Text.rich(
+                                                overflow: TextOverflow.ellipsis,
+                                                TextSpan(
+                                                  children: [
+                                                    TextSpan(
+                                                      text:
+                                                          "${Strings.dollar} ${(controller.riderConfirmRequestModel.value.data![index]?.price ?? 0)}",
+                                                      style:
+                                                          TextStyleUtil.k16Bold(
+                                                              color: ColorUtil
+                                                                  .kSecondary01),
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
                                             ),
                                             8.kwidthBox,

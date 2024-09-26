@@ -103,6 +103,20 @@ class MatchingRidesController extends GetxController {
             (rideDetails?['ridesDetails']['seatAvailable']);
     final pricePerSeat =
         int.parse(matchingRidesModel.value.data?[index]?.price ?? "0");
+    //change rider's origin details and destination details to matched details
+    rideDetails?['ridesDetails']['origin']['name'] =
+        matchingRidesModel.value.data?[index]?.matchedOriginLocation?.name;
+    rideDetails?['ridesDetails']['origin']['latitude'] = matchingRidesModel
+        .value.data?[index]?.matchedOriginLocation?.coordinates?.last;
+    rideDetails?['ridesDetails']['origin']['longitude'] = matchingRidesModel
+        .value.data?[index]?.matchedOriginLocation?.coordinates?.first;
+    rideDetails?['ridesDetails']['destination']['name'] =
+        matchingRidesModel.value.data?[index]?.matchedDestinationLocation?.name;
+    rideDetails?['ridesDetails']['destination']['latitude'] = matchingRidesModel
+        .value.data?[index]?.matchedDestinationLocation?.coordinates?.last;
+    rideDetails?['ridesDetails']['destination']['longitude'] =
+        matchingRidesModel
+            .value.data?[index]?.matchedDestinationLocation?.coordinates?.first;
     Get.toNamed(Routes.DRIVER_DETAILS, arguments: {
       'rideDetails': rideDetails,
       'driverRideId': driverRideId,
@@ -175,8 +189,9 @@ class MatchingRidesController extends GetxController {
     Map<String, dynamic> getPreferencesData() {
       final Map<String, dynamic> preferencesData = {};
 
-      if (appreciatesConvo.value)
+      if (appreciatesConvo.value) {
         preferencesData["AppreciatesConversation"] = true;
+      }
       if (enjoysMusic.value) preferencesData["EnjoysMusic"] = true;
       if (coolOrHeat.value) preferencesData["CoolingOrHeating"] = true;
       if (smokeFree.value) preferencesData["SmokeFree"] = true;
