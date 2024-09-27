@@ -22,6 +22,7 @@ class ChatPageController extends GetxController {
   final RxList<MessageModel> messages = <MessageModel>[].obs;
   late ScrollController scrollController;
   StreamSubscription<DatabaseEvent>? _chatSubscription;
+  bool isSubscribed = false;
 
   @override
   void onInit() {
@@ -46,7 +47,13 @@ class ChatPageController extends GetxController {
   }
 
   void getChat() async {
-    if (!isClosed) {
+    if (!isClosed && !isSubscribed) {
+      isSubscribed = true;
+
+      _chatSubscription?.cancel();
+      _chatSubscription = null;
+      debugPrint('New subscription is being created');
+
       _chatSubscription = FirebaseDatabase.instance
           .ref()
           .child('chats')
@@ -77,14 +84,6 @@ class ChatPageController extends GetxController {
         debugPrint("Error: $error");
       });
     }
-  }
-
-  @override
-  void onClose() {
-    _chatSubscription?.cancel();
-    scrollController.dispose();
-    Get.delete<ChatPageController>();
-    super.onClose();
   }
 
   void _scrollToBottom() {
@@ -224,5 +223,20 @@ class ChatPageController extends GetxController {
 
   call() {
     // launchUrl(Uri.parse("tel:${chatArg.value.phone}"));
+  }
+
+  @override
+  void onClose() {
+    if (_chatSubscription != null) {
+      _chatSubscription!.cancel();
+      _chatSubscription = null;
+      debugPrint('Subscription cancelled');
+    }
+
+    if (scrollController.hasClients || !scrollController.hasClients) {
+      scrollController.dispose();
+    }
+
+    super.onClose();
   }
 }

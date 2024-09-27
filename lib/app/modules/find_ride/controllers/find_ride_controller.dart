@@ -95,8 +95,7 @@ class FindRideController extends GetxController {
   void decideRouting() async {
     if (Get.find<GetStorageService>().isLoggedIn) {
       final rideDetails = _getRideDetails();
-      if (Get.find<HomeController>().userInfo.value.data?.profileStatus ==
-          true) {
+      if (Get.find<GetStorageService>().profileStatus == true) {
         _storePreviousLocations();
         Get.toNamed(Routes.MATCHING_RIDES, arguments: rideDetails.toJson());
       } else {

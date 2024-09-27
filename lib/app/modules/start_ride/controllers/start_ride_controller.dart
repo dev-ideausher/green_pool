@@ -165,7 +165,7 @@ class StartRideController extends GetxController {
       // icon: BitmapDescriptor.fromBytes(bytes), //Icon for Marker
       icon: image == ""
           ? BitmapDescriptor.defaultMarker
-          : await BitmapDescriptor.fromAssetImage(
+          : await BitmapDescriptor.asset(
               ImageConfiguration(size: Size(30.kw, 60.kh)), image),
     ));
   }

@@ -232,7 +232,7 @@ class PushNotificationService {
 
       case 'Chat':
         Get.find<HomeController>().newMsgReceived.value = true;
-        Get.find<MessagesController>().getMessageListAPI();
+        Get.find<MessagesController>().refreshIndicatorKey.currentState?.show();
         break;
 
       case "ChatResolved":

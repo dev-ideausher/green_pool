@@ -359,7 +359,7 @@ class RiderTile extends StatelessWidget {
                             : ColorUtil.kWhiteColor),
                     4.kwidthBox,
                     Text(
-                      myRidesModelData?.rideStatus == "Confirm"
+                      myRidesModelData?.rideStatus == "Confirmed"
                           ? GpUtil.getArrivalTimeOfDriver(DateTime.parse(
                               myRidesModelData?.confirmDriverDetails?.first
                                       ?.driverPostsDetails?.first?.time ??

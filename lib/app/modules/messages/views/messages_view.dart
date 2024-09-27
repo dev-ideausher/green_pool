@@ -29,8 +29,9 @@ class MessagesView extends GetView<MessagesController> {
             color: Get.find<HomeController>().isPinkModeOn.value
                 ? ColorUtil.kPrimary3PinkMode
                 : ColorUtil.kPrimary01,
+            key: controller.refreshIndicatorKey,
             onRefresh: () async {
-              await controller.getMessageListAPI();
+              await controller.refreshMessageListAPI();
             },
             child: controller.isLoading.value
                 ? ListView.builder(
@@ -81,7 +82,7 @@ class MessagesView extends GetView<MessagesController> {
                           style: TextStyleUtil.k24Heading600(),
                           textAlign: TextAlign.center,
                         ),
-                      )
+                      ).paddingSymmetric(horizontal: 16.kw)
                     : ListView.builder(
                         itemCount:
                             controller.messagesModel.value.chatRoomIds!.length,
@@ -98,7 +99,8 @@ class MessagesView extends GetView<MessagesController> {
                                   null;
                           return MessageTile(
                             onTap: () {
-                              controller.getToChatPage(message);
+                              controller.getToChatPage(
+                                  message, controller.refreshIndicatorKey);
                             },
                             title: controller.messagesModel.value
                                     .chatRoomIds?[index]?.user2?.fullName ??

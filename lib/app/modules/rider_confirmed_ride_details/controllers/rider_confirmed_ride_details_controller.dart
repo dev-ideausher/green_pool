@@ -26,42 +26,62 @@ class RiderConfirmedRideDetailsController extends GetxController {
   openMessage(MyRidesModelData data) async {
     try {
       messageBtnLoading.value = true;
-      final res = await APIManager.getChatRoomId(receiverId: data.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.driverDetails?[0]?.Id ?? "");
+      final res = await APIManager.getChatRoomId(
+          receiverId: data.confirmDriverDetails?[0]?.driverPostsDetails?[0]
+                  ?.driverDetails?[0]?.Id ??
+              "");
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
               chatRoomId: res.data["data"]["chatRoomId"] ?? "",
               deleteUpdateTime: res.data["data"]["deleteUpdateTime"] ?? "",
-              id: data.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.driverDetails?[0]?.Id,
-              name: data.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.driverDetails?[0]?.fullName,
-              image: data.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.driverDetails?[0]?.profilePic?.url));
-              messageBtnLoading.value = false;
+              id: data.confirmDriverDetails?[0]?.driverPostsDetails?[0]
+                  ?.driverDetails?[0]?.Id,
+              name: data.confirmDriverDetails?[0]?.driverPostsDetails?[0]
+                  ?.driverDetails?[0]?.fullName,
+              image: data.confirmDriverDetails?[0]?.driverPostsDetails?[0]
+                  ?.driverDetails?[0]?.profilePic?.url));
+      messageBtnLoading.value = false;
     } catch (e) {
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
               chatRoomId: "",
               deleteUpdateTime: "",
-              id: data.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.driverDetails?[0]?.Id,
-              name: data.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.driverDetails?[0]?.fullName,
-              image: data.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.driverDetails?[0]?.profilePic?.url));
-              messageBtnLoading.value = false;
+              id: data.confirmDriverDetails?[0]?.driverPostsDetails?[0]
+                  ?.driverDetails?[0]?.Id,
+              name: data.confirmDriverDetails?[0]?.driverPostsDetails?[0]
+                  ?.driverDetails?[0]?.fullName,
+              image: data.confirmDriverDetails?[0]?.driverPostsDetails?[0]
+                  ?.driverDetails?[0]?.profilePic?.url));
+      messageBtnLoading.value = false;
     }
   }
 
   riderCancelRideAPI(MyRidesModelData myRidesModelData) async {
-    DialogHelper.riderCancelRideDialog(() async {
-      Get.back();
-      final Map<String, dynamic> riderRideId = {"riderRideId": myRidesModelData.Id};
-      try {
-        final cancelRideResponse = await APIManager.riderCancelRide(body: riderRideId);
-        if (cancelRideResponse.data["status"]) {
-          Get.back();
-        } else {
-          showMySnackbar(msg: cancelRideResponse.data["message"].toString());
+    if (myRidesModelData.confirmDriverDetails?.first?.driverPostsDetails?.first
+            ?.isStarted ==
+        false) {
+      DialogHelper.riderCancelRideDialog(() async {
+        Get.back();
+        final Map<String, dynamic> riderRideId = {
+          "riderRideId": myRidesModelData.Id
+        };
+        try {
+          final cancelRideResponse =
+              await APIManager.riderCancelRide(body: riderRideId);
+          if (cancelRideResponse.data["status"]) {
+            Get.back();
+          } else {
+            showMySnackbar(msg: cancelRideResponse.data["message"].toString());
+          }
+        } catch (e) {
+          throw Exception(e);
         }
-      } catch (e) {
-        throw Exception(e);
-      }
-    });
+      });
+    } else {
+      showMySnackbar(
+          msg:
+              "Ride cancellation is not allowed as your ride has already started.");
+    }
   }
 
 // @override

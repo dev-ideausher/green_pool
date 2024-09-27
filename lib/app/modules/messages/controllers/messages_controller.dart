@@ -12,6 +12,8 @@ class MessagesController extends GetxController {
   RxBool refreshPage = true.obs;
   RxBool isLoading = false.obs;
   final Rx<MessageListModel> messagesModel = MessageListModel().obs;
+  final GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
 
   @override
   void onInit() {
@@ -48,7 +50,34 @@ class MessagesController extends GetxController {
     }
   }
 
-  Future<void> getToChatPage(message) async {
+  refreshMessageListAPI() async {
+    try {
+      final resp = await APIManager.getChatList();
+      var data = jsonDecode(resp.toString());
+      messagesModel.value = MessageListModel.fromJson(data);
+      messagesModel.value?.chatRoomIds?.sort((a, b) {
+        final dateTimeA =
+            DateTime.parse(a!.updatedAt ?? "2024-01-01T00:00:00.000Z");
+        final dateTimeB =
+            DateTime.parse(b!.updatedAt ?? "2024-01-01T00:00:00.000Z");
+
+        if (dateTimeA == null && dateTimeB == null) {
+          return 0;
+        } else if (dateTimeA == null) {
+          return 1;
+        } else if (dateTimeB == null) {
+          return -1;
+        } else {
+          return dateTimeB.compareTo(dateTimeA);
+        }
+      });
+      messagesModel.refresh();
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
+  Future<void> getToChatPage(message, GlobalKey<RefreshIndicatorState> refreshIndicatorKey) async {
     Get.toNamed(Routes.CHAT_PAGE,
             arguments: ChatArg(
                 chatRoomId: message?.chatRoomId ?? "",
@@ -58,24 +87,8 @@ class MessagesController extends GetxController {
                 name: message?.user2?.fullName))!
         .then((value) async {
       if (value != true) {
-        final resp = await APIManager.getChatList();
-        var data = jsonDecode(resp.toString());
-        messagesModel.value = MessageListModel.fromJson(data);
-        messagesModel.value?.chatRoomIds?.sort((a, b) {
-          final dateTimeA =
-              DateTime.parse(a!.updatedAt ?? "2024-01-01T00:00:00.000Z");
-          final dateTimeB =
-              DateTime.parse(b!.updatedAt ?? "2024-01-01T00:00:00.000Z");
-
-          if (dateTimeA == null && dateTimeB == null) {
-            return 0;
-          } else if (dateTimeA == null) {
-            return 1;
-          } else if (dateTimeB == null) {
-            return -1;
-          } else {
-            return dateTimeB.compareTo(dateTimeA);
-          }
+        Future.delayed(const Duration(milliseconds: 100), () {
+          refreshIndicatorKey.currentState?.show();
         });
         messagesModel.refresh();
       } else {

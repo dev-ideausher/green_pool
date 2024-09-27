@@ -56,7 +56,7 @@ class MyRidesOneTimeController extends GetxController {
 
   riderCancelRideAPI(MyRidesModelData myRidesModelData) async {
     if (myRidesModelData.confirmDriverDetails?.first?.driverPostsDetails?.first
-            ?.isStarted !=
+            ?.isStarted ==
         false) {
       DialogHelper.riderCancelRideDialog(() async {
         Get.back();
@@ -78,6 +78,10 @@ class MyRidesOneTimeController extends GetxController {
           throw Exception(e);
         }
       });
+    } else {
+      showMySnackbar(
+          msg:
+              "Ride cancellation is not allowed as your ride has already started.");
     }
   }
 
