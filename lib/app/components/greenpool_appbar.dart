@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../constants/image_constant.dart';
@@ -26,7 +27,7 @@ class GreenPoolAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: title,
       titleTextStyle: TextStyleUtil.k18Bold(),
       toolbarHeight: appBarSize ?? 46.kh,
-      backgroundColor: Colors.transparent,
+      backgroundColor: ColorUtil.kBackgroundColor,
       foregroundColor: Colors.transparent,
       surfaceTintColor: Colors.white,
       systemOverlayStyle: const SystemUiOverlayStyle(

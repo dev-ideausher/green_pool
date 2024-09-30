@@ -126,7 +126,7 @@ class HomeController extends GetxController {
         // Check and request location permission if necessary
         if (permission == LocationPermission.denied ||
             permission == LocationPermission.unableToDetermine) {
-          Get.to(const PermissionsLocation());
+          Get.to(() => const PermissionsLocation());
           return Future.error('Location services are disabled.');
         } else {
           await determinePosition().then((value) => {

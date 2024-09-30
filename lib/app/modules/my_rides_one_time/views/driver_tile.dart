@@ -198,59 +198,53 @@ class DriverTile extends StatelessWidget {
                             ),
                           ],
                         )
-                      : isToday(myRidesModelData.date ?? "")
-                          ? isWithinTimeRange(myRidesModelData.time ?? "")
-                              ? Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    GreenPoolButton(
-                                        onPressed: myRidesModelData.isCompleted!
-                                            ? () {}
-                                            : () {
-                                                controller.startRide(
-                                                    myRidesModelData);
-                                              },
-                                        width: 144.kw,
-                                        height: 40.kh,
-                                        padding: EdgeInsets.all(8.kh),
-                                        fontSize: 14.kh,
-                                        label: (myRidesModelData.isCompleted ??
-                                                false)
+                      : isWithinTimeRange(myRidesModelData.time ?? "")
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                GreenPoolButton(
+                                    onPressed: myRidesModelData.isCompleted!
+                                        ? () {}
+                                        : () {
+                                            controller
+                                                .startRide(myRidesModelData);
+                                          },
+                                    width: 144.kw,
+                                    height: 40.kh,
+                                    padding: EdgeInsets.all(8.kh),
+                                    fontSize: 14.kh,
+                                    label:
+                                        (myRidesModelData.isCompleted ?? false)
                                             ? Strings.rideCompleted
                                             : (myRidesModelData
                                                         .postsInfo?.isEmpty ??
                                                     false)
                                                 ? Strings.requests
                                                 : Strings.startRide),
-                                    GreenPoolButton(
-                                      onPressed: () {
-                                        controller.checkCancellationCount(
-                                            myRidesModelData);
-                                      },
-                                      width: 144.kw,
-                                      height: 40.kh,
-                                      padding: EdgeInsets.all(8.kh),
-                                      fontSize: 14.kh,
-                                      isBorder: true,
-                                      borderColor: Get.find<HomeController>()
-                                              .isPinkModeOn
-                                              .value
-                                          ? ColorUtil.kPrimary3PinkMode
-                                          : ColorUtil.kSecondary01,
-                                      labelColor: Get.find<HomeController>()
-                                              .isPinkModeOn
-                                              .value
-                                          ? ColorUtil.kPrimary3PinkMode
-                                          : ColorUtil.kSecondary01,
-                                      label: Strings.cancelRide,
-                                    ),
-                                  ],
-                                )
-                              : RequestAndCancelButtons(
-                                  myRidesModelData: myRidesModelData,
-                                  controller: controller,
-                                )
+                                GreenPoolButton(
+                                  onPressed: () {
+                                    controller.checkCancellationCount(
+                                        myRidesModelData);
+                                  },
+                                  width: 144.kw,
+                                  height: 40.kh,
+                                  padding: EdgeInsets.all(8.kh),
+                                  fontSize: 14.kh,
+                                  isBorder: true,
+                                  borderColor: Get.find<HomeController>()
+                                          .isPinkModeOn
+                                          .value
+                                      ? ColorUtil.kPrimary3PinkMode
+                                      : ColorUtil.kSecondary01,
+                                  labelColor: Get.find<HomeController>()
+                                          .isPinkModeOn
+                                          .value
+                                      ? ColorUtil.kPrimary3PinkMode
+                                      : ColorUtil.kSecondary01,
+                                  label: Strings.cancelRide,
+                                ),
+                              ],
+                            )
                           : RequestAndCancelButtons(
                               myRidesModelData: myRidesModelData,
                               controller: controller,
@@ -262,37 +256,58 @@ class DriverTile extends StatelessWidget {
     });
   }
 
-  bool isToday(String s) {
-    DateTime dateTime = DateTime.parse(s).toLocal();
-    DateTime now = DateTime.now().toLocal();
-    return dateTime.year == now.year &&
-        dateTime.month == now.month &&
-        dateTime.day == now.day;
-  }
-
   bool isWithinTimeRange(String timeString) {
     try {
       // Parse the timeString as a UTC DateTime
       DateTime parsedTimeUTC = DateTime.parse(timeString);
+
       // Convert the parsed time to local time
       DateTime parsedTimeLocal = parsedTimeUTC.toLocal();
       DateTime now = DateTime.now();
 
-      // Adjust the parsed time to today's date
-      DateTime inputTimeWithCurrentDate = DateTime(
-        now.year,
-        now.month,
-        now.day,
-        parsedTimeLocal.hour,
-        parsedTimeLocal.minute,
-      );
+      // Check if the parsed date is today
+      bool isToday = parsedTimeLocal.year == now.year &&
+          parsedTimeLocal.month == now.month &&
+          parsedTimeLocal.day == now.day;
 
-      DateTime startTime =
-          inputTimeWithCurrentDate.subtract(const Duration(minutes: 60));
-      DateTime endTime =
-          inputTimeWithCurrentDate.add(const Duration(minutes: 30));
+      // If the timeString is around midnight or very close to it
+      if (parsedTimeLocal.hour == 0 || parsedTimeLocal.hour == 12) {
+        // Adjust the parsed time to today's date
+        DateTime inputTimeWithCurrentDate = DateTime(
+          now.year,
+          now.month,
+          now.day,
+          parsedTimeLocal.hour,
+          parsedTimeLocal.minute,
+        );
 
-      return now.isAfter(startTime) && now.isBefore(endTime);
+        DateTime startTime =
+            inputTimeWithCurrentDate.subtract(const Duration(minutes: 60));
+        DateTime endTime =
+            inputTimeWithCurrentDate.add(const Duration(minutes: 30));
+
+        return now.isAfter(startTime) && now.isBefore(endTime);
+      }
+
+      // Regular time check if it's today
+      if (isToday) {
+        DateTime inputTimeWithCurrentDate = DateTime(
+          now.year,
+          now.month,
+          now.day,
+          parsedTimeLocal.hour,
+          parsedTimeLocal.minute,
+        );
+
+        DateTime startTime =
+            inputTimeWithCurrentDate.subtract(const Duration(minutes: 60));
+        DateTime endTime =
+            inputTimeWithCurrentDate.add(const Duration(minutes: 30));
+
+        return now.isAfter(startTime) && now.isBefore(endTime);
+      }
+
+      return false; // If the timeString is not today and not around midnight
     } catch (e) {
       print('Error parsing time string: $e');
       return false;
