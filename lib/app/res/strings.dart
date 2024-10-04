@@ -506,7 +506,7 @@ class Strings {
 
   static String dollar = "\$";
 
-  static var minimumAdditionAmnt = "Minimum addition amount: \$100";
+  static var minimumAdditionAmnt = "Minimum addition amount: \$10";
 
   static String enterOTP = "Enter OTP";
 

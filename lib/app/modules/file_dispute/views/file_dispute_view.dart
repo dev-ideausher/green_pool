@@ -55,8 +55,6 @@ class FileDisputeView extends GetView<FileDisputeController> {
                               child: Column(
                                 children: [
                                   Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       ClipRRect(
                                         borderRadius:
@@ -72,9 +70,13 @@ class FileDisputeView extends GetView<FileDisputeController> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Text(
-                                            "${controller.fileDisputeModel.value.data?[index]?.driver?.fullName}",
-                                            style: TextStyleUtil.k16Bold(),
+                                          SizedBox(
+                                            width: 105.kw,
+                                            child: Text(
+                                              "${controller.fileDisputeModel.value.data?[index]?.driver?.fullName}",
+                                              style: TextStyleUtil.k16Bold(),
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
                                           ),
                                           12.kheightBox,
                                           Row(
@@ -111,6 +113,7 @@ class FileDisputeView extends GetView<FileDisputeController> {
                                           ),
                                         ],
                                       ),
+                                      const Spacer(),
                                       Align(
                                         alignment: Alignment.centerRight,
                                         child: SizedBox(
@@ -291,7 +294,7 @@ class FileDisputeView extends GetView<FileDisputeController> {
                               ),
                             ).paddingOnly(bottom: 16.kh);
                           },
-                        ).paddingOnly(top: 32.kh),
+                        ).paddingOnly(top: 12.kh),
                       ),
                     ],
                   ).paddingSymmetric(horizontal: 16.kw),

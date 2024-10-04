@@ -30,20 +30,20 @@ class WalletToBankAccController extends GetxController {
   String? fareValidator(String input) {
     // Check if input is empty
     if (input.isEmpty) {
-      return "Fare cannot be empty";
+      return "Amount cannot be empty";
     }
 
     // Check if input can be parsed to an integer
     try {
       int fare = int.parse(input);
 
-      if (fare >= 25) {
+      if (fare >= 10) {
         return null;
       } else {
-        return "Fare must be greater than 25";
+        return "Amount must be greater than \$10";
       }
     } catch (e) {
-      return "Invalid input. Please enter a valid integer fare";
+      return "Invalid input. Please enter a valid amount";
     }
   }
 
@@ -52,7 +52,7 @@ class WalletToBankAccController extends GetxController {
         double.parse(Get.find<WalletController>().walletBalance.value);
     if (value.isEmpty ||
         value == "" ||
-        int.parse(value) < 25 ||
+        int.parse(value) < 10 ||
         walletBalance <= 0.0 ||
         int.parse(value) > walletBalance) {
       buttonState.value = false;

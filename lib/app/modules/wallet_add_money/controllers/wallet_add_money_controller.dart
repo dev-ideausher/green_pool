@@ -17,7 +17,7 @@ class WalletAddMoneyController extends GetxController {
   }
 
   setButtonState(String value) {
-    if (value.isEmpty || value == "" || int.parse(value) < 100) {
+    if (value.isEmpty || value == "" || int.parse(value) < 10) {
       buttonState.value = false;
     } else {
       buttonState.value = true;

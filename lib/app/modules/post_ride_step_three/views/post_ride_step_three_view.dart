@@ -183,7 +183,7 @@ class PostRideStepThreeView extends GetView<PostRideStepThreeController> {
                                       trallingText:
                                           "${controller.postRideModel.value.ridesDetails?.origin?.name.toString().split(",").first} to ${controller.postRideModel.value.ridesDetails?.stops?[1]?.name.toString().split(",").first}",
                                       txtController:
-                                          controller.OriginToStop2Price,
+                                          controller.originToStop2Price,
                                     )
                                   : const SizedBox(),
                               //From stop 1 to stop 2
@@ -204,7 +204,7 @@ class PostRideStepThreeView extends GetView<PostRideStepThreeController> {
                                       validator: (v) =>
                                           controller.fareValidator(v),
                                       txtController:
-                                          controller.Stop1ToStop2Price,
+                                          controller.stop1ToStop2Price,
                                       trallingText:
                                           "${controller.postRideModel.value.ridesDetails?.stops?[0]?.name.toString().split(",").first} to ${controller.postRideModel.value.ridesDetails?.stops?[1]?.name.toString().split(",").first}",
                                     )
@@ -220,7 +220,7 @@ class PostRideStepThreeView extends GetView<PostRideStepThreeController> {
                                       trallingText:
                                           "${controller.postRideModel.value.ridesDetails?.stops?[0]?.name.toString().split(",").first} to ${controller.postRideModel.value.ridesDetails?.destination?.name.toString().split(",").first}",
                                       txtController:
-                                          controller.Stop1ToDestinationPrice,
+                                          controller.stop1ToDestinationPrice,
                                       validator: (v) =>
                                           controller.fareValidator(v),
                                     )
@@ -236,7 +236,7 @@ class PostRideStepThreeView extends GetView<PostRideStepThreeController> {
                                       validator: (v) =>
                                           controller.fareValidator(v),
                                       txtController:
-                                          controller.Stop2toDestinationPrice,
+                                          controller.stop2toDestinationPrice,
                                       trallingText:
                                           "${controller.postRideModel.value.ridesDetails?.stops?[1]?.name.toString().split(",").first} to ${controller.postRideModel.value.ridesDetails?.destination?.name.toString().split(",").first}",
                                     )

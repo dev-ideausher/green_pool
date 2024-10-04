@@ -12,10 +12,10 @@ class PostRideStepThreeController extends GetxController {
   final Rx<PostRideModel> postRideModel = PostRideModel().obs;
   TextEditingController totalPrice = TextEditingController();
   TextEditingController originToStop1Price = TextEditingController();
-  TextEditingController OriginToStop2Price = TextEditingController();
-  TextEditingController Stop1ToStop2Price = TextEditingController();
-  TextEditingController Stop1ToDestinationPrice = TextEditingController();
-  TextEditingController Stop2toDestinationPrice = TextEditingController();
+  TextEditingController originToStop2Price = TextEditingController();
+  TextEditingController stop1ToStop2Price = TextEditingController();
+  TextEditingController stop1ToDestinationPrice = TextEditingController();
+  TextEditingController stop2toDestinationPrice = TextEditingController();
   TextEditingController descriptionTextController = TextEditingController();
 
   RxBool isActivePricingButton = false.obs;
@@ -38,10 +38,10 @@ class PostRideStepThreeController extends GetxController {
   void onClose() {
     totalPrice.dispose();
     originToStop1Price.dispose();
-    OriginToStop2Price.dispose();
-    Stop1ToStop2Price.dispose();
-    Stop1ToDestinationPrice.dispose();
-    Stop2toDestinationPrice.dispose();
+    originToStop2Price.dispose();
+    stop1ToStop2Price.dispose();
+    stop1ToDestinationPrice.dispose();
+    stop2toDestinationPrice.dispose();
     descriptionTextController.dispose();
     super.onClose();
   }
@@ -152,16 +152,16 @@ class PostRideStepThreeController extends GetxController {
       postRideModel.value.ridesDetails?.stops?.first.originToStopFair =
           originToStop1Price.text;
       postRideModel.value.ridesDetails?.stops?.first.stopTodestinationFair =
-          Stop1ToDestinationPrice.text;
+          stop1ToDestinationPrice.text;
       postRideModel.value.ridesDetails?.stops?.first.stopToStopFair =
-          Stop1ToStop2Price.text;
+          stop1ToStop2Price.text;
       if (postRideModel.value.ridesDetails?.stops?.length == 2) {
         postRideModel.value.ridesDetails?.stops?[1].originToStopFair =
-            OriginToStop2Price.text;
+            originToStop2Price.text;
         postRideModel.value.ridesDetails?.stops?[1].stopTodestinationFair =
-            Stop2toDestinationPrice.text;
+            stop2toDestinationPrice.text;
         postRideModel.value.ridesDetails?.stops?[1].stopToStopFair =
-            Stop1ToStop2Price.text;
+            stop1ToStop2Price.text;
       }
     }
 
@@ -200,12 +200,12 @@ class PostRideStepThreeController extends GetxController {
                 postRideModel.value.ridesDetails?.destination?.latitude ?? 0.0,
             endLong: postRideModel.value.ridesDetails?.destination?.longitude ??
                 0.0);
-        Stop1ToDestinationPrice.text =
+        stop1ToDestinationPrice.text =
             (stop1toDestinationDistance * ratePerKm).round().toString();
 
         //price should not go less than 5 dollars
-        if (int.parse(Stop1ToDestinationPrice.text) < 5) {
-          Stop1ToDestinationPrice.text = "5";
+        if (int.parse(stop1ToDestinationPrice.text) < 5) {
+          stop1ToDestinationPrice.text = "5";
         }
 
         if (postRideModel.value.ridesDetails?.stops?[1].name?.isNotEmpty ??
@@ -244,22 +244,22 @@ class PostRideStepThreeController extends GetxController {
                           .value.ridesDetails?.destination?.longitude ??
                       0.0);
 
-          OriginToStop2Price.text =
+          originToStop2Price.text =
               (originToStop2Distance * ratePerKm).round().toString();
-          Stop1ToStop2Price.text =
+          stop1ToStop2Price.text =
               (stop1toStop2Distance * ratePerKm).round().toString();
-          Stop2toDestinationPrice.text =
+          stop2toDestinationPrice.text =
               (stop2toDestinationDistance * ratePerKm).round().toString();
 
           //price should not go less than 5 dollars
-          if (int.parse(OriginToStop2Price.text) < 5) {
-            OriginToStop2Price.text = "5";
+          if (int.parse(originToStop2Price.text) < 5) {
+            originToStop2Price.text = "5";
           }
-          if (int.parse(Stop1ToStop2Price.text) < 5) {
-            Stop1ToStop2Price.text = "5";
+          if (int.parse(stop1ToStop2Price.text) < 5) {
+            stop1ToStop2Price.text = "5";
           }
-          if (int.parse(Stop2toDestinationPrice.text) < 5) {
-            Stop2toDestinationPrice.text = "5";
+          if (int.parse(stop2toDestinationPrice.text) < 5) {
+            stop2toDestinationPrice.text = "5";
           }
         }
       }
