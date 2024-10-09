@@ -22,6 +22,7 @@ class WalletController extends GetxController {
       final res = await APIManager.walletBalance();
       walletBalance.value = res.data['wallet'] ?? 0;
       walletBalance.refresh();
+      print("WALLET API CALLED");
       stripeAccountId.value = res.data['stripeAccountId'] ?? "";
       stripeAccountId.refresh();
       hasCompletedOnboarding.value =
@@ -33,14 +34,14 @@ class WalletController extends GetxController {
   }
 
   history() {
-    Get.toNamed(Routes.TRANSACTION_HISTORY);
+    Get.toNamed(Routes.TRANSACTION_HISTORY)?.then((value) => getWallet());
   }
 
   addMoney() {
-    Get.toNamed(Routes.WALLET_ADD_MONEY);
+    Get.toNamed(Routes.WALLET_ADD_MONEY)?.then((value) => getWallet());
   }
 
   sendMoney() {
-    Get.toNamed(Routes.WALLET_TO_BANK_ACC);
+    Get.toNamed(Routes.WALLET_TO_BANK_ACC)?.then((value) => getWallet());
   }
 }

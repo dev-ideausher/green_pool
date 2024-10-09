@@ -36,13 +36,13 @@ class PostRideStepThreeController extends GetxController {
 
   @override
   void onClose() {
-    totalPrice.dispose();
-    originToStop1Price.dispose();
-    originToStop2Price.dispose();
-    stop1ToStop2Price.dispose();
-    stop1ToDestinationPrice.dispose();
-    stop2toDestinationPrice.dispose();
-    descriptionTextController.dispose();
+    // totalPrice.dispose();
+    // originToStop1Price.dispose();
+    // originToStop2Price.dispose();
+    // stop1ToStop2Price.dispose();
+    // stop1ToDestinationPrice.dispose();
+    // stop2toDestinationPrice.dispose();
+    // descriptionTextController.dispose();
     super.onClose();
   }
 

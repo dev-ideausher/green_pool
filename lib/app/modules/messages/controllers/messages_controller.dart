@@ -18,12 +18,17 @@ class MessagesController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    getMessageListAPI();
+    showLoadingMessages();
+  }
+
+  Future<void> showLoadingMessages() async {
+    isLoading.value = true;
+    await getMessageListAPI();
+    isLoading.value = false;
   }
 
   getMessageListAPI() async {
     try {
-      isLoading.value = true;
       final resp = await APIManager.getChatList();
       var data = jsonDecode(resp.toString());
       messagesModel.value = MessageListModel.fromJson(data);
@@ -44,7 +49,6 @@ class MessagesController extends GetxController {
         }
       });
       messagesModel.refresh();
-      isLoading.value = false;
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -77,7 +81,8 @@ class MessagesController extends GetxController {
     }
   }
 
-  Future<void> getToChatPage(message, GlobalKey<RefreshIndicatorState> refreshIndicatorKey) async {
+  Future<void> getToChatPage(
+      message, GlobalKey<RefreshIndicatorState> refreshIndicatorKey) async {
     Get.toNamed(Routes.CHAT_PAGE,
             arguments: ChatArg(
                 chatRoomId: message?.chatRoomId ?? "",
@@ -92,7 +97,7 @@ class MessagesController extends GetxController {
         });
         messagesModel.refresh();
       } else {
-        getMessageListAPI();
+        showLoadingMessages();
       }
     });
   }

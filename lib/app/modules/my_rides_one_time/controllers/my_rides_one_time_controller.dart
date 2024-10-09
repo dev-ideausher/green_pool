@@ -29,14 +29,19 @@ class MyRidesOneTimeController extends GetxController {
   var recurringResp = RecurringRidesModel().obs;
 
   @override
-  Future<void> onReady() async {
+  void onReady() {
     super.onReady();
+    loadMyRidesPage();
+  }
+
+  Future<void> loadMyRidesPage() async {
+    isLoad.value = true;
     await myRidesAPI();
+    isLoad.value = false;
   }
 
   myRidesAPI({bool isRecurring = false}) async {
     try {
-      isLoad.value = true;
       final response = await APIManager.getAllMyRides();
       final mData = MyRidesModel.fromJson(response.data);
       await allRecurringRidesAPI();

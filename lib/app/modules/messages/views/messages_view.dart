@@ -34,48 +34,9 @@ class MessagesView extends GetView<MessagesController> {
               await controller.refreshMessageListAPI();
             },
             child: controller.isLoading.value
-                ? ListView.builder(
-                    itemCount: 5,
-                    itemBuilder: (context, index) {
-                      return SizedBox(
-                        // height: 78.kh,
-                        child: ListTile(
-                          tileColor: ColorUtil.kWhiteColor,
-                          onTap: () {},
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.kh)),
-                          title: SizedBox(
-                            height: 10.kh,
-                            width: 100.w,
-                            child: const LinearProgressIndicator(
-                              color: ColorUtil.kGreyColor,
-                            ),
-                          ),
-                          subtitle: SizedBox(
-                            height: 10.kh,
-                            width: 100.w,
-                            child: const LinearProgressIndicator(
-                              color: ColorUtil.kGreyColor,
-                            ),
-                          ),
-                          contentPadding: EdgeInsets.symmetric(
-                              horizontal: 24.kw, vertical: 8.kh),
-                          leading: SizedBox(
-                            height: 40.kh,
-                            width: 40.kw,
-                            child: ClipRRect(
-                                borderRadius: BorderRadius.circular(8.kh),
-                                child: const LinearProgressIndicator(
-                                  color: ColorUtil.kGreyColor,
-                                )),
-                          ),
-                          trailing:
-                              SvgPicture.asset(ImageConstant.svgIconRightArrow),
-                        ),
-                      ).paddingOnly(top: 8.kh);
-                    },
-                  ).paddingOnly(left: 16.kw, right: 16.kw, top: 8.kh)
-                : controller.messagesModel.value.chatRoomIds!.isEmpty
+                ? const LoadingWidget()
+                    .paddingOnly(left: 16.kw, right: 16.kw, top: 8.kh)
+                : controller.messagesModel.value.chatRoomIds?.isEmpty ?? true
                     ? Center(
                         child: Text(
                           Strings.yourFutureMsgsWillApearHere,
@@ -141,6 +102,56 @@ class MessagesView extends GetView<MessagesController> {
                       ).paddingOnly(left: 16.kw, right: 16.kw, top: 8.kh),
           ),
         ));
+  }
+}
+
+class LoadingWidget extends StatelessWidget {
+  const LoadingWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: 5,
+      itemBuilder: (context, index) {
+        return SizedBox(
+          // height: 78.kh,
+          child: ListTile(
+            tileColor: ColorUtil.kWhiteColor,
+            onTap: () {},
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8.kh)),
+            title: SizedBox(
+              height: 10.kh,
+              width: 100.w,
+              child: const LinearProgressIndicator(
+                color: ColorUtil.kGreyColor,
+              ),
+            ),
+            subtitle: SizedBox(
+              height: 10.kh,
+              width: 100.w,
+              child: const LinearProgressIndicator(
+                color: ColorUtil.kGreyColor,
+              ),
+            ),
+            contentPadding:
+                EdgeInsets.symmetric(horizontal: 24.kw, vertical: 8.kh),
+            leading: SizedBox(
+              height: 40.kh,
+              width: 40.kw,
+              child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8.kh),
+                  child: const LinearProgressIndicator(
+                    color: ColorUtil.kGreyColor,
+                  )),
+            ),
+            trailing: SvgPicture.asset(ImageConstant.svgIconRightArrow),
+          ),
+        ).paddingOnly(top: 8.kh);
+      },
+    );
   }
 }
 

@@ -15,6 +15,7 @@ import 'package:permission_handler/permission_handler.dart';
 import '../data/chat_arg.dart';
 import '../data/ride_detail_id.dart';
 import '../modules/my_rides_one_time/controllers/my_rides_one_time_controller.dart';
+import '../modules/wallet/controllers/wallet_controller.dart';
 import 'dio/api_service.dart';
 
 class PushNotificationService {
@@ -199,6 +200,10 @@ class PushNotificationService {
       case "Payment Received!":
       case "Refund Processed":
       case "Refund Issued":
+      case "Driver Ride Expire":
+        if (Get.currentRoute == Routes.WALLET) {
+          Get.find<WalletController>().getWallet();
+        }
         break;
 
       case "New Ride Request!":
@@ -439,6 +444,7 @@ class PushNotificationService {
         break;
 
       //payment
+      case "Driver Ride Expire":
       case "Payment Successful":
       case "Refund Processed":
       case "Refund Issued":

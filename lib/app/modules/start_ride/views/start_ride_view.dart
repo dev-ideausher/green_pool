@@ -23,7 +23,7 @@ class StartRideView extends GetView<StartRideController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(      
+    return Scaffold(
       body: Obx(
         () => controller.isLoad.value
             ? const GpProgress()
@@ -94,7 +94,11 @@ class StartRideView extends GetView<StartRideController> {
         () => controller.isLoad.value
             ? const GpProgress()
             : Container(
-                color: ColorUtil.kWhiteColor,
+                decoration: BoxDecoration(
+                    color: ColorUtil.kWhiteColor,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(8.kh),
+                        topRight: Radius.circular(8.kh))),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
