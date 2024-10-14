@@ -61,8 +61,9 @@ class LoginView extends GetView<LoginController> {
                       controller.countryCode = countryCode.dialCode ?? "+1";
                     },
                     padding: const EdgeInsets.all(0),
+                    dialogSize: Size(60.kw, 25.h),
                     initialSelection: 'CA',
-                    countryFilter: const ['CA', 'IN', 'US'],
+                    countryFilter: const ['CA'],
                     showFlag: true,
                     searchDecoration: InputDecoration(
                       focusColor: ColorUtil.kNeutral6,

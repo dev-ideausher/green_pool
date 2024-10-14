@@ -77,9 +77,10 @@ class CreateAccountView extends GetView<CreateAccountController> {
                       controller.countryCode = countryCode.dialCode ?? "+1";
                     },
                     padding: const EdgeInsets.all(0),
-                    initialSelection: 'CA',
                     showFlag: true,
-                    countryFilter: const ['CA', 'IN', 'US'],
+                    dialogSize: Size(60.kw, 25.h),
+                    initialSelection: 'CA',
+                    countryFilter: const ['CA'],
                     searchDecoration: InputDecoration(
                       focusColor: ColorUtil.kNeutral6,
                       focusedBorder: OutlineInputBorder(

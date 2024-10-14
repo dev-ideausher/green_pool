@@ -29,7 +29,7 @@ class PolicyPrivacyView extends GetView<PolicyPrivacyController> {
                       key: key,
                       controller: WebViewController()
                         ..loadRequest(Uri.parse(
-                            "https://web-carpooll.vercel.app/privacy-policy" ??
+                            "https://carpooll.com/privacy-policy" ??
                                 ""))
                         ..setJavaScriptMode(JavaScriptMode.unrestricted)
                         ..setNavigationDelegate(NavigationDelegate(

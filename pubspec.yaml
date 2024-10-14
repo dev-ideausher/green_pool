@@ -44,7 +44,7 @@ dependencies:
   flutter_polyline_points: ^2.0.1
   firebase_messaging: ^14.9.4
   permission_handler: ^11.3.1
-  flutter_local_notifications: ^17.1.2
+  flutter_local_notifications: ^17.2.3
   firebase_database: ^10.5.7
   confetti: ^0.7.0
   share_plus: ^9.0.0

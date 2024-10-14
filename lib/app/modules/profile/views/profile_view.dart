@@ -163,7 +163,7 @@ class ProfileView extends GetView<ProfileController> {
                 text: Strings.termsAmbersentConditions),
             ProfileContainer(
                 onTap: () async {
-                  await launchUrl(Uri.parse("https://web-carpooll.vercel.app"));
+                  await launchUrl(Uri.parse("https://carpooll.com"));
                 },
                 image: ImageConstant.svgProfileFollow,
                 text: Strings.followUsOnSocialMedia),

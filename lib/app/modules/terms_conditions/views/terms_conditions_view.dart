@@ -26,7 +26,7 @@ class TermsAndConditionsView extends GetView<TermsConditionsController> {
                       key: key,
                       controller: WebViewController()
                         ..loadRequest(Uri.parse(
-                            "https://web-carpooll.vercel.app/terms-conditions" ??
+                            "https://carpooll.com/terms-conditions" ??
                                 ""))
                         ..setJavaScriptMode(JavaScriptMode.unrestricted)
                         ..setNavigationDelegate(NavigationDelegate(

@@ -26,7 +26,7 @@ class PolicyCancellationView extends GetView<PolicyCancellationController> {
                       key: key,
                       controller: WebViewController()
                         ..loadRequest(Uri.parse(
-                            "https://web-carpooll.vercel.app/cancellation-policy" ??
+                            "https://carpooll.com/cancellation-policy" ??
                                 ""))
                         ..setJavaScriptMode(JavaScriptMode.unrestricted)
                         ..setNavigationDelegate(NavigationDelegate(
