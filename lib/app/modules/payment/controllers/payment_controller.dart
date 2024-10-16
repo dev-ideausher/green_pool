@@ -6,13 +6,17 @@ import 'package:green_pool/app/data/promo_code_model.dart';
 import 'package:green_pool/app/modules/my_rides_one_time/controllers/my_rides_one_time_controller.dart';
 import 'package:green_pool/app/modules/rider_my_ride_request/controllers/rider_my_ride_request_controller.dart';
 import 'package:green_pool/app/services/dialog_helper.dart';
+import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../data/request_ride_by_rider_model.dart';
 import '../../../data/rider_confirm_request_model.dart';
 import '../../../data/rider_send_request_model.dart';
+import '../../../res/strings.dart';
 import '../../../routes/app_pages.dart';
+import '../../../services/colors.dart';
 import '../../../services/dio/api_service.dart';
 import '../../../services/snackbar.dart';
+import '../../../services/text_style_util.dart';
 import '../../rider_my_ride_request/views/request_accepted_bottom.dart';
 import '../views/insufficient_balance_bottomsheet.dart';
 
@@ -28,6 +32,7 @@ class PaymentController extends GetxController {
   final RxBool isPromoLoading = true.obs;
   final RxBool fromDriverDetails = false.obs;
   final RxBool fromConfirmRequestSection = false.obs;
+  RxBool isChecked = false.obs;
   RxBool discountAvailed = false.obs;
   String ridePostId = "";
   String promoCodeId = "";
@@ -73,14 +78,14 @@ class PaymentController extends GetxController {
         seatsBooked = riderConfirmRequestModelData
             .riderRideDetails?.seatAvailable
             .toString();
-        origin = riderConfirmRequestModelData?.driverRideDetails?.origin!.name
+        origin = riderConfirmRequestModelData.driverRideDetails?.origin!.name
             .toString();
         destination = riderConfirmRequestModelData
-            ?.driverRideDetails?.destination!.name
+            .driverRideDetails?.destination!.name
             .toString();
-        stop1 = riderConfirmRequestModelData?.driverRideDetails?.stops?[0]?.name
+        stop1 = riderConfirmRequestModelData.driverRideDetails?.stops?[0]?.name
             .toString();
-        stop2 = riderConfirmRequestModelData?.driverRideDetails?.stops?[1]?.name
+        stop2 = riderConfirmRequestModelData.driverRideDetails?.stops?[1]?.name
             .toString();
       } catch (e) {
         //from matching rides
@@ -108,6 +113,11 @@ class PaymentController extends GetxController {
   // void onClose() {
   //   super.onClose();
   // }
+
+  void toggleCheckbox() {
+    //handles checkbox state in guidelines view
+    isChecked.value = !isChecked.value;
+  }
 
   getWallet() async {
     try {
@@ -285,5 +295,146 @@ class PaymentController extends GetxController {
 
   void moveToWallet() {
     Get.toNamed(Routes.WALLET);
+  }
+
+  getDriverPolicy() {
+    Get.dialog(
+      useSafeArea: true,
+      Center(
+        child: Container(
+          padding: EdgeInsets.all(16.kh),
+          height: 35.h,
+          // width: 375.kw,
+          decoration: BoxDecoration(
+            color: ColorUtil.kWhiteColor,
+            borderRadius: BorderRadius.circular(40.kh),
+          ),
+          child: ListView(
+            children: [
+              GestureDetector(
+                onTap: () => Get.back(),
+                child: Container(
+                  alignment: Alignment.centerRight,
+                  child: const Icon(Icons.close),
+                ),
+              ),
+              Text(
+                Strings.driverCancellationpolicy,
+                style: TextStyleUtil.k24Heading700(),
+                textAlign: TextAlign.center,
+              ).paddingOnly(top: 14.kh, bottom: 20.kh),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '• ',
+                    style: TextStyleUtil.k16Medium(),
+                    textAlign: TextAlign.left,
+                  ),
+                  Expanded(
+                    child: Text(
+                      Strings.youAreAllowedUpto6Cancellation,
+                      style: TextStyleUtil.k16Medium(),
+                      textAlign: TextAlign.left,
+                    ).paddingOnly(bottom: 12.kh),
+                  ),
+                ],
+              ).paddingSymmetric(horizontal: 24.kw),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '• ',
+                    style: TextStyleUtil.k16Medium(),
+                    textAlign: TextAlign.left,
+                  ),
+                  Expanded(
+                    child: Text(
+                      Strings.exceedingThisMayResultSuspension,
+                      style: TextStyleUtil.k16Medium(),
+                      textAlign: TextAlign.left,
+                    ).paddingOnly(bottom: 12.kh),
+                  ),
+                ],
+              ).paddingSymmetric(horizontal: 24.kw),
+            ],
+          ),
+        ).paddingSymmetric(horizontal: 16.kw),
+      ),
+    );
+  }
+
+  getRiderPolicy() {
+    Get.dialog(
+      useSafeArea: true,
+      Center(
+        child: Container(
+          padding: EdgeInsets.all(16.kh),
+          height: 70.h,
+          decoration: BoxDecoration(
+            color: ColorUtil.kWhiteColor,
+            borderRadius: BorderRadius.circular(40.kh),
+          ),
+          child: ListView(
+            children: [
+              GestureDetector(
+                onTap: () => Get.back(),
+                child: Container(
+                  alignment: Alignment.centerRight,
+                  child: const Icon(Icons.close),
+                ),
+              ),
+              Text(
+                Strings.riderCancellationpolicy,
+                style: TextStyleUtil.k24Heading700(),
+                textAlign: TextAlign.center,
+              ).paddingOnly(top: 14.kh),
+              16.kheightBox,
+              PolicySection(
+                number: '1.',
+                title: Strings.withdrawalBookingReqorExpiration,
+                bulletPoints: [
+                  Strings.ifYouWithdrawBookingReqOrExpires,
+                ],
+              ).paddingSymmetric(horizontal: 24.kw),
+              PolicySection(
+                number: '2.',
+                title: Strings.cancellationLessThan12Hours,
+                bulletPoints: [
+                  Strings
+                      .ifYouCancelBookingLessThan12HoursBeforeTheScheduledDeparture,
+                  Strings.theDriverIsEntitledToReceiveHalfOfThePriceSeat,
+                ],
+              ).paddingSymmetric(horizontal: 24.kw),
+              Text(Strings.riderCancellationNote,
+                      style: TextStyleUtil.k14Medium())
+                  .paddingSymmetric(vertical: 8.kh, horizontal: 24.kw),
+              PolicySection(
+                number: '3.',
+                title: Strings.cancellationMoreThan12hours,
+                bulletPoints: [
+                  Strings
+                      .ifYouCancelBookingMoreThan12HoursBeforeScheduledDeparture,
+                ],
+              ).paddingSymmetric(horizontal: 24.kw),
+              PolicySection(
+                number: '4.',
+                title: Strings.failureToShowUp,
+                bulletPoints: [
+                  Strings.ifYouFailToShowUpforTheRide,
+                ],
+              ).paddingSymmetric(horizontal: 24.kw),
+              PolicySection(
+                number: '5.',
+                title: Strings.driverInitiiatedCancellation,
+                bulletPoints: [
+                  Strings.inTheEventThatTheDriverCancellsTheTrip,
+                ],
+              ).paddingSymmetric(horizontal: 24.kw),
+            ],
+          ),
+        ).paddingSymmetric(horizontal: 16.kw),
+      ),
+    );
   }
 }

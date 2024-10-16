@@ -81,11 +81,10 @@ class PostRideStepFourView extends GetView<PostRideStepFourController> {
                                       ? ColorUtil.kPrimary2PinkMode
                                       : ColorUtil.kSecondary03),
                           recognizer: TapGestureRecognizer()
-                            ..onTap =
-                                () => Get.toNamed(Routes.POLICY_CANCELLATION),
+                            ..onTap = () => controller.getDriverPolicy(),
                         ),
                         TextSpan(
-                          text: Strings.termsOfService,
+                          text: Strings.termsAndConditions,
                           style: TextStyleUtil.k12Semibold(
                               color:
                                   Get.find<HomeController>().isPinkModeOn.value

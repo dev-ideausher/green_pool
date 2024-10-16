@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -130,10 +132,15 @@ class ProfileView extends GetView<ProfileController> {
                 image: ImageConstant.svgProfileDiscount,
                 text: Strings.studentDiscount),
             ProfileContainer(
-                onTap: () async {
-                  await Share.share(
-                      "Check this cool app! \nhttps://play.google.com/store/apps/details?id=com.greenpool.app");
-                },
+                onTap: Platform.isIOS
+                    ? () async {
+                        await Share.share(
+                            "Check this cool app! \nhttps://apps.apple.com/in/app/carpooll-com/id6480311009");
+                      }
+                    : () async {
+                        await Share.share(
+                            "Check this cool app! \nhttps://play.google.com/store/apps/details?id=com.greenpool.app");
+                      },
                 image: ImageConstant.svgProfileRefer,
                 text: Strings.referAFriend),
             ProfileContainer(

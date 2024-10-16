@@ -37,7 +37,7 @@ class Strings {
 
   static String writeMsg = 'Write a message';
 
-  static String termsAndConditions = "Terms and Condition";
+  static String termsAndConditions = "Terms and Conditions";
 
   static String agreeToTermsAndConditions =
       "Before you proceed you must read and agree to\nGreen Pool's Terms and Conditions.";
@@ -724,6 +724,8 @@ class Strings {
   static var iConsentToTheseGuidelines = 'I consent to these guidelines, the ';
 
   static var driverCancellationPolicyf = 'Driver Cancellation Policy, ';
+
+  static var riderCancellationPolicyf = 'Rider Cancellation Policy, ';
 
   static var termsOfService = 'Terms of Service,';
 

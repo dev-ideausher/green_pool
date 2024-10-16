@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/gp_progress.dart';
@@ -12,6 +13,8 @@ import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
+
+import '../../../routes/app_pages.dart';
 
 class PaymentView extends GetView<PaymentController> {
   const PaymentView({super.key});
@@ -233,18 +236,111 @@ class PaymentView extends GetView<PaymentController> {
                         ],
                       ),
                     ),
-                    120.kheightBox,
+                    16.kheightBox,
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 4.kw, vertical: 12.kh),
+                      decoration: BoxDecoration(
+                          color: ColorUtil.kWhiteColor,
+                          borderRadius: BorderRadius.circular(8.kh)),
+                      child: Row(
+                        children: [
+                          Obx(
+                            () => Checkbox(
+                              value: controller.isChecked.value,
+                              activeColor:
+                                  Get.find<HomeController>().isPinkModeOn.value
+                                      ? ColorUtil.kPrimary2PinkMode
+                                      : ColorUtil.kSecondary01,
+                              onChanged: (value) {
+                                controller.toggleCheckbox();
+                              },
+                            ),
+                          ),
+                          Expanded(
+                            child: Text.rich(
+                              TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: Strings.iConsentToTheseGuidelines,
+                                    style: TextStyleUtil.k12Regular(),
+                                  ),
+                                  TextSpan(
+                                    text: Strings.driverCancellationPolicyf,
+                                    style: TextStyleUtil.k12Semibold(
+                                        color: Get.find<HomeController>()
+                                                .isPinkModeOn
+                                                .value
+                                            ? ColorUtil.kPrimary2PinkMode
+                                            : ColorUtil.kSecondary03),
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap =
+                                          () => controller.getDriverPolicy(),
+                                  ),
+                                  TextSpan(
+                                    text: Strings.riderCancellationPolicyf,
+                                    style: TextStyleUtil.k12Semibold(
+                                        color: Get.find<HomeController>()
+                                                .isPinkModeOn
+                                                .value
+                                            ? ColorUtil.kPrimary2PinkMode
+                                            : ColorUtil.kSecondary03),
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap =
+                                          () => controller.getRiderPolicy(),
+                                  ),
+                                  TextSpan(
+                                    text: Strings.termsAndConditions,
+                                    style: TextStyleUtil.k12Semibold(
+                                        color: Get.find<HomeController>()
+                                                .isPinkModeOn
+                                                .value
+                                            ? ColorUtil.kPrimary2PinkMode
+                                            : ColorUtil.kSecondary03),
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () =>
+                                          Get.toNamed(Routes.TERMS_CONDITIONS),
+                                  ),
+                                  TextSpan(
+                                    text: Strings.and,
+                                    style: TextStyleUtil.k12Regular(),
+                                  ),
+                                  TextSpan(
+                                    text: Strings.privacyPolicyf,
+                                    style: TextStyleUtil.k12Semibold(
+                                        color: Get.find<HomeController>()
+                                                .isPinkModeOn
+                                                .value
+                                            ? ColorUtil.kPrimary2PinkMode
+                                            : ColorUtil.kSecondary03),
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () =>
+                                          Get.toNamed(Routes.POLICY_PRIVACY),
+                                  ),
+                                  TextSpan(
+                                    text: Strings
+                                        .iAcknowledgeThatMyAccMayFaceSuspension,
+                                    style: TextStyleUtil.k12Regular(),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    20.kheightBox,
+                    GreenPoolButton(
+                      onPressed: () {
+                        controller.decideAPI();
+                      },
+                      label: Strings.payNow,
+                      isActive: controller.isChecked.value,
+                    ).paddingOnly(bottom: 20.kh),
                   ],
                 ).paddingOnly(top: 24.kh, left: 16.kw, right: 16.kw),
               ),
       ),
-      floatingActionButton: GreenPoolButton(
-        onPressed: () {
-          controller.decideAPI();
-        },
-        label: Strings.payNow,
-        // isActive: controller.buttonState.value,
-      ).paddingOnly(bottom: 20.kh),
     );
   }
 }
