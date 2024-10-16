@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_native_timezone_updated_gradle/flutter_native_timezone.dart';
+import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get/instance_manager.dart';
 import '../../routes/app_pages.dart';
@@ -22,8 +22,7 @@ class AppInterceptors extends Interceptor {
   FutureOr<dynamic> onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
     isOverlayLoader ? DialogHelper.showLoading() : null;
-    final String currentTimeZone =
-        await FlutterNativeTimezone.getLocalTimezone();
+    final String currentTimeZone = await FlutterTimezone.getLocalTimezone();
     await Helpers.validateToken(
       onSuccess: () {
         options.headers = {
@@ -51,7 +50,7 @@ class AppInterceptors extends Interceptor {
     try {
       final errorMessage = DioExceptions.fromDioError(err).toString();
       isOverlayLoader ? DialogHelper.hideDialog() : null;
-      if(showSnakbar == true){
+      if (showSnakbar == true) {
         showMySnackbar(msg: errorMessage, title: 'Error');
       }
     } catch (e) {
