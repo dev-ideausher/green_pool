@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 void showMySnackbar({String? title, required String msg}) {
@@ -7,5 +8,6 @@ void showMySnackbar({String? title, required String msg}) {
           title: title,
           message: msg,
           duration: const Duration(milliseconds: 2000),
-        );
+          borderRadius: 8,
+          margin: const EdgeInsets.all(16));
 }

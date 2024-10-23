@@ -99,7 +99,7 @@ class PostRideStepThreeView extends GetView<PostRideStepThreeController> {
                               controller: controller.totalPrice,
                               prefix: Text(
                                 '\$',
-                                style: TextStyleUtil.k14Regular(
+                                style: TextStyleUtil.k16Regular(
                                   color: ColorUtil.kBlack03,
                                 ),
                               ),
