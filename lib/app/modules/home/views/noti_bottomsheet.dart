@@ -6,6 +6,7 @@ import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
+import 'package:green_pool/app/services/storage.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
 import '../controllers/home_controller.dart';
@@ -41,6 +42,7 @@ class NotificationBottomSheet extends GetView<HomeController> {
             onPressed: () async {
               await controller.setupMessage();
               Get.back();
+              Get.find<GetStorageService>().hasTappedAllowNotification = true;
             },
             label: Strings.enableNotifications,
           ).paddingOnly(bottom: 16.kh),

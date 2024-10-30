@@ -9,5 +9,5 @@ void showMySnackbar({String? title, required String msg}) {
           message: msg,
           duration: const Duration(milliseconds: 2000),
           borderRadius: 8,
-          margin: const EdgeInsets.all(16));
+          margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 12));
 }

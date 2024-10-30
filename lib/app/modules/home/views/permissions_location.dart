@@ -7,6 +7,7 @@ import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
+import '../../../services/storage.dart';
 import '../controllers/home_controller.dart';
 
 class PermissionsLocation extends GetView<HomeController> {
@@ -38,7 +39,9 @@ class PermissionsLocation extends GetView<HomeController> {
           Center(
             child: GreenPoolButton(
               onPressed: () {
+                Get.back();
                 controller.determinePosition();
+                Get.find<GetStorageService>().hasTappedAllowLocation = true;
               },
               label: Strings.allowAccess,
             ).paddingSymmetric(vertical: 40.kh),

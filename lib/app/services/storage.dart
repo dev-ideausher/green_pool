@@ -82,6 +82,16 @@ class GetStorageService extends GetxService {
   bool get accSuspended => _runData.read('accSuspended') ?? false;
   set accSuspended(bool val) => _runData.write('accSuspended', val);
 
+  bool get hasTappedAllowLocation =>
+      _runData.read('hasTappedAllowLocation') ?? false;
+  set hasTappedAllowLocation(bool val) =>
+      _runData.write('hasTappedAllowLocation', val);
+
+  bool get hasTappedAllowNotification =>
+      _runData.read('hasTappedAllowNotification') ?? false;
+  set hasTappedAllowNotification(bool val) =>
+      _runData.write('hasTappedAllowNotification', val);
+
 //!
   File? get profilePic =>
       _runData.read('userAppId') ?? File(ImageConstant.svgSetupProfilePic);

@@ -31,6 +31,7 @@ class HomeController extends GetxController {
   RxBool isPinkModeOn = false.obs;
   bool canPop = false;
   final RxBool newMsgReceived = false.obs;
+  final LocationService locationService = LocationService();
 
   void changeTabIndex(int index) {
     pageController.animateToPage(
@@ -46,8 +47,8 @@ class HomeController extends GetxController {
     super.onInit();
     try {
       await userInfoAPI();
-      latitude.value = await LocationService().getLatitude();
-      longitude.value = await LocationService().getLongitude();
+      latitude.value = await locationService.getLatitude();
+      longitude.value = await locationService.getLongitude();
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -124,8 +125,7 @@ class HomeController extends GetxController {
         onChangeLocation();
 
         // Check and request location permission if necessary
-        if (permission == LocationPermission.denied ||
-            permission == LocationPermission.unableToDetermine) {
+        if (!Get.find<GetStorageService>().hasTappedAllowLocation) {
           Get.to(() => const PermissionsLocation());
           return Future.error('Location services are disabled.');
         } else {
@@ -158,43 +158,37 @@ class HomeController extends GetxController {
   }
 
   Future<Position> determinePosition() async {
-    bool serviceEnabled;
-    LocationPermission permission;
-
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       return Future.error('Location services are disabled.');
     }
-    permission = await Geolocator.checkPermission();
+
+    LocationPermission permission = await Geolocator.checkPermission();
+
+    Future<void> promptNotificationPermission() async {
+      if (!Get.find<GetStorageService>().hasTappedAllowNotification) {
+        bool isNotificationDenied = await Permission.notification.isDenied;
+        if (isNotificationDenied) {
+          Get.bottomSheet(const NotificationBottomSheet());
+        }
+      }
+    }
 
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.always ||
-          permission == LocationPermission.whileInUse ||
-          permission == LocationPermission.unableToDetermine) {
-        // Get.until((route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
-        Get.back();
-        await Permission.notification.isDenied.then((value) async {
-          if (value) {
-            Get.bottomSheet(const NotificationBottomSheet());
-          }
-        });
-        latitude.value = await LocationService().getLatitude();
-        longitude.value = await LocationService().getLongitude();
-        return Future.error('Location permissions are granted');
+      if (permission == LocationPermission.denied) {
+        await promptNotificationPermission();
+        return Future.error('Location permission denied');
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
-      Get.back();
-      await Permission.notification.isDenied.then((value) async {
-        if (value) {
-          Get.bottomSheet(const NotificationBottomSheet());
-        }
-      });
+      showMySnackbar(msg: "Please enable location from settings");
       return Future.error(
-          'Location permissions are permanently denied, we cannot request permissions.');
+          'Location permissions are permanently denied, cannot request permissions.');
     }
+
+    await promptNotificationPermission();
 
     return await Geolocator.getCurrentPosition();
   }

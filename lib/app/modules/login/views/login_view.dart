@@ -55,7 +55,7 @@ class LoginView extends GetView<LoginController> {
                   validator: (value) => controller.phoneNumberValidator(value),
                   onchanged: (v) {},
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  autofocus: true,
+                  autofocus: false,
                   prefix: CountryCodePicker(
                     onChanged: (countryCode) {
                       controller.countryCode = countryCode.dialCode ?? "+1";
