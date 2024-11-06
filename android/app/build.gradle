@@ -31,9 +31,11 @@ if (flutterVersionName == null) {
 android {
     namespace "com.iu.green_pool"
     compileSdkVersion 34
-    ndkVersion flutter.ndkVersion
+    buildToolsVersion "34.0.0"
+    ndkVersion = "25.1.8937393"
 
     compileOptions {
+        coreLibraryDesugaringEnabled true
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
@@ -68,6 +70,8 @@ android {
         release {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
+            minifyEnabled false
+            shrinkResources false
             signingConfig signingConfigs.release
         }
     }
@@ -78,5 +82,6 @@ flutter {
 }
 
 dependencies {
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.2.2'
      implementation 'com.facebook.android:facebook-login:latest.release'
 }
