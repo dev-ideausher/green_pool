@@ -18,8 +18,30 @@ class Socials extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Platform.isAndroid? Center(
+      child: ElevatedButton(
+        onPressed: onPressedGoogle ?? () {},
+        style: ElevatedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8.kh),
+              side: const BorderSide(color: ColorUtil.kBlack06)),
+          padding: EdgeInsets.symmetric(horizontal: 40.kw, vertical: 12.kh),
+          shadowColor: Colors.transparent,
+          backgroundColor: ColorUtil.kBackgroundColor,
+          foregroundColor: ColorUtil.kBackgroundColor,
+          surfaceTintColor: ColorUtil.kBackgroundColor,
+          disabledBackgroundColor: Colors.transparent,
+          disabledForegroundColor: Colors.transparent,
+        ),
+        child: SvgPicture.asset(
+          ImageConstant.svgGoogle,
+          height: 24.kh,
+          width: 24.kw,
+        ),
+      ),
+    ): Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+
       children: [
         ElevatedButton(
           onPressed: onPressedGoogle ?? () {},
@@ -64,7 +86,7 @@ class Socials extends StatelessWidget {
             ),
           ),
         ),
-        ElevatedButton(
+     /*   ElevatedButton(
           onPressed: onPressedFacebook ?? () {},
           style: ElevatedButton.styleFrom(
             shape: RoundedRectangleBorder(
@@ -83,7 +105,7 @@ class Socials extends StatelessWidget {
             height: 24.kh,
             width: 24.kw,
           ),
-        ),
+        ),*/
       ],
     );
   }
