@@ -76,6 +76,38 @@ android {
         }
     }
 }
+flavorDimensions "app"
+productFlavors {
+    create("dev") {
+        dimension = "app"
+        applicationIdSuffix = ".dev"
+        versionNameSuffix = "-dev"
+        resValue "string", "app_name", "Carpooll-dav"
+        resValue "string", "map_key", "AIzaSyAs_QL4LPuvaU23w-t0wOUJyUziRmSIlkE"
+    }
+    create("prod") {
+        dimension = "app"
+        resValue "string", "app_name", "Carpooll"
+        resValue "string", "map_key", "AIzaSyAs_QL4LPuvaU23w-t0wOUJyUziRmSIlkE"
+    }
+}
+def flavors = ["dev", "prod"]
+flavors.each { flavor ->
+    // Apply Google Services plugin for each flavor
+    apply plugin: 'com.google.gms.google-services'
+    android.applicationVariants.all { variant ->
+        if (variant.buildType.name.toLowerCase().contains(flavor)) {
+            variant.outputs.all {
+                // Specify the path to the respective google-services.json for each flavor
+                def googleServicesPlugin = project.plugins.findPlugin("com.google.gms.google-services")
+                if (googleServicesPlugin != null && googleServicesPlugin.respondsTo("jsonFile")) {
+                    googleServicesPlugin.jsonFile = file("src/$flavor/google-services.json")
+                }
+            }
+        }
+    }
+}
+}
 
 flutter {
     source '../..'

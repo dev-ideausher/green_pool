@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "624865732455",
+    "firebase_url": "https://staging-green-pool-default-rtdb.firebaseio.com",
+    "project_id": "staging-green-pool",
+    "storage_bucket": "staging-green-pool.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:624865732455:android:2a111044f0202fc0e871c2",
+        "android_client_info": {
+          "package_name": "com.iu.green_pool.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "624865732455-8nr0sdf4gbrmgihn2psp099s00q6oro4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.iu.green_pool.dev",
+            "certificate_hash": "7b31c2a942d8ce94d077643b6f968bc810129a4c"
+          }
+        },
+        {
+          "client_id": "624865732455-kfjioacuslatgs65p821nslpkr4ee5le.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSII-ApNaWvveogt3MQ5_8Pb_aVlqpZ-w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "624865732455-kfjioacuslatgs65p821nslpkr4ee5le.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
