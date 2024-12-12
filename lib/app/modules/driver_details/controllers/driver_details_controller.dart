@@ -5,6 +5,7 @@ import 'package:green_pool/app/data/matching_rides_model.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 
 import '../../../services/dio/api_service.dart';
+import '../../../services/storage.dart';
 
 class DriverDetailsController extends GetxController {
   var matchingRidesModelData = MatchingRidesModelData().obs;
@@ -30,10 +31,36 @@ class DriverDetailsController extends GetxController {
   //   super.onReady();
   // }
 
-  // @override
-  // void onClose() {
-  //   super.onClose();
-  // }
+  @override
+  void onClose() {
+    rideDetails!['ridesDetails']!['date'] = "";
+    rideDetails!['ridesDetails']!['time'] = "";
+    super.onClose();
+  }
+
+  isUserLoggedIn(String value) {
+    if (Get.find<GetStorageService>().isLoggedIn) {
+      if (Get.find<GetStorageService>().profileStatus == true) {
+        if (value == "chat") {
+          chatWithDriver();
+        } else {
+          moveToPayment();
+        }
+      } else {
+        Get.toNamed(Routes.RIDER_PROFILE_SETUP, arguments: {
+          "fromNavBar": false,
+          "fullName": Get.find<GetStorageService>().getUserName ?? "",
+          "findRideModel": rideDetails
+        });
+      }
+    } else {
+      Get.toNamed(Routes.CREATE_ACCOUNT, arguments: {
+        'isDriver': false,
+        'fromNavBar': false,
+        'findRideModel': rideDetails,
+      });
+    }
+  }
 
   moveToPayment() {
     rideDetails?["ridesDetails"]["date"] =

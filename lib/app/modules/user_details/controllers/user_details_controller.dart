@@ -9,13 +9,14 @@ import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/storage.dart';
 import 'package:http_parser/http_parser.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../services/auth.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
 import '../../../services/dio/api_service.dart';
-import '../../../services/gp_util.dart';
+import '../../../services/image_helper.dart';
 import '../../../services/push_notification_service.dart';
 import '../../../services/snackbar.dart';
 
@@ -48,8 +49,16 @@ class UserDetailsController extends GetxController {
   RxBool saveBtnLoading = false.obs;
   RxBool isBtnActive = false.obs;
 
+  //focus node
+  FocusNode nameFocusNode = FocusNode();
+  FocusNode emailFocusNode = FocusNode();
+  FocusNode genderFocusNode = FocusNode();
+  FocusNode cityFocusNode = FocusNode();
+
   getProfileImage(ImageSource imageSource) async {
-    XFile? pickedFile = await GpUtil.compressImage(imageSource);
+    XFile? pickedFile = await ImageUtil.cropCompressImage(
+        cropAspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
+        imageSource: imageSource);
     if (pickedFile != null) {
       selectedProfileImagePath!.value = File(pickedFile.path);
       showMySnackbar(msg: 'Image selected');
@@ -62,7 +71,9 @@ class UserDetailsController extends GetxController {
   }
 
   getIDImage(ImageSource imageSource) async {
-    XFile? pickedIDFile = await GpUtil.compressImage(imageSource);
+    XFile? pickedIDFile = await ImageUtil.cropCompressImage(
+        cropAspectRatio: const CropAspectRatio(ratioX: 16, ratioY: 9),
+        imageSource: imageSource);
     if (pickedIDFile != null) {
       selectedIDImagePath!.value = File(pickedIDFile.path);
       showMySnackbar(msg: 'Image selected');
@@ -74,7 +85,51 @@ class UserDetailsController extends GetxController {
     }
   }
 
+  bool _isFieldEmpty(
+      String fieldValue, FocusNode focusNode, String errorMessage) {
+    if (fieldValue.isEmpty) {
+      focusNode.requestFocus();
+      showMySnackbar(msg: errorMessage);
+      return true;
+    }
+    return false;
+  }
+
+  bool _isValidEmail(
+      String emailValue, FocusNode focusNode, String errorMessage) {
+    if (emailValue.isNotEmpty && !GetUtils.isEmail(emailValue)) {
+      focusNode.requestFocus();
+      showMySnackbar(msg: errorMessage);
+      return false;
+    }
+    return true;
+  }
+
   Future<void> updateDetailsAPI() async {
+    if (_isFieldEmpty(
+      nameTextController.text,
+      nameFocusNode,
+      'Please enter your name',
+    )) return;
+
+    if (!_isValidEmail(
+      emailTextController.text,
+      emailFocusNode,
+      'Please enter a valid email address',
+    )) return;
+
+    if (_isFieldEmpty(
+      genderTextController.text,
+      genderFocusNode,
+      'Please select your gender',
+    )) return;
+
+    if (_isFieldEmpty(
+      city.text,
+      cityFocusNode,
+      'Please select your city province',
+    )) return;
+
     saveBtnLoading.value = true;
     final storageService = Get.find<GetStorageService>();
 

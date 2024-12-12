@@ -11,6 +11,7 @@ import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../components/greenpool_textfield.dart';
+import '../../../components/opt_heading_text.dart';
 import '../../../components/richtext_heading.dart';
 import '../../../res/strings.dart';
 import '../../../services/colors.dart';
@@ -34,70 +35,13 @@ class UserDetailsView extends GetView<UserDetailsController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Center(
-              child: Column(
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      controller.getProfileImage(ImageSource.gallery);
-                    },
-                    child: Hero(
-                      tag: "profilePic",
-                      transitionOnUserGestures: true,
-                      child: Stack(
-                        alignment: Alignment.bottomRight,
-                        children: [
-                          Obx(
-                            () => Container(
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                              ),
-                              child:
-                                  controller.isProfilePicUpdated?.value ?? false
-                                      ? ClipOval(
-                                          child: SizedBox.fromSize(
-                                              size: Size.fromRadius(50.kh),
-                                              child: CommonImageView(
-                                                file: controller
-                                                        .selectedProfileImagePath
-                                                        ?.value ??
-                                                    File(''),
-                                              )),
-                                        )
-                                      : ClipOval(
-                                          child: SizedBox.fromSize(
-                                            size: Size.fromRadius(50.kh),
-                                            child: CommonImageView(
-                                              height: 50.kh,
-                                              width: 50.kw,
-                                              url: Get.find<GetStorageService>()
-                                                      .profilePicUrl ??
-                                                  '',
-                                            ),
-                                          ),
-                                        ),
-                            ),
-                          ),
-                          SvgPicture.asset(
-                            Get.find<HomeController>().isPinkModeOn?.value ??
-                                    false
-                                ? ImageConstant.svgPinkSetupAdd
-                                : ImageConstant.svgSetupAdd,
-                          ),
-                        ],
-                      ).paddingOnly(bottom: 12.kh, top: 32.kh),
-                    ),
-                  ),
-                  Text(
-                    Strings.takeOrUploadProfilePic,
-                    style: TextStyleUtil.k16Regular(color: ColorUtil.kNeutral4),
-                  ),
-                ],
-              ),
+              child: ProfileImage(controller: controller),
             ).paddingOnly(bottom: 40.kh),
             RichTextHeading(text: Strings.fullName).paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
               hintText: Strings.fullName,
               controller: controller.nameTextController,
+              focusNode: controller.nameFocusNode,
               inputFormatters: [
                 FilteringTextInputFormatter.allow(
                     RegExp(r'[a-zA-Z\s]')), // Allow only alphabets and spaces
@@ -117,11 +61,12 @@ class UserDetailsView extends GetView<UserDetailsController> {
                 ),
               ),
             ).paddingOnly(bottom: 16.kh),
-            RichTextHeading(text: Strings.emailAddress)
+            OptFieldHeading(heading: Strings.emailAddress)
                 .paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
               hintText: Strings.emailID,
               keyboardType: TextInputType.emailAddress,
+              focusNode: controller.emailFocusNode,
               controller: controller.emailTextController,
               onchanged: (value) {
                 if (value != null) {
@@ -155,6 +100,7 @@ class UserDetailsView extends GetView<UserDetailsController> {
             GreenPoolTextField(
               hintText: Strings.gender,
               controller: controller.genderTextController,
+              focusNode: controller.genderFocusNode,
               readOnly: true,
             ).paddingOnly(bottom: 16.kh),
             RichTextHeading(text: Strings.cityProvince)
@@ -163,6 +109,7 @@ class UserDetailsView extends GetView<UserDetailsController> {
               () => GreenPoolTextField(
                 hintText: Strings.selectCity,
                 controller: controller.city,
+                focusNode: controller.cityFocusNode,
                 suffix: controller.isCityListExpanded.value
                     ? const Icon(Icons.arrow_drop_up)
                     : const Icon(Icons.arrow_drop_down),
@@ -226,26 +173,14 @@ class UserDetailsView extends GetView<UserDetailsController> {
                 ).paddingOnly(bottom: 16.kh),
               ),
             ),
-            Text.rich(
-              TextSpan(
-                children: [
-                  TextSpan(
-                    text: Strings.dateOfBirth,
-                    style: TextStyleUtil.k14Semibold(),
-                  ),
-                  TextSpan(
-                    text: Strings.above18,
-                    style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack04),
-                  ),
-                ],
-              ),
-            ).paddingOnly(bottom: 8.kh),
+            OptFieldHeading(heading: Strings.dateOfBirth)
+                .paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
               hintText: Strings.dob,
               controller: controller.dobTextController,
               readOnly: true,
             ).paddingOnly(bottom: 16.kh),
-            RichTextHeading(text: Strings.idVerification)
+            OptFieldHeading(heading: Strings.idVerification)
                 .paddingOnly(bottom: 8.kh),
             GestureDetector(
               onTap: () {
@@ -259,18 +194,21 @@ class UserDetailsView extends GetView<UserDetailsController> {
                     color: ColorUtil.kGreyColor,
                     borderRadius: BorderRadius.circular(8.kh),
                   ),
-                  child: controller.isIDPicUpdated?.value == true
-                      ? Image.file(
-                          controller.selectedIDImagePath?.value ?? File(''))
-                      : CommonImageView(
-                          url: Get.find<HomeController>()
-                                  .userInfo
-                                  .value
-                                  .data
-                                  ?.idPic
-                                  ?.url ??
-                              '',
-                        ),
+                  child: //if no ID image was uploaded then pick image
+                      Get.find<GetStorageService>()
+                                  .idVerificationPicUrl
+                                  .isEmpty &&
+                              !controller.isIDPicUpdated.value
+                          ? const UploadIdImage()
+                          //if pick was uploaded then show uploaded pic or if new pic is being uploaded then show that
+                          : controller.isIDPicUpdated.value == true
+                              ? Image.file(
+                                  controller.selectedIDImagePath?.value ??
+                                      File(''))
+                              : CommonImageView(
+                                  url: Get.find<GetStorageService>()
+                                      .idVerificationPicUrl,
+                                ),
                 ),
               ),
             ),
@@ -295,6 +233,95 @@ class UserDetailsView extends GetView<UserDetailsController> {
           ],
         ).paddingSymmetric(horizontal: 16.kw),
       ),
+    );
+  }
+}
+
+class UploadIdImage extends StatelessWidget {
+  const UploadIdImage({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        SvgPicture.asset(ImageConstant.svgIconUpload).paddingOnly(right: 8.kw),
+        Text(
+          Strings.uploadId,
+          style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
+        ),
+      ],
+    );
+  }
+}
+
+class ProfileImage extends StatelessWidget {
+  const ProfileImage({
+    super.key,
+    required this.controller,
+  });
+
+  final UserDetailsController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        GestureDetector(
+          onTap: () {
+            controller.getProfileImage(ImageSource.gallery);
+          },
+          child: Hero(
+            tag: "profilePic",
+            transitionOnUserGestures: true,
+            child: Stack(
+              alignment: Alignment.bottomRight,
+              children: [
+                Obx(
+                  () => Container(
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                    ),
+                    child: controller.isProfilePicUpdated?.value ?? false
+                        ? ClipOval(
+                            child: SizedBox.fromSize(
+                                size: Size.fromRadius(50.kh),
+                                child: CommonImageView(
+                                  file: controller
+                                          .selectedProfileImagePath?.value ??
+                                      File(''),
+                                )),
+                          )
+                        : ClipOval(
+                            child: SizedBox.fromSize(
+                              size: Size.fromRadius(50.kh),
+                              child: CommonImageView(
+                                height: 50.kh,
+                                width: 50.kw,
+                                url: Get.find<GetStorageService>()
+                                        .profilePicUrl ??
+                                    '',
+                              ),
+                            ),
+                          ),
+                  ),
+                ),
+                SvgPicture.asset(
+                  Get.find<HomeController>().isPinkModeOn?.value ?? false
+                      ? ImageConstant.svgPinkSetupAdd
+                      : ImageConstant.svgSetupAdd,
+                ),
+              ],
+            ).paddingOnly(bottom: 12.kh, top: 32.kh),
+          ),
+        ),
+        Text(
+          Strings.takeOrUploadProfilePic,
+          style: TextStyleUtil.k16Regular(color: ColorUtil.kNeutral4),
+        ),
+      ],
     );
   }
 }

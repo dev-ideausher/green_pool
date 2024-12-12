@@ -298,7 +298,7 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                                   .data![index]
                                                   .requestSent ??
                                               false
-                                          ? Strings.sent
+                                          ? Strings.cancel
                                           : Strings.request,
                                       onPressed: () async {
                                         if (controller
@@ -307,8 +307,10 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                                 .data![index]
                                                 .requestSent ??
                                             false) {
-                                          showMySnackbar(
-                                              msg: Strings.reqHasAlreadySent);
+                                          // showMySnackbar(msg: Strings.reqHasAlreadySent);
+                                          controller.withdrawRidersReq(
+                                              controller.riderSendRequestModel
+                                                  .value.data![index].Id);
                                         } else {
                                           controller
                                               .moveToPaymentFromSendRequest(

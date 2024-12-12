@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,6 +11,7 @@ import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/snackbar.dart';
 
 import '../../../routes/app_pages.dart';
+import '../../../services/dialog_helper.dart';
 import '../../../services/storage.dart';
 
 class FindRideController extends GetxController {
@@ -56,6 +58,15 @@ class FindRideController extends GetxController {
     }
   }
 
+  void swapTextFields() {
+    // Swap logic
+    final origin = riderOriginTextController.text;
+    final destination = riderDestinationTextController.text;
+
+    riderOriginTextController.text = destination;
+    riderDestinationTextController.text = origin;
+  }
+
   FindRideModel _getRideDetails() {
     String rideDate = "";
     String rideTime = "";
@@ -92,27 +103,10 @@ class FindRideController extends GetxController {
     );
   }
 
-  void decideRouting() async {
-    if (Get.find<GetStorageService>().isLoggedIn) {
-      final rideDetails = _getRideDetails();
-      if (Get.find<GetStorageService>().profileStatus == true) {
-        _storePreviousLocations();
-        Get.toNamed(Routes.MATCHING_RIDES, arguments: rideDetails.toJson());
-      } else {
-        Get.toNamed(Routes.RIDER_PROFILE_SETUP, arguments: {
-          "fromNavBar": false,
-          "fullName": Get.find<GetStorageService>().getUserName ?? "",
-          "findRideModel": rideDetails
-        });
-      }
-    } else {
-      final rideDetails = _getRideDetails();
-      Get.toNamed(Routes.CREATE_ACCOUNT, arguments: {
-        'isDriver': isDriver,
-        'fromNavBar': false,
-        'findRideModel': rideDetails,
-      });
-    }
+  void moveToMatchingRides() {
+    final rideDetails = _getRideDetails();
+    _storePreviousLocations();
+    Get.toNamed(Routes.MATCHING_RIDES, arguments: rideDetails.toJson());
   }
 
   /*Future<void> riderPostRideAPI() async {
@@ -134,13 +128,16 @@ class FindRideController extends GetxController {
   }*/
 
   Future<void> setDate(BuildContext context) async {
-    DateTime? pickedDate = await showDatePicker(
-      context: context,
-      builder: _pickerTheme,
-      firstDate: DateTime.now(),
-      lastDate: DateTime.now().add(const Duration(days: 90)),
-      initialDate: DateTime.now(),
-    );
+    DateTime? pickedDate = Platform.isIOS
+        ? await DialogHelper.cupertinoDatePicker(context, DateTime.now(),
+            DateTime.now().add(const Duration(days: 90)), DateTime.now())
+        : await showDatePicker(
+            context: context,
+            builder: _pickerTheme,
+            firstDate: DateTime.now(),
+            lastDate: DateTime.now().add(const Duration(days: 90)),
+            initialDate: DateTime.now(),
+          );
 
     if (pickedDate != null) {
       date.text = pickedDate.toIso8601String();
@@ -150,18 +147,14 @@ class FindRideController extends GetxController {
   }
 
   Future<void> setTime(BuildContext context) async {
-    TimeOfDay? pickedTime = await showTimePicker(
-      context: context,
-      builder: _pickerTheme,
-      initialTime: TimeOfDay.now(),
-      initialEntryMode: TimePickerEntryMode.dial,
-    );
-
-    // if (pickedTime != null) {
-    //   final localizations = MaterialLocalizations.of(context);
-    //   selectedTime.text = localizations.formatTimeOfDay(pickedTime,
-    //       alwaysUse24HourFormat: false);
-    // }
+    TimeOfDay? pickedTime = Platform.isIOS
+        ? await DialogHelper.cupertinoTimePicker(context)
+        : await showTimePicker(
+            context: context,
+            builder: _pickerTheme,
+            initialTime: TimeOfDay.now(),
+            initialEntryMode: TimePickerEntryMode.dial,
+          );
     if (pickedTime != null) {
       final localizations = MaterialLocalizations.of(context);
       final formattedTime = localizations.formatTimeOfDay(pickedTime,
@@ -184,15 +177,23 @@ class FindRideController extends GetxController {
   }
 
   void setActiveState() {
-    isActive.value = riderOriginTextController.text.isNotEmpty ||
-        riderDestinationTextController.text.isNotEmpty;
+    final seatText = seatAvailable.value.text;
+
+    isActive.value = (riderOriginTextController.text.isNotEmpty ||
+            riderDestinationTextController.text.isNotEmpty) &&
+        (seatText.isNotEmpty &&
+            int.tryParse(seatText) != null &&
+            int.parse(seatText) >= 1 &&
+            int.parse(seatText) < 11);
   }
 
   String? seatsValidator(String? value) {
     if (value == null || value.isEmpty) return 'Please enter a value';
+
     final parsedValue = int.tryParse(value);
-    if (parsedValue == null || parsedValue < 1 || parsedValue > 6)
-      return 'Please enter an integer between 1 and 6';
+    if (parsedValue == null || parsedValue < 1 || parsedValue > 10) {
+      return 'You can only book up to 10 seats.';
+    }
     return null;
   }
 

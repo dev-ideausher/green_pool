@@ -458,19 +458,23 @@ class RiderMyRidesSendDetailsView
               },
               label: Strings.message,
               isBorder: true,
+            ).paddingSymmetric(vertical: 16.kh),
+            Visibility(
+              visible:
+                  controller.riderSendRequestModelData.requestSent == false,
+              child: GreenPoolButton(
+                onPressed: () async {
+                  try {
+                    await Get.find<RiderMyRideRequestController>()
+                        .moveToPaymentFromSendRequest(
+                            controller.riderSendRequestModelData);
+                  } catch (e) {
+                    throw Exception(e);
+                  }
+                },
+                label: Strings.requestDriver,
+              ).paddingOnly(bottom: 40.kh),
             ),
-            GreenPoolButton(
-              onPressed: () async {
-                try {
-                  await Get.find<RiderMyRideRequestController>()
-                      .moveToPaymentFromSendRequest(
-                          controller.riderSendRequestModelData);
-                } catch (e) {
-                  throw Exception(e);
-                }
-              },
-              label: Strings.requestDriver,
-            ).paddingOnly(bottom: 40.kh, top: 16.kh),
           ],
         ).paddingSymmetric(horizontal: 16.kw),
       ),

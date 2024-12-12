@@ -11,14 +11,14 @@ import 'app/services/auth.dart';
 import 'app/services/colors.dart';
 import 'app/services/dependency_injection.dart';
 import 'app/services/storage.dart';
+import 'app_environment.dart';
 import 'firebase_options.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+      options: DefaultFirebaseOptions.currentPlatform, name: "prod");
   await initGetServices();
   await SystemChrome.setPreferredOrientations(
     [DeviceOrientation.portraitUp],
@@ -57,4 +57,5 @@ Future<void> initGetServices() async {
   await Get.putAsync<AuthService>(() async => AuthService());
   Get.put(HomeController());
   await DependencyInjection.init();
+  AppEnvironment.setupEnv(Environment.prod);
 }

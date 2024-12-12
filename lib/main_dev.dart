@@ -1,6 +1,7 @@
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
+import 'package:green_pool/app_environment.dart';
 
 import 'app/modules/home/bindings/home_binding.dart';
 import 'package:flutter/material.dart';
@@ -18,8 +19,7 @@ import 'firebase_options_dev.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-    options: DefaultFirebaseOptionsDev.currentPlatform,
-  );
+      options: DefaultFirebaseOptionsDev.currentPlatform, name: "dev");
   await initGetServices();
   await SystemChrome.setPreferredOrientations(
     [DeviceOrientation.portraitUp],
@@ -56,4 +56,5 @@ Future<void> initGetServices() async {
   await Get.putAsync<AuthService>(() async => AuthService());
   Get.put(HomeController());
   await DependencyInjection.init();
+  AppEnvironment.setupEnv(Environment.dev);
 }

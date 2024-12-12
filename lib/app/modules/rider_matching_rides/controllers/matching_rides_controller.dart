@@ -11,6 +11,7 @@ import '../../../data/matching_rides_model.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/dio/api_service.dart';
 import '../../../services/gp_util.dart';
+import '../../../services/storage.dart';
 import '../views/create_ride_alert_bottomsheet.dart';
 
 class MatchingRidesController extends GetxController {
@@ -128,19 +129,35 @@ class MatchingRidesController extends GetxController {
   }
 
   Future<void> createRideAlert() async {
-    if (rideDetails?['ridesDetails']['date'] != "" &&
-        rideDetails?['ridesDetails']['time'] != "" &&
-        rideDetails?['ridesDetails']['origin']['name'] != "" &&
-        rideDetails?['ridesDetails']['destination']['name'] != "") {
-      try {
-        riderPostRideAPI();
-      } catch (e) {
-        throw Exception(e);
+    if (Get.find<GetStorageService>().isLoggedIn) {
+      if (Get.find<GetStorageService>().profileStatus == true) {
+        if (rideDetails?['ridesDetails']['date'] != "" &&
+            rideDetails?['ridesDetails']['time'] != "" &&
+            rideDetails?['ridesDetails']['origin']['name'] != "" &&
+            rideDetails?['ridesDetails']['destination']['name'] != "") {
+          try {
+            riderPostRideAPI();
+          } catch (e) {
+            throw Exception(e);
+          }
+        } else {
+          Get.back();
+          showMySnackbar(
+              msg: "To create a ride alert please enter all the details");
+        }
+      } else {
+        Get.toNamed(Routes.RIDER_PROFILE_SETUP, arguments: {
+          "fromNavBar": false,
+          "fullName": Get.find<GetStorageService>().getUserName ?? "",
+          "findRideModel": rideDetails
+        });
       }
     } else {
-      Get.back();
-      showMySnackbar(
-          msg: "To create a ride alert please enter all the details");
+      Get.toNamed(Routes.CREATE_ACCOUNT, arguments: {
+        'isDriver': false,
+        'fromNavBar': false,
+        'findRideModel': rideDetails,
+      });
     }
   }
 

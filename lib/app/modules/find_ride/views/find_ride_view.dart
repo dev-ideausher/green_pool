@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
@@ -53,7 +54,6 @@ class FindRideView extends GetView<FindRideController> {
                 Get.toNamed(Routes.ORIGIN,
                         arguments: LocationValues.findRideOrigin)
                     ?.then((v) => controller.setActiveState());
-                ;
               },
               controller: controller.riderOriginTextController,
               readOnly: true,
@@ -64,8 +64,22 @@ class FindRideView extends GetView<FindRideController> {
                     ? ColorUtil.kPrimary3PinkMode
                     : ColorUtil.kSecondary01,
               ),
-            ).paddingOnly(top: 8.kh, bottom: 16.kh),
-            // RichTextHeading(text: Strings.destination),
+            ).paddingOnly(top: 8.kh, bottom: 8.kh),
+            Align(
+              alignment: Alignment.center,
+              child: IconButton(
+                      onPressed: () {
+                        controller.swapTextFields();
+                      },
+                      highlightColor: ColorUtil.kPrimary03,
+                      style: const ButtonStyle(
+                        backgroundColor:
+                            WidgetStatePropertyAll(ColorUtil.kPrimary01),
+                      ),
+                      icon: const Icon(Icons.swap_vert_sharp))
+                  .animate()
+                  .flip(),
+            ),
             Text(
               Strings.destination,
               style: TextStyleUtil.k14Semibold(),
@@ -149,7 +163,7 @@ class FindRideView extends GetView<FindRideController> {
                   ).paddingOnly(top: 8.kh, bottom: 16.kh),
                 ),
               ],
-            ).paddingOnly(bottom: 16.kh),
+            ).paddingOnly(bottom: 8.kh),
             RichTextHeading(text: Strings.seatsNeeded)
                 .paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
@@ -187,7 +201,7 @@ class FindRideView extends GetView<FindRideController> {
               () => Visibility(
                   visible: controller.locationModelNames.isNotEmpty,
                   child: SizedBox(
-                    height: 165.kh,
+                    height: 158.kh,
                     child: ListView.builder(
                         itemCount: controller.locationModelNames.length,
                         itemBuilder: (context, index) {
@@ -229,7 +243,7 @@ class FindRideView extends GetView<FindRideController> {
             const Expanded(child: SizedBox()),
             GreenPoolButton(
               padding: const EdgeInsets.all(0),
-              onPressed: () => controller.decideRouting(),
+              onPressed: () => controller.moveToMatchingRides(),
               isActive: controller.isActive.value,
               label: Strings.findMatchingRides,
             ).paddingOnly(bottom: 30.kh),

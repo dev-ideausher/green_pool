@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -398,6 +399,144 @@ class DialogHelper {
           ),
         ),
       ),
+    );
+  }
+
+  static Future<DateTime?> cupertinoDatePicker(BuildContext context,
+      DateTime minDate, DateTime maxDate, DateTime initialDate) {
+    return showModalBottomSheet<DateTime>(
+      context: context,
+      builder: (BuildContext builder) {
+        DateTime tempPickedDate = DateTime.now();
+
+        return Container(
+          // height: 250.kh,
+          decoration: BoxDecoration(
+              color: ColorUtil.kWhiteColor,
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(8.kh),
+                  topRight: Radius.circular(8.kh))),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Get.back();
+                    },
+                    style: ButtonStyle(
+                      overlayColor: WidgetStateProperty.all(Colors.transparent),
+                    ),
+                    child: Text("Cancel",
+                        style: TextStyleUtil.k16Regular(
+                            color: ColorUtil.kBlack04)),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context, tempPickedDate);
+                    },
+                    style: ButtonStyle(
+                      overlayColor: WidgetStateProperty.all(Colors.transparent),
+                    ),
+                    child: Text("Select", style: TextStyleUtil.k16Bold()),
+                  ),
+                ],
+              ).paddingSymmetric(horizontal: 12.kw),
+              SizedBox(
+                height: 200.kh,
+                child: CupertinoDatePicker(
+                  mode: CupertinoDatePickerMode.date,
+                  minimumDate: minDate,
+                  maximumDate: maxDate,
+                  initialDateTime: initialDate,
+                  onDateTimeChanged: (DateTime dateTime) {
+                    tempPickedDate = dateTime;
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  static Future<TimeOfDay?> cupertinoTimePicker(BuildContext context) {
+    return showModalBottomSheet<TimeOfDay>(
+      context: context,
+      builder: (BuildContext builder) {
+        TimeOfDay tempPickedTime = TimeOfDay.now();
+        DateTime now = DateTime.now();
+
+        return Container(
+          // height: 250.kh,
+          decoration: BoxDecoration(
+              color: ColorUtil.kWhiteColor,
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(8.kh),
+                  topRight: Radius.circular(8.kh))),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Get.back();
+                    },
+                    style: ButtonStyle(
+                      overlayColor: WidgetStateProperty.all(Colors.transparent),
+                    ),
+                    child: Text(
+                      "Cancel",
+                      style:
+                          TextStyleUtil.k16Regular(color: ColorUtil.kBlack04),
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(
+                        context,
+                        tempPickedTime,
+                      );
+                    },
+                    style: ButtonStyle(
+                      overlayColor: WidgetStateProperty.all(Colors.transparent),
+                    ),
+                    child: Text(
+                      "Select",
+                      style: TextStyleUtil.k16Bold(),
+                    ),
+                  ),
+                ],
+              ).paddingSymmetric(horizontal: 12.kw),
+              SizedBox(
+                height: 200.kh,
+                child: CupertinoDatePicker(
+                  mode: CupertinoDatePickerMode.time,
+                  use24hFormat: false, // Ensures AM/PM format
+                  initialDateTime: DateTime(
+                    now.year,
+                    now.month,
+                    now.day,
+                    tempPickedTime.hour,
+                    tempPickedTime.minute,
+                  ),
+                  onDateTimeChanged: (DateTime dateTime) {
+                    tempPickedTime = TimeOfDay(
+                      hour: dateTime.hour,
+                      minute: dateTime.minute,
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

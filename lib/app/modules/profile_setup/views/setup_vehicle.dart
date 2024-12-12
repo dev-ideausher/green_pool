@@ -22,6 +22,7 @@ class SetupVehicle extends GetView<ProfileSetupController> {
   Widget build(BuildContext context) {
     Get.lazyPut(() => ProfileSetupController());
     return SingleChildScrollView(
+      controller: controller.vehicleInfoScroll,
       child: Form(
         key: controller.vehicleFormKey,
         child: Column(
@@ -73,6 +74,7 @@ class SetupVehicle extends GetView<ProfileSetupController> {
             GreenPoolTextField(
               hintText: Strings.enterVehicleModel,
               controller: controller.model,
+              focusNode: controller.modelFocusNode,
               validator: (value) => controller.validateModel(value),
               autovalidateMode: AutovalidateMode.onUserInteraction,
             ).paddingOnly(bottom: 16.kh),
@@ -81,6 +83,7 @@ class SetupVehicle extends GetView<ProfileSetupController> {
               () => GreenPoolTextField(
                 hintText: Strings.selectVehicleType,
                 controller: controller.type,
+                focusNode: controller.typeFocusNode,
                 validator: (value) => controller.validateVehicleType(value),
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 suffix: controller.isTypeListExpanded.value
@@ -142,6 +145,7 @@ class SetupVehicle extends GetView<ProfileSetupController> {
               () => GreenPoolTextField(
                 hintText: Strings.selectVehicleColor,
                 controller: controller.color,
+                focusNode: controller.colorFocusNode,
                 validator: (value) => controller.validateColor(value),
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 suffix: controller.isColorListExpanded.value
@@ -202,6 +206,7 @@ class SetupVehicle extends GetView<ProfileSetupController> {
             GreenPoolTextField(
               hintText: Strings.enterYear,
               controller: controller.year,
+              focusNode: controller.yearFocusNode,
               validator: (p0) => controller.validateYear(p0),
               keyboardType: const TextInputType.numberWithOptions(),
               autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -210,14 +215,20 @@ class SetupVehicle extends GetView<ProfileSetupController> {
                 .paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
               hintText: Strings.licenseplate,
-              controller: controller.licencePlate,
+              controller: controller.licensePlate,
+              focusNode: controller.licenseFocusNode,
               validator: (p0) => controller.validateLicensePlate(p0),
               autovalidateMode: AutovalidateMode.onUserInteraction,
             ),
             Obx(
               () => GreenPoolButton(
                 onPressed: () {
-                  if (controller.userDetailsFilled) {
+                  if (controller.userDetailsFilled ||
+                      (controller.isProfileImagePicked.value &&
+                          controller.fullName.text.isNotEmpty &&
+                          controller.phoneNumber.text.isNotEmpty &&
+                          controller.gender.text.isNotEmpty &&
+                          controller.city.text.isNotEmpty)) {
                     controller.checkVehicleValidations();
                   } else {
                     controller.tabBarController.index = 0;

@@ -23,16 +23,25 @@ class AppInterceptors extends Interceptor {
       RequestOptions options, RequestInterceptorHandler handler) async {
     isOverlayLoader ? DialogHelper.showLoading() : null;
     final String currentTimeZone = await FlutterTimezone.getLocalTimezone();
-    await Helpers.validateToken(
-      onSuccess: () {
-        options.headers = {
-          "Authorization": "Bearer ${Get.find<GetStorageService>().encjwToken}",
-          "timezone": currentTimeZone,
-          "Content-Type": "application/json"
-        };
-        super.onRequest(options, handler);
-      },
-    );
+    if (Get.find<GetStorageService>().isLoggedIn) {
+      await Helpers.validateToken(
+        onSuccess: () {
+          options.headers = {
+            "Authorization":
+                "Bearer ${Get.find<GetStorageService>().encjwToken}",
+            "timezone": currentTimeZone,
+            "Content-Type": "application/json"
+          };
+          super.onRequest(options, handler);
+        },
+      );
+    } else {
+      options.headers = {
+        "timezone": currentTimeZone,
+        "Content-Type": "application/json"
+      };
+      super.onRequest(options, handler);
+    }
   }
 
   @override

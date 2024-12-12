@@ -28,7 +28,6 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
         leading: GestureDetector(
           onTap: () {
             Get.back();
-            controller.rideDetails!['ridesDetails']!['date'] = "";
           },
           child: Padding(
             padding: EdgeInsets.all(8.kh),
@@ -431,7 +430,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
             Obx(
               () => GreenPoolButton(
                       onPressed: () {
-                        controller.chatWithDriver();
+                        controller.isUserLoggedIn("chat");
                       },
                       isLoading: controller.messageBtnLoading.value,
                       loadingColor:
@@ -443,7 +442,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                   .paddingOnly(top: 8.kh),
             ),
             GreenPoolButton(
-                    onPressed: () => controller.moveToPayment(),
+                    onPressed: () => controller.isUserLoggedIn("request"),
                     label: Strings.requestRide)
                 .paddingOnly(bottom: 40.kh, top: 16.kh),
           ],

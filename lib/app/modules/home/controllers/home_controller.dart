@@ -128,12 +128,12 @@ class HomeController extends GetxController {
         if (!Get.find<GetStorageService>().hasTappedAllowLocation) {
           Get.to(() => const PermissionsLocation());
           return Future.error('Location services are disabled.');
-        } else {
+        } /*else {
           await determinePosition().then((value) => {
                 latitude.value = value.latitude,
                 longitude.value = value.longitude,
               });
-        }
+        }*/
         // Setup message notifications
         setupMessage();
       } catch (e) {

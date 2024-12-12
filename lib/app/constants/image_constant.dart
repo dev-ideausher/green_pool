@@ -93,6 +93,7 @@ class ImageConstant {
   static String svgPinkFindRide = 'assets/images/home/pink_FindRide.svg';
   static String svgSetupProfilePic = 'assets/images/home/setup_profilepic.svg';
   static String svgSetupAdd = 'assets/images/home/setup_add.svg';
+  static String svgSetupAddSec01 = 'assets/images/home/setup_add_secondary.svg';
   static String svgPinkSetupAdd = 'assets/images/home/pink_setup_add.svg';
   static String svgRiderDriving = 'assets/images/home/driving.svg';
   static String svgRiderNeedRide = 'assets/images/home/need_ride.svg';

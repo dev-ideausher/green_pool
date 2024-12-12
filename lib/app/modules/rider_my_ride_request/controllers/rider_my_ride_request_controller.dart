@@ -148,6 +148,23 @@ class RiderMyRideRequestController extends GetxController {
     }
   }
 
+  Future<void> withdrawRidersReq(driverRideId) async {
+    try {
+      final response = await APIManager.postRiderCancelReq(body: {
+        'riderRideId': rideIdFromMyRides,
+        'driverRideId': driverRideId
+      });
+      if (response.data["status"]) {
+        allRiderSendRequestAPI();
+        showMySnackbar(msg: "The ride request has been cancelled.");
+      } else {
+        showMySnackbar(msg: response.data["message"]);
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
   openMessage(RiderSendRequestModelData data) async {
     try {
       final res = await APIManager.getChatRoomId(

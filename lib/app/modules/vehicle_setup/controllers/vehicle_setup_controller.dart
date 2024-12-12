@@ -3,12 +3,13 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http_parser/http_parser.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../data/post_ride_model.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/dio/api_service.dart';
-import '../../../services/gp_util.dart';
+import '../../../services/image_helper.dart';
 import '../../../services/snackbar.dart';
 import '../../../services/storage.dart';
 import '../../home/controllers/home_controller.dart';
@@ -67,7 +68,9 @@ class VehicleSetupController extends GetxController {
   }
 
   getVehicleImage(ImageSource imageSource) async {
-    XFile? pickedVehicleFile = await GpUtil.compressImage(imageSource);
+    XFile? pickedVehicleFile = await ImageUtil.cropCompressImage(
+        cropAspectRatio: const CropAspectRatio(ratioX: 16, ratioY: 9),
+        imageSource: imageSource);
     if (pickedVehicleFile != null) {
       selectedVehicleImagePath.value = File(pickedVehicleFile.path);
       isVehicleImagePicked.value = true;
@@ -129,7 +132,8 @@ class VehicleSetupController extends GetxController {
         Get.find<GetStorageService>().setDriver = true;
         Get.find<HomeController>().userInfoAPI();
         isVehicleBtnLoading.value = false;
-        Get.offNamed(Routes.POST_RIDE_STEP_TWO, arguments: postRideModel.value);
+        Get.until((route) => Get.currentRoute == Routes.POST_RIDE_STEP_FOUR);
+        // Get.offNamed(Routes.POST_RIDE_STEP_TWO, arguments: postRideModel.value);
       } else {
         showMySnackbar(msg: res.data["message"].toString());
       }

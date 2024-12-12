@@ -14,6 +14,7 @@ import 'package:green_pool/app/services/text_style_util.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../components/common_image_view.dart';
+import '../../../components/opt_heading_text.dart';
 import '../../../components/upload_add_picture.dart';
 import '../../../components/richtext_heading.dart';
 import '../controllers/profile_setup_controller.dart';
@@ -25,67 +26,20 @@ class SetupUser extends GetView<ProfileSetupController> {
   Widget build(BuildContext context) {
     Get.lazyPut(() => ProfileSetupController());
     return SingleChildScrollView(
+      controller: controller.userInfoScroll,
       child: Form(
         key: controller.userFormKey,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Center(
-              child: Column(
-                children: [
-                  GestureDetector(
-                    onTap: () => Get.to(() => AddPictureView(
-                          onPressedGallery: () {
-                            controller.getProfileImage(ImageSource.gallery);
-                          },
-                          onPressedSelfie: () {
-                            controller.getProfileImage(ImageSource.camera);
-                          },
-                        )),
-                    child: Stack(
-                      alignment: Alignment.bottomRight,
-                      children: [
-                        Obx(
-                          () => controller.isProfileImagePicked.value
-                              ? Container(
-                                  decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: ClipOval(
-                                    child: SizedBox.fromSize(
-                                      size: Size.fromRadius(44.kh),
-                                      child: CommonImageView(
-                                        file: controller
-                                            .selectedProfileImagePath.value!,
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              : Container(
-                                  decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      border: controller.imageNotUploaded.value
-                                          ? Border.all(color: ColorUtil.kError2)
-                                          : null),
-                                  child: SvgPicture.asset(
-                                      ImageConstant.svgSetupProfilePic),
-                                ),
-                        ),
-                        SvgPicture.asset(ImageConstant.svgSetupAdd),
-                      ],
-                    ).paddingOnly(bottom: 12.kh, top: 32.kh),
-                  ),
-                  Text(
-                    Strings.takeOrUploadProfilePic,
-                    style: TextStyleUtil.k16Regular(color: ColorUtil.kNeutral4),
-                  ),
-                ],
-              ),
+              child: ProfileImage(controller: controller),
             ).paddingOnly(bottom: 40.kh),
             RichTextHeading(text: Strings.fullName).paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
               hintText: Strings.enterName,
               controller: controller.fullName,
+              focusNode: controller.nameFocusNode,
               inputFormatters: [
                 FilteringTextInputFormatter.allow(
                     RegExp(r'[a-zA-Z\s]')), // Allow only alphabets and spaces
@@ -94,14 +48,15 @@ class SetupUser extends GetView<ProfileSetupController> {
               autovalidateMode: AutovalidateMode.onUserInteraction,
               suffix: SvgPicture.asset(ImageConstant.svgProfileEditPen),
             ).paddingOnly(bottom: 16.kh),
-            RichTextHeading(text: Strings.emailAddress)
+            OptFieldHeading(heading: Strings.emailAddress)
                 .paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
               hintText: Strings.emailID,
               controller: controller.email,
+              focusNode: controller.emailFocusNode,
               keyboardType: TextInputType.emailAddress,
-              validator: (value) => controller.validateEmail(value),
-              autovalidateMode: AutovalidateMode.onUserInteraction,
+              /*validator: (value) => controller.validateEmail(value),
+              autovalidateMode: AutovalidateMode.onUserInteraction,*/
               suffix: controller.readOnlyEmail
                   ? const SizedBox()
                   : SvgPicture.asset(ImageConstant.svgProfileEditPen),
@@ -124,6 +79,7 @@ class SetupUser extends GetView<ProfileSetupController> {
                 ),
               ),
               controller: controller.phoneNumber,
+              focusNode: controller.phoneFocusNode,
               keyboardType: TextInputType.number,
               validator: (value) => controller.phoneNumberValidator(value),
               autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -134,6 +90,7 @@ class SetupUser extends GetView<ProfileSetupController> {
               () => GreenPoolTextField(
                 hintText: Strings.selectGender,
                 controller: controller.gender,
+                focusNode: controller.genderFocusNode,
                 validator: (value) => controller.validateGender(value),
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 readOnly: true,
@@ -195,6 +152,7 @@ class SetupUser extends GetView<ProfileSetupController> {
               () => GreenPoolTextField(
                 hintText: Strings.selectCity,
                 controller: controller.city,
+                focusNode: controller.cityFocusNode,
                 validator: (value) => controller.validateCity(value),
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 suffix: controller.isCityListExpanded.value
@@ -256,24 +214,8 @@ class SetupUser extends GetView<ProfileSetupController> {
                     )).paddingOnly(bottom: 16.kh),
               ),
             ),
-            Text.rich(
-              TextSpan(
-                children: [
-                  TextSpan(
-                    text: Strings.dateOfBirth,
-                    style: TextStyleUtil.k14Semibold(),
-                  ),
-                  TextSpan(
-                    text: '*',
-                    style: TextStyleUtil.k14Regular(color: ColorUtil.kError3),
-                  ),
-                  TextSpan(
-                    text: Strings.above18,
-                    style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack04),
-                  ),
-                ],
-              ),
-            ).paddingOnly(bottom: 8.kh),
+            OptFieldHeading(heading: Strings.dateOfBirth)
+                .paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
               hintText: Strings.selectYourDateOfBirth,
               suffix: SvgPicture.asset(ImageConstant.svgIconCalendar),
@@ -282,10 +224,10 @@ class SetupUser extends GetView<ProfileSetupController> {
               onTap: () {
                 controller.setDate(context);
               },
-              validator: (value) => controller.validateDOB(value),
-              autovalidateMode: AutovalidateMode.onUserInteraction,
+              /*validator: (value) => controller.validateDOB(value),
+              autovalidateMode: AutovalidateMode.onUserInteraction,*/
             ).paddingOnly(bottom: 16.kh),
-            RichTextHeading(text: Strings.idVerification)
+            OptFieldHeading(heading: Strings.idVerification)
                 .paddingOnly(bottom: 8.kh),
             GestureDetector(
               onTap: () => Get.to(() => UploadIDView(
@@ -301,11 +243,6 @@ class SetupUser extends GetView<ProfileSetupController> {
                   padding:
                       EdgeInsets.symmetric(vertical: 68.kh, horizontal: 76.kw),
                   decoration: BoxDecoration(
-                      border: controller.isIDPicked.value
-                          ? null
-                          : controller.imageNotUploaded.value
-                              ? Border.all(color: ColorUtil.kError2)
-                              : null,
                       color: ColorUtil.kGreyColor,
                       borderRadius: BorderRadius.circular(8.kh)),
                   child: controller.isIDPicked.value
@@ -334,6 +271,68 @@ class SetupUser extends GetView<ProfileSetupController> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class ProfileImage extends StatelessWidget {
+  const ProfileImage({
+    super.key,
+    required this.controller,
+  });
+
+  final ProfileSetupController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        GestureDetector(
+          onTap: () => Get.to(() => AddPictureView(
+                onPressedGallery: () {
+                  controller.getProfileImage(ImageSource.gallery);
+                },
+                onPressedSelfie: () {
+                  controller.getProfileImage(ImageSource.camera);
+                },
+              )),
+          child: Stack(
+            alignment: Alignment.bottomRight,
+            children: [
+              Obx(
+                () => controller.isProfileImagePicked.value
+                    ? Container(
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                        ),
+                        child: ClipOval(
+                          child: SizedBox.fromSize(
+                            size: Size.fromRadius(44.kh),
+                            child: CommonImageView(
+                              file: controller.selectedProfileImagePath.value!,
+                            ),
+                          ),
+                        ),
+                      )
+                    : Container(
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: controller.isProfileImagePickedCheck.value
+                                ? Border.all(color: ColorUtil.kError2)
+                                : null),
+                        child:
+                            SvgPicture.asset(ImageConstant.svgSetupProfilePic),
+                      ),
+              ),
+              SvgPicture.asset(ImageConstant.svgSetupAddSec01),
+            ],
+          ).paddingOnly(bottom: 12.kh, top: 32.kh),
+        ),
+        Text(
+          Strings.takeOrUploadProfilePic,
+          style: TextStyleUtil.k16Regular(color: ColorUtil.kNeutral4),
+        ),
+      ],
     );
   }
 }

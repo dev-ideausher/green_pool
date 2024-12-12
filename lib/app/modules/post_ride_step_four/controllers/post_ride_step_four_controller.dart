@@ -8,7 +8,9 @@ import '../../../routes/app_pages.dart';
 import '../../../services/colors.dart';
 import '../../../services/dio/api_service.dart';
 import '../../../services/snackbar.dart';
+import '../../../services/storage.dart';
 import '../../../services/text_style_util.dart';
+import '../../home/controllers/home_controller.dart';
 
 class PostRideStepFourController extends GetxController {
   RxBool isChecked = false.obs;
@@ -29,12 +31,43 @@ class PostRideStepFourController extends GetxController {
     //handles button state in guidelines view
     if (isChecked.value == true) {
       try {
-        postRideAPI();
+        decideRouting();
       } catch (e) {
         throw Exception(e);
       }
     } else {
       showMySnackbar(msg: 'Terms and Conditions not accepted');
+    }
+  }
+
+  decideRouting() {
+    final storageService = Get.find<GetStorageService>();
+    final homeController = Get.find<HomeController>();
+
+    //if user is logged in
+    if (storageService.isLoggedIn) {
+      //if user has filled profile details
+      if (storageService.profileStatus == false) {
+        showMySnackbar(msg: Strings.pleaseCompleteProfileSetup);
+        Get.toNamed(Routes.PROFILE_SETUP, arguments: {
+          'fromNavBar': false,
+          'fullName': Get.find<GetStorageService>().getUserName ?? "",
+          'postRideModel': postRideModel.value
+        });
+      } //else if user has not filled vehicle details then move to vehicle details and back to step four
+      else if (homeController.userInfo.value.data?.vehicleStatus == false) {
+        showMySnackbar(msg: Strings.plsFillVehicleDetails);
+        Get.toNamed(Routes.VEHICLE_SETUP, arguments: postRideModel.value);
+      } //else Post the ride
+      else {
+        postRideAPI();
+      }
+    } else {
+      Get.toNamed(Routes.CREATE_ACCOUNT, arguments: {
+        'fromNavBar': false,
+        'isDriver': true,
+        'postRideModel': postRideModel.value
+      });
     }
   }
 

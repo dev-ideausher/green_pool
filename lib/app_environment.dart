@@ -1,6 +1,5 @@
 import 'dart:io';
 
-
 enum Environment { dev, prod }
 
 abstract class AppEnvironment {
@@ -21,18 +20,22 @@ abstract class AppEnvironment {
         {
           baseApiUrl = "https://green-pool-backend.vercel.app/v1/";
           title = 'Flutter flavors dev';
-          publishableKey= "";
-          cardEncryptionKey="";
-          placeApiKey = Platform.isAndroid ?'AIzaSyAs_QL4LPuvaU23w-t0wOUJyUziRmSIlkE' : 'AIzaSyBq5jpn2f8NAb4pb562ejP2YCg47uX1_nU';
+          publishableKey = "";
+          cardEncryptionKey = "";
+          placeApiKey = Platform.isAndroid
+              ? 'AIzaSyAs_QL4LPuvaU23w-t0wOUJyUziRmSIlkE'
+              : 'AIzaSyBq5jpn2f8NAb4pb562ejP2YCg47uX1_nU';
           break;
         }
       case Environment.prod:
         {
           baseApiUrl = "https://api.carpooll.com/v1/";
           title = 'Flutter flavors prod';
-          publishableKey="";
-          cardEncryptionKey="";
-          placeApiKey = Platform.isAndroid ?'AIzaSyAs_QL4LPuvaU23w-t0wOUJyUziRmSIlkE' : 'AIzaSyBq5jpn2f8NAb4pb562ejP2YCg47uX1_nU';
+          publishableKey = "";
+          cardEncryptionKey = "";
+          placeApiKey = Platform.isAndroid
+              ? 'AIzaSyAs_QL4LPuvaU23w-t0wOUJyUziRmSIlkE'
+              : 'AIzaSyBq5jpn2f8NAb4pb562ejP2YCg47uX1_nU';
 
           break;
         }

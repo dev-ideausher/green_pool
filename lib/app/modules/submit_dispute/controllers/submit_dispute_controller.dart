@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import '../../../services/dio/api_service.dart';
-import '../../../services/gp_util.dart';
+import '../../../services/image_helper.dart';
 import '../../../services/snackbar.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -45,7 +45,7 @@ class SubmitDisputeController extends GetxController {
   }
 
   getImage(ImageSource imageSource) async {
-    final List<XFile>? pickedFiles = await GpUtil.compressImages(
+    final List<XFile>? pickedFiles = await ImageUtil.compressImages(
         imageSource); // Ensure this method returns a list of XFile
     if (pickedFiles != null && pickedFiles.isNotEmpty) {
       selectedImages.value =

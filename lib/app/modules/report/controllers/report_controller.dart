@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -9,7 +8,7 @@ import 'package:dio/dio.dart' as dio;
 import 'package:path/path.dart' as path;
 
 import '../../../services/dio/api_service.dart';
-import '../../../services/gp_util.dart';
+import '../../../services/image_helper.dart';
 import '../../../services/snackbar.dart';
 
 class ReportController extends GetxController {
@@ -43,7 +42,7 @@ class ReportController extends GetxController {
   }
 
   getBugImage(ImageSource imageSource) async {
-    final List<XFile>? pickedFiles = await GpUtil.compressImages(
+    final List<XFile>? pickedFiles = await ImageUtil.compressImages(
         imageSource); // Ensure this method returns a list of XFile
     if (pickedFiles != null && pickedFiles.isNotEmpty) {
       selectedImages.value =

@@ -10,6 +10,7 @@ import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../components/greenpool_textfield.dart';
+import '../../../components/opt_heading_text.dart';
 import '../../../components/richtext_heading.dart';
 import '../../../components/upload_id.dart';
 import '../../../constants/image_constant.dart';
@@ -31,6 +32,7 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
         appBarSize: 8.kh,
       ),
       body: SingleChildScrollView(
+        controller: controller.scrollController,
         child: Form(
           key: controller.userFormKey,
           child: Column(
@@ -45,60 +47,7 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
                 style: TextStyleUtil.k16Regular(color: ColorUtil.kBlack04),
               ).paddingOnly(bottom: 40.kh),
               Center(
-                child: Column(
-                  children: [
-                    GestureDetector(
-                      onTap: () => Get.to(() => AddPictureView(
-                            onPressedGallery: () {
-                              controller.getProfileImage(ImageSource.gallery);
-                            },
-                            onPressedSelfie: () {
-                              controller.getProfileImage(ImageSource.camera);
-                            },
-                          )),
-                      child: Stack(
-                        alignment: Alignment.bottomRight,
-                        children: [
-                          Obx(
-                            () => Container(
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                    color: controller.isProfileImagePickedCheck
-                                                .value &&
-                                            (controller.selectedProfileImagePath
-                                                        .value?.path ??
-                                                    "")
-                                                .isEmpty
-                                        ? Colors.red
-                                        : Colors.transparent,
-                                    style: BorderStyle.solid),
-                              ),
-                              child: controller.isProfileImagePicked.value
-                                  ? ClipOval(
-                                      child: SizedBox.fromSize(
-                                          size: Size.fromRadius(44.kh),
-                                          child: CommonImageView(
-                                            file: controller
-                                                .selectedProfileImagePath
-                                                .value!,
-                                          )),
-                                    )
-                                  : SvgPicture.asset(
-                                      ImageConstant.svgSetupProfilePic),
-                            ),
-                          ),
-                          SvgPicture.asset(ImageConstant.svgSetupAdd),
-                        ],
-                      ).paddingOnly(bottom: 12.kh),
-                    ),
-                    Text(
-                      Strings.takeOrUploadProfilePic,
-                      style:
-                          TextStyleUtil.k16Regular(color: ColorUtil.kNeutral4),
-                    ),
-                  ],
-                ),
+                child: ProfileImage(controller: controller),
               ).paddingOnly(bottom: 40.kh),
               RichTextHeading(text: Strings.fullName).paddingOnly(bottom: 8.kh),
               GreenPoolTextField(
@@ -109,17 +58,16 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
                       RegExp(r'[a-zA-Z\s]')), // Allow only alphabets and spaces
                 ],
                 validator: (value) => controller.nameValidator(value),
+                focusNode: controller.nameFocusNode,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 suffix: SvgPicture.asset(ImageConstant.svgProfileEditPen),
               ).paddingOnly(bottom: 16.kh),
-              RichTextHeading(text: Strings.emailAddress)
+              OptFieldHeading(heading: Strings.emailAddress)
                   .paddingOnly(bottom: 8.kh),
               GreenPoolTextField(
                 hintText: Strings.enterEmailId,
                 controller: controller.email,
-                validator: (value) => controller.validateEmail(value),
                 keyboardType: TextInputType.emailAddress,
-                autovalidateMode: AutovalidateMode.onUserInteraction,
                 suffix: controller.readOnlyEmail
                     ? const SizedBox()
                     : SvgPicture.asset(ImageConstant.svgProfileEditPen),
@@ -136,6 +84,7 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
                     color: ColorUtil.kBlack03,
                   ),
                 ),
+                focusNode: controller.phoneFocusNode,
                 keyboardType: TextInputType.number,
                 validator: (value) => controller.phoneNumberValidator(value),
                 autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -148,6 +97,7 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
                   controller: controller.gender,
                   validator: (value) => controller.validateGender(value),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
+                  focusNode: controller.genderFocusNode,
                   readOnly: true,
                   suffix: controller.isGenderListExpanded.value
                       ? const Icon(Icons.arrow_drop_up)
@@ -207,6 +157,7 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
                 () => GreenPoolTextField(
                   hintText: Strings.selectCity,
                   controller: controller.city,
+                  focusNode: controller.cityFocusNode,
                   validator: (value) => controller.validateCity(value),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   suffix: controller.isCityListExpanded.value
@@ -268,35 +219,16 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
                       )).paddingOnly(bottom: 16.kh),
                 ),
               ),
-              Text.rich(
-                TextSpan(
-                  children: [
-                    TextSpan(
-                      text: Strings.dateOfBirth,
-                      style: TextStyleUtil.k14Semibold(),
-                    ),
-                    TextSpan(
-                      text: '*',
-                      style: TextStyleUtil.k14Regular(color: ColorUtil.kError3),
-                    ),
-                    TextSpan(
-                      text: Strings.above18,
-                      style:
-                          TextStyleUtil.k14Regular(color: ColorUtil.kBlack04),
-                    ),
-                  ],
-                ),
-              ).paddingOnly(bottom: 8.kh),
+              OptFieldHeading(heading: Strings.dateOfBirth)
+                  .paddingOnly(bottom: 8.kh),
               GreenPoolTextField(
                 hintText: Strings.enterDateOfBirth,
                 controller: controller.formattedDateOfBirth,
                 readOnly: true,
-                validator: (value) => controller.validateDOB(value),
-                autovalidateMode: AutovalidateMode.onUserInteraction,
                 onTap: () => controller.setDate(context),
                 suffix: SvgPicture.asset(ImageConstant.svgIconCalendar),
               ).paddingOnly(bottom: 16.kh),
-              RichTextHeading(text: Strings.idVerification)
+              OptFieldHeading(heading: Strings.idVerification)
                   .paddingOnly(bottom: 8.kh),
               GestureDetector(
                 onTap: () => Get.to(() => UploadIDView(
@@ -307,39 +239,29 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
                         controller.getIDImage(ImageSource.camera);
                       },
                     )),
-                child: Obx(
-                  () => Container(
-                    padding: EdgeInsets.symmetric(
-                        vertical: 68.kh, horizontal: 76.kw),
-                    decoration: BoxDecoration(
-                        color: ColorUtil.kGreyColor,
-                        border: Border.all(
-                          color: controller.isIDPickedCheck.value &&
-                                  (controller.selectedIDImagePath.value?.path ??
-                                          "")
-                                      .isEmpty
-                              ? Colors.red
-                              : Colors.transparent,
-                        ),
-                        borderRadius: BorderRadius.circular(8.kh)),
-                    child: Obx(
-                      () => controller.isIDPicked.value
-                          ? Image.file(
-                              controller.selectedIDImagePath.value!,
-                            )
-                          : Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SvgPicture.asset(ImageConstant.svgIconUpload)
-                                    .paddingOnly(right: 8.kw),
-                                Text(
-                                  Strings.uploadId,
-                                  style: TextStyleUtil.k14Regular(
-                                      color: ColorUtil.kBlack03),
-                                ),
-                              ],
-                            ),
-                    ),
+                child: Container(
+                  padding:
+                      EdgeInsets.symmetric(vertical: 68.kh, horizontal: 76.kw),
+                  decoration: BoxDecoration(
+                      color: ColorUtil.kGreyColor,
+                      borderRadius: BorderRadius.circular(8.kh)),
+                  child: Obx(
+                    () => controller.isIDPicked.value
+                        ? Image.file(
+                            controller.selectedIDImagePath.value!,
+                          )
+                        : Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SvgPicture.asset(ImageConstant.svgIconUpload)
+                                  .paddingOnly(right: 8.kw),
+                              Text(
+                                Strings.uploadId,
+                                style: TextStyleUtil.k14Regular(
+                                    color: ColorUtil.kBlack03),
+                              ),
+                            ],
+                          ),
                   ),
                 ),
               ),
@@ -354,6 +276,69 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
           ).paddingSymmetric(horizontal: 16.kw),
         ),
       ),
+    );
+  }
+}
+
+class ProfileImage extends StatelessWidget {
+  const ProfileImage({
+    super.key,
+    required this.controller,
+  });
+
+  final RiderProfileSetupController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        GestureDetector(
+          onTap: () => Get.to(() => AddPictureView(
+                onPressedGallery: () {
+                  controller.getProfileImage(ImageSource.gallery);
+                },
+                onPressedSelfie: () {
+                  controller.getProfileImage(ImageSource.camera);
+                },
+              )),
+          child: Stack(
+            alignment: Alignment.bottomRight,
+            children: [
+              Obx(
+                () => Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                        color: controller.isProfileImagePickedCheck.value &&
+                                (controller.selectedProfileImagePath.value
+                                            ?.path ??
+                                        "")
+                                    .isEmpty
+                            ? Colors.red
+                            : Colors.transparent,
+                        style: BorderStyle.solid),
+                  ),
+                  child: controller.isProfileImagePicked.value
+                      ? ClipOval(
+                          child: SizedBox.fromSize(
+                              size: Size.fromRadius(44.kh),
+                              child: CommonImageView(
+                                file:
+                                    controller.selectedProfileImagePath.value!,
+                              )),
+                        )
+                      : SvgPicture.asset(ImageConstant.svgSetupProfilePic),
+                ),
+              ),
+              SvgPicture.asset(ImageConstant.svgSetupAddSec01),
+            ],
+          ).paddingOnly(bottom: 12.kh),
+        ),
+        Text(
+          Strings.takeOrUploadProfilePic,
+          style: TextStyleUtil.k16Regular(color: ColorUtil.kNeutral4),
+        ),
+      ],
     );
   }
 }

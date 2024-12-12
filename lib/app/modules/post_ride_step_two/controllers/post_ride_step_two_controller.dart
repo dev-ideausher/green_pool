@@ -1,8 +1,15 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:green_pool/app/components/gp_imagepicker.dart';
 import 'package:green_pool/app/data/post_ride_model.dart';
+import 'package:green_pool/app/services/dialog_helper.dart';
 import 'package:green_pool/app/services/gp_util.dart';
+import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/snackbar.dart';
+import 'package:green_pool/app/services/text_style_util.dart';
 import 'package:intl/intl.dart';
 
 import '../../../routes/app_pages.dart';
@@ -95,13 +102,16 @@ class PostRideStepTwoController extends GetxController {
   }
 
   Future<void> setDate(BuildContext context) async {
-    DateTime? pickedDate = await showDatePicker(
-      context: context,
-      builder: _pickerTheme,
-      firstDate: DateTime.now(),
-      lastDate: DateTime.now().add(const Duration(days: 3 * 30)),
-      initialDate: DateTime.now(),
-    );
+    DateTime? pickedDate = Platform.isIOS
+        ? await DialogHelper.cupertinoDatePicker(context, DateTime.now(),
+            DateTime.now().add(const Duration(days: 3 * 30)), DateTime.now())
+        : await showDatePicker(
+            context: context,
+            builder: _pickerTheme,
+            firstDate: DateTime.now(),
+            lastDate: DateTime.now().add(const Duration(days: 3 * 30)),
+            initialDate: DateTime.now(),
+          );
 
     if (pickedDate != null) {
       String formattedDate = pickedDate.toIso8601String();
@@ -114,12 +124,14 @@ class PostRideStepTwoController extends GetxController {
   }
 
   Future<void> setTime(BuildContext context) async {
-    TimeOfDay? pickedTime = await showTimePicker(
-      context: context,
-      builder: _pickerTheme,
-      initialTime: TimeOfDay.now(),
-      initialEntryMode: TimePickerEntryMode.dial,
-    );
+    TimeOfDay? pickedTime = Platform.isIOS
+        ? await DialogHelper.cupertinoTimePicker(context)
+        : await showTimePicker(
+            context: context,
+            builder: _pickerTheme,
+            initialTime: TimeOfDay.now(),
+            initialEntryMode: TimePickerEntryMode.dial,
+          );
     if (pickedTime != null) {
       // Use MaterialLocalizations to format the time in 24-hour format
       final MaterialLocalizations localizations =
@@ -147,12 +159,15 @@ class PostRideStepTwoController extends GetxController {
   }
 
   Future<void> setReturnDate(BuildContext context) async {
-    DateTime? pickedDate = await showDatePicker(
-        context: context,
-        builder: _pickerTheme,
-        firstDate: DateTime.now(),
-        lastDate: DateTime.now().add(const Duration(days: 3 * 30)),
-        initialDate: DateTime.now());
+    DateTime? pickedDate = Platform.isIOS
+        ? await DialogHelper.cupertinoDatePicker(context, DateTime.now(),
+            DateTime.now().add(const Duration(days: 3 * 30)), DateTime.now())
+        : await showDatePicker(
+            context: context,
+            builder: _pickerTheme,
+            firstDate: DateTime.now(),
+            lastDate: DateTime.now().add(const Duration(days: 3 * 30)),
+            initialDate: DateTime.now());
 
     if (pickedDate != null) {
       String formattedDate = pickedDate.toIso8601String();
@@ -170,12 +185,14 @@ class PostRideStepTwoController extends GetxController {
   }
 
   Future<void> setReturnTime(BuildContext context) async {
-    TimeOfDay? pickedTime = await showTimePicker(
-      context: context,
-      builder: _pickerTheme,
-      initialTime: TimeOfDay.now(),
-      initialEntryMode: TimePickerEntryMode.dial,
-    );
+    TimeOfDay? pickedTime = Platform.isIOS
+        ? await DialogHelper.cupertinoTimePicker(context)
+        : await showTimePicker(
+            context: context,
+            builder: _pickerTheme,
+            initialTime: TimeOfDay.now(),
+            initialEntryMode: TimePickerEntryMode.dial,
+          );
 
     if (pickedTime != null) {
       final MaterialLocalizations localizations =
@@ -200,12 +217,14 @@ class PostRideStepTwoController extends GetxController {
   }
 
   Future<void> setRecurringTime(BuildContext context) async {
-    TimeOfDay? pickedTime = await showTimePicker(
-      context: context,
-      builder: _pickerTheme,
-      initialTime: TimeOfDay.now(),
-      initialEntryMode: TimePickerEntryMode.dial,
-    );
+    TimeOfDay? pickedTime = Platform.isIOS
+        ? await DialogHelper.cupertinoTimePicker(context)
+        : await showTimePicker(
+            context: context,
+            builder: _pickerTheme,
+            initialTime: TimeOfDay.now(),
+            initialEntryMode: TimePickerEntryMode.dial,
+          );
 
     if (pickedTime != null) {
       // Use MaterialLocalizations to format the time in 24-hour format
@@ -244,7 +263,7 @@ class PostRideStepTwoController extends GetxController {
 
   void increment() {
     //handles available seat number
-    if (count.value <= 5) {
+    if (count.value <= 9) {
       count.value++;
     }
   }

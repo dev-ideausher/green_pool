@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -6,14 +5,16 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/data/find_ride_model.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/modules/rider_profile_setup/views/rider_review_pic.dart';
-import 'package:green_pool/app/services/gp_util.dart';
 import 'package:http_parser/http_parser.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../routes/app_pages.dart';
 import '../../../services/auth.dart';
 import '../../../services/colors.dart';
+import '../../../services/dialog_helper.dart';
 import '../../../services/dio/api_service.dart';
+import '../../../services/image_helper.dart';
 import '../../../services/snackbar.dart';
 import '../../../services/storage.dart';
 import 'package:path/path.dart' as path;
@@ -32,7 +33,6 @@ class RiderProfileSetupController extends GetxController {
   RxBool isProfileImagePicked = false.obs;
   RxBool isProfileImagePickedCheck = false.obs;
   RxBool isIDPicked = false.obs;
-  RxBool isIDPickedCheck = false.obs;
   TextEditingController fullName = TextEditingController(
       text: Get.find<AuthService>().auth.currentUser?.displayName);
   TextEditingController email = TextEditingController(
@@ -57,6 +57,15 @@ class RiderProfileSetupController extends GetxController {
   GlobalKey<FormState> userFormKey = GlobalKey<FormState>();
 
   final Rx<FindRideModel> findRideModel = FindRideModel().obs;
+
+  ScrollController scrollController = ScrollController();
+
+  //focus node
+  FocusNode nameFocusNode = FocusNode();
+  FocusNode emailFocusNode = FocusNode();
+  FocusNode phoneFocusNode = FocusNode();
+  FocusNode genderFocusNode = FocusNode();
+  FocusNode cityFocusNode = FocusNode();
 
   @override
   void onInit() {
@@ -87,39 +96,42 @@ class RiderProfileSetupController extends GetxController {
     DateTime initialDate =
         DateTime.now().isAfter(lastDate) ? lastDate : DateTime.now();
 
-    DateTime? pickedDate = await showDatePicker(
-      context: context,
-      firstDate: DateTime(1950),
-      lastDate: lastDate,
-      initialDate: initialDate,
-      builder: (BuildContext context, Widget? child) {
-        return Theme(
-          // Define the custom theme for the date picker
-          data: ThemeData(
-            // Define the primary color
-            primaryColor: Get.find<HomeController>().isPinkModeOn.value
-                ? ColorUtil.kPrimaryPinkMode
-                : ColorUtil.kPrimary01,
-            // Define the color scheme for the date picker
-            colorScheme: ColorScheme.light(
-              // Define the primary color for the date picker
-              primary: Get.find<HomeController>().isPinkModeOn.value
-                  ? ColorUtil.kPrimaryPinkMode
-                  : ColorUtil.kPrimary01,
-              // Define the background color for the date picker
-              surface: ColorUtil.kWhiteColor,
-              // Define the on-primary color for the date picker
-              onPrimary: ColorUtil.kBlack01,
-              secondary: Get.find<HomeController>().isPinkModeOn.value
-                  ? ColorUtil.kPrimaryPinkMode
-                  : ColorUtil.kPrimary01,
-            ),
-          ),
-          // Apply the custom theme to the child widget
-          child: child!,
-        );
-      },
-    );
+    DateTime? pickedDate = Platform.isIOS
+        ? await DialogHelper.cupertinoDatePicker(
+            context, DateTime(1950), lastDate, initialDate)
+        : await showDatePicker(
+            context: context,
+            firstDate: DateTime(1950),
+            lastDate: lastDate,
+            initialDate: initialDate,
+            builder: (BuildContext context, Widget? child) {
+              return Theme(
+                // Define the custom theme for the date picker
+                data: ThemeData(
+                  // Define the primary color
+                  primaryColor: Get.find<HomeController>().isPinkModeOn.value
+                      ? ColorUtil.kPrimaryPinkMode
+                      : ColorUtil.kPrimary01,
+                  // Define the color scheme for the date picker
+                  colorScheme: ColorScheme.light(
+                    // Define the primary color for the date picker
+                    primary: Get.find<HomeController>().isPinkModeOn.value
+                        ? ColorUtil.kPrimaryPinkMode
+                        : ColorUtil.kPrimary01,
+                    // Define the background color for the date picker
+                    surface: ColorUtil.kWhiteColor,
+                    // Define the on-primary color for the date picker
+                    onPrimary: ColorUtil.kBlack01,
+                    secondary: Get.find<HomeController>().isPinkModeOn.value
+                        ? ColorUtil.kPrimaryPinkMode
+                        : ColorUtil.kPrimary01,
+                  ),
+                ),
+                // Apply the custom theme to the child widget
+                child: child!,
+              );
+            },
+          );
 
     if (pickedDate != null) {
       String formattedDate = pickedDate.toString().split(" ")[0];
@@ -130,7 +142,9 @@ class RiderProfileSetupController extends GetxController {
   }
 
   getProfileImage(ImageSource imageSource) async {
-    XFile? pickedFile = await GpUtil.compressImage(imageSource);
+    XFile? pickedFile = await ImageUtil.cropCompressImage(
+        cropAspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
+        imageSource: imageSource);
     if (pickedFile != null) {
       selectedProfileImagePath.value = File(pickedFile.path);
       update();
@@ -143,7 +157,9 @@ class RiderProfileSetupController extends GetxController {
   }
 
   getIDImage(ImageSource imageSource) async {
-    XFile? pickedIDFile = await GpUtil.compressImage(imageSource);
+    XFile? pickedIDFile = await ImageUtil.cropCompressImage(
+        cropAspectRatio: const CropAspectRatio(ratioX: 16, ratioY: 9),
+        imageSource: imageSource);
 
     if (pickedIDFile != null) {
       selectedIDImagePath.value = File(pickedIDFile.path);
@@ -159,8 +175,9 @@ class RiderProfileSetupController extends GetxController {
   Future<void> userDetailsAPI() async {
     isBtnLoading.value = true;
     final storageService = Get.find<GetStorageService>();
-    final File pickedImageFile = File(selectedProfileImagePath.value!.path);
-    final File pickedIDFile = File(selectedIDImagePath.value!.path);
+    final File pickedImageFile =
+        File(selectedProfileImagePath.value?.path ?? "");
+    final File pickedIDFile = File(selectedIDImagePath.value?.path ?? "");
     String extension = pickedImageFile.path.split('.').last;
     String mediaType;
 
@@ -180,21 +197,22 @@ class RiderProfileSetupController extends GetxController {
 
     final userData = dio.FormData.fromMap({
       'fullName': fullName.text,
-      'email': email.text,
+      if (email.value.text.isNotEmpty) 'email': email.text,
       'phone': "+1${phoneNumber.text}",
       'gender': genderValue,
       'city': city.value.text,
-      'dob': dateOfBirth.text,
+      if (dateOfBirth.value.text.isNotEmpty) 'dob': dateOfBirth.text,
       'profilePic': await dio.MultipartFile.fromFile(
         pickedImageFile.path,
         contentType: MediaType.parse(mediaType),
         filename: path.basename(pickedImageFile.path),
       ),
-      'idPic': await dio.MultipartFile.fromFile(
-        pickedIDFile.path,
-        contentType: MediaType.parse(mediaType),
-        filename: path.basename(pickedIDFile.path),
-      ),
+      if (isIDPicked.value)
+        'idPic': await dio.MultipartFile.fromFile(
+          pickedIDFile.path,
+          contentType: MediaType.parse(mediaType),
+          filename: path.basename(pickedIDFile.path),
+        ),
     });
 
     try {
@@ -227,7 +245,8 @@ class RiderProfileSetupController extends GetxController {
           .then((value) => Get.find<HomeController>().changeTabIndex(0));
       Get.find<HomeController>().userInfoAPI();
     } else {
-      Get.until((route) => Get.currentRoute == Routes.FIND_RIDE);
+      // Get.until((route) => Get.currentRoute == Routes.FIND_RIDE);
+      Get.back();
     }
   }
 
@@ -291,23 +310,92 @@ class RiderProfileSetupController extends GetxController {
     return null;
   }
 
-  checkUserValidations() async {
+  Future<void> checkUserValidations() async {
     final isValid = userFormKey.currentState!.validate();
 
     if (!isValid) {
       isProfileImagePickedCheck.value = true;
-      isIDPickedCheck.value = true;
-      return showMySnackbar(msg: 'Please fill in all the details');
-    } else {
-      if (isProfileImagePicked.value != true || isIDPicked.value != true) {
-        isProfileImagePickedCheck.value = true;
-        isIDPickedCheck.value = true;
-        return showMySnackbar(msg: 'Please upload the required images');
-      } else {
-        userFormKey.currentState!.save();
-        await userDetailsAPI();
+
+      if (!isProfileImagePicked.value) {
+        _scrollToTop();
+        return showMySnackbar(msg: 'Please upload your profile image');
       }
+
+      if (_isFieldEmpty(
+        fullName.text,
+        nameFocusNode,
+        'Please enter your name',
+      )) return;
+
+      if (!_isValidEmail(
+        email.text,
+        emailFocusNode,
+        'Please enter a valid email address',
+      )) return;
+
+      if (readOnlyEmail &&
+          _isFieldEmpty(
+            phoneNumber.text,
+            phoneFocusNode,
+            'Please enter your phone number',
+          )) return;
+
+      if (_isFieldEmpty(
+        gender.text,
+        genderFocusNode,
+        'Please select your gender',
+      )) {
+        isGenderListExpanded.value = true;
+        return;
+      }
+
+      if (_isFieldEmpty(
+        city.text,
+        cityFocusNode,
+        'Please select your city province',
+      )) return;
+
+      return showMySnackbar(msg: 'Please fill in all the details');
     }
+
+    // Handle valid form case
+    if (!isProfileImagePicked.value) {
+      isProfileImagePickedCheck.value = true;
+      _scrollToTop();
+      return showMySnackbar(msg: 'Please upload your profile image');
+    }
+
+    // Save form and make API call
+    userFormKey.currentState!.save();
+    await userDetailsAPI();
+  }
+
+  void _scrollToTop() {
+    scrollController.animateTo(
+      0.0,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+  }
+
+  bool _isFieldEmpty(
+      String fieldValue, FocusNode focusNode, String errorMessage) {
+    if (fieldValue.isEmpty) {
+      focusNode.requestFocus();
+      showMySnackbar(msg: errorMessage);
+      return true;
+    }
+    return false;
+  }
+
+  bool _isValidEmail(
+      String emailValue, FocusNode focusNode, String errorMessage) {
+    if (emailValue.isNotEmpty && !GetUtils.isEmail(emailValue)) {
+      focusNode.requestFocus();
+      showMySnackbar(msg: errorMessage);
+      return false;
+    }
+    return true;
   }
 
   void addCityNames(String value) {

@@ -105,7 +105,7 @@ class Strings {
 
   static String departureDate = 'Departure Date';
 
-  static String optional = '(optional)';
+  static String optional = ' (optional)';
 
   static String enterDate = 'Enter Date';
 
@@ -599,7 +599,7 @@ class Strings {
 
   static var selectCity = "Select your City";
 
-  static var dateOfBirth = 'Date of Birth ';
+  static var dateOfBirth = 'Date of Birth';
 
   static var above18 = '(should be above 18)';
 
@@ -962,4 +962,6 @@ class Strings {
       "Your money has been successfully transferred to your bank account.";
 
   static var somethingWentWrong = "Oops! Something went wrong";
+
+  static String plsFillVehicleDetails = "Please fill in vehicle details";
 }

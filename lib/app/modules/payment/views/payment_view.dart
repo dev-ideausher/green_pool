@@ -79,7 +79,7 @@ class PaymentView extends GetView<PaymentController> {
                         style: TextStyleUtil.k14Semibold(),
                       ),
                     ).paddingOnly(bottom: 4.kh),
-                    ListTile(
+                    /*ListTile(
                       tileColor: ColorUtil.kWhiteColor,
                       onTap: () {
                         controller.promoCodeAPI();
@@ -96,7 +96,7 @@ class PaymentView extends GetView<PaymentController> {
                             : ColorUtil.kPrimary01,
                         size: 24.kh,
                       ),
-                    ).paddingOnly(bottom: 4.kh),
+                    ).paddingOnly(bottom: 4.kh),*/
                     Visibility(
                       visible: controller.discountAvailed.value,
                       child: ListTile(

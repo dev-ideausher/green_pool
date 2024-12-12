@@ -4,7 +4,6 @@ import '../../../data/chat_arg.dart';
 import '../../../data/rider_send_request_model.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/dio/api_service.dart';
-import '../../rider_my_ride_request/controllers/rider_my_ride_request_controller.dart';
 
 class RiderMyRidesSendDetailsController extends GetxController {  
   var riderSendRequestModelData = RiderSendRequestModelData();

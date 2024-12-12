@@ -45,6 +45,7 @@ class Endpoints {
   static const String createStripeAccount = "stripe/accounts";
   static const String stripeOnboarding = "stripe/accounts/onboard";
   static const String transferWalletBalance = "stripe/accounts/transfer-wallet-balance";
+  static const String riderCancelReq = "rider/cancelRequest";
 
   //get url
   static const String userLogin = "auth/login";

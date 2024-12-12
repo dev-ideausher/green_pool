@@ -15,6 +15,7 @@ import '../../../routes/app_pages.dart';
 import '../../../services/auth.dart';
 import '../../../services/dio/api_service.dart';
 import '../../../services/dio/exceptions.dart';
+import '../../../services/push_notification_service.dart';
 import '../../../services/storage.dart';
 
 class VerifyController extends GetxController {
@@ -141,6 +142,8 @@ class VerifyController extends GetxController {
           storageService.setUserName = "";
           storageService.emailId = "";
           storageService.phoneNumber = "";
+          PushNotificationService.unsubFcm(
+              "${homeController.userInfo.value.data?.Id}");
           Get.find<AuthService>().logOutUser();
           showMySnackbar(msg: response.data['message'].toString() ?? "");
         }
@@ -164,6 +167,8 @@ class VerifyController extends GetxController {
           storageService.setUserName = "";
           storageService.emailId = "";
           storageService.phoneNumber = "";
+          PushNotificationService.unsubFcm(
+              "${homeController.userInfo.value.data?.Id}");
           Get.find<AuthService>().logOutUser();
           showMySnackbar(msg: response.data['message'].toString() ?? "");
         }
@@ -191,31 +196,28 @@ class VerifyController extends GetxController {
         storageService.profileStatus = true;
         storageService.isLoggedIn = true;
         Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
-        showMySnackbar(
-            msg: "You are now logged in! This account already exists.");
+        showMySnackbar(msg: "You are now logged in!");
         await homeController.userInfoAPI();
       } else {
         //if the user is trying to post or find a ride then they should be logged in and redirected to respective pages with data
         try {
           if (homeController.findingRide.value) {
-            //if the user was finding
+            //if the user is finding
             storageService.isLoggedIn = true;
             storageService.profileStatus = true;
             Get.back();
-            showMySnackbar(
-                msg: "You are now logged in! This account already exists.");
+            showMySnackbar(msg: "You are now logged in!");
             await homeController.userInfoAPI();
           } else {
-            //if the user was posting
+            //if the user is posting
             if (userInfo.data!.vehicleStatus!) {
               //if they have filled then proceed to post ride step 2
               storageService.isLoggedIn = true;
               storageService.profileStatus = true;
               storageService.setDriver = true;
-              Get.offNamed(Routes.POST_RIDE_STEP_TWO,
-                  arguments: postRideModel.value);
-              showMySnackbar(
-                  msg: "You are now logged in! This account already exists.");
+              Get.back();
+              // Get.offNamed(Routes.POST_RIDE_STEP_TWO, arguments: postRideModel.value);
+              showMySnackbar(msg: "You are now logged in!");
               await homeController.userInfoAPI();
             } else {
               //if not then redirect to vehicle details page
@@ -299,15 +301,15 @@ class VerifyController extends GetxController {
             storageService.isLoggedIn = true;
             storageService.profileStatus = true;
             storageService.setDriver = true;
-            Get.offNamed(Routes.POST_RIDE_STEP_TWO,
-                arguments: postRideModel.value);
+            Get.back();
+            // Get.offNamed(Routes.POST_RIDE_STEP_TWO, arguments: postRideModel.value);
             showMySnackbar(msg: "Successfully logged in");
             await homeController.userInfoAPI();
           } else {
             //if not then redirect to vehicle details page
             storageService.isLoggedIn = true;
             storageService.profileStatus = true;
-            Get.toNamed(Routes.VEHICLE_SETUP, arguments: postRideModel.value);
+            Get.offNamed(Routes.VEHICLE_SETUP, arguments: postRideModel.value);
             showMySnackbar(msg: "To proceed please fill in vehicle details");
           }
         }

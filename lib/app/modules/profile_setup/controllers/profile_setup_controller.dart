@@ -11,12 +11,14 @@ import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/snackbar.dart';
 import 'package:green_pool/app/services/storage.dart';
 import 'package:http_parser/http_parser.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:path/path.dart' as path;
 import '../../../services/colors.dart';
+import '../../../services/dialog_helper.dart';
 import '../../../services/dio/api_service.dart';
-import '../../../services/gp_util.dart';
+import '../../../services/image_helper.dart';
 
 class ProfileSetupController extends GetxController
     with GetSingleTickerProviderStateMixin {
@@ -57,9 +59,9 @@ class ProfileSetupController extends GetxController
   Rx<File?> selectedProfileImagePath = Rx<File?>(null);
   Rx<File?> selectedIDImagePath = Rx<File?>(null);
   RxBool isProfileImagePicked = false.obs;
+  RxBool isProfileImagePickedCheck = false.obs;
   RxBool isIDPicked = false.obs;
   RxBool expandList = false.obs;
-  RxBool imageNotUploaded = false.obs;
   bool readOnlyEmail = false;
   TextEditingController fullName = TextEditingController(
       text: Get.find<GetStorageService>().getUserName ?? "");
@@ -86,12 +88,27 @@ class ProfileSetupController extends GetxController
   RxBool isVehicleImagePicked = false.obs;
   RxBool vehicleImageNotUploaded = false.obs;
   TextEditingController year = TextEditingController();
-  TextEditingController licencePlate = TextEditingController();
+  TextEditingController licensePlate = TextEditingController();
 
   GlobalKey<FormState> userFormKey = GlobalKey<FormState>();
   GlobalKey<FormState> vehicleFormKey = GlobalKey<FormState>();
 
   final Rx<PostRideModel> postRideModel = PostRideModel().obs;
+
+  //focus node
+  FocusNode nameFocusNode = FocusNode();
+  FocusNode emailFocusNode = FocusNode();
+  FocusNode phoneFocusNode = FocusNode();
+  FocusNode genderFocusNode = FocusNode();
+  FocusNode cityFocusNode = FocusNode();
+  FocusNode modelFocusNode = FocusNode();
+  FocusNode typeFocusNode = FocusNode();
+  FocusNode colorFocusNode = FocusNode();
+  FocusNode yearFocusNode = FocusNode();
+  FocusNode licenseFocusNode = FocusNode();
+
+  ScrollController userInfoScroll = ScrollController();
+  ScrollController vehicleInfoScroll = ScrollController();
 
   @override
   void onInit() {
@@ -118,32 +135,35 @@ class ProfileSetupController extends GetxController
     DateTime initialDate =
         DateTime.now().isAfter(lastDate) ? lastDate : DateTime.now();
 
-    DateTime? pickedDate = await showDatePicker(
-      context: context,
-      firstDate: DateTime(1950),
-      lastDate: lastDate,
-      initialDate: initialDate,
-      builder: (BuildContext context, Widget? child) {
-        return Theme(
-          data: ThemeData(
-            primaryColor: Get.find<HomeController>().isPinkModeOn.value
-                ? ColorUtil.kPrimaryPinkMode
-                : ColorUtil.kPrimary01,
-            colorScheme: ColorScheme.light(
-              primary: Get.find<HomeController>().isPinkModeOn.value
-                  ? ColorUtil.kPrimaryPinkMode
-                  : ColorUtil.kPrimary01,
-              surface: ColorUtil.kWhiteColor,
-              onPrimary: ColorUtil.kBlack01,
-              secondary: Get.find<HomeController>().isPinkModeOn.value
-                  ? ColorUtil.kPrimaryPinkMode
-                  : ColorUtil.kPrimary01,
-            ),
-          ),
-          child: child!,
-        );
-      },
-    );
+    DateTime? pickedDate = Platform.isIOS
+        ? await DialogHelper.cupertinoDatePicker(
+            context, DateTime(1950), lastDate, initialDate)
+        : await showDatePicker(
+            context: context,
+            firstDate: DateTime(1950),
+            lastDate: lastDate,
+            initialDate: initialDate,
+            builder: (BuildContext context, Widget? child) {
+              return Theme(
+                data: ThemeData(
+                  primaryColor: Get.find<HomeController>().isPinkModeOn.value
+                      ? ColorUtil.kPrimaryPinkMode
+                      : ColorUtil.kPrimary01,
+                  colorScheme: ColorScheme.light(
+                    primary: Get.find<HomeController>().isPinkModeOn.value
+                        ? ColorUtil.kPrimaryPinkMode
+                        : ColorUtil.kPrimary01,
+                    surface: ColorUtil.kWhiteColor,
+                    onPrimary: ColorUtil.kBlack01,
+                    secondary: Get.find<HomeController>().isPinkModeOn.value
+                        ? ColorUtil.kPrimaryPinkMode
+                        : ColorUtil.kPrimary01,
+                  ),
+                ),
+                child: child!,
+              );
+            },
+          );
 
     if (pickedDate != null) {
       String formattedDate = pickedDate.toString().split(" ")[0];
@@ -154,7 +174,9 @@ class ProfileSetupController extends GetxController
   }
 
   getProfileImage(ImageSource imageSource) async {
-    XFile? pickedFile = await GpUtil.compressImage(imageSource);
+    XFile? pickedFile = await ImageUtil.cropCompressImage(
+        cropAspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
+        imageSource: imageSource);
     if (pickedFile != null) {
       selectedProfileImagePath.value = File(pickedFile.path);
       update();
@@ -167,7 +189,9 @@ class ProfileSetupController extends GetxController
   }
 
   getIDImage(ImageSource imageSource) async {
-    XFile? pickedIDFile = await GpUtil.compressImage(imageSource);
+    XFile? pickedIDFile = await ImageUtil.cropCompressImage(
+        cropAspectRatio: const CropAspectRatio(ratioX: 16, ratioY: 9),
+        imageSource: imageSource);
     if (pickedIDFile != null) {
       selectedIDImagePath.value = File(pickedIDFile.path);
       isIDPicked.value = true;
@@ -179,7 +203,9 @@ class ProfileSetupController extends GetxController
   }
 
   getVehicleImage(ImageSource imageSource) async {
-    XFile? pickedVehicleFile = await GpUtil.compressImage(imageSource);
+    XFile? pickedVehicleFile = await ImageUtil.cropCompressImage(
+        cropAspectRatio: const CropAspectRatio(ratioX: 16, ratioY: 9),
+        imageSource: imageSource);
     if (pickedVehicleFile != null) {
       selectedVehicleImagePath.value = File(pickedVehicleFile.path);
       isVehicleImagePicked.value = true;
@@ -192,8 +218,9 @@ class ProfileSetupController extends GetxController
 
   Future<void> userDetailsAPI() async {
     final storageService = Get.find<GetStorageService>();
-    final File pickedImageFile = File(selectedProfileImagePath.value!.path);
-    final File pickedIDFile = File(selectedIDImagePath.value!.path);
+    final File pickedImageFile =
+        File(selectedProfileImagePath.value?.path ?? "");
+    final File pickedIDFile = File(selectedIDImagePath.value?.path ?? "");
     String extension = pickedImageFile.path.split('.').last;
     String idExtension = pickedIDFile.path.split('.').last;
     String mediaType;
@@ -222,21 +249,22 @@ class ProfileSetupController extends GetxController
 
     final userData = dio.FormData.fromMap({
       'fullName': fullName.text,
-      'email': email.text,
+      if (email.value.text.isNotEmpty) 'email': email.text,
       'phone': "+1${phoneNumber.text}",
       'gender': genderValue,
       'city': city.value.text,
-      'dob': dateOfBirth.text,
+      if (dateOfBirth.value.text.isNotEmpty) 'dob': dateOfBirth.text,
       'profilePic': await dio.MultipartFile.fromFile(
         pickedImageFile.path,
         contentType: MediaType.parse(mediaType),
         filename: path.basename(pickedImageFile.path),
       ),
-      'idPic': await dio.MultipartFile.fromFile(
-        pickedIDFile.path,
-        contentType: MediaType.parse(idMediaType),
-        filename: path.basename(pickedIDFile.path),
-      ),
+      if (isIDPicked.value)
+        'idPic': await dio.MultipartFile.fromFile(
+          pickedIDFile.path,
+          contentType: MediaType.parse(idMediaType),
+          filename: path.basename(pickedIDFile.path),
+        ),
     });
     try {
       isVehicleBtnLoading.value = true;
@@ -276,7 +304,7 @@ class ProfileSetupController extends GetxController
       'type': type.value.text,
       'color': color.value.text,
       'year': year.text,
-      'licencePlate': licencePlate.text,
+      'licencePlate': licensePlate.text,
       'vehiclePic': await dio.MultipartFile.fromFile(
         pickedVehicleFile.path,
         contentType: MediaType.parse(mediaType),
@@ -316,7 +344,8 @@ class ProfileSetupController extends GetxController
           .then((value) => Get.find<HomeController>().changeTabIndex(0));
       Get.find<HomeController>().userInfoAPI();
     } else {
-      Get.offNamed(Routes.POST_RIDE_STEP_TWO, arguments: postRideModel.value);
+      // Get.offNamed(Routes.POST_RIDE_STEP_TWO, arguments: postRideModel.value);
+      Get.until((route) => Get.currentRoute == Routes.POST_RIDE_STEP_FOUR);
     }
   }
 
@@ -403,7 +432,7 @@ class ProfileSetupController extends GetxController
 
   String? validateColor(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Please select your Vehicle colour';
+      return 'Kindly select the color of your vehicle.';
     }
     return null;
   }
@@ -447,7 +476,7 @@ class ProfileSetupController extends GetxController
     return null;
   }
 
-  checkUserValidations() async {
+  /*checkUserValidations() async {
     final isValid = userFormKey.currentState!.validate();
 
     if (!isValid) {
@@ -464,6 +493,103 @@ class ProfileSetupController extends GetxController
         tabBarController.index = 1;
       }
     }
+  }*/
+
+  void _scrollUserInfoToTop() {
+    userInfoScroll.animateTo(
+      0.0,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+  }
+
+  void _scrollVehicleInfoToTop() {
+    vehicleInfoScroll.animateTo(
+      0.0,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+  }
+
+  bool _isFieldEmpty(
+      String fieldValue, FocusNode focusNode, String errorMessage) {
+    if (fieldValue.isEmpty) {
+      focusNode.requestFocus();
+      showMySnackbar(msg: errorMessage);
+      return true;
+    }
+    return false;
+  }
+
+  bool _isValidEmail(
+      String emailValue, FocusNode focusNode, String errorMessage) {
+    if (emailValue.isNotEmpty && !GetUtils.isEmail(emailValue)) {
+      focusNode.requestFocus();
+      showMySnackbar(msg: errorMessage);
+      return false;
+    }
+    return true;
+  }
+
+  Future<void> checkUserValidations() async {
+    final isValid = userFormKey.currentState!.validate();
+
+    if (!isValid) {
+      isProfileImagePickedCheck.value = true;
+
+      if (!isProfileImagePicked.value) {
+        _scrollUserInfoToTop();
+        return showMySnackbar(msg: 'Please upload your profile image');
+      }
+
+      if (_isFieldEmpty(
+        fullName.text,
+        nameFocusNode,
+        'Please enter your name',
+      )) return;
+
+      if (!_isValidEmail(
+        email.text,
+        emailFocusNode,
+        'Please enter a valid email address',
+      )) return;
+
+      if (readOnlyEmail &&
+          _isFieldEmpty(
+            phoneNumber.text,
+            phoneFocusNode,
+            'Please enter your phone number',
+          )) return;
+
+      if (_isFieldEmpty(
+        gender.text,
+        genderFocusNode,
+        'Please select your gender',
+      )) {
+        isGenderListExpanded.value = true;
+        return;
+      }
+
+      if (_isFieldEmpty(
+        city.text,
+        cityFocusNode,
+        'Please select your city province',
+      )) return;
+
+      return showMySnackbar(msg: 'Please fill in all the details');
+    }
+
+    // Handle valid form case
+    if (!isProfileImagePicked.value) {
+      isProfileImagePickedCheck.value = true;
+      _scrollUserInfoToTop();
+      return showMySnackbar(msg: 'Please upload your profile image');
+    }
+
+    // Save form and make API call
+    userFormKey.currentState!.save();
+    userDetailsFilled = true;
+    tabBarController.index = 1;
   }
 
   checkVehicleValidations() async {
@@ -471,6 +597,48 @@ class ProfileSetupController extends GetxController
 
     if (!isValid) {
       vehicleImageNotUploaded.value = true;
+
+      if (!isVehicleImagePicked.value) {
+        _scrollVehicleInfoToTop();
+        return showMySnackbar(msg: 'Please upload the vehicle image');
+      }
+
+      if (_isFieldEmpty(
+        model.text,
+        modelFocusNode,
+        'Please enter your model',
+      )) return;
+
+      if (_isFieldEmpty(
+        type.text,
+        typeFocusNode,
+        'Please select your car type',
+      )) {
+        isTypeListExpanded.value = true;
+        return;
+      }
+
+      if (_isFieldEmpty(
+        color.text,
+        colorFocusNode,
+        'Kindly select the color of your vehicle.',
+      )) {
+        isColorListExpanded.value = true;
+        return;
+      }
+
+      if (_isFieldEmpty(
+        year.text,
+        yearFocusNode,
+        'Please enter a correct year',
+      )) return;
+
+      if (_isFieldEmpty(
+        licensePlate.text,
+        licenseFocusNode,
+        'Please enter a correct license number',
+      )) return;
+
       return showMySnackbar(msg: 'Please fill in all the details');
     } else {
       if (isVehicleImagePicked.value != true) {

@@ -34,7 +34,7 @@ class VehicleDetailsView extends GetView<VehicleDetailsController> {
                 .paddingOnly(top: 32.kh, bottom: 8.kh),
             GestureDetector(
               onTap: () {
-                controller.getProfileImage(ImageSource.gallery);
+                controller.getVehicleImage(ImageSource.gallery);
               },
               child: Obx(() => Container(
                   padding:

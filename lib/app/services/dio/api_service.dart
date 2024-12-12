@@ -45,6 +45,11 @@ class APIManager {
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
           .post(Endpoints.sendRequestToRider, data: jsonEncode(body));
 
+  static Future<Response> postRiderCancelReq({required dynamic body}) async =>
+      // rider will withdraw the req already sent to driver and driver has not acted upoon it
+      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+          .post(Endpoints.riderCancelReq, data: jsonEncode(body));
+
   static Future<Response> postSendRequestToDriver(
           {required dynamic body}) async =>
       // rider will send request to driver

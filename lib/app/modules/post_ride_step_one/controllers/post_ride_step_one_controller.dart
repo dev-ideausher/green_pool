@@ -37,6 +37,15 @@ class PostRideStepOneController extends GetxController {
     isDriver.value = Get.arguments;
   }
 
+  void swapTextFields() {
+    // Swap logic
+    final origin = originTextController.text;
+    final destination = destinationTextController.text;
+
+    originTextController.text = destination;
+    destinationTextController.text = origin;
+  }
+
   moveToSetOrigin() {
     Get.toNamed(Routes.SEARCH_ADDRESS, arguments: LocationValues.origin)?.then(
       (value) => setActiveStatePostRideView(),
@@ -89,63 +98,8 @@ class PostRideStepOneController extends GetxController {
       isActive.value = false;
     }
   }
-
-  decideRouting() {
-    final storageService = Get.find<GetStorageService>();
-    final homeController = Get.find<HomeController>();
-    // Decides if the user is logged in and redirects accordingly
-    if (storageService.isLoggedIn) {
-      if (storageService.profileStatus == false) {
-        showMySnackbar(msg: Strings.pleaseCompleteProfileSetup);
-        Get.toNamed(Routes.PROFILE_SETUP, arguments: {
-          'fromNavBar': false,
-          'fullName': Get.find<GetStorageService>().getUserName ?? "",
-          'postRideModel': PostRideModel(
-              ridesDetails: PostRideModelRidesDetails(
-                  origin: PostRideModelRidesDetailsOrigin(
-                      name: originTextController.value.text,
-                      latitude: originLatitude.value,
-                      longitude: originLongitude.value),
-                  destination: PostRideModelRidesDetailsDestination(
-                      name: destinationTextController.value.text,
-                      latitude: destLatitude.value,
-                      longitude: destLongitude.value),
-                  stops: [
-                PostRideModelRidesDetailsStops(
-                    name: stop1TextController.value.text,
-                    latitude: stop1Lat.value,
-                    longitude: stop1Long.value),
-                PostRideModelRidesDetailsStops(
-                    name: stop2TextController.value.text,
-                    latitude: stop2Lat.value,
-                    longitude: stop2Long.value),
-              ]))
-        });
-      } else if (homeController.userInfo.value.data?.vehicleStatus == false) {
-        showMySnackbar(msg: 'Please fill in vehicle details');
-        Get.toNamed(Routes.VEHICLE_SETUP,
-            arguments: PostRideModel(
-                ridesDetails: PostRideModelRidesDetails(
-                    origin: PostRideModelRidesDetailsOrigin(
-                        name: originTextController.value.text,
-                        latitude: originLatitude.value,
-                        longitude: originLongitude.value),
-                    destination: PostRideModelRidesDetailsDestination(
-                        name: destinationTextController.value.text,
-                        latitude: destLatitude.value,
-                        longitude: destLongitude.value),
-                    stops: [
-                  PostRideModelRidesDetailsStops(
-                      name: stop1TextController.value.text,
-                      latitude: stop1Lat.value,
-                      longitude: stop1Long.value),
-                  PostRideModelRidesDetailsStops(
-                      name: stop2TextController.value.text,
-                      latitude: stop2Lat.value,
-                      longitude: stop2Long.value),
-                ])));
-      } else {
-        Get.toNamed(
+  void moveToStepTwo () {
+    Get.toNamed(
           Routes.POST_RIDE_STEP_TWO,
           arguments: PostRideModel(
               ridesDetails: PostRideModelRidesDetails(
@@ -168,33 +122,6 @@ class PostRideStepOneController extends GetxController {
                     longitude: stop2Long.value),
               ])),
         );
-      }
-    } else {
-      Get.toNamed(Routes.CREATE_ACCOUNT, arguments: {
-        'fromNavBar': false,
-        'isDriver': true,
-        'postRideModel': PostRideModel(
-            ridesDetails: PostRideModelRidesDetails(
-                origin: PostRideModelRidesDetailsOrigin(
-                    name: originTextController.value.text,
-                    latitude: originLatitude.value,
-                    longitude: originLongitude.value),
-                destination: PostRideModelRidesDetailsDestination(
-                    name: destinationTextController.value.text,
-                    latitude: destLatitude.value,
-                    longitude: destLongitude.value),
-                stops: [
-              PostRideModelRidesDetailsStops(
-                  name: stop1TextController.value.text,
-                  latitude: stop1Lat.value,
-                  longitude: stop1Long.value),
-              PostRideModelRidesDetailsStops(
-                  name: stop2TextController.value.text,
-                  latitude: stop2Lat.value,
-                  longitude: stop2Long.value),
-            ])),
-      });
-    }
   }
 
   removeStop1() {

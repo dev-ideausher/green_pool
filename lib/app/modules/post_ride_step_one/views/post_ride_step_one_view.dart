@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -54,7 +55,22 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
                       onTap: () => controller.removeOrigin(),
                       child: const Icon(Icons.cancel))
                   : const SizedBox(),*/
-            ).paddingOnly(top: 8.kh, bottom: 16.kh),
+            ).paddingOnly(top: 8.kh, bottom: 8.kh),
+            Align(
+              alignment: Alignment.center,
+              child: IconButton(
+                      onPressed: () {
+                        controller.swapTextFields();
+                      },
+                      highlightColor: ColorUtil.kPrimary03,
+                      style: const ButtonStyle(
+                        backgroundColor:
+                            WidgetStatePropertyAll(ColorUtil.kPrimary01),
+                      ),
+                      icon: const Icon(Icons.swap_vert_sharp))
+                  .animate()
+                  .flip(),
+            ),
             RichTextHeading(text: Strings.destination),
             GreenPoolTextField(
               hintText: Strings.enterAdestination,
@@ -165,7 +181,7 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
               children: [
                 Obx(
                   () => GreenPoolButton(
-                    onPressed: () => controller.decideRouting(),
+                    onPressed: () => controller.moveToStepTwo(),
                     padding: const EdgeInsets.all(0),
                     isActive: controller.isActive.value,
                     label: Strings.next,

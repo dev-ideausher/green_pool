@@ -18,6 +18,7 @@ class GreenPoolTextField extends StatelessWidget {
   final Function(String?)? onchanged, onSaved;
   final int? maxLines;
   final bool? enabled, autofocus;
+  final FocusNode? focusNode;
   final Widget? prefix, suffix;
   final Function()? onTap, onPressedSuffix;
   final AutovalidateMode? autovalidateMode;
@@ -36,6 +37,7 @@ class GreenPoolTextField extends StatelessWidget {
       this.prefix,
       this.onTap,
       this.autofocus,
+      this.focusNode,
       this.onPressedSuffix,
       this.readOnly,
       this.autovalidateMode,
@@ -64,6 +66,7 @@ class GreenPoolTextField extends StatelessWidget {
       onSaved: onSaved,
       obscureText: obscureText ?? false,
       autofocus: autofocus ?? false,
+      focusNode: focusNode,
       readOnly: readOnly ?? false,
       textCapitalization: textCapitalization,
       keyboardType: keyboardType ?? TextInputType.name,

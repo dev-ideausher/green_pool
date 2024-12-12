@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/services/dio/api_service.dart';
 import 'package:http_parser/http_parser.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../routes/app_pages.dart';
-import '../../../services/gp_util.dart';
+import '../../../services/image_helper.dart';
 import '../../../services/snackbar.dart';
 import '../../home/controllers/home_controller.dart';
 
@@ -81,8 +82,10 @@ class VehicleDetailsController extends GetxController {
   RxBool btnLoading = false.obs;
   RxBool isBtnActive = false.obs;
 
-  getProfileImage(ImageSource imageSource) async {
-    XFile? pickedFile = await GpUtil.compressImage(imageSource);
+  getVehicleImage(ImageSource imageSource) async {
+    XFile? pickedFile = await ImageUtil.cropCompressImage(
+        cropAspectRatio: const CropAspectRatio(ratioX: 16, ratioY: 9),
+        imageSource: imageSource);
     if (pickedFile != null) {
       selectedVehicleImagePath!.value = File(pickedFile.path);
       showMySnackbar(msg: 'Image selected');

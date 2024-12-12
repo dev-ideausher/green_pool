@@ -75,20 +75,21 @@ android {
             signingConfig signingConfigs.release
         }
     }
-}
-flavorDimensions "app"
-productFlavors {
-    create("dev") {
-        dimension = "app"
-        applicationIdSuffix = ".dev"
-        versionNameSuffix = "-dev"
-        resValue "string", "app_name", "Carpooll-dav"
-        resValue "string", "map_key", "AIzaSyAs_QL4LPuvaU23w-t0wOUJyUziRmSIlkE"
-    }
-    create("prod") {
-        dimension = "app"
-        resValue "string", "app_name", "Carpooll"
-        resValue "string", "map_key", "AIzaSyAs_QL4LPuvaU23w-t0wOUJyUziRmSIlkE"
+
+    flavorDimensions "app"
+    productFlavors {
+        create("dev") {
+            dimension = "app"
+            applicationIdSuffix = ".dev"
+            versionNameSuffix = "-dev"
+            resValue "string", "app_name", "Carpooll-dev"
+            resValue "string", "map_key", "AIzaSyAs_QL4LPuvaU23w-t0wOUJyUziRmSIlkE"
+        }
+        create("prod") {
+            dimension = "app"
+            resValue "string", "app_name", "Carpooll"
+            resValue "string", "map_key", "AIzaSyAs_QL4LPuvaU23w-t0wOUJyUziRmSIlkE"
+        }
     }
 }
 def flavors = ["dev", "prod"]
@@ -106,7 +107,6 @@ flavors.each { flavor ->
             }
         }
     }
-}
 }
 
 flutter {

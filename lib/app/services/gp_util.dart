@@ -1,76 +1,16 @@
-import 'dart:io';
 import 'dart:ui';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_google_maps_webservices/directions.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:ui' as ui;
 
 import 'dio/endpoints.dart';
 
 class GpUtil {
-  static Future<XFile?> compressImage(ImageSource imageSource) async {
-    final pickedFile = await ImagePicker().pickImage(source: imageSource);
-    final originalImage = File(pickedFile!.path);
-    final targetPath = originalImage.path;
-    final directory =
-        originalImage.parent; // Get the parent directory of the original image
-    final fileName =
-        'compressed_${originalImage.uri.pathSegments.last}'; // Create a new filename
-    final compressedPath =
-        '${directory.path}/$fileName'; // Ensure it ends with .jpg
-    final compressedImage = await FlutterImageCompress.compressAndGetFile(
-        targetPath, compressedPath,
-        quality: 10);
-    if (compressedImage != null) {
-      return XFile(compressedImage.path);
-    } else {
-      // Compression failed, handle the error
-      return null;
-    }
-  }
-
-  static Future<List<XFile>?> compressImages(ImageSource imageSource) async {
-    final pickedFiles = await ImagePicker()
-        .pickMultiImage(); // pickMultiImage for multiple images
-    if (pickedFiles == null || pickedFiles.isEmpty) {
-      return null;
-    }
-
-    List<XFile> compressedImages = [];
-
-    for (var pickedFile in pickedFiles) {
-      final originalImage = File(pickedFile.path);
-      final targetPath = originalImage.path;
-      final directory = originalImage
-          .parent; // Get the parent directory of the original image
-      final fileName =
-          'compressed_${originalImage.uri.pathSegments.last}'; // Create a new filename
-      final compressedPath =
-          '${directory.path}/$fileName'; // Ensure it ends with .jpg
-
-      final compressedImage = await FlutterImageCompress.compressAndGetFile(
-        targetPath,
-        compressedPath,
-        quality: 10,
-      );
-
-      if (compressedImage != null) {
-        compressedImages.add(XFile(compressedImage.path));
-      } else {
-        // Handle the case where compression fails for one image
-        print('Compression failed for ${pickedFile.path}');
-      }
-    }
-
-    return compressedImages.isNotEmpty ? compressedImages : null;
-  }
-
   static Future<String> calculateDistance({
     required double startLat,
     required double startLong,
