@@ -58,7 +58,7 @@ class DefaultFirebaseOptionsDev {
     databaseURL: 'https://staging-green-pool-default-rtdb.firebaseio.com',
     storageBucket: 'staging-green-pool.firebasestorage.app',
     androidClientId: '624865732455-8nr0sdf4gbrmgihn2psp099s00q6oro4.apps.googleusercontent.com',
-    iosClientId: '624865732455-0uqf72gt3e1mr913tgfa4jf1kt22p2rp.apps.googleusercontent.com',
+    iosClientId: '624865732455-9ufkjf2ggbeiqr22cae133me5ot3v6ph.apps.googleusercontent.com',
     iosBundleId: 'com.iu.greenPool.dev',
   );
 
