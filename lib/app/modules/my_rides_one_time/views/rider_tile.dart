@@ -245,6 +245,22 @@ class RiderTile extends StatelessWidget {
                                     '${GpUtil.getDateFormat(myRidesModelData?.time ?? "")}  ${GpUtil.convertUtcToLocal(myRidesModelData?.time ?? "")}',
                                     style: TextStyleUtil.k16Bold(),
                                   ),
+                            const Spacer(),
+                            Align(
+                              alignment: Alignment.center,
+                              child: GreenPoolButton(
+                                onPressed: () {
+                                  controller.riderDeleteRide(
+                                      myRidesModelData?.Id ?? "");
+                                },
+                                label: "Delete",
+                                height: 32.kh,
+                                width: 96.kw,
+                                padding: EdgeInsets.all(0.kh),
+                                isBorder: true,
+                                fontSize: 12.kh,
+                              ),
+                            )
                           ],
                         ).paddingOnly(bottom: 16.kh)
                       : const SizedBox(),

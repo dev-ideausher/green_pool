@@ -28,6 +28,13 @@ Future<void> main() async {
   return runApp(GestureDetector(
     onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
     child: GetMaterialApp(
+      builder: (context, child) {
+        return MediaQuery(
+          data: MediaQuery.of(context)
+              .copyWith(textScaler: const TextScaler.linear(1.0)),
+          child: child!,
+        );
+      },
       theme: ThemeData(
         scaffoldBackgroundColor: ColorUtil.kBackgroundColor,
       ),

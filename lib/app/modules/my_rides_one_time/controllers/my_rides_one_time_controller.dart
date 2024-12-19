@@ -80,13 +80,29 @@ class MyRidesOneTimeController extends GetxController {
           }
           isLoad.value = false;
         } catch (e) {
-          throw Exception(e);
+          debugPrint("riderCancelRideAPI error: $e");
         }
       });
     } else {
       showMySnackbar(
           msg:
               "Ride cancellation is not allowed as your ride has already started.");
+    }
+  }
+
+  riderDeleteRide(String riderRideId) async {
+    try {
+      isLoad.value = true;
+      final deleteRideResponse = await APIManager.postRiderDeleteRide(
+          body: {'riderRideId': riderRideId});
+      if (deleteRideResponse.data['status']) {
+        await myRidesAPI();
+      } else {
+        showMySnackbar(msg: deleteRideResponse.data['message'].toString());
+      }
+      isLoad.value = false;
+    } catch (e) {
+      debugPrint("riderDeleteRide error: $e");
     }
   }
 

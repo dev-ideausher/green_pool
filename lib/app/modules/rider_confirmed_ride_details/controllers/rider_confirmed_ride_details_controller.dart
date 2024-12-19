@@ -26,10 +26,16 @@ class RiderConfirmedRideDetailsController extends GetxController {
   openMessage(MyRidesModelData data) async {
     try {
       messageBtnLoading.value = true;
-      final res = await APIManager.getChatRoomId(
+      final res = await APIManager.postChatRoomId(
           receiverId: data.confirmDriverDetails?[0]?.driverPostsDetails?[0]
                   ?.driverDetails?[0]?.Id ??
-              "");
+              "",
+          body: {
+            "driverRideId":
+                data.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.Id,
+            "riderRideId": data.Id,
+            "seatsRequired": "" //no need of payment from here
+          });
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
               chatRoomId: res.data["data"]["chatRoomId"] ?? "",

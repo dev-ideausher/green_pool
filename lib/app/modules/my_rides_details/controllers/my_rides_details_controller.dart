@@ -53,8 +53,14 @@ class MyRidesDetailsController extends GetxController {
               [],
       onPressed: (rider) async {
         try {
-          final res = await APIManager.getChatRoomId(
-              receiverId: rider.riderDetails?.Id ?? "");
+          final res = await APIManager.postChatRoomId(
+              receiverId: rider.riderDetails?.Id ?? "",
+              //abhinav no need of payment from here so not sending riderRideId
+              body: {
+                "driverRideId": myRidesModelData.value.driverRideId,
+                "seatsRequired": "",
+                "riderRideId": ""
+              });
           Get.toNamed(Routes.CHAT_PAGE,
               arguments: ChatArg(
                   chatRoomId: res.data["data"]["chatRoomId"] ?? "",

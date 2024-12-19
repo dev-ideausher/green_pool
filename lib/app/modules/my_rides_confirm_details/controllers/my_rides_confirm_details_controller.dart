@@ -65,7 +65,7 @@ class MyRidesConfirmDetailsController extends GetxController {
   openMessage(DriverConfirmRequestModelDataRideDetails data) async {
     try {
       isBtnLoading.value = true;
-      final res = await APIManager.getChatRoomId(
+      final res = await APIManager.postChatRoomId(
           receiverId: data.riderDetails?.first?.Id ?? "");
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(

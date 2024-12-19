@@ -46,6 +46,7 @@ class Endpoints {
   static const String stripeOnboarding = "stripe/accounts/onboard";
   static const String transferWalletBalance = "stripe/accounts/transfer-wallet-balance";
   static const String riderCancelReq = "rider/cancelRequest";
+  static const String riderDeleteRide = "rider/cancelAllRide";
 
   //get url
   static const String userLogin = "auth/login";
@@ -79,6 +80,8 @@ class Endpoints {
   static const String helpAndSupport = "company/helpAndSupport";
   static const String aboutUs = "admin/app/aboutUs";
   static const String promoCode = "admin/promoCode/web";
+  static const String checkForPayBtn = "driver/riderCheck/";
+  static const String getRideDetail = "driver/ride/";
 
   //patch url
   static const String emergencyContactsUpdate = "user/emergencyContacts";

@@ -86,10 +86,12 @@ class MessagesController extends GetxController {
     Get.toNamed(Routes.CHAT_PAGE,
             arguments: ChatArg(
                 chatRoomId: message?.chatRoomId ?? "",
-                id: message?.user2?.Id ?? "",
-                image: message?.user2?.profilePic?.url,
+                id: message?.reciver?.Id ?? "",
+                driverRideId: message.driverRideDetails?.Id ?? "",
+                riderRideId: message.riderRideId ?? "",
+                image: message?.reciver?.profilePic?.url,
                 deleteUpdateTime: message?.deleteUpdateTime ?? "",
-                name: message?.user2?.fullName))!
+                name: message?.reciver?.fullName))!
         .then((value) async {
       if (value != true) {
         Future.delayed(const Duration(milliseconds: 100), () {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:green_pool/app/res/strings.dart';
+import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:intl/intl.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/common_image_view.dart';
@@ -87,6 +88,10 @@ class ChatPageView extends GetView<ChatPageController> {
             ? const GpProgress()
             : Column(
                 children: [
+                  Visibility(
+                    visible: controller.isPayBtnVisible.value,
+                    child: PayNowBtn(controller: controller),
+                  ),
                   Expanded(
                     child: ListView.separated(
                       itemCount: controller.messages.length,
@@ -288,6 +293,10 @@ class ChatPageView extends GetView<ChatPageController> {
                       },
                     ),
                   ),
+                  Visibility(
+                    visible: controller.isWarningVisible.value,
+                    child: WarningMsg(controller: controller),
+                  ),
                   GreenPoolTextField(
                     controller: controller.eMsg,
                     hintText: Strings.writeMsg,
@@ -295,11 +304,104 @@ class ChatPageView extends GetView<ChatPageController> {
                     textCapitalization: TextCapitalization.sentences,
                     suffix: InkWell(
                         onTap: () => controller.sendMsg(),
+                        splashColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
                         child: SvgPicture.asset(ImageConstant.svgIconSend)),
                   ).paddingOnly(bottom: 40.kh, top: 5.kh)
                 ],
               ).paddingSymmetric(horizontal: 16.kw),
       ),
+    );
+  }
+}
+
+class PayNowBtn extends StatelessWidget {
+  const PayNowBtn({
+    super.key,
+    required this.controller,
+  });
+
+  final ChatPageController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      splashColor: Colors.transparent,
+      highlightColor: Colors.transparent,
+      onTap: () {
+        Get.toNamed(Routes.PAYNOW, arguments: {
+          //rider ride id for payment
+          "chatArg": controller.chatArg.value,
+          //rider has created a ride?
+          "rideCreated": controller.rideCreated,
+        });
+      },
+      child: Container(
+        padding: EdgeInsets.all(16.kh),
+        decoration: BoxDecoration(
+            color: ColorUtil.kSecondary07,
+            borderRadius: BorderRadius.circular(8.kh)),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              "Pay Now!",
+              style: TextStyleUtil.k14Semibold(),
+            ),
+            CommonImageView(
+              svgPath: ImageConstant.svgIconRightArrow,
+            )
+          ],
+        ),
+      ).paddingOnly(top: 16.kh),
+    );
+  }
+}
+
+class WarningMsg extends StatelessWidget {
+  const WarningMsg({
+    super.key,
+    required this.controller,
+  });
+
+  final ChatPageController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: Alignment.bottomCenter,
+      children: [
+        Container(
+            padding: EdgeInsets.all(16.kh),
+            decoration: BoxDecoration(
+                color: ColorUtil.kSecondary07,
+                borderRadius: BorderRadius.circular(8.kh)),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Icon(Icons.warning_amber_rounded)
+                    .paddingOnly(right: 8.kw),
+                Expanded(
+                  child: Text(
+                    "To prevent scams and phishing, never message or pay outside Carpooll.com",
+                    style: TextStyleUtil.k14Regular(),
+                  ),
+                )
+              ],
+            )),
+        // )).paddingOnly(top: 16.kh),
+        Obx(() {
+          return LinearProgressIndicator(
+            value: controller.progress.value,
+            minHeight: 4.0,
+            borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(8.kh),
+                bottomRight: Radius.circular(8.kh)),
+            color: ColorUtil.kSecondary01,
+            backgroundColor: ColorUtil.kSecondary07,
+          );
+        }),
+      ],
     );
   }
 }

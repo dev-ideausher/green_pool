@@ -15,6 +15,7 @@ import 'package:image_picker/image_picker.dart';
 import '../../../services/auth.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
+import '../../../services/dialog_helper.dart';
 import '../../../services/dio/api_service.dart';
 import '../../../services/image_helper.dart';
 import '../../../services/push_notification_service.dart';
@@ -305,6 +306,51 @@ class UserDetailsController extends GetxController {
       cityNames.value = CityList.cityNames.where((city) {
         return city.toLowerCase().contains(value.toLowerCase());
       }).toList();
+    }
+  }
+
+  Future<void> setDate(BuildContext context) async {
+    DateTime lastDate = DateTime.now().subtract(const Duration(days: 18 * 365));
+
+    DateTime initialDate =
+        DateTime.now().isAfter(lastDate) ? lastDate : DateTime.now();
+
+    DateTime? pickedDate = Platform.isIOS
+        ? await DialogHelper.cupertinoDatePicker(
+            context, DateTime(1950), lastDate, initialDate)
+        : await showDatePicker(
+            context: context,
+            firstDate: DateTime(1950),
+            lastDate: lastDate,
+            initialDate: initialDate,
+            builder: (BuildContext context, Widget? child) {
+              return Theme(
+                data: ThemeData(
+                  primaryColor: Get.find<HomeController>().isPinkModeOn.value
+                      ? ColorUtil.kPrimaryPinkMode
+                      : ColorUtil.kPrimary01,
+                  colorScheme: ColorScheme.light(
+                    primary: Get.find<HomeController>().isPinkModeOn.value
+                        ? ColorUtil.kPrimaryPinkMode
+                        : ColorUtil.kPrimary01,
+                    surface: ColorUtil.kWhiteColor,
+                    onPrimary: ColorUtil.kBlack01,
+                    secondary: Get.find<HomeController>().isPinkModeOn.value
+                        ? ColorUtil.kPrimaryPinkMode
+                        : ColorUtil.kPrimary01,
+                  ),
+                ),
+                child: child!,
+              );
+            },
+          );
+
+    if (pickedDate != null) {
+      String formattedDate = pickedDate.toString().split(" ")[0];
+      dobTextController.text = formattedDate;
+      dobTextController.text =
+          "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
+      isBtnActive.value = true;
     }
   }
 }

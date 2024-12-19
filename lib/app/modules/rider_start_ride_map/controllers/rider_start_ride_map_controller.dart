@@ -422,8 +422,13 @@ class RiderStartRideMapController extends GetxController {
 
   chatWithDriver() async {
     try {
-      final res = await APIManager.getChatRoomId(
-          receiverId: bookingDetail.value.driverDetails?.Id ?? "");
+      final res = await APIManager.postChatRoomId(
+          receiverId: bookingDetail.value.driverDetails?.Id ?? "",
+          body: {
+            "driverRideId": bookingDetail.value.driverRideId,
+            "riderRideId": bookingDetail.value.riderRideId,
+            "seatsRequired": "" //not required because payment is already done
+          });
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
               chatRoomId: res.data["data"]["chatRoomId"] ?? "",

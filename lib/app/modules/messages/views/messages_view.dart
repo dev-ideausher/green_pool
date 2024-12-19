@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/services/colors.dart';
+import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
@@ -63,40 +64,52 @@ class MessagesView extends GetView<MessagesController> {
                               controller.getToChatPage(
                                   message, controller.refreshIndicatorKey);
                             },
+                            tileColor: messageRead
+                                ? ColorUtil.kWhiteColor
+                                : ColorUtil.kSecondary07.withOpacity(0.3),
+                            borderSide: messageRead
+                                ? BorderSide.none
+                                : const BorderSide(
+                                    color: ColorUtil.kSecondary07),
                             title: controller.messagesModel.value
-                                    .chatRoomIds?[index]?.user2?.fullName ??
+                                    .chatRoomIds?[index]?.reciver?.fullName ??
                                 "",
                             path: controller
                                     .messagesModel
                                     .value
                                     .chatRoomIds?[index]
-                                    ?.user2
+                                    ?.reciver
                                     ?.profilePic
                                     ?.url ??
                                 "",
-                            subtitle: message?.lastMessage ?? "",
-                            subtitleStyle: messageRead
-                                ? TextStyleUtil.k14Regular(
+                            subtitle:
+                                "${message?.driverRideDetails?.origin?.split(",").first} to ${message?.driverRideDetails?.destination?.split(",").first}, ${GpUtil.formatDate(DateTime.parse(message?.driverRideDetails?.date ?? ""))}",
+                            lastMsg: message?.lastMessage ?? "",
+                            lastMsgStyle: messageRead
+                                ? TextStyleUtil.k12Regular(
                                     color: ColorUtil.kBlack03)
-                                : TextStyleUtil.k14Bold(
+                                : TextStyleUtil.k12Bold(
                                     color: isPinkModeOn
                                         ? ColorUtil.kPrimary3PinkMode
                                         : ColorUtil.kSecondary03),
-                            trailing: messageRead
-                                ? SvgPicture.asset(
-                                    ImageConstant.svgIconRightArrow)
-                                : Container(
-                                    padding: EdgeInsets.all(10.kh),
-                                    decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: isPinkModeOn
-                                            ? ColorUtil.kPrimaryPinkMode
-                                            : ColorUtil.kPrimary01),
-                                    child: Text(
-                                      "${controller.messagesModel.value.chatRoomIds?[index]?.unReadCount}",
-                                      style: TextStyleUtil.k12Bold(),
-                                    ),
+                            trailing: PopupMenuButton(
+                              itemBuilder: (context) {
+                                return [
+                                  PopupMenuItem(
+                                    onTap: () {},
+                                    value: 0,
+                                    height: 45.kh,
+                                    textStyle: TextStyleUtil.k12Medium(),
+                                    child: const Text("Move to Archive"),
                                   ),
+                                ];
+                              },
+                              color: ColorUtil.kWhiteColor,
+                              icon: const Icon(Icons.more_vert),
+                              iconSize: 28.kh,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.kh)),
+                            ),
                           ).paddingOnly(top: 8.kh);
                         },
                       ).paddingOnly(left: 16.kw, right: 16.kw, top: 8.kh),
@@ -156,10 +169,12 @@ class LoadingWidget extends StatelessWidget {
 }
 
 class MessageTile extends StatelessWidget {
-  final String title, path, subtitle;
+  final String title, path, subtitle, lastMsg;
   final Widget trailing;
-  final TextStyle? subtitleStyle;
+  final TextStyle? subtitleStyle, lastMsgStyle;
   final Function() onTap;
+  final Color? tileColor;
+  final BorderSide borderSide;
 
   const MessageTile({
     super.key,
@@ -169,27 +184,46 @@ class MessageTile extends StatelessWidget {
     required this.subtitle,
     required this.trailing,
     this.subtitleStyle,
+    this.tileColor,
+    this.borderSide = BorderSide.none,
+    required this.lastMsg,
+    this.lastMsgStyle,
   });
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      // height: 78.kh,
+      height: 97.kh,
       child: ListTile(
-        tileColor: ColorUtil.kWhiteColor,
+        tileColor: tileColor,
         onTap: onTap,
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.kh)),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.kh), side: borderSide),
         title: Text(
           title,
           style: TextStyleUtil.k14Semibold(),
         ),
-        subtitle: Text(
-          subtitle,
-          style: subtitleStyle ??
-              TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
-          overflow: TextOverflow.ellipsis,
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              subtitle,
+              style: subtitleStyle ??
+                  TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
+              overflow: TextOverflow.ellipsis,
+            ),
+            2.kheightBox,
+            Text(
+              lastMsg,
+              style: lastMsgStyle ??
+                  TextStyleUtil.k12Regular(color: ColorUtil.kBlack03),
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
         ),
+        isThreeLine: true,
+        titleAlignment: ListTileTitleAlignment.titleHeight,
         contentPadding: EdgeInsets.symmetric(horizontal: 24.kw, vertical: 8.kh),
         leading: SizedBox(
           height: 40.kh,

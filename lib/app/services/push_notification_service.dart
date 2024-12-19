@@ -292,7 +292,8 @@ class PushNotificationService {
 
     Future<void> navigateToChatPage() async {
       try {
-        final res = await APIManager.getChatRoomId(
+        //abhinav
+        final res = await APIManager.postChatRoomId(
             receiverId: actionData?.data['senderId'] ?? "");
         Get.toNamed(Routes.CHAT_PAGE,
                 arguments: ChatArg(

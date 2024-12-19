@@ -59,7 +59,10 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                             controller.riderSendRequestModel.value.data![index];
                         return GestureDetector(
                           onTap: () {
-                            controller.moveToDetailsPage(rideDetails);
+                            controller.moveToDetailsPage(
+                                rideDetails,
+                                controller.riderSendRequestModel.value
+                                    .riderRideDetails!);
                           },
                           child: Container(
                             padding: EdgeInsets.all(16.kh),

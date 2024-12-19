@@ -30,7 +30,7 @@ if (flutterVersionName == null) {
 
 android {
     namespace "com.iu.green_pool"
-    compileSdkVersion 34
+    compileSdkVersion 35
     buildToolsVersion "34.0.0"
     ndkVersion = "25.1.8937393"
 

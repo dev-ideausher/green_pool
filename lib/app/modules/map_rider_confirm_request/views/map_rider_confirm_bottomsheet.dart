@@ -77,7 +77,12 @@ class MapRiderConfirmBottomsheet extends StatelessWidget {
                         InkWell(
                           onTap: () => Get.find<RiderMyRideRequestController>()
                               .openMessageFromConfirm(
-                                  element.driverRideDetails),
+                                  data: element.driverRideDetails,
+                                  driverRideId: element.driverRideId ?? "",
+                                  riderRideId: element.riderRideId ?? "",
+                                  seats:
+                                      element.riderRideDetails?.seatAvailable ??
+                                          0),
                           child: Container(
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(40.kh),

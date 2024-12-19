@@ -80,6 +80,7 @@ abstract class Routes {
   static const TRANSACTION_HISTORY = _Paths.TRANSACTION_HISTORY;
   static const PAYMENT_METHOD = _Paths.PAYMENT_METHOD;
   static const PAYMENT = _Paths.PAYMENT;
+  static const PAYNOW = _Paths.PAYNOW;
   static const ADD_CARD = _Paths.ADD_CARD;
   static const ADD_BANK_DETAILS = _Paths.ADD_BANK_DETAILS;
   static const SEARCH_ADDRESS = _Paths.SEARCH_ADDRESS;
@@ -170,6 +171,7 @@ abstract class _Paths {
   static const TRANSACTION_HISTORY = '/transaction-history';
   static const PAYMENT_METHOD = '/payment-method';
   static const PAYMENT = '/payment';
+  static const PAYNOW = '/pay-now';
   static const ADD_CARD = '/add-card';
   static const ADD_BANK_DETAILS = '/add-bank-details';
   static const SEARCH_ADDRESS = '/search-address';

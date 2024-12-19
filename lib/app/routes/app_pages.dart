@@ -61,6 +61,8 @@ import '../modules/origin/bindings/origin_binding.dart';
 import '../modules/origin/views/origin_view.dart';
 import '../modules/password_changed/bindings/password_changed_binding.dart';
 import '../modules/password_changed/views/password_changed_view.dart';
+import '../modules/payNow/bindings/pay_now_binding.dart';
+import '../modules/payNow/views/pay_now_view.dart';
 import '../modules/payment/bindings/payment_binding.dart';
 import '../modules/payment/views/payment_view.dart';
 import '../modules/payment_method/bindings/payment_method_binding.dart';
@@ -460,6 +462,11 @@ class AppPages {
       name: _Paths.PAYMENT,
       page: () => const PaymentView(),
       binding: PaymentBinding(),
+    ),
+    GetPage(
+      name: _Paths.PAYNOW,
+      page: () => const PayNowView(),
+      binding: PayNowBinding(),
     ),
     GetPage(
       name: _Paths.ADD_CARD,

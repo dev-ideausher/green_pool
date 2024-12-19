@@ -50,6 +50,11 @@ class APIManager {
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
           .post(Endpoints.riderCancelReq, data: jsonEncode(body));
 
+  static Future<Response> postRiderDeleteRide({required dynamic body}) async =>
+      // rider will delete ride from my rides and all the requests sent to drivers will be removed and refunded
+      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+          .post(Endpoints.riderDeleteRide, data: jsonEncode(body));
+
   static Future<Response> postSendRequestToDriver(
           {required dynamic body}) async =>
       // rider will send request to driver
@@ -89,6 +94,12 @@ class APIManager {
   static Future<Response> postRegisterAcc({dynamic body}) async =>
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
           .post(Endpoints.userLogin, data: jsonEncode(body));
+
+  static Future<Response> postChatRoomId(
+          {required String receiverId, dynamic body}) async =>
+      await DioClient(Dio(), showSnakbar: false, isOverlayLoader: false).post(
+          "${Endpoints.getChatRoomId}$receiverId",
+          data: jsonEncode(body));
 
   static Future<Response> postLogin() async =>
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
@@ -231,13 +242,23 @@ class APIManager {
           .get(Endpoints.allDriverConfirmRequests + driverRideId);
 
   static Future<Response> getAllRiderConfirmRequest(
+          {required String riderRideId}) async =>
+      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false)
+          .get(Endpoints.viewDriversRequest + riderRideId);
+
+  static Future<Response> getCheckForPayBtn(
+          {required String driverRideId}) async =>
+      await DioClient(Dio(), showSnakbar: false, isOverlayLoader: false)
+          .get(Endpoints.checkForPayBtn + driverRideId);
+
+  static Future<Response> getRideDetailById(
           {required String driverRideId}) async =>
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false)
-          .get(Endpoints.viewDriversRequest + driverRideId);
+          .get(Endpoints.getRideDetail + driverRideId);
 
-  static Future<Response> getChatRoomId({required String receiverId}) async =>
-      await DioClient(Dio(), showSnakbar: false, isOverlayLoader: false)
-          .get("${Endpoints.getChatRoomId}$receiverId");
+  // static Future<Response> postChatRoomId({required String receiverId}) async =>
+  //     await DioClient(Dio(), showSnakbar: false, isOverlayLoader: false)
+  //         .get("${Endpoints.postChatRoomId}$receiverId");
 
   static Future<Response> getPromoCode() async =>
       await DioClient(Dio(), showSnakbar: false, isOverlayLoader: false)

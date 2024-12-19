@@ -175,11 +175,21 @@ class UserDetailsView extends GetView<UserDetailsController> {
             ),
             OptFieldHeading(heading: Strings.dateOfBirth)
                 .paddingOnly(bottom: 8.kh),
-            GreenPoolTextField(
-              hintText: Strings.dob,
-              controller: controller.dobTextController,
-              readOnly: true,
-            ).paddingOnly(bottom: 16.kh),
+            controller.dobTextController.value.text == ""
+                ? GreenPoolTextField(
+                    hintText: Strings.selectYourDateOfBirth,
+                    suffix: SvgPicture.asset(ImageConstant.svgIconCalendar),
+                    controller: controller.dobTextController,
+                    readOnly: true,
+                    onTap: () {
+                      controller.setDate(context);
+                    },
+                  ).paddingOnly(bottom: 16.kh)
+                : GreenPoolTextField(
+                    hintText: Strings.dob,
+                    controller: controller.dobTextController,
+                    readOnly: true,
+                  ).paddingOnly(bottom: 16.kh),
             OptFieldHeading(heading: Strings.idVerification)
                 .paddingOnly(bottom: 8.kh),
             GestureDetector(

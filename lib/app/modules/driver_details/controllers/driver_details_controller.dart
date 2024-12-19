@@ -62,7 +62,8 @@ class DriverDetailsController extends GetxController {
     }
   }
 
-  moveToPayment() {
+  void setPendingData() {
+    //if rider has not added the data while searching then set the data according to the driver
     rideDetails?["ridesDetails"]["date"] =
         matchingRidesModelData.value.time.toString().split("T").first;
     rideDetails?["ridesDetails"]["time"] = matchingRidesModelData.value.time;
@@ -85,6 +86,10 @@ class DriverDetailsController extends GetxController {
           matchingRidesModelData
               .value.matchedDestinationLocation?.coordinates?.last;
     }
+  }
+
+  moveToPayment() {
+    setPendingData();
 
     final Map<String, dynamic> rideData = {
       "ridesDetails": rideDetails!["ridesDetails"],
@@ -96,16 +101,25 @@ class DriverDetailsController extends GetxController {
   }
 
   Future<void> chatWithDriver() async {
+    setPendingData();
     try {
       messageBtnLoading.value = true;
-      final res = await APIManager.getChatRoomId(
+      final res = await APIManager.postChatRoomId(
           receiverId:
-              matchingRidesModelData.value.driverDetails?.first?.Id ?? "");
+              matchingRidesModelData.value.driverDetails?.first?.Id ?? "",
+          body: {
+            "driverRideId": driverRideId,
+            "seatsRequired": rideDetails!['ridesDetails']!["seatAvailable"],
+            "riderRideId": "",
+            "ridesDetails": rideDetails!['ridesDetails'],
+            "distance": minStopDistance
+          });
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
               chatRoomId: res.data["data"]["chatRoomId"] ?? "",
               deleteUpdateTime: res.data["data"]["deleteUpdateTime"] ?? "",
               id: matchingRidesModelData.value.driverDetails?.first?.Id,
+              driverRideId: driverRideId,
               name: matchingRidesModelData.value.driverDetails?.first?.fullName,
               image: matchingRidesModelData
                   .value.driverDetails?.first?.profilePic?.url));

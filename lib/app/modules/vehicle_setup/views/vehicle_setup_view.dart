@@ -28,6 +28,7 @@ class VehicleSetupView extends GetView<VehicleSetupController> {
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.kw),
         child: SingleChildScrollView(
+          controller: controller.vehicleInfoScroll,
           child: Form(
             key: controller.vehicleFormKey,
             child: Column(
@@ -79,6 +80,7 @@ class VehicleSetupView extends GetView<VehicleSetupController> {
                 GreenPoolTextField(
                   hintText: Strings.enterVehicleModel,
                   controller: controller.model,
+                  focusNode: controller.modelFocusNode,
                   validator: (p0) => controller.validateModel(p0),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                 ).paddingOnly(bottom: 16.kh),
@@ -87,6 +89,7 @@ class VehicleSetupView extends GetView<VehicleSetupController> {
                   () => GreenPoolTextField(
                     hintText: Strings.selectVehicleType,
                     controller: controller.type,
+                    focusNode: controller.typeFocusNode,
                     validator: (value) => controller.validateVehicleType(value),
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     suffix: controller.isTypeListExpanded.value
@@ -149,6 +152,7 @@ class VehicleSetupView extends GetView<VehicleSetupController> {
                   () => GreenPoolTextField(
                     hintText: Strings.selectVehicleColor,
                     controller: controller.color,
+                    focusNode: controller.colorFocusNode,
                     validator: (value) => controller.validateColor(value),
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     suffix: controller.isColorListExpanded.value
@@ -210,6 +214,7 @@ class VehicleSetupView extends GetView<VehicleSetupController> {
                 GreenPoolTextField(
                   hintText: Strings.enterYear,
                   controller: controller.year,
+                  focusNode: controller.yearFocusNode,
                   validator: (p0) => controller.validateYear(p0),
                   keyboardType: const TextInputType.numberWithOptions(),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -219,6 +224,7 @@ class VehicleSetupView extends GetView<VehicleSetupController> {
                 GreenPoolTextField(
                   hintText: Strings.licensePlate,
                   controller: controller.licencePlate,
+                  focusNode: controller.licenseFocusNode,
                   validator: (p0) => controller.validateLicensePlate(p0),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                 ),

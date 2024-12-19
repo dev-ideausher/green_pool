@@ -409,14 +409,21 @@ class StartRideController extends GetxController {
 
   showChatBottomSheet() async {
     try {
-      final res = await APIManager.getChatRoomId(
+      final res = await APIManager.postChatRoomId(
           receiverId: myRidesModel
                   .value
                   .driverBookingDetails
                   ?.riderBookingDetails?[selectedRider.value]
                   ?.riderDetails
                   ?.Id ??
-              "");
+              "",
+          body: {
+            "driverRideId": myRidesModel.value.driverBookingDetails?.Id,
+            "riderRideId": myRidesModel.value.driverBookingDetails
+                ?.riderBookingDetails?[selectedRider.value].Id,
+            "seatsRequired": myRidesModel.value.driverBookingDetails
+                ?.riderBookingDetails?[selectedRider.value].seatAvailable
+          });
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
               chatRoomId: res.data["data"]["chatRoomId"] ?? "",

@@ -23,6 +23,10 @@ class ChatPageController extends GetxController {
   late ScrollController scrollController;
   StreamSubscription<DatabaseEvent>? _chatSubscription;
   bool isSubscribed = false;
+  bool rideCreated = false;
+  RxBool isPayBtnVisible = false.obs;
+  RxBool isWarningVisible = true.obs;
+  final progress = 0.0.obs;
 
   @override
   void onInit() {
@@ -32,17 +36,33 @@ class ChatPageController extends GetxController {
     if (chatArg.value.chatRoomId != null) {
       getChat();
     }
+    checkForPayBtn();
 
     isLoad.value = false;
+    startProgress();
   }
 
   void readMsg() async {
     try {
-      await APIManager.getChatRoomId(receiverId: chatArg.value.id!);
+      await APIManager.postChatRoomId(
+          receiverId: chatArg.value.id!,
+          body: {"driverRideId": chatArg.value.driverRideId});
       print(
           "++++++++++++++++++++++++++++++++READ MESSAGE API CALLED+++++++++++++++++++++++++++++++++++++");
     } catch (e) {
       debugPrint(e.toString());
+    }
+  }
+
+  checkForPayBtn() async {
+    try {
+      final response = await APIManager.getCheckForPayBtn(
+          driverRideId: chatArg.value.driverRideId ?? "");
+      isPayBtnVisible.value = response.data["riderCheck"] == false &&
+          response.data["driver"] == false;
+      rideCreated = response.data["rideRequested"] == true; //if false then rider has not requested ride so we need to create a riderRide
+    } catch (e) {
+      debugPrint("check for pay btn error: $e");
     }
   }
 
@@ -135,8 +155,11 @@ class ChatPageController extends GetxController {
           timestamp: timestamp));
       messages.refresh();
       WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToBottom());
-      final res = await APIManager.sendMessage(
-          body: {"message": msg, "receiverId": chatArg.value.id});
+      final res = await APIManager.sendMessage(body: {
+        "message": msg,
+        "receiverId": chatArg.value.id,
+        "chatRoomId": chatArg.value.chatRoomId
+      });
       chatArg.value.chatRoomId = res.data["chatRoomId"];
       getChat();
     } catch (e) {
@@ -238,5 +261,24 @@ class ChatPageController extends GetxController {
     }
 
     super.onClose();
+  }
+
+  void startProgress() {
+    progress.value = 0.0; // Reset progress
+    const duration = Duration(seconds: 8);
+    const interval = Duration(milliseconds: 1); // Adjust for smoother progress
+    int ticks = 0;
+
+    // Timer to increment progress
+    Timer.periodic(interval, (timer) {
+      ticks++;
+      progress.value =
+          ticks / (duration.inMilliseconds / interval.inMilliseconds);
+
+      if (progress.value >= 1.0) {
+        timer.cancel(); // Stop timer when complete
+        isWarningVisible.value = false;
+      }
+    });
   }
 }

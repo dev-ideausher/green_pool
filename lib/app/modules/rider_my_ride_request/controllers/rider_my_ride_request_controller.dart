@@ -53,7 +53,7 @@ class RiderMyRideRequestController extends GetxController {
       // need driver id which will come from confirm ride by rider
       isLoading.value = true;
       final confirmReqResponse = await APIManager.getAllRiderConfirmRequest(
-          driverRideId: rideIdFromMyRides);
+          riderRideId: rideIdFromMyRides);
       var data = jsonDecode(confirmReqResponse.toString());
       riderConfirmRequestModel.value = RiderConfirmRequestModel.fromJson(data);
       isLoading.value = false;
@@ -167,8 +167,14 @@ class RiderMyRideRequestController extends GetxController {
 
   openMessage(RiderSendRequestModelData data) async {
     try {
-      final res = await APIManager.getChatRoomId(
-          receiverId: data.driverDetails?[0]?.Id ?? "");
+      final res = await APIManager.postChatRoomId(
+          receiverId: data.driverDetails?[0]?.Id ?? "",
+          body: {
+            "driverRideId": data.Id,
+            "riderRideId": rideIdFromMyRides,
+            "seatsRequired":
+                riderSendRequestModel.value.riderRideDetails?.seatAvailable
+          });
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
               chatRoomId: res.data["data"]["chatRoomId"] ?? "",
@@ -188,10 +194,18 @@ class RiderMyRideRequestController extends GetxController {
   }
 
   openMessageFromConfirm(
-      RiderConfirmRequestModelDataDriverRideDetails? data) async {
+      {required RiderConfirmRequestModelDataDriverRideDetails? data,
+      required String driverRideId,
+      required String riderRideId,
+      required int seats}) async {
     try {
-      final res = await APIManager.getChatRoomId(
-          receiverId: data?.driverDetails?.firstOrNull?.Id ?? "");
+      final res = await APIManager.postChatRoomId(
+          receiverId: data?.driverDetails?.firstOrNull?.Id ?? "",
+          body: {
+            "driverRideId": driverRideId,
+            "riderRideId": riderRideId,
+            "seatsRequired": seats
+          });
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
               chatRoomId: res.data["data"]["chatRoomId"] ?? "",
@@ -258,7 +272,9 @@ class RiderMyRideRequestController extends GetxController {
     });
   }
 
-  void moveToDetailsPage(RiderSendRequestModelData data) {
-    Get.toNamed(Routes.RIDER_MY_RIDES_SEND_DETAILS, arguments: data);
+  void moveToDetailsPage(RiderSendRequestModelData data,
+      RiderSendRequestModelRiderRideDetails riderRideDetails) {
+    Get.toNamed(Routes.RIDER_MY_RIDES_SEND_DETAILS,
+        arguments: {"data": data, "riderRideData": riderRideDetails});
   }
 }

@@ -57,6 +57,15 @@ class VehicleSetupController extends GetxController {
     "Brown"
   ].obs;
 
+  //focus node
+  FocusNode modelFocusNode = FocusNode();
+  FocusNode typeFocusNode = FocusNode();
+  FocusNode colorFocusNode = FocusNode();
+  FocusNode yearFocusNode = FocusNode();
+  FocusNode licenseFocusNode = FocusNode();
+
+  ScrollController vehicleInfoScroll = ScrollController();
+
   @override
   void onInit() {
     super.onInit();
@@ -81,11 +90,70 @@ class VehicleSetupController extends GetxController {
     }
   }
 
+  bool _isFieldEmpty(
+      String fieldValue, FocusNode focusNode, String errorMessage) {
+    if (fieldValue.isEmpty) {
+      focusNode.requestFocus();
+      showMySnackbar(msg: errorMessage);
+      return true;
+    }
+    return false;
+  }
+
+  void _scrollVehicleInfoToTop() {
+    vehicleInfoScroll.animateTo(
+      0.0,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+  }
+
   checkVehicleValidations() async {
     final isValid = vehicleFormKey.currentState!.validate();
 
     if (!isValid) {
       vehicleImageNotUploaded.value = true;
+
+      if (!isVehicleImagePicked.value) {
+        _scrollVehicleInfoToTop();
+        return showMySnackbar(msg: 'Please upload the vehicle image');
+      }
+
+      if (_isFieldEmpty(
+        model.text,
+        modelFocusNode,
+        'Please enter your model',
+      )) return;
+
+      if (_isFieldEmpty(
+        type.text,
+        typeFocusNode,
+        'Please select your car type',
+      )) {
+        isTypeListExpanded.value = true;
+        return;
+      }
+
+      if (_isFieldEmpty(
+        color.text,
+        colorFocusNode,
+        'Kindly select the color of your vehicle.',
+      )) {
+        isColorListExpanded.value = true;
+        return;
+      }
+
+      if (_isFieldEmpty(
+        year.text,
+        yearFocusNode,
+        'Please enter a correct year',
+      )) return;
+
+      if (_isFieldEmpty(
+        licencePlate.text,
+        licenseFocusNode,
+        'Please enter a correct license number',
+      )) return;
       return showMySnackbar(msg: 'Please fill in all the details');
     } else {
       if (isVehicleImagePicked.value != true) {

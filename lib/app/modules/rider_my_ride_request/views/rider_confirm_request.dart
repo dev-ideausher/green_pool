@@ -55,6 +55,8 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                       itemCount: controller
                           .riderConfirmRequestModel.value.data?.length,
                       itemBuilder: (context, index) {
+                        final data = controller
+                            .riderConfirmRequestModel.value.data![index];
                         return GestureDetector(
                           onTap: () {
                             Get.toNamed(Routes.RIDER_MY_RIDES_CONFIRM_DETAILS,
@@ -84,7 +86,7 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                                   height: 64.kh,
                                                   width: 64.kw,
                                                   url:
-                                                      "${controller.riderConfirmRequestModel.value.data![index]?.driverRideDetails!?.driverDetails?[0]?.profilePic?.url}")),
+                                                      "${data?.driverRideDetails!?.driverDetails?[0]?.profilePic?.url}")),
                                         ).paddingOnly(bottom: 8.kh),
                                         Positioned(
                                           top: 52.kh,
@@ -121,10 +123,7 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                                   size: 12.kh,
                                                 ).paddingOnly(right: 2.kw),
                                                 Text(
-                                                  controller
-                                                          .riderConfirmRequestModel
-                                                          .value
-                                                          .data?[index]
+                                                  data
                                                           ?.driverRideDetails
                                                           ?.driverDetails?[0]
                                                           ?.rating
@@ -158,7 +157,7 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                             SizedBox(
                                               width: 75.kw,
                                               child: Text(
-                                                "${controller.riderConfirmRequestModel.value.data?[index]?.driverRideDetails?.driverDetails?[0]?.fullName.toString().split(" ").first}",
+                                                "${data?.driverRideDetails?.driverDetails?[0]?.fullName.toString().split(" ").first}",
                                                 style:
                                                     TextStyleUtil.k16Semibold(
                                                         fontSize: 16.kh),
@@ -174,7 +173,7 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                                   children: [
                                                     TextSpan(
                                                       text:
-                                                          "${Strings.dollar} ${(controller.riderConfirmRequestModel.value.data![index]?.price ?? 0)}",
+                                                          "${Strings.dollar} ${(data?.price ?? 0)}",
                                                       style:
                                                           TextStyleUtil.k16Bold(
                                                               color: ColorUtil
@@ -188,11 +187,18 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                             InkWell(
                                               onTap: () => controller
                                                   .openMessageFromConfirm(
-                                                      controller
-                                                          .riderConfirmRequestModel
-                                                          .value
-                                                          .data?[index]
-                                                          ?.driverRideDetails),
+                                                      data: data
+                                                          ?.driverRideDetails,
+                                                      driverRideId:
+                                                          data?.driverRideId ??
+                                                              "",
+                                                      riderRideId:
+                                                          data?.riderRideId ??
+                                                              "",
+                                                      seats: data
+                                                              ?.riderRideDetails
+                                                              ?.seatAvailable ??
+                                                          0),
                                               child: Container(
                                                 decoration: BoxDecoration(
                                                     borderRadius:
@@ -234,7 +240,7 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                                       BlendMode.srcIn),
                                                 ).paddingOnly(right: 4.kw),
                                                 Text(
-                                                  "${GpUtil.getDateFormat(controller.riderConfirmRequestModel.value.data?[index]?.driverRideDetails?.time ?? "")} ${GpUtil.convertUtcToLocal(controller.riderConfirmRequestModel.value.data?[index]?.driverRideDetails?.time ?? "")}",
+                                                  "${GpUtil.getDateFormat(data?.driverRideDetails?.time ?? "")} ${GpUtil.convertUtcToLocal(data?.driverRideDetails?.time ?? "")}",
                                                   style:
                                                       TextStyleUtil.k12Regular(
                                                           color: ColorUtil
@@ -257,7 +263,7 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                                               .kSecondary01,
                                                 ).paddingOnly(right: 4.kw),
                                                 Text(
-                                                  '${controller.riderConfirmRequestModel.value.data![index]?.driverRideDetails?.seatAvailable} seats',
+                                                  '${data?.driverRideDetails?.seatAvailable} seats',
                                                   style:
                                                       TextStyleUtil.k14Regular(
                                                           color: ColorUtil
@@ -275,25 +281,15 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                     .paddingOnly(bottom: 8.kh),
                                 OriginToDestination(
                                   origin:
-                                      "${controller.riderConfirmRequestModel.value.data?[index]?.driverRideDetails?.origin?.name}",
-                                  stop1: controller
-                                          .riderConfirmRequestModel
-                                          .value
-                                          .data?[index]
-                                          ?.driverRideDetails
-                                          ?.stops?[0]
+                                      "${data?.driverRideDetails?.origin?.name}",
+                                  stop1: data?.driverRideDetails?.stops?[0]
                                           ?.name ??
                                       "",
-                                  stop2: controller
-                                          .riderConfirmRequestModel
-                                          .value
-                                          .data?[index]
-                                          ?.driverRideDetails
-                                          ?.stops?[1]
+                                  stop2: data?.driverRideDetails?.stops?[1]
                                           ?.name ??
                                       "",
                                   destination:
-                                      "${controller.riderConfirmRequestModel.value.data?[index]?.driverRideDetails?.destination?.name}",
+                                      "${data?.driverRideDetails?.destination?.name}",
                                   needPickupText: false,
                                 ).paddingOnly(bottom: 8.kh),
                                 const GreenPoolDivider()
