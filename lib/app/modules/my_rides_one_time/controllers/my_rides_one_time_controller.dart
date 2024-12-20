@@ -63,26 +63,30 @@ class MyRidesOneTimeController extends GetxController {
     if (myRidesModelData.confirmDriverDetails?.first?.driverPostsDetails?.first
             ?.isStarted ==
         false) {
-      DialogHelper.riderCancelRideDialog(() async {
-        Get.back();
-        final Map<String, dynamic> riderRideId = {
-          "riderRideId": myRidesModelData.Id
-        };
-        try {
-          isLoad.value = true;
-          final cancelRideResponse =
-              await APIManager.riderCancelRide(body: riderRideId);
-          if (cancelRideResponse.data['status']) {
-            await myRidesAPI();
-            Get.back();
-          } else {
-            showMySnackbar(msg: cancelRideResponse.data['message'].toString());
+      DialogHelper.riderCancelRideDialog(
+        () async {
+          Get.back();
+          final Map<String, dynamic> riderRideId = {
+            "riderRideId": myRidesModelData.Id
+          };
+          try {
+            isLoad.value = true;
+            final cancelRideResponse =
+                await APIManager.riderCancelRide(body: riderRideId);
+            if (cancelRideResponse.data['status']) {
+              await myRidesAPI();
+              Get.back();
+            } else {
+              showMySnackbar(
+                  msg: cancelRideResponse.data['message'].toString());
+            }
+            isLoad.value = false;
+          } catch (e) {
+            debugPrint("riderCancelRideAPI error: $e");
           }
-          isLoad.value = false;
-        } catch (e) {
-          debugPrint("riderCancelRideAPI error: $e");
-        }
-      });
+        },
+        Strings.cancelRide, //btnText
+      );
     } else {
       showMySnackbar(
           msg:
@@ -90,20 +94,28 @@ class MyRidesOneTimeController extends GetxController {
     }
   }
 
-  riderDeleteRide(String riderRideId) async {
-    try {
-      isLoad.value = true;
-      final deleteRideResponse = await APIManager.postRiderDeleteRide(
-          body: {'riderRideId': riderRideId});
-      if (deleteRideResponse.data['status']) {
-        await myRidesAPI();
-      } else {
-        showMySnackbar(msg: deleteRideResponse.data['message'].toString());
-      }
-      isLoad.value = false;
-    } catch (e) {
-      debugPrint("riderDeleteRide error: $e");
-    }
+  riderDeleteRide(String riderRideId) {
+    DialogHelper.riderCancelRideDialog(
+      () async {
+        Get.back();
+        try {
+          isLoad.value = true;
+          final deleteRideResponse = await APIManager.postRiderDeleteRide(
+              body: {'riderRideId': riderRideId});
+          if (deleteRideResponse.data['status']) {
+            await myRidesAPI();
+            showMySnackbar(
+                msg: "Ride deleted successfully. We've initiated your refund.");
+          } else {
+            showMySnackbar(msg: deleteRideResponse.data['message'].toString());
+          }
+          isLoad.value = false;
+        } catch (e) {
+          debugPrint("riderDeleteRide error: $e");
+        }
+      },
+      "Delete Ride", //btnText
+    );
   }
 
   checkCancellationCount(MyRidesModelData myRidesModelData) async {

@@ -77,9 +77,8 @@ class VehicleSetupController extends GetxController {
   }
 
   getVehicleImage(ImageSource imageSource) async {
-    XFile? pickedVehicleFile = await ImageUtil.cropCompressImage(
-        cropAspectRatio: const CropAspectRatio(ratioX: 16, ratioY: 9),
-        imageSource: imageSource);
+    XFile? pickedVehicleFile =
+        await ImageUtil.cropCompressImage(imageSource: imageSource);
     if (pickedVehicleFile != null) {
       selectedVehicleImagePath.value = File(pickedVehicleFile.path);
       isVehicleImagePicked.value = true;

@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 
 import '../../../data/chat_arg.dart';
 import '../../../data/my_rides_model.dart';
+import '../../../res/strings.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/dialog_helper.dart';
 import '../../../services/dio/api_service.dart';
@@ -66,23 +67,27 @@ class RiderConfirmedRideDetailsController extends GetxController {
     if (myRidesModelData.confirmDriverDetails?.first?.driverPostsDetails?.first
             ?.isStarted ==
         false) {
-      DialogHelper.riderCancelRideDialog(() async {
-        Get.back();
-        final Map<String, dynamic> riderRideId = {
-          "riderRideId": myRidesModelData.Id
-        };
-        try {
-          final cancelRideResponse =
-              await APIManager.riderCancelRide(body: riderRideId);
-          if (cancelRideResponse.data["status"]) {
-            Get.back();
-          } else {
-            showMySnackbar(msg: cancelRideResponse.data["message"].toString());
+      DialogHelper.riderCancelRideDialog(
+        () async {
+          Get.back();
+          final Map<String, dynamic> riderRideId = {
+            "riderRideId": myRidesModelData.Id
+          };
+          try {
+            final cancelRideResponse =
+                await APIManager.riderCancelRide(body: riderRideId);
+            if (cancelRideResponse.data["status"]) {
+              Get.back();
+            } else {
+              showMySnackbar(
+                  msg: cancelRideResponse.data["message"].toString());
+            }
+          } catch (e) {
+            throw Exception(e);
           }
-        } catch (e) {
-          throw Exception(e);
-        }
-      });
+        },
+        Strings.cancelRide, //btnText
+      );
     } else {
       showMySnackbar(
           msg:

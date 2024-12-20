@@ -83,9 +83,8 @@ class VehicleDetailsController extends GetxController {
   RxBool isBtnActive = false.obs;
 
   getVehicleImage(ImageSource imageSource) async {
-    XFile? pickedFile = await ImageUtil.cropCompressImage(
-        cropAspectRatio: const CropAspectRatio(ratioX: 16, ratioY: 9),
-        imageSource: imageSource);
+    XFile? pickedFile =
+        await ImageUtil.cropCompressImage(imageSource: imageSource);
     if (pickedFile != null) {
       selectedVehicleImagePath!.value = File(pickedFile.path);
       showMySnackbar(msg: 'Image selected');

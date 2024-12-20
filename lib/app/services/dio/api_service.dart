@@ -202,6 +202,11 @@ class APIManager {
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false)
           .get(Endpoints.driverMyRides);
 
+  static Future<Response> getUnreadCount() async =>
+      //count of requests pending in my rides
+      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false)
+          .get(Endpoints.unreadCount);
+
   static Future<Response> getCompanyDetails() async =>
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false)
           .get(Endpoints.companyDetails);
@@ -263,6 +268,10 @@ class APIManager {
   static Future<Response> getPromoCode() async =>
       await DioClient(Dio(), showSnakbar: false, isOverlayLoader: false)
           .get(Endpoints.promoCode);
+
+  static Future<Response> getVerifyPromoCode({required String code}) async =>
+      await DioClient(Dio(), showSnakbar: false, isOverlayLoader: false)
+          .get(Endpoints.verifyPromo + code);
 
   static Future<Response> getArrivalTime(
           {required String origin, required String destination}) async =>

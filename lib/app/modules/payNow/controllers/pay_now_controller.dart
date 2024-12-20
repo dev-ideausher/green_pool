@@ -50,6 +50,9 @@ class PayNowController extends GetxController {
   String? promoCodeTitle = "";
   final Rx<ChatArg> chatArg = ChatArg().obs;
   bool rideCreated = false;
+  TextEditingController code = TextEditingController();
+  RxBool checkingCode = false.obs;
+  RxBool promoCodeApplied = false.obs;
 
   @override
   Future<void> onInit() async {
@@ -113,6 +116,33 @@ class PayNowController extends GetxController {
     }
   }
 
+  verifyPromoCodeAPI(code) async {
+    if (code == "") {
+      return showMySnackbar(msg: "Please enter a promo code");
+    }
+    try {
+      checkingCode.value = true;
+      final res = await APIManager.getVerifyPromoCode(code: code);
+      if (res.data['status']) {
+        var data = jsonDecode(res.toString());
+        promoCodeModel.value = PromoCodeModel.fromJson(data);
+        if (promoCodeModel.value.data?[0]?.usageLimit != 0) {
+          promoCodeApplied.value = true;
+          applyDiscount(0);
+        } else {
+          promoCodeApplied.value = false;
+          showMySnackbar(msg: "Promo code expired");
+        }
+      } else {
+        promoCodeApplied.value = false;
+        showMySnackbar(msg: "Promo code not valid");
+      }
+      checkingCode.value = false;
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
   void decideAPI() {
     if (rideCreated) {
       //if rider has already created a ride then just needs to pay -> sendRequest api
@@ -145,7 +175,7 @@ class PayNowController extends GetxController {
           "promoCodeId": promoCodeId
         });
         if (response.data['status']) {
-          DialogHelper.paymentSuccessfull();          
+          DialogHelper.paymentSuccessfull();
         } else {
           showMySnackbar(msg: response.data['message'].toString());
         }
@@ -266,7 +296,8 @@ class PayNowController extends GetxController {
       }
       promoCodeId = promoCodeModel.value.data?[index]?.Id ?? "";
       isLoading.value = false;
-      Get.back();
+      showMySnackbar(msg: "Discount successfully applied!");
+      // Get.back();
     } else {
       //if price does not meet minAmnt criteria
       isLoading.value = false;

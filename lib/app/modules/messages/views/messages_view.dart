@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:get/get.dart';
-import 'package:green_pool/app/constants/image_constant.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/gp_util.dart';
@@ -92,7 +90,8 @@ class MessagesView extends GetView<MessagesController> {
                                     color: isPinkModeOn
                                         ? ColorUtil.kPrimary3PinkMode
                                         : ColorUtil.kSecondary03),
-                            trailing: PopupMenuButton(
+                            trailing: SizedBox(),
+                            /*trailing: PopupMenuButton(
                               itemBuilder: (context) {
                                 return [
                                   PopupMenuItem(
@@ -109,7 +108,7 @@ class MessagesView extends GetView<MessagesController> {
                               iconSize: 28.kh,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(8.kh)),
-                            ),
+                            ),*/
                           ).paddingOnly(top: 8.kh);
                         },
                       ).paddingOnly(left: 16.kw, right: 16.kw, top: 8.kh),
@@ -160,7 +159,7 @@ class LoadingWidget extends StatelessWidget {
                     color: ColorUtil.kGreyColor,
                   )),
             ),
-            trailing: SvgPicture.asset(ImageConstant.svgIconRightArrow),
+            trailing: const Icon(Icons.more_vert),
           ),
         ).paddingOnly(top: 8.kh);
       },

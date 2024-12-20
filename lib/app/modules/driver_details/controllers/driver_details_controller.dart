@@ -14,6 +14,8 @@ class DriverDetailsController extends GetxController {
   String minStopDistance = '';
   int pricePerSeat = 0;
   RxBool messageBtnLoading = false.obs;
+  String date = "";
+  String time = "";
 
   @override
   void onInit() {
@@ -24,6 +26,9 @@ class DriverDetailsController extends GetxController {
     driverRideId = Get.arguments['driverRideId'];
     matchingRidesModelData.value = Get.arguments['matchingRidesmodel'];
     minStopDistance = Get.arguments['distance'];
+    //the date and time of rider with which search was initiated
+    date = rideDetails!['ridesDetails']!['date'];
+    time = rideDetails!['ridesDetails']!['time'];
   }
 
   // @override
@@ -33,8 +38,8 @@ class DriverDetailsController extends GetxController {
 
   @override
   void onClose() {
-    rideDetails!['ridesDetails']!['date'] = "";
-    rideDetails!['ridesDetails']!['time'] = "";
+    rideDetails!['ridesDetails']!['date'] = date;
+    rideDetails!['ridesDetails']!['time'] = time;
     super.onClose();
   }
 

@@ -82,6 +82,8 @@ class Endpoints {
   static const String promoCode = "admin/promoCode/web";
   static const String checkForPayBtn = "driver/riderCheck/";
   static const String getRideDetail = "driver/ride/";
+  static const String verifyPromo = "admin/promoCode/search?search=";
+  static const String unreadCount = "driver/rides/unreadCount";
 
   //patch url
   static const String emergencyContactsUpdate = "user/emergencyContacts";

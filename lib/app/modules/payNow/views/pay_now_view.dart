@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/gp_progress.dart';
 import 'package:green_pool/app/components/green_pool_divider.dart';
@@ -12,6 +13,7 @@ import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
+import '../../../components/greenpool_textfield.dart';
 import '../../../routes/app_pages.dart';
 import '../controllers/pay_now_controller.dart';
 
@@ -62,25 +64,63 @@ class PayNowView extends GetView<PayNowController> {
                         style: TextStyleUtil.k14Semibold(),
                       ),
                     ).paddingOnly(bottom: 4.kh),
-                    /*ListTile(
-                      tileColor: ColorUtil.kWhiteColor,
-                      onTap: () {
-                        controller.promoCodeAPI();
-                        Get.to(() => const PromoCode());
-                      },
-                      title: Text(
-                        Strings.addPromoCode,
-                        style: TextStyleUtil.k14Semibold(),
-                      ),
-                      leading: Icon(
-                        Icons.add,
-                        color: Get.find<HomeController>().isPinkModeOn.value
-                            ? ColorUtil.kPrimary2PinkMode
-                            : ColorUtil.kPrimary01,
-                        size: 24.kh,
-                      ),
-                    ).paddingOnly(bottom: 4.kh),*/
-                    Visibility(
+                    Obx(
+                      () => ListTile(
+                        tileColor: ColorUtil.kWhiteColor,
+                        // onTap: () {
+                        // controller.promoCodeAPI();
+                        // Get.to(() => const PromoCode());
+                        // },
+                        title: SizedBox(
+                          width: 20.w,
+                          child: GreenPoolTextField(
+                            hintText: "Apply Code",
+                            controller: controller.code,
+                            readOnly: controller.promoCodeApplied.value,
+                            inputFormatters: [
+                              TextInputFormatter.withFunction(
+                                (oldValue, newValue) => TextEditingValue(
+                                  text: newValue.text.toUpperCase(),
+                                  selection: newValue.selection,
+                                ),
+                              ),
+                              FilteringTextInputFormatter.deny(
+                                RegExp(r'\s'),
+                              ),
+                              LengthLimitingTextInputFormatter(30),
+                            ],
+                          ),
+                        ),
+                        trailing: controller.promoCodeApplied.value
+                            ? Icon(
+                                Icons.check,
+                                size: 24.kh,
+                                color: ColorUtil.kPrimary01,
+                              )
+                            : controller.checkingCode.value
+                                ? SizedBox(
+                                    height: 12.kh,
+                                    width: 12.kh,
+                                    child: const GpProgress())
+                                : TextButton(
+                                    onPressed: () {
+                                      controller.verifyPromoCodeAPI(
+                                          controller.code.value.text);
+                                    },
+                                    child: Text(
+                                      "Apply",
+                                      style: TextStyleUtil.k14Bold(),
+                                    )),
+                        /*leading: Icon(
+                          Icons.add,
+                          color: Get.find<HomeController>().isPinkModeOn.value
+                              ? ColorUtil.kPrimary2PinkMode
+                              : ColorUtil.kPrimary01,
+                          size: 24.kh,
+                        ),*/
+                      ).paddingOnly(bottom: 4.kh),
+                    ),
+                    /*Visibility(
                       visible: controller.discountAvailed.value,
                       child: ListTile(
                         tileColor: ColorUtil.kWhiteColor,
@@ -113,7 +153,7 @@ class PayNowView extends GetView<PayNowController> {
                           ),
                         ),
                       ),
-                    ),
+                    ),*/
                     24.kheightBox,
                     ListTile(
                       tileColor: ColorUtil.kWhiteColor,

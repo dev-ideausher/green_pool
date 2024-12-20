@@ -162,7 +162,7 @@ class DialogHelper {
     );
   }
 
-  static void riderCancelRideDialog(Function() onPressed) {
+  static void riderCancelRideDialog(Function() onPressed, String? btnText) {
     Get.dialog(
       useSafeArea: true,
       Center(
@@ -233,7 +233,7 @@ class DialogHelper {
                 onPressed: onPressed,
                 height: 56.kh,
                 width: 343.kw,
-                label: Strings.cancelRide,
+                label: btnText ?? Strings.cancelRide,
                 fontSize: 16.kh,
                 padding: const EdgeInsets.all(8),
               ).paddingOnly(top: 12.kh),

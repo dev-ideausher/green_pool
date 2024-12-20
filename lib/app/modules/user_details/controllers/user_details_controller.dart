@@ -57,7 +57,7 @@ class UserDetailsController extends GetxController {
   FocusNode cityFocusNode = FocusNode();
 
   getProfileImage(ImageSource imageSource) async {
-    XFile? pickedFile = await ImageUtil.cropCompressImage(
+    XFile? pickedFile = await ImageUtil.squareCropCompressImage(
         cropAspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 1),
         imageSource: imageSource);
     if (pickedFile != null) {
@@ -72,9 +72,8 @@ class UserDetailsController extends GetxController {
   }
 
   getIDImage(ImageSource imageSource) async {
-    XFile? pickedIDFile = await ImageUtil.cropCompressImage(
-        cropAspectRatio: const CropAspectRatio(ratioX: 16, ratioY: 9),
-        imageSource: imageSource);
+    XFile? pickedIDFile =
+        await ImageUtil.cropCompressImage(imageSource: imageSource);
     if (pickedIDFile != null) {
       selectedIDImagePath!.value = File(pickedIDFile.path);
       showMySnackbar(msg: 'Image selected');

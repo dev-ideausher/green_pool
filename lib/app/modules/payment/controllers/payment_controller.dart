@@ -47,6 +47,9 @@ class PaymentController extends GetxController {
   String? destination = "";
   String? seatsBooked = "";
   String? promoCodeTitle = "";
+  TextEditingController code = TextEditingController();
+  RxBool checkingCode = false.obs;
+  RxBool promoCodeApplied = false.obs;
 
   @override
   Future<void> onInit() async {
@@ -241,13 +244,40 @@ class PaymentController extends GetxController {
     }
   }
 
-  promoCodeAPI() async {
+  // promoCodeAPI() async {
+  //   try {
+  //     isPromoLoading.value = true;
+  //     final response = await APIManager.getPromoCode();
+  //     var data = jsonDecode(response.toString());
+  //     promoCodeModel.value = PromoCodeModel.fromJson(data);
+  //     isPromoLoading.value = false;
+  //   } catch (e) {
+  //     debugPrint(e.toString());
+  //   }
+  // }
+
+  verifyPromoCodeAPI(code) async {
+    if (code == "") {
+      return showMySnackbar(msg: "Please enter a promo code");
+    }
     try {
-      isPromoLoading.value = true;
-      final response = await APIManager.getPromoCode();
-      var data = jsonDecode(response.toString());
-      promoCodeModel.value = PromoCodeModel.fromJson(data);
-      isPromoLoading.value = false;
+      checkingCode.value = true;
+      final res = await APIManager.getVerifyPromoCode(code: code);
+      if (res.data['status']) {
+        var data = jsonDecode(res.toString());
+        promoCodeModel.value = PromoCodeModel.fromJson(data);
+        if (promoCodeModel.value.data?[0]?.usageLimit != 0) {
+          promoCodeApplied.value = true;
+          applyDiscount(0);
+        } else {
+          promoCodeApplied.value = false;
+          showMySnackbar(msg: "Promo code expired");
+        }
+      } else {
+        promoCodeApplied.value = false;
+        showMySnackbar(msg: "Promo code not valid");
+      }
+      checkingCode.value = false;
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -279,7 +309,8 @@ class PaymentController extends GetxController {
       }
       promoCodeId = promoCodeModel.value.data?[index]?.Id ?? "";
       isLoading.value = false;
-      Get.back();
+      showMySnackbar(msg: "Discount successfully applied!");
+      // Get.back();
     } else {
       //if price does not meet minAmnt criteria
       isLoading.value = false;
