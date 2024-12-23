@@ -53,9 +53,7 @@ class FindRideView extends GetView<FindRideController> {
                     controller.setActiveState();
                   },
                   onTap: () {
-                    Get.toNamed(Routes.ORIGIN,
-                            arguments: LocationValues.findRideOrigin)
-                        ?.then((v) => controller.setActiveState());
+                    controller.moveToSetOrigin();
                   },
                   controller: controller.riderOriginTextController,
                   readOnly: true,
@@ -66,7 +64,12 @@ class FindRideView extends GetView<FindRideController> {
                         ? ColorUtil.kPrimary3PinkMode
                         : ColorUtil.kSecondary01,
                   ),
-                ).paddingOnly(top: 8.kh, bottom: 30.kh),
+                  suffix: controller.isOriginAdded.value
+                      ? InkWell(
+                          onTap: () => controller.removeOrigin(),
+                          child: const Icon(Icons.cancel))
+                      : const SizedBox(),
+                ).paddingOnly(top: 8.kh, bottom: 28.kh),
                 Text(
                   Strings.destination,
                   style: TextStyleUtil.k14Semibold(),
@@ -78,9 +81,7 @@ class FindRideView extends GetView<FindRideController> {
                     controller.setActiveState();
                   },
                   onTap: () {
-                    Get.toNamed(Routes.ORIGIN,
-                            arguments: LocationValues.findRideDestination)
-                        ?.then((v) => controller.setActiveState());
+                    controller.moveToSetDestination();
                   },
                   controller: controller.riderDestinationTextController,
                   prefix: Icon(
@@ -91,6 +92,11 @@ class FindRideView extends GetView<FindRideController> {
                         : ColorUtil.kSecondary01,
                   ),
                   readOnly: true,
+                  suffix: controller.isDestinationAdded.value
+                      ? InkWell(
+                          onTap: () => controller.removeDestination(),
+                          child: const Icon(Icons.cancel))
+                      : const SizedBox(),
                 ).paddingOnly(top: 8.kh, bottom: 16.kh),
                 Row(
                   children: [
@@ -253,7 +259,7 @@ class FindRideView extends GetView<FindRideController> {
                   Icons.swap_vert_rounded,
                   size: 28.kh,
                   color: ColorUtil.kSecondary01,
-                )).paddingOnly(right: 40.kw, top: 96.kh).animate().flip(),
+                )).paddingOnly(right: 32.kw, top: 96.kh).animate().flip(),
           ),
         ],
       ),

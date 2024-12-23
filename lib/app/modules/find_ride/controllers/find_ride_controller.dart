@@ -13,6 +13,7 @@ import 'package:green_pool/app/services/snackbar.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/dialog_helper.dart';
 import '../../../services/storage.dart';
+import '../../origin/controllers/origin_controller.dart';
 
 class FindRideController extends GetxController {
   bool isDriver = false;
@@ -36,6 +37,9 @@ class FindRideController extends GetxController {
   RxList<LocationModel> locationModelNames = <LocationModel>[].obs;
   // var rideresponse = FindRideResponseModel().obs;
 
+  RxBool isOriginAdded = false.obs;
+  RxBool isDestinationAdded = false.obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -58,13 +62,49 @@ class FindRideController extends GetxController {
     }
   }
 
-  void swapTextFields() {
-    // Swap logic
-    final origin = riderOriginTextController.text;
-    final destination = riderDestinationTextController.text;
+  moveToSetOrigin() {
+    Get.toNamed(Routes.ORIGIN, arguments: LocationValues.findRideOrigin)
+        ?.then((v) {
+      if (riderOriginTextController.value.text.isNotEmpty) {
+        isOriginAdded.value = true;
+      } else {
+        isOriginAdded.value = false;
+      }
+      setActiveState();
+    });
+  }
 
-    riderOriginTextController.text = destination;
-    riderDestinationTextController.text = origin;
+  moveToSetDestination() {
+    Get.toNamed(Routes.ORIGIN, arguments: LocationValues.findRideDestination)
+        ?.then(
+      (value) {
+        if (riderDestinationTextController.value.text.isNotEmpty) {
+          isDestinationAdded.value = true;
+        } else {
+          isDestinationAdded.value = false;
+        }
+        setActiveState();
+      },
+    );
+  }
+
+  void swapTextFields() {
+    // Swap origin and destination values
+    final tempName = riderOriginTextController.text;
+    final tempLat = riderOriginLat;
+    final tempLong = riderOriginLong;
+
+    riderOriginTextController.text = riderDestinationTextController.text;
+    riderOriginLat = riderDestinationLat;
+    riderOriginLong = riderDestinationLong;
+
+    riderDestinationTextController.text = tempName;
+    riderDestinationLat = tempLat;
+    riderDestinationLong = tempLong;
+
+    // Update flags
+    isOriginAdded.value = riderOriginTextController.text.isNotEmpty;
+    isDestinationAdded.value = riderDestinationTextController.text.isNotEmpty;
   }
 
   FindRideModel _getRideDetails() {
@@ -254,6 +294,10 @@ class FindRideController extends GetxController {
     riderDestinationTextController.text =
         location.destinationLocation!.nameOfLocation ?? "";
 
+    // Update flags
+    isOriginAdded.value = riderOriginTextController.text.isNotEmpty;
+    isDestinationAdded.value = riderDestinationTextController.text.isNotEmpty;
+
     setActiveState();
   }
 
@@ -291,5 +335,19 @@ class FindRideController extends GetxController {
         riderDestinationTextController: riderDestinationTextController,
       );
     }
+  }
+
+  removeOrigin() {
+    riderOriginTextController.clear();
+    isOriginAdded.value = false;
+    riderOriginLat = 0.0;
+    riderOriginLong = 0.0;
+  }
+
+  removeDestination() {
+    riderDestinationTextController.clear();
+    isDestinationAdded.value = false;
+    riderDestinationLat = 0.0;
+    riderDestinationLong = 0.0;
   }
 }
