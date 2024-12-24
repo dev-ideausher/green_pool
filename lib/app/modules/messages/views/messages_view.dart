@@ -71,7 +71,7 @@ class MessagesView extends GetView<MessagesController> {
                                     color: ColorUtil.kSecondary07),
                             title: controller.messagesModel.value
                                     .chatRoomIds?[index]?.reciver?.fullName ??
-                                "",
+                                "User",
                             path: controller
                                     .messagesModel
                                     .value
@@ -81,7 +81,7 @@ class MessagesView extends GetView<MessagesController> {
                                     ?.url ??
                                 "",
                             subtitle:
-                                "${message?.driverRideDetails?.origin?.split(",").first} to ${message?.driverRideDetails?.destination?.split(",").first}, ${GpUtil.formatDate(DateTime.parse(message?.driverRideDetails?.date ?? ""))}",
+                                "${message?.driverRideDetails?.origin?.split(",").first ?? "City"} to ${message?.driverRideDetails?.destination?.split(",").first ?? "City"}, ${GpUtil.formatDate(DateTime.parse(message?.driverRideDetails?.date ?? "2024-12-31T00:00:00.000Z"))}",
                             lastMsg: message?.lastMessage ?? "",
                             lastMsgStyle: messageRead
                                 ? TextStyleUtil.k12Regular(

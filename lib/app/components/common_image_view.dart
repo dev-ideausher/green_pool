@@ -29,7 +29,7 @@ class CommonImageView extends StatelessWidget {
     this.height,
     this.width,
     this.fit = BoxFit.cover,
-    this.placeHolder = Assets.myridesEmptyPassenger,
+    this.placeHolder = Assets.iconsLogo,
   });
 
   @override
@@ -38,7 +38,14 @@ class CommonImageView extends StatelessWidget {
   }
 
   Widget _buildImageView() {
-    if (svgPath != null && svgPath!.isNotEmpty) {
+    if (url == '' || imagePath == '' || svgPath == '') {
+      return Image.asset(
+        placeHolder,
+        height: height,
+        width: width,
+        fit: fit,
+      );
+    } else if (svgPath != null && svgPath!.isNotEmpty) {
       return SizedBox(
         height: height,
         width: width,
@@ -57,7 +64,7 @@ class CommonImageView extends StatelessWidget {
         width: width,
         fit: fit,
       );
-    } else if (url != null && url!.isNotEmpty) {
+    } else if (url != null && url!.isNotEmpty && url != "") {
       return CachedNetworkImage(
         height: height,
         width: width,
@@ -81,13 +88,6 @@ class CommonImageView extends StatelessWidget {
     } else if (imagePath != null && imagePath!.isNotEmpty) {
       return Image.asset(
         imagePath!,
-        height: height,
-        width: width,
-        fit: fit,
-      );
-    } else if (url == '' || imagePath == '' || svgPath == '') {
-      Image.asset(
-        placeHolder,
         height: height,
         width: width,
         fit: fit,

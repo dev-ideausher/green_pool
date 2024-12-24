@@ -52,12 +52,12 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
                         ? ColorUtil.kPrimary3PinkMode
                         : ColorUtil.kSecondary01,
                   ),
-                  /*suffix: controller.originTextController.value.text.isNotEmpty
+                  suffix: controller.isOriginAdded.value
                       ? InkWell(
                           onTap: () => controller.removeOrigin(),
                           child: const Icon(Icons.cancel))
-                      : const SizedBox(),*/
-                ).paddingOnly(top: 8.kh, bottom: 30.kh),
+                      : const SizedBox(),
+                ).paddingOnly(top: 8.kh, bottom: 28.kh),
                 RichTextHeading(text: Strings.destination),
                 GreenPoolTextField(
                   hintText: Strings.enterAdestination,
@@ -77,14 +77,15 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
                         ? ColorUtil.kPrimary3PinkMode
                         : ColorUtil.kSecondary01,
                   ),
-                  /*suffix: controller.destinationTextController.value.text.isNotEmpty
+                  suffix: controller.isDestinationAdded.value
                       ? InkWell(
                           onTap: () => controller.removeDestination(),
                           child: const Icon(Icons.cancel))
-                      : const SizedBox(),*/
+                      : const SizedBox(),
                 ).paddingOnly(top: 8.kh, bottom: 16.kh),
                 Visibility(
-                  visible: controller.isDestinationAdded.value,
+                  visible: controller.isDestinationAdded.value &&
+                      controller.isOriginAdded.value,
                   child: Text(
                     Strings.addStops,
                     style: TextStyleUtil.k14Semibold(),
@@ -92,7 +93,8 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
                 ),
                 //stop1
                 Visibility(
-                  visible: controller.isDestinationAdded.value,
+                  visible: controller.isDestinationAdded.value &&
+                      controller.isOriginAdded.value,
                   child: GreenPoolTextField(
                     hintText: Strings.addStops,
                     keyboardType: TextInputType.streetAddress,
@@ -198,27 +200,10 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
                   Icons.swap_vert_rounded,
                   size: 28.kh,
                   color: ColorUtil.kSecondary01,
-                )).paddingOnly(right: 40.kw, top: 96.kh).animate().flip(),
+                )).paddingOnly(right: 32.kw, top: 96.kh).animate().flip(),
           ),
         ],
       ),
     );
   }
 }
-/**
- Align(
-                  alignment: Alignment.center,
-                  child: IconButton(
-                          onPressed: () {
-                            controller.swapTextFields();
-                          },
-                          highlightColor: ColorUtil.kPrimary03,
-                          style: const ButtonStyle(
-                            backgroundColor:
-                                WidgetStatePropertyAll(ColorUtil.kPrimary01),
-                          ),
-                          icon: const Icon(Icons.swap_vert_sharp))
-                      .animate()
-                      .flip(),
-                ),
- */

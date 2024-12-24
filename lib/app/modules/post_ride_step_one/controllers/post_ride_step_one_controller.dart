@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/data/post_ride_model.dart';
-import 'package:green_pool/app/res/strings.dart';
 
 import '../../../routes/app_pages.dart';
-import '../../../services/snackbar.dart';
-import '../../../services/storage.dart';
-import '../../home/controllers/home_controller.dart';
 import '../../origin/controllers/origin_controller.dart';
 
 class PostRideStepOneController extends GetxController {
@@ -14,6 +10,7 @@ class PostRideStepOneController extends GetxController {
   RxBool isStop1Added = false.obs;
   RxBool isStop2Added = false.obs;
 
+  RxBool isOriginAdded = false.obs;
   RxBool isDestinationAdded = false.obs;
   final RxBool isDriver = false.obs;
   var postRideModel = PostRideModel().obs;
@@ -38,18 +35,34 @@ class PostRideStepOneController extends GetxController {
   }
 
   void swapTextFields() {
-    // Swap logic
-    final origin = originTextController.text;
-    final destination = destinationTextController.text;
+    // Swap origin and destination values
+    final tempName = originTextController.text;
+    final tempLat = originLatitude.value;
+    final tempLong = originLongitude.value;
 
-    originTextController.text = destination;
-    destinationTextController.text = origin;
+    originTextController.text = destinationTextController.text;
+    originLatitude.value = destLatitude.value;
+    originLongitude.value = destLongitude.value;
+
+    destinationTextController.text = tempName;
+    destLatitude.value = tempLat;
+    destLongitude.value = tempLong;
+
+    // Update flags
+    isOriginAdded.value = originTextController.text.isNotEmpty;
+    isDestinationAdded.value = destinationTextController.text.isNotEmpty;
   }
 
   moveToSetOrigin() {
-    Get.toNamed(Routes.SEARCH_ADDRESS, arguments: LocationValues.origin)?.then(
-      (value) => setActiveStatePostRideView(),
-    );
+    Get.toNamed(Routes.SEARCH_ADDRESS, arguments: LocationValues.origin)
+        ?.then((value) {
+      if (originTextController.value.text.isNotEmpty) {
+        isOriginAdded.value = true;
+      } else {
+        isOriginAdded.value = false;
+      }
+      setActiveStatePostRideView();
+    });
   }
 
   moveToSetDestination() {
@@ -98,30 +111,31 @@ class PostRideStepOneController extends GetxController {
       isActive.value = false;
     }
   }
-  void moveToStepTwo () {
+
+  void moveToStepTwo() {
     Get.toNamed(
-          Routes.POST_RIDE_STEP_TWO,
-          arguments: PostRideModel(
-              ridesDetails: PostRideModelRidesDetails(
-                  origin: PostRideModelRidesDetailsOrigin(
-                      name: originTextController.value.text,
-                      latitude: originLatitude.value,
-                      longitude: originLongitude.value),
-                  destination: PostRideModelRidesDetailsDestination(
-                      name: destinationTextController.value.text,
-                      latitude: destLatitude.value,
-                      longitude: destLongitude.value),
-                  stops: [
-                PostRideModelRidesDetailsStops(
-                    name: stop1TextController.value.text,
-                    latitude: stop1Lat.value,
-                    longitude: stop1Long.value),
-                PostRideModelRidesDetailsStops(
-                    name: stop2TextController.value.text,
-                    latitude: stop2Lat.value,
-                    longitude: stop2Long.value),
-              ])),
-        );
+      Routes.POST_RIDE_STEP_TWO,
+      arguments: PostRideModel(
+          ridesDetails: PostRideModelRidesDetails(
+              origin: PostRideModelRidesDetailsOrigin(
+                  name: originTextController.value.text,
+                  latitude: originLatitude.value,
+                  longitude: originLongitude.value),
+              destination: PostRideModelRidesDetailsDestination(
+                  name: destinationTextController.value.text,
+                  latitude: destLatitude.value,
+                  longitude: destLongitude.value),
+              stops: [
+            PostRideModelRidesDetailsStops(
+                name: stop1TextController.value.text,
+                latitude: stop1Lat.value,
+                longitude: stop1Long.value),
+            PostRideModelRidesDetailsStops(
+                name: stop2TextController.value.text,
+                latitude: stop2Lat.value,
+                longitude: stop2Long.value),
+          ])),
+    );
   }
 
   removeStop1() {
@@ -140,12 +154,14 @@ class PostRideStepOneController extends GetxController {
 
   removeOrigin() {
     originTextController.clear();
+    isOriginAdded.value = false;
     originLatitude.value = 0.0;
     originLongitude.value = 0.0;
   }
 
   removeDestination() {
     destinationTextController.clear();
+    isDestinationAdded.value = false;
     destLatitude.value = 0.0;
     destLongitude.value = 0.0;
   }

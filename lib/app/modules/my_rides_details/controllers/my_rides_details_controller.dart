@@ -55,7 +55,6 @@ class MyRidesDetailsController extends GetxController {
         try {
           final res = await APIManager.postChatRoomId(
               receiverId: rider.riderDetails?.Id ?? "",
-              //abhinav no need of payment from here so not sending riderRideId
               body: {
                 "driverRideId": myRidesModelData.value.driverRideId,
                 "seatsRequired": "",
