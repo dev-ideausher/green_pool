@@ -292,7 +292,6 @@ class PushNotificationService {
 
     Future<void> navigateToChatPage() async {
       try {
-        //abhinav
         final res = await APIManager.postChatRoomId(
             receiverId: actionData?.data['senderId'] ?? "");
         Get.toNamed(Routes.CHAT_PAGE,
@@ -476,10 +475,10 @@ class PushNotificationService {
         if (currentRoute != Routes.CHAT_PAGE) {
           if (currentRoute == Routes.BOTTOM_NAVIGATION) {
             homeController.changeTabIndex(2);
-            await navigateToChatPage();
+            // await navigateToChatPage();
           } else {
             await navigateToBottomNavigation(2);
-            await navigateToChatPage();
+            // await navigateToChatPage();
           }
         }
         break;
