@@ -86,6 +86,20 @@ class AuthService extends GetxService {
   mobileOtp({required String phoneno}) async {
     await auth.requestVerificationCode(
       phoneNumber: phoneno,
+      onVerificationFailed: (exception) {
+        if (exception.code == 'invalid-phone-number') {
+          debugPrint('The provided phone number is not valid.');
+        } else {
+          debugPrint(exception.message);
+        }
+      },
+      onVerificationCompleted: (authenticationResult) {
+        if (authenticationResult.user != null) {
+          debugPrint('User is signed in');
+        } else {
+          debugPrint('User is not signed in');
+        }
+      },
       timeout: const Duration(seconds: 120),
       onCodeSent: (verificationID) => print('verificationId: $verificationID'),
     );
