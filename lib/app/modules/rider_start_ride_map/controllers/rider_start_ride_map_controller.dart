@@ -435,7 +435,17 @@ class RiderStartRideMapController extends GetxController {
               deleteUpdateTime: res.data["data"]["deleteUpdateTime"] ?? "",
               id: bookingDetail.value.driverDetails?.Id,
               name: bookingDetail.value.driverDetails?.fullName,
-              image: bookingDetail.value.driverDetails?.profilePic?.url));
+              image: bookingDetail.value.driverDetails?.profilePic?.url,
+              driverRideId: bookingDetail.value.driverRideId,
+              riderRideId: bookingDetail.value.riderRideId,
+              origin: bookingDetail.value.driverBookingDetails?.origin?.name?.split(',').first ??
+                  "City",
+              destination:
+                  bookingDetail.value.driverBookingDetails?.destination?.name?.split(',').first ??
+                      "City",
+              
+                  date: GpUtil.formatDate(DateTime.parse(bookingDetail.value.driverBookingDetails?.date ??
+                  Strings.defaultDate))));
     } catch (e) {
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
@@ -443,7 +453,16 @@ class RiderStartRideMapController extends GetxController {
               deleteUpdateTime: "",
               id: bookingDetail.value.driverDetails?.Id,
               name: bookingDetail.value.driverDetails?.fullName,
-              image: bookingDetail.value.driverDetails?.profilePic?.url));
+              image: bookingDetail.value.driverDetails?.profilePic?.url,
+              driverRideId: bookingDetail.value.driverRideId,
+              riderRideId: bookingDetail.value.riderRideId,
+              origin: bookingDetail.value.driverBookingDetails?.origin?.name?.split(',').first ??
+                  "City",
+              destination:
+                  bookingDetail.value.driverBookingDetails?.destination?.name?.split(',').first ??
+                      "City",
+              date: GpUtil.formatDate(DateTime.parse(bookingDetail.value.driverBookingDetails?.date ??
+                  Strings.defaultDate))));
     }
   }
 

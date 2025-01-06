@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
+import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:stacked_firebase_auth/stacked_firebase_auth.dart';
 import 'snackbar.dart';
 import 'storage.dart';
@@ -40,7 +41,8 @@ class AuthService extends GetxService {
 
         status = true;
       } else {
-        showMySnackbar(msg: value.errorMessage!);
+        showMySnackbar(msg: "Google Sign In has been cancelled");
+        debugPrint(value.errorMessage.toString());
       }
     });
     DialogHelper.hideDialog();
@@ -188,6 +190,8 @@ class AuthService extends GetxService {
   Future<void> logOutUser() async {
     DialogHelper.showLoading();
     // erase the user's token and data in GetStorageService
+    Get.find<HomeController>().reqsCount.value = 0;
+    Get.find<HomeController>().totUnreadMsgs.value = 0;
     Get.find<GetStorageService>().logout();
     Get.find<GetStorageService>().isLoggedIn = false;
     // firbase logout

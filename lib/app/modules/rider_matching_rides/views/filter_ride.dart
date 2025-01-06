@@ -10,6 +10,7 @@ import 'package:green_pool/app/services/text_style_util.dart';
 
 import '../../../constants/image_constant.dart';
 import '../../../res/strings.dart';
+import '../../home/controllers/home_controller.dart';
 import '../../rider_matching_rides/views/filter_list.dart';
 import '../controllers/matching_rides_controller.dart';
 
@@ -19,7 +20,7 @@ class FilterRide extends GetView<MatchingRidesController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:  GreenPoolAppBar(
+      appBar: GreenPoolAppBar(
         title: Text(Strings.filter),
       ),
       body: Obx(
@@ -149,9 +150,14 @@ class FilterRide extends GetView<MatchingRidesController> {
                   },
                   label: Strings.clearAll,
                   isBorder: true,
-                  borderColor: ColorUtil.kSecondary01,
                   width: 156.kw,
                   height: 56.kh,
+                  borderColor: Get.find<HomeController>().isPinkModeOn.value
+                      ? ColorUtil.kPrimary3PinkMode
+                      : ColorUtil.kSecondary01,
+                  labelColor: Get.find<HomeController>().isPinkModeOn.value
+                      ? ColorUtil.kPrimary3PinkMode
+                      : ColorUtil.kSecondary01,
                 ),
               ],
             ).paddingOnly(bottom: 40.kh),

@@ -22,6 +22,7 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
 
   @override
   Widget build(BuildContext context) {
+    final isPinkModeOn = Get.find<HomeController>().isPinkModeOn.value;
     return Scaffold(
       appBar: GreenPoolAppBar(
         title: Text(Strings.postARide),
@@ -48,7 +49,7 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
                   prefix: Icon(
                     Icons.location_on,
                     size: 24.kh,
-                    color: Get.find<HomeController>().isPinkModeOn.value
+                    color: isPinkModeOn
                         ? ColorUtil.kPrimary3PinkMode
                         : ColorUtil.kSecondary01,
                   ),
@@ -73,7 +74,7 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
                   prefix: Icon(
                     Icons.location_on,
                     size: 24.kh,
-                    color: Get.find<HomeController>().isPinkModeOn.value
+                    color: isPinkModeOn
                         ? ColorUtil.kPrimary3PinkMode
                         : ColorUtil.kSecondary01,
                   ),
@@ -110,7 +111,7 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
                     prefix: Icon(
                       Icons.add_circle,
                       size: 20.kh,
-                      color: Get.find<HomeController>().isPinkModeOn.value
+                      color: isPinkModeOn
                           ? ColorUtil.kPrimary3PinkMode
                           : ColorUtil.kSecondary01,
                     ),
@@ -121,7 +122,7 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
                         : SvgPicture.asset(
                             ImageConstant.svgIconReorder,
                             colorFilter: ColorFilter.mode(
-                                Get.find<HomeController>().isPinkModeOn.value
+                                isPinkModeOn
                                     ? ColorUtil.kPrimary3PinkMode
                                     : ColorUtil.kSecondary01,
                                 BlendMode.srcIn),
@@ -146,7 +147,7 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
                     prefix: Icon(
                       Icons.add_circle,
                       size: 20.kh,
-                      color: Get.find<HomeController>().isPinkModeOn.value
+                      color: isPinkModeOn
                           ? ColorUtil.kPrimary3PinkMode
                           : ColorUtil.kSecondary01,
                     ),
@@ -157,7 +158,7 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
                         : SvgPicture.asset(
                             ImageConstant.svgIconReorder,
                             colorFilter: ColorFilter.mode(
-                                Get.find<HomeController>().isPinkModeOn.value
+                                isPinkModeOn
                                     ? ColorUtil.kPrimary3PinkMode
                                     : ColorUtil.kSecondary01,
                                 BlendMode.srcIn),
@@ -191,9 +192,13 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
                 onPressed: () {
                   controller.swapTextFields();
                 },
-                highlightColor: ColorUtil.kPrimary03,
-                style: const ButtonStyle(
-                  backgroundColor: WidgetStatePropertyAll(ColorUtil.kPrimary01),
+                highlightColor: isPinkModeOn
+                    ? ColorUtil.kPrimaryPinkMode
+                    : ColorUtil.kPrimary03,
+                style: ButtonStyle(
+                  backgroundColor: WidgetStatePropertyAll(isPinkModeOn
+                      ? ColorUtil.kPrimary2PinkMode.withOpacity(0.8)
+                      : ColorUtil.kPrimary01),
                 ),
                 padding: EdgeInsets.all(4.kh),
                 icon: Icon(

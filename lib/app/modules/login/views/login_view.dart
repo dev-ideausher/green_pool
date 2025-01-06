@@ -65,6 +65,7 @@ class LoginView extends GetView<LoginController> {
                     initialSelection: 'CA',
                     countryFilter: const ['CA'],
                     showFlag: true,
+                    hideSearch: true,
                     searchDecoration: InputDecoration(
                       focusColor: ColorUtil.kNeutral6,
                       focusedBorder: OutlineInputBorder(

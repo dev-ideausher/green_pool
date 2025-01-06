@@ -235,10 +235,14 @@ class UserDetailsView extends GetView<UserDetailsController> {
             GreenPoolButton(
               onPressed: () => controller.deleteAccountAPI(),
               isBorder: true,
-              borderColor: ColorUtil.kSecondary01,
               borderWidth: 2.kh,
               label: Strings.deleteAccount,
-              labelColor: ColorUtil.kSecondary01,
+              borderColor: Get.find<HomeController>().isPinkModeOn.value
+                  ? ColorUtil.kPrimary3PinkMode
+                  : ColorUtil.kSecondary01,
+              labelColor: Get.find<HomeController>().isPinkModeOn.value
+                  ? ColorUtil.kPrimary3PinkMode
+                  : ColorUtil.kSecondary01,
             ).paddingOnly(bottom: 40.kh),
           ],
         ).paddingSymmetric(horizontal: 16.kw),

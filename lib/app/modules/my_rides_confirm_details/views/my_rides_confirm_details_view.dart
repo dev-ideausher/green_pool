@@ -82,6 +82,16 @@ class MyRidesConfirmDetailsView
                                 height: 32.kh,
                                 fontSize: 14.kh,
                                 padding: const EdgeInsets.all(0),
+                                borderColor: Get.find<HomeController>()
+                                        .isPinkModeOn
+                                        .value
+                                    ? ColorUtil.kPrimary3PinkMode
+                                    : ColorUtil.kSecondary01,
+                                labelColor: Get.find<HomeController>()
+                                        .isPinkModeOn
+                                        .value
+                                    ? ColorUtil.kPrimary3PinkMode
+                                    : ColorUtil.kSecondary01,
                               ).paddingOnly(top: 8.kh),
                             ),
                           ],
@@ -248,6 +258,12 @@ class MyRidesConfirmDetailsView
                 width: 162.kw,
                 label: Strings.reject,
                 isBorder: true,
+                borderColor: Get.find<HomeController>().isPinkModeOn.value
+                    ? ColorUtil.kPrimary3PinkMode
+                    : ColorUtil.kSecondary01,
+                labelColor: Get.find<HomeController>().isPinkModeOn.value
+                    ? ColorUtil.kPrimary3PinkMode
+                    : ColorUtil.kSecondary01,
               ),
             ],
           ).paddingOnly(top: 16.kh, bottom: 40.kh),

@@ -24,9 +24,7 @@ class SendRequest extends GetView<MyRidesRequestController> {
 
   @override
   Widget build(BuildContext context) {
-    Get.lazyPut(
-      () => MapDriverSendRequestController(),
-    );
+    Get.lazyPut(() => MapDriverSendRequestController());
     return Obx(
       () => controller.isSendPageLoading.value
           ? const GpProgress()
@@ -232,6 +230,16 @@ class SendRequest extends GetView<MyRidesRequestController> {
                                     isBorder: true,
                                     padding: const EdgeInsets.all(0),
                                     label: Strings.message,
+                                    borderColor: Get.find<HomeController>()
+                                            .isPinkModeOn
+                                            .value
+                                        ? ColorUtil.kPrimary3PinkMode
+                                        : ColorUtil.kSecondary01,
+                                    labelColor: Get.find<HomeController>()
+                                            .isPinkModeOn
+                                            .value
+                                        ? ColorUtil.kPrimary3PinkMode
+                                        : ColorUtil.kSecondary01,
                                   ),
                                   GreenPoolButton(
                                       width: 144.kw,

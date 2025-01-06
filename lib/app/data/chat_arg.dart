@@ -6,6 +6,9 @@ class ChatArg {
   String? deleteUpdateTime;
   String? driverRideId;
   String? riderRideId;
+  String? origin;
+  String? destination;
+  String? date;
 
   ChatArg(
       {this.name,
@@ -14,5 +17,8 @@ class ChatArg {
       this.chatRoomId,
       this.deleteUpdateTime,
       this.driverRideId,
-      this.riderRideId});
+      this.riderRideId,
+      this.origin,
+      this.destination,
+      this.date});
 }

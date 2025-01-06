@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:green_pool/app/services/gp_util.dart';
 
 import '../../../data/chat_arg.dart';
 import '../../../data/my_rides_model.dart';
@@ -46,7 +47,18 @@ class RiderConfirmedRideDetailsController extends GetxController {
               name: data.confirmDriverDetails?[0]?.driverPostsDetails?[0]
                   ?.driverDetails?[0]?.fullName,
               image: data.confirmDriverDetails?[0]?.driverPostsDetails?[0]
-                  ?.driverDetails?[0]?.profilePic?.url));
+                  ?.driverDetails?[0]?.profilePic?.url,
+                  driverRideId: data.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.Id,
+                  riderRideId: data.Id,
+              origin: data.confirmDriverDetails?[0]?.driverPostsDetails?[0]
+                      ?.origin?.name?.split(',').first ??
+                  "City",
+              destination: data.confirmDriverDetails?[0]?.driverPostsDetails?[0]
+                      ?.destination?.name?.split(',').first ??
+                  "City",
+              date:
+                  GpUtil.formatDate(DateTime.parse(data.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.date ??
+                      Strings.defaultDate))));
       messageBtnLoading.value = false;
     } catch (e) {
       Get.toNamed(Routes.CHAT_PAGE,
@@ -58,7 +70,18 @@ class RiderConfirmedRideDetailsController extends GetxController {
               name: data.confirmDriverDetails?[0]?.driverPostsDetails?[0]
                   ?.driverDetails?[0]?.fullName,
               image: data.confirmDriverDetails?[0]?.driverPostsDetails?[0]
-                  ?.driverDetails?[0]?.profilePic?.url));
+                  ?.driverDetails?[0]?.profilePic?.url,
+                  driverRideId: data.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.Id,
+                  riderRideId: data.Id,
+              origin: data.confirmDriverDetails?[0]?.driverPostsDetails?[0]
+                      ?.origin?.name?.split(',').first ??
+                  "City",
+              destination: data.confirmDriverDetails?[0]?.driverPostsDetails?[0]
+                      ?.destination?.name?.split(',').first ??
+                  "City",
+              date:
+                  GpUtil.formatDate(DateTime.parse(data.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.date ??
+                      Strings.defaultDate))));
       messageBtnLoading.value = false;
     }
   }

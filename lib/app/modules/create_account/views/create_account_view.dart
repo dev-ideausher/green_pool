@@ -6,7 +6,6 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/greenpool_textfield.dart';
 import 'package:green_pool/app/components/socials.dart';
-import 'package:green_pool/app/modules/create_account/views/terms_view.dart';
 import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/colors.dart';
@@ -78,6 +77,7 @@ class CreateAccountView extends GetView<CreateAccountController> {
                     },
                     padding: const EdgeInsets.all(0),
                     showFlag: true,
+                    hideSearch: true,
                     dialogSize: Size(60.kw, 25.h),
                     initialSelection: 'CA',
                     countryFilter: const ['CA'],

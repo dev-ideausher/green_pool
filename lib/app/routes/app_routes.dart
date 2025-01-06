@@ -93,6 +93,7 @@ abstract class Routes {
   static const CHAT_WITH_EXPERTS = _Paths.CHAT_WITH_EXPERTS;
   static const WEB_ADD_TO_BANK = _Paths.WEB_ADD_TO_BANK;
   static const MY_RIDES_CONFIRM_DETAILS = _Paths.MY_RIDES_CONFIRM_DETAILS;
+  static const ARCHIVED = _Paths.ARCHIVED;
 }
 
 abstract class _Paths {
@@ -184,4 +185,5 @@ abstract class _Paths {
   static const CHAT_WITH_EXPERTS = '/chat-with-experts';
   static const WEB_ADD_TO_BANK = '/web-add-to-bank';
   static const MY_RIDES_CONFIRM_DETAILS = '/my-rides-confirm-details';
+  static const ARCHIVED = '/archived';
 }

@@ -431,6 +431,12 @@ class RiderMyRidesConfirmDetailsView
                     ? ColorUtil.kPrimary3PinkMode
                     : ColorUtil.kPrimary01,
                 isBorder: true,
+                borderColor: Get.find<HomeController>().isPinkModeOn.value
+                    ? ColorUtil.kPrimary3PinkMode
+                    : ColorUtil.kSecondary01,
+                labelColor: Get.find<HomeController>().isPinkModeOn.value
+                    ? ColorUtil.kPrimary3PinkMode
+                    : ColorUtil.kSecondary01,
               ).paddingOnly(top: 8.kh),
             ),
             Row(
@@ -456,6 +462,12 @@ class RiderMyRidesConfirmDetailsView
                   width: 162.kw,
                   label: Strings.reject,
                   isBorder: true,
+                  borderColor: Get.find<HomeController>().isPinkModeOn.value
+                      ? ColorUtil.kPrimary3PinkMode
+                      : ColorUtil.kSecondary01,
+                  labelColor: Get.find<HomeController>().isPinkModeOn.value
+                      ? ColorUtil.kPrimary3PinkMode
+                      : ColorUtil.kSecondary01,
                 ),
               ],
             ).paddingOnly(top: 16.kh, bottom: 40.kh),

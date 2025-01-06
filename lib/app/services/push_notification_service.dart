@@ -10,6 +10,7 @@ import 'package:green_pool/app/modules/my_rides_request/controllers/my_rides_req
 import 'package:green_pool/app/modules/rider_confirmed_ride_details/controllers/rider_confirmed_ride_details_controller.dart';
 import 'package:green_pool/app/modules/rider_my_ride_request/controllers/rider_my_ride_request_controller.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
+import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/storage.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../data/chat_arg.dart';
@@ -180,6 +181,8 @@ class PushNotificationService {
       case "Ride Confirmed!":
         Get.find<MyRidesOneTimeController>().myRidesAPI();
         Get.find<HomeController>().newMsgReceived.value = true;
+        Get.find<HomeController>().getReqsCount();
+        Get.find<HomeController>().getUnreadCount();
         break;
       case "Request Accepted!":
         Get.find<HomeController>().newMsgReceived.value = true;
@@ -195,6 +198,7 @@ class PushNotificationService {
           Get.find<HomeController>().newMsgReceived.value = true;
           Get.find<MyRidesRequestController>().allConfirmRequestAPI();
         }
+        Get.find<HomeController>().getReqsCount();
         break;
 
       case "Payment Received!":
@@ -210,6 +214,7 @@ class PushNotificationService {
         if (Get.currentRoute == Routes.RIDER_MY_RIDE_REQUEST) {
           Get.find<RiderMyRideRequestController>().allRiderConfirmRequestAPI();
         }
+        Get.find<HomeController>().getReqsCount();
         break;
 
       case "Ride Completed":
@@ -238,6 +243,7 @@ class PushNotificationService {
       case 'Chat':
         Get.find<HomeController>().newMsgReceived.value = true;
         Get.find<MessagesController>().refreshIndicatorKey.currentState?.show();
+        Get.find<HomeController>().getUnreadCount();
         break;
 
       case "ChatResolved":
@@ -293,26 +299,44 @@ class PushNotificationService {
     Future<void> navigateToChatPage() async {
       try {
         final res = await APIManager.postChatRoomId(
-            receiverId: actionData?.data['senderId'] ?? "");
+            receiverId: actionData?.data['senderId'] ?? "",
+            body: {"driverRideId": "", "riderRideId": "", "seatsRequired": ""});
         Get.toNamed(Routes.CHAT_PAGE,
                 arguments: ChatArg(
-                    chatRoomId: res.data["data"]["chatRoomId"] ?? "",
-                    deleteUpdateTime:
-                        res.data["data"]["deleteUpdateTime"] ?? "",
-                    id: actionData?.data['senderId'],
-                    name: actionData?.data['name'],
-                    image: actionData?.data['profilePic']))
+                  chatRoomId: res.data["data"]["chatRoomId"] ?? "",
+                  deleteUpdateTime: res.data["data"]["deleteUpdateTime"] ?? "",
+                  id: actionData?.data['senderId'],
+                  name: actionData?.data['name'],
+                  image: actionData?.data['profilePic'],
+                  origin:
+                      actionData?.data['origin'].toString().split(',').first,
+                  destination: actionData?.data['destination']
+                      .toString()
+                      .split(',')
+                      .first,
+                  date: GpUtil.formatDate(
+                      DateTime.parse(actionData?.data['date'])),
+                ))
             ?.then(
                 (value) => Get.find<MessagesController>().getMessageListAPI());
       } catch (e) {
         try {
           Get.toNamed(Routes.CHAT_PAGE,
                   arguments: ChatArg(
-                      chatRoomId: "",
-                      deleteUpdateTime: "",
-                      id: actionData?.data['senderId'],
-                      name: actionData?.data['name'],
-                      image: actionData?.data['profilePic']))
+                    chatRoomId: "",
+                    deleteUpdateTime: "",
+                    id: actionData?.data['senderId'],
+                    name: actionData?.data['name'],
+                    image: actionData?.data['profilePic'],
+                    origin:
+                        actionData?.data['origin'].toString().split(',').first,
+                    destination: actionData?.data['destination']
+                        .toString()
+                        .split(',')
+                        .first,
+                    date: GpUtil.formatDate(
+                        DateTime.parse(actionData?.data['date'])),
+                  ))
               ?.then((value) =>
                   Get.find<MessagesController>().getMessageListAPI());
         } catch (e) {

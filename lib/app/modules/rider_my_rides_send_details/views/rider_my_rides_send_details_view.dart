@@ -458,6 +458,12 @@ class RiderMyRidesSendDetailsView
               },
               label: Strings.message,
               isBorder: true,
+              borderColor: Get.find<HomeController>().isPinkModeOn.value
+                  ? ColorUtil.kPrimary3PinkMode
+                  : ColorUtil.kSecondary01,
+              labelColor: Get.find<HomeController>().isPinkModeOn.value
+                  ? ColorUtil.kPrimary3PinkMode
+                  : ColorUtil.kSecondary01,
             ).paddingSymmetric(vertical: 16.kh),
             Visibility(
               visible:

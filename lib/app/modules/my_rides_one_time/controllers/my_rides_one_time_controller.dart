@@ -52,6 +52,7 @@ class MyRidesOneTimeController extends GetxController {
           myRidesModelData.where((item) => (item.driverId != null)).toList();
       riderRides.value =
           myRidesModelData.where((item) => (item.riderId != null)).toList();
+      await Get.find<HomeController>().getReqsCount();
     } catch (e) {
       debugPrint(e.toString());
     } finally {

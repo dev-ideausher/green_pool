@@ -13,6 +13,7 @@ import '../../../res/strings.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/colors.dart';
 import '../../../services/text_style_util.dart';
+import '../../home/controllers/home_controller.dart';
 import '../controllers/my_rides_one_time_controller.dart';
 
 class RecurringTile extends StatelessWidget {
@@ -56,6 +57,12 @@ class RecurringTile extends StatelessWidget {
                     fontSize: 12.kh,
                     width: 136.kw,
                     height: 34.kh,
+                    borderColor: Get.find<HomeController>().isPinkModeOn.value
+                        ? ColorUtil.kPrimary3PinkMode
+                        : ColorUtil.kSecondary01,
+                    labelColor: Get.find<HomeController>().isPinkModeOn.value
+                        ? ColorUtil.kPrimary3PinkMode
+                        : ColorUtil.kSecondary01,
                   )
                   /*Obx(
                     () => Transform.scale(

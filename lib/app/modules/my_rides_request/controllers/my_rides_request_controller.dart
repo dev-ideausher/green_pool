@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/data/ride_detail_id.dart';
 import 'package:green_pool/app/modules/my_rides_one_time/controllers/my_rides_one_time_controller.dart';
+import 'package:green_pool/app/res/strings.dart';
 import '../../../data/chat_arg.dart';
 import '../../../data/driver_cofirm_request_model.dart';
 import '../../../data/driver_send_request_model.dart';
 import '../../../data/send_rider_request_model.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/dio/api_service.dart';
+import '../../../services/gp_util.dart';
 import '../../../services/snackbar.dart';
 import '../../home/controllers/home_controller.dart';
 import '../views/booking_confirm_bottom.dart';
@@ -156,7 +158,12 @@ class MyRidesRequestController extends GetxController {
               deleteUpdateTime: res.data["data"]["deleteUpdateTime"] ?? "",
               id: data.riderDetails?.Id,
               name: data.riderDetails?.fullName,
-              image: data.riderDetails?.profilePic?.url));
+              image: data.riderDetails?.profilePic?.url,
+              driverRideId: rideDetailId.value.driverRidId,
+              riderRideId: rideDetailId.value.riderRidId,
+              origin: data.origin?.name?.split(',').first ?? "City",
+              destination: data.destination?.name?.split(',').first ?? "City",              
+              date: GpUtil.formatDate(DateTime.parse(data.date ?? Strings.defaultDate))));
     } catch (e) {
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
@@ -164,7 +171,12 @@ class MyRidesRequestController extends GetxController {
               deleteUpdateTime: "",
               id: data.riderDetails?.Id,
               name: data.riderDetails?.fullName,
-              image: data.riderDetails?.profilePic?.url));
+              image: data.riderDetails?.profilePic?.url,
+              driverRideId: rideDetailId.value.driverRidId,
+              riderRideId: rideDetailId.value.riderRidId,
+              origin: data.origin?.name?.split(',').first ?? "City",
+              destination: data.destination?.name?.split(',').first ?? "City",
+              date: GpUtil.formatDate(DateTime.parse(data.date ?? Strings.defaultDate))));
     }
   }
 
@@ -183,8 +195,12 @@ class MyRidesRequestController extends GetxController {
               deleteUpdateTime: res.data["data"]["deleteUpdateTime"] ?? "",
               id: data.rideDetails?[0]?.riderDetails?.first?.Id,
               name: data.rideDetails?[0]?.riderDetails?.first?.fullName ?? "",
-              image:
-                  data.rideDetails?[0]?.riderDetails?.first?.profilePic?.url));
+              image: data.rideDetails?[0]?.riderDetails?.first?.profilePic?.url,
+              driverRideId: rideDetailId.value.driverRidId,
+              riderRideId: rideDetailId.value.riderRidId,
+              origin: data.rideDetails?[0]?.origin?.name?.split(',').first ?? "City",
+              destination: data.rideDetails?[0]?.destination?.name?.split(',').first ?? "City",              
+              date: GpUtil.formatDate(DateTime.parse(data.rideDetails?[0]?.date ?? Strings.defaultDate))));
     } catch (e) {
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
@@ -192,8 +208,12 @@ class MyRidesRequestController extends GetxController {
               deleteUpdateTime: "",
               id: data.rideDetails?[0]?.riderDetails?.first?.Id,
               name: data.rideDetails?[0]?.riderDetails?.first?.fullName ?? "",
-              image:
-                  data.rideDetails?[0]?.riderDetails?.first?.profilePic?.url));
+              image: data.rideDetails?[0]?.riderDetails?.first?.profilePic?.url,
+              driverRideId: rideDetailId.value.driverRidId,
+              riderRideId: rideDetailId.value.riderRidId,
+              origin: data.rideDetails?[0]?.origin?.name?.split(',').first ?? "City",
+              destination: data.rideDetails?[0]?.destination?.name?.split(',').first ?? "City",
+              date: GpUtil.formatDate(DateTime.parse(data.rideDetails?[0]?.date ?? Strings.defaultDate))));
     }
   }
 }

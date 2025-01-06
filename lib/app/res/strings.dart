@@ -961,7 +961,17 @@ class Strings {
   static var moneyHasBeenTransferred =
       "Your money has been successfully transferred to your bank account.";
 
-  static var somethingWentWrong = "Oops! Something went wrong";
+  static var somethingWentWrong = "Something went wrong";
 
   static String plsFillVehicleDetails = "Please fill in vehicle details";
+
+  static var defaultDate = "2024-12-31T00:00:00.000Z";
+
+  static String archivedMsgs = "Archived Messages";
+
+  static var unArchive = "Unarchive";
+
+  static String moveToArchive = "Move to Archive";
+
+  static var archive = "Archive";
 }

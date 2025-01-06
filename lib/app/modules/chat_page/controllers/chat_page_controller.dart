@@ -9,10 +9,13 @@ import 'package:green_pool/app/services/storage.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
 import '../../../data/chat_arg.dart';
+import '../../../data/rider_confirm_request_model.dart';
 import '../../../res/strings.dart';
+import '../../../routes/app_pages.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
 import '../../../services/dio/api_service.dart';
+import '../../home/controllers/home_controller.dart';
 
 class ChatPageController extends GetxController {
   final Rx<ChatArg> chatArg = ChatArg().obs;
@@ -26,16 +29,28 @@ class ChatPageController extends GetxController {
   bool rideCreated = false;
   RxBool isPayBtnVisible = false.obs;
   RxBool isWarningVisible = true.obs;
+  RxBool confirmByDriver = true.obs;
   final progress = 0.0.obs;
+  String ridePostId = "";
 
   @override
   void onInit() {
     super.onInit();
     scrollController = ScrollController();
-    chatArg.value = Get.arguments;
-    if (chatArg.value.chatRoomId != null) {
-      getChat();
+    try {
+      chatArg.value = Get.arguments["chatArg"];
+      ridePostId = Get.arguments[
+          "ridePostId"]; //ride post id from rider-confirm-req-section
+      if (chatArg.value.chatRoomId != null) {
+        getChat();
+      }
+    } catch (e) {
+      chatArg.value = Get.arguments;
+      if (chatArg.value.chatRoomId != null) {
+        getChat();
+      }
     }
+
     checkForPayBtn();
 
     isLoad.value = false;
@@ -60,7 +75,9 @@ class ChatPageController extends GetxController {
           driverRideId: chatArg.value.driverRideId ?? "");
       isPayBtnVisible.value = response.data["riderCheck"] == false &&
           response.data["driver"] == false;
-      rideCreated = response.data["rideRequested"] == true; //if false then rider has not requested ride so we need to create a riderRide
+      confirmByDriver.value = response.data["confirmByDriver"];
+      rideCreated = response.data["rideRequested"] ==
+          true; //if false then rider has not requested ride so we need to create a riderRide
     } catch (e) {
       debugPrint("check for pay btn error: $e");
     }
@@ -214,6 +231,12 @@ class ChatPageController extends GetxController {
                     label: Strings.cancel,
                     fontSize: 14.kh,
                     padding: const EdgeInsets.all(8),
+                    borderColor: Get.find<HomeController>().isPinkModeOn.value
+                        ? ColorUtil.kPrimary3PinkMode
+                        : ColorUtil.kSecondary01,
+                    labelColor: Get.find<HomeController>().isPinkModeOn.value
+                        ? ColorUtil.kPrimary3PinkMode
+                        : ColorUtil.kSecondary01,
                   ),
                   GreenPoolButton(
                     onPressed: () {
@@ -280,5 +303,29 @@ class ChatPageController extends GetxController {
         isWarningVisible.value = false;
       }
     });
+  }
+
+  void moveToPaymentFromConfirmSection() {
+    try {
+      Get.toNamed(Routes.PAYNOW, arguments: {
+        //rider ride id for payment
+        "chatArg": chatArg.value,
+        //rider has created a ride?
+        "rideCreated": rideCreated,
+        //true if driver has requested the rider
+        "confirmByDriver": confirmByDriver.value,
+        //ride post id to implement "accept drivers request api" (if driver has requested rider)
+        "ridePostId": ridePostId,
+      });
+    } catch (e) {
+      Get.toNamed(Routes.PAYNOW, arguments: {
+        //rider ride id for payment
+        "chatArg": chatArg.value,
+        //rider has created a ride?
+        "rideCreated": rideCreated,
+        //true if driver has requested the rider
+        "confirmByDriver": confirmByDriver.value,
+      });
+    }
   }
 }

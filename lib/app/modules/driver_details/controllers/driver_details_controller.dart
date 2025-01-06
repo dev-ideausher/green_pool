@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/data/chat_arg.dart';
 import 'package:green_pool/app/data/matching_rides_model.dart';
+import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
+import 'package:green_pool/app/services/gp_util.dart';
 
 import '../../../services/dio/api_service.dart';
 import '../../../services/storage.dart';
@@ -127,7 +129,16 @@ class DriverDetailsController extends GetxController {
               driverRideId: driverRideId,
               name: matchingRidesModelData.value.driverDetails?.first?.fullName,
               image: matchingRidesModelData
-                  .value.driverDetails?.first?.profilePic?.url));
+                  .value.driverDetails?.first?.profilePic?.url,
+              origin:
+                  matchingRidesModelData.value.origin?.name?.split(',').first ??
+                      "City",
+              destination: matchingRidesModelData.value.destination?.name
+                      ?.split(',')
+                      .first ??
+                  "City",
+              date: GpUtil.formatDate(DateTime.parse(
+                  matchingRidesModelData.value.date ?? Strings.defaultDate))));
       messageBtnLoading.value = false;
     } catch (e) {
       try {
@@ -136,10 +147,22 @@ class DriverDetailsController extends GetxController {
                 chatRoomId: "",
                 id: matchingRidesModelData.value.driverDetails?.first?.Id,
                 deleteUpdateTime: "",
+                driverRideId: driverRideId,
                 name:
                     matchingRidesModelData.value.driverDetails?.first?.fullName,
                 image: matchingRidesModelData
-                    .value.driverDetails?.first?.profilePic?.url));
+                    .value.driverDetails?.first?.profilePic?.url,
+                origin: matchingRidesModelData.value.origin?.name
+                        ?.split(',')
+                        .first ??
+                    "City",
+                destination: matchingRidesModelData.value.destination?.name
+                        ?.split(',')
+                        .first ??
+                    "City",
+                date: GpUtil.formatDate(DateTime.parse(
+                    matchingRidesModelData.value.date ??
+                        Strings.defaultDate))));
         messageBtnLoading.value = false;
       } catch (e) {
         debugPrint(e.toString());

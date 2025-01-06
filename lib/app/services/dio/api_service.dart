@@ -168,6 +168,11 @@ class APIManager {
         showSnakbar: true,
       ).get(Endpoints.getChatList);
 
+  static Future<Response> getArchivedChatList() async => await DioClient(
+        Dio(),
+        showSnakbar: true,
+      ).get(Endpoints.allArchivedChats);
+
   static Future<Response> getPrivacyPolicy() async => await DioClient(
         Dio(),
         showSnakbar: true,
@@ -258,8 +263,10 @@ class APIManager {
 
   static Future<Response> getRideDetailById(
           {required String driverRideId}) async =>
-      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false)
-          .get(Endpoints.getRideDetail + driverRideId);
+      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false).get(
+        Endpoints.getRideDetail + driverRideId,
+        queryParameters: {"type": "chat"},
+      );
 
   // static Future<Response> postChatRoomId({required String receiverId}) async =>
   //     await DioClient(Dio(), showSnakbar: false, isOverlayLoader: false)
@@ -391,7 +398,7 @@ class APIManager {
     required String chatRoomId,
   }) async =>
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
-          .delete(Endpoints.deleteChat + chatRoomId);
+          .post(Endpoints.deleteChat, data: {"chatRoomId": chatRoomId});
 
   static Future<dynamic> deleteAccount() async =>
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
@@ -412,6 +419,15 @@ class APIManager {
       // driver will reject the request send by a rider
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
           .patch(Endpoints.rejectRidersRequest, data: jsonEncode(body));
+
+  static Future<Response> patchArchiveMsg({required String chatRoomId}) async =>
+      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+          .patch(Endpoints.archiveMsg + chatRoomId);
+
+  static Future<Response> patchUnarchiveMsg(
+          {required String chatRoomId}) async =>
+      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true)
+          .patch(Endpoints.unarchiveMsg + chatRoomId);
 
   //--------------------put api--------------------//
 

@@ -259,6 +259,16 @@ class RiderTile extends StatelessWidget {
                                 padding: EdgeInsets.all(0.kh),
                                 isBorder: true,
                                 fontSize: 12.kh,
+                                borderColor: Get.find<HomeController>()
+                                        .isPinkModeOn
+                                        .value
+                                    ? ColorUtil.kPrimary3PinkMode
+                                    : ColorUtil.kSecondary01,
+                                labelColor: Get.find<HomeController>()
+                                        .isPinkModeOn
+                                        .value
+                                    ? ColorUtil.kPrimary3PinkMode
+                                    : ColorUtil.kSecondary01,
                               ),
                             )
                           ],

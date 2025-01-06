@@ -72,6 +72,10 @@ class VerifyController extends GetxController {
   // }
 
   verifyOTP() async {
+    if (otpController.text.isEmpty || otpController.value.text == "") {
+      return showMySnackbar(
+          msg: "Please enter the OTP. The field cannot be empty.");
+    }
     try {
       isButtonLoading.value = true;
       await Future.delayed(const Duration(seconds: 2));

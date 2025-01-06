@@ -9,14 +9,17 @@ import 'package:green_pool/app/modules/messages/views/messages_view.dart';
 import 'package:green_pool/app/modules/my_rides_page/views/my_rides_page_view.dart';
 import 'package:green_pool/app/modules/profile/views/profile_view.dart';
 import 'package:green_pool/app/res/strings.dart';
+import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../services/colors.dart';
+import '../../../services/storage.dart';
 import '../../../services/text_style_util.dart';
 
 class BottomNavigationView extends GetView<HomeController> {
   const BottomNavigationView({super.key});
   @override
   Widget build(BuildContext context) {
+    final storageService = Get.find<GetStorageService>();
     return PopScope(
       canPop: controller.canPop,
       onPopInvoked: (didPop) {
@@ -30,7 +33,7 @@ class BottomNavigationView extends GetView<HomeController> {
       child: Scaffold(
         bottomNavigationBar: Obx(
           () => BottomNavigationBar(
-              selectedLabelStyle: controller.isPinkModeOn.value
+              selectedLabelStyle: storageService.isPinkMode
                   ? TextStyleUtil.k12Semibold(
                       color: ColorUtil.kPrimary3PinkMode)
                   : TextStyleUtil.k12Semibold(color: ColorUtil.kSecondary01),
@@ -41,7 +44,7 @@ class BottomNavigationView extends GetView<HomeController> {
               currentIndex: controller.selectedIndex.value,
               enableFeedback: true,
               unselectedItemColor: ColorUtil.kBlack05,
-              selectedItemColor: controller.isPinkModeOn.value
+              selectedItemColor: storageService.isPinkMode
                   ? ColorUtil.kPrimary3PinkMode
                   : ColorUtil.kSecondary01,
               onTap: (index) {
@@ -52,7 +55,7 @@ class BottomNavigationView extends GetView<HomeController> {
                   activeIcon: SvgPicture.asset(
                     ImageConstant.svgNavHomeFilled,
                     colorFilter: ColorFilter.mode(
-                        controller.isPinkModeOn.value
+                        storageService.isPinkMode
                             ? ColorUtil.kPrimary3PinkMode
                             : ColorUtil.kSecondary01,
                         BlendMode.srcIn),
@@ -61,34 +64,142 @@ class BottomNavigationView extends GetView<HomeController> {
                   label: Strings.home,
                 ),
                 BottomNavigationBarItem(
-                  activeIcon: SvgPicture.asset(
-                    ImageConstant.svgNavCarFilled,
-                    colorFilter: ColorFilter.mode(
-                        controller.isPinkModeOn.value
-                            ? ColorUtil.kPrimary3PinkMode
-                            : ColorUtil.kSecondary01,
-                        BlendMode.srcIn),
+                  activeIcon: Stack(
+                    alignment: Alignment.topRight,
+                    children: [
+                      SvgPicture.asset(
+                        ImageConstant.svgNavCarFilled,
+                        colorFilter: ColorFilter.mode(
+                            storageService.isPinkMode
+                                ? ColorUtil.kPrimary3PinkMode
+                                : ColorUtil.kSecondary01,
+                            BlendMode.srcIn),
+                      ),
+                      Visibility(
+                        visible: controller.reqsCount.value > 0,
+                        child: Container(
+                          height: 14.kh,
+                          width: 14.kw,
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.symmetric(
+                              vertical: 1.kh, horizontal: 4.kw),
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: storageService.isPinkMode
+                                  ? ColorUtil.kSecondaryPinkMode
+                                  : ColorUtil.kPrimary05),
+                          child: Text(
+                            "${controller.reqsCount.value}",
+                            style: TextStyleUtil.k8Semibold(
+                                color: storageService.isPinkMode
+                                    ? ColorUtil.kPrimary3PinkMode
+                                    : ColorUtil.kSecondary01),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  icon: SvgPicture.asset(ImageConstant.svgNavCar),
+                  icon: Stack(
+                    alignment: Alignment.topRight,
+                    children: [
+                      SvgPicture.asset(ImageConstant.svgNavCar),
+                      Visibility(
+                        visible: controller.reqsCount.value > 0,
+                        child: Container(
+                          height: 14.kh,
+                          width: 14.kw,
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.symmetric(
+                              vertical: 1.kh, horizontal: 4.kw),
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: storageService.isPinkMode
+                                  ? ColorUtil.kSecondaryPinkMode
+                                  : ColorUtil.kPrimary05),
+                          child: Text(
+                            "${controller.reqsCount.value}",
+                            style: TextStyleUtil.k8Semibold(
+                                color: storageService.isPinkMode
+                                    ? ColorUtil.kPrimary3PinkMode
+                                    : ColorUtil.kSecondary01),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                   label: Strings.myRides,
                 ),
                 BottomNavigationBarItem(
-                  activeIcon: SvgPicture.asset(
-                    ImageConstant.svgNavMessagesFilled,
-                    colorFilter: ColorFilter.mode(
-                        controller.isPinkModeOn.value
-                            ? ColorUtil.kPrimary3PinkMode
-                            : ColorUtil.kSecondary01,
-                        BlendMode.srcIn),
+                  activeIcon: Stack(
+                    alignment: Alignment.topRight,
+                    children: [
+                      SvgPicture.asset(
+                        ImageConstant.svgNavMessagesFilled,
+                        colorFilter: ColorFilter.mode(
+                            storageService.isPinkMode
+                                ? ColorUtil.kPrimary3PinkMode
+                                : ColorUtil.kSecondary01,
+                            BlendMode.srcIn),
+                      ),
+                      Visibility(
+                        visible: controller.totUnreadMsgs.value > 0,
+                        child: Container(
+                          height: 14.kh,
+                          width: 14.kw,
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.symmetric(
+                              vertical: 1.kh, horizontal: 4.kw),
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: storageService.isPinkMode
+                                  ? ColorUtil.kSecondaryPinkMode
+                                  : ColorUtil.kPrimary05),
+                          child: Text(
+                            "${controller.totUnreadMsgs.value}",
+                            style: TextStyleUtil.k8Semibold(
+                                color: storageService.isPinkMode
+                                    ? ColorUtil.kPrimary3PinkMode
+                                    : ColorUtil.kSecondary01),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  icon: SvgPicture.asset(ImageConstant.svgNavMessages),
+                  icon: Stack(
+                    alignment: Alignment.topRight,
+                    children: [
+                      SvgPicture.asset(ImageConstant.svgNavMessages),
+                      Visibility(
+                        visible: controller.totUnreadMsgs.value > 0,
+                        child: Container(
+                          height: 14.kh,
+                          width: 14.kw,
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.symmetric(
+                              vertical: 1.kh, horizontal: 4.kw),
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: storageService.isPinkMode
+                                  ? ColorUtil.kSecondaryPinkMode
+                                  : ColorUtil.kPrimary05),
+                          child: Text(
+                            "${controller.totUnreadMsgs.value}",
+                            style: TextStyleUtil.k8Semibold(
+                                color: storageService.isPinkMode
+                                    ? ColorUtil.kPrimary3PinkMode
+                                    : ColorUtil.kSecondary01),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                   label: Strings.messages,
                 ),
                 BottomNavigationBarItem(
                   activeIcon: SvgPicture.asset(
                     ImageConstant.svgNavProfileFilled,
                     colorFilter: ColorFilter.mode(
-                        controller.isPinkModeOn.value
+                        storageService.isPinkMode
                             ? ColorUtil.kPrimary3PinkMode
                             : ColorUtil.kSecondary01,
                         BlendMode.srcIn),

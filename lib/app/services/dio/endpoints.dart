@@ -84,6 +84,7 @@ class Endpoints {
   static const String getRideDetail = "driver/ride/";
   static const String verifyPromo = "admin/promoCode/search?search=";
   static const String unreadCount = "driver/rides/unreadCount";
+  static const String allArchivedChats = "chat/archivedChats";
 
   //patch url
   static const String emergencyContactsUpdate = "user/emergencyContacts";
@@ -102,8 +103,10 @@ class Endpoints {
   static const String getArrivalTime = "directions/json?origin=";
   static const String enableOrDisableRecurring = "driver/recurringRides?driverRideId=";
   static const String addPromoCode = "rider/ride/promoCode";
+  static const String archiveMsg = "chat/archive/";
+  static const String unarchiveMsg = "chat/unarchive/";
 
   //delete url
-  static const String deleteChat = "/chat/";
+  static const String deleteChat = "chat/deleteChat";
   static const String deleteAccount = "/user";
 }

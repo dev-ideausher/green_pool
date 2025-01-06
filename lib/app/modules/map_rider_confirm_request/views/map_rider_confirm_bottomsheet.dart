@@ -78,6 +78,7 @@ class MapRiderConfirmBottomsheet extends StatelessWidget {
                           onTap: () => Get.find<RiderMyRideRequestController>()
                               .openMessageFromConfirm(
                                   data: element.driverRideDetails,
+                                  ridePostId: element.Id ?? "",
                                   driverRideId: element.driverRideId ?? "",
                                   riderRideId: element.riderRideId ?? "",
                                   seats:

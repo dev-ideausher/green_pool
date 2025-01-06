@@ -2,7 +2,9 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:green_pool/app/data/rider_confirm_request_model.dart';
+import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
+import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/snackbar.dart';
 import '../../../data/chat_arg.dart';
 import '../../../data/confirm_ride_by_rider_model.dart';
@@ -76,59 +78,6 @@ class RiderMyRideRequestController extends GetxController {
     }
   }
 
-  /*sendRideRequestToDriverAPI(
-      RiderSendRequestModelData riderSendRequestModelData) async {
-    final String driverRideId = "${riderSendRequestModelData.Id}";
-    final String driverId = "${riderSendRequestModelData.driverId}";
-    final String driverName =
-        "${riderSendRequestModelData.driverDetails?[0]?.fullName}";
-    final dynamic driverNotificationPref = riderSendRequestModelData
-        .driverDetails?[0]?.notificationPreferences!
-        .toJson();
-
-    final Map<String, dynamic> rideData = {
-      "riderRideId": rideIdFromMyRides,
-      "driverRideId": driverRideId,
-      "driverId": driverId,
-      "driverName": driverName,
-      "driverNotificationPreferences": driverNotificationPref,
-      "price": riderSendRequestModelData.price ?? 0
-    };
-    try {
-      final response = await APIManager.postSendRequestToDriver(body: rideData);
-      if (response.data['status']) {
-        allRiderSendRequestAPI();
-        showBottom();
-      } else {
-        showMySnackbar(msg: response.data['message']);
-      }
-    } catch (e) {
-      throw Exception(e);
-    }
-  }*/
-
-  /*acceptDriversRequestAPI(int index, {bool showAcceptBottom = false}) async {
-    try {
-      final response = await APIManager.acceptDriversRequest(body: {
-        "ridePostId": riderConfirmRequestModel.value.data?[index]?.Id,
-        "price":
-            (riderConfirmRequestModel.value.data?[index]?.price ?? 0).toString()
-      });
-      if (response.data['status']) {
-        allRiderConfirmRequestAPI();
-        if (showAcceptBottom) {
-          Get.bottomSheet(RequestAcceptedBottom());
-        } else {
-          showMySnackbar(msg: "Request accepted!");
-          Get.until((route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
-        }
-      } else {
-        showMySnackbar(msg: response.data['message']);
-      }
-    } catch (e) {
-      throw Exception(e);
-    }
-  }*/
 
   rejectDriversRequestAPI(int index) async {
     try {
@@ -181,7 +130,13 @@ class RiderMyRideRequestController extends GetxController {
               deleteUpdateTime: res.data["data"]["deleteUpdateTime"] ?? "",
               id: data.driverDetails?[0]?.Id,
               name: data.driverDetails?[0]?.fullName,
-              image: data.driverDetails?[0]?.profilePic?.url));
+              image: data.driverDetails?[0]?.profilePic?.url,
+              driverRideId: data.Id,
+              riderRideId: rideIdFromMyRides,
+              origin: data.origin?.name?.split(',').first ?? "City",
+              destination: data.destination?.name?.split(',').first ?? "City",
+              date: GpUtil.formatDate(
+                  DateTime.parse(data.date ?? Strings.defaultDate))));
     } catch (e) {
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
@@ -189,7 +144,13 @@ class RiderMyRideRequestController extends GetxController {
               deleteUpdateTime: "",
               id: data.driverDetails?[0]?.Id,
               name: data.driverDetails?[0]?.fullName,
-              image: data.driverDetails?[0]?.profilePic?.url));
+              image: data.driverDetails?[0]?.profilePic?.url,
+              driverRideId: data.Id,
+              riderRideId: rideIdFromMyRides,
+              origin: data.origin?.name?.split(',').first ?? "City",
+              destination: data.destination?.name?.split(',').first ?? "City",
+              date: GpUtil.formatDate(
+                  DateTime.parse(data.date ?? Strings.defaultDate))));
     }
   }
 
@@ -197,7 +158,8 @@ class RiderMyRideRequestController extends GetxController {
       {required RiderConfirmRequestModelDataDriverRideDetails? data,
       required String driverRideId,
       required String riderRideId,
-      required int seats}) async {
+      required String ridePostId,
+      required int seats      }) async {
     try {
       final res = await APIManager.postChatRoomId(
           receiverId: data?.driverDetails?.firstOrNull?.Id ?? "",
@@ -207,12 +169,21 @@ class RiderMyRideRequestController extends GetxController {
             "seatsRequired": seats
           });
       Get.toNamed(Routes.CHAT_PAGE,
-          arguments: ChatArg(
+          arguments: {
+            "chatArg": ChatArg(
               chatRoomId: res.data["data"]["chatRoomId"] ?? "",
               deleteUpdateTime: res.data["data"]["deleteUpdateTime"] ?? "",
               id: data?.driverDetails?.firstOrNull?.Id,
               name: data?.driverDetails?.firstOrNull?.fullName ?? "",
-              image: data?.driverDetails?.firstOrNull?.profilePic?.url));
+              image: data?.driverDetails?.firstOrNull?.profilePic?.url,
+              driverRideId: driverRideId,
+              riderRideId: riderRideId,
+              origin: data?.origin?.name?.split(',').first ?? "City",
+              destination: data?.destination?.name?.split(',').first ?? "City",
+              date: GpUtil.formatDate(
+                  DateTime.parse(data?.date ?? Strings.defaultDate))),
+                  "ridePostId": ridePostId
+          });
     } catch (e) {
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
@@ -220,7 +191,13 @@ class RiderMyRideRequestController extends GetxController {
               deleteUpdateTime: "",
               id: data?.driverDetails?.firstOrNull?.Id,
               name: data?.driverDetails?.firstOrNull?.fullName ?? "",
-              image: data?.driverDetails?.firstOrNull?.profilePic?.url));
+              image: data?.driverDetails?.firstOrNull?.profilePic?.url,
+              driverRideId: driverRideId,
+              riderRideId: riderRideId,
+              origin: data?.origin?.name?.split(',').first ?? "City",
+              destination: data?.destination?.name?.split(',').first ?? "City",
+              date: GpUtil.formatDate(
+                  DateTime.parse(data?.date ?? Strings.defaultDate))));
     }
   }
 
@@ -278,3 +255,57 @@ class RiderMyRideRequestController extends GetxController {
         arguments: {"data": data, "riderRideData": riderRideDetails});
   }
 }
+
+/*sendRideRequestToDriverAPI(
+      RiderSendRequestModelData riderSendRequestModelData) async {
+    final String driverRideId = "${riderSendRequestModelData.Id}";
+    final String driverId = "${riderSendRequestModelData.driverId}";
+    final String driverName =
+        "${riderSendRequestModelData.driverDetails?[0]?.fullName}";
+    final dynamic driverNotificationPref = riderSendRequestModelData
+        .driverDetails?[0]?.notificationPreferences!
+        .toJson();
+
+    final Map<String, dynamic> rideData = {
+      "riderRideId": rideIdFromMyRides,
+      "driverRideId": driverRideId,
+      "driverId": driverId,
+      "driverName": driverName,
+      "driverNotificationPreferences": driverNotificationPref,
+      "price": riderSendRequestModelData.price ?? 0
+    };
+    try {
+      final response = await APIManager.postSendRequestToDriver(body: rideData);
+      if (response.data['status']) {
+        allRiderSendRequestAPI();
+        showBottom();
+      } else {
+        showMySnackbar(msg: response.data['message']);
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+  }*/
+
+  /*acceptDriversRequestAPI(int index, {bool showAcceptBottom = false}) async {
+    try {
+      final response = await APIManager.acceptDriversRequest(body: {
+        "ridePostId": riderConfirmRequestModel.value.data?[index]?.Id,
+        "price":
+            (riderConfirmRequestModel.value.data?[index]?.price ?? 0).toString()
+      });
+      if (response.data['status']) {
+        allRiderConfirmRequestAPI();
+        if (showAcceptBottom) {
+          Get.bottomSheet(RequestAcceptedBottom());
+        } else {
+          showMySnackbar(msg: "Request accepted!");
+          Get.until((route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);
+        }
+      } else {
+        showMySnackbar(msg: response.data['message']);
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+  }*/

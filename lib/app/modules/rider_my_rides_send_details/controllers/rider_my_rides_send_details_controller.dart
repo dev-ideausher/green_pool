@@ -1,9 +1,11 @@
 import 'package:get/get.dart';
+import 'package:green_pool/app/res/strings.dart';
 
 import '../../../data/chat_arg.dart';
 import '../../../data/rider_send_request_model.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/dio/api_service.dart';
+import '../../../services/gp_util.dart';
 
 class RiderMyRidesSendDetailsController extends GetxController {
   var riderSendRequestModelData = RiderSendRequestModelData();
@@ -31,7 +33,12 @@ class RiderMyRidesSendDetailsController extends GetxController {
               deleteUpdateTime: res.data["data"]["deleteUpdateTime"] ?? "",
               id: data.driverDetails?[0]?.Id,
               name: data.driverDetails?[0]?.fullName,
-              image: data.driverDetails?[0]?.profilePic?.url));
+              image: data.driverDetails?[0]?.profilePic?.url,
+              driverRideId: data.Id,
+              riderRideId: riderRideDetails.Id,
+              origin: data.origin?.name?.split(',').first ?? "City",
+              destination: data.destination?.name?.split(',').first ?? "City",
+              date: GpUtil.formatDate(DateTime.parse(data.date ?? Strings.defaultDate))));
     } catch (e) {
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
@@ -39,7 +46,12 @@ class RiderMyRidesSendDetailsController extends GetxController {
               deleteUpdateTime: "",
               id: data.driverDetails?[0]?.Id,
               name: data.driverDetails?[0]?.fullName,
-              image: data.driverDetails?[0]?.profilePic?.url));
+              image: data.driverDetails?[0]?.profilePic?.url,
+              driverRideId: data.Id,
+              riderRideId: riderRideDetails.Id,
+              origin: data.origin?.name?.split(',').first ?? "City",
+              destination: data.destination?.name?.split(',').first ?? "City",
+              date: GpUtil.formatDate(DateTime.parse(data.date ?? Strings.defaultDate))));
     }
   }
 

@@ -9,6 +9,7 @@ import '../../../routes/app_pages.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
 import '../../../services/text_style_util.dart';
+import '../../home/controllers/home_controller.dart';
 
 class RequestSentBottom extends StatelessWidget {
   const RequestSentBottom({super.key});
@@ -49,6 +50,12 @@ class RequestSentBottom extends StatelessWidget {
             GreenPoolButton(
                 label: Strings.cancelRequest,
                 isBorder: true,
+                borderColor: Get.find<HomeController>().isPinkModeOn.value
+                    ? ColorUtil.kPrimary3PinkMode
+                    : ColorUtil.kSecondary01,
+                labelColor: Get.find<HomeController>().isPinkModeOn.value
+                    ? ColorUtil.kPrimary3PinkMode
+                    : ColorUtil.kSecondary01,
                 onPressed: () {
                   Get.until(
                       (route) => Get.currentRoute == Routes.BOTTOM_NAVIGATION);

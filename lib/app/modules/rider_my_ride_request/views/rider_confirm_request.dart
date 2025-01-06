@@ -189,6 +189,11 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                                   .openMessageFromConfirm(
                                                       data: data
                                                           ?.driverRideDetails,
+                                                      ridePostId:
+                                                          controller
+                                                              .riderConfirmRequestModel
+                                                              .value
+                                                              .data![index]!.Id ?? "",
                                                       driverRideId:
                                                           data?.driverRideId ??
                                                               "",

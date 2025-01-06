@@ -32,6 +32,8 @@ class HomeController extends GetxController {
   bool canPop = false;
   final RxBool newMsgReceived = false.obs;
   final LocationService locationService = LocationService();
+  RxInt reqsCount = 0.obs;
+  RxInt totUnreadMsgs = 0.obs;
 
   void changeTabIndex(int index) {
     pageController.animateToPage(
@@ -49,6 +51,8 @@ class HomeController extends GetxController {
       await userInfoAPI();
       latitude.value = await locationService.getLatitude();
       longitude.value = await locationService.getLongitude();
+      getReqsCount();
+      getUnreadCount();
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -223,6 +227,35 @@ class HomeController extends GetxController {
         Get.toNamed(Routes.LOGIN,
             arguments: {'isDriver': false, 'fromNavBar': true});
       }
+    }
+  }
+
+  Future<void> getReqsCount() async {
+    try {
+      final res = await APIManager.getUnreadCount();
+      debugPrint(res.data['data'].toString());
+      reqsCount.value = res.data['data']['finalCount'];
+    } catch (e) {
+      debugPrint(e.toString());
+      throw Exception(e);
+    }
+  }
+
+  void getUnreadCount() async {
+    var chatList = [].obs;
+    try {
+      final resp = await APIManager.getChatList();
+      chatList.value = resp.data['chatRoomIds'];
+
+      totUnreadMsgs.value = chatList.fold<int>(
+        0,
+        (sum, item) => sum + (item['unReadCount'] as int? ?? 0),
+      );
+
+      // Print total unread count
+      print("Total Unread Count: ${totUnreadMsgs.value}");
+    } catch (e) {
+      debugPrint("Error fetching chat list: ${e.toString()}");
     }
   }
 }

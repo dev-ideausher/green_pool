@@ -229,6 +229,8 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                                         .k14Regular(
                                                             color: ColorUtil
                                                                 .kBlack03),
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
                                                   ),
                                                 ],
                                               ),
@@ -288,6 +290,16 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                       fontSize: 14.kh,
                                       height: 38.kh,
                                       width: 134.kw,
+                                      borderColor: Get.find<HomeController>()
+                                              .isPinkModeOn
+                                              .value
+                                          ? ColorUtil.kPrimary3PinkMode
+                                          : ColorUtil.kSecondary01,
+                                      labelColor: Get.find<HomeController>()
+                                              .isPinkModeOn
+                                              .value
+                                          ? ColorUtil.kPrimary3PinkMode
+                                          : ColorUtil.kSecondary01,
                                       padding: EdgeInsets.all(0.kh),
                                     ),
                                     GreenPoolButton(

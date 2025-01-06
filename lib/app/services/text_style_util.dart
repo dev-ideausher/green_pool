@@ -354,6 +354,21 @@ class TextStyleUtil {
     );
   }
 
+  static k8Semibold({
+    Color color = ColorUtil.kBlack01,
+    FontWeight fontWeight = FontWeight.w500,
+    TextDecoration textDecoration = TextDecoration.none,
+  }) {
+    return GoogleFonts.inter(
+      fontWeight: fontWeight,
+      color: color,
+      fontStyle: FontStyle.normal,
+      fontSize: 8.kh,
+      decoration: textDecoration,
+      letterSpacing: 0.4000000059604645,
+    );
+  }
+
   static k18Heading700({
     Color color = ColorUtil.kBlack01,
     FontWeight fontWeight = FontWeight.w700,

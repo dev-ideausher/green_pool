@@ -444,7 +444,17 @@ class StartRideController extends GetxController {
                       ?.riderDetails
                       ?.profilePic
                       ?.url ??
-                  ""));
+                  "",
+                  driverRideId: myRidesModel.value.driverBookingDetails?.Id,
+                  riderRideId: myRidesModel.value.driverBookingDetails
+                ?.riderBookingDetails?[selectedRider.value].Id,
+              origin: myRidesModel.value.driverBookingDetails?.origin?.name?.split(',').first ??
+                  "City",
+              destination:
+                  myRidesModel.value.driverBookingDetails?.destination?.name?.split(',').first ??
+                      "City",
+              date: GpUtil.formatDate(DateTime.parse(myRidesModel.value.driverBookingDetails?.date ??
+                  Strings.defaultDate))));
     } catch (e) {
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
@@ -466,7 +476,17 @@ class StartRideController extends GetxController {
                       ?.riderDetails
                       ?.profilePic
                       ?.url ??
-                  ""));
+                  "",
+                  driverRideId: myRidesModel.value.driverBookingDetails?.Id,
+                  riderRideId: myRidesModel.value.driverBookingDetails
+                ?.riderBookingDetails?[selectedRider.value].Id,
+              origin: myRidesModel.value.driverBookingDetails?.origin?.name?.split(',').first ??
+                  "City",
+              destination:
+                  myRidesModel.value.driverBookingDetails?.destination?.name?.split(',').first ??
+                      "City",
+              date: GpUtil.formatDate(DateTime.parse(myRidesModel.value.driverBookingDetails?.date ??
+                  Strings.defaultDate))));
     }
   }
 

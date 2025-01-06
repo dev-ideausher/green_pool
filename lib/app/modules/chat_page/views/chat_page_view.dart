@@ -22,31 +22,49 @@ class ChatPageView extends GetView<ChatPageController> {
 
   @override
   Widget build(BuildContext context) {
+    final isPinkModeOn = Get.find<HomeController>().isPinkModeOn.value;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Get.find<HomeController>().isPinkModeOn.value
-            ? ColorUtil.kPrimaryPinkMode
-            : ColorUtil.kPrimary01,
-        surfaceTintColor: Get.find<HomeController>().isPinkModeOn.value
-            ? ColorUtil.kPrimaryPinkMode
-            : ColorUtil.kPrimary01,
+        backgroundColor:
+            isPinkModeOn ? ColorUtil.kPrimaryPinkMode : ColorUtil.kPrimary01,
+        surfaceTintColor:
+            isPinkModeOn ? ColorUtil.kPrimaryPinkMode : ColorUtil.kPrimary01,
         elevation: 1,
         toolbarHeight: 64.kh,
         title: Obx(
-          () => Row(children: [
-            ClipRRect(
+          () => Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ClipRRect(
                 borderRadius: BorderRadius.circular(8.kh),
                 child: CommonImageView(
                   url: controller.chatArg.value.image,
                   height: 32.kh,
                   width: 32.kh,
-                )),
-            12.kwidthBox,
-            Text(
-              controller.chatArg.value.name ?? "",
-              style: TextStyleUtil.k14Bold(),
-            )
-          ]),
+                ),
+              ),
+              12.kwidthBox,
+              Flexible(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      controller.chatArg.value.name ?? "",
+                      style: TextStyleUtil.k14Bold(),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+                    Text(
+                      "${controller.chatArg.value.origin} to ${controller.chatArg.value.destination}, ${controller.chatArg.value.date}",
+                      style: TextStyleUtil.k12Regular(),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
         leading: GestureDetector(
           onTap: () => Get.back(),
@@ -62,25 +80,6 @@ class ChatPageView extends GetView<ChatPageController> {
               color: ColorUtil.kBlack01,
             ).paddingOnly(right: 14.kh),
           ),
-          /*PopupMenuButton(
-            color: ColorUtil.kWhiteColor,
-            itemBuilder: (context) {
-              return [
-                PopupMenuItem(
-                  onTap: () => controller.call(),
-                  value: 1,
-                  child: Text(Strings.call, style: TextStyleUtil.k12Medium()),
-                ),
-                PopupMenuItem(
-                  onTap: () => controller.deleteChat(),
-                  value: 1,
-                  child: Text(Strings.deleteChat,
-                      style: TextStyleUtil.k12Medium()),
-                ),
-              ];
-            },
-            child: Icon(Icons.more_vert),
-          ).paddingOnly(right: 14.kw),*/
         ],
       ),
       body: Obx(
@@ -90,7 +89,8 @@ class ChatPageView extends GetView<ChatPageController> {
                 children: [
                   Visibility(
                     visible: controller.isPayBtnVisible.value,
-                    child: PayNowBtn(controller: controller),
+                    child: PayNowBtn(
+                        controller: controller, isPinkModeOn: isPinkModeOn),
                   ),
                   Expanded(
                     child: ListView.separated(
@@ -101,8 +101,6 @@ class ChatPageView extends GetView<ChatPageController> {
                         final message = controller.messages[index];
                         final isSender = message.senderId ==
                             Get.find<GetStorageService>().getUserAppId;
-                        final isPinkModeOn =
-                            Get.find<HomeController>().isPinkModeOn.value;
 
                         return Container(
                           padding: EdgeInsets.only(
@@ -295,7 +293,8 @@ class ChatPageView extends GetView<ChatPageController> {
                   ),
                   Visibility(
                     visible: controller.isWarningVisible.value,
-                    child: WarningMsg(controller: controller),
+                    child: WarningMsg(
+                        controller: controller, isPinkModeOn: isPinkModeOn),
                   ),
                   GreenPoolTextField(
                     controller: controller.eMsg,
@@ -307,7 +306,7 @@ class ChatPageView extends GetView<ChatPageController> {
                         splashColor: Colors.transparent,
                         highlightColor: Colors.transparent,
                         child: SvgPicture.asset(ImageConstant.svgIconSend)),
-                  ).paddingOnly(bottom: 40.kh, top: 5.kh)
+                  ).paddingOnly(bottom: 20.kh, top: 5.kh)
                 ],
               ).paddingSymmetric(horizontal: 16.kw),
       ),
@@ -319,9 +318,11 @@ class PayNowBtn extends StatelessWidget {
   const PayNowBtn({
     super.key,
     required this.controller,
+    required this.isPinkModeOn,
   });
 
   final ChatPageController controller;
+  final bool isPinkModeOn;
 
   @override
   Widget build(BuildContext context) {
@@ -329,17 +330,14 @@ class PayNowBtn extends StatelessWidget {
       splashColor: Colors.transparent,
       highlightColor: Colors.transparent,
       onTap: () {
-        Get.toNamed(Routes.PAYNOW, arguments: {
-          //rider ride id for payment
-          "chatArg": controller.chatArg.value,
-          //rider has created a ride?
-          "rideCreated": controller.rideCreated,
-        });
+        controller.moveToPaymentFromConfirmSection();
       },
       child: Container(
         padding: EdgeInsets.all(16.kh),
         decoration: BoxDecoration(
-            color: ColorUtil.kSecondary07,
+            color: isPinkModeOn
+                ? ColorUtil.kPrimaryPinkMode.withOpacity(0.8)
+                : ColorUtil.kSecondary07,
             borderRadius: BorderRadius.circular(8.kh)),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -362,9 +360,11 @@ class WarningMsg extends StatelessWidget {
   const WarningMsg({
     super.key,
     required this.controller,
+    required this.isPinkModeOn,
   });
 
   final ChatPageController controller;
+  final bool isPinkModeOn;
 
   @override
   Widget build(BuildContext context) {
@@ -374,7 +374,9 @@ class WarningMsg extends StatelessWidget {
         Container(
             padding: EdgeInsets.all(16.kh),
             decoration: BoxDecoration(
-                color: ColorUtil.kSecondary07,
+                color: isPinkModeOn
+                    ? ColorUtil.kPrimary5PinkMode
+                    : ColorUtil.kSecondary07,
                 borderRadius: BorderRadius.circular(8.kh)),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -397,8 +399,12 @@ class WarningMsg extends StatelessWidget {
             borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(8.kh),
                 bottomRight: Radius.circular(8.kh)),
-            color: ColorUtil.kSecondary01,
-            backgroundColor: ColorUtil.kSecondary07,
+            color: isPinkModeOn
+                ? ColorUtil.kPrimary3PinkMode
+                : ColorUtil.kSecondary01,
+            backgroundColor: isPinkModeOn
+                ? ColorUtil.kPrimary5PinkMode
+                : ColorUtil.kSecondary07,
           );
         }),
       ],

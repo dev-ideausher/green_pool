@@ -112,7 +112,11 @@ class PaymentView extends GetView<PaymentController> {
                             ? Icon(
                                 Icons.check,
                                 size: 24.kh,
-                                color: ColorUtil.kPrimary01,
+                                color: Get.find<HomeController>()
+                                        .isPinkModeOn
+                                        .value
+                                    ? ColorUtil.kPrimary3PinkMode
+                                    : ColorUtil.kPrimary01,
                               )
                             : controller.checkingCode.value
                                 ? SizedBox(

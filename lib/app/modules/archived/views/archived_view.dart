@@ -3,9 +3,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 
 import 'package:get/get.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
-import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/colors.dart';
-import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
@@ -13,39 +11,16 @@ import 'package:green_pool/app/services/text_style_util.dart';
 import '../../../components/common_image_view.dart';
 import '../../../components/greenpool_appbar.dart';
 import '../../../res/strings.dart';
-import '../controllers/messages_controller.dart';
+import '../controllers/archived_controller.dart';
 
-class MessagesView extends GetView<MessagesController> {
-  const MessagesView({super.key});
+class ArchivedView extends GetView<ArchivedController> {
+  const ArchivedView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    Get.lazyPut(() => MessagesController());
-    controller.getMessageListAPI();
     return Scaffold(
         appBar: GreenPoolAppBar(
-          title: Text(Strings.messages),
-          leading: const SizedBox(),
-          actions: [
-            GreenPoolButton(
-              onPressed: () {
-                controller.moveToUnarchive();
-              },
-              isBorder: true,
-              label: "Archived",
-              height: 24.kh,
-              width: 76.kw,
-              fontSize: 12.kh,
-              padding: const EdgeInsets.all(0),
-              borderColor: Get.find<HomeController>().isPinkModeOn.value
-                  ? ColorUtil.kPrimary3PinkMode
-                  : ColorUtil.kSecondary01,
-              labelColor: Get.find<HomeController>().isPinkModeOn.value
-                  ? ColorUtil.kPrimary3PinkMode
-                  : ColorUtil.kSecondary01,
-            ).paddingOnly(right: 16.kw)
-          ],
-        ),
+            title: Text(Strings.archivedMsgs), leading: const SizedBox()),
         body: Obx(
           () => RefreshIndicator(
             backgroundColor: ColorUtil.kWhiteColor,
@@ -54,15 +29,15 @@ class MessagesView extends GetView<MessagesController> {
                 : ColorUtil.kPrimary01,
             key: controller.refreshIndicatorKey,
             onRefresh: () async {
-              await controller.refreshMessageListAPI();
+              await controller.getArchivedListAPI();
             },
             child: controller.isLoading.value
                 ? const LoadingWidget()
                     .paddingOnly(left: 16.kw, right: 16.kw, top: 8.kh)
-                : controller.messagesModel.value.chatRoomIds?.isEmpty ?? true
+                : controller.archivedModel.value.chatRoomIds?.isEmpty ?? true
                     ? Center(
                         child: Text(
-                          //implement a text button to see archived msgs
+                          //implement a text button to go back and see normal msgs
                           Strings.yourFutureMsgsWillApearHere,
                           style: TextStyleUtil.k24Heading600(),
                           textAlign: TextAlign.center,
@@ -70,16 +45,16 @@ class MessagesView extends GetView<MessagesController> {
                       ).paddingSymmetric(horizontal: 16.kw)
                     : ListView.builder(
                         itemCount:
-                            controller.messagesModel.value.chatRoomIds!.length,
+                            controller.archivedModel.value.chatRoomIds!.length,
                         itemBuilder: (context, index) {
                           final message = controller
-                              .messagesModel.value.chatRoomIds?[index];
+                              .archivedModel.value.chatRoomIds?[index];
                           final isPinkModeOn =
                               Get.find<HomeController>().isPinkModeOn.value;
-                          final messageRead = controller.messagesModel.value
+                          final messageRead = controller.archivedModel.value
                                       .chatRoomIds?[index]?.unReadCount ==
                                   0 ||
-                              controller.messagesModel.value.chatRoomIds?[index]
+                              controller.archivedModel.value.chatRoomIds?[index]
                                       ?.unReadCount ==
                                   null;
                           return Slidable(
@@ -88,11 +63,11 @@ class MessagesView extends GetView<MessagesController> {
                                 children: [
                                   SlidableAction(
                                     onPressed: (context) {
-                                      controller.archiveMsgAPI(
+                                      controller.unarchiveChat(
                                           message?.chatRoomId ?? "");
                                     },
-                                    icon: Icons.archive,
-                                    label: Strings.archive,
+                                    icon: Icons.unarchive,
+                                    label: Strings.unArchive,
                                     backgroundColor: isPinkModeOn
                                         ? ColorUtil.kPrimary3PinkMode
                                         : ColorUtil.kSecondary01,
@@ -120,7 +95,14 @@ class MessagesView extends GetView<MessagesController> {
                                           : ColorUtil.kSecondary07),
                               title:
                                   "${message?.reciver?.fullName ?? "User"} • ${message?.paymentStatus ?? "Inquiry"}",
-                              path: message?.reciver?.profilePic?.url ?? "",
+                              path: controller
+                                      .archivedModel
+                                      .value
+                                      .chatRoomIds?[index]
+                                      ?.reciver
+                                      ?.profilePic
+                                      ?.url ??
+                                  "",
                               subtitle:
                                   "${message?.driverRideDetails?.origin?.split(",").first ?? "City"} to ${message?.driverRideDetails?.destination?.split(",").first ?? "City"}, ${GpUtil.formatDate(DateTime.parse(message?.driverRideDetails?.date ?? Strings.defaultDate))}",
                               lastMsg: message?.lastMessage ?? "...",
@@ -136,13 +118,13 @@ class MessagesView extends GetView<MessagesController> {
                                   return [
                                     PopupMenuItem(
                                       onTap: () {
-                                        controller.archiveMsgAPI(
+                                        controller.unarchiveChat(
                                             message?.chatRoomId ?? "");
                                       },
                                       value: 0,
                                       height: 45.kh,
                                       textStyle: TextStyleUtil.k12Medium(),
-                                      child: Text(Strings.moveToArchive,
+                                      child: Text(Strings.unArchive,
                                           style: TextStyleUtil.k14Regular()),
                                     ),
                                   ];

@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:green_pool/app/modules/archived/bindings/archived_binding.dart';
+import 'package:green_pool/app/modules/archived/views/archived_view.dart';
 
 import '../modules/about/bindings/about_binding.dart';
 import '../modules/about/views/about_view.dart';
@@ -527,6 +529,11 @@ class AppPages {
       name: _Paths.MY_RIDES_CONFIRM_DETAILS,
       page: () => const MyRidesConfirmDetailsView(),
       binding: MyRidesConfirmDetailsBinding(),
+    ),
+    GetPage(
+      name: _Paths.ARCHIVED,
+      page: () => const ArchivedView(),
+      binding: ArchivedBinding(),
     ),
   ];
 }

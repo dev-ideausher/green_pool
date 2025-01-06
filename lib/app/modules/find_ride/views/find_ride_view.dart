@@ -12,12 +12,10 @@ import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../components/greenpool_textfield.dart';
 
-import '../../../routes/app_pages.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
 import '../../../services/text_style_util.dart';
 import '../../home/controllers/home_controller.dart';
-import '../../origin/controllers/origin_controller.dart';
 import '../controllers/find_ride_controller.dart';
 
 class FindRideView extends GetView<FindRideController> {
@@ -250,9 +248,13 @@ class FindRideView extends GetView<FindRideController> {
                 onPressed: () {
                   controller.swapTextFields();
                 },
-                highlightColor: ColorUtil.kPrimary03,
-                style: const ButtonStyle(
-                  backgroundColor: WidgetStatePropertyAll(ColorUtil.kPrimary01),
+                highlightColor: isPinkModeOn
+                    ? ColorUtil.kPrimaryPinkMode
+                    : ColorUtil.kPrimary03,
+                style: ButtonStyle(
+                  backgroundColor: WidgetStatePropertyAll(isPinkModeOn
+                      ? ColorUtil.kPrimary2PinkMode.withOpacity(0.8)
+                      : ColorUtil.kPrimary01),
                 ),
                 padding: EdgeInsets.all(4.kh),
                 icon: Icon(

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:green_pool/app/res/strings.dart';
+import 'package:green_pool/app/services/gp_util.dart';
 
 import '../../../data/chat_arg.dart';
 import '../../../data/driver_cofirm_request_model.dart';
@@ -66,14 +68,25 @@ class MyRidesConfirmDetailsController extends GetxController {
     try {
       isBtnLoading.value = true;
       final res = await APIManager.postChatRoomId(
-          receiverId: data.riderDetails?.first?.Id ?? "");
+          receiverId: data.riderDetails?.first?.Id ?? "",
+          body: {
+            "driverRideId": riderRideDetails.driverRideId,
+            "riderRideId": riderRideDetails.riderRideId,
+            "seatsRequired": ""
+          });
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
               chatRoomId: res.data["data"]["chatRoomId"] ?? "",
               deleteUpdateTime: res.data["data"]["deleteUpdateTime"] ?? "",
               id: data.riderDetails?.first?.Id,
               name: data.riderDetails?.first?.fullName ?? "",
-              image: data.riderDetails?.first?.profilePic?.url));
+              image: data.riderDetails?.first?.profilePic?.url,
+              driverRideId: riderRideDetails.driverRideId,
+              riderRideId: riderRideDetails.riderRideId,
+              origin: data.origin?.name?.split(',').first ?? "City",
+              destination: data.destination?.name?.split(',').first ?? "City",
+              date: GpUtil.formatDate(
+                  DateTime.parse(data.date ?? Strings.defaultDate))));
       isBtnLoading.value = false;
     } catch (e) {
       Get.toNamed(Routes.CHAT_PAGE,
@@ -82,7 +95,13 @@ class MyRidesConfirmDetailsController extends GetxController {
               deleteUpdateTime: "",
               id: data.riderDetails?.first?.Id,
               name: data.riderDetails?.first?.fullName ?? "",
-              image: data.riderDetails?.first?.profilePic?.url));
+              image: data.riderDetails?.first?.profilePic?.url,
+              driverRideId: riderRideDetails.driverRideId,
+              riderRideId: riderRideDetails.riderRideId,
+              origin: data.origin?.name?.split(',').first ?? "City",
+              destination: data.destination?.name?.split(',').first ?? "City",
+              date: GpUtil.formatDate(
+                  DateTime.parse(data.date ?? Strings.defaultDate))));
       isBtnLoading.value = false;
     }
   }

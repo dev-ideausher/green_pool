@@ -23,6 +23,7 @@ class PayNowView extends GetView<PayNowController> {
   @override
   Widget build(BuildContext context) {
     controller.getWallet();
+    final isPinkModeOn = Get.find<HomeController>().isPinkModeOn.value;
     return Scaffold(
       appBar: GreenPoolAppBar(
         title: Text(Strings.payment),
@@ -54,7 +55,7 @@ class PayNowView extends GetView<PayNowController> {
                       ),
                       leading: Icon(
                         Icons.person,
-                        color: Get.find<HomeController>().isPinkModeOn.value
+                        color: isPinkModeOn
                             ? ColorUtil.kPrimary2PinkMode
                             : ColorUtil.kPrimary01,
                         size: 24.kh,
@@ -95,7 +96,9 @@ class PayNowView extends GetView<PayNowController> {
                             ? Icon(
                                 Icons.check,
                                 size: 24.kh,
-                                color: ColorUtil.kPrimary01,
+                                color: isPinkModeOn
+                                    ? ColorUtil.kPrimary3PinkMode
+                                    : ColorUtil.kPrimary01,
                               )
                             : controller.checkingCode.value
                                 ? SizedBox(
@@ -174,7 +177,7 @@ class PayNowView extends GetView<PayNowController> {
                             color: ColorUtil.kBlack07),
                         child: Icon(
                           Icons.account_balance_wallet,
-                          color: Get.find<HomeController>().isPinkModeOn.value
+                          color: isPinkModeOn
                               ? ColorUtil.kPrimary2PinkMode
                               : ColorUtil.kPrimary01,
                           size: 24.kh,
@@ -271,10 +274,9 @@ class PayNowView extends GetView<PayNowController> {
                           Obx(
                             () => Checkbox(
                               value: controller.isChecked.value,
-                              activeColor:
-                                  Get.find<HomeController>().isPinkModeOn.value
-                                      ? ColorUtil.kPrimary2PinkMode
-                                      : ColorUtil.kSecondary01,
+                              activeColor: isPinkModeOn
+                                  ? ColorUtil.kPrimary2PinkMode
+                                  : ColorUtil.kSecondary01,
                               onChanged: (value) {
                                 controller.toggleCheckbox();
                               },
@@ -291,9 +293,7 @@ class PayNowView extends GetView<PayNowController> {
                                   TextSpan(
                                     text: Strings.driverCancellationPolicyf,
                                     style: TextStyleUtil.k12Semibold(
-                                        color: Get.find<HomeController>()
-                                                .isPinkModeOn
-                                                .value
+                                        color: isPinkModeOn
                                             ? ColorUtil.kPrimary2PinkMode
                                             : ColorUtil.kSecondary03),
                                     recognizer: TapGestureRecognizer()
@@ -303,9 +303,7 @@ class PayNowView extends GetView<PayNowController> {
                                   TextSpan(
                                     text: Strings.riderCancellationPolicyf,
                                     style: TextStyleUtil.k12Semibold(
-                                        color: Get.find<HomeController>()
-                                                .isPinkModeOn
-                                                .value
+                                        color: isPinkModeOn
                                             ? ColorUtil.kPrimary2PinkMode
                                             : ColorUtil.kSecondary03),
                                     recognizer: TapGestureRecognizer()
@@ -315,9 +313,7 @@ class PayNowView extends GetView<PayNowController> {
                                   TextSpan(
                                     text: Strings.termsAndConditions,
                                     style: TextStyleUtil.k12Semibold(
-                                        color: Get.find<HomeController>()
-                                                .isPinkModeOn
-                                                .value
+                                        color: isPinkModeOn
                                             ? ColorUtil.kPrimary2PinkMode
                                             : ColorUtil.kSecondary03),
                                     recognizer: TapGestureRecognizer()
@@ -331,9 +327,7 @@ class PayNowView extends GetView<PayNowController> {
                                   TextSpan(
                                     text: Strings.privacyPolicyf,
                                     style: TextStyleUtil.k12Semibold(
-                                        color: Get.find<HomeController>()
-                                                .isPinkModeOn
-                                                .value
+                                        color: isPinkModeOn
                                             ? ColorUtil.kPrimary2PinkMode
                                             : ColorUtil.kSecondary03),
                                     recognizer: TapGestureRecognizer()

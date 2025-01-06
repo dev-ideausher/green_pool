@@ -20,11 +20,12 @@ import '../../../services/dio/api_service.dart';
 import '../../../services/snackbar.dart';
 import '../../../services/text_style_util.dart';
 import '../../payment/views/insufficient_balance_bottomsheet.dart';
+import '../../rider_my_ride_request/views/request_accepted_bottom.dart';
 
 class PayNowController extends GetxController {
   var requestRideModel = RequestRideByRiderModel().obs;
-  var riderSendRequestModelData = RiderSendRequestModelData();
-  var riderConfirmRequestModelData = RiderConfirmRequestModelData();
+  // var riderSendRequestModelData = RiderSendRequestModelData();
+  // var riderConfirmRequestModelData = RiderConfirmRequestModelData();
   var promoCodeModel = PromoCodeModel().obs;
   var payNowDetail = PayNowDetail().obs;
   final RxString walletBalance = "0.0".obs;
@@ -50,6 +51,7 @@ class PayNowController extends GetxController {
   String? promoCodeTitle = "";
   final Rx<ChatArg> chatArg = ChatArg().obs;
   bool rideCreated = false;
+  bool confirmByDriver = false;
   TextEditingController code = TextEditingController();
   RxBool checkingCode = false.obs;
   RxBool promoCodeApplied = false.obs;
@@ -57,9 +59,17 @@ class PayNowController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
-    chatArg.value = Get.arguments["chatArg"];
-    rideCreated = Get.arguments["rideCreated"];
-    fetchDetails(chatArg.value.driverRideId);
+    try {
+      chatArg.value = Get.arguments["chatArg"];
+      rideCreated = Get.arguments["rideCreated"];
+      confirmByDriver = Get.arguments["confirmByDriver"];
+      ridePostId = Get.arguments["ridePostId"];
+      fetchDetails(chatArg.value.driverRideId);
+    } catch (e) {
+      chatArg.value = Get.arguments["chatArg"];
+      rideCreated = Get.arguments["rideCreated"];
+      fetchDetails(chatArg.value.driverRideId);
+    }
   }
 
   // @override
@@ -145,8 +155,13 @@ class PayNowController extends GetxController {
 
   void decideAPI() {
     if (rideCreated) {
-      //if rider has already created a ride then just needs to pay -> sendRequest api
-      sendRequestToDriverAPI();
+      if (confirmByDriver) {
+        //if driver has requested the rider then rider accepts the request -> accept driver's req api
+        acceptDriversRequestAPI();
+      } else {
+        //if rider has already created a ride then just needs to pay -> sendRequest api
+        sendRequestToDriverAPI();
+      }
     } else {
       //if rider has not created a ride then needs to create one -> createRideAlert api
       createRideAlert();
@@ -182,6 +197,37 @@ class PayNowController extends GetxController {
         isBtnLoading.value = false;
       } catch (e) {
         debugPrint(e.toString());
+      }
+    } else {
+      Get.bottomSheet(const InsufficientBalanceSheet());
+    }
+  }
+
+  Future<void> acceptDriversRequestAPI() async {
+    double totalAmountToBePaid = 0.0;
+    if (discountAvailed.value) {
+      totalAmountToBePaid = totalAmount + platformFees;
+    } else {
+      totalAmountToBePaid = totalAmount;
+    }
+    if (double.parse(walletBalance.value) >= totalAmountToBePaid) {
+      try {
+        isBtnLoading.value = true;
+        final response = await APIManager.acceptDriversRequest(body: {
+          "ridePostId": ridePostId,
+          "price": price,
+          "promoCodeId": promoCodeId
+        });
+        if (response.data['status']) {
+          Get.bottomSheet(const RequestAcceptedBottom());
+          Get.find<RiderMyRideRequestController>().allRiderConfirmRequestAPI();
+          Get.find<MyRidesOneTimeController>().myRidesAPI();
+        } else {
+          showMySnackbar(msg: response.data['message'].toString() ?? "");
+        }
+        isBtnLoading.value = false;
+      } catch (e) {
+        throw Exception(e);
       }
     } else {
       Get.bottomSheet(const InsufficientBalanceSheet());

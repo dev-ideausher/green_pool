@@ -24,9 +24,7 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
 
   @override
   Widget build(BuildContext context) {
-    Get.lazyPut(
-      () => MapDriverConfirmRequestController(),
-    );
+    Get.lazyPut(() => MapDriverConfirmRequestController());
     return Obx(
       () => controller.isLoading.value
           ? const GpProgress()
