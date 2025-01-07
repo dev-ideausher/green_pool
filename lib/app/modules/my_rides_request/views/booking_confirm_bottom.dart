@@ -109,55 +109,6 @@ class BookingConfirmBottom extends StatelessWidget {
                               ],
                             ),
                           ),
-                          Row(
-                            children: [
-                              Icon(
-                                Icons.location_on,
-                                size: 16.kh,
-                                color: Get.find<HomeController>()
-                                        .isPinkModeOn
-                                        .value
-                                    ? ColorUtil.kPrimary3PinkMode
-                                    : ColorUtil.kSecondary01,
-                              ),
-                              FutureBuilder<String>(
-                                future: GpUtil.calculateDistance(
-                                  startLat:
-                                      Get.find<HomeController>().latitude.value,
-                                  startLong: Get.find<HomeController>()
-                                      .longitude
-                                      .value,
-                                  endLat: driverRideData?.rideDetails?[0]
-                                          ?.origin?.coordinates?.last ??
-                                      0.0,
-                                  endLong: driverRideData?.rideDetails?[0]
-                                          ?.origin?.coordinates?.first ??
-                                      0.0,
-                                ),
-                                builder: (context, snapshot) {
-                                  if (snapshot.connectionState ==
-                                      ConnectionState.waiting) {
-                                    return const Text(
-                                        "..."); // Show a loading indicator while fetching data
-                                  } else if (snapshot.hasError) {
-                                    return Text(
-                                      Strings.na,
-                                      style: TextStyleUtil.k12Regular(
-                                        color: ColorUtil.kBlack02,
-                                      ),
-                                    );
-                                  } else {
-                                    return Text(
-                                      snapshot.data.toString(),
-                                      style: TextStyleUtil.k12Regular(
-                                        color: ColorUtil.kBlack02,
-                                      ),
-                                    );
-                                  }
-                                },
-                              ),
-                            ],
-                          ),
                         ],
                       ),
                     ],

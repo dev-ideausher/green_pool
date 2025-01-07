@@ -4,7 +4,8 @@ import 'package:geolocator/geolocator.dart';
 class LocationService {
   Future<bool> requestLocationPermission() async {
     LocationPermission permission = await Geolocator.requestPermission();
-    return permission == LocationPermission.always || permission == LocationPermission.whileInUse;
+    return permission == LocationPermission.always ||
+        permission == LocationPermission.whileInUse;
   }
 
   Future<bool> isLocationPermissionGranted() async {
@@ -36,7 +37,7 @@ class LocationService {
     return position.longitude;
   }
 
-  Future<String> getAddressFromLatLng() async {
+  /*Future<String> getAddressFromLatLng() async {
     await getCurrentLocation();
     List<Placemark> placemarks = await placemarkFromCoordinates(await getLatitude(), await getLongitude());
     Placemark location = placemarks.first;
@@ -49,5 +50,5 @@ class LocationService {
     Placemark location = placemarks.first;
     String? address = "${location.name} ${location.administrativeArea} ${location.country}";
     return address.toString();
-  }
+  }*/
 }

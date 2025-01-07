@@ -41,7 +41,9 @@ class OriginController extends GetxController {
 
   void setSessionToken() {
     _sessionToken ??= uuid.v4();
-    debouncer(() => addressAutoComplete(originController.text));
+    if (originController.text.length >= 3) {
+      debouncer(() => addressAutoComplete(originController.text));
+    }
   }
 
   addressAutoComplete(String input) async {

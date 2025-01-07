@@ -36,7 +36,7 @@ class OnboardingView extends GetView<OnboardingController> {
                           duration: const Duration(milliseconds: 500),
                           curve: Curves.linear,
                         );
-                        controller.pageIndex.value = 3;
+                        controller.pageIndex.value = 1;
                       },
                       padding: const EdgeInsets.all(0),
                       label: Strings.skip,

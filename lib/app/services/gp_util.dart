@@ -11,7 +11,7 @@ import 'dart:ui' as ui;
 import 'dio/endpoints.dart';
 
 class GpUtil {
-  static Future<String> calculateDistance({
+  /*static Future<String> calculateDistance({
     required double startLat,
     required double startLong,
     required double endLat,
@@ -33,7 +33,7 @@ class GpUtil {
     } else {
       return "0"; // Return a double value for consistency
     }
-  }
+  }*/
 
   static Future<num> calculateDistanceInInt({
     required double startLat,

@@ -90,41 +90,6 @@ class RiderRequestBottomsheet extends StatelessWidget {
                     ),
                   ),
                   4.kheightBox,
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        Icons.location_on,
-                        size: 16.kh,
-                        color: Get.find<HomeController>().isPinkModeOn.value
-                            ? ColorUtil.kPrimary3PinkMode
-                            : ColorUtil.kSecondary01,
-                      ),
-                      FutureBuilder<String>(
-                        future: GpUtil.calculateDistance(
-                            startLat: Get.find<HomeController>().latitude.value,
-                            startLong:
-                                Get.find<HomeController>().longitude.value,
-                            endLat: (element.origin?.coordinates?.lastOrNull ??
-                                0.0),
-                            endLong:
-                                (element.origin?.coordinates?.firstOrNull ??
-                                    0.0)),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return const Text(
-                                "..."); // Show a loading indicator while fetching data
-                          } else if (snapshot.hasError) {
-                            // return Text('Error: ${snapshot.error}');
-                            return text("NA");
-                          } else {
-                            return text(snapshot.data.toString());
-                          }
-                        },
-                      ),
-                    ],
-                  ),
                 ],
               ),
             ),
