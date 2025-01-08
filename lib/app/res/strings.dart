@@ -974,4 +974,6 @@ class Strings {
   static String moveToArchive = "Move to Archive";
 
   static var archive = "Archive";
+
+  static String plsPayInApp = "Please pay in app";
 }

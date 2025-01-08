@@ -185,7 +185,7 @@ class MyRidesRecurringDetailsView
                         : const SizedBox(),
 
                     const GreenPoolDivider().paddingSymmetric(vertical: 16.kh),
-                    Text(
+                    /*Text(
                       Strings.description,
                       style: TextStyleUtil.k14Bold(),
                     ).paddingOnly(bottom: 8.kh),
@@ -198,7 +198,7 @@ class MyRidesRecurringDetailsView
                           style: TextStyleUtil.k14Semibold(),
                         )
                       ],
-                    ),
+                    ),*/
                     const GreenPoolDivider().paddingSymmetric(vertical: 16.kh),
                     SizedBox(
                       height: controller.recurringModel.value.data!

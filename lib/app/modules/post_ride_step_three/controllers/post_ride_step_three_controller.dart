@@ -266,8 +266,6 @@ class PostRideStepThreeController extends GetxController {
     } catch (e) {
       debugPrint(e.toString());
     }
-
-    setActiveStatePricing();
   }
 
   double calculateRatePerKm(
@@ -276,5 +274,16 @@ class PostRideStepThreeController extends GetxController {
       return 1;
     }
     return (totalPrice / totalDistance);
+  }
+
+  void onchanged(String? val) {
+    if (val != null &&
+        val.isNotEmpty &&
+        val != "0" &&
+        double.parse(val) < maxFarePrice &&
+        double.parse(val) > minFarePrice) {
+      postRideModel.value.ridesDetails?.origin?.originDestinationFair = val;
+      setActiveStatePricing();
+    }
   }
 }

@@ -347,7 +347,7 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                         : const SizedBox(),
 
                     const GreenPoolDivider().paddingSymmetric(vertical: 16.kh),
-                    Text(
+                    /*Text(
                       Strings.description,
                       style: TextStyleUtil.k14Bold(),
                     ).paddingOnly(bottom: 8.kh),
@@ -360,7 +360,7 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                           style: TextStyleUtil.k14Semibold(),
                         )
                       ],
-                    ),
+                    ),*/
                     (controller.myRidesModelData.value.driverBookingDetails
                                 ?.isStarted ??
                             false)

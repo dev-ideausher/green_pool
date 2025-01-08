@@ -88,9 +88,7 @@ class PostRideStepThreeView extends GetView<PostRideStepThreeController> {
                                     r'[^\w\s]')), // Deny all special characters
                               ],
                               onchanged: (val) {
-                                controller.setActiveStatePricing();
-                                controller.postRideModel.value.ridesDetails
-                                    ?.origin?.originDestinationFair = val;
+                                controller.onchanged(val);
                               },
                               validator: (v) => controller.fareValidator(v),
                               autovalidateMode:
@@ -153,15 +151,7 @@ class PostRideStepThreeView extends GetView<PostRideStepThreeController> {
                               controller.postRideModel.value.ridesDetails!
                                       .stops![0]!.name!.isNotEmpty
                                   ? PriceTile(
-                                      onchanged: (val) {
-                                        /*   controller.setActiveStatePricing();
-                                        controller
-                                            .postRideModel
-                                            .value
-                                            .ridesDetails
-                                            ?.stops?[0]
-                                            ?.originToStopFair = val;*/
-                                      },
+                                      onchanged: (val) {},
                                       validator: (v) =>
                                           controller.fareValidator(v),
                                       trallingText:
@@ -174,10 +164,7 @@ class PostRideStepThreeView extends GetView<PostRideStepThreeController> {
                               controller.postRideModel.value.ridesDetails!
                                       .stops![1]!.name!.isNotEmpty
                                   ? PriceTile(
-                                      onchanged: (val) {
-                                        /*  controller.setActiveStatePricing();
-                                        controller.postRideModel.value.ridesDetails?.stops?[1]?.originToStopFair = val;*/
-                                      },
+                                      onchanged: (val) {},
                                       validator: (v) =>
                                           controller.fareValidator(v),
                                       trallingText:
@@ -197,10 +184,7 @@ class PostRideStepThreeView extends GetView<PostRideStepThreeController> {
                                           .name!
                                           .isNotEmpty)
                                   ? PriceTile(
-                                      onchanged: (val) {
-                                        /*      controller.setActiveStatePricing();
-                                        controller.postRideModel.value.ridesDetails?.stops?[0]?.stopToStopFair = val;*/
-                                      },
+                                      onchanged: (val) {},
                                       validator: (v) =>
                                           controller.fareValidator(v),
                                       txtController:
@@ -213,10 +197,7 @@ class PostRideStepThreeView extends GetView<PostRideStepThreeController> {
                               controller.postRideModel.value.ridesDetails!
                                       .stops![0]!.name!.isNotEmpty
                                   ? PriceTile(
-                                      onchanged: (val) {
-                                        /* controller.setActiveStatePricing();
-                                        controller.postRideModel.value.ridesDetails?.stops?[0]?.stopTodestinationFair = int.parse(val ?? "0");*/
-                                      },
+                                      onchanged: (val) {},
                                       trallingText:
                                           "${controller.postRideModel.value.ridesDetails?.stops?[0]?.name.toString().split(",").first} to ${controller.postRideModel.value.ridesDetails?.destination?.name.toString().split(",").first}",
                                       txtController:
@@ -229,22 +210,45 @@ class PostRideStepThreeView extends GetView<PostRideStepThreeController> {
                               controller.postRideModel.value.ridesDetails!
                                       .stops![1]!.name!.isNotEmpty
                                   ? PriceTile(
-                                      onchanged: (val) {
-                                        /*      controller.setActiveStatePricing();
-                                        controller.postRideModel.value.ridesDetails?.stops?[1]?.stopTodestinationFair = int.parse(val ?? "0");*/
-                                      },
+                                      onchanged: (val) {},
                                       validator: (v) =>
                                           controller.fareValidator(v),
                                       txtController:
                                           controller.stop2toDestinationPrice,
                                       trallingText:
                                           "${controller.postRideModel.value.ridesDetails?.stops?[1]?.name.toString().split(",").first} to ${controller.postRideModel.value.ridesDetails?.destination?.name.toString().split(",").first}",
-                                    )
+                                    ).paddingOnly(bottom: 40.kh)
                                   : const SizedBox(),
                             ],
                           )
                         : const SizedBox()),
-                    Row(
+                    Center(
+                      child: Text(
+                        Strings.plsPayInApp,
+                        style: TextStyleUtil.k18Bold(),
+                        textAlign: TextAlign.center,
+                      ).paddingOnly(top: 20.kh),
+                    ),
+                  ],
+                ).paddingSymmetric(horizontal: 16.kw),
+              ),
+      ),
+      bottomSheet: Container(
+        width: 100.w,
+        color: ColorUtil.kBackgroundColor,
+        child: Obx(
+          () => GreenPoolButton(
+            onPressed: () => controller.moveToGuidelines(),
+            isActive: controller.isActivePricingButton.value,
+            label: Strings.next,
+          ).paddingOnly(bottom: 20.kh, left: 16.kw, right: 16.kw),
+        ),
+      ),
+    );
+  }
+}
+
+/*Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -274,18 +278,4 @@ class PostRideStepThreeView extends GetView<PostRideStepThreeController> {
                             ?.description = value;
                       },
                       maxLines: 8,
-                    ).paddingOnly(bottom: 30.kh),
-                    Obx(
-                      () => GreenPoolButton(
-                        onPressed: () => controller.moveToGuidelines(),
-                        isActive: controller.isActivePricingButton.value,
-                        label: Strings.next,
-                      ).paddingOnly(bottom: 40.kh),
-                    ),
-                  ],
-                ).paddingSymmetric(horizontal: 16.kw),
-              ),
-      ),
-    );
-  }
-}
+                    ).paddingOnly(bottom: 30.kh),*/

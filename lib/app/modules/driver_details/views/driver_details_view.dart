@@ -414,7 +414,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                 : const SizedBox(),
 
             const GreenPoolDivider().paddingSymmetric(vertical: 16.kh),
-            Text(
+            /*Text(
               Strings.description,
               style: TextStyleUtil.k14Bold(),
             ).paddingOnly(bottom: 8.kh),
@@ -426,7 +426,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                 )
               ],
             ),
-            const GreenPoolDivider().paddingSymmetric(vertical: 16.kh),
+            const GreenPoolDivider().paddingSymmetric(vertical: 16.kh),*/
             Obx(
               () => GreenPoolButton(
                       onPressed: () {

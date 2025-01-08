@@ -439,7 +439,7 @@ class RiderMyRidesSendDetailsView
                 : const SizedBox(),
 
             const GreenPoolDivider().paddingOnly(top: 8.kh),
-            Text(
+            /*Text(
               Strings.description,
               style: TextStyleUtil.k14Bold(),
             ).paddingOnly(bottom: 8.kh),
@@ -450,7 +450,7 @@ class RiderMyRidesSendDetailsView
                   style: TextStyleUtil.k14Semibold(),
                 )
               ],
-            ),
+            ),*/
             const GreenPoolDivider().paddingOnly(top: 8.kh),
             GreenPoolButton(
               onPressed: () {

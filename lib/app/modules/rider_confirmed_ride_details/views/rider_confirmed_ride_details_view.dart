@@ -483,7 +483,7 @@ class RiderConfirmedRideDetailsView
                 : const SizedBox(),
 
             const GreenPoolDivider().paddingOnly(top: 8.kh, bottom: 16.kh),
-            Text(
+            /*Text(
               Strings.description,
               style: TextStyleUtil.k14Bold(),
             ).paddingOnly(bottom: 8.kh),
@@ -500,7 +500,7 @@ class RiderConfirmedRideDetailsView
                   style: TextStyleUtil.k14Semibold(),
                 )
               ],
-            ),
+            ),*/
             const GreenPoolDivider().paddingOnly(top: 8.kh),
             Obx(
               () => GreenPoolButton(

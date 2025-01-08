@@ -319,7 +319,7 @@ class RideDetailsView extends GetView<RideDetailsController> {
             ],
           ),
           const GreenPoolDivider().paddingSymmetric(vertical: 16.kh),
-          Text(
+          /*Text(
             Strings.description,
             style: TextStyleUtil.k14Bold(),
           ).paddingOnly(bottom: 8.kh),
@@ -330,7 +330,7 @@ class RideDetailsView extends GetView<RideDetailsController> {
                 style: TextStyleUtil.k14Semibold(),
               )
             ],
-          ),
+          ),*/
         ],
       ).paddingSymmetric(horizontal: 16.kw),
     );
