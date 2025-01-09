@@ -204,7 +204,8 @@ class MyRidesOneTimeController extends GetxController {
                 arguments: myRidesModelData)
             ?.then((v) => myRidesAPI());
       }
-    } else if (myRidesModelData.rideStatus == "NA") {
+    } else if (myRidesModelData.rideStatus == "NA" ||
+        myRidesModelData.rideStatus == "Cancel") {
       Get.toNamed(Routes.RIDER_MY_RIDE_REQUEST, arguments: myRidesModelData.Id)
           ?.then((v) => myRidesAPI());
     }

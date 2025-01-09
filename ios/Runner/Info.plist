@@ -60,7 +60,7 @@
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>We need access to your location to provide accurate pick-up points, route tracking, and nearby ride options while the app is active.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>We require background location access to continue providing accurate pick-up points and tracking your ride, even when the app is running in the background.</string>
+	<string>Carpooll.com Smart Ride Share collects location data to enable ride-sharing services even when the app is closed or not in use. This helps ensure accurate ride tracking and improves service quality.</string>
     <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
     <string>We need location access at all times to ensure we can provide you with accurate pick-ups, ride tracking, and nearby drivers whether you are using the app actively or in the background.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>

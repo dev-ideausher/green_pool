@@ -364,7 +364,7 @@ class Strings {
   static String enableLocation = "Enable Location";
 
   static String allowLocationAccess =
-      "Please allow Carpooll.com access to location services.";
+      "Carpooll.com Smart Ride Share collects location data to enable ride-sharing services even when the app is closed or not in use. This helps ensure accurate ride tracking and improves service quality.\nPlease allow Carpooll.com access to location services.";
 
   static var allowAccess = "Allow Access";
 
