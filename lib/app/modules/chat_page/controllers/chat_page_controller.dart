@@ -74,8 +74,8 @@ class ChatPageController extends GetxController {
       final response = await APIManager.getCheckForPayBtn(
           driverRideId: chatArg.value.driverRideId ?? "");
       isPayBtnVisible.value = response.data["riderCheck"] == false &&
-          response.data["driver"] == false;
-      confirmByDriver.value = response.data["confirmByDriver"];
+          response.data["driver"] == false; //to show pay button
+      confirmByDriver.value = response.data["requestByDriver"]; //if driver has requested the rider
       rideCreated = response.data["rideRequested"] ==
           true; //if false then rider has not requested ride so we need to create a riderRide
     } catch (e) {

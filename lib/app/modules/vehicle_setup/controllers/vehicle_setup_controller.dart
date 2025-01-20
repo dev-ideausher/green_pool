@@ -22,6 +22,7 @@ class VehicleSetupController extends GetxController {
   RxBool isVehicleBtnLoading = false.obs;
   RxBool isVehicleImagePicked = false.obs;
   RxBool vehicleImageNotUploaded = false.obs;
+  RxBool idImageNotUploaded = false.obs;
   TextEditingController year = TextEditingController();
   TextEditingController licencePlate = TextEditingController();
 
@@ -29,6 +30,9 @@ class VehicleSetupController extends GetxController {
   GlobalKey<FormState> vehicleFormKey = GlobalKey<FormState>();
 
   final Rx<PostRideModel> postRideModel = PostRideModel().obs;
+
+  Rx<File?> selectedIDImagePath = Rx<File?>(null);
+  RxBool isIDPicked = false.obs;
 
   final count = 0.obs;
   TextEditingController type = TextEditingController();
@@ -89,6 +93,20 @@ class VehicleSetupController extends GetxController {
     }
   }
 
+  getIDImage(ImageSource imageSource) async {
+    XFile? pickedIDFile =
+        await ImageUtil.cropCompressImage(imageSource: imageSource);
+
+    if (pickedIDFile != null) {
+      selectedIDImagePath.value = File(pickedIDFile.path);
+      isIDPicked.value = true;
+      Get.back();
+      update();
+    } else {
+      showMySnackbar(msg: 'No image selected');
+    }
+  }
+
   bool _isFieldEmpty(
       String fieldValue, FocusNode focusNode, String errorMessage) {
     if (fieldValue.isEmpty) {
@@ -112,6 +130,7 @@ class VehicleSetupController extends GetxController {
 
     if (!isValid) {
       vehicleImageNotUploaded.value = true;
+      idImageNotUploaded.value = true;
 
       if (!isVehicleImagePicked.value) {
         _scrollVehicleInfoToTop();
@@ -153,16 +172,65 @@ class VehicleSetupController extends GetxController {
         licenseFocusNode,
         'Please enter a correct license number',
       )) return;
+
+      if (!isIDPicked.value) {
+        idImageNotUploaded.value = true;
+        return showMySnackbar(msg: 'Please upload your verification ID');
+      }
+
       return showMySnackbar(msg: 'Please fill in all the details');
     } else {
-      if (isVehicleImagePicked.value != true) {
-        vehicleImageNotUploaded.value = true;
-        return showMySnackbar(msg: 'Please upload the required images');
-      } else {
-        vehicleImageNotUploaded.value = false;
-        vehicleFormKey.currentState!.save();
-        await vehicleDetailsAPI();
+      if (!isVehicleImagePicked.value) {
+        _scrollVehicleInfoToTop();
+        return showMySnackbar(msg: 'Please upload the vehicle image');
       }
+
+      if (!isIDPicked.value) {
+        idImageNotUploaded.value = true;
+        return showMySnackbar(msg: 'Please upload your verification ID');
+      }
+
+      vehicleImageNotUploaded.value = false;
+      idImageNotUploaded.value = false;
+      vehicleFormKey.currentState!.save();
+      await uploadID();
+    }
+  }
+
+  Future<void> uploadID() async {
+    final File pickedIDFile = File(selectedIDImagePath.value?.path ?? "");
+    String idExtension = pickedIDFile.path.split('.').last;
+    String idMediaType;
+
+    if (idExtension == 'jpg' || idExtension == 'jpeg') {
+      idMediaType = 'image/jpeg';
+    } else if (idExtension == 'png') {
+      idMediaType = 'image/png';
+    } else {
+      idMediaType = 'application/octet-stream';
+    }
+
+    final userData = dio.FormData.fromMap({
+      if (isIDPicked.value)
+        'idPic': await dio.MultipartFile.fromFile(
+          pickedIDFile.path,
+          contentType: MediaType.parse(idMediaType),
+          filename: path.basename(pickedIDFile.path),
+        ),
+    });
+
+    try {
+      isVehicleBtnLoading.value = true;
+      final response = await APIManager.userDetails(body: userData);
+      if (response.data['status'] == true) {
+        await vehicleDetailsAPI();
+      } else {
+        showMySnackbar(msg: response.data['message'].toString());
+        isVehicleBtnLoading.value = false;
+      }
+    } catch (e) {
+      isVehicleBtnLoading.value = false;
+      throw Exception(e);
     }
   }
 

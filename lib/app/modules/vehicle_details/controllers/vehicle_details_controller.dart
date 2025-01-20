@@ -82,6 +82,9 @@ class VehicleDetailsController extends GetxController {
   RxBool btnLoading = false.obs;
   RxBool isBtnActive = false.obs;
 
+  Rx<File?> selectedIDImagePath = Rx<File?>(null);
+  RxBool isIDPicUpdated = false.obs;
+
   getVehicleImage(ImageSource imageSource) async {
     XFile? pickedFile =
         await ImageUtil.cropCompressImage(imageSource: imageSource);
@@ -93,6 +96,64 @@ class VehicleDetailsController extends GetxController {
       isBtnActive.value = true;
     } else {
       showMySnackbar(msg: 'No image selected');
+    }
+  }
+
+  getIDImage(ImageSource imageSource) async {
+    XFile? pickedIDFile =
+        await ImageUtil.cropCompressImage(imageSource: imageSource);
+    if (pickedIDFile != null) {
+      selectedIDImagePath!.value = File(pickedIDFile.path);
+      showMySnackbar(msg: 'Image selected');
+      update();
+      isIDPicUpdated.value = true;
+      isBtnActive.value = true;
+    } else {
+      showMySnackbar(msg: 'No image selected');
+    }
+  }
+
+  updateData() async {
+    if (selectedIDImagePath.value != null) {
+      await updateID();
+    } else {
+      await updateVehicleDetailsAPI();
+    }
+  }
+
+  Future<void> updateID() async {
+    final File pickedIDFile = File(selectedIDImagePath.value?.path ?? "");
+    String idExtension = pickedIDFile.path.split('.').last;
+    String idMediaType;
+
+    if (idExtension == 'jpg' || idExtension == 'jpeg') {
+      idMediaType = 'image/jpeg';
+    } else if (idExtension == 'png') {
+      idMediaType = 'image/png';
+    } else {
+      idMediaType = 'application/octet-stream';
+    }
+
+    final userData = dio.FormData.fromMap({
+      'idPic': await dio.MultipartFile.fromFile(
+        pickedIDFile.path,
+        contentType: MediaType.parse(idMediaType),
+        filename: path.basename(pickedIDFile.path),
+      )
+    });
+
+    try {
+      btnLoading.value = true;
+      final response = await APIManager.userDetails(body: userData);
+      if (response.data['status'] == true) {
+        await updateVehicleDetailsAPI();
+      } else {
+        showMySnackbar(msg: response.data['message'].toString());
+        btnLoading.value = false;
+      }
+    } catch (e) {
+      btnLoading.value = false;
+      throw Exception(e);
     }
   }
 

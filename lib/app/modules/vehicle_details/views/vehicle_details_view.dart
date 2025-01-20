@@ -15,6 +15,8 @@ import '../../../components/richtext_heading.dart';
 import '../../../constants/image_constant.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
+import '../../../services/storage.dart';
+import '../../../services/text_style_util.dart';
 import '../../home/controllers/home_controller.dart';
 import '../controllers/vehicle_details_controller.dart';
 
@@ -221,11 +223,43 @@ class VehicleDetailsView extends GetView<VehicleDetailsController> {
                           ? ColorUtil.kPrimary3PinkMode
                           : ColorUtil.kSecondary01,
                       BlendMode.srcIn)),
+            ).paddingOnly(bottom: 8.kh),
+            RichTextHeading(text: Strings.idVerification)
+                .paddingOnly(bottom: 8.kh),
+            GestureDetector(
+              onTap: () {
+                controller.getIDImage(ImageSource.gallery);
+              },
+              child: Obx(
+                () => Container(
+                  padding:
+                      EdgeInsets.symmetric(vertical: 68.kh, horizontal: 76.kw),
+                  decoration: BoxDecoration(
+                    color: ColorUtil.kGreyColor,
+                    borderRadius: BorderRadius.circular(8.kh),
+                  ),
+                  child: //if no ID image was uploaded then pick image
+                      Get.find<GetStorageService>()
+                                  .idVerificationPicUrl
+                                  .isEmpty &&
+                              !controller.isIDPicUpdated.value
+                          ? const UploadIdImage()
+                          //if pick was uploaded then show uploaded pic or if new pic is being uploaded then show that
+                          : controller.isIDPicUpdated.value == true
+                              ? Image.file(
+                                  controller.selectedIDImagePath?.value ??
+                                      File(''))
+                              : CommonImageView(
+                                  url: Get.find<GetStorageService>()
+                                      .idVerificationPicUrl,
+                                ),
+                ),
+              ),
             ),
             Obx(
               () => GreenPoolButton(
                 onPressed: () {
-                  controller.updateVehicleDetailsAPI();
+                  controller.updateData();
                 },
                 label: Strings.save,
                 isActive: controller.isBtnActive.value,
@@ -235,6 +269,26 @@ class VehicleDetailsView extends GetView<VehicleDetailsController> {
           ],
         ).paddingSymmetric(horizontal: 16.kw),
       ),
+    );
+  }
+}
+
+class UploadIdImage extends StatelessWidget {
+  const UploadIdImage({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        SvgPicture.asset(ImageConstant.svgIconUpload).paddingOnly(right: 8.kw),
+        Text(
+          Strings.uploadId,
+          style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
+        ),
+      ],
     );
   }
 }

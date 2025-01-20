@@ -71,19 +71,6 @@ class UserDetailsController extends GetxController {
     }
   }
 
-  getIDImage(ImageSource imageSource) async {
-    XFile? pickedIDFile =
-        await ImageUtil.cropCompressImage(imageSource: imageSource);
-    if (pickedIDFile != null) {
-      selectedIDImagePath!.value = File(pickedIDFile.path);
-      showMySnackbar(msg: 'Image selected');
-      update();
-      isIDPicUpdated.value = true;
-      isBtnActive.value = true;
-    } else {
-      showMySnackbar(msg: 'No image selected');
-    }
-  }
 
   bool _isFieldEmpty(
       String fieldValue, FocusNode focusNode, String errorMessage) {

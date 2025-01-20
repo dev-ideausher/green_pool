@@ -29,10 +29,8 @@ class RiderProfileSetupController extends GetxController {
   bool readOnlyEmail = false;
   RxList<String> cityNames = <String>[].obs;
   Rx<File?> selectedProfileImagePath = Rx<File?>(null);
-  Rx<File?> selectedIDImagePath = Rx<File?>(null);
   RxBool isProfileImagePicked = false.obs;
   RxBool isProfileImagePickedCheck = false.obs;
-  RxBool isIDPicked = false.obs;
   TextEditingController fullName = TextEditingController(
       text: Get.find<AuthService>().auth.currentUser?.displayName);
   TextEditingController email = TextEditingController(
@@ -156,27 +154,12 @@ class RiderProfileSetupController extends GetxController {
     }
   }
 
-  getIDImage(ImageSource imageSource) async {
-    XFile? pickedIDFile = await ImageUtil.cropCompressImage(        
-        imageSource: imageSource);
-
-    if (pickedIDFile != null) {
-      selectedIDImagePath.value = File(pickedIDFile.path);
-      isIDPicked.value = true;
-      Get.back();
-      update();
-    } else {
-      showMySnackbar(msg: 'No image selected');
-    }
-  }
-
   //
   Future<void> userDetailsAPI() async {
     isBtnLoading.value = true;
     final storageService = Get.find<GetStorageService>();
     final File pickedImageFile =
         File(selectedProfileImagePath.value?.path ?? "");
-    final File pickedIDFile = File(selectedIDImagePath.value?.path ?? "");
     String extension = pickedImageFile.path.split('.').last;
     String mediaType;
 
@@ -206,12 +189,6 @@ class RiderProfileSetupController extends GetxController {
         contentType: MediaType.parse(mediaType),
         filename: path.basename(pickedImageFile.path),
       ),
-      if (isIDPicked.value)
-        'idPic': await dio.MultipartFile.fromFile(
-          pickedIDFile.path,
-          contentType: MediaType.parse(mediaType),
-          filename: path.basename(pickedIDFile.path),
-        ),
     });
 
     try {

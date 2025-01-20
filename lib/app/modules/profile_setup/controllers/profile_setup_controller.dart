@@ -87,6 +87,7 @@ class ProfileSetupController extends GetxController
   TextEditingController type = TextEditingController();
   RxBool isVehicleImagePicked = false.obs;
   RxBool vehicleImageNotUploaded = false.obs;
+  RxBool idImageNotUploaded = false.obs;
   TextEditingController year = TextEditingController();
   TextEditingController licensePlate = TextEditingController();
 
@@ -512,6 +513,7 @@ class ProfileSetupController extends GetxController
   bool _isFieldEmpty(
       String fieldValue, FocusNode focusNode, String errorMessage) {
     if (fieldValue.isEmpty) {
+      tabBarController.index = 0;
       focusNode.requestFocus();
       showMySnackbar(msg: errorMessage);
       return true;
@@ -536,6 +538,7 @@ class ProfileSetupController extends GetxController
       isProfileImagePickedCheck.value = true;
 
       if (!isProfileImagePicked.value) {
+        tabBarController.index = 0;
         _scrollUserInfoToTop();
         return showMySnackbar(msg: 'Please upload your profile image');
       }
@@ -579,6 +582,7 @@ class ProfileSetupController extends GetxController
 
     // Handle valid form case
     if (!isProfileImagePicked.value) {
+      tabBarController.index = 0;
       isProfileImagePickedCheck.value = true;
       _scrollUserInfoToTop();
       return showMySnackbar(msg: 'Please upload your profile image');
@@ -595,6 +599,7 @@ class ProfileSetupController extends GetxController
 
     if (!isValid) {
       vehicleImageNotUploaded.value = true;
+      idImageNotUploaded.value = true;
 
       if (!isVehicleImagePicked.value) {
         _scrollVehicleInfoToTop();
@@ -637,16 +642,27 @@ class ProfileSetupController extends GetxController
         'Please enter a correct license number',
       )) return;
 
+      if (!isIDPicked.value) {
+        idImageNotUploaded.value = true;
+        return showMySnackbar(msg: 'Please upload your verification ID');
+      }
+
       return showMySnackbar(msg: 'Please fill in all the details');
     } else {
-      if (isVehicleImagePicked.value != true) {
-        vehicleImageNotUploaded.value = true;
-        return showMySnackbar(msg: 'Please upload the required images');
-      } else {
-        vehicleImageNotUploaded.value = false;
-        vehicleFormKey.currentState!.save();
-        await userDetailsAPI();
+      if (!isVehicleImagePicked.value) {
+        _scrollVehicleInfoToTop();
+        return showMySnackbar(msg: 'Please upload the vehicle image');
       }
+
+      if (!isIDPicked.value) {
+        idImageNotUploaded.value = true;
+        return showMySnackbar(msg: 'Please upload your verification ID');
+      }
+
+      vehicleImageNotUploaded.value = false;
+      idImageNotUploaded.value = false;
+      vehicleFormKey.currentState!.save();
+      await userDetailsAPI();
     }
   }
 

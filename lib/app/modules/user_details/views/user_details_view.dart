@@ -189,8 +189,8 @@ class UserDetailsView extends GetView<UserDetailsController> {
                     hintText: Strings.dob,
                     controller: controller.dobTextController,
                     readOnly: true,
-                  ).paddingOnly(bottom: 16.kh),
-            OptFieldHeading(heading: Strings.idVerification)
+                  ),
+            /*OptFieldHeading(heading: Strings.idVerification)
                 .paddingOnly(bottom: 8.kh),
             GestureDetector(
               onTap: () {
@@ -221,7 +221,7 @@ class UserDetailsView extends GetView<UserDetailsController> {
                                 ),
                 ),
               ),
-            ),
+            ),*/
             Obx(
               () => GreenPoolButton(
                 onPressed: () {
@@ -230,7 +230,7 @@ class UserDetailsView extends GetView<UserDetailsController> {
                 isActive: controller.isBtnActive.value,
                 isLoading: controller.saveBtnLoading.value,
                 label: Strings.save,
-              ).paddingOnly(top: 40.kh, bottom: 16.kh),
+              ).paddingOnly(top: 20.kh, bottom: 16.kh),
             ),
             GreenPoolButton(
               onPressed: () => controller.deleteAccountAPI(),
@@ -251,25 +251,7 @@ class UserDetailsView extends GetView<UserDetailsController> {
   }
 }
 
-class UploadIdImage extends StatelessWidget {
-  const UploadIdImage({
-    super.key,
-  });
 
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        SvgPicture.asset(ImageConstant.svgIconUpload).paddingOnly(right: 8.kw),
-        Text(
-          Strings.uploadId,
-          style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
-        ),
-      ],
-    );
-  }
-}
 
 class ProfileImage extends StatelessWidget {
   const ProfileImage({

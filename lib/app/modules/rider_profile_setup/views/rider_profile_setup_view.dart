@@ -227,8 +227,8 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
                 readOnly: true,
                 onTap: () => controller.setDate(context),
                 suffix: SvgPicture.asset(ImageConstant.svgIconCalendar),
-              ).paddingOnly(bottom: 16.kh),
-              OptFieldHeading(heading: Strings.idVerification)
+              ),
+              /*OptFieldHeading(heading: Strings.idVerification)
                   .paddingOnly(bottom: 8.kh),
               GestureDetector(
                 onTap: () => Get.to(() => UploadIDView(
@@ -264,7 +264,7 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
                           ),
                   ),
                 ),
-              ),
+              ),*/
               Obx(
                 () => GreenPoolButton(
                   onPressed: () => controller.checkUserValidations(),

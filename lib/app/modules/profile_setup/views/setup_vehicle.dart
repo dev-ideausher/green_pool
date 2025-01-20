@@ -219,6 +219,48 @@ class SetupVehicle extends GetView<ProfileSetupController> {
               focusNode: controller.licenseFocusNode,
               validator: (p0) => controller.validateLicensePlate(p0),
               autovalidateMode: AutovalidateMode.onUserInteraction,
+            ).paddingOnly(bottom: 16.kh),
+            RichTextHeading(text: LocaleKeys.app_idVerification.tr)
+                .paddingOnly(bottom: 8.kh),
+            GestureDetector(
+              onTap: () => Get.to(() => UploadIDView(
+                    onPressedGallery: () {
+                      controller.getIDImage(ImageSource.gallery);
+                    },
+                    onPressedSelfie: () {
+                      controller.getIDImage(ImageSource.camera);
+                    },
+                  )),
+              child: Obx(
+                () => Container(
+                  padding:
+                      EdgeInsets.symmetric(vertical: 68.kh, horizontal: 76.kw),
+                  decoration: BoxDecoration(
+                      border: controller.isIDPicked.value
+                          ? null
+                          : controller.idImageNotUploaded.value
+                              ? Border.all(color: ColorUtil.kError2)
+                              : null,
+                      color: ColorUtil.kGreyColor,
+                      borderRadius: BorderRadius.circular(8.kh)),
+                  child: controller.isIDPicked.value
+                      ? Image.file(
+                          controller.selectedIDImagePath.value!,
+                        )
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SvgPicture.asset(ImageConstant.svgIconUpload)
+                                .paddingOnly(right: 8.kw),
+                            Text(
+                              LocaleKeys.app_uploadId.tr,
+                              style: TextStyleUtil.k14Regular(
+                                  color: ColorUtil.kBlack03),
+                            ),
+                          ],
+                        ),
+                ),
+              ),
             ),
             Obx(
               () => GreenPoolButton(

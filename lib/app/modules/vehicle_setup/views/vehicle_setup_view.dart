@@ -9,6 +9,7 @@ import 'package:image_picker/image_picker.dart';
 
 import '../../../components/greenpool_textfield.dart';
 import '../../../components/richtext_heading.dart';
+import '../../../components/upload_id.dart';
 import '../../../components/upload_vehicle_picture.dart';
 import '../../../res/strings.dart';
 import '../../../services/colors.dart';
@@ -227,6 +228,48 @@ class VehicleSetupView extends GetView<VehicleSetupController> {
                   focusNode: controller.licenseFocusNode,
                   validator: (p0) => controller.validateLicensePlate(p0),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
+                ).paddingOnly(bottom: 16.kh),
+                RichTextHeading(text: Strings.idVerification)
+                    .paddingOnly(bottom: 8.kh),
+                GestureDetector(
+                  onTap: () => Get.to(() => UploadIDView(
+                        onPressedGallery: () {
+                          controller.getIDImage(ImageSource.gallery);
+                        },
+                        onPressedSelfie: () {
+                          controller.getIDImage(ImageSource.camera);
+                        },
+                      )),
+                  child: Obx(
+                    () => Container(
+                      padding: EdgeInsets.symmetric(
+                          vertical: 68.kh, horizontal: 76.kw),
+                      decoration: BoxDecoration(
+                          border: controller.isIDPicked.value
+                              ? null
+                              : controller.idImageNotUploaded.value
+                                  ? Border.all(color: ColorUtil.kError2)
+                                  : null,
+                          color: ColorUtil.kGreyColor,
+                          borderRadius: BorderRadius.circular(8.kh)),
+                      child: controller.isIDPicked.value
+                          ? Image.file(
+                              controller.selectedIDImagePath.value!,
+                            )
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SvgPicture.asset(ImageConstant.svgIconUpload)
+                                    .paddingOnly(right: 8.kw),
+                                Text(
+                                  Strings.uploadId,
+                                  style: TextStyleUtil.k14Regular(
+                                      color: ColorUtil.kBlack03),
+                                ),
+                              ],
+                            ),
+                    ),
+                  ),
                 ),
                 GreenPoolButton(
                   onPressed: () async =>

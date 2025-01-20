@@ -20,7 +20,7 @@ import '../../../routes/app_pages.dart';
 import '../../../services/dio/api_service.dart';
 import '../../../services/snackbar.dart';
 
-class HomeController extends GetxController {
+class HomeController extends GetxController with Versionk {
   final RxInt selectedIndex = 0.obs;
   final PageController pageController = PageController();
   final RxBool findingRide = false.obs;
@@ -51,6 +51,7 @@ class HomeController extends GetxController {
       await userInfoAPI();
       latitude.value = await locationService.getLatitude();
       longitude.value = await locationService.getLongitude();
+      handleNewUpdate();
       getReqsCount();
       getUnreadCount();
     } catch (e) {
@@ -120,10 +121,11 @@ class HomeController extends GetxController {
 
         // Subscribe to FCM notifications using the user ID
         PushNotificationService.subFcm("${userInfo.value.data?.Id}");
+        debugPrint("USER ID: ${userInfo.value.data?.Id}");
+        debugPrint(storageService.encjwToken);
 
         // Update the pink mode status from storage service
         isPinkModeOn.value = storageService.isPinkMode;
-        print(storageService.encjwToken);
 
         //method to handle location changes
         onChangeLocation();
@@ -145,7 +147,7 @@ class HomeController extends GetxController {
       }
       log("User info API called");
     } else {
-      print("User not logged in");
+      log("User not logged in");
     }
   }
 
@@ -222,8 +224,6 @@ class HomeController extends GetxController {
       }
     } else {
       if (index != 0) {
-        print(
-            "GET STORAGE IS LOGGED IN: ${storageService.isLoggedIn.toString()}");
         Get.toNamed(Routes.LOGIN,
             arguments: {'isDriver': false, 'fromNavBar': true});
       }

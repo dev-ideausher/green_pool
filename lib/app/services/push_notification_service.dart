@@ -300,7 +300,11 @@ class PushNotificationService {
       try {
         final res = await APIManager.postChatRoomId(
             receiverId: actionData?.data['senderId'] ?? "",
-            body: {"driverRideId": "", "riderRideId": "", "seatsRequired": ""});
+            body: {
+              "driverRideId": actionData?.data['driverRideId'],
+              "riderRideId": actionData?.data['riderRideId'],
+              "seatsRequired": ""
+            });
         Get.toNamed(Routes.CHAT_PAGE,
                 arguments: ChatArg(
                   chatRoomId: res.data["data"]["chatRoomId"] ?? "",
@@ -314,8 +318,7 @@ class PushNotificationService {
                       .toString()
                       .split(',')
                       .first,
-                  date: GpUtil.formatDate(
-                      DateTime.parse(actionData?.data['date'])),
+                  date: actionData?.data['date'],
                 ))
             ?.then(
                 (value) => Get.find<MessagesController>().getMessageListAPI());
@@ -334,8 +337,7 @@ class PushNotificationService {
                         .toString()
                         .split(',')
                         .first,
-                    date: GpUtil.formatDate(
-                        DateTime.parse(actionData?.data['date'])),
+                    date: actionData?.data['date'],
                   ))
               ?.then((value) =>
                   Get.find<MessagesController>().getMessageListAPI());
@@ -499,10 +501,10 @@ class PushNotificationService {
         if (currentRoute != Routes.CHAT_PAGE) {
           if (currentRoute == Routes.BOTTOM_NAVIGATION) {
             homeController.changeTabIndex(2);
-            // await navigateToChatPage();
+            await navigateToChatPage();
           } else {
             await navigateToBottomNavigation(2);
-            // await navigateToChatPage();
+            await navigateToChatPage();
           }
         }
         break;
