@@ -6,6 +6,7 @@ import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/snackbar.dart';
+import '../../../../generated/locales.g.dart';
 import '../../../data/chat_arg.dart';
 import '../../../data/confirm_ride_by_rider_model.dart';
 import '../../../data/rider_send_request_model.dart';
@@ -136,7 +137,7 @@ class RiderMyRideRequestController extends GetxController {
               origin: data.origin?.name?.split(',').first ?? "City",
               destination: data.destination?.name?.split(',').first ?? "City",
               date: GpUtil.formatDate(
-                  DateTime.parse(data.date ?? Strings.defaultDate))));
+                  DateTime.parse(data.date ?? LocaleKeys.app_defaultDate.tr))));
     } catch (e) {
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
@@ -150,7 +151,7 @@ class RiderMyRideRequestController extends GetxController {
               origin: data.origin?.name?.split(',').first ?? "City",
               destination: data.destination?.name?.split(',').first ?? "City",
               date: GpUtil.formatDate(
-                  DateTime.parse(data.date ?? Strings.defaultDate))));
+                  DateTime.parse(data.date ?? LocaleKeys.app_defaultDate.tr))));
     }
   }
 
@@ -181,7 +182,7 @@ class RiderMyRideRequestController extends GetxController {
               origin: data?.origin?.name?.split(',').first ?? "City",
               destination: data?.destination?.name?.split(',').first ?? "City",
               date: GpUtil.formatDate(
-                  DateTime.parse(data?.date ?? Strings.defaultDate))),
+                  DateTime.parse(data?.date ?? LocaleKeys.app_defaultDate.tr))),
                   "ridePostId": ridePostId
           });
     } catch (e) {
@@ -197,7 +198,7 @@ class RiderMyRideRequestController extends GetxController {
               origin: data?.origin?.name?.split(',').first ?? "City",
               destination: data?.destination?.name?.split(',').first ?? "City",
               date: GpUtil.formatDate(
-                  DateTime.parse(data?.date ?? Strings.defaultDate))));
+                  DateTime.parse(data?.date ?? LocaleKeys.app_defaultDate.tr))));
     }
   }
 

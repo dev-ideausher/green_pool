@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../components/gp_progress.dart';
 import '../../../components/greenpool_textfield.dart';
 import '../../../res/strings.dart';
@@ -19,22 +20,22 @@ class OriginView extends GetView<OriginController> {
     return Scaffold(
         appBar: GreenPoolAppBar(
           title: controller.locationValues.name == LocationValues.origin.name || controller.locationValues.name == LocationValues.findRideOrigin.name
-              ?  Text(Strings.pickup)
+              ?  Text(LocaleKeys.app_pickup.tr)
               : controller.locationValues.name == LocationValues.destination.name || controller.locationValues.name == LocationValues.findRideDestination.name
-                  ? Text(Strings.destination)
-                  : Text(Strings.addStops),
+                  ? Text(LocaleKeys.app_destination.tr)
+                  : Text(LocaleKeys.app_addStops.tr),
         ),
         body: Column(
           children: [
             Obx(
               () => GreenPoolTextField(
                 hintText: controller.locationValues.name == LocationValues.origin.name || controller.locationValues.name == LocationValues.findRideOrigin.name
-                    ? Strings.enterOrigin
+                    ? LocaleKeys.app_enterOrigin.tr
                     : controller.locationValues.name == LocationValues.destination.name || controller.locationValues.name == LocationValues.findRideDestination.name
-                        ? Strings.enterDestinationAddress
+                        ? LocaleKeys.app_enterDestinationAddress.tr
                         : controller.locationValues.name == LocationValues.addStop1.name
-                            ? Strings.addStop1
-                            : Strings.addStop2,
+                            ? LocaleKeys.app_addStop1.tr
+                            : LocaleKeys.app_addStop2.tr,
                 controller: controller.originController,
                 onchanged: (value) {
                   controller.setSessionToken();

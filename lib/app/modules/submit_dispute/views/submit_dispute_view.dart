@@ -7,6 +7,7 @@ import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../components/greenpool_appbar.dart';
 import '../../../components/greenpool_textfield.dart';
 import '../../../constants/image_constant.dart';
@@ -21,7 +22,7 @@ class SubmitDisputeView extends GetView<SubmitDisputeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: GreenPoolAppBar(
-        title: Text(Strings.fileDispute),
+        title: Text(LocaleKeys.app_fileDispute.tr),
       ),
       resizeToAvoidBottomInset: false,
       body: SafeArea(
@@ -29,11 +30,11 @@ class SubmitDisputeView extends GetView<SubmitDisputeController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              Strings.fileIfanyPartyCausesAnyIssue,
+              LocaleKeys.app_fileIfanyPartyCausesAnyIssue.tr,
               style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
             ).paddingOnly(top: 32.kh, bottom: 24.kh),
             Text(
-              Strings.enterBookingId,
+              LocaleKeys.app_enterBookingId.tr,
               style: TextStyleUtil.k14Semibold(),
             ).paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
@@ -42,11 +43,11 @@ class SubmitDisputeView extends GetView<SubmitDisputeController> {
               hintColor: ColorUtil.kBlack01,
             ).paddingOnly(bottom: 16.kh),
             Text(
-              Strings.disputeDescription,
+              LocaleKeys.app_disputeDescription.tr,
               style: TextStyleUtil.k14Semibold(),
             ).paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
-              hintText: Strings.enterTextHere,
+              hintText: LocaleKeys.app_enterTextHere.tr,
               controller: controller.descriptionTextController,
               maxLines: 4,
               onchanged: (value) {
@@ -54,7 +55,7 @@ class SubmitDisputeView extends GetView<SubmitDisputeController> {
               },
             ).paddingOnly(bottom: 16.kh),
             Text(
-              Strings.uploadImages,
+              LocaleKeys.app_uploadImages.tr,
               style: TextStyleUtil.k14Semibold(),
             ).paddingOnly(bottom: 16.kh),
             GestureDetector(
@@ -130,7 +131,7 @@ class SubmitDisputeView extends GetView<SubmitDisputeController> {
                   controller.fileDisputeAPI();
                 },
                 isActive: controller.isActive.value,
-                label: Strings.submit,
+                label: LocaleKeys.app_submit.tr,
               ).paddingOnly(bottom: 40.kh),
             ),
           ],

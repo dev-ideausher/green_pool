@@ -11,6 +11,7 @@ import 'package:green_pool/app/services/dialog_helper.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../services/storage.dart';
 import '../../profile/controllers/profile_controller.dart';
 import '../controllers/home_controller.dart';
@@ -81,11 +82,11 @@ class HomeView extends GetView<HomeController> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            Strings.postRide,
+                            LocaleKeys.app_postRide.tr,
                             style: TextStyleUtil.k20Heading700(),
                           ).paddingOnly(bottom: 4.kh),
                           Text(
-                            Strings.offerRideNearby,
+                            LocaleKeys.app_offerRideNearby.tr,
                             style: TextStyleUtil.k14Regular(),
                           ),
                         ],
@@ -149,11 +150,11 @@ class HomeView extends GetView<HomeController> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            Strings.findRide,
+                            LocaleKeys.app_findRide.tr,
                             style: TextStyleUtil.k20Heading700(),
                           ).paddingOnly(bottom: 4.kh),
                           Text(
-                            Strings.takeRidesNearby,
+                            LocaleKeys.app_takeRidesNearby.tr,
                             style: TextStyleUtil.k14Regular(),
                           ),
                         ],

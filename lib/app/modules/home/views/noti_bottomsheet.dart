@@ -9,6 +9,7 @@ import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/storage.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../controllers/home_controller.dart';
 
 class NotificationBottomSheet extends GetView<HomeController> {
@@ -26,14 +27,14 @@ class NotificationBottomSheet extends GetView<HomeController> {
       child: Column(
         children: [
           Text(
-            Strings.enableNotification,
+            LocaleKeys.app_enableNotification.tr,
             style: TextStyleUtil.k18Heading600(),
           ),
           CommonImageView(
             svgPath: ImageConstant.svgEnableNotification,
           ).paddingSymmetric(vertical: 64.kh),
           Text(
-            Strings.dontLetAnyRideSlip,
+            LocaleKeys.app_dontLetAnyRideSlip.tr,
             style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack04),
             textAlign: TextAlign.center,
           ),
@@ -44,7 +45,7 @@ class NotificationBottomSheet extends GetView<HomeController> {
               Get.back();
               Get.find<GetStorageService>().hasTappedAllowNotification = true;
             },
-            label: Strings.enableNotifications,
+            label: LocaleKeys.app_enableNotifications.tr,
           ).paddingOnly(bottom: 16.kh),
         ],
       ),

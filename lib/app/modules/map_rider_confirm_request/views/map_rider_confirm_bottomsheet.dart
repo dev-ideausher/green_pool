@@ -5,6 +5,7 @@ import 'package:green_pool/app/components/origin_to_destination.dart';
 import 'package:green_pool/app/modules/rider_my_ride_request/controllers/rider_my_ride_request_controller.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../components/common_image_view.dart';
 import '../../../components/green_pool_divider.dart';
 import '../../../constants/image_constant.dart';
@@ -35,7 +36,7 @@ class MapRiderConfirmBottomsheet extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(children: [
             Text(
-              Strings.driverRequest,
+              LocaleKeys.app_driverRequest.tr,
               style: TextStyleUtil.k18Heading600(),
             ).paddingOnly(bottom: 4.kh),
             const GreenPoolDivider().paddingSymmetric(vertical: 8.kh),
@@ -90,7 +91,7 @@ class MapRiderConfirmBottomsheet extends StatelessWidget {
                                 border:
                                     Border.all(color: ColorUtil.kSecondary01)),
                             child: Text(
-                              Strings.message,
+                              LocaleKeys.app_message.tr,
                               style: TextStyleUtil.k12Semibold(),
                             ).paddingSymmetric(
                                 vertical: 4.kh, horizontal: 16.kw),
@@ -159,7 +160,7 @@ class MapRiderConfirmBottomsheet extends StatelessWidget {
                   //rating column
                   children: [
                     Text(
-                      Strings.rating,
+                      LocaleKeys.app_rating.tr,
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Container(
@@ -192,7 +193,7 @@ class MapRiderConfirmBottomsheet extends StatelessWidget {
                   //ride with column
                   children: [
                     Text(
-                      Strings.totalRides,
+                      LocaleKeys.app_totalRides.tr,
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Text(
@@ -209,11 +210,11 @@ class MapRiderConfirmBottomsheet extends StatelessWidget {
                   //joined in column
                   children: [
                     Text(
-                      Strings.joined,
+                      LocaleKeys.app_joined.tr,
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Text(
-                      '${Strings.inA} ${element?.driverRideDetails?.driverDetails?.firstOrNull?.createdAt?.substring(0, 4) ?? 2024}',
+                      '${LocaleKeys.app_inA.tr} ${element?.driverRideDetails?.driverDetails?.firstOrNull?.createdAt?.substring(0, 4) ?? 2024}',
                       style:
                           TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                     ),
@@ -231,7 +232,7 @@ class MapRiderConfirmBottomsheet extends StatelessWidget {
                       Get.back();
                       await controller.moveToPaymentFromConfirmSection(element);
                     },
-                    label: Strings.accept,
+                    label: LocaleKeys.app_accept.tr,
                     fontSize: 14.kh,
                     height: 40.kh,
                     width: 144.kw,
@@ -242,7 +243,7 @@ class MapRiderConfirmBottomsheet extends StatelessWidget {
                       await controller.rejectDriversRequestAPI(0);
                     },
                     isBorder: true,
-                    label: Strings.reject,
+                    label: LocaleKeys.app_reject.tr,
                     fontSize: 14.kh,
                     height: 40.kh,
                     width: 144.kw,

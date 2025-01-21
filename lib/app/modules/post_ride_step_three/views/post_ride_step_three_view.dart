@@ -6,11 +6,11 @@ import 'package:green_pool/app/components/gp_progress.dart';
 import 'package:green_pool/app/modules/post_ride_step_three/views/price_tile.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../components/green_pool_divider.dart';
 import '../../../components/greenpool_appbar.dart';
 import '../../../components/greenpool_textfield.dart';
 import '../../../components/richtext_heading.dart';
-import '../../../res/strings.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
 import '../../../services/text_style_util.dart';
@@ -23,7 +23,7 @@ class PostRideStepThreeView extends GetView<PostRideStepThreeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: GreenPoolAppBar(
-        title: Text(Strings.postARide),
+        title: Text(LocaleKeys.app_postARide.tr),
       ),
       body: Obx(
         () => controller.isLoading.value
@@ -37,7 +37,7 @@ class PostRideStepThreeView extends GetView<PostRideStepThreeController> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         RichTextHeading(
-                          text: Strings.pricing,
+                          text: LocaleKeys.app_pricing.tr,
                           style: TextStyleUtil.k18Bold(),
                         ),
                         Expanded(
@@ -49,17 +49,17 @@ class PostRideStepThreeView extends GetView<PostRideStepThreeController> {
                       ],
                     ).paddingOnly(top: 8.kh, bottom: 4.kh),
                     Text(
-                      Strings.specifyAReasonableCost,
+                      LocaleKeys.app_specifyAReasonableCost.tr,
                       style:
                           TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                     ).paddingOnly(bottom: 24.kh),
                     Text(
-                      Strings.pricePerSeat,
+                      LocaleKeys.app_pricePerSeat.tr,
                       style:
                           TextStyleUtil.k14Semibold(color: ColorUtil.kBlack01),
                     ).paddingOnly(bottom: 4.kh),
                     Text(
-                      Strings.thisPricingStrategy,
+                      LocaleKeys.app_thisPricingStrategy.tr,
                       style:
                           TextStyleUtil.k14Semibold(color: ColorUtil.kBlack04),
                     ),
@@ -126,13 +126,13 @@ class PostRideStepThreeView extends GetView<PostRideStepThreeController> {
                       child: Obx(
                         () => controller.viewPrice.value
                             ? Text(
-                                Strings.seeLess,
+                                LocaleKeys.app_seeLess.tr,
                                 style: TextStyleUtil.k14Semibold(
                                     color: ColorUtil.kSecondary01,
                                     textDecoration: TextDecoration.underline),
                               ).paddingOnly(bottom: 12.kh)
                             : Text(
-                                Strings.viewPriceOfEachStop,
+                                LocaleKeys.app_viewPriceOfEachStop.tr,
                                 style: TextStyleUtil.k14Semibold(
                                     color: ColorUtil.kSecondary01,
                                     textDecoration: TextDecoration.underline),
@@ -224,7 +224,7 @@ class PostRideStepThreeView extends GetView<PostRideStepThreeController> {
                         : const SizedBox()),
                     Center(
                       child: Text(
-                        Strings.plsPayInApp,
+                        LocaleKeys.app_plsPayInApp.tr,
                         style: TextStyleUtil.k18Bold(),
                         textAlign: TextAlign.center,
                       ).paddingOnly(top: 20.kh),
@@ -240,7 +240,7 @@ class PostRideStepThreeView extends GetView<PostRideStepThreeController> {
           () => GreenPoolButton(
             onPressed: () => controller.moveToGuidelines(),
             isActive: controller.isActivePricingButton.value,
-            label: Strings.next,
+            label: LocaleKeys.app_next.tr,
           ).paddingOnly(bottom: 20.kh, left: 16.kw, right: 16.kw),
         ),
       ),
@@ -253,7 +253,7 @@ class PostRideStepThreeView extends GetView<PostRideStepThreeController> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          Strings.description,
+                          LocaleKeys.app_description.tr,
                           style: TextStyleUtil.k18Bold(),
                         ),
                         Expanded(
@@ -265,12 +265,12 @@ class PostRideStepThreeView extends GetView<PostRideStepThreeController> {
                       ],
                     ).paddingOnly(top: 12.kh, bottom: 4.kh),
                     Text(
-                      Strings.includeKeyTripDetails,
+                      LocaleKeys.app_includeKeyTripDetails.tr,
                       style:
                           TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                     ).paddingOnly(bottom: 24.kh),
                     GreenPoolTextField(
-                      hintText: Strings.enterTextHere,
+                      hintText: LocaleKeys.app_enterTextHere.tr,
                       controller: controller.descriptionTextController,
                       textCapitalization: TextCapitalization.sentences,
                       onchanged: (value) {

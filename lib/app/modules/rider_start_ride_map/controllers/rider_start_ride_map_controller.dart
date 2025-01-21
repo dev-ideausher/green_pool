@@ -14,6 +14,7 @@ import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/storage.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../constants/image_constant.dart';
 import '../../../data/booking_detail_model.dart';
 import '../../../data/live_location_model.dart';
@@ -392,13 +393,13 @@ class RiderStartRideMapController extends GetxController {
   String getMsg() {
     if ((riderBookingDetail.value.isStarted ?? false) == false) {
       return arrivalTime.value.contains("1 min")
-          ? Strings.yourRideIsArrived
-          : "${Strings.yourRideIsArrivingIn} ${arrivalTime.value}.";
+          ? LocaleKeys.app_yourRideIsArrived.tr
+          : "${LocaleKeys.app_yourRideIsArrivingIn.tr} ${arrivalTime.value}.";
     } else {
       if (isLessThanFiveMinutes(arrivalTime.value)) {
-        return Strings.youAreAboutToReachYourDestination;
+        return LocaleKeys.app_youAreAboutToReachYourDestination.tr;
       } else {
-        return Strings.youWillReachYourDestinationIn + arrivalTime.value;
+        return LocaleKeys.app_youWillReachYourDestinationIn.tr + arrivalTime.value;
       }
     }
   }
@@ -445,7 +446,7 @@ class RiderStartRideMapController extends GetxController {
                       "City",
               
                   date: GpUtil.formatDate(DateTime.parse(bookingDetail.value.driverBookingDetails?.date ??
-                  Strings.defaultDate))));
+                  LocaleKeys.app_defaultDate.tr))));
     } catch (e) {
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
@@ -462,7 +463,7 @@ class RiderStartRideMapController extends GetxController {
                   bookingDetail.value.driverBookingDetails?.destination?.name?.split(',').first ??
                       "City",
               date: GpUtil.formatDate(DateTime.parse(bookingDetail.value.driverBookingDetails?.date ??
-                  Strings.defaultDate))));
+                  LocaleKeys.app_defaultDate.tr))));
     }
   }
 

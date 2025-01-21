@@ -11,6 +11,7 @@ import 'package:green_pool/app/services/dio/api_service.dart';
 import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/snackbar.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../data/booking_detail_model.dart';
 import '../../../data/recurring_rides_model.dart';
 import '../../../data/ride_detail_id.dart';
@@ -86,7 +87,7 @@ class MyRidesOneTimeController extends GetxController {
             debugPrint("riderCancelRideAPI error: $e");
           }
         },
-        Strings.cancelRide, //btnText
+        LocaleKeys.app_cancelRide.tr, //btnText
       );
     } else {
       showMySnackbar(
@@ -358,13 +359,13 @@ class MyRidesOneTimeController extends GetxController {
       } else {
         return isNoRidesVisible = false;
       }
-    } else if (type == Strings.booked) {
+    } else if (type == LocaleKeys.app_booked.tr) {
       if (driverRides.isEmpty) {
         return isNoRidesVisible = true;
       } else {
         return isNoRidesVisible = false;
       }
-    } else if (type == Strings.published) {
+    } else if (type == LocaleKeys.app_published.tr) {
       if (riderRides.isEmpty) {
         return isNoRidesVisible = true;
       } else {

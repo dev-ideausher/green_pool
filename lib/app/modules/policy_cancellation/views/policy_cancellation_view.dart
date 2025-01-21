@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:green_pool/generated/locales.g.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../../components/gp_progress.dart';
 import '../../../components/greenpool_appbar.dart';
-import '../../../res/strings.dart';
 import '../controllers/policy_cancellation_controller.dart';
 
 class PolicyCancellationView extends GetView<PolicyCancellationController> {
@@ -14,7 +14,7 @@ class PolicyCancellationView extends GetView<PolicyCancellationController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: GreenPoolAppBar(
-        title: Text(Strings.driverCancellationPolicy),
+        title: Text(LocaleKeys.app_driverCancellationPolicy.tr),
       ),
       body: Obx(
         () => controller.isLoad.value

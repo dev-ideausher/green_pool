@@ -12,7 +12,7 @@ class GreenPoolTextField extends StatelessWidget {
   final Color? fillColor, hintColor;
   final TextCapitalization textCapitalization;
   final bool? isSuffixNeeded;
-  final InputBorder? border;
+  final InputBorder? border, focusedBorder;
   final TextInputType? keyboardType;
   final bool? obscureText, readOnly;
   final Function(String?)? onchanged, onSaved;
@@ -48,7 +48,8 @@ class GreenPoolTextField extends StatelessWidget {
       this.isSuffixNeeded,
       this.hintColor,
       this.textCapitalization = TextCapitalization.none,
-      this.inputFormatters});
+      this.inputFormatters,
+      this.focusedBorder});
 
   @override
   Widget build(BuildContext context) {
@@ -98,9 +99,10 @@ class GreenPoolTextField extends StatelessWidget {
             UnderlineInputBorder(
                 borderSide: const BorderSide(color: Colors.transparent),
                 borderRadius: BorderRadius.circular(8.kh)),
-        focusedBorder: UnderlineInputBorder(
-            borderSide: const BorderSide(color: Colors.transparent),
-            borderRadius: BorderRadius.circular(8.kh)),
+        focusedBorder: focusedBorder ??
+            UnderlineInputBorder(
+                borderSide: const BorderSide(color: Colors.transparent),
+                borderRadius: BorderRadius.circular(8.kh)),
         disabledBorder: UnderlineInputBorder(
             borderSide: const BorderSide(color: Colors.transparent),
             borderRadius: BorderRadius.circular(8.kh)),

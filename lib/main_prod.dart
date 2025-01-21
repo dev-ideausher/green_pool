@@ -17,6 +17,8 @@ import 'app_environment.dart';
 import 'firebase_options.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+import 'generated/locales.g.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   if (Platform.isIOS) {
@@ -51,7 +53,7 @@ Future<void> main() async {
       smartManagement: SmartManagement.full,
       debugShowCheckedModeBanner: false,
       locale: const Locale('en', 'US'),
-      // translationsKeys: AppTranslation.translations,
+      translationsKeys: AppTranslation.translations,
       initialRoute: AppPages.INITIAL,
       initialBinding: HomeBinding(),
       getPages: AppPages.routes,

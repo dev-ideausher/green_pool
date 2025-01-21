@@ -6,6 +6,7 @@ import 'package:green_pool/app/components/common_image_view.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../components/gp_progress.dart';
 import '../../../res/strings.dart';
 import '../../../services/colors.dart';
@@ -72,7 +73,7 @@ class RiderStartRideMapView extends GetView<RiderStartRideMapController> {
                           Get.find<HomeController>().isPinkModeOn.value
                               ? ColorUtil.kSecondaryPinkMode
                               : ColorUtil.kPrimary05,
-                      tooltip: Strings.openGoogleMaps,
+                      tooltip: LocaleKeys.app_openGoogleMaps.tr,
                       onPressed: () {
                         controller.openGoogleMaps();
                       },

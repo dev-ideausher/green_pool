@@ -7,6 +7,7 @@ import 'package:green_pool/app/data/driver_send_request_model.dart';
 import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../components/green_pool_divider.dart';
 import '../../../constants/image_constant.dart';
 import '../../../res/strings.dart';
@@ -35,7 +36,7 @@ class MapDriverSendBottomsheet extends StatelessWidget {
           child: Column(
             children: [
               Text(
-                Strings.rideRequest,
+                LocaleKeys.app_rideRequest.tr,
                 style: TextStyleUtil.k18Heading600(),
               ).paddingOnly(bottom: 32.kh),
               const GreenPoolDivider().paddingSymmetric(vertical: 16.kh),
@@ -102,7 +103,7 @@ class MapDriverSendBottomsheet extends StatelessWidget {
                       //rating column
                       children: [
                         Text(
-                          Strings.rating,
+                          LocaleKeys.app_rating.tr,
                           style: TextStyleUtil.k12Semibold(),
                         ).paddingOnly(bottom: 4.kh),
                         Container(
@@ -132,7 +133,7 @@ class MapDriverSendBottomsheet extends StatelessWidget {
                       //ride with column
                       children: [
                         Text(
-                          Strings.totalRides,
+                          LocaleKeys.app_totalRides.tr,
                           style: TextStyleUtil.k12Semibold(),
                         ).paddingOnly(bottom: 4.kh),
                         Text(
@@ -146,11 +147,11 @@ class MapDriverSendBottomsheet extends StatelessWidget {
                       //joined in column
                       children: [
                         Text(
-                          Strings.joined,
+                          LocaleKeys.app_joined.tr,
                           style: TextStyleUtil.k12Semibold(),
                         ).paddingOnly(bottom: 4.kh),
                         Text(
-                          '${Strings.inA} ${element?.riderDetails?.createdAt?.substring(0, 4) ?? 2024}',
+                          '${LocaleKeys.app_inA.tr} ${element?.riderDetails?.createdAt?.substring(0, 4) ?? 2024}',
                           style: TextStyleUtil.k14Regular(
                               color: ColorUtil.kBlack03),
                         ),
@@ -164,7 +165,7 @@ class MapDriverSendBottomsheet extends StatelessWidget {
                   children: [
                     GreenPoolButton(
                       onPressed: () {},
-                      label: Strings.accept,
+                      label: LocaleKeys.app_accept.tr,
                       fontSize: 14.kh,
                       height: 40.kh,
                       width: 144.kw,
@@ -173,7 +174,7 @@ class MapDriverSendBottomsheet extends StatelessWidget {
                     GreenPoolButton(
                       onPressed: () {},
                       isBorder: true,
-                      label: Strings.reject,
+                      label: LocaleKeys.app_reject.tr,
                       fontSize: 14.kh,
                       height: 40.kh,
                       width: 144.kw,

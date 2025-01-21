@@ -13,6 +13,7 @@ import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../components/common_image_view.dart';
 import '../../../components/opt_heading_text.dart';
 import '../../../components/upload_add_picture.dart';
@@ -35,9 +36,9 @@ class SetupUser extends GetView<ProfileSetupController> {
             Center(
               child: ProfileImage(controller: controller),
             ).paddingOnly(bottom: 40.kh),
-            RichTextHeading(text: Strings.fullName).paddingOnly(bottom: 8.kh),
+            RichTextHeading(text: LocaleKeys.app_fullName.tr).paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
-              hintText: Strings.enterName,
+              hintText: LocaleKeys.app_enterName.tr,
               controller: controller.fullName,
               focusNode: controller.nameFocusNode,
               inputFormatters: [
@@ -48,10 +49,10 @@ class SetupUser extends GetView<ProfileSetupController> {
               autovalidateMode: AutovalidateMode.onUserInteraction,
               suffix: SvgPicture.asset(ImageConstant.svgProfileEditPen),
             ).paddingOnly(bottom: 16.kh),
-            OptFieldHeading(heading: Strings.emailAddress)
+            OptFieldHeading(heading: LocaleKeys.app_emailAddress.tr)
                 .paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
-              hintText: Strings.emailID,
+              hintText: LocaleKeys.app_emailID.tr,
               controller: controller.email,
               focusNode: controller.emailFocusNode,
               keyboardType: TextInputType.emailAddress,
@@ -62,10 +63,10 @@ class SetupUser extends GetView<ProfileSetupController> {
                   : SvgPicture.asset(ImageConstant.svgProfileEditPen),
               readOnly: controller.readOnlyEmail,
             ).paddingOnly(bottom: 16.kh),
-            RichTextHeading(text: Strings.phoneNumber)
+            RichTextHeading(text: LocaleKeys.app_phoneNumber.tr)
                 .paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
-              hintText: Strings.enterPhoneNumber,
+              hintText: LocaleKeys.app_enterPhoneNumber.tr,
               inputFormatters: [
                 FilteringTextInputFormatter.allow(
                     RegExp(r'[0-9]')), // Only allow digits (0-9)
@@ -85,10 +86,10 @@ class SetupUser extends GetView<ProfileSetupController> {
               autovalidateMode: AutovalidateMode.onUserInteraction,
               readOnly: !controller.readOnlyEmail,
             ).paddingOnly(bottom: 16.kh),
-            RichTextHeading(text: Strings.gender).paddingOnly(bottom: 8.kh),
+            RichTextHeading(text: LocaleKeys.app_gender.tr).paddingOnly(bottom: 8.kh),
             Obx(
               () => GreenPoolTextField(
-                hintText: Strings.selectGender,
+                hintText: LocaleKeys.app_selectGender.tr,
                 controller: controller.gender,
                 focusNode: controller.genderFocusNode,
                 validator: (value) => controller.validateGender(value),
@@ -146,11 +147,11 @@ class SetupUser extends GetView<ProfileSetupController> {
                 ).paddingOnly(bottom: 16.kh),
               ),
             ),
-            RichTextHeading(text: Strings.cityProvince)
+            RichTextHeading(text: LocaleKeys.app_cityProvince.tr)
                 .paddingOnly(bottom: 8.kh),
             Obx(
               () => GreenPoolTextField(
-                hintText: Strings.selectCity,
+                hintText: LocaleKeys.app_selectCity.tr,
                 controller: controller.city,
                 focusNode: controller.cityFocusNode,
                 validator: (value) => controller.validateCity(value),
@@ -214,10 +215,10 @@ class SetupUser extends GetView<ProfileSetupController> {
                     )).paddingOnly(bottom: 16.kh),
               ),
             ),
-            OptFieldHeading(heading: Strings.dateOfBirth)
+            OptFieldHeading(heading: LocaleKeys.app_dateOfBirth.tr)
                 .paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
-              hintText: Strings.selectYourDateOfBirth,
+              hintText: LocaleKeys.app_selectYourDateOfBirth.tr,
               suffix: SvgPicture.asset(ImageConstant.svgIconCalendar),
               controller: controller.formattedDateOfBirth,
               readOnly: true,
@@ -226,47 +227,10 @@ class SetupUser extends GetView<ProfileSetupController> {
               },
               /*validator: (value) => controller.validateDOB(value),
               autovalidateMode: AutovalidateMode.onUserInteraction,*/
-            ).paddingOnly(bottom: 16.kh),
-            OptFieldHeading(heading: Strings.idVerification)
-                .paddingOnly(bottom: 8.kh),
-            GestureDetector(
-              onTap: () => Get.to(() => UploadIDView(
-                    onPressedGallery: () {
-                      controller.getIDImage(ImageSource.gallery);
-                    },
-                    onPressedSelfie: () {
-                      controller.getIDImage(ImageSource.camera);
-                    },
-                  )),
-              child: Obx(
-                () => Container(
-                  padding:
-                      EdgeInsets.symmetric(vertical: 68.kh, horizontal: 76.kw),
-                  decoration: BoxDecoration(
-                      color: ColorUtil.kGreyColor,
-                      borderRadius: BorderRadius.circular(8.kh)),
-                  child: controller.isIDPicked.value
-                      ? Image.file(
-                          controller.selectedIDImagePath.value!,
-                        )
-                      : Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SvgPicture.asset(ImageConstant.svgIconUpload)
-                                .paddingOnly(right: 8.kw),
-                            Text(
-                              Strings.uploadId,
-                              style: TextStyleUtil.k14Regular(
-                                  color: ColorUtil.kBlack03),
-                            ),
-                          ],
-                        ),
-                ),
-              ),
             ),
             GreenPoolButton(
               onPressed: () => controller.checkUserValidations(),
-              label: Strings.proceed,
+              label: LocaleKeys.app_proceed.tr,
             ).paddingSymmetric(vertical: 40.kh),
           ],
         ),
@@ -329,7 +293,7 @@ class ProfileImage extends StatelessWidget {
           ).paddingOnly(bottom: 12.kh, top: 32.kh),
         ),
         Text(
-          Strings.takeOrUploadProfilePic,
+          LocaleKeys.app_takeOrUploadProfilePic.tr,
           style: TextStyleUtil.k16Regular(color: ColorUtil.kNeutral4),
         ),
       ],

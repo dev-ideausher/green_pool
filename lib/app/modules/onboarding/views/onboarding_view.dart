@@ -8,6 +8,7 @@ import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../controllers/onboarding_controller.dart';
 import 'get_started_view.dart';
 import 'onboard1_view.dart';
@@ -39,7 +40,7 @@ class OnboardingView extends GetView<OnboardingController> {
                         controller.pageIndex.value = 1;
                       },
                       padding: const EdgeInsets.all(0),
-                      label: Strings.skip,
+                      label: LocaleKeys.app_skip.tr,
                       color: controller.pageIndex.value == 1
                           ? ColorUtil.kSecondaryPinkMode
                           : ColorUtil.kPrimary05,
@@ -79,7 +80,7 @@ class OnboardingView extends GetView<OnboardingController> {
                         onPressed: () {
                           Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
                         },
-                        label: Strings.letsGetStarted,
+                        label: LocaleKeys.app_letsGetStarted.tr,
                       ).paddingOnly(bottom: 26.kh, top: 32.kh),
                     )
                   : Row(
@@ -120,7 +121,7 @@ class OnboardingView extends GetView<OnboardingController> {
                           color: controller.pageIndex.value == 1
                               ? ColorUtil.kPrimary2PinkMode
                               : ColorUtil.kPrimary01,
-                          label: Strings.next,
+                          label: LocaleKeys.app_next.tr,
                           fontSize: 14.kh,
                           width: 120.kw,
                           height: 40.kh,

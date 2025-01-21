@@ -6,6 +6,7 @@ import 'package:green_pool/app/data/my_rides_model.dart';
 import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../components/common_image_view.dart';
 import '../../../components/origin_to_destination.dart';
 import '../../../constants/image_constant.dart';
@@ -134,11 +135,11 @@ class DriverTile extends StatelessWidget {
               const GreenPoolDivider().paddingOnly(bottom: 8.kh),
               OriginToDestination(
                 needPickupText: true,
-                origin: myRidesModelData.origin?.name ?? Strings.pickup,
+                origin: myRidesModelData.origin?.name ?? LocaleKeys.app_pickup.tr,
                 stop1: myRidesModelData.stops?[0]?.name ?? "",
                 stop2: myRidesModelData.stops?[1]?.name ?? "",
                 destination:
-                    myRidesModelData.destination?.name ?? Strings.destination,
+                    myRidesModelData.destination?.name ?? LocaleKeys.app_destination.tr,
               ).paddingOnly(bottom: 8.kh),
               const GreenPoolDivider().paddingOnly(bottom: 16.kh),
               myRidesModelData.isStarted == true
@@ -153,7 +154,7 @@ class DriverTile extends StatelessWidget {
                       height: 40.kh,
                       padding: EdgeInsets.all(8.kh),
                       fontSize: 14.kh,
-                      label: Strings.viewDetails)
+                      label: LocaleKeys.app_viewDetails.tr)
                   : myRidesModelData.date == "" || myRidesModelData.date == null
                       ? Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -174,7 +175,7 @@ class DriverTile extends StatelessWidget {
                                   Get.find<HomeController>().isPinkModeOn.value
                                       ? ColorUtil.kPrimary3PinkMode
                                       : ColorUtil.kSecondary01,
-                              label: Strings.viewDetails,
+                              label: LocaleKeys.app_viewDetails.tr,
                             ),
                             GreenPoolButton(
                               onPressed: () {
@@ -194,7 +195,7 @@ class DriverTile extends StatelessWidget {
                                   Get.find<HomeController>().isPinkModeOn.value
                                       ? ColorUtil.kPrimary3PinkMode
                                       : ColorUtil.kSecondary01,
-                              label: Strings.cancelRide,
+                              label: LocaleKeys.app_cancelRide.tr,
                             ),
                           ],
                         )
@@ -215,12 +216,12 @@ class DriverTile extends StatelessWidget {
                                     fontSize: 14.kh,
                                     label:
                                         (myRidesModelData.isCompleted ?? false)
-                                            ? Strings.rideCompleted
+                                            ? LocaleKeys.app_rideCompleted.tr
                                             : (myRidesModelData
                                                         .postsInfo?.isEmpty ??
                                                     false)
-                                                ? Strings.requests
-                                                : Strings.startRide),
+                                                ? LocaleKeys.app_requests.tr
+                                                : LocaleKeys.app_startRide.tr),
                                 GreenPoolButton(
                                   onPressed: () {
                                     controller.checkCancellationCount(
@@ -241,7 +242,7 @@ class DriverTile extends StatelessWidget {
                                           .value
                                       ? ColorUtil.kPrimary3PinkMode
                                       : ColorUtil.kSecondary01,
-                                  label: Strings.cancelRide,
+                                  label: LocaleKeys.app_cancelRide.tr,
                                 ),
                               ],
                             )
@@ -344,7 +345,7 @@ class RequestAndCancelButtons extends StatelessWidget {
           labelColor: Get.find<HomeController>().isPinkModeOn.value
               ? ColorUtil.kPrimary3PinkMode
               : ColorUtil.kSecondary01,
-          label: Strings.request,
+          label: LocaleKeys.app_request.tr,
         ),
         GreenPoolButton(
           onPressed: () {
@@ -361,7 +362,7 @@ class RequestAndCancelButtons extends StatelessWidget {
           labelColor: Get.find<HomeController>().isPinkModeOn.value
               ? ColorUtil.kPrimary3PinkMode
               : ColorUtil.kSecondary01,
-          label: Strings.cancelRide,
+          label: LocaleKeys.app_cancelRide.tr,
         ),
       ],
     );

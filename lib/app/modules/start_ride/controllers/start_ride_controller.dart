@@ -15,6 +15,7 @@ import 'package:green_pool/app/services/dio/endpoints.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/snackbar.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../data/booking_detail_model.dart';
 import '../../../data/chat_arg.dart';
 import '../../../res/strings.dart';
@@ -454,7 +455,7 @@ class StartRideController extends GetxController {
                   myRidesModel.value.driverBookingDetails?.destination?.name?.split(',').first ??
                       "City",
               date: GpUtil.formatDate(DateTime.parse(myRidesModel.value.driverBookingDetails?.date ??
-                  Strings.defaultDate))));
+                  LocaleKeys.app_defaultDate.tr))));
     } catch (e) {
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
@@ -486,7 +487,7 @@ class StartRideController extends GetxController {
                   myRidesModel.value.driverBookingDetails?.destination?.name?.split(',').first ??
                       "City",
               date: GpUtil.formatDate(DateTime.parse(myRidesModel.value.driverBookingDetails?.date ??
-                  Strings.defaultDate))));
+                  LocaleKeys.app_defaultDate.tr))));
     }
   }
 
@@ -590,9 +591,9 @@ class StartRideController extends GetxController {
 
   getButtonLabel() {
     if (myRidesModel.value.driverBookingDetails?.isStarted ?? false) {
-      btnText.value = Strings.endRide;
+      btnText.value = LocaleKeys.app_endRide.tr;
     } else {
-      btnText.value = Strings.startRide;
+      btnText.value = LocaleKeys.app_startRide.tr;
     }
   }
 

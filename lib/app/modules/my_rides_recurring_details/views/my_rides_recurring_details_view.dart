@@ -9,6 +9,7 @@ import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../components/gp_progress.dart';
 import '../../../components/green_pool_divider.dart';
 import '../../../data/ride_detail_id.dart';
@@ -26,7 +27,7 @@ class MyRidesRecurringDetailsView
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: GreenPoolAppBar(
-        title: Text(Strings.rideDetails),
+        title: Text(LocaleKeys.app_rideDetails.tr),
       ),
       body: Obx(
         () => controller.isLoading.value
@@ -40,7 +41,7 @@ class MyRidesRecurringDetailsView
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          Strings.pickupToDrop,
+                          LocaleKeys.app_pickupToDrop.tr,
                           style: TextStyleUtil.k16Bold(),
                         ).paddingOnly(bottom: 16.kh),
                         OriginToDestination(
@@ -57,7 +58,7 @@ class MyRidesRecurringDetailsView
 
                     //Vehicle details
                     Text(
-                      Strings.vehicleDetails,
+                      LocaleKeys.app_vehicleDetails.tr,
                       style: TextStyleUtil.k14Bold(),
                     ).paddingOnly(bottom: 16.kh),
                     Row(
@@ -107,7 +108,7 @@ class MyRidesRecurringDetailsView
 
                     //Features available
                     Text(
-                      Strings.featuresAvailable,
+                      LocaleKeys.app_featuresAvailable.tr,
                       style: TextStyleUtil.k14Bold(),
                     ).paddingOnly(bottom: 16.kh),
 
@@ -116,7 +117,7 @@ class MyRidesRecurringDetailsView
                             true
                         ? Amenities(
                                 toggleSwitch: false,
-                                text: Strings.appreciatesConversation,
+                                text: LocaleKeys.app_appreciatesConversation.tr,
                                 image: ImageConstant.svgAmenities1)
                             .paddingOnly(bottom: 8.kh)
                         : const SizedBox(),
@@ -125,7 +126,7 @@ class MyRidesRecurringDetailsView
                             true
                         ? Amenities(
                                 toggleSwitch: false,
-                                text: Strings.enjoysMusic,
+                                text: LocaleKeys.app_enjoysMusic.tr,
                                 image: ImageConstant.svgAmenities2)
                             .paddingOnly(bottom: 8.kh)
                         : const SizedBox(),
@@ -134,7 +135,7 @@ class MyRidesRecurringDetailsView
                             true
                         ? Amenities(
                                 toggleSwitch: false,
-                                text: Strings.smokeFree,
+                                text: LocaleKeys.app_smokeFree.tr,
                                 image: ImageConstant.svgAmenities3)
                             .paddingOnly(bottom: 8.kh)
                         : const SizedBox(),
@@ -143,7 +144,7 @@ class MyRidesRecurringDetailsView
                             true
                         ? Amenities(
                                 toggleSwitch: false,
-                                text: Strings.petFriendly,
+                                text: LocaleKeys.app_petFriendly.tr,
                                 image: ImageConstant.svgAmenities4)
                             .paddingOnly(bottom: 8.kh)
                         : const SizedBox(),
@@ -152,7 +153,7 @@ class MyRidesRecurringDetailsView
                             true
                         ? Amenities(
                                 toggleSwitch: false,
-                                text: Strings.winterTires,
+                                text: LocaleKeys.app_winterTires.tr,
                                 image: ImageConstant.svgAmenities5)
                             .paddingOnly(bottom: 8.kh)
                         : const SizedBox(),
@@ -161,7 +162,7 @@ class MyRidesRecurringDetailsView
                             true
                         ? Amenities(
                                 toggleSwitch: false,
-                                text: Strings.coolingOrHeating,
+                                text: LocaleKeys.app_coolingOrHeating.tr,
                                 image: ImageConstant.svgAmenities6)
                             .paddingOnly(bottom: 8.kh)
                         : const SizedBox(),
@@ -170,7 +171,7 @@ class MyRidesRecurringDetailsView
                             true
                         ? Amenities(
                                 toggleSwitch: false,
-                                text: Strings.babySeat,
+                                text: LocaleKeys.app_babySeat.tr,
                                 image: ImageConstant.svgAmenities7)
                             .paddingOnly(bottom: 8.kh)
                         : const SizedBox(),
@@ -179,14 +180,14 @@ class MyRidesRecurringDetailsView
                             true
                         ? Amenities(
                                 toggleSwitch: false,
-                                text: Strings.heatedSeats,
+                                text: LocaleKeys.app_heatedSeats.tr,
                                 image: ImageConstant.svgAmenities8)
                             .paddingOnly(bottom: 8.kh)
                         : const SizedBox(),
 
                     const GreenPoolDivider().paddingSymmetric(vertical: 16.kh),
                     /*Text(
-                      Strings.description,
+                      LocaleKeys.app_description.tr,
                       style: TextStyleUtil.k14Bold(),
                     ).paddingOnly(bottom: 8.kh),
                     Wrap(
@@ -263,7 +264,7 @@ class MyRidesRecurringDetailsView
                                 Align(
                                   alignment: Alignment.bottomRight,
                                   child: GreenPoolButton(
-                                      label: Strings.viewMatchingRiders,
+                                      label: LocaleKeys.app_viewMatchingRiders.tr,
                                       height: 40.kh,
                                       width: 192.kw,
                                       fontSize: 14.kh,

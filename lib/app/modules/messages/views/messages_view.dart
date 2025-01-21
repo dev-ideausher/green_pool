@@ -10,6 +10,7 @@ import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../components/common_image_view.dart';
 import '../../../components/greenpool_appbar.dart';
 import '../../../res/strings.dart';
@@ -24,7 +25,7 @@ class MessagesView extends GetView<MessagesController> {
     controller.getMessageListAPI();
     return Scaffold(
         appBar: GreenPoolAppBar(
-          title: Text(Strings.messages),
+          title: Text(LocaleKeys.app_messages.tr),
           leading: const SizedBox(),
           actions: [
             GreenPoolButton(
@@ -63,7 +64,7 @@ class MessagesView extends GetView<MessagesController> {
                     ? Center(
                         child: Text(
                           //implement a text button to see archived msgs
-                          Strings.yourFutureMsgsWillApearHere,
+                          LocaleKeys.app_yourFutureMsgsWillApearHere.tr,
                           style: TextStyleUtil.k24Heading600(),
                           textAlign: TextAlign.center,
                         ),
@@ -92,7 +93,7 @@ class MessagesView extends GetView<MessagesController> {
                                           message?.chatRoomId ?? "");
                                     },
                                     icon: Icons.archive,
-                                    label: Strings.archive,
+                                    label: LocaleKeys.app_archive.tr,
                                     backgroundColor: isPinkModeOn
                                         ? ColorUtil.kPrimary3PinkMode
                                         : ColorUtil.kSecondary01,
@@ -122,7 +123,7 @@ class MessagesView extends GetView<MessagesController> {
                                   "${message?.reciver?.fullName ?? "User"} • ${message?.paymentStatus ?? "Inquiry"}",
                               path: message?.reciver?.profilePic?.url ?? "",
                               subtitle:
-                                  "${message?.driverRideDetails?.origin?.split(",").first ?? "City"} to ${message?.driverRideDetails?.destination?.split(",").first ?? "City"}, ${GpUtil.formatDate(DateTime.parse(message?.driverRideDetails?.date ?? Strings.defaultDate))}",
+                                  "${message?.driverRideDetails?.origin?.split(",").first ?? "City"} to ${message?.driverRideDetails?.destination?.split(",").first ?? "City"}, ${GpUtil.formatDate(DateTime.parse(message?.driverRideDetails?.date ?? LocaleKeys.app_defaultDate.tr))}",
                               lastMsg: message?.lastMessage ?? "...",
                               lastMsgStyle: messageRead
                                   ? TextStyleUtil.k12Regular(
@@ -142,7 +143,7 @@ class MessagesView extends GetView<MessagesController> {
                                       value: 0,
                                       height: 45.kh,
                                       textStyle: TextStyleUtil.k12Medium(),
-                                      child: Text(Strings.moveToArchive,
+                                      child: Text(LocaleKeys.app_moveToArchive.tr,
                                           style: TextStyleUtil.k14Regular()),
                                     ),
                                   ];

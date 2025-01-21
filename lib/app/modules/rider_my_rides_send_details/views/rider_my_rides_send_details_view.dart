@@ -7,6 +7,7 @@ import 'package:green_pool/app/modules/rider_my_ride_request/controllers/rider_m
 import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../components/green_pool_divider.dart';
 import '../../../components/greenpool_appbar.dart';
 import '../../../components/origin_to_destination.dart';
@@ -28,7 +29,7 @@ class RiderMyRidesSendDetailsView
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: GreenPoolAppBar(
-        title: Text(Strings.driverDetails),
+        title: Text(LocaleKeys.app_driverDetails.tr),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -74,13 +75,13 @@ class RiderMyRidesSendDetailsView
                                 TextSpan(
                                   children: [
                                     TextSpan(
-                                      text: Strings.fare,
+                                      text: LocaleKeys.app_fare.tr,
                                       style: TextStyleUtil.k14Semibold(
                                           color: ColorUtil.kSecondary01),
                                     ),
                                     TextSpan(
                                       text:
-                                          '${Strings.dollar} ${controller.riderSendRequestModelData.origin?.originDestinationFair}',
+                                          '${LocaleKeys.app_dollar.tr} ${controller.riderSendRequestModelData.origin?.originDestinationFair}',
                                       style: TextStyleUtil.k16Semibold(
                                           fontSize: 16.kh,
                                           color: ColorUtil.kSecondary01),
@@ -170,7 +171,7 @@ class RiderMyRidesSendDetailsView
                   //rating column
                   children: [
                     Text(
-                      Strings.rating,
+                      LocaleKeys.app_rating.tr,
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Container(
@@ -202,7 +203,7 @@ class RiderMyRidesSendDetailsView
                   //ride with column
                   children: [
                     Text(
-                      Strings.totalRides,
+                      LocaleKeys.app_totalRides.tr,
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Text(
@@ -216,11 +217,11 @@ class RiderMyRidesSendDetailsView
                   //joined in column
                   children: [
                     Text(
-                      Strings.joined,
+                      LocaleKeys.app_joined.tr,
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Text(
-                      '${Strings.inA} ${controller.riderSendRequestModelData.createdAt.toString().split("-")[0]}',
+                      '${LocaleKeys.app_inA.tr} ${controller.riderSendRequestModelData.createdAt.toString().split("-")[0]}',
                       style:
                           TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                     ),
@@ -233,7 +234,7 @@ class RiderMyRidesSendDetailsView
 
             //co passengers
             Text(
-              Strings.coPassengers,
+              LocaleKeys.app_coPassengers.tr,
               style: TextStyleUtil.k14Bold(),
             ).paddingOnly(bottom: 16.kh),
             SizedBox(
@@ -272,7 +273,7 @@ class RiderMyRidesSendDetailsView
                       Text(
                         isRider
                             ? "${controller.riderSendRequestModelData.ridersDetatils?[passengerIndex]?.fullName.toString().split(" ").first}"
-                            : Strings.emptySeat,
+                            : LocaleKeys.app_emptySeat.tr,
                         style: TextStyleUtil.k12Semibold(),
                         textAlign: TextAlign.center,
                       ),
@@ -314,7 +315,7 @@ class RiderMyRidesSendDetailsView
 
             //Vehicle details
             Text(
-              Strings.vehicleDetails,
+              LocaleKeys.app_vehicleDetails.tr,
               style: TextStyleUtil.k14Bold(),
             ).paddingOnly(bottom: 16.kh),
             Row(
@@ -362,7 +363,7 @@ class RiderMyRidesSendDetailsView
             //Features available
 
             Text(
-              Strings.featuresAvailable,
+              LocaleKeys.app_featuresAvailable.tr,
               style: TextStyleUtil.k14Bold(),
             ).paddingOnly(bottom: 16.kh),
 
@@ -371,7 +372,7 @@ class RiderMyRidesSendDetailsView
                     true
                 ? Amenities(
                         toggleSwitch: false,
-                        text: Strings.appreciatesConversation,
+                        text: LocaleKeys.app_appreciatesConversation.tr,
                         image: ImageConstant.svgAmenities1)
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
@@ -380,7 +381,7 @@ class RiderMyRidesSendDetailsView
                     true
                 ? Amenities(
                         toggleSwitch: false,
-                        text: Strings.enjoysMusic,
+                        text: LocaleKeys.app_enjoysMusic.tr,
                         image: ImageConstant.svgAmenities2)
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
@@ -389,7 +390,7 @@ class RiderMyRidesSendDetailsView
                     true
                 ? Amenities(
                         toggleSwitch: false,
-                        text: Strings.smokeFree,
+                        text: LocaleKeys.app_smokeFree.tr,
                         image: ImageConstant.svgAmenities3)
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
@@ -398,7 +399,7 @@ class RiderMyRidesSendDetailsView
                     true
                 ? Amenities(
                         toggleSwitch: false,
-                        text: Strings.petFriendly,
+                        text: LocaleKeys.app_petFriendly.tr,
                         image: ImageConstant.svgAmenities4)
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
@@ -407,7 +408,7 @@ class RiderMyRidesSendDetailsView
                     true
                 ? Amenities(
                         toggleSwitch: false,
-                        text: Strings.winterTires,
+                        text: LocaleKeys.app_winterTires.tr,
                         image: ImageConstant.svgAmenities5)
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
@@ -416,7 +417,7 @@ class RiderMyRidesSendDetailsView
                     true
                 ? Amenities(
                         toggleSwitch: false,
-                        text: Strings.coolingOrHeating,
+                        text: LocaleKeys.app_coolingOrHeating.tr,
                         image: ImageConstant.svgAmenities6)
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
@@ -424,7 +425,7 @@ class RiderMyRidesSendDetailsView
                     true
                 ? Amenities(
                         toggleSwitch: false,
-                        text: Strings.babySeat,
+                        text: LocaleKeys.app_babySeat.tr,
                         image: ImageConstant.svgAmenities7)
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
@@ -433,14 +434,14 @@ class RiderMyRidesSendDetailsView
                     true
                 ? Amenities(
                         toggleSwitch: false,
-                        text: Strings.heatedSeats,
+                        text: LocaleKeys.app_heatedSeats.tr,
                         image: ImageConstant.svgAmenities8)
                     .paddingOnly(bottom: 8.kh)
                 : const SizedBox(),
 
             const GreenPoolDivider().paddingOnly(top: 8.kh),
             /*Text(
-              Strings.description,
+              LocaleKeys.app_description.tr,
               style: TextStyleUtil.k14Bold(),
             ).paddingOnly(bottom: 8.kh),
             Wrap(
@@ -456,7 +457,7 @@ class RiderMyRidesSendDetailsView
               onPressed: () {
                 controller.openMessage(controller.riderSendRequestModelData);
               },
-              label: Strings.message,
+              label: LocaleKeys.app_message.tr,
               isBorder: true,
               borderColor: Get.find<HomeController>().isPinkModeOn.value
                   ? ColorUtil.kPrimary3PinkMode
@@ -478,7 +479,7 @@ class RiderMyRidesSendDetailsView
                     throw Exception(e);
                   }
                 },
-                label: Strings.requestDriver,
+                label: LocaleKeys.app_requestDriver.tr,
               ).paddingOnly(bottom: 40.kh),
             ),
           ],

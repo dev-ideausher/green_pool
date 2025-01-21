@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/data/rider_confirm_request_model.dart';
 import 'package:green_pool/app/res/strings.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../data/chat_arg.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/dio/api_service.dart';
@@ -78,7 +79,7 @@ class RiderMyRidesConfirmDetailsController extends GetxController {
               riderRideId: riderConfirmRequestModel.riderRideId,
               origin: data?.origin?.name?.split(',').first ?? "City",
               destination: data?.destination?.name?.split(',').first ?? "City",              
-              date: GpUtil.formatDate(DateTime.parse(data?.date ?? Strings.defaultDate))));
+              date: GpUtil.formatDate(DateTime.parse(data?.date ?? LocaleKeys.app_defaultDate.tr))));
       isBtnLoading.value = false;
     } catch (e) {
       Get.toNamed(Routes.CHAT_PAGE,
@@ -92,7 +93,7 @@ class RiderMyRidesConfirmDetailsController extends GetxController {
               riderRideId: riderConfirmRequestModel.riderRideId,
               origin: data?.origin?.name?.split(',').first ?? "City",
               destination: data?.destination?.name?.split(',').first ?? "City",
-              date: GpUtil.formatDate(DateTime.parse(data?.date ?? Strings.defaultDate))));
+              date: GpUtil.formatDate(DateTime.parse(data?.date ?? LocaleKeys.app_defaultDate.tr))));
       isBtnLoading.value = false;
     }
   }

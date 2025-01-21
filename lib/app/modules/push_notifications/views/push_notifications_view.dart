@@ -8,6 +8,7 @@ import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../home/controllers/home_controller.dart';
 import '../controllers/push_notifications_controller.dart';
 
@@ -17,20 +18,20 @@ class PushNotificationsView extends GetView<PushNotificationsController> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar:  GreenPoolAppBar(
-          title: Text(Strings.notifications),
+          title: Text(LocaleKeys.app_notifications.tr),
         ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              Strings.pushNotifications,
+              LocaleKeys.app_pushNotifications.tr,
               style: TextStyleUtil.k18Bold(),
             ).paddingOnly(top: 32.kh, bottom: 24.kh),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  Strings.trips,
+                  LocaleKeys.app_trips.tr,
                   style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                 ),
                 SizedBox(
@@ -60,7 +61,7 @@ class PushNotificationsView extends GetView<PushNotificationsController> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  Strings.alerts,
+                  LocaleKeys.app_alerts.tr,
                   style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                 ),
                 SizedBox(
@@ -90,7 +91,7 @@ class PushNotificationsView extends GetView<PushNotificationsController> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  Strings.payments,
+                  LocaleKeys.app_payments.tr,
                   style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                 ),
                 SizedBox(
@@ -120,7 +121,7 @@ class PushNotificationsView extends GetView<PushNotificationsController> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  Strings.transactions,
+                  LocaleKeys.app_transactions.tr,
                   style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                 ),
                 SizedBox(
@@ -150,7 +151,7 @@ class PushNotificationsView extends GetView<PushNotificationsController> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  Strings.offers,
+                  LocaleKeys.app_offers.tr,
                   style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                 ),
                 SizedBox(
@@ -181,7 +182,7 @@ class PushNotificationsView extends GetView<PushNotificationsController> {
               onPressed: () {
                 controller.notificationPreferencesAPI();
               },
-              label: Strings.save,
+              label: LocaleKeys.app_save.tr,
             ).paddingSymmetric(vertical: 40.kh),
           ],
         ).paddingSymmetric(horizontal: 16.kw));

@@ -12,6 +12,7 @@ import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/storage.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../components/gp_progress.dart';
 import '../../../components/green_pool_divider.dart';
 import '../../../components/origin_to_destination.dart';
@@ -27,7 +28,7 @@ class RideHistoryView extends GetView<RideHistoryController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: GreenPoolAppBar(
-        title: Text(Strings.rideHistory),
+        title: Text(LocaleKeys.app_rideHistory.tr),
       ),
       body: RefreshIndicator(
         backgroundColor: ColorUtil.kWhiteColor,
@@ -43,7 +44,7 @@ class RideHistoryView extends GetView<RideHistoryController> {
               : controller.rideHistModel.value.data!.isEmpty
                   ? Center(
                       child: Text(
-                        Strings.noRideHistory,
+                        LocaleKeys.app_noRideHistory.tr,
                         style: TextStyleUtil.k18Heading600(),
                       ),
                     )
@@ -182,12 +183,12 @@ class RiderRideHistTile extends StatelessWidget {
                               TextSpan(
                                 children: [
                                   TextSpan(
-                                    text: Strings.fare,
+                                    text: LocaleKeys.app_fare.tr,
                                     style: TextStyleUtil.k14Semibold(
                                         color: ColorUtil.kSecondary01),
                                   ),
                                   TextSpan(
-                                    text: '${Strings.dollar} ${his?.price}',
+                                    text: '${LocaleKeys.app_dollar.tr} ${his?.price}',
                                     style: TextStyleUtil.k16Semibold(
                                         fontSize: 16.kh,
                                         color: ColorUtil.kSecondary01),
@@ -293,8 +294,8 @@ class RiderRideHistTile extends StatelessWidget {
                       EdgeInsets.symmetric(vertical: 4.kh, horizontal: 24.kw),
                   child: Text(
                     his?.rideStatus == "Cancel"
-                        ? Strings.cancelledRide
-                        : Strings.incomplete,
+                        ? LocaleKeys.app_cancelledRide.tr
+                        : LocaleKeys.app_incomplete.tr,
                     style: TextStyleUtil.k14Semibold(color: ColorUtil.kError2),
                   ),
                 ).paddingOnly(top: 8.kh))
@@ -420,10 +421,10 @@ class DriverRideHistTile extends StatelessWidget {
             const GreenPoolDivider().paddingOnly(bottom: 8.kh),
             OriginToDestination(
               needPickupText: false,
-              origin: his?.origin?.name ?? Strings.pickup,
+              origin: his?.origin?.name ?? LocaleKeys.app_pickup.tr,
               stop1: his?.stops?[0]?.name ?? "",
               stop2: his?.stops?[1]?.name ?? "",
-              destination: his?.destination?.name ?? Strings.destination,
+              destination: his?.destination?.name ?? LocaleKeys.app_destination.tr,
             ).paddingOnly(bottom: 8.kh),
             const GreenPoolDivider().paddingOnly(bottom: 16.kh),
             Visibility(
@@ -438,8 +439,8 @@ class DriverRideHistTile extends StatelessWidget {
                       EdgeInsets.symmetric(vertical: 4.kh, horizontal: 24.kw),
                   child: Text(
                     his?.rideStatus == "Cancel"
-                        ? Strings.cancelledRide
-                        : Strings.incomplete,
+                        ? LocaleKeys.app_cancelledRide.tr
+                        : LocaleKeys.app_incomplete.tr,
                     style: TextStyleUtil.k14Semibold(color: ColorUtil.kError2),
                   ),
                 ))

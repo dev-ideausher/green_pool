@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:green_pool/app/services/gp_util.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../data/chat_arg.dart';
 import '../../../data/my_rides_model.dart';
 import '../../../res/strings.dart';
@@ -58,7 +59,7 @@ class RiderConfirmedRideDetailsController extends GetxController {
                   "City",
               date:
                   GpUtil.formatDate(DateTime.parse(data.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.date ??
-                      Strings.defaultDate))));
+                      LocaleKeys.app_defaultDate.tr))));
       messageBtnLoading.value = false;
     } catch (e) {
       Get.toNamed(Routes.CHAT_PAGE,
@@ -81,7 +82,7 @@ class RiderConfirmedRideDetailsController extends GetxController {
                   "City",
               date:
                   GpUtil.formatDate(DateTime.parse(data.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.date ??
-                      Strings.defaultDate))));
+                      LocaleKeys.app_defaultDate.tr))));
       messageBtnLoading.value = false;
     }
   }
@@ -109,7 +110,7 @@ class RiderConfirmedRideDetailsController extends GetxController {
             throw Exception(e);
           }
         },
-        Strings.cancelRide, //btnText
+        LocaleKeys.app_cancelRide.tr, //btnText
       );
     } else {
       showMySnackbar(

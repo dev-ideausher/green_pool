@@ -9,6 +9,7 @@ import 'package:green_pool/app/modules/my_rides_one_time/views/rider_tile.dart';
 import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import '../../../../generated/assets.dart';
+import '../../../../generated/locales.g.dart';
 import '../../../components/gp_progress.dart';
 import '../../../services/colors.dart';
 import '../../../services/text_style_util.dart';
@@ -69,13 +70,13 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                             } else {
                               isListEmpty = false;
                             }
-                          } else if (type == Strings.booked) {
+                          } else if (type == LocaleKeys.app_booked.tr) {
                             if (controller.driverRides.isEmpty) {
                               isListEmpty = true;
                             } else {
                               isListEmpty = false;
                             }
-                          } else if (type == Strings.published) {
+                          } else if (type == LocaleKeys.app_published.tr) {
                             if (controller.riderRides.isEmpty) {
                               isListEmpty = true;
                             } else {
@@ -113,7 +114,7 @@ class MyRidesOneTimeView extends GetView<MyRidesOneTimeController> {
                                                 .myRidesModelData[index]);
                                       }
                                     } else {
-                                      if (type == Strings.booked) {
+                                      if (type == LocaleKeys.app_booked.tr) {
                                         if (controller.myRidesModelData[index]
                                                 .driverId !=
                                             null) {
@@ -164,7 +165,7 @@ class NoRidePosted extends StatelessWidget {
                 : SvgPicture.asset(ImageConstant.svgNoRides)),
         20.kheightBox,
         Text(
-          Strings.youHavePostedNoRides,
+          LocaleKeys.app_youHavePostedNoRides.tr,
           style: TextStyleUtil.k24Heading600(),
           textAlign: TextAlign.center,
         )

@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../constants/image_constant.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/colors.dart';
@@ -45,14 +46,14 @@ class VerificationDoneView extends GetView<VerificationDoneController> {
                 Positioned(
                   top: 390.kh,
                   child: Text(
-                    Strings.woohoo,
+                    LocaleKeys.app_woohoo.tr,
                     style: TextStyleUtil.k24Heading700(),
                   ),
                 ),
                 Positioned(
                     top: 440.kh,
                     child: Text(
-                      Strings.verificationSuccessfull,
+                      LocaleKeys.app_verificationSuccessfull.tr,
                       style:
                           TextStyleUtil.k16Regular(color: ColorUtil.kBlack04),
                       textAlign: TextAlign.center,
@@ -93,7 +94,7 @@ class VerificationDoneView extends GetView<VerificationDoneController> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                Strings.continueAsRiderOrDriver,
+                                LocaleKeys.app_continueAsRiderOrDriver.tr,
                                 style: TextStyleUtil.k18Bold(
                                   color: ColorUtil.kBlack04,
                                 ),
@@ -114,7 +115,7 @@ class VerificationDoneView extends GetView<VerificationDoneController> {
                                     },
                                     height: 40.kh,
                                     width: 130.kw,
-                                    label: Strings.rider,
+                                    label: LocaleKeys.app_rider.tr,
                                     fontSize: 14.kh,
                                     padding: const EdgeInsets.all(8),
                                   ),
@@ -129,7 +130,7 @@ class VerificationDoneView extends GetView<VerificationDoneController> {
                                     },
                                     height: 40.kh,
                                     width: 130.kw,
-                                    label: Strings.driver,
+                                    label: LocaleKeys.app_driver.tr,
                                     fontSize: 14.kh,
                                     padding: const EdgeInsets.all(8),
                                   ),
@@ -141,7 +142,7 @@ class VerificationDoneView extends GetView<VerificationDoneController> {
                       ),
                     );
                   },
-            label: Strings.continueText,
+            label: LocaleKeys.app_continueText.tr,
           ).paddingOnly(bottom: 40.kh),
         ],
       ),

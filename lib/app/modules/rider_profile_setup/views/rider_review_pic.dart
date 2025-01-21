@@ -10,6 +10,7 @@ import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../components/common_image_view.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
@@ -33,11 +34,11 @@ class RiderReviewPictureView extends GetView<RiderProfileSetupController> {
               child: SvgPicture.asset(ImageConstant.svgIconBack30),
             ).paddingOnly(top: 16.kh, bottom: 8.kh),
             Text(
-              Strings.reviewPicture,
+              LocaleKeys.app_reviewPicture.tr,
               style: TextStyleUtil.k32Heading700(),
             ).paddingOnly(bottom: 4.kh),
             Text(
-              Strings.pleaseReviewYourPicture,
+              LocaleKeys.app_pleaseReviewYourPicture.tr,
               style: TextStyleUtil.k16Regular(color: ColorUtil.kBlack04),
             ).paddingOnly(bottom: 74.kh),
             Center(
@@ -62,13 +63,13 @@ class RiderReviewPictureView extends GetView<RiderProfileSetupController> {
                 controller.isProfileImagePicked.value = true;
                 controller.isProfileImagePickedCheck.value = false;
               },
-              label: Strings.done,
+              label: LocaleKeys.app_done.tr,
             ),
             GreenPoolButton(
               onPressed: () => Get.back(),
               isBorder: true,
               borderColor: ColorUtil.kSecondary01,
-              label: Strings.retakePhoto,
+              label: LocaleKeys.app_retakePhoto.tr,
               labelColor: ColorUtil.kSecondary01,
               borderWidth: 2.kh,
             ).paddingOnly(top: 16.kh, bottom: 24.kh),

@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../components/greenpool_appbar.dart';
 import '../../../components/greenpool_textfield.dart';
 import '../../../services/colors.dart';
@@ -20,7 +21,7 @@ class WalletToBankAccView extends GetView<WalletToBankAccController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: GreenPoolAppBar(
-        title: Text(Strings.payout),
+        title: Text(LocaleKeys.app_payout.tr),
       ),
       resizeToAvoidBottomInset: false,
       body: Column(
@@ -43,12 +44,12 @@ class WalletToBankAccView extends GetView<WalletToBankAccController> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  Strings.carpoollCash,
+                  LocaleKeys.app_carpoollCash.tr,
                   style: TextStyleUtil.k18Heading600(),
                   textAlign: TextAlign.center,
                 ).paddingOnly(bottom: 16.kh),
                 Text(
-                  "${Strings.dollar} ${Get.find<WalletController>().walletBalance}",
+                  "${LocaleKeys.app_dollar.tr} ${Get.find<WalletController>().walletBalance}",
                   style: TextStyleUtil.k32Heading700(
                       color: ColorUtil.kSecondary01),
                   textAlign: TextAlign.center,
@@ -66,17 +67,17 @@ class WalletToBankAccView extends GetView<WalletToBankAccController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  Strings.sendMoneyToBankAccount,
+                  LocaleKeys.app_sendMoneyToBankAccount.tr,
                   style: TextStyleUtil.k16Bold(),
                 ).paddingOnly(bottom: 24.kh),
                 Text(
-                  Strings.amount,
+                  LocaleKeys.app_amount.tr,
                   style: TextStyleUtil.k14Semibold(),
                 ).paddingOnly(bottom: 8.kh),
                 GreenPoolTextField(
-                  hintText: Strings.enterAmount,
+                  hintText: LocaleKeys.app_enterAmount.tr,
                   prefix: Text(
-                    Strings.dollar,
+                    LocaleKeys.app_dollar.tr,
                     style: TextStyleUtil.k16Regular(
                       color: ColorUtil.kBlack03,
                     ),
@@ -103,7 +104,7 @@ class WalletToBankAccView extends GetView<WalletToBankAccController> {
                 // Get.toNamed(Routes.ADD_BANK_DETAILS);
                 controller.moveToWebToBankAcc();
               },
-              label: Strings.proceed,
+              label: LocaleKeys.app_proceed.tr,
               isActive: controller.buttonState.value,
             ).paddingSymmetric(vertical: 40.kh),
           ),

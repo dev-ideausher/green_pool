@@ -6,6 +6,7 @@ import 'package:green_pool/app/components/origin_to_destination.dart';
 import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../components/green_pool_divider.dart';
 import '../../../constants/image_constant.dart';
 import '../../../data/rider_send_request_model.dart';
@@ -36,7 +37,7 @@ class RiderRequestSendDriverBottomsheet extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(children: [
             Text(
-              Strings.driverRequest,
+              LocaleKeys.app_driverRequest.tr,
               style: TextStyleUtil.k18Heading600(),
             ).paddingOnly(bottom: 12.kh),
             const GreenPoolDivider().paddingSymmetric(vertical: 8.kh),
@@ -84,7 +85,7 @@ class RiderRequestSendDriverBottomsheet extends StatelessWidget {
                                 border:
                                     Border.all(color: ColorUtil.kSecondary01)),
                             child: Text(
-                              Strings.message,
+                              LocaleKeys.app_message.tr,
                               style: TextStyleUtil.k12Semibold(),
                             ).paddingSymmetric(
                                 vertical: 4.kh, horizontal: 16.kw),
@@ -152,7 +153,7 @@ class RiderRequestSendDriverBottomsheet extends StatelessWidget {
                   //rating column
                   children: [
                     Text(
-                      Strings.rating,
+                      LocaleKeys.app_rating.tr,
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Container(
@@ -184,7 +185,7 @@ class RiderRequestSendDriverBottomsheet extends StatelessWidget {
                   //ride with column
                   children: [
                     Text(
-                      Strings.totalRides,
+                      LocaleKeys.app_totalRides.tr,
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Text(
@@ -200,11 +201,11 @@ class RiderRequestSendDriverBottomsheet extends StatelessWidget {
                   //joined in column
                   children: [
                     Text(
-                      Strings.joined,
+                      LocaleKeys.app_joined.tr,
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Text(
-                      '${Strings.inA} ${element?.driverDetails?.firstOrNull?.createdAt?.substring(0, 4) ?? 2024}',
+                      '${LocaleKeys.app_inA.tr} ${element?.driverDetails?.firstOrNull?.createdAt?.substring(0, 4) ?? 2024}',
                       style:
                           TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                     ),
@@ -214,7 +215,7 @@ class RiderRequestSendDriverBottomsheet extends StatelessWidget {
             ),
             const GreenPoolDivider().paddingOnly(bottom: 16.kh, top: 8.kh),
             /*ListTile(
-              title: Text(Strings.coPassengers),
+              title: Text(LocaleKeys.app_coPassengers.tr),
               contentPadding: EdgeInsets.zero,
             ),
             SizedBox(
@@ -230,7 +231,7 @@ class RiderRequestSendDriverBottomsheet extends StatelessWidget {
             GreenPoolButton(
               onPressed: () {
                 if (element.requestSent ?? false) {
-                  showMySnackbar(msg: Strings.reqHasAlreadySent);
+                  showMySnackbar(msg: LocaleKeys.app_reqHasAlreadySent.tr);
                 } else {
                   Get.back();
                   Get.find<RiderMyRideRequestController>()
@@ -238,8 +239,8 @@ class RiderRequestSendDriverBottomsheet extends StatelessWidget {
                 }
               },
               label: element.requestSent ?? false
-                  ? Strings.sent
-                  : Strings.sendRequest,
+                  ? LocaleKeys.app_sent.tr
+                  : LocaleKeys.app_sendRequest.tr,
               fontSize: 14.kh,
               height: 40.kh,
               width: 144.kw,

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
-import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../components/greenpool_textfield.dart';
 import '../../../services/custom_button.dart';
 import '../controllers/add_bank_details_controller.dart';
@@ -16,45 +16,45 @@ class AddBankDetailsView extends GetView<AddBankDetailsController> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: GreenPoolAppBar(
-          title: Text(Strings.payment),
+          title: Text(LocaleKeys.app_payment.tr),
         ),
         resizeToAvoidBottomInset: false,
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              Strings.enterAccDetails,
+              LocaleKeys.app_enterAccDetails.tr,
               style: TextStyleUtil.k16Bold(),
             ).paddingOnly(top: 32.kh, bottom: 24.kh),
             Text(
-              Strings.accHolderName,
+              LocaleKeys.app_accHolderName.tr,
               style: TextStyleUtil.k14Semibold(),
             ).paddingOnly(bottom: 8.kh),
-            GreenPoolTextField(hintText: Strings.enterName)
+            GreenPoolTextField(hintText: LocaleKeys.app_enterName.tr)
                 .paddingOnly(bottom: 16.kh),
             Text(
-              Strings.accNumber,
+              LocaleKeys.app_accNumber.tr,
               style: TextStyleUtil.k14Semibold(),
             ).paddingOnly(bottom: 8.kh),
-            GreenPoolTextField(hintText: Strings.enterNumber)
+            GreenPoolTextField(hintText: LocaleKeys.app_enterNumber.tr)
                 .paddingOnly(bottom: 16.kh),
             Text(
-              Strings.transitNumber,
+              LocaleKeys.app_transitNumber.tr,
               style: TextStyleUtil.k14Semibold(),
             ).paddingOnly(bottom: 8.kh),
-            GreenPoolTextField(hintText: Strings.enterNumber)
+            GreenPoolTextField(hintText: LocaleKeys.app_enterNumber.tr)
                 .paddingOnly(bottom: 16.kh),
             Text(
-              Strings.institutionNumber,
+              LocaleKeys.app_institutionNumber.tr,
               style: TextStyleUtil.k14Semibold(),
             ).paddingOnly(bottom: 8.kh),
-            GreenPoolTextField(hintText: Strings.enterNumber)
+            GreenPoolTextField(hintText: LocaleKeys.app_enterNumber.tr)
                 .paddingOnly(bottom: 16.kh),
             const Expanded(child: SizedBox()),
             Obx(
               () => GreenPoolButton(
                 onPressed: () {},
-                label: Strings.send,
+                label: LocaleKeys.app_send.tr,
                 isActive: controller.buttonState.value,
               ).paddingSymmetric(vertical: 40.kh),
             ),

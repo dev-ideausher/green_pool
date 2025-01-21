@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/modules/post_ride_step_two/controllers/post_ride_step_two_controller.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../constants/image_constant.dart';
 import '../../../res/strings.dart';
 import '../../../services/colors.dart';
@@ -19,14 +20,14 @@ class AmenitiesList extends GetView<PostRideStepTwoController> {
         () => Column(
           children: [
             AmenityTile(
-                text: Strings.appreciatesConversation,
+                text: LocaleKeys.app_appreciatesConversation.tr,
                 image: ImageConstant.svgAmenities1,
                 value: controller.appreciatesConversation.value,
                 onChanged: (val) {
                   controller.appreciatesConversation.value = val;
                 }),
             AmenityTile(
-              text: Strings.enjoysMusic,
+              text: LocaleKeys.app_enjoysMusic.tr,
               image: ImageConstant.svgAmenities2,
               value: controller.enjoysMusic.value,
               onChanged: (val) {
@@ -34,7 +35,7 @@ class AmenitiesList extends GetView<PostRideStepTwoController> {
               },
             ),
             AmenityTile(
-              text: Strings.smokeFree,
+              text: LocaleKeys.app_smokeFree.tr,
               image: ImageConstant.svgAmenities3,
               value: controller.smokeFree.value,
               onChanged: (val) {
@@ -42,7 +43,7 @@ class AmenitiesList extends GetView<PostRideStepTwoController> {
               },
             ),
             AmenityTile(
-              text: Strings.petFriendly,
+              text: LocaleKeys.app_petFriendly.tr,
               image: ImageConstant.svgAmenities4,
               value: controller.petFriendly.value,
               onChanged: (val) {
@@ -50,7 +51,7 @@ class AmenitiesList extends GetView<PostRideStepTwoController> {
               },
             ),
             AmenityTile(
-              text: Strings.winterTires,
+              text: LocaleKeys.app_winterTires.tr,
               image: ImageConstant.svgAmenities5,
               value: controller.winterTires.value,
               onChanged: (val) {
@@ -58,7 +59,7 @@ class AmenitiesList extends GetView<PostRideStepTwoController> {
               },
             ),
             AmenityTile(
-              text: Strings.coolingOrHeating,
+              text: LocaleKeys.app_coolingOrHeating.tr,
               image: ImageConstant.svgAmenities6,
               value: controller.coolingOrHeating.value,
               onChanged: (val) {
@@ -66,7 +67,7 @@ class AmenitiesList extends GetView<PostRideStepTwoController> {
               },
             ),
             AmenityTile(
-              text: Strings.babySeat,
+              text: LocaleKeys.app_babySeat.tr,
               image: ImageConstant.svgAmenities7,
               value: controller.babySeat.value,
               onChanged: (val) {
@@ -74,7 +75,7 @@ class AmenitiesList extends GetView<PostRideStepTwoController> {
               },
             ),
             AmenityTile(
-              text: Strings.heatedSeats,
+              text: LocaleKeys.app_heatedSeats.tr,
               image: ImageConstant.svgAmenities8,
               value: controller.heatedSeats.value,
               onChanged: (val) {

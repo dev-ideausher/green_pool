@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../components/greenpool_textfield.dart';
 import '../../../components/richtext_heading.dart';
 import '../../../services/colors.dart';
@@ -19,11 +20,11 @@ class RecurringTripView extends GetView<PostRideStepTwoController> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          Strings.selectTheDaysAndTime,
+          LocaleKeys.app_selectTheDaysAndTime.tr,
           style: TextStyleUtil.k16Semibold(
               fontSize: 16.kh, color: ColorUtil.kBlack02),
         ).paddingOnly(top: 24.kh, bottom: 16.kh),
-         RichTextHeading(text: Strings.day).paddingOnly(bottom: 8.kh),
+         RichTextHeading(text: LocaleKeys.app_day.tr).paddingOnly(bottom: 8.kh),
         Obx(
           () => Row(
             // recurring days selection
@@ -35,7 +36,7 @@ class RecurringTripView extends GetView<PostRideStepTwoController> {
                   label: const SizedBox(),
                   textPadding: 0.0.kh,
                   padding: EdgeInsets.all(0.kh),
-                  labelText: Strings.mon,
+                  labelText: LocaleKeys.app_mon.tr,
                   selected: controller.isMonday.value,
                   onPressed: () {
                     controller.isMonday.value = !controller.isMonday.value;
@@ -50,7 +51,7 @@ class RecurringTripView extends GetView<PostRideStepTwoController> {
                   label: const SizedBox(),
                   textPadding: 0.0.kh,
                   padding: EdgeInsets.all(0.kh),
-                  labelText: Strings.tue,
+                  labelText: LocaleKeys.app_tue.tr,
                   selected: controller.isTuesday.value,
                   onPressed: () {
                     controller.isTuesday.value = !controller.isTuesday.value;
@@ -65,7 +66,7 @@ class RecurringTripView extends GetView<PostRideStepTwoController> {
                   label: const SizedBox(),
                   textPadding: 0.0.kh,
                   padding: EdgeInsets.all(0.kh),
-                  labelText: Strings.wed,
+                  labelText: LocaleKeys.app_wed.tr,
                   selected: controller.isWednesday.value,
                   onPressed: () {
                     controller.isWednesday.value =
@@ -81,7 +82,7 @@ class RecurringTripView extends GetView<PostRideStepTwoController> {
                   label: const SizedBox(),
                   textPadding: 0.0.kh,
                   padding: EdgeInsets.all(0.kh),
-                  labelText: Strings.thu,
+                  labelText: LocaleKeys.app_thu.tr,
                   selected: controller.isThursDay.value,
                   onPressed: () {
                     controller.isThursDay.value = !controller.isThursDay.value;
@@ -96,7 +97,7 @@ class RecurringTripView extends GetView<PostRideStepTwoController> {
                   label: const SizedBox(),
                   textPadding: 0.0.kh,
                   padding: EdgeInsets.all(0.kh),
-                  labelText: Strings.fri,
+                  labelText: LocaleKeys.app_fri.tr,
                   selected: controller.isFriday.value,
                   onPressed: () {
                     controller.isFriday.value = !controller.isFriday.value;
@@ -111,7 +112,7 @@ class RecurringTripView extends GetView<PostRideStepTwoController> {
                   label: const SizedBox(),
                   textPadding: 0.0.kh,
                   padding: EdgeInsets.all(0.kh),
-                  labelText: Strings.sat,
+                  labelText: LocaleKeys.app_sat.tr,
                   selected: controller.isSaturday.value,
                   onPressed: () {
                     controller.isSaturday.value = !controller.isSaturday.value;
@@ -126,7 +127,7 @@ class RecurringTripView extends GetView<PostRideStepTwoController> {
                   label: const SizedBox(),
                   textPadding: 0.0.kh,
                   padding: EdgeInsets.all(0.kh),
-                  labelText: Strings.sun,
+                  labelText: LocaleKeys.app_sun.tr,
                   selected: controller.isSunday.value,
                   onPressed: () {
                     controller.isSunday.value = !controller.isSunday.value;
@@ -138,9 +139,9 @@ class RecurringTripView extends GetView<PostRideStepTwoController> {
             ],
           ).paddingOnly(bottom: 8.kh),
         ),
-         RichTextHeading(text: Strings.time),
+         RichTextHeading(text: LocaleKeys.app_time.tr),
         GreenPoolTextField(
-          hintText: Strings.selectTime,
+          hintText: LocaleKeys.app_selectTime.tr,
           controller: controller.selectedRecurringTime,
           onTap: () {
             controller.setRecurringTime(context);

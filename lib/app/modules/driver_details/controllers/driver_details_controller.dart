@@ -6,6 +6,7 @@ import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/gp_util.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../services/dio/api_service.dart';
 import '../../../services/storage.dart';
 
@@ -138,7 +139,7 @@ class DriverDetailsController extends GetxController {
                       .first ??
                   "City",
               date: GpUtil.formatDate(DateTime.parse(
-                  matchingRidesModelData.value.date ?? Strings.defaultDate))));
+                  matchingRidesModelData.value.date ?? LocaleKeys.app_defaultDate.tr))));
       messageBtnLoading.value = false;
     } catch (e) {
       try {
@@ -162,7 +163,7 @@ class DriverDetailsController extends GetxController {
                     "City",
                 date: GpUtil.formatDate(DateTime.parse(
                     matchingRidesModelData.value.date ??
-                        Strings.defaultDate))));
+                        LocaleKeys.app_defaultDate.tr))));
         messageBtnLoading.value = false;
       } catch (e) {
         debugPrint(e.toString());

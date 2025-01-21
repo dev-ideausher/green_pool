@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/data/post_ride_model.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
+import 'package:green_pool/generated/locales.g.dart';
 
 import '../../../res/strings.dart';
 import '../../../routes/app_pages.dart';
@@ -48,7 +49,7 @@ class PostRideStepFourController extends GetxController {
     if (storageService.isLoggedIn) {
       //if user has filled profile details
       if (storageService.profileStatus == false) {
-        showMySnackbar(msg: Strings.pleaseCompleteProfileSetup);
+        showMySnackbar(msg: LocaleKeys.app_pleaseCompleteProfileSetup.tr);
         Get.toNamed(Routes.PROFILE_SETUP, arguments: {
           'fromNavBar': false,
           'fullName': Get.find<GetStorageService>().getUserName ?? "",
@@ -56,7 +57,7 @@ class PostRideStepFourController extends GetxController {
         });
       } //else if user has not filled vehicle details then move to vehicle details and back to step four
       else if (homeController.userInfo.value.data?.vehicleStatus == false) {
-        showMySnackbar(msg: Strings.plsFillVehicleDetails);
+        showMySnackbar(msg: LocaleKeys.app_plsFillVehicleDetails.tr);
         Get.toNamed(Routes.VEHICLE_SETUP, arguments: postRideModel.value);
       } //else Post the ride
       else {
@@ -110,7 +111,7 @@ class PostRideStepFourController extends GetxController {
                 ),
               ),
               Text(
-                Strings.driverCancellationpolicy,
+                LocaleKeys.app_driverCancellationpolicy.tr,
                 style: TextStyleUtil.k24Heading700(),
                 textAlign: TextAlign.center,
               ).paddingOnly(top: 14.kh, bottom: 20.kh),
@@ -124,7 +125,7 @@ class PostRideStepFourController extends GetxController {
                   ),
                   Expanded(
                     child: Text(
-                      Strings.youAreAllowedUpto6Cancellation,
+                      LocaleKeys.app_youAreAllowedUpTo6Cancellation.tr,
                       style: TextStyleUtil.k16Medium(),
                       textAlign: TextAlign.left,
                     ).paddingOnly(bottom: 12.kh),
@@ -141,7 +142,7 @@ class PostRideStepFourController extends GetxController {
                   ),
                   Expanded(
                     child: Text(
-                      Strings.exceedingThisMayResultSuspension,
+                      LocaleKeys.app_exceedingThisMayResultSuspension.tr,
                       style: TextStyleUtil.k16Medium(),
                       textAlign: TextAlign.left,
                     ).paddingOnly(bottom: 20.kh),

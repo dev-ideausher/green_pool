@@ -7,6 +7,7 @@ import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../services/storage.dart';
 import '../controllers/home_controller.dart';
 
@@ -27,11 +28,11 @@ class PermissionsLocation extends GetView<HomeController> {
             ),
           ),
           Text(
-            Strings.enableLocation,
+            LocaleKeys.app_enableLocation.tr,
             style: TextStyleUtil.k24Heading600(),
           ).paddingOnly(bottom: 8.kh),
           Text(
-            Strings.allowLocationAccess,
+            LocaleKeys.app_allowLocationAccess.tr,
             style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack04),
             textAlign: TextAlign.center,
           ).paddingOnly(bottom: 8.kh, left: 16.kw, right: 16.kw),
@@ -43,7 +44,7 @@ class PermissionsLocation extends GetView<HomeController> {
                 controller.determinePosition();
                 Get.find<GetStorageService>().hasTappedAllowLocation = true;
               },
-              label: Strings.allowAccess,
+              label: LocaleKeys.app_allowAccess.tr,
             ).paddingSymmetric(vertical: 40.kh),
           ),
         ],

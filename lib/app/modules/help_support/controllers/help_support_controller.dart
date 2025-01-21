@@ -20,7 +20,7 @@ class HelpSupportController extends GetxController {
 
   // navigateToChat() async {
   //   final url =
-  //       "https://wa.me/111111111?text=${Uri.encodeComponent(Strings.howCanWeHelpYou)}";
+  //       "https://wa.me/111111111?text=${Uri.encodeComponent(LocalesKey.howCanWeHelpYou)}";
   //   if (await canLaunch(url)) {
   //     await launchUrl(Uri.parse(url));
   //   } else {

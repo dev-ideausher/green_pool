@@ -8,9 +8,8 @@ import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/storage.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../data/chat_arg.dart';
-import '../../../data/rider_confirm_request_model.dart';
-import '../../../res/strings.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
@@ -207,12 +206,12 @@ class ChatPageController extends GetxController {
                 ),
               ),
               Text(
-                Strings.delete,
+                LocaleKeys.app_delete.tr,
                 style: TextStyleUtil.k18Semibold(),
                 textAlign: TextAlign.left,
               ).paddingSymmetric(vertical: 4.kh),
               Text(
-                Strings.areYouSureYouWantToDeleteThisChat,
+                LocaleKeys.app_areYouSureYouWantToDeleteThisChat.tr,
                 style: TextStyleUtil.k14Regular(
                   color: ColorUtil.kBlack04,
                 ),
@@ -228,7 +227,7 @@ class ChatPageController extends GetxController {
                     isBorder: true,
                     height: 40.kh,
                     width: 124.kw,
-                    label: Strings.cancel,
+                    label: LocaleKeys.app_cancel.tr,
                     fontSize: 14.kh,
                     padding: const EdgeInsets.all(8),
                     borderColor: Get.find<HomeController>().isPinkModeOn.value
@@ -245,7 +244,7 @@ class ChatPageController extends GetxController {
                     },
                     height: 40.kh,
                     width: 124.kw,
-                    label: Strings.delete,
+                    label: LocaleKeys.app_delete.tr,
                     fontSize: 14.kh,
                     padding: const EdgeInsets.all(8),
                   ),

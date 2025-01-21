@@ -13,6 +13,7 @@ import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../components/origin_to_destination.dart';
 import '../../../res/strings.dart';
 import '../../home/controllers/home_controller.dart';
@@ -25,7 +26,7 @@ class FileDisputeView extends GetView<FileDisputeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: GreenPoolAppBar(
-        title: Text(Strings.fileDispute),
+        title: Text(LocaleKeys.app_fileDispute.tr),
       ),
       body: Obx(
         () => controller.isLoading.value
@@ -33,7 +34,7 @@ class FileDisputeView extends GetView<FileDisputeController> {
             : controller.fileDisputeModel.value.data!.isEmpty
                 ? Center(
                     child: Text(
-                      Strings.noRideHistory,
+                      LocaleKeys.app_noRideHistory.tr,
                       style: TextStyleUtil.k18Heading600(),
                     ),
                   )
@@ -214,7 +215,7 @@ class FileDisputeView extends GetView<FileDisputeController> {
                                                 vertical: 4.kh,
                                                 horizontal: 24.kw),
                                             child: Text(
-                                              Strings.filedAdispute,
+                                              LocaleKeys.app_filedAdispute.tr,
                                               style: TextStyleUtil.k14Semibold(
                                                   color: ColorUtil.kError2),
                                             ),
@@ -242,7 +243,7 @@ class FileDisputeView extends GetView<FileDisputeController> {
                                                       color: ColorUtil.kBlack01,
                                                     ).paddingOnly(right: 8.kw),
                                                     Text(
-                                                      Strings.resolved,
+                                                      LocaleKeys.app_resolved.tr,
                                                       style: TextStyleUtil
                                                           .k14Regular(
                                                               color: ColorUtil
@@ -287,7 +288,7 @@ class FileDisputeView extends GetView<FileDisputeController> {
                                                             .kPrimary3PinkMode
                                                         : ColorUtil
                                                             .kSecondary01,
-                                                label: Strings.fileDispute,
+                                                label: LocaleKeys.app_fileDispute.tr,
                                               ),
                                   ),
                                 ],

@@ -9,6 +9,7 @@ import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../components/gp_progress.dart';
 import '../../../components/green_pool_divider.dart';
 import '../../../components/origin_to_destination.dart';
@@ -25,7 +26,7 @@ class MatchingRidesView extends GetView<MatchingRidesController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: GreenPoolAppBar(
-        title: Text(Strings.matchingRides),
+        title: Text(LocaleKeys.app_matchingRides.tr),
         actions: [
           GestureDetector(
             onTap: () {
@@ -40,7 +41,7 @@ class MatchingRidesView extends GetView<MatchingRidesController> {
         onPressed: () async {
           controller.createRideAlert();
         },
-        label: Strings.createRideAlert,
+        label: LocaleKeys.app_createRideAlert.tr,
       ),
       // bottomSheet: Container(
       //   color: ColorUtil.kWhiteColor,
@@ -48,7 +49,7 @@ class MatchingRidesView extends GetView<MatchingRidesController> {
       //     onPressed: () async {
       //       controller.createRideAlert();
       //     },
-      //     label: Strings.createRideAlert,
+      //     label: LocaleKeys.app_createRideAlert.tr,
       //   ).paddingOnly(bottom: 24.kh),
       // ),
       body: Obx(
@@ -70,7 +71,7 @@ class MatchingRidesView extends GetView<MatchingRidesController> {
                             MediaQuery.of(context).size.height - kToolbarHeight,
                         alignment: Alignment.center,
                         child: Text(
-                          Strings.noRidesAvailable,
+                          LocaleKeys.app_noRidesAvailable.tr,
                           style: TextStyleUtil.k18Heading600(),
                         ),
                       ),
@@ -217,7 +218,7 @@ class MatchingRidesView extends GetView<MatchingRidesController> {
                                                                   TextSpan(
                                                                     // text: '\$3.50',
                                                                     text:
-                                                                        "${Strings.dollar} ${controller.matchingRidesModel.value.data![index]?.price}",
+                                                                        "${LocaleKeys.app_dollar.tr} ${controller.matchingRidesModel.value.data![index]?.price}",
                                                                     style: TextStyleUtil
                                                                         .k16Bold(
                                                                             color:

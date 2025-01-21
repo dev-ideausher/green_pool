@@ -6,6 +6,7 @@ import 'package:green_pool/app/modules/my_rides_one_time/views/my_rides_one_time
 import 'package:green_pool/app/modules/my_rides_recurring/controllers/my_rides_recurring_controller.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../components/greenpool_appbar.dart';
 import '../../../res/strings.dart';
 import '../../../services/colors.dart';
@@ -23,7 +24,7 @@ class MyRidesPageView extends GetView<MyRidesPageController> {
     Get.lazyPut(() => MyRidesPageController());
     return Scaffold(
         appBar:  GreenPoolAppBar(
-          title: Text(Strings.myRides),
+          title: Text(LocaleKeys.app_myRides.tr),
           leading: const SizedBox(),
         ),
         body: SafeArea(
@@ -71,22 +72,22 @@ class MyRidesPageView extends GetView<MyRidesPageController> {
                           tabs: [
                             Tab(
                               child: Text(
-                                Strings.allRides,
+                                LocaleKeys.app_allRides.tr,
                               ),
                             ),
                             Tab(
                               child: Text(
-                                Strings.driver,
+                                LocaleKeys.app_driver.tr,
                               ),
                             ),
                             Tab(
                               child: Text(
-                                Strings.rider,
+                                LocaleKeys.app_rider.tr,
                               ),
                             ),
                             /*  Tab(
                             child: Text(
-                              Strings.recurringTrips,
+                              LocaleKeys.app_recurringTrips.tr,
                             ),
                           ),*/
                           ]).paddingSymmetric(horizontal: 16.kw),
@@ -95,8 +96,8 @@ class MyRidesPageView extends GetView<MyRidesPageController> {
                           physics: const NeverScrollableScrollPhysics(),
                           children: [
                             MyRidesOneTimeView(),
-                            MyRidesOneTimeView(type: Strings.booked),
-                            MyRidesOneTimeView(type: Strings.published),
+                            MyRidesOneTimeView(type: LocaleKeys.app_booked.tr),
+                            MyRidesOneTimeView(type: LocaleKeys.app_published.tr),
                             //  MyRidesRecurringView()
                           ],
                         ),

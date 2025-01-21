@@ -5,6 +5,7 @@ import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
+import 'package:green_pool/generated/locales.g.dart';
 
 import '../../../components/common_image_view.dart';
 import '../../../constants/image_constant.dart';
@@ -19,17 +20,17 @@ class PaymentMethodView extends GetView<PaymentMethodController> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: GreenPoolAppBar(
-          title: Text(Strings.paymentMethod),
+          title: Text(LocaleKeys.app_paymentMethod.tr),
         ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              Strings.savedCard,
+              LocaleKeys.app_savedCard.tr,
               style: TextStyleUtil.k16Bold(),
             ).paddingOnly(top: 32.kh, bottom: 16.kh),
             SavedCardsTile(
-                title: Strings.addCreditDebit,
+                title: LocaleKeys.app_addCreditDebit.tr,
                 path: ImageConstant.svgAddCard,
                 onTap: () {
                   Get.toNamed(Routes.ADD_CARD);
@@ -37,7 +38,7 @@ class PaymentMethodView extends GetView<PaymentMethodController> {
             const Expanded(child: SizedBox()),
             GreenPoolButton(
               onPressed: () {},
-              label: Strings.proceed,
+              label: LocaleKeys.app_proceed.tr,
             ).paddingSymmetric(vertical: 40.kh),
           ],
         ).paddingSymmetric(horizontal: 16.kw));

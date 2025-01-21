@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../components/common_image_view.dart';
 import '../../../components/gp_progress.dart';
 import '../../../components/greenpool_textfield.dart';
@@ -31,7 +32,7 @@ class ChatWithExpertsView extends GetView<ChatWithExpertsController> {
         elevation: 1,
         toolbarHeight: 64.kh,
         title: Text(
-          Strings.helpAndSupport,
+          LocaleKeys.app_helpAndSupport.tr,
           style: TextStyleUtil.k16Bold(),
         ),
         leading: GestureDetector(
@@ -192,19 +193,19 @@ class ChatWithExpertsView extends GetView<ChatWithExpertsController> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           SuggestionsChip(
-                                            topic: Strings.wallet,
+                                            topic: LocaleKeys.app_wallet.tr,
                                             controller: controller,
                                           ),
                                           SuggestionsChip(
-                                            topic: Strings.refund,
+                                            topic: LocaleKeys.app_refund.tr,
                                             controller: controller,
                                           ),
                                           SuggestionsChip(
-                                            topic: Strings.rideRelated,
+                                            topic: LocaleKeys.app_rideRelated.tr,
                                             controller: controller,
                                           ),
                                           SuggestionsChip(
-                                            topic: Strings.accRelated,
+                                            topic: LocaleKeys.app_accRelated.tr,
                                             controller: controller,
                                           ),
                                         ],
@@ -221,7 +222,7 @@ class ChatWithExpertsView extends GetView<ChatWithExpertsController> {
                   Obx(
                     () => GreenPoolTextField(
                       controller: controller.eMsg,
-                      hintText: Strings.writeMsg,
+                      hintText: LocaleKeys.app_writeMsg.tr,
                       readOnly: !controller.isChatStarted.value,
                       keyboardType: TextInputType.text,
                       textCapitalization: TextCapitalization.sentences,

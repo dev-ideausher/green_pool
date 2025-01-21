@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/gp_util.dart';
+import '../../../../generated/locales.g.dart';
 import '../../../data/booking_detail_model.dart';
 import '../../../data/chat_arg.dart';
 import '../../../data/ride_detail_id.dart';
@@ -74,7 +75,7 @@ class MyRidesDetailsController extends GetxController {
                   destination:
                       rider.destination?.name?.split(',').first ?? "City",
                   date: GpUtil.formatDate(
-                      DateTime.parse(rider.date ?? Strings.defaultDate))));
+                      DateTime.parse(rider.date ?? LocaleKeys.app_defaultDate.tr))));
         } catch (e) {
           Get.toNamed(Routes.CHAT_PAGE,
               arguments: ChatArg(
@@ -88,7 +89,7 @@ class MyRidesDetailsController extends GetxController {
                   destination:
                       rider.destination?.name?.split(',').first ?? "City",
                   date: GpUtil.formatDate(
-                      DateTime.parse(rider.date ?? Strings.defaultDate))));
+                      DateTime.parse(rider.date ?? LocaleKeys.app_defaultDate.tr))));
         }
       },
     ));

@@ -6,6 +6,7 @@ import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/res/strings.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../controllers/terms_conditions_controller.dart';
 
 class TermsAndConditionsView extends GetView<TermsConditionsController> {
@@ -14,7 +15,7 @@ class TermsAndConditionsView extends GetView<TermsConditionsController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: GreenPoolAppBar(
-        title: Text(Strings.termsAmbersentConditions),
+        title: Text(LocaleKeys.app_termsAmbersentConditions.tr),
       ),
       body: Obx(
         () => controller.isLoad.value

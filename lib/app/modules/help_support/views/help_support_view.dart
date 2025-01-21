@@ -8,6 +8,7 @@ import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 import '../../../../generated/assets.dart';
+import '../../../../generated/locales.g.dart';
 import '../controllers/help_support_controller.dart';
 
 class HelpSupportView extends GetView<HelpSupportController> {
@@ -18,7 +19,7 @@ class HelpSupportView extends GetView<HelpSupportController> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: GreenPoolAppBar(
-        title: Text(Strings.helpAndSupport),
+        title: Text(LocaleKeys.app_helpAndSupport.tr),
       ),
       body: Obx(
         () => controller.isLoad.value
@@ -30,11 +31,11 @@ class HelpSupportView extends GetView<HelpSupportController> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     /*Text(
-                      Strings.getYourAnsHere,
+                      LocaleKeys.app_getYourAnsHere.tr,
                       style: TextStyleUtil.k16Bold(),
                     ).paddingOnly(bottom: 8.kh),
                     GreenPoolTextField(
-                      hintText: Strings.howCanWeHelpYou,
+                      hintText: LocaleKeys.app_howCanWeHelpYou.tr,
                       suffix: const Icon(
                         Icons.chevron_right,
                         color: ColorUtil.kBlack01,
@@ -131,7 +132,7 @@ class HelpSupportView extends GetView<HelpSupportController> {
             child: ListTile(
               onTap: () => controller.navigateToChatPage(),
               leading: SvgPicture.asset(Assets.svgChatbox),
-              title: Text(Strings.chatWithOurExperts),
+              title: Text(LocaleKeys.app_chatWithOurExperts.tr),
               trailing: const Icon(Icons.chevron_right),
             ),
           ),

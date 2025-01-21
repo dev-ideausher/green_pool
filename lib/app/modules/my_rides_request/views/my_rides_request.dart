@@ -6,6 +6,7 @@ import 'package:green_pool/app/modules/my_rides_request/controllers/my_rides_req
 import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../constants/image_constant.dart';
 import '../../../services/colors.dart';
 import '../../../services/text_style_util.dart';
@@ -21,7 +22,7 @@ class MyRideRequestsView extends GetView<MyRidesRequestController> {
     Get.lazyPut(() => MyRidesRequestController());
     return Scaffold(
       appBar: GreenPoolAppBar(
-        title: Text(Strings.myRides),
+        title: Text(LocaleKeys.app_myRides.tr),
         actions: [
           Obx(
             () => GestureDetector(
@@ -70,12 +71,12 @@ class MyRideRequestsView extends GetView<MyRidesRequestController> {
                   tabs: [
                     Tab(
                       child: Text(
-                        Strings.confirmRequests,
+                        LocaleKeys.app_confirmRequests.tr,
                       ),
                     ),
                     Tab(
                       child: Text(
-                        Strings.sendRequests,
+                        LocaleKeys.app_sendRequests.tr,
                       ),
                     ),
                   ]).paddingSymmetric(horizontal: 16.kw),

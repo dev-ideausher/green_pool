@@ -8,6 +8,7 @@ import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/generated/assets.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../components/common_image_view.dart';
 import '../../../components/gp_progress.dart';
 import '../../../components/green_pool_divider.dart';
@@ -38,12 +39,12 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
                           : SvgPicture.asset(ImageConstant.svgNoRides),
                     ),
                     Text(
-                      Strings.noRidesBetweenCities,
+                      LocaleKeys.app_noRidesBetweenCities.tr,
                       style: TextStyleUtil.k24Heading600(),
                       textAlign: TextAlign.center,
                     ).paddingOnly(bottom: 16.kh),
                     Text(
-                      Strings.pleaseTryAgain,
+                      LocaleKeys.app_pleaseTryAgain.tr,
                       style:
                           TextStyleUtil.k18Regular(color: ColorUtil.kBlack04),
                       textAlign: TextAlign.center,
@@ -156,7 +157,7 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
                                       height: 40.kh,
                                       padding: EdgeInsets.all(8.kh),
                                       fontSize: 14.kh,
-                                      label: Strings.accept,
+                                      label: LocaleKeys.app_accept.tr,
                                       onPressed: () async {
                                         try {
                                           await controller
@@ -193,7 +194,7 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
                                               .value
                                           ? ColorUtil.kPrimary3PinkMode
                                           : ColorUtil.kSecondary01,
-                                      label: Strings.reject,
+                                      label: LocaleKeys.app_reject.tr,
                                     ),
                                   ],
                                 ),

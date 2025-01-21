@@ -11,6 +11,7 @@ import 'package:green_pool/app/modules/profile/views/profile_view.dart';
 import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../services/colors.dart';
 import '../../../services/storage.dart';
 import '../../../services/text_style_util.dart';
@@ -61,7 +62,7 @@ class BottomNavigationView extends GetView<HomeController> {
                         BlendMode.srcIn),
                   ),
                   icon: SvgPicture.asset(ImageConstant.svgNavHome),
-                  label: Strings.home,
+                  label: LocaleKeys.app_home.tr,
                 ),
                 BottomNavigationBarItem(
                   activeIcon: Stack(
@@ -127,7 +128,7 @@ class BottomNavigationView extends GetView<HomeController> {
                       ),
                     ],
                   ),
-                  label: Strings.myRides,
+                  label: LocaleKeys.app_myRides.tr,
                 ),
                 BottomNavigationBarItem(
                   activeIcon: Stack(
@@ -193,7 +194,7 @@ class BottomNavigationView extends GetView<HomeController> {
                       ),
                     ],
                   ),
-                  label: Strings.messages,
+                  label: LocaleKeys.app_messages.tr,
                 ),
                 BottomNavigationBarItem(
                   activeIcon: SvgPicture.asset(
@@ -205,7 +206,7 @@ class BottomNavigationView extends GetView<HomeController> {
                         BlendMode.srcIn),
                   ),
                   icon: SvgPicture.asset(ImageConstant.svgNavProfile),
-                  label: Strings.profile,
+                  label: LocaleKeys.app_profile.tr,
                 ),
               ]),
         ),

@@ -12,6 +12,7 @@ import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../res/strings.dart';
 import '../../../services/custom_button.dart';
 import '../../home/controllers/home_controller.dart';
@@ -23,9 +24,12 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
   @override
   Widget build(BuildContext context) {
     final isPinkModeOn = Get.find<HomeController>().isPinkModeOn.value;
+    final borderforStopField = OutlineInputBorder(
+        borderSide: const BorderSide(color: ColorUtil.kBlack06),
+        borderRadius: BorderRadius.circular(8.kh));
     return Scaffold(
       appBar: GreenPoolAppBar(
-        title: Text(Strings.postARide),
+        title: Text(LocaleKeys.app_postARide.tr),
       ),
       resizeToAvoidBottomInset: false,
       body: Stack(
@@ -34,9 +38,10 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
             () => Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                RichTextHeading(text: Strings.pickup).paddingOnly(top: 12.kh),
+                RichTextHeading(text: LocaleKeys.app_pickup.tr)
+                    .paddingOnly(top: 12.kh),
                 GreenPoolTextField(
-                  hintText: Strings.enterOrigin,
+                  hintText: LocaleKeys.app_enterOrigin.tr,
                   keyboardType: TextInputType.streetAddress,
                   onchanged: (v) {
                     controller.setActiveStatePostRideView();
@@ -59,9 +64,9 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
                           child: const Icon(Icons.cancel))
                       : const SizedBox(),
                 ).paddingOnly(top: 8.kh, bottom: 28.kh),
-                RichTextHeading(text: Strings.destination),
+                RichTextHeading(text: LocaleKeys.app_destination.tr),
                 GreenPoolTextField(
-                  hintText: Strings.enterAdestination,
+                  hintText: LocaleKeys.app_enterAdestination.tr,
                   keyboardType: TextInputType.streetAddress,
                   onchanged: (v) {
                     controller.setActiveStatePostRideView();
@@ -88,7 +93,7 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
                   visible: controller.isDestinationAdded.value &&
                       controller.isOriginAdded.value,
                   child: Text(
-                    Strings.addStops,
+                    LocaleKeys.app_addStops.tr,
                     style: TextStyleUtil.k14Semibold(),
                   ),
                 ),
@@ -97,17 +102,17 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
                   visible: controller.isDestinationAdded.value &&
                       controller.isOriginAdded.value,
                   child: GreenPoolTextField(
-                    hintText: Strings.addStops,
+                    hintText: LocaleKeys.app_addStops.tr,
                     keyboardType: TextInputType.streetAddress,
                     fillColor: Colors.transparent,
-                    border: OutlineInputBorder(
-                        borderSide: const BorderSide(color: ColorUtil.kBlack06),
-                        borderRadius: BorderRadius.circular(8.kh)),
+                    border: borderforStopField,
+                    focusedBorder: borderforStopField,
                     onTap: () {
                       controller.moveToSetStop1();
                     },
                     controller: controller.stop1TextController,
                     readOnly: true,
+                    enabled: true,
                     prefix: Icon(
                       Icons.add_circle,
                       size: 20.kh,
@@ -133,17 +138,17 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
                 Visibility(
                   visible: controller.isStop1Added.value,
                   child: GreenPoolTextField(
-                    hintText: Strings.addStops,
+                    hintText: LocaleKeys.app_addStops.tr,
                     keyboardType: TextInputType.streetAddress,
                     fillColor: Colors.transparent,
-                    border: OutlineInputBorder(
-                        borderSide: const BorderSide(color: ColorUtil.kBlack06),
-                        borderRadius: BorderRadius.circular(8.kh)),
+                    border: borderforStopField,
+                    focusedBorder: borderforStopField,
                     onTap: () {
                       controller.moveToSetStop2();
                     },
                     controller: controller.stop2TextController,
                     readOnly: true,
+                    enabled: true,
                     prefix: Icon(
                       Icons.add_circle,
                       size: 20.kh,
@@ -174,7 +179,7 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
                         onPressed: () => controller.moveToStepTwo(),
                         padding: const EdgeInsets.all(0),
                         isActive: controller.isActive.value,
-                        label: Strings.next,
+                        label: LocaleKeys.app_next.tr,
                         fontSize: 14.kh,
                         width: 120.kw,
                         height: 40.kh,

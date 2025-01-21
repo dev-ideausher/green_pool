@@ -11,6 +11,7 @@ import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../res/strings.dart';
 import '../controllers/rating_driver_side_controller.dart';
 
@@ -26,12 +27,12 @@ class RatingDriverSideView extends GetView<RatingDriverSideController> {
             SvgPicture.asset(ImageConstant.svgRideCompleted)
                 .paddingOnly(top: 40.kh, bottom: 24.kh),
             Text(
-              Strings.rideCompleted,
+              LocaleKeys.app_rideCompleted.tr,
               style: TextStyleUtil.k24Heading600(),
               textAlign: TextAlign.center,
             ).paddingOnly(bottom: 8.kh),
             Text(
-              Strings.hopeYouHadGreatExperience,
+              LocaleKeys.app_hopeYouHadGreatExperience.tr,
               style: TextStyleUtil.k16Regular(color: ColorUtil.kBlack04),
               textAlign: TextAlign.center,
             ),
@@ -47,7 +48,7 @@ class RatingDriverSideView extends GetView<RatingDriverSideController> {
                   children: [
                     Center(
                       child: Text(
-                        Strings.rateRiders,
+                        LocaleKeys.app_rateRiders.tr,
                         style: TextStyleUtil.k18Heading600(),
                       ).paddingOnly(top: 40.kh),
                     ),
@@ -136,7 +137,7 @@ class RatingDriverSideView extends GetView<RatingDriverSideController> {
                       onPressed: () {
                         controller.rateUserAPI();
                       },
-                      label: Strings.continueText,
+                      label: LocaleKeys.app_continueText.tr,
                     ).paddingOnly(top: 40.kh, bottom: 10.kh),
                     12.kheightBox,
                   ],

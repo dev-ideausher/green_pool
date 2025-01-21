@@ -8,6 +8,7 @@ import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../components/common_image_view.dart';
 import '../../../components/greenpool_textfield.dart';
 import '../../../constants/image_constant.dart';
@@ -22,22 +23,22 @@ class ReportView extends GetView<ReportController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:  GreenPoolAppBar(
-        title: Text(Strings.reportABug),
+        title: Text(LocaleKeys.app_reportABug.tr),
       ),
       resizeToAvoidBottomInset: false,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            Strings.makeItEasyToTellUsAboutProblems,
+            LocaleKeys.app_makeItEasyToTellUsAboutProblems.tr,
             style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
           ).paddingOnly(bottom: 24.kh, top: 32.kh),
           RichTextHeading(
-            text: Strings.bugslashfeedback,
+            text: LocaleKeys.app_bugSlashFeedback.tr,
             style: TextStyleUtil.k14Semibold(),
           ).paddingOnly(bottom: 8.kh),
           GreenPoolTextField(
-            hintText: Strings.enterHere,
+            hintText: LocaleKeys.app_enterHere.tr,
             controller: controller.bugController,
             onchanged: (val) {
               controller.bugController.text = val.toString();
@@ -45,7 +46,7 @@ class ReportView extends GetView<ReportController> {
             },
           ).paddingOnly(bottom: 16.kh),
           Text(
-            Strings.uploadImagesOptional,
+            LocaleKeys.app_uploadImagesOptional.tr,
             style: TextStyleUtil.k14Semibold(),
           ).paddingOnly(bottom: 16.kh),
           GestureDetector(
@@ -82,7 +83,7 @@ class ReportView extends GetView<ReportController> {
           Obx(
             () => GreenPoolButton(
               onPressed: () => controller.bugReportAPI(),
-              label: Strings.submit,
+              label: LocaleKeys.app_submit.tr,
               isActive: controller.isActive.value,
             ).paddingSymmetric(vertical: 40.kh),
           ),

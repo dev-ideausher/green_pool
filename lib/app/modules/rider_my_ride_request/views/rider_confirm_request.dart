@@ -8,6 +8,7 @@ import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../../generated/assets.dart';
+import '../../../../generated/locales.g.dart';
 import '../../../components/common_image_view.dart';
 import '../../../components/gp_progress.dart';
 import '../../../components/green_pool_divider.dart';
@@ -37,12 +38,12 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                           : SvgPicture.asset(ImageConstant.svgNoRides),
                     ),
                     Text(
-                      Strings.thereAreNoRidesBetweenTheseCities,
+                      LocaleKeys.app_thereAreNoRidesBetweenTheseCities.tr,
                       style: TextStyleUtil.k24Heading600(),
                       textAlign: TextAlign.center,
                     ).paddingOnly(bottom: 16.kh),
                     Text(
-                      Strings.pleaseTryAgainAfterFewDays,
+                      LocaleKeys.app_pleaseTryAgainAfterFewDays.tr,
                       style:
                           TextStyleUtil.k18Regular(color: ColorUtil.kBlack04),
                       textAlign: TextAlign.center,
@@ -173,7 +174,7 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                                   children: [
                                                     TextSpan(
                                                       text:
-                                                          "${Strings.dollar} ${(data?.price ?? 0)}",
+                                                          "${LocaleKeys.app_dollar.tr} ${(data?.price ?? 0)}",
                                                       style:
                                                           TextStyleUtil.k16Bold(
                                                               color: ColorUtil
@@ -213,7 +214,7 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                                         color: ColorUtil
                                                             .kSecondary01)),
                                                 child: Text(
-                                                  Strings.message,
+                                                  LocaleKeys.app_message.tr,
                                                   style: TextStyleUtil
                                                       .k12Semibold(),
                                                 ).paddingSymmetric(
@@ -308,7 +309,7 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                       height: 40.kh,
                                       padding: EdgeInsets.all(8.kh),
                                       fontSize: 14.kh,
-                                      label: Strings.accept,
+                                      label: LocaleKeys.app_accept.tr,
                                       onPressed: () async {
                                         controller
                                             .moveToPaymentFromConfirmSection(
@@ -338,7 +339,7 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                               .value
                                           ? ColorUtil.kPrimary3PinkMode
                                           : ColorUtil.kSecondary01,
-                                      label: Strings.reject,
+                                      label: LocaleKeys.app_reject.tr,
                                     ),
                                   ],
                                 ),

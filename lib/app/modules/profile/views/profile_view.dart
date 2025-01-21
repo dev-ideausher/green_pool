@@ -14,6 +14,7 @@ import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../res/strings.dart';
 import '../../../services/text_style_util.dart';
 import '../controllers/profile_controller.dart';
@@ -27,7 +28,7 @@ class ProfileView extends GetView<ProfileController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: GreenPoolAppBar(
-        title: Text(Strings.profile),
+        title: Text(LocaleKeys.app_profile.tr),
         leading: const SizedBox(),
       ),
       body: SingleChildScrollView(
@@ -58,7 +59,7 @@ class ProfileView extends GetView<ProfileController> {
               () => SizedBox(
                 width: 50.w,
                 child: Text(
-                  controller.fullName.value ?? Strings.user,
+                  controller.fullName.value ?? LocaleKeys.app_user.tr,
                   style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
@@ -68,7 +69,7 @@ class ProfileView extends GetView<ProfileController> {
             controller.userInfo.value.data?.gender == "Female"
                 ? ProfileContainer(
                     image: ImageConstant.svgProfileShieldPink,
-                    text: Strings.activatePinkMode,
+                    text: LocaleKeys.app_activatePinkMode.tr,
                     info: GestureDetector(
                         onTap: () => Get.dialog(
                               useSafeArea: true,
@@ -81,8 +82,7 @@ class ProfileView extends GetView<ProfileController> {
                                       borderRadius: BorderRadius.circular(8.kh),
                                     ),
                                     child: Text(
-                                      Strings
-                                          .travelWithConfidenceWithOurPinkMode,
+                                      LocaleKeys.app_travelWithConfidenceWithOurPinkMode.tr,
                                       style: TextStyleUtil.k14Regular(
                                           color: ColorUtil.kBlack03),
                                     )),
@@ -113,24 +113,24 @@ class ProfileView extends GetView<ProfileController> {
                       (value) => controller.updateInfo(),
                     ),
                 image: ImageConstant.svgProfileSettings,
-                text: Strings.profileSettings),
+                text: LocaleKeys.app_profileSettings.tr),
             ProfileContainer(
                 onTap: () => Get.toNamed(Routes.PUSH_NOTIFICATIONS),
                 image: ImageConstant.svgProfileNoti,
-                text: Strings.notifications),
+                text: LocaleKeys.app_notifications.tr),
             ProfileContainer(
                     onTap: () => Get.toNamed(Routes.RIDE_HISTORY),
                     image: ImageConstant.svgProfileRideHistory,
-                    text: Strings.ridehistory)
+                    text: LocaleKeys.app_ridehistory.tr)
                 .paddingOnly(bottom: 8.kh),
             ProfileContainer(
                 onTap: () => Get.toNamed(Routes.WALLET),
                 image: ImageConstant.svgProfileWallet,
-                text: Strings.wallet),
+                text: LocaleKeys.app_wallet.tr),
             ProfileContainer(
                 onTap: () => Get.toNamed(Routes.STUDENT_DISCOUNTS),
                 image: ImageConstant.svgProfileDiscount,
-                text: Strings.studentDiscount),
+                text: LocaleKeys.app_studentDiscount.tr),
             ProfileContainer(
                 onTap: Platform.isIOS
                     ? () async {
@@ -142,42 +142,42 @@ class ProfileView extends GetView<ProfileController> {
                             "Check this cool app! \nhttps://play.google.com/store/apps/details?id=com.greenpool.app");
                       },
                 image: ImageConstant.svgProfileRefer,
-                text: Strings.referAFriend),
+                text: LocaleKeys.app_referAFriend.tr),
             ProfileContainer(
                     onTap: () {
                       Get.bottomSheet(const RatingBottomSheet(),
                           enableDrag: true, isScrollControlled: true);
                     },
                     image: ImageConstant.svgProfileStar,
-                    text: Strings.rateUs)
+                    text: LocaleKeys.app_rateUs.tr)
                 .paddingOnly(bottom: 8.kh),
             ProfileContainer(
               image: ImageConstant.svgProfileAbout,
-              text: Strings.aboutUs,
+              text: LocaleKeys.app_aboutUs.tr,
               onTap: () => Get.toNamed(Routes.ABOUT),
             ),
             ProfileContainer(
                 onTap: () => Get.toNamed(Routes.FILE_DISPUTE),
                 image: ImageConstant.svgProfileFile,
-                text: Strings.fileDispute),
+                text: LocaleKeys.app_fileDispute.tr),
             ProfileContainer(
                 onTap: () => Get.toNamed(Routes.HELP_SUPPORT),
                 image: ImageConstant.svgProfileHelp,
-                text: Strings.helpAndSupport),
+                text: LocaleKeys.app_helpAndSupport.tr),
             ProfileContainer(
                 onTap: () => Get.toNamed(Routes.TERMS_CONDITIONS),
                 image: ImageConstant.svgProfileTerms,
-                text: Strings.termsAmbersentConditions),
+                text: LocaleKeys.app_termsAmbersentConditions.tr),
             ProfileContainer(
                 onTap: () async {
                   await launchUrl(Uri.parse("https://carpooll.com"));
                 },
                 image: ImageConstant.svgProfileFollow,
-                text: Strings.followUsOnSocialMedia),
+                text: LocaleKeys.app_followUsOnSocialMedia.tr),
             ProfileContainer(
                     onTap: () => Get.toNamed(Routes.REPORT),
                     image: ImageConstant.svgProfileBug,
-                    text: Strings.reportABug)
+                    text: LocaleKeys.app_reportABug.tr)
                 .paddingOnly(bottom: 8.kh),
             ProfileContainer(
               onTap: () => Get.dialog(
@@ -202,12 +202,12 @@ class ProfileView extends GetView<ProfileController> {
                           ),
                         ),
                         Text(
-                          Strings.confirmLogout,
+                          LocaleKeys.app_confirmLogout.tr,
                           style: TextStyleUtil.k18Semibold(),
                           textAlign: TextAlign.center,
                         ).paddingSymmetric(vertical: 4.kh),
                         Text(
-                          Strings.sureWantToLogout,
+                          LocaleKeys.app_sureWantToLogout.tr,
                           style: TextStyleUtil.k14Regular(
                             color: ColorUtil.kBlack04,
                           ),
@@ -221,7 +221,7 @@ class ProfileView extends GetView<ProfileController> {
                             },
                             height: 40.kh,
                             width: 144.kw,
-                            label: Strings.logout,
+                            label: LocaleKeys.app_logout.tr,
                             fontSize: 14.kh,
                             padding: const EdgeInsets.all(8),
                           ),
@@ -232,7 +232,7 @@ class ProfileView extends GetView<ProfileController> {
                 ),
               ),
               image: ImageConstant.svgProfileLogout,
-              text: Strings.logout,
+              text: LocaleKeys.app_logout.tr,
               border: Border.all(color: ColorUtil.kWhiteColor),
             ).paddingOnly(bottom: 40.kh),
           ],

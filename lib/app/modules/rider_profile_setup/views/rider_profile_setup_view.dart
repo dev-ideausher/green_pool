@@ -9,6 +9,7 @@ import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../components/greenpool_textfield.dart';
 import '../../../components/opt_heading_text.dart';
 import '../../../components/richtext_heading.dart';
@@ -39,19 +40,19 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                Strings.profileSetup,
+                LocaleKeys.app_profileSetup.tr,
                 style: TextStyleUtil.k32Heading700(),
               ).paddingOnly(bottom: 4.kh, top: 16.kh),
               Text(
-                Strings.editProfileDetails,
+                LocaleKeys.app_editProfileDetails.tr,
                 style: TextStyleUtil.k16Regular(color: ColorUtil.kBlack04),
               ).paddingOnly(bottom: 40.kh),
               Center(
                 child: ProfileImage(controller: controller),
               ).paddingOnly(bottom: 40.kh),
-              RichTextHeading(text: Strings.fullName).paddingOnly(bottom: 8.kh),
+              RichTextHeading(text: LocaleKeys.app_fullName.tr).paddingOnly(bottom: 8.kh),
               GreenPoolTextField(
-                hintText: Strings.enterName,
+                hintText: LocaleKeys.app_enterName.tr,
                 controller: controller.fullName,
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(
@@ -62,10 +63,10 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 suffix: SvgPicture.asset(ImageConstant.svgProfileEditPen),
               ).paddingOnly(bottom: 16.kh),
-              OptFieldHeading(heading: Strings.emailAddress)
+              OptFieldHeading(heading: LocaleKeys.app_emailAddress.tr)
                   .paddingOnly(bottom: 8.kh),
               GreenPoolTextField(
-                hintText: Strings.enterEmailId,
+                hintText: LocaleKeys.app_enterEmailId.tr,
                 controller: controller.email,
                 keyboardType: TextInputType.emailAddress,
                 suffix: controller.readOnlyEmail
@@ -73,10 +74,10 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
                     : SvgPicture.asset(ImageConstant.svgProfileEditPen),
                 readOnly: controller.readOnlyEmail,
               ).paddingOnly(bottom: 16.kh),
-              RichTextHeading(text: Strings.phoneNumber)
+              RichTextHeading(text: LocaleKeys.app_phoneNumber.tr)
                   .paddingOnly(bottom: 8.kh),
               GreenPoolTextField(
-                hintText: Strings.enterPhoneNumber,
+                hintText: LocaleKeys.app_enterPhoneNumber.tr,
                 controller: controller.phoneNumber,
                 prefix: Text(
                   "+1",
@@ -90,10 +91,10 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 readOnly: !controller.readOnlyEmail,
               ).paddingOnly(bottom: 16.kh),
-              RichTextHeading(text: Strings.gender).paddingOnly(bottom: 8.kh),
+              RichTextHeading(text: LocaleKeys.app_gender.tr).paddingOnly(bottom: 8.kh),
               Obx(
                 () => GreenPoolTextField(
-                  hintText: Strings.selectGender,
+                  hintText: LocaleKeys.app_selectGender.tr,
                   controller: controller.gender,
                   validator: (value) => controller.validateGender(value),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -151,11 +152,11 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
                   ).paddingOnly(bottom: 16.kh),
                 ),
               ),
-              RichTextHeading(text: Strings.cityProvince)
+              RichTextHeading(text: LocaleKeys.app_cityProvince.tr)
                   .paddingOnly(bottom: 8.kh),
               Obx(
                 () => GreenPoolTextField(
-                  hintText: Strings.selectCity,
+                  hintText: LocaleKeys.app_selectCity.tr,
                   controller: controller.city,
                   focusNode: controller.cityFocusNode,
                   validator: (value) => controller.validateCity(value),
@@ -219,16 +220,16 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
                       )).paddingOnly(bottom: 16.kh),
                 ),
               ),
-              OptFieldHeading(heading: Strings.dateOfBirth)
+              OptFieldHeading(heading: LocaleKeys.app_dateOfBirth.tr)
                   .paddingOnly(bottom: 8.kh),
               GreenPoolTextField(
-                hintText: Strings.enterDateOfBirth,
+                hintText: LocaleKeys.app_enterDateOfBirth.tr,
                 controller: controller.formattedDateOfBirth,
                 readOnly: true,
                 onTap: () => controller.setDate(context),
                 suffix: SvgPicture.asset(ImageConstant.svgIconCalendar),
               ),
-              /*OptFieldHeading(heading: Strings.idVerification)
+              /*OptFieldHeading(heading: LocaleKeys.app_idVerification.tr)
                   .paddingOnly(bottom: 8.kh),
               GestureDetector(
                 onTap: () => Get.to(() => UploadIDView(
@@ -256,7 +257,7 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
                               SvgPicture.asset(ImageConstant.svgIconUpload)
                                   .paddingOnly(right: 8.kw),
                               Text(
-                                Strings.uploadId,
+                                LocaleKeys.app_uploadId.tr,
                                 style: TextStyleUtil.k14Regular(
                                     color: ColorUtil.kBlack03),
                               ),
@@ -268,7 +269,7 @@ class RiderProfileSetupView extends GetView<RiderProfileSetupController> {
               Obx(
                 () => GreenPoolButton(
                   onPressed: () => controller.checkUserValidations(),
-                  label: Strings.proceed,
+                  label: LocaleKeys.app_proceed.tr,
                   isLoading: controller.isBtnLoading.value,
                 ).paddingSymmetric(vertical: 40.kh),
               ),
@@ -335,7 +336,7 @@ class ProfileImage extends StatelessWidget {
           ).paddingOnly(bottom: 12.kh),
         ),
         Text(
-          Strings.takeOrUploadProfilePic,
+          LocaleKeys.app_takeOrUploadProfilePic.tr,
           style: TextStyleUtil.k16Regular(color: ColorUtil.kNeutral4),
         ),
       ],

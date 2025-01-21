@@ -10,6 +10,7 @@ import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../components/greenpool_textfield.dart';
 import '../../../components/richtext_heading.dart';
 import '../../../constants/image_constant.dart';
@@ -26,13 +27,13 @@ class VehicleDetailsView extends GetView<VehicleDetailsController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: GreenPoolAppBar(
-        title: Text(Strings.vehicleDetails),
+        title: Text(LocaleKeys.app_vehicleDetails.tr),
       ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            RichTextHeading(text: Strings.vehiclePhoto)
+            RichTextHeading(text: LocaleKeys.app_vehiclePhoto.tr)
                 .paddingOnly(top: 32.kh, bottom: 8.kh),
             GestureDetector(
               onTap: () {
@@ -53,9 +54,9 @@ class VehicleDetailsView extends GetView<VehicleDetailsController> {
                           url:
                               "${controller.vehicleInfoModel!.vehiclePic!.url}"))),
             ).paddingOnly(bottom: 16.kh),
-            RichTextHeading(text: Strings.model).paddingOnly(bottom: 8.kh),
+            RichTextHeading(text: LocaleKeys.app_model.tr).paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
-              hintText: Strings.enterVehicleModel,
+              hintText: LocaleKeys.app_enterVehicleModel.tr,
               controller: controller.modelTextController,
               onchanged: (value) {
                 if (value != null) {
@@ -69,10 +70,10 @@ class VehicleDetailsView extends GetView<VehicleDetailsController> {
                           : ColorUtil.kSecondary01,
                       BlendMode.srcIn)),
             ).paddingOnly(bottom: 16.kh),
-            RichTextHeading(text: Strings.type).paddingOnly(bottom: 8.kh),
+            RichTextHeading(text: LocaleKeys.app_type.tr).paddingOnly(bottom: 8.kh),
             Obx(
               () => GreenPoolTextField(
-                hintText: Strings.selectVehicleType,
+                hintText: LocaleKeys.app_selectVehicleType.tr,
                 controller: controller.type,
                 suffix: controller.isTypeListExpanded.value
                     ? const Icon(Icons.arrow_drop_up)
@@ -130,10 +131,10 @@ class VehicleDetailsView extends GetView<VehicleDetailsController> {
                 ).paddingOnly(bottom: 16.kh),
               ),
             ),
-            RichTextHeading(text: Strings.color).paddingOnly(bottom: 8.kh),
+            RichTextHeading(text: LocaleKeys.app_color.tr).paddingOnly(bottom: 8.kh),
             Obx(
               () => GreenPoolTextField(
-                hintText: Strings.selectVehicleColor,
+                hintText: LocaleKeys.app_selectVehicleColor.tr,
                 controller: controller.color,
                 suffix: controller.isColorListExpanded.value
                     ? const Icon(Icons.arrow_drop_up)
@@ -191,9 +192,9 @@ class VehicleDetailsView extends GetView<VehicleDetailsController> {
                 ).paddingOnly(bottom: 16.kh),
               ),
             ),
-            RichTextHeading(text: Strings.year).paddingOnly(bottom: 8.kh),
+            RichTextHeading(text: LocaleKeys.app_year.tr).paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
-              hintText: Strings.enterYear,
+              hintText: LocaleKeys.app_enterYear.tr,
               controller: controller.yearTextController,
               onchanged: (value) {
                 if (value != null) {
@@ -207,10 +208,10 @@ class VehicleDetailsView extends GetView<VehicleDetailsController> {
                           : ColorUtil.kSecondary01,
                       BlendMode.srcIn)),
             ).paddingOnly(bottom: 16.kh),
-            RichTextHeading(text: Strings.licensePlate)
+            RichTextHeading(text: LocaleKeys.app_licensePlate.tr)
                 .paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
-              hintText: Strings.licensePlate,
+              hintText: LocaleKeys.app_licensePlate.tr,
               controller: controller.licenseTextController,
               onchanged: (value) {
                 if (value != null) {
@@ -224,7 +225,7 @@ class VehicleDetailsView extends GetView<VehicleDetailsController> {
                           : ColorUtil.kSecondary01,
                       BlendMode.srcIn)),
             ).paddingOnly(bottom: 8.kh),
-            RichTextHeading(text: Strings.idVerification)
+            RichTextHeading(text: LocaleKeys.app_idVerification.tr)
                 .paddingOnly(bottom: 8.kh),
             GestureDetector(
               onTap: () {
@@ -261,7 +262,7 @@ class VehicleDetailsView extends GetView<VehicleDetailsController> {
                 onPressed: () {
                   controller.updateData();
                 },
-                label: Strings.save,
+                label: LocaleKeys.app_save.tr,
                 isActive: controller.isBtnActive.value,
                 isLoading: controller.btnLoading.value,
               ).paddingSymmetric(vertical: 40.kh),
@@ -285,7 +286,7 @@ class UploadIdImage extends StatelessWidget {
       children: [
         SvgPicture.asset(ImageConstant.svgIconUpload).paddingOnly(right: 8.kw),
         Text(
-          Strings.uploadId,
+          LocaleKeys.app_uploadId.tr,
           style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
         ),
       ],

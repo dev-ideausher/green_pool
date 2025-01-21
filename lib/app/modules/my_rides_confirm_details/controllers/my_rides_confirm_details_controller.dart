@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/gp_util.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../data/chat_arg.dart';
 import '../../../data/driver_cofirm_request_model.dart';
 import '../../../routes/app_pages.dart';
@@ -86,7 +87,7 @@ class MyRidesConfirmDetailsController extends GetxController {
               origin: data.origin?.name?.split(',').first ?? "City",
               destination: data.destination?.name?.split(',').first ?? "City",
               date: GpUtil.formatDate(
-                  DateTime.parse(data.date ?? Strings.defaultDate))));
+                  DateTime.parse(data.date ?? LocaleKeys.app_defaultDate.tr))));
       isBtnLoading.value = false;
     } catch (e) {
       Get.toNamed(Routes.CHAT_PAGE,
@@ -101,7 +102,7 @@ class MyRidesConfirmDetailsController extends GetxController {
               origin: data.origin?.name?.split(',').first ?? "City",
               destination: data.destination?.name?.split(',').first ?? "City",
               date: GpUtil.formatDate(
-                  DateTime.parse(data.date ?? Strings.defaultDate))));
+                  DateTime.parse(data.date ?? LocaleKeys.app_defaultDate.tr))));
       isBtnLoading.value = false;
     }
   }

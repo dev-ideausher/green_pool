@@ -13,6 +13,8 @@ import 'package:green_pool/app/services/snackbar.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../../generated/locales.g.dart';
+import '../../../components/upload_id.dart';
 import '../controllers/profile_setup_controller.dart';
 
 class SetupVehicle extends GetView<ProfileSetupController> {
@@ -28,7 +30,7 @@ class SetupVehicle extends GetView<ProfileSetupController> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            RichTextHeading(text: Strings.vehiclePhoto)
+            RichTextHeading(text: LocaleKeys.app_vehiclePhoto.tr)
                 .paddingOnly(top: 32.kh, bottom: 8.kh),
             GestureDetector(
               onTap: () => Get.to(() => VehiclePictureView(
@@ -61,7 +63,7 @@ class SetupVehicle extends GetView<ProfileSetupController> {
                             SvgPicture.asset(ImageConstant.svgIconUpload)
                                 .paddingOnly(right: 8.kw),
                             Text(
-                              Strings.uploadPhoto,
+                              LocaleKeys.app_uploadPhoto.tr,
                               style: TextStyleUtil.k14Regular(
                                   color: ColorUtil.kBlack03),
                             ),
@@ -70,18 +72,18 @@ class SetupVehicle extends GetView<ProfileSetupController> {
                 ),
               ),
             ).paddingOnly(bottom: 16.kh),
-            RichTextHeading(text: Strings.model).paddingOnly(bottom: 8.kh),
+            RichTextHeading(text: LocaleKeys.app_model.tr).paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
-              hintText: Strings.enterVehicleModel,
+              hintText: LocaleKeys.app_enterVehicleModel.tr,
               controller: controller.model,
               focusNode: controller.modelFocusNode,
               validator: (value) => controller.validateModel(value),
               autovalidateMode: AutovalidateMode.onUserInteraction,
             ).paddingOnly(bottom: 16.kh),
-            RichTextHeading(text: Strings.type).paddingOnly(bottom: 8.kh),
+            RichTextHeading(text: LocaleKeys.app_type.tr).paddingOnly(bottom: 8.kh),
             Obx(
               () => GreenPoolTextField(
-                hintText: Strings.selectVehicleType,
+                hintText: LocaleKeys.app_selectVehicleType.tr,
                 controller: controller.type,
                 focusNode: controller.typeFocusNode,
                 validator: (value) => controller.validateVehicleType(value),
@@ -140,10 +142,10 @@ class SetupVehicle extends GetView<ProfileSetupController> {
                 ).paddingOnly(bottom: 16.kh),
               ),
             ),
-            RichTextHeading(text: Strings.color).paddingOnly(bottom: 8.kh),
+            RichTextHeading(text: LocaleKeys.app_color.tr).paddingOnly(bottom: 8.kh),
             Obx(
               () => GreenPoolTextField(
-                hintText: Strings.selectVehicleColor,
+                hintText: LocaleKeys.app_selectVehicleColor.tr,
                 controller: controller.color,
                 focusNode: controller.colorFocusNode,
                 validator: (value) => controller.validateColor(value),
@@ -202,19 +204,19 @@ class SetupVehicle extends GetView<ProfileSetupController> {
                 ).paddingOnly(bottom: 16.kh),
               ),
             ),
-            RichTextHeading(text: Strings.year).paddingOnly(bottom: 8.kh),
+            RichTextHeading(text: LocaleKeys.app_year.tr).paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
-              hintText: Strings.enterYear,
+              hintText: LocaleKeys.app_enterYear.tr,
               controller: controller.year,
               focusNode: controller.yearFocusNode,
               validator: (p0) => controller.validateYear(p0),
               keyboardType: const TextInputType.numberWithOptions(),
               autovalidateMode: AutovalidateMode.onUserInteraction,
             ).paddingOnly(bottom: 16.kh),
-            RichTextHeading(text: Strings.licensePlate)
+            RichTextHeading(text: LocaleKeys.app_licensePlate.tr)
                 .paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
-              hintText: Strings.licenseplate,
+              hintText: LocaleKeys.app_licenseplate.tr,
               controller: controller.licensePlate,
               focusNode: controller.licenseFocusNode,
               validator: (p0) => controller.validateLicensePlate(p0),
@@ -274,10 +276,10 @@ class SetupVehicle extends GetView<ProfileSetupController> {
                     controller.checkVehicleValidations();
                   } else {
                     controller.tabBarController.index = 0;
-                    showMySnackbar(msg: Strings.pleaseFillInUserDetails);
+                    showMySnackbar(msg: LocaleKeys.app_pleaseFillInUserDetails.tr);
                   }
                 },
-                label: Strings.proceed,
+                label: LocaleKeys.app_proceed.tr,
                 isLoading: controller.isVehicleBtnLoading.value,
               ).paddingSymmetric(vertical: 40.kh),
             ),

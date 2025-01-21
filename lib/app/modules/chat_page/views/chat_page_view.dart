@@ -12,6 +12,7 @@ import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/storage.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../components/gp_progress.dart';
 import '../../../services/gp_util.dart';
 import '../../home/controllers/home_controller.dart';
@@ -272,7 +273,7 @@ class ChatPageView extends GetView<ChatPageController> {
                                   children: [
                                     Text(
                                       GpUtil.isToday(nextMessage.timestamp)
-                                          ? Strings.today
+                                          ? LocaleKeys.app_today.tr
                                           : DateFormat.E()
                                               .format(nextMessage.timestamp),
                                       style: TextStyleUtil.k14Regular(),
@@ -298,7 +299,7 @@ class ChatPageView extends GetView<ChatPageController> {
                   ),
                   GreenPoolTextField(
                     controller: controller.eMsg,
-                    hintText: Strings.writeMsg,
+                    hintText: LocaleKeys.app_writeMsg.tr,
                     keyboardType: TextInputType.text,
                     textCapitalization: TextCapitalization.sentences,
                     suffix: InkWell(

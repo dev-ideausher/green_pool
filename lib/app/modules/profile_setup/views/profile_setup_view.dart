@@ -7,6 +7,7 @@ import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../services/text_style_util.dart';
 import '../controllers/profile_setup_controller.dart';
 
@@ -21,11 +22,11 @@ class ProfileSetupView extends GetView<ProfileSetupController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              Strings.profileSetup,
+              LocaleKeys.app_profileSetup.tr,
               style: TextStyleUtil.k32Heading700(),
             ).paddingOnly(bottom: 4.kh, top: 42.kh),
             Text(
-              Strings.enterYourProfileDetails,
+              LocaleKeys.app_enterYourProfileDetails.tr,
               style: TextStyleUtil.k16Regular(color: ColorUtil.kNeutral4),
             ).paddingOnly(bottom: 24.kh),
             TabBar(
@@ -47,12 +48,12 @@ class ProfileSetupView extends GetView<ProfileSetupController> {
                 tabs:  [
                   Tab(
                     child: Text(
-                      Strings.userDetails,
+                      LocaleKeys.app_userDetails.tr,
                     ),
                   ),
                   Tab(
                     child: Text(
-                      Strings.vehicleDetails,
+                      LocaleKeys.app_vehicleDetails.tr,
                     ),
                   ),
                 ]),

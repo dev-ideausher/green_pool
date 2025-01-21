@@ -11,7 +11,7 @@ class AboutView extends GetView<AboutController> {
   Widget build(BuildContext context) {
     return Scaffold(
       // appBar: GreenPoolAppBar(
-      //   title: Text(Strings.aboutGp),
+      //   title: Text(LocaleKeys.app_aboutGp.tr),
       // ),
       body: SafeArea(
         child: WebViewWidget(

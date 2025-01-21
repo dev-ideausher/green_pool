@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:green_pool/app/data/booking_detail_model.dart';
 import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../components/common_image_view.dart';
 import '../../../res/strings.dart';
 import '../../../services/text_style_util.dart';
@@ -27,7 +29,7 @@ class BottomRiders extends StatelessWidget {
       child: Column(
         children: [
           ListTile(
-            title: Text(Strings.riders, style: TextStyleUtil.k16Bold()),
+            title: Text(LocaleKeys.app_riders.tr, style: TextStyleUtil.k16Bold()),
           ),
           Expanded(
             child: ListView.separated(
@@ -53,7 +55,7 @@ class BottomRiders extends StatelessWidget {
                         height: 32.kh,
                         fontSize: 14.kh,
                         isBorder: true,
-                        label: Strings.message,
+                        label: LocaleKeys.app_message.tr,
                         padding: const EdgeInsets.all(0),
                       )
 
@@ -62,7 +64,7 @@ class BottomRiders extends StatelessWidget {
                       //     onPressed?.call(rider);
                       //   },
                       //   child: Text(
-                      //     Strings.message,
+                      //     LocaleKeys.app_message.tr,
                       //     style: TextStyleUtil.k14Semibold(),
                       //   ),
                       // ),

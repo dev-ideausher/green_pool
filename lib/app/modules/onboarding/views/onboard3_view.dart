@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../constants/image_constant.dart';
 import '../../../services/colors.dart';
 import '../../../services/text_style_util.dart';
@@ -21,12 +22,12 @@ class Onboard3View extends GetView {
           width: 348.kw,
         ).paddingOnly(bottom: 3.kh),
         Text(
-          Strings.onboard3text1,
+          LocaleKeys.app_onboard3text1.tr,
           style: TextStyleUtil.k24Heading700(),
           textAlign: TextAlign.center,
         ).paddingOnly(bottom: 16.kh),
         Text(
-          Strings.onboard3text2,
+          LocaleKeys.app_onboard3text2.tr,
           style: TextStyleUtil.k16Regular(color: ColorUtil.kBlack04),
           textAlign: TextAlign.center,
         ),

@@ -8,6 +8,7 @@ import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../components/common_image_view.dart';
 import '../../../components/greenpool_appbar.dart';
 import '../../../res/strings.dart';
@@ -20,7 +21,7 @@ class ArchivedView extends GetView<ArchivedController> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: GreenPoolAppBar(
-            title: Text(Strings.archivedMsgs), leading: const SizedBox()),
+            title: Text(LocaleKeys.app_archivedMsgs.tr), leading: const SizedBox()),
         body: Obx(
           () => RefreshIndicator(
             backgroundColor: ColorUtil.kWhiteColor,
@@ -38,7 +39,7 @@ class ArchivedView extends GetView<ArchivedController> {
                     ? Center(
                         child: Text(
                           //implement a text button to go back and see normal msgs
-                          Strings.yourFutureMsgsWillApearHere,
+                          LocaleKeys.app_yourFutureMsgsWillApearHere.tr,
                           style: TextStyleUtil.k24Heading600(),
                           textAlign: TextAlign.center,
                         ),
@@ -67,7 +68,7 @@ class ArchivedView extends GetView<ArchivedController> {
                                           message?.chatRoomId ?? "");
                                     },
                                     icon: Icons.unarchive,
-                                    label: Strings.unArchive,
+                                    label: LocaleKeys.app_unArchive.tr,
                                     backgroundColor: isPinkModeOn
                                         ? ColorUtil.kPrimary3PinkMode
                                         : ColorUtil.kSecondary01,
@@ -104,7 +105,7 @@ class ArchivedView extends GetView<ArchivedController> {
                                       ?.url ??
                                   "",
                               subtitle:
-                                  "${message?.driverRideDetails?.origin?.split(",").first ?? "City"} to ${message?.driverRideDetails?.destination?.split(",").first ?? "City"}, ${GpUtil.formatDate(DateTime.parse(message?.driverRideDetails?.date ?? Strings.defaultDate))}",
+                                  "${message?.driverRideDetails?.origin?.split(",").first ?? "City"} to ${message?.driverRideDetails?.destination?.split(",").first ?? "City"}, ${GpUtil.formatDate(DateTime.parse(message?.driverRideDetails?.date ?? LocaleKeys.app_defaultDate.tr))}",
                               lastMsg: message?.lastMessage ?? "...",
                               lastMsgStyle: messageRead
                                   ? TextStyleUtil.k12Regular(
@@ -124,7 +125,7 @@ class ArchivedView extends GetView<ArchivedController> {
                                       value: 0,
                                       height: 45.kh,
                                       textStyle: TextStyleUtil.k12Medium(),
-                                      child: Text(Strings.unArchive,
+                                      child: Text(LocaleKeys.app_unArchive.tr,
                                           style: TextStyleUtil.k14Regular()),
                                     ),
                                   ];

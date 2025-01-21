@@ -10,6 +10,7 @@ import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../generated/assets.dart';
+import '../../../../generated/locales.g.dart';
 import '../../../components/common_image_view.dart';
 import '../../../components/gp_progress.dart';
 import '../../../constants/image_constant.dart';
@@ -79,7 +80,7 @@ class StartRideView extends GetView<StartRideController> {
                   backgroundColor: Get.find<HomeController>().isPinkModeOn.value
                       ? ColorUtil.kSecondaryPinkMode
                       : ColorUtil.kPrimary05,
-                  tooltip: Strings.openGoogleMaps,
+                  tooltip: LocaleKeys.app_openGoogleMaps.tr,
                   onPressed: () {
                     controller.openGoogleMaps();
                   },
@@ -117,7 +118,7 @@ class StartRideView extends GetView<StartRideController> {
                                     horizontal: -4, vertical: -4),
                                 leading: const Icon(Icons.email_outlined,
                                     color: ColorUtil.kWhiteColor),
-                                title: Text(Strings.riderNotified,
+                                title: Text(LocaleKeys.app_riderNotified.tr,
                                     style: TextStyleUtil.k14Regular(
                                         color: ColorUtil.kWhiteColor))))
                         : const SizedBox(),
@@ -125,7 +126,7 @@ class StartRideView extends GetView<StartRideController> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(Strings.currentRiders),
+                        Text(LocaleKeys.app_currentRiders.tr),
                         SizedBox(
                           height: 30.kh,
                           width: 28.w,

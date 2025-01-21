@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../constants/image_constant.dart';
 import '../../../res/strings.dart';
 import '../../../services/colors.dart';
@@ -26,7 +27,7 @@ class RequestBottom extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              Strings.requestSent,
+              LocaleKeys.app_requestSent.tr,
               style: TextStyleUtil.k18Heading600(),
             ).paddingOnly(bottom: 24.kh),
             SvgPicture.asset(
@@ -35,17 +36,17 @@ class RequestBottom extends StatelessWidget {
               width: 64.kw,
             ).paddingOnly(bottom: 16.kh),
             Text(
-              Strings.requestSentToRider,
+              LocaleKeys.app_requestSentToRider.tr,
               textAlign: TextAlign.center,
               style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
             ).paddingOnly(bottom: 40.kh),
             GreenPoolButton(
-                label: Strings.continueText,
+                label: LocaleKeys.app_continueText.tr,
                 onPressed: () {
                   Get.back();
                 }).paddingOnly(bottom: 16.kh),
             /*GreenPoolButton(
-                label: Strings.cancelRequest,
+                label: LocaleKeys.app_cancelRequest.tr,
                 isBorder: true,
                 onPressed: () {
                   Get.until(

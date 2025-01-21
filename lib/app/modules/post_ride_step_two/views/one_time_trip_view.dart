@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../components/greenpool_textfield.dart';
 import '../../../components/richtext_heading.dart';
 import '../../../constants/image_constant.dart';
@@ -24,15 +25,15 @@ class OneTimeTripView extends GetView<PostRideStepTwoController> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          Strings.enterSpecificDateAndTime,
+          LocaleKeys.app_enterSpecificDateAndTime.tr,
           style: TextStyleUtil.k16Semibold(
               fontSize: 16.kh, color: ColorUtil.kBlack02),
         ).paddingOnly(top: 24.kh, bottom: 16.kh),
 
-        RichTextHeading(text: Strings.date),
+        RichTextHeading(text: LocaleKeys.app_date.tr),
         GreenPoolTextField(
             controller: controller.formattedOneTimeDate,
-            hintText: Strings.selectDate,
+            hintText: LocaleKeys.app_selectDate.tr,
             readOnly: true,
             suffix: SizedBox(
               child: SvgPicture.asset(
@@ -51,9 +52,9 @@ class OneTimeTripView extends GetView<PostRideStepTwoController> {
                   .setDate(context)
                   .then((value) => controller.setActiveStateCarpoolSchedule());
             }).paddingOnly(top: 8.kh, bottom: 16.kh),
-        RichTextHeading(text: Strings.time),
+        RichTextHeading(text: LocaleKeys.app_time.tr),
         GreenPoolTextField(
-          hintText: Strings.selectTime,
+          hintText: LocaleKeys.app_selectTime.tr,
           controller: controller.selectedTime,
           onTap: () {
             controller.setTime(context);
@@ -66,7 +67,7 @@ class OneTimeTripView extends GetView<PostRideStepTwoController> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              Strings.returnTrip,
+              LocaleKeys.app_returnTrip.tr,
               style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
             ),
             Obx(
@@ -107,7 +108,7 @@ class OneTimeTripView extends GetView<PostRideStepTwoController> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          Strings.selectDateAndTimeOfArrival,
+                          LocaleKeys.app_selectDateAndTimeOfArrival.tr,
                           style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
                         ),
                         Expanded(
@@ -118,9 +119,9 @@ class OneTimeTripView extends GetView<PostRideStepTwoController> {
                         ),
                       ],
                     ).paddingSymmetric(vertical: 16.kh),
-                    RichTextHeading(text: Strings.date),
+                    RichTextHeading(text: LocaleKeys.app_date.tr),
                     GreenPoolTextField(
-                      hintText: Strings.selectDate,
+                      hintText: LocaleKeys.app_selectDate.tr,
                       controller: controller.formattedReturnDate,
                       onTap: () {
                         controller.setReturnDate(context);
@@ -139,9 +140,9 @@ class OneTimeTripView extends GetView<PostRideStepTwoController> {
                         ).paddingOnly(right: 16.kw),
                       ),
                     ).paddingOnly(top: 8.kh, bottom: 16.kh),
-                    RichTextHeading(text: Strings.time),
+                    RichTextHeading(text: LocaleKeys.app_time.tr),
                     GreenPoolTextField(
-                      hintText: Strings.selectTime,
+                      hintText: LocaleKeys.app_selectTime.tr,
                       onTap: () {
                         controller.setReturnTime(context);
                       },

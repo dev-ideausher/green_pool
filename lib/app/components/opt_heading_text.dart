@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:green_pool/generated/locales.g.dart';
 
-import '../res/strings.dart';
 import '../services/colors.dart';
 import '../services/text_style_util.dart';
 
@@ -22,7 +23,7 @@ class OptFieldHeading extends StatelessWidget {
             style: TextStyleUtil.k14Semibold(),
           ),
           TextSpan(
-            text: Strings.optional,
+            text: LocaleKeys.app_optional.tr,
             style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack04),
           ),
         ],

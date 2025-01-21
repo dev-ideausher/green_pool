@@ -9,6 +9,7 @@ import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/snackbar.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../res/strings.dart';
 import '../controllers/payment_controller.dart';
 
@@ -19,7 +20,7 @@ class PromoCode extends GetView<PaymentController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: GreenPoolAppBar(
-        title: Text(Strings.promoCode),
+        title: Text(LocaleKeys.app_promoCode.tr),
       ),
       body: Obx(
         () => controller.isPromoLoading.value
@@ -75,13 +76,13 @@ class PromoCode extends GetView<PaymentController> {
                     trailing: TextButton(
                         onPressed: promoCode?.status ?? false
                             ? () {
-                                showMySnackbar(msg: Strings.alreadyUsedCoupon);
+                                showMySnackbar(msg: LocaleKeys.app_alreadyUsedCoupon.tr);
                               }
                             : () {
                                 controller.applyDiscount(index);
                               },
                         child: Text(
-                          Strings.apply,
+                          LocaleKeys.app_apply.tr,
                           style: TextStyleUtil.k14Semibold(
                               textDecoration: TextDecoration.underline,
                               color:

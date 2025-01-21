@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../components/common_image_view.dart';
 import '../../../components/green_pool_divider.dart';
 import '../../../components/greenpool_appbar.dart';
@@ -24,7 +25,7 @@ class MyRidesConfirmDetailsView
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: GreenPoolAppBar(
-        title: Text(Strings.riderDetails),
+        title: Text(LocaleKeys.app_riderDetails.tr),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -71,7 +72,7 @@ class MyRidesConfirmDetailsView
                                       .riderRideDetails.rideDetails!.first!);
                                 },
                                 isLoading: controller.isBtnLoading.value,
-                                label: Strings.message,
+                                label: LocaleKeys.app_message.tr,
                                 loadingColor: Get.find<HomeController>()
                                         .isPinkModeOn
                                         .value
@@ -166,7 +167,7 @@ class MyRidesConfirmDetailsView
                 //rating column
                 children: [
                   Text(
-                    Strings.rating,
+                    LocaleKeys.app_rating.tr,
                     style: TextStyleUtil.k12Semibold(),
                   ).paddingOnly(bottom: 4.kh),
                   Container(
@@ -198,7 +199,7 @@ class MyRidesConfirmDetailsView
                 //ride with column
                 children: [
                   Text(
-                    Strings.totalRides,
+                    LocaleKeys.app_totalRides.tr,
                     style: TextStyleUtil.k12Semibold(),
                   ).paddingOnly(bottom: 4.kh),
                   Text(
@@ -211,11 +212,11 @@ class MyRidesConfirmDetailsView
                 //joined in column
                 children: [
                   Text(
-                    Strings.joined,
+                    LocaleKeys.app_joined.tr,
                     style: TextStyleUtil.k12Semibold(),
                   ).paddingOnly(bottom: 4.kh),
                   Text(
-                    '${Strings.inA} ${controller.riderRideDetails.rideDetails?.first?.riderDetails?.first?.createdAt.toString().split("-")[0]}',
+                    '${LocaleKeys.app_inA.tr} ${controller.riderRideDetails.rideDetails?.first?.riderDetails?.first?.createdAt.toString().split("-")[0]}',
                     style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                   ),
                 ],
@@ -226,7 +227,7 @@ class MyRidesConfirmDetailsView
           const GreenPoolDivider().paddingOnly(bottom: 16.kh),
 
           /*Text(
-            Strings.description,
+            LocaleKeys.app_description.tr,
             style: TextStyleUtil.k14Bold(),
           ).paddingOnly(bottom: 8.kh),
           Wrap(
@@ -248,7 +249,7 @@ class MyRidesConfirmDetailsView
                       .acceptRidersRequestAPI(controller.riderRideDetails);
                 },
                 width: 162.kw,
-                label: Strings.accept,
+                label: LocaleKeys.app_accept.tr,
               ),
               GreenPoolButton(
                 onPressed: () {
@@ -256,7 +257,7 @@ class MyRidesConfirmDetailsView
                       .rejectRidersRequestAPI(controller.riderRideDetails);
                 },
                 width: 162.kw,
-                label: Strings.reject,
+                label: LocaleKeys.app_reject.tr,
                 isBorder: true,
                 borderColor: Get.find<HomeController>().isPinkModeOn.value
                     ? ColorUtil.kPrimary3PinkMode

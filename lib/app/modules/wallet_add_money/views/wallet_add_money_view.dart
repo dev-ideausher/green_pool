@@ -8,6 +8,7 @@ import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../services/colors.dart';
 import '../../../services/text_style_util.dart';
 import '../../home/controllers/home_controller.dart';
@@ -21,7 +22,7 @@ class WalletAddMoneyView extends GetView<WalletAddMoneyController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: GreenPoolAppBar(
-        title: Text(Strings.addMoneyToWallet),
+        title: Text(LocaleKeys.app_addMoneyToWallet.tr),
       ),
       resizeToAvoidBottomInset: false,
       body: Column(
@@ -44,13 +45,13 @@ class WalletAddMoneyView extends GetView<WalletAddMoneyController> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  Strings.carpoollCash,
+                  LocaleKeys.app_carpoollCash.tr,
                   style: TextStyleUtil.k18Heading600(),
                   textAlign: TextAlign.center,
                 ).paddingOnly(bottom: 16.kh),
                 Obx(
                   () => Text(
-                    "${Strings.dollar} ${Get.find<WalletController>().walletBalance}",
+                    "${LocaleKeys.app_dollar.tr} ${Get.find<WalletController>().walletBalance}",
                     style: TextStyleUtil.k32Heading700(
                         color: ColorUtil.kSecondary01),
                     textAlign: TextAlign.center,
@@ -69,17 +70,17 @@ class WalletAddMoneyView extends GetView<WalletAddMoneyController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  Strings.addMoneyToWallet,
+                  LocaleKeys.app_addMoneyToWallet.tr,
                   style: TextStyleUtil.k16Bold(),
                 ).paddingOnly(bottom: 24.kh),
                 Text(
-                  Strings.amount,
+                  LocaleKeys.app_amount.tr,
                   style: TextStyleUtil.k14Semibold(),
                 ).paddingOnly(bottom: 8.kh),
                 GreenPoolTextField(
-                  hintText: Strings.enterAmount,
+                  hintText: LocaleKeys.app_enterAmount.tr,
                   prefix: Text(
-                    Strings.dollar,
+                    LocaleKeys.app_dollar.tr,
                     style: TextStyleUtil.k16Regular(
                       color: ColorUtil.kBlack03,
                     ),
@@ -106,7 +107,7 @@ class WalletAddMoneyView extends GetView<WalletAddMoneyController> {
                             TextStyleUtil.k14Regular(color: ColorUtil.kError3),
                       ),
                       TextSpan(
-                        text: Strings.minimumAdditionAmnt,
+                        text: LocaleKeys.app_minimumAdditionAmnt.tr,
                         style:
                             TextStyleUtil.k12Regular(color: ColorUtil.kBlack03),
                       ),
@@ -120,7 +121,7 @@ class WalletAddMoneyView extends GetView<WalletAddMoneyController> {
           Obx(
             () => GreenPoolButton(
               onPressed: () => controller.addMoney(),
-              label: Strings.proceed,
+              label: LocaleKeys.app_proceed.tr,
               isActive: controller.buttonState.value,
             ).paddingSymmetric(vertical: 40.kh),
           ),

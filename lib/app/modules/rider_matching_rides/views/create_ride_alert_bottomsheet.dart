@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../constants/image_constant.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/colors.dart';
@@ -27,7 +28,7 @@ class CreateRideAlertBottomsheet extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(
-                          Strings.requestAlertCreatedSuccessfully,
+                          LocaleKeys.app_requestAlertCreatedSuccessfully.tr,
                           style: TextStyleUtil.k18Heading600(),
                           textAlign: TextAlign.center,
                         ).paddingOnly(bottom: 24.kh),
@@ -37,17 +38,17 @@ class CreateRideAlertBottomsheet extends StatelessWidget {
                           width: 64.kw,
                         ).paddingOnly(bottom: 16.kh),
                         Text(
-                          Strings.rideAlertCreatedSuccessfully,
+                          LocaleKeys.app_rideAlertCreatedSuccessfully.tr,
                           textAlign: TextAlign.center,
                           style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
                         ).paddingOnly(bottom: 4.kh),
                         Text(
-                          Strings.theMatchingRideAlertWillBeSentToYouShortly,
+                          LocaleKeys.app_theMatchingRideAlertWillBeSentToYouShortly.tr,
                           textAlign: TextAlign.center,
                           style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
                         ).paddingOnly(bottom: 40.kh),
                         GreenPoolButton(
-                            label: Strings.continueText,
+                            label: LocaleKeys.app_continueText.tr,
                             onPressed: () {
                               Get.until((route) =>
                                   Get.currentRoute == Routes.BOTTOM_NAVIGATION);

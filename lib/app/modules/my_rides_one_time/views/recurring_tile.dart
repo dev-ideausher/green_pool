@@ -5,6 +5,7 @@ import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../components/common_image_view.dart';
 import '../../../components/green_pool_divider.dart';
 import '../../../components/origin_to_destination.dart';
@@ -51,7 +52,7 @@ class RecurringTile extends StatelessWidget {
                     onPressed: () {
                       controller.deleteRecurringride(recurringResp?.Id ?? "");
                     },
-                    label: Strings.delete,
+                    label: LocaleKeys.app_delete.tr,
                     isBorder: true,
                     padding: const EdgeInsets.all(0),
                     fontSize: 12.kh,
@@ -103,7 +104,7 @@ class RecurringTile extends StatelessWidget {
               ).paddingOnly(bottom: 8.kh),
               const GreenPoolDivider().paddingOnly(bottom: 16.kh),
               Text(
-                Strings.riderDetails,
+                LocaleKeys.app_riderDetails.tr,
                 style: TextStyleUtil.k14Bold(),
               ).paddingOnly(bottom: 16.kh),
               SizedBox(

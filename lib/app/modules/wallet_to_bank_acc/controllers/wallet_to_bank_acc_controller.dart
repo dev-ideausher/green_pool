@@ -4,6 +4,7 @@ import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/dialog_helper.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../services/dio/api_service.dart';
 import '../../../services/snackbar.dart';
 import '../../wallet/controllers/wallet_controller.dart';
@@ -125,7 +126,7 @@ class WalletToBankAccController extends GetxController {
         );
       }
     } catch (e) {
-      showMySnackbar(msg: Strings.somethingWentWrong);
+      showMySnackbar(msg: LocaleKeys.app_somethingWentWrong.tr);
       debugPrint("ERROR: $e");
     } finally {
       DialogHelper.hideDialog();
@@ -137,7 +138,7 @@ class WalletToBankAccController extends GetxController {
       final res = await APIManager.postTransferWalletBalance(
           body: {"amount": double.parse(amountTextController.text.trim())});
       if (res.data["status"]) {
-        showMySnackbar(msg: Strings.moneyHasBeenTransferred);
+        showMySnackbar(msg: LocaleKeys.app_moneyHasBeenTransferred.tr);
         Get.find<WalletController>().getWallet();
         Get.until(
           (route) => Get.currentRoute == Routes.WALLET,

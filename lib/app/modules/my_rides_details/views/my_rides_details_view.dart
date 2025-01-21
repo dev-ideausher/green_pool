@@ -10,6 +10,7 @@ import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../components/green_pool_divider.dart';
 import '../../../components/greenpool_appbar.dart';
 import '../../../constants/image_constant.dart';
@@ -26,7 +27,7 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: GreenPoolAppBar(
-        title: Text(Strings.rideDetails),
+        title: Text(LocaleKeys.app_rideDetails.tr),
       ),
       body: Obx(
         () => controller.isLoad.value
@@ -62,7 +63,7 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                               ],
                             ),
                             Text(
-                              "${Strings.fare}\$ ${controller.myRidesModelData.value.driverBookingDetails?.origin?.originDestinationFair ?? ""}",
+                              "${LocaleKeys.app_fare.tr}\$ ${controller.myRidesModelData.value.driverBookingDetails?.origin?.originDestinationFair ?? ""}",
                               style: TextStyleUtil.k16Semibold(
                                   fontSize: 16.kh,
                                   color: ColorUtil.kSecondary01),
@@ -72,7 +73,7 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                         const GreenPoolDivider()
                             .paddingSymmetric(vertical: 16.kh),
                         Text(
-                          Strings.pickupToDrop,
+                          LocaleKeys.app_pickupToDrop.tr,
                           style: TextStyleUtil.k16Bold(),
                         ).paddingOnly(bottom: 16.kh),
                         OriginToDestination(
@@ -113,7 +114,7 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          Strings.coPassengers,
+                          LocaleKeys.app_coPassengers.tr,
                           style: TextStyleUtil.k14Bold(),
                         ),
                         Visibility(
@@ -122,7 +123,7 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                                   0) >
                               0,
                           child: Text(
-                            "${controller.myRidesModelData.value.driverBookingDetails?.seatAvailable} ${Strings.seatsLeft}",
+                            "${controller.myRidesModelData.value.driverBookingDetails?.seatAvailable} ${LocaleKeys.app_seatsLeft.tr}",
                             style: TextStyleUtil.k14Semibold(),
                           ),
                         ),
@@ -136,7 +137,7 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                             0
                         ? Center(
                             child: Text(
-                              Strings.noPassengersAvailable,
+                              LocaleKeys.app_noPassengersAvailable.tr,
                               style: TextStyleUtil.k14Semibold(),
                             ),
                           ).paddingOnly(bottom: 16.kh)
@@ -212,7 +213,7 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
 
                     //Vehicle details
                     Text(
-                      Strings.vehicleDetails,
+                      LocaleKeys.app_vehicleDetails.tr,
                       style: TextStyleUtil.k14Bold(),
                     ).paddingOnly(bottom: 16.kh),
                     Row(
@@ -269,7 +270,7 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
 
                     //Features available
                     Text(
-                      Strings.featuresAvailable,
+                      LocaleKeys.app_featuresAvailable.tr,
                       style: TextStyleUtil.k14Bold(),
                     ).paddingOnly(bottom: 16.kh),
 
@@ -278,7 +279,7 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                             true
                         ? Amenities(
                                 toggleSwitch: false,
-                                text: Strings.appreciatesConversation,
+                                text: LocaleKeys.app_appreciatesConversation.tr,
                                 image: ImageConstant.svgAmenities1)
                             .paddingOnly(bottom: 8.kh)
                         : const SizedBox(),
@@ -287,7 +288,7 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                             true
                         ? Amenities(
                                 toggleSwitch: false,
-                                text: Strings.enjoysMusic,
+                                text: LocaleKeys.app_enjoysMusic.tr,
                                 image: ImageConstant.svgAmenities2)
                             .paddingOnly(bottom: 8.kh)
                         : const SizedBox(),
@@ -296,7 +297,7 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                             true
                         ? Amenities(
                                 toggleSwitch: false,
-                                text: Strings.smokeFree,
+                                text: LocaleKeys.app_smokeFree.tr,
                                 image: ImageConstant.svgAmenities3)
                             .paddingOnly(bottom: 8.kh)
                         : const SizedBox(),
@@ -305,7 +306,7 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                             true
                         ? Amenities(
                                 toggleSwitch: false,
-                                text: Strings.petFriendly,
+                                text: LocaleKeys.app_petFriendly.tr,
                                 image: ImageConstant.svgAmenities4)
                             .paddingOnly(bottom: 8.kh)
                         : const SizedBox(),
@@ -314,7 +315,7 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                             true
                         ? Amenities(
                                 toggleSwitch: false,
-                                text: Strings.winterTires,
+                                text: LocaleKeys.app_winterTires.tr,
                                 image: ImageConstant.svgAmenities5)
                             .paddingOnly(bottom: 8.kh)
                         : const SizedBox(),
@@ -323,7 +324,7 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                             true
                         ? Amenities(
                                 toggleSwitch: false,
-                                text: Strings.coolingOrHeating,
+                                text: LocaleKeys.app_coolingOrHeating.tr,
                                 image: ImageConstant.svgAmenities6)
                             .paddingOnly(bottom: 8.kh)
                         : const SizedBox(),
@@ -332,7 +333,7 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                             true
                         ? Amenities(
                                 toggleSwitch: false,
-                                text: Strings.babySeat,
+                                text: LocaleKeys.app_babySeat.tr,
                                 image: ImageConstant.svgAmenities7)
                             .paddingOnly(bottom: 8.kh)
                         : const SizedBox(),
@@ -341,14 +342,14 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                             true
                         ? Amenities(
                                 toggleSwitch: false,
-                                text: Strings.heatedSeats,
+                                text: LocaleKeys.app_heatedSeats.tr,
                                 image: ImageConstant.svgAmenities8)
                             .paddingOnly(bottom: 8.kh)
                         : const SizedBox(),
 
                     const GreenPoolDivider().paddingSymmetric(vertical: 16.kh),
                     /*Text(
-                      Strings.description,
+                      LocaleKeys.app_description.tr,
                       style: TextStyleUtil.k14Bold(),
                     ).paddingOnly(bottom: 8.kh),
                     Wrap(
@@ -365,11 +366,11 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                                 ?.isStarted ??
                             false)
                         ? GreenPoolButton(
-                                label: Strings.viewDetails,
+                                label: LocaleKeys.app_viewDetails.tr,
                                 onPressed: () => controller.viewOnMap())
                             .paddingSymmetric(vertical: 40.kh)
                         : GreenPoolButton(
-                                label: Strings.viewMatchingRiders,
+                                label: LocaleKeys.app_viewMatchingRiders.tr,
                                 onPressed: () =>
                                     controller.viewMatchingRiders())
                             .paddingOnly(bottom: 16.kh, top: 40.kh),
@@ -388,7 +389,7 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                                 border:
                                     Border.all(color: ColorUtil.kSecondary01)),
                             child: Text(
-                              Strings.message,
+                              LocaleKeys.app_message.tr,
                               style: TextStyleUtil.k16Bold(),
                             ),
                           ).paddingOnly(bottom: 40.kh),

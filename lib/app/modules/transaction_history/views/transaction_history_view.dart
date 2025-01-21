@@ -5,6 +5,7 @@ import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../components/common_image_view.dart';
 import '../../../components/gp_progress.dart';
 import '../../../res/strings.dart';
@@ -19,7 +20,7 @@ class TransactionHistoryView extends GetView<TransactionHistoryController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: GreenPoolAppBar(
-        title: Text(Strings.transactionHistory),
+        title: Text(LocaleKeys.app_transactionHistory.tr),
       ),
       body: Obx(
         () => controller.isLoad.value
@@ -28,7 +29,7 @@ class TransactionHistoryView extends GetView<TransactionHistoryController> {
                 ? Center(
                     child: Center(
                     child: Text(
-                      Strings.futureTransactionsWillBeVisibleHere,
+                      LocaleKeys.app_futureTransactionsWillBeVisibleHere.tr,
                       style: TextStyleUtil.k24Heading600(),
                       textAlign: TextAlign.center,
                     ),
@@ -117,8 +118,8 @@ class TransactionHistoryView extends GetView<TransactionHistoryController> {
                               },
                               trailing: Text(
                                 (transaction?.type ?? "") == "Credit"
-                                    ? "+${Strings.dollar} ${(transaction.amount ?? 0).toStringAsFixed(2)}"
-                                    : "-${Strings.dollar} ${(transaction.amount ?? 0).toStringAsFixed(2)}",
+                                    ? "+${LocaleKeys.app_dollar.tr} ${(transaction.amount ?? 0).toStringAsFixed(2)}"
+                                    : "-${LocaleKeys.app_dollar.tr} ${(transaction.amount ?? 0).toStringAsFixed(2)}",
                                 style: TextStyleUtil.k16Semibold(
                                     fontSize: 16.kh,
                                     color: (transaction?.type ?? "") == "Credit"

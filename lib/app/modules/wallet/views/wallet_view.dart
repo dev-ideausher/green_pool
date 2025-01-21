@@ -10,6 +10,7 @@ import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../components/greenpool_appbar.dart';
 import '../../../res/strings.dart';
 import '../controllers/wallet_controller.dart';
@@ -21,7 +22,7 @@ class WalletView extends GetView<WalletController> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: GreenPoolAppBar(
-          title: Text(Strings.wallet),
+          title: Text(LocaleKeys.app_wallet.tr),
         ),
         body: Obx(
           () => controller.isLoad.value
@@ -49,11 +50,11 @@ class WalletView extends GetView<WalletController> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            Strings.carpoollCash,
+                            LocaleKeys.app_carpoollCash.tr,
                             style: TextStyleUtil.k18Heading600(),
                           ).paddingOnly(bottom: 16.kh),
                           Text(
-                            "${Strings.dollar} ${controller.walletBalance.value}",
+                            "${LocaleKeys.app_dollar.tr} ${controller.walletBalance.value}",
                             style: TextStyleUtil.k32Heading700(
                                 color: ColorUtil.kSecondary01),
                           ).paddingOnly(bottom: 20.kh),
@@ -80,7 +81,7 @@ class WalletView extends GetView<WalletController> {
                                   size: 16.kh,
                                 ).paddingOnly(right: 3.kw),
                                 Text(
-                                  Strings.giftCard,
+                                  LocaleKeys.app_giftCard.tr,
                                   style: TextStyleUtil.k14Semibold(
                                       color: Get.find<HomeController>()
                                               .isPinkModeOn
@@ -95,17 +96,17 @@ class WalletView extends GetView<WalletController> {
                       ),
                     ).paddingOnly(top: 32.kh, bottom: 24.kh),
                     WalletTile(
-                      title: Strings.addMoneyToWallet,
+                      title: LocaleKeys.app_addMoneyToWallet.tr,
                       path: ImageConstant.svgAddMoney,
                       onTap: () => controller.addMoney(),
                     ).paddingOnly(bottom: 8.kh),
                     WalletTile(
-                      title: Strings.payout,
+                      title: LocaleKeys.app_payout.tr,
                       path: ImageConstant.svgSendMoney,
                       onTap: () => controller.sendMoney(),
                     ).paddingOnly(bottom: 8.kh),
                     WalletTile(
-                      title: Strings.transactionHistory,
+                      title: LocaleKeys.app_transactionHistory.tr,
                       path: ImageConstant.svgTransactionHistory,
                       onTap: () => controller.history(),
                     ),

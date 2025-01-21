@@ -12,6 +12,7 @@ import 'package:http_parser/http_parser.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../services/auth.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
@@ -219,12 +220,12 @@ class UserDetailsController extends GetxController {
                   ),
                 ),
                 Text(
-                  Strings.deleteAccount,
+                  LocaleKeys.app_deleteAccount.tr,
                   style: TextStyleUtil.k18Semibold(),
                   textAlign: TextAlign.left,
                 ).paddingSymmetric(vertical: 4.kh),
                 Text(
-                  Strings.areYouSureYouWantToDeleteYourAcc,
+                  LocaleKeys.app_areYouSureYouWantToDeleteYourAcc.tr,
                   style: TextStyleUtil.k14Regular(
                     color: ColorUtil.kBlack04,
                   ),
@@ -239,7 +240,7 @@ class UserDetailsController extends GetxController {
                       },
                       height: 40.kh,
                       width: 124.kw,
-                      label: Strings.cancel,
+                      label: LocaleKeys.app_cancel.tr,
                       fontSize: 14.kh,
                       isBorder: true,
                       padding: const EdgeInsets.all(8),
@@ -261,7 +262,7 @@ class UserDetailsController extends GetxController {
                       },
                       height: 40.kh,
                       width: 124.kw,
-                      label: Strings.delete,
+                      label: LocaleKeys.app_delete.tr,
                       fontSize: 14.kh,
                       padding: const EdgeInsets.all(8),
                     ),

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/data/ride_detail_id.dart';
 import 'package:green_pool/app/modules/my_rides_one_time/controllers/my_rides_one_time_controller.dart';
 import 'package:green_pool/app/res/strings.dart';
+import '../../../../generated/locales.g.dart';
 import '../../../data/chat_arg.dart';
 import '../../../data/driver_cofirm_request_model.dart';
 import '../../../data/driver_send_request_model.dart';
@@ -163,7 +164,7 @@ class MyRidesRequestController extends GetxController {
               riderRideId: rideDetailId.value.riderRidId,
               origin: data.origin?.name?.split(',').first ?? "City",
               destination: data.destination?.name?.split(',').first ?? "City",              
-              date: GpUtil.formatDate(DateTime.parse(data.date ?? Strings.defaultDate))));
+              date: GpUtil.formatDate(DateTime.parse(data.date ?? LocaleKeys.app_defaultDate.tr))));
     } catch (e) {
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
@@ -176,7 +177,7 @@ class MyRidesRequestController extends GetxController {
               riderRideId: rideDetailId.value.riderRidId,
               origin: data.origin?.name?.split(',').first ?? "City",
               destination: data.destination?.name?.split(',').first ?? "City",
-              date: GpUtil.formatDate(DateTime.parse(data.date ?? Strings.defaultDate))));
+              date: GpUtil.formatDate(DateTime.parse(data.date ?? LocaleKeys.app_defaultDate.tr))));
     }
   }
 
@@ -200,7 +201,7 @@ class MyRidesRequestController extends GetxController {
               riderRideId: rideDetailId.value.riderRidId,
               origin: data.rideDetails?[0]?.origin?.name?.split(',').first ?? "City",
               destination: data.rideDetails?[0]?.destination?.name?.split(',').first ?? "City",              
-              date: GpUtil.formatDate(DateTime.parse(data.rideDetails?[0]?.date ?? Strings.defaultDate))));
+              date: GpUtil.formatDate(DateTime.parse(data.rideDetails?[0]?.date ?? LocaleKeys.app_defaultDate.tr))));
     } catch (e) {
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
@@ -213,7 +214,7 @@ class MyRidesRequestController extends GetxController {
               riderRideId: rideDetailId.value.riderRidId,
               origin: data.rideDetails?[0]?.origin?.name?.split(',').first ?? "City",
               destination: data.rideDetails?[0]?.destination?.name?.split(',').first ?? "City",
-              date: GpUtil.formatDate(DateTime.parse(data.rideDetails?[0]?.date ?? Strings.defaultDate))));
+              date: GpUtil.formatDate(DateTime.parse(data.rideDetails?[0]?.date ?? LocaleKeys.app_defaultDate.tr))));
     }
   }
 }

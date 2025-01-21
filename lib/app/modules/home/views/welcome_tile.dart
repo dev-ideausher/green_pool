@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
-import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../constants/image_constant.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/colors.dart';
@@ -26,31 +26,33 @@ class WelcomeTile extends StatelessWidget {
             children: [
               SizedBox(
                 width: 75.w,
-                child: Obx(
-                  () => Text.rich(
-                    overflow: TextOverflow.ellipsis,
-                    TextSpan(
-                      children: [
-                        TextSpan(
-                          text: controller.welcomeText.value,
-                          style: TextStyleUtil.k24Heading700(),
-                        ),
-                        TextSpan(
-                          text: storageService.isLoggedIn &&
-                                  storageService.profileStatus
-                              ? " ${Get.find<GetStorageService>().getUserName.split(" ").first ?? "..."},"
-                              : "",
-                          style: TextStyleUtil.k24Heading700(
-                              color: storageService.isPinkMode
-                                  ? ColorUtil.kPrimaryPinkMode
-                                  : ColorUtil.kPrimary01),
-                        ),
-                      ],
-                    ),
-                  ).paddingOnly(bottom: 4.kh),
-                ),
+                child:
+                    // Obx(() =>
+                    Text.rich(
+                  overflow: TextOverflow.ellipsis,
+                  TextSpan(
+                    children: [
+                      TextSpan(
+                        // text: controller.welcomeText.value,
+                        text: LocaleKeys.app_welcome.tr,
+                        style: TextStyleUtil.k24Heading700(),
+                      ),
+                      TextSpan(
+                        text: storageService.isLoggedIn &&
+                                storageService.profileStatus
+                            ? " ${Get.find<GetStorageService>().getUserName.split(" ").first ?? "..."},"
+                            : "",
+                        style: TextStyleUtil.k24Heading700(
+                            color: storageService.isPinkMode
+                                ? ColorUtil.kPrimaryPinkMode
+                                : ColorUtil.kPrimary01),
+                      ),
+                    ],
+                  ),
+                ).paddingOnly(bottom: 4.kh),
+                // ),
               ),
-              Text(Strings.whatWouldYouLikeToDoToday,
+              Text(LocaleKeys.app_whatWouldYouLikeToDoToday.tr,
                   style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack04))
             ],
           ),

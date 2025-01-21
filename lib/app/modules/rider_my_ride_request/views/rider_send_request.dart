@@ -7,6 +7,7 @@ import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../../generated/assets.dart';
+import '../../../../generated/locales.g.dart';
 import '../../../components/common_image_view.dart';
 import '../../../components/gp_progress.dart';
 import '../../../components/green_pool_divider.dart';
@@ -37,12 +38,12 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                           : SvgPicture.asset(ImageConstant.svgNoRides),
                     ),
                     Text(
-                      Strings.thereAreNoRidesBetweenTheseCities,
+                      LocaleKeys.app_thereAreNoRidesBetweenTheseCities.tr,
                       style: TextStyleUtil.k24Heading600(),
                       textAlign: TextAlign.center,
                     ).paddingOnly(bottom: 16.kh),
                     Text(
-                      Strings.pleaseTryAgainAfterFewDays,
+                      LocaleKeys.app_pleaseTryAgainAfterFewDays.tr,
                       style:
                           TextStyleUtil.k18Regular(color: ColorUtil.kBlack04),
                       textAlign: TextAlign.center,
@@ -168,7 +169,7 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                                   children: [
                                                     TextSpan(
                                                       text:
-                                                          "${Strings.dollar} ${rideDetails?.price ?? "0"}",
+                                                          "${LocaleKeys.app_dollar.tr} ${rideDetails?.price ?? "0"}",
                                                       style:
                                                           TextStyleUtil.k16Bold(
                                                               color: ColorUtil
@@ -276,7 +277,7 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                     //         border: Border.all(
                                     //             color: ColorUtil.kSecondary01)),
                                     //     child: Text(
-                                    //       Strings.message,
+                                    //       LocaleKeys.app_message.tr,
                                     //       style: TextStyleUtil.k12Semibold(),
                                     //     ),
                                     //   ),
@@ -285,7 +286,7 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                       onPressed: () {
                                         controller.openMessage(rideDetails!);
                                       },
-                                      label: Strings.message,
+                                      label: LocaleKeys.app_message.tr,
                                       isBorder: true,
                                       fontSize: 14.kh,
                                       height: 38.kh,
@@ -313,8 +314,8 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                                   .data![index]
                                                   .requestSent ??
                                               false
-                                          ? Strings.cancel
-                                          : Strings.request,
+                                          ? LocaleKeys.app_cancel.tr
+                                          : LocaleKeys.app_request.tr,
                                       onPressed: () async {
                                         if (controller
                                                 .riderSendRequestModel
@@ -322,7 +323,7 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                                 .data![index]
                                                 .requestSent ??
                                             false) {
-                                          // showMySnackbar(msg: Strings.reqHasAlreadySent);
+                                          // showMySnackbar(msg: LocaleKeys.app_reqHasAlreadySent.tr);
                                           controller.withdrawRidersReq(
                                               controller.riderSendRequestModel
                                                   .value.data![index].Id);

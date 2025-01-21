@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/data/driver_cofirm_request_model.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../components/common_image_view.dart';
 import '../../../components/green_pool_divider.dart';
 import '../../../components/origin_to_destination.dart';
@@ -38,7 +39,7 @@ class BookingConfirmBottom extends StatelessWidget {
           children: [
             Center(
               child: Text(
-                Strings.bookingConfirmed,
+                LocaleKeys.app_bookingConfirmed.tr,
                 style: TextStyleUtil.k18Heading600(),
               ).paddingOnly(bottom: 24.kh),
             ),
@@ -51,14 +52,14 @@ class BookingConfirmBottom extends StatelessWidget {
             ),
             Center(
               child: Text(
-                "${Strings.bookingId} ${(driverRideData?.Id ?? "")}",
+                "${LocaleKeys.app_bookingId.tr} ${(driverRideData?.Id ?? "")}",
                 textAlign: TextAlign.center,
                 style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
               ),
             ),
             const GreenPoolDivider().paddingSymmetric(vertical: 16.kh),
             Text(
-              Strings.riderDetails,
+              LocaleKeys.app_riderDetails.tr,
               style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
             ).paddingOnly(bottom: 8.kh),
             Row(
@@ -125,13 +126,13 @@ class BookingConfirmBottom extends StatelessWidget {
             ).paddingOnly(bottom: 8.kh),
             const GreenPoolDivider().paddingOnly(top: 8.kh, bottom: 20.kh),
             GreenPoolButton(
-              label: Strings.continueText,
+              label: LocaleKeys.app_continueText.tr,
               onPressed: () {
                 Get.back();
               },
             ),
             /*GreenPoolButton(
-              label: Strings.cancelRequest,
+              label: LocaleKeys.app_cancelRequest.tr,
               isBorder: true,
               onPressed: () async {
                 try {
@@ -141,7 +142,7 @@ class BookingConfirmBottom extends StatelessWidget {
                   );
                   if (rejectRiderResponse.data["status"]) {
                     Get.back();
-                    showMySnackbar(msg: Strings.reqRejectedSuccessfully);
+                    showMySnackbar(msg: LocaleKeys.app_reqRejectedSuccessfully.tr);
                   } else {
                     showMySnackbar(msg: rejectRiderResponse.data["message"]);
                   }

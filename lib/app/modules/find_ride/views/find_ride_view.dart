@@ -10,6 +10,7 @@ import 'package:green_pool/app/constants/image_constant.dart';
 import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../components/greenpool_textfield.dart';
 
 import '../../../services/colors.dart';
@@ -30,7 +31,7 @@ class FindRideView extends GetView<FindRideController> {
     //     "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
     return Scaffold(
       appBar: GreenPoolAppBar(
-        title: Text(Strings.findRide),
+        title: Text(LocaleKeys.app_findRide.tr),
       ),
       resizeToAvoidBottomInset: false,
       body: Stack(
@@ -39,13 +40,13 @@ class FindRideView extends GetView<FindRideController> {
             () => Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // RichTextHeading(text: Strings.pickup).paddingOnly(top: 12.kh),
+                // RichTextHeading(text: LocaleKeys.app_pickup.tr).paddingOnly(top: 12.kh),
                 Text(
-                  Strings.pickup,
+                  LocaleKeys.app_pickup.tr,
                   style: TextStyleUtil.k14Semibold(),
                 ).paddingOnly(top: 12.kh),
                 GreenPoolTextField(
-                  hintText: Strings.enterOrigin,
+                  hintText: LocaleKeys.app_enterOrigin.tr,
                   keyboardType: TextInputType.streetAddress,
                   onchanged: (v) {
                     controller.setActiveState();
@@ -69,11 +70,11 @@ class FindRideView extends GetView<FindRideController> {
                       : const SizedBox(),
                 ).paddingOnly(top: 8.kh, bottom: 28.kh),
                 Text(
-                  Strings.destination,
+                  LocaleKeys.app_destination.tr,
                   style: TextStyleUtil.k14Semibold(),
                 ),
                 GreenPoolTextField(
-                  hintText: Strings.enterAdestination,
+                  hintText: LocaleKeys.app_enterAdestination.tr,
                   keyboardType: TextInputType.streetAddress,
                   onchanged: (v) {
                     controller.setActiveState();
@@ -101,13 +102,13 @@ class FindRideView extends GetView<FindRideController> {
                     SizedBox(
                       width: 55.w,
                       child: Text(
-                        Strings.departureDate,
+                        LocaleKeys.app_departureDate.tr,
                         style: TextStyleUtil.k14Semibold(),
                       ),
                     ),
                     Flexible(
                         child: Text(
-                      Strings.time,
+                      LocaleKeys.app_time.tr,
                       style: TextStyleUtil.k14Semibold(),
                     ))
                   ],
@@ -117,7 +118,7 @@ class FindRideView extends GetView<FindRideController> {
                     SizedBox(
                       width: 55.w,
                       child: GreenPoolTextField(
-                        hintText: Strings.enterDate,
+                        hintText: LocaleKeys.app_enterDate.tr,
                         controller: controller.departureDate,
                         isSuffixNeeded: false,
                         readOnly: true,
@@ -136,7 +137,7 @@ class FindRideView extends GetView<FindRideController> {
                     ),
                     Flexible(
                       child: GreenPoolTextField(
-                        hintText: Strings.time,
+                        hintText: LocaleKeys.app_time.tr,
                         controller: controller.selectedTime,
                         isSuffixNeeded: false,
                         readOnly: true,
@@ -155,10 +156,10 @@ class FindRideView extends GetView<FindRideController> {
                     ),
                   ],
                 ).paddingOnly(bottom: 8.kh),
-                RichTextHeading(text: Strings.seatsNeeded)
+                RichTextHeading(text: LocaleKeys.app_seatsNeeded.tr)
                     .paddingOnly(bottom: 8.kh),
                 GreenPoolTextField(
-                  hintText: Strings.enterNumberOfSeats,
+                  hintText: LocaleKeys.app_enterNumberOfSeats.tr,
                   controller: controller.seatAvailable,
                   inputFormatters: [
                     FilteringTextInputFormatter.allow(
@@ -183,7 +184,7 @@ class FindRideView extends GetView<FindRideController> {
                   () => Visibility(
                     visible: controller.locationModelNames.isNotEmpty,
                     child: Text(
-                      Strings.previouslySearched,
+                      LocaleKeys.app_previouslySearched.tr,
                       style: TextStyleUtil.k14Semibold(),
                     ).paddingOnly(bottom: 8.kh),
                   ),
@@ -223,11 +224,11 @@ class FindRideView extends GetView<FindRideController> {
                       )),
                 ),
                 /*Text(
-                  Strings.description,
+                  LocaleKeys.app_description.tr,
                   style: TextStyleUtil.k14Semibold(),
                 ).paddingOnly(bottom: 8.kh),
                 GreenPoolTextField(
-                  hintText: Strings.enterTextHere,
+                  hintText: LocaleKeys.app_enterTextHere.tr,
                   controller: controller.descriptionTextController,
                   maxLines: 6,
                 ),*/
@@ -236,7 +237,7 @@ class FindRideView extends GetView<FindRideController> {
                   padding: const EdgeInsets.all(0),
                   onPressed: () => controller.moveToMatchingRides(),
                   isActive: controller.isActive.value,
-                  label: Strings.findMatchingRides,
+                  label: LocaleKeys.app_findMatchingRides.tr,
                 ).paddingOnly(bottom: 30.kh),
               ],
             ).paddingSymmetric(horizontal: 16.kw),

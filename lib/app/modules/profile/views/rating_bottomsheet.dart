@@ -5,6 +5,7 @@ import 'package:green_pool/app/components/greenpool_textfield.dart';
 import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../constants/image_constant.dart';
 import '../../../services/colors.dart';
 import '../../../services/text_style_util.dart';
@@ -30,7 +31,7 @@ class RatingBottomSheet extends GetView<ProfileController> {
         child: Column(
           children: [
             Text(
-              Strings.enjoyingCarpoollApp,
+              LocaleKeys.app_enjoyingCarpoollApp.tr,
               style: TextStyleUtil.k18Semibold(),
             ).paddingOnly(bottom: 8.kh),
             Image.asset(
@@ -39,7 +40,7 @@ class RatingBottomSheet extends GetView<ProfileController> {
               width: 200.kw,
             ),
             Text(
-              Strings.supportUsByGivingRate,
+              LocaleKeys.app_supportUsByGivingRate.tr,
               style: TextStyleUtil.k14Semibold(color: ColorUtil.kBlack04),
               textAlign: TextAlign.center,
             ).paddingOnly(bottom: 24.kh),
@@ -65,7 +66,7 @@ class RatingBottomSheet extends GetView<ProfileController> {
               },
             ).paddingOnly(bottom: 16.kh),
             GreenPoolTextField(
-              hintText: Strings.feedbackOrSuggestions,
+              hintText: LocaleKeys.app_feedbackOrSuggestions.tr,
               controller: controller.ratingTextController,
             ).paddingOnly(bottom: 16.kh),
             TextButton(
@@ -73,14 +74,14 @@ class RatingBottomSheet extends GetView<ProfileController> {
                 controller.submitFeedback();
               },
               child: Text(
-                Strings.submit,
+                LocaleKeys.app_submit.tr,
                 style: TextStyleUtil.k16Bold(),
               ),
             ),
             TextButton(
               onPressed: () => Get.back(),
               child: Text(
-                Strings.maybeLater,
+                LocaleKeys.app_maybeLater.tr,
                 style: TextStyleUtil.k16Bold(),
               ),
             ),

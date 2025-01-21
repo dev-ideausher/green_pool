@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../constants/image_constant.dart';
 import '../../../services/colors.dart';
 import '../../../services/text_style_util.dart';
@@ -24,11 +25,11 @@ class GetStartedView extends GetView {
           ),
         ).paddingOnly(bottom: 3.kh),
         Text(
-          Strings.getStarted1,
+          LocaleKeys.app_getStarted1.tr,
           style: TextStyleUtil.k32Heading700(),
         ).paddingOnly(bottom: 14.kh),
         Text(
-          Strings.getStarted2,
+          LocaleKeys.app_getStarted2.tr,
           style: TextStyleUtil.k16Regular(color: ColorUtil.kBlack04),
         ),
       ],

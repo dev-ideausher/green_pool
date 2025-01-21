@@ -8,6 +8,8 @@ import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
+import '../../../../generated/locales.g.dart';
+
 class Onboard1View extends GetView {
   const Onboard1View({super.key});
   @override
@@ -20,12 +22,12 @@ class Onboard1View extends GetView {
           width: 348.kw,
         ).paddingOnly(bottom: 3.kh),
         Text(
-          Strings.onboard1text1,
+          LocaleKeys.app_onboard1text1.tr,
           style: TextStyleUtil.k24Heading700(),
           textAlign: TextAlign.center,
         ).paddingOnly(bottom: 16.kh),
         Text(
-          Strings.onboard1text2,
+          LocaleKeys.app_onboard1text2.tr,
           style: TextStyleUtil.k16Regular(color: ColorUtil.kBlack04),
           textAlign: TextAlign.center,
         )

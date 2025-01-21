@@ -10,6 +10,7 @@ import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../controllers/emergency_contacts_controller.dart';
 
 class EmergencyContactsView extends GetView<EmergencyContactsController> {
@@ -18,34 +19,34 @@ class EmergencyContactsView extends GetView<EmergencyContactsController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: GreenPoolAppBar(
-        title: Text(Strings.emergencyContacts),
+        title: Text(LocaleKeys.app_emergencyContacts.tr),
       ),
       resizeToAvoidBottomInset: false,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            Strings.addEmergencyContacts,
+            LocaleKeys.app_addEmergencyContacts.tr,
             style: TextStyleUtil.k16Bold(),
           ).paddingOnly(top: 32.kh, bottom: 24.kh),
           Text(
-            Strings.contactNumberOne,
+            LocaleKeys.app_contactNumberOne.tr,
             style: TextStyleUtil.k14Bold(color: ColorUtil.kBlack02),
           ).paddingOnly(bottom: 16.kh),
           Text(
-            Strings.fullName,
+            LocaleKeys.app_fullName.tr,
             style: TextStyleUtil.k14Semibold(),
           ).paddingOnly(bottom: 8.kh),
           GreenPoolTextField(
-            hintText: Strings.enterFullName,
+            hintText: LocaleKeys.app_enterFullName.tr,
             controller: controller.fullName1,
           ).paddingOnly(bottom: 16.kh),
           Text(
-            Strings.phoneNumber,
+            LocaleKeys.app_phoneNumber.tr,
             style: TextStyleUtil.k14Semibold(),
           ).paddingOnly(bottom: 8.kh),
           GreenPoolTextField(
-            hintText: Strings.enterPhoneNumber,
+            hintText: LocaleKeys.app_enterPhoneNumber.tr,
             keyboardType: TextInputType.phone,
             controller: controller.emergencyNumber1,
             onchanged: (value) {
@@ -54,23 +55,23 @@ class EmergencyContactsView extends GetView<EmergencyContactsController> {
           ).paddingOnly(bottom: 24.kh),
           const GreenPoolDivider().paddingOnly(bottom: 16.kh),
           Text(
-            Strings.contactNumberTwo,
+            LocaleKeys.app_contactNumberTwo.tr,
             style: TextStyleUtil.k14Bold(color: ColorUtil.kBlack02),
           ).paddingOnly(bottom: 16.kh),
           Text(
-            Strings.fullName,
+            LocaleKeys.app_fullName.tr,
             style: TextStyleUtil.k14Semibold(),
           ).paddingOnly(bottom: 8.kh),
           GreenPoolTextField(
-            hintText: Strings.enterFullName,
+            hintText: LocaleKeys.app_enterFullName.tr,
             controller: controller.fullName2,
           ).paddingOnly(bottom: 16.kh),
           Text(
-            Strings.phoneNumber,
+            LocaleKeys.app_phoneNumber.tr,
             style: TextStyleUtil.k14Semibold(),
           ).paddingOnly(bottom: 8.kh),
           GreenPoolTextField(
-            hintText: Strings.enterPhoneNumber,
+            hintText: LocaleKeys.app_enterPhoneNumber.tr,
             keyboardType: TextInputType.phone,
             controller: controller.emergencyNumber2,
             onchanged: (value) {
@@ -83,7 +84,7 @@ class EmergencyContactsView extends GetView<EmergencyContactsController> {
             () => GreenPoolButton(
               onPressed: () => controller.emergencyContactsAPI(),
               isActive: controller.buttonState.value,
-              label: Strings.addContacts,
+              label: LocaleKeys.app_addContacts.tr,
             ).paddingOnly(bottom: 40.kh),
           ),
         ],

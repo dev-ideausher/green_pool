@@ -6,6 +6,7 @@ import 'package:green_pool/app/modules/map_driver_send_request/views/map_driver_
 import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import '../../../../generated/assets.dart';
+import '../../../../generated/locales.g.dart';
 import '../../../components/common_image_view.dart';
 import '../../../components/gp_progress.dart';
 import '../../../components/green_pool_divider.dart';
@@ -38,12 +39,12 @@ class SendRequest extends GetView<MyRidesRequestController> {
                           : SvgPicture.asset(ImageConstant.svgNoRides),
                     ),
                     Text(
-                      Strings.noRidesBetweenCities,
+                      LocaleKeys.app_noRidesBetweenCities.tr,
                       style: TextStyleUtil.k24Heading600(),
                       textAlign: TextAlign.center,
                     ).paddingOnly(bottom: 16.kh),
                     Text(
-                      Strings.pleaseTryAgain,
+                      LocaleKeys.app_pleaseTryAgain.tr,
                       style:
                           TextStyleUtil.k18Regular(color: ColorUtil.kBlack04),
                       textAlign: TextAlign.center,
@@ -161,7 +162,7 @@ class SendRequest extends GetView<MyRidesRequestController> {
                                     fontSize: 14.kh,
                                     isBorder: true,
                                     padding: const EdgeInsets.all(0),
-                                    label: Strings.message,
+                                    label: LocaleKeys.app_message.tr,
                                     borderColor: Get.find<HomeController>()
                                             .isPinkModeOn
                                             .value
@@ -181,14 +182,14 @@ class SendRequest extends GetView<MyRidesRequestController> {
                                       label: controller.sendRequestModel.value
                                                   .data![index].requestSent ??
                                               false
-                                          ? Strings.sent
-                                          : Strings.request,
+                                          ? LocaleKeys.app_sent.tr
+                                          : LocaleKeys.app_request.tr,
                                       onPressed: () async {
                                         if (controller.sendRequestModel.value
                                                 .data![index].requestSent ??
                                             false) {
                                           showMySnackbar(
-                                              msg: Strings.reqHasAlreadySent);
+                                              msg: LocaleKeys.app_reqHasAlreadySent.tr);
                                         } else {
                                           await controller
                                               .sendRequestToRiderAPI(controller

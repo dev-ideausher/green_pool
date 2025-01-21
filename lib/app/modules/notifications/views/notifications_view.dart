@@ -6,6 +6,7 @@ import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../components/gp_progress.dart';
 import '../../../services/colors.dart';
 import '../../../services/text_style_util.dart';
@@ -19,7 +20,7 @@ class NotificationsView extends GetView<NotificationsController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: GreenPoolAppBar(
-        title: Text(Strings.notifications),
+        title: Text(LocaleKeys.app_notifications.tr),
       ),
       body: Obx(
         () => controller.isLoad.value
@@ -27,7 +28,7 @@ class NotificationsView extends GetView<NotificationsController> {
             : controller.notifications.isEmpty
                 ? Center(
                     child: Text(
-                      Strings.yourFutureNotificationsWillAppearHere,
+                      LocaleKeys.app_yourFutureNotificationsWillAppearHere.tr,
                       style: TextStyleUtil.k24Heading600(),
                       textAlign: TextAlign.center,
                     ),

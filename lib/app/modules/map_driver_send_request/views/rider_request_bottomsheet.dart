@@ -8,6 +8,7 @@ import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/snackbar.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../components/green_pool_divider.dart';
 import '../../../constants/image_constant.dart';
 import '../../../res/strings.dart';
@@ -36,7 +37,7 @@ class RiderRequestBottomsheet extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(children: [
             Text(
-              Strings.riderRequest,
+              LocaleKeys.app_riderRequest.tr,
               style: TextStyleUtil.k18Heading600(),
             ).paddingOnly(bottom: 4.kh),
             const GreenPoolDivider().paddingSymmetric(vertical: 8.kh),
@@ -84,7 +85,7 @@ class RiderRequestBottomsheet extends StatelessWidget {
                           borderRadius: BorderRadius.circular(40.kh),
                           border: Border.all(color: ColorUtil.kSecondary01)),
                       child: Text(
-                        Strings.message,
+                        LocaleKeys.app_message.tr,
                         style: TextStyleUtil.k12Semibold(),
                       ),
                     ),
@@ -107,7 +108,7 @@ class RiderRequestBottomsheet extends StatelessWidget {
                   //rating column
                   children: [
                     Text(
-                      Strings.rating,
+                      LocaleKeys.app_rating.tr,
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Container(
@@ -137,7 +138,7 @@ class RiderRequestBottomsheet extends StatelessWidget {
                   //ride with column
                   children: [
                     Text(
-                      Strings.totalRides,
+                      LocaleKeys.app_totalRides.tr,
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Text(
@@ -151,11 +152,11 @@ class RiderRequestBottomsheet extends StatelessWidget {
                   //joined in column
                   children: [
                     Text(
-                      Strings.joined,
+                      LocaleKeys.app_joined.tr,
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Text(
-                      '${Strings.inA} ${element?.riderDetails?.createdAt?.substring(0, 4) ?? 2024}',
+                      '${LocaleKeys.app_inA.tr} ${element?.riderDetails?.createdAt?.substring(0, 4) ?? 2024}',
                       style:
                           TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                     ),
@@ -167,7 +168,7 @@ class RiderRequestBottomsheet extends StatelessWidget {
             GreenPoolButton(
               onPressed: () {
                 if (element?.requestSent ?? false) {
-                  showMySnackbar(msg: Strings.reqHasAlreadySent);
+                  showMySnackbar(msg: LocaleKeys.app_reqHasAlreadySent.tr);
                 } else {
                   Get.back();
                   Get.find<MyRidesRequestController>()
@@ -175,8 +176,8 @@ class RiderRequestBottomsheet extends StatelessWidget {
                 }
               },
               label: element?.requestSent ?? false
-                  ? Strings.sent
-                  : Strings.requestRider,
+                  ? LocaleKeys.app_sent.tr
+                  : LocaleKeys.app_requestRider.tr,
               fontSize: 14.kh,
               height: 40.kh,
               width: 144.kw,

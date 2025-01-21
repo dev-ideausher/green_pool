@@ -7,6 +7,7 @@ import 'package:green_pool/app/constants/image_constant.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../components/greenpool_textfield.dart';
 import '../../../components/richtext_heading.dart';
 import '../../../components/upload_id.dart';
@@ -24,7 +25,7 @@ class VehicleSetupView extends GetView<VehicleSetupController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: GreenPoolAppBar(
-        title: Text(Strings.vehicleSetup),
+        title: Text(LocaleKeys.app_vehicleSetup.tr),
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.kw),
@@ -35,7 +36,7 @@ class VehicleSetupView extends GetView<VehicleSetupController> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                RichTextHeading(text: Strings.vehiclePhoto)
+                RichTextHeading(text: LocaleKeys.app_vehiclePhoto.tr)
                     .paddingOnly(top: 32.kh, bottom: 8.kh),
                 GestureDetector(
                   onTap: () => Get.to(() => VehiclePictureView(
@@ -68,7 +69,7 @@ class VehicleSetupView extends GetView<VehicleSetupController> {
                                 SvgPicture.asset(ImageConstant.svgIconUpload)
                                     .paddingOnly(right: 8.kw),
                                 Text(
-                                  Strings.uploadPhoto,
+                                  LocaleKeys.app_uploadPhoto.tr,
                                   style: TextStyleUtil.k14Regular(
                                       color: ColorUtil.kBlack03),
                                 ),
@@ -77,18 +78,18 @@ class VehicleSetupView extends GetView<VehicleSetupController> {
                     ),
                   ),
                 ).paddingOnly(bottom: 16.kh),
-                RichTextHeading(text: Strings.model).paddingOnly(bottom: 8.kh),
+                RichTextHeading(text: LocaleKeys.app_model.tr).paddingOnly(bottom: 8.kh),
                 GreenPoolTextField(
-                  hintText: Strings.enterVehicleModel,
+                  hintText: LocaleKeys.app_enterVehicleModel.tr,
                   controller: controller.model,
                   focusNode: controller.modelFocusNode,
                   validator: (p0) => controller.validateModel(p0),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                 ).paddingOnly(bottom: 16.kh),
-                RichTextHeading(text: Strings.type).paddingOnly(bottom: 8.kh),
+                RichTextHeading(text: LocaleKeys.app_type.tr).paddingOnly(bottom: 8.kh),
                 Obx(
                   () => GreenPoolTextField(
-                    hintText: Strings.selectVehicleType,
+                    hintText: LocaleKeys.app_selectVehicleType.tr,
                     controller: controller.type,
                     focusNode: controller.typeFocusNode,
                     validator: (value) => controller.validateVehicleType(value),
@@ -148,10 +149,10 @@ class VehicleSetupView extends GetView<VehicleSetupController> {
                     ).paddingOnly(bottom: 16.kh),
                   ),
                 ),
-                RichTextHeading(text: Strings.color).paddingOnly(bottom: 8.kh),
+                RichTextHeading(text: LocaleKeys.app_color.tr).paddingOnly(bottom: 8.kh),
                 Obx(
                   () => GreenPoolTextField(
-                    hintText: Strings.selectVehicleColor,
+                    hintText: LocaleKeys.app_selectVehicleColor.tr,
                     controller: controller.color,
                     focusNode: controller.colorFocusNode,
                     validator: (value) => controller.validateColor(value),
@@ -211,25 +212,25 @@ class VehicleSetupView extends GetView<VehicleSetupController> {
                     ).paddingOnly(bottom: 16.kh),
                   ),
                 ),
-                RichTextHeading(text: Strings.year).paddingOnly(bottom: 8.kh),
+                RichTextHeading(text: LocaleKeys.app_year.tr).paddingOnly(bottom: 8.kh),
                 GreenPoolTextField(
-                  hintText: Strings.enterYear,
+                  hintText: LocaleKeys.app_enterYear.tr,
                   controller: controller.year,
                   focusNode: controller.yearFocusNode,
                   validator: (p0) => controller.validateYear(p0),
                   keyboardType: const TextInputType.numberWithOptions(),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                 ).paddingOnly(bottom: 16.kh),
-                RichTextHeading(text: Strings.licensePlate)
+                RichTextHeading(text: LocaleKeys.app_licensePlate.tr)
                     .paddingOnly(bottom: 8.kh),
                 GreenPoolTextField(
-                  hintText: Strings.licensePlate,
+                  hintText: LocaleKeys.app_licensePlate.tr,
                   controller: controller.licencePlate,
                   focusNode: controller.licenseFocusNode,
                   validator: (p0) => controller.validateLicensePlate(p0),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                 ).paddingOnly(bottom: 16.kh),
-                RichTextHeading(text: Strings.idVerification)
+                RichTextHeading(text: LocaleKeys.app_idVerification.tr)
                     .paddingOnly(bottom: 8.kh),
                 GestureDetector(
                   onTap: () => Get.to(() => UploadIDView(
@@ -262,7 +263,7 @@ class VehicleSetupView extends GetView<VehicleSetupController> {
                                 SvgPicture.asset(ImageConstant.svgIconUpload)
                                     .paddingOnly(right: 8.kw),
                                 Text(
-                                  Strings.uploadId,
+                                  LocaleKeys.app_uploadId.tr,
                                   style: TextStyleUtil.k14Regular(
                                       color: ColorUtil.kBlack03),
                                 ),
@@ -274,7 +275,7 @@ class VehicleSetupView extends GetView<VehicleSetupController> {
                 GreenPoolButton(
                   onPressed: () async =>
                       await controller.checkVehicleValidations(),
-                  label: Strings.proceed,
+                  label: LocaleKeys.app_proceed.tr,
                 ).paddingSymmetric(vertical: 40.kh),
               ],
             ),

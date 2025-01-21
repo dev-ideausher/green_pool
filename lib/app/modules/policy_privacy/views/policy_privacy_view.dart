@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
+import 'package:green_pool/generated/locales.g.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../../components/gp_progress.dart';
@@ -17,7 +18,7 @@ class PolicyPrivacyView extends GetView<PolicyPrivacyController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: GreenPoolAppBar(
-        title: Text(Strings.privacyPolicy),
+        title: Text(LocaleKeys.app_privacyPolicy.tr),
       ),
       body: Obx(
         () => controller.isLoad.value

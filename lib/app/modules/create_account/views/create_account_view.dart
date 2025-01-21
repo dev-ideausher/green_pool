@@ -13,6 +13,7 @@ import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../controllers/create_account_controller.dart';
 
 class CreateAccountView extends GetView<CreateAccountController> {
@@ -29,21 +30,21 @@ class CreateAccountView extends GetView<CreateAccountController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  Strings.createAccount,
+                  LocaleKeys.app_createAccount.tr,
                   style: TextStyleUtil.k32Heading700(),
                 ).paddingOnly(top: 48.kh),
                 Text(
-                  Strings.enterDetails,
+                  LocaleKeys.app_enterDetails.tr,
                   style: TextStyleUtil.k16Regular(color: ColorUtil.kBlack04),
                 ).paddingOnly(bottom: 32.kh),
 
                 //
                 Text(
-                  Strings.fullName,
+                  LocaleKeys.app_fullName.tr,
                   style: TextStyleUtil.k14Semibold(),
                 ).paddingOnly(bottom: 8.kh),
                 GreenPoolTextField(
-                  hintText: Strings.enterName,
+                  hintText: LocaleKeys.app_enterName.tr,
                   controller: controller.fullNameController,
                   inputFormatters: [
                     FilteringTextInputFormatter.allow(RegExp(
@@ -56,11 +57,11 @@ class CreateAccountView extends GetView<CreateAccountController> {
                 //
 
                 Text(
-                  Strings.phoneNumber,
+                  LocaleKeys.app_phoneNumber.tr,
                   style: TextStyleUtil.k14Semibold(),
                 ).paddingOnly(bottom: 8.kh),
                 GreenPoolTextField(
-                  hintText: Strings.enterHere,
+                  hintText: LocaleKeys.app_enterHere.tr,
                   keyboardType: TextInputType.phone,
                   controller: controller.phoneNumberController,
                   inputFormatters: [
@@ -129,22 +130,22 @@ class CreateAccountView extends GetView<CreateAccountController> {
                         TextSpan(
                           children: [
                             TextSpan(
-                              text: Strings.readAndAgree,
+                              text: LocaleKeys.app_readAndAgree.tr,
                               style: TextStyleUtil.k12Regular(),
                             ),
                             TextSpan(
-                                text: Strings.termsCondition,
+                                text: LocaleKeys.app_termsCondition.tr,
                                 style: TextStyleUtil.k12Semibold(
                                     color: ColorUtil.kSecondary03),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () =>
                                       Get.toNamed(Routes.TERMS_CONDITIONS)),
                             TextSpan(
-                              text: Strings.and,
+                              text: LocaleKeys.app_and.tr,
                               style: TextStyleUtil.k12Regular(),
                             ),
                             TextSpan(
-                                text: Strings.privacyPolicy,
+                                text: LocaleKeys.app_privacyPolicy.tr,
                                 style: TextStyleUtil.k12Semibold(
                                     color: ColorUtil.kSecondary03),
                                 recognizer: TapGestureRecognizer()
@@ -162,7 +163,7 @@ class CreateAccountView extends GetView<CreateAccountController> {
                       await controller.checkValidation();
                     },
                     isActive: controller.isTermsAccepted.value,
-                    label: Strings.signUp,
+                    label: LocaleKeys.app_signUp.tr,
                   ).paddingOnly(bottom: 16.kh),
                 ),
                 Center(
@@ -170,11 +171,11 @@ class CreateAccountView extends GetView<CreateAccountController> {
                     TextSpan(
                       children: [
                         TextSpan(
-                            text: Strings.alreadyHaveAcc,
+                            text: LocaleKeys.app_alreadyHaveAcc.tr,
                             style: TextStyleUtil.k14Semibold(
                                 color: ColorUtil.kBlack04)),
                         TextSpan(
-                            text: Strings.spaceLogin,
+                            text: LocaleKeys.app_spaceLogin.tr,
                             style: TextStyleUtil.k14Semibold(
                                 color: ColorUtil.kSecondary01),
                             recognizer: TapGestureRecognizer()
@@ -194,7 +195,7 @@ class CreateAccountView extends GetView<CreateAccountController> {
                       ).paddingOnly(right: 8.kw),
                     ),
                     Text(
-                      Strings.orSignUpWith,
+                      LocaleKeys.app_orSignUpWith.tr,
                       style:
                           TextStyleUtil.k12Semibold(color: ColorUtil.kNeutral3),
                     ),

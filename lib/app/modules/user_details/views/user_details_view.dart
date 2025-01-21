@@ -10,6 +10,7 @@ import 'package:green_pool/app/constants/image_constant.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../components/greenpool_textfield.dart';
 import '../../../components/opt_heading_text.dart';
 import '../../../components/richtext_heading.dart';
@@ -28,7 +29,7 @@ class UserDetailsView extends GetView<UserDetailsController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: GreenPoolAppBar(
-        title: Text(Strings.userDetails),
+        title: Text(LocaleKeys.app_userDetails.tr),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -37,9 +38,9 @@ class UserDetailsView extends GetView<UserDetailsController> {
             Center(
               child: ProfileImage(controller: controller),
             ).paddingOnly(bottom: 40.kh),
-            RichTextHeading(text: Strings.fullName).paddingOnly(bottom: 8.kh),
+            RichTextHeading(text: LocaleKeys.app_fullName.tr).paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
-              hintText: Strings.fullName,
+              hintText: LocaleKeys.app_fullName.tr,
               controller: controller.nameTextController,
               focusNode: controller.nameFocusNode,
               inputFormatters: [
@@ -61,10 +62,10 @@ class UserDetailsView extends GetView<UserDetailsController> {
                 ),
               ),
             ).paddingOnly(bottom: 16.kh),
-            OptFieldHeading(heading: Strings.emailAddress)
+            OptFieldHeading(heading: LocaleKeys.app_emailAddress.tr)
                 .paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
-              hintText: Strings.emailID,
+              hintText: LocaleKeys.app_emailID.tr,
               keyboardType: TextInputType.emailAddress,
               focusNode: controller.emailFocusNode,
               controller: controller.emailTextController,
@@ -83,10 +84,10 @@ class UserDetailsView extends GetView<UserDetailsController> {
                 ),
               ),
             ).paddingOnly(bottom: 16.kh),
-            RichTextHeading(text: Strings.phoneNumber)
+            RichTextHeading(text: LocaleKeys.app_phoneNumber.tr)
                 .paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
-              hintText: Strings.phoneNumber,
+              hintText: LocaleKeys.app_phoneNumber.tr,
               controller: controller.phoneTextController,
               prefix: Text(
                 "+1",
@@ -96,18 +97,18 @@ class UserDetailsView extends GetView<UserDetailsController> {
               ),
               readOnly: true,
             ).paddingOnly(bottom: 16.kh),
-            RichTextHeading(text: Strings.gender).paddingOnly(bottom: 8.kh),
+            RichTextHeading(text: LocaleKeys.app_gender.tr).paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
-              hintText: Strings.gender,
+              hintText: LocaleKeys.app_gender.tr,
               controller: controller.genderTextController,
               focusNode: controller.genderFocusNode,
               readOnly: true,
             ).paddingOnly(bottom: 16.kh),
-            RichTextHeading(text: Strings.cityProvince)
+            RichTextHeading(text: LocaleKeys.app_cityProvince.tr)
                 .paddingOnly(bottom: 8.kh),
             Obx(
               () => GreenPoolTextField(
-                hintText: Strings.selectCity,
+                hintText: LocaleKeys.app_selectCity.tr,
                 controller: controller.city,
                 focusNode: controller.cityFocusNode,
                 suffix: controller.isCityListExpanded.value
@@ -173,11 +174,11 @@ class UserDetailsView extends GetView<UserDetailsController> {
                 ).paddingOnly(bottom: 16.kh),
               ),
             ),
-            OptFieldHeading(heading: Strings.dateOfBirth)
+            OptFieldHeading(heading: LocaleKeys.app_dateOfBirth.tr)
                 .paddingOnly(bottom: 8.kh),
             controller.dobTextController.value.text == ""
                 ? GreenPoolTextField(
-                    hintText: Strings.selectYourDateOfBirth,
+                    hintText: LocaleKeys.app_selectYourDateOfBirth.tr,
                     suffix: SvgPicture.asset(ImageConstant.svgIconCalendar),
                     controller: controller.dobTextController,
                     readOnly: true,
@@ -186,11 +187,11 @@ class UserDetailsView extends GetView<UserDetailsController> {
                     },
                   ).paddingOnly(bottom: 16.kh)
                 : GreenPoolTextField(
-                    hintText: Strings.dob,
+                    hintText: LocaleKeys.app_dob.tr,
                     controller: controller.dobTextController,
                     readOnly: true,
                   ),
-            /*OptFieldHeading(heading: Strings.idVerification)
+            /*OptFieldHeading(heading: LocaleKeys.app_idVerification.tr)
                 .paddingOnly(bottom: 8.kh),
             GestureDetector(
               onTap: () {
@@ -229,14 +230,14 @@ class UserDetailsView extends GetView<UserDetailsController> {
                 },
                 isActive: controller.isBtnActive.value,
                 isLoading: controller.saveBtnLoading.value,
-                label: Strings.save,
+                label: LocaleKeys.app_save.tr,
               ).paddingOnly(top: 20.kh, bottom: 16.kh),
             ),
             GreenPoolButton(
               onPressed: () => controller.deleteAccountAPI(),
               isBorder: true,
               borderWidth: 2.kh,
-              label: Strings.deleteAccount,
+              label: LocaleKeys.app_deleteAccount.tr,
               borderColor: Get.find<HomeController>().isPinkModeOn.value
                   ? ColorUtil.kPrimary3PinkMode
                   : ColorUtil.kSecondary01,
@@ -314,7 +315,7 @@ class ProfileImage extends StatelessWidget {
           ),
         ),
         Text(
-          Strings.takeOrUploadProfilePic,
+          LocaleKeys.app_takeOrUploadProfilePic.tr,
           style: TextStyleUtil.k16Regular(color: ColorUtil.kNeutral4),
         ),
       ],

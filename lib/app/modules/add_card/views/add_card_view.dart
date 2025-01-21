@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/greenpool_textfield.dart';
-import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../components/greenpool_appbar.dart';
 import '../../../services/custom_button.dart';
 import '../../../services/text_style_util.dart';
@@ -16,26 +16,26 @@ class AddCardView extends GetView<AddCardController> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: GreenPoolAppBar(
-          title: Text(Strings.payment),
+          title: Text(LocaleKeys.app_payment.tr),
         ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              Strings.addNewcard,
+              LocaleKeys.app_addNewcard.tr,
               style: TextStyleUtil.k16Bold(),
             ).paddingOnly(top: 32.kh, bottom: 16.kh),
             Text(
-              Strings.cardHolderName,
+              LocaleKeys.app_cardHolderName.tr,
               style: TextStyleUtil.k14Semibold(),
             ).paddingOnly(bottom: 8.kh),
-            GreenPoolTextField(hintText: Strings.enterName)
+            GreenPoolTextField(hintText: LocaleKeys.app_enterName.tr)
                 .paddingOnly(bottom: 16.kh),
             Text(
-              Strings.cardNumber,
+              LocaleKeys.app_cardNumber.tr,
               style: TextStyleUtil.k14Semibold(),
             ).paddingOnly(bottom: 8.kh),
-            GreenPoolTextField(hintText: Strings.enterCardNumber)
+            GreenPoolTextField(hintText: LocaleKeys.app_enterCardNumber.tr)
                 .paddingOnly(bottom: 16.kh),
             Row(
               children: [
@@ -45,11 +45,11 @@ class AddCardView extends GetView<AddCardController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        Strings.expiryDate,
+                        LocaleKeys.app_expiryDate.tr,
                         style: TextStyleUtil.k14Semibold(),
                       ).paddingOnly(bottom: 8.kh),
                       GreenPoolTextField(
-                        hintText: Strings.mmYY,
+                        hintText: LocaleKeys.app_mmYY.tr,
                         isSuffixNeeded: false,
                         onTap: () {},
                       ).paddingOnly(top: 8.kh, bottom: 16.kh, right: 8.kw),
@@ -61,7 +61,7 @@ class AddCardView extends GetView<AddCardController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        Strings.cvv,
+                        LocaleKeys.app_cvv.tr,
                         style: TextStyleUtil.k14Semibold(),
                       ).paddingOnly(bottom: 8.kh),
                       GreenPoolTextField(
@@ -77,7 +77,7 @@ class AddCardView extends GetView<AddCardController> {
             const Expanded(child: SizedBox()),
             GreenPoolButton(
               onPressed: () {},
-              label: Strings.proceed,
+              label: LocaleKeys.app_proceed.tr,
             ).paddingSymmetric(vertical: 40.kh),
           ],
         ).paddingSymmetric(horizontal: 16.kw));

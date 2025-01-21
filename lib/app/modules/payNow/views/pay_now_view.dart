@@ -12,6 +12,7 @@ import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
+import 'package:green_pool/generated/locales.g.dart';
 
 import '../../../components/greenpool_textfield.dart';
 import '../../../routes/app_pages.dart';
@@ -26,7 +27,7 @@ class PayNowView extends GetView<PayNowController> {
     final isPinkModeOn = Get.find<HomeController>().isPinkModeOn.value;
     return Scaffold(
       appBar: GreenPoolAppBar(
-        title: Text(Strings.payment),
+        title: Text(LocaleKeys.app_payment.tr),
       ),
       body: Obx(
         () => controller.isLoading.value
@@ -44,13 +45,13 @@ class PayNowView extends GetView<PayNowController> {
                         .paddingSymmetric(horizontal: 16.kw),
                     24.kheightBox,
                     Text(
-                      Strings.promotions,
+                      LocaleKeys.app_promotions.tr,
                       style: TextStyleUtil.k16Bold(),
                     ).paddingOnly(bottom: 16.kh),
                     ListTile(
                       tileColor: ColorUtil.kWhiteColor,
                       title: Text(
-                        Strings.seatsBooked,
+                        LocaleKeys.app_seatsBooked.tr,
                         style: TextStyleUtil.k14Semibold(),
                       ),
                       leading: Icon(
@@ -146,7 +147,7 @@ class PayNowView extends GetView<PayNowController> {
                             controller.promoCodeId = "";
                           },
                           child: Text(
-                            Strings.remove,
+                            LocaleKeys.app_remove.tr,
                             style: TextStyleUtil.k12Bold(
                               color:
                                   Get.find<HomeController>().isPinkModeOn.value
@@ -165,7 +166,7 @@ class PayNowView extends GetView<PayNowController> {
                         controller.moveToWallet();
                       },
                       title: Text(
-                        Strings.walletBalance,
+                        LocaleKeys.app_walletBalance.tr,
                         style: TextStyleUtil.k14Semibold(),
                       ),
                       leading: Container(
@@ -201,7 +202,7 @@ class PayNowView extends GetView<PayNowController> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                Strings.subtotal,
+                                LocaleKeys.app_subtotal.tr,
                                 style: TextStyleUtil.k14Regular(
                                     color: ColorUtil.kBlack03),
                               ),
@@ -215,7 +216,7 @@ class PayNowView extends GetView<PayNowController> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                Strings.platformFees,
+                                LocaleKeys.app_platformFees.tr,
                                 style: TextStyleUtil.k14Regular(
                                     color: ColorUtil.kBlack03),
                               ),
@@ -231,7 +232,7 @@ class PayNowView extends GetView<PayNowController> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  Strings.discount,
+                                  LocaleKeys.app_discount.tr,
                                   style: TextStyleUtil.k14Regular(
                                       color: ColorUtil.kBlack03),
                                 ),
@@ -247,7 +248,7 @@ class PayNowView extends GetView<PayNowController> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                Strings.toPay,
+                                LocaleKeys.app_toPay.tr,
                                 style: TextStyleUtil.k14Bold(
                                     color: ColorUtil.kBlack02),
                               ),
@@ -287,11 +288,11 @@ class PayNowView extends GetView<PayNowController> {
                               TextSpan(
                                 children: [
                                   TextSpan(
-                                    text: Strings.iConsentToTheseGuidelines,
+                                    text: LocaleKeys.app_iConsentToTheseGuidelines.tr,
                                     style: TextStyleUtil.k12Regular(),
                                   ),
                                   TextSpan(
-                                    text: Strings.driverCancellationPolicyf,
+                                    text: LocaleKeys.app_driverCancellationPolicyf.tr,
                                     style: TextStyleUtil.k12Semibold(
                                         color: isPinkModeOn
                                             ? ColorUtil.kPrimary2PinkMode
@@ -301,7 +302,7 @@ class PayNowView extends GetView<PayNowController> {
                                           () => controller.getDriverPolicy(),
                                   ),
                                   TextSpan(
-                                    text: Strings.riderCancellationPolicyf,
+                                    text: LocaleKeys.app_riderCancellationPolicyf.tr,
                                     style: TextStyleUtil.k12Semibold(
                                         color: isPinkModeOn
                                             ? ColorUtil.kPrimary2PinkMode
@@ -311,7 +312,7 @@ class PayNowView extends GetView<PayNowController> {
                                           () => controller.getRiderPolicy(),
                                   ),
                                   TextSpan(
-                                    text: Strings.termsAndConditions,
+                                    text: LocaleKeys.app_termsAndConditions.tr,
                                     style: TextStyleUtil.k12Semibold(
                                         color: isPinkModeOn
                                             ? ColorUtil.kPrimary2PinkMode
@@ -321,11 +322,11 @@ class PayNowView extends GetView<PayNowController> {
                                           Get.toNamed(Routes.TERMS_CONDITIONS),
                                   ),
                                   TextSpan(
-                                    text: Strings.and,
+                                    text: LocaleKeys.app_and.tr,
                                     style: TextStyleUtil.k12Regular(),
                                   ),
                                   TextSpan(
-                                    text: Strings.privacyPolicyf,
+                                    text: LocaleKeys.app_privacyPolicyf.tr,
                                     style: TextStyleUtil.k12Semibold(
                                         color: isPinkModeOn
                                             ? ColorUtil.kPrimary2PinkMode
@@ -335,8 +336,7 @@ class PayNowView extends GetView<PayNowController> {
                                           Get.toNamed(Routes.POLICY_PRIVACY),
                                   ),
                                   TextSpan(
-                                    text: Strings
-                                        .iAcknowledgeThatMyAccMayFaceSuspension,
+                                    text: LocaleKeys.app_iAcknowledgeThatMyAccMayFaceSuspension.tr,
                                     style: TextStyleUtil.k12Regular(),
                                   ),
                                 ],
@@ -351,7 +351,7 @@ class PayNowView extends GetView<PayNowController> {
                       onPressed: () {
                         controller.decideAPI();
                       },
-                      label: Strings.payNow,
+                      label: LocaleKeys.app_payNow.tr,
                       isActive: controller.isChecked.value,
                     ).paddingOnly(bottom: 20.kh),
                   ],

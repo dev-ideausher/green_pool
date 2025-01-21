@@ -10,6 +10,7 @@ import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../constants/image_constant.dart';
 import '../../../services/storage.dart';
 import '../../../services/text_style_util.dart';
@@ -21,7 +22,7 @@ class ProfileSettingsView extends GetView<ProfileSettingsController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: GreenPoolAppBar(
-        title: Text(Strings.profile),
+        title: Text(LocaleKeys.app_profile.tr),
       ),
       body: Column(
         children: [
@@ -45,7 +46,7 @@ class ProfileSettingsView extends GetView<ProfileSettingsController> {
             () => SizedBox(
               width: 50.w,
               child: Text(
-                controller.fullName.value ?? Strings.user,
+                controller.fullName.value ?? LocaleKeys.app_user.tr,
                 textAlign: TextAlign.center,
                 style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
                 overflow: TextOverflow.ellipsis,
@@ -57,12 +58,12 @@ class ProfileSettingsView extends GetView<ProfileSettingsController> {
                     (value) => controller.updateInfo(),
                   ),
               image: ImageConstant.svgProfileDetails,
-              text: Strings.userDetails),
+              text: LocaleKeys.app_userDetails.tr),
           Get.find<HomeController>().userInfo.value.data?.vehicleStatus == true
               ? ProfileContainer(
                   onTap: () => Get.toNamed(Routes.VEHICLE_DETAILS),
                   image: ImageConstant.svgProfileCar,
-                  text: Strings.vehicleDetails)
+                  text: LocaleKeys.app_vehicleDetails.tr)
               : const SizedBox(),
           /*ProfileContainer(
               onTap: () => Get.toNamed(Routes.CHANGE_PASSWORD),
@@ -71,7 +72,7 @@ class ProfileSettingsView extends GetView<ProfileSettingsController> {
           ProfileContainer(
               onTap: () => Get.toNamed(Routes.EMERGENCY_CONTACTS),
               image: ImageConstant.svgProfileCall,
-              text: Strings.emergencyContacts),*/
+              text: LocaleKeys.app_emergencyContacts.tr),*/
         ],
       ).paddingSymmetric(horizontal: 16.kw),
     );

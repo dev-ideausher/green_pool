@@ -13,8 +13,10 @@ import 'package:green_pool/app/services/dialog_helper.dart';
 import 'package:green_pool/app/services/location_service.dart';
 import 'package:green_pool/app/services/push_notification_service.dart';
 import 'package:green_pool/app/services/storage.dart';
+import 'package:green_pool/app/services/version_k.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../data/user_info_model.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/dio/api_service.dart';
@@ -27,7 +29,7 @@ class HomeController extends GetxController with Versionk {
   RxDouble latitude = 0.0.obs;
   RxDouble longitude = 0.0.obs;
   var userInfo = UserInfoModel().obs;
-  RxString welcomeText = Strings.welcome.obs;
+  RxString welcomeText = LocaleKeys.app_welcome.tr.obs;
   RxBool isPinkModeOn = false.obs;
   bool canPop = false;
   final RxBool newMsgReceived = false.obs;
@@ -219,7 +221,7 @@ class HomeController extends GetxController with Versionk {
         if (index != 0) {
           Get.toNamed(Routes.RIDER_PROFILE_SETUP,
               arguments: {"fromNavBar": true, "fullName": ""});
-          showMySnackbar(msg: Strings.pleaseCompleteProfileSetup);
+          showMySnackbar(msg: LocaleKeys.app_pleaseCompleteProfileSetup.tr);
         }
       }
     } else {

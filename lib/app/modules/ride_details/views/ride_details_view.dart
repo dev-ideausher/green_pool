@@ -11,6 +11,7 @@ import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../constants/image_constant.dart';
 import '../../../res/strings.dart';
 import '../../home/controllers/home_controller.dart';
@@ -26,7 +27,7 @@ class RideDetailsView extends GetView<RideDetailsController> {
         controller.rideHistory.value.rideStatus == "Completed";
     return Scaffold(
       appBar: GreenPoolAppBar(
-        title: Text(Strings.rideDetails),
+        title: Text(LocaleKeys.app_rideDetails.tr),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,8 +56,8 @@ class RideDetailsView extends GetView<RideDetailsController> {
                   ).paddingOnly(right: 8.kw),
                   Text(
                     isRideCancelled
-                        ? Strings.rideCancelled
-                        : Strings.completedSuccesfully,
+                        ? LocaleKeys.app_rideCancelled.tr
+                        : LocaleKeys.app_completedSuccessfully.tr,
                     style: TextStyleUtil.k14Regular(
                         color: isRideCancelled
                             ? ColorUtil.kWhiteColor
@@ -145,13 +146,13 @@ class RideDetailsView extends GetView<RideDetailsController> {
                               TextSpan(
                                 children: [
                                   TextSpan(
-                                    text: Strings.fare,
+                                    text: LocaleKeys.app_fare.tr,
                                     style: TextStyleUtil.k14Semibold(
                                         color: ColorUtil.kSecondary01),
                                   ),
                                   TextSpan(
                                     text:
-                                        '${Strings.dollar} ${controller.rideHistory.value.price}',
+                                        '${LocaleKeys.app_dollar.tr} ${controller.rideHistory.value.price}',
                                     style: TextStyleUtil.k16Semibold(
                                         fontSize: 16.kh,
                                         color: ColorUtil.kSecondary01),
@@ -226,7 +227,7 @@ class RideDetailsView extends GetView<RideDetailsController> {
 
           //co passengers
           Text(
-            Strings.coPassengers,
+            LocaleKeys.app_coPassengers.tr,
             style: TextStyleUtil.k14Bold(),
           ).paddingOnly(bottom: 16.kh),
           SizedBox(
@@ -262,7 +263,7 @@ class RideDetailsView extends GetView<RideDetailsController> {
                     Text(
                       isRider
                           ? "${controller.rideHistory.value.riders?[passengerIndex]?.fullName.toString().split(" ").first}"
-                          : Strings.emptySeat,
+                          : LocaleKeys.app_emptySeat.tr,
                       style: TextStyleUtil.k12Semibold(),
                       textAlign: TextAlign.center,
                     ),
@@ -275,7 +276,7 @@ class RideDetailsView extends GetView<RideDetailsController> {
 
           //Vehicle details
           Text(
-            Strings.vehicleDetails,
+            LocaleKeys.app_vehicleDetails.tr,
             style: TextStyleUtil.k14Bold(),
           ).paddingOnly(bottom: 16.kh),
           Row(
@@ -320,7 +321,7 @@ class RideDetailsView extends GetView<RideDetailsController> {
           ),
           const GreenPoolDivider().paddingSymmetric(vertical: 16.kh),
           /*Text(
-            Strings.description,
+            LocaleKeys.app_description.tr,
             style: TextStyleUtil.k14Bold(),
           ).paddingOnly(bottom: 8.kh),
           Wrap(

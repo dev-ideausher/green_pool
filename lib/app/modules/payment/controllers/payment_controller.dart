@@ -7,6 +7,7 @@ import 'package:green_pool/app/modules/my_rides_one_time/controllers/my_rides_on
 import 'package:green_pool/app/modules/rider_my_ride_request/controllers/rider_my_ride_request_controller.dart';
 import 'package:green_pool/app/services/dialog_helper.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
+import 'package:green_pool/generated/locales.g.dart';
 
 import '../../../data/request_ride_by_rider_model.dart';
 import '../../../data/rider_confirm_request_model.dart';
@@ -350,7 +351,7 @@ class PaymentController extends GetxController {
                 ),
               ),
               Text(
-                Strings.driverCancellationpolicy,
+                LocaleKeys.app_driverCancellationpolicy.tr,
                 style: TextStyleUtil.k24Heading700(),
                 textAlign: TextAlign.center,
               ).paddingOnly(top: 14.kh, bottom: 20.kh),
@@ -364,7 +365,7 @@ class PaymentController extends GetxController {
                   ),
                   Expanded(
                     child: Text(
-                      Strings.youAreAllowedUpto6Cancellation,
+                      LocaleKeys.app_youAreAllowedUpTo6Cancellation.tr,
                       style: TextStyleUtil.k16Medium(),
                       textAlign: TextAlign.left,
                     ).paddingOnly(bottom: 12.kh),
@@ -381,7 +382,7 @@ class PaymentController extends GetxController {
                   ),
                   Expanded(
                     child: Text(
-                      Strings.exceedingThisMayResultSuspension,
+                      LocaleKeys.app_exceedingThisMayResultSuspension.tr,
                       style: TextStyleUtil.k16Medium(),
                       textAlign: TextAlign.left,
                     ).paddingOnly(bottom: 12.kh),
@@ -416,50 +417,53 @@ class PaymentController extends GetxController {
                 ),
               ),
               Text(
-                Strings.riderCancellationpolicy,
+                LocaleKeys.app_riderCancellationPolicy.tr,
                 style: TextStyleUtil.k24Heading700(),
                 textAlign: TextAlign.center,
               ).paddingOnly(top: 14.kh),
               16.kheightBox,
               PolicySection(
                 number: '1.',
-                title: Strings.withdrawalBookingReqorExpiration,
+                title: LocaleKeys.app_withdrawalBookingReqOrExpiration.tr,
                 bulletPoints: [
-                  Strings.ifYouWithdrawBookingReqOrExpires,
+                  LocaleKeys.app_ifYouWithdrawBookingReqOrExpires.tr,
                 ],
               ).paddingSymmetric(horizontal: 24.kw),
               PolicySection(
                 number: '2.',
-                title: Strings.cancellationLessThan12Hours,
+                title: LocaleKeys.app_cancellationLessThan12Hours.tr,
                 bulletPoints: [
-                  Strings
-                      .ifYouCancelBookingLessThan12HoursBeforeTheScheduledDeparture,
-                  Strings.theDriverIsEntitledToReceiveHalfOfThePriceSeat,
+                  LocaleKeys
+                      .app_ifYouCancelBookingLessThan12HoursBeforeTheScheduledDeparture
+                      .tr,
+                  LocaleKeys
+                      .app_theDriverIsEntitledToReceiveHalfOfThePriceSeat.tr,
                 ],
               ).paddingSymmetric(horizontal: 24.kw),
-              Text(Strings.riderCancellationNote,
+              Text(LocaleKeys.app_riderCancellationNote.tr,
                       style: TextStyleUtil.k14Medium())
                   .paddingSymmetric(vertical: 8.kh, horizontal: 24.kw),
               PolicySection(
                 number: '3.',
-                title: Strings.cancellationMoreThan12hours,
+                title: LocaleKeys.app_cancellationMoreThan12Hours.tr,
                 bulletPoints: [
-                  Strings
-                      .ifYouCancelBookingMoreThan12HoursBeforeScheduledDeparture,
+                  LocaleKeys
+                      .app_ifYouCancelBookingMoreThan12HoursBeforeScheduledDeparture
+                      .tr,
                 ],
               ).paddingSymmetric(horizontal: 24.kw),
               PolicySection(
                 number: '4.',
-                title: Strings.failureToShowUp,
+                title: LocaleKeys.app_failureToShowUp.tr,
                 bulletPoints: [
-                  Strings.ifYouFailToShowUpforTheRide,
+                  LocaleKeys.app_ifYouFailToShowUpForTheRide.tr,
                 ],
               ).paddingSymmetric(horizontal: 24.kw),
               PolicySection(
                 number: '5.',
-                title: Strings.driverInitiiatedCancellation,
+                title: LocaleKeys.app_driverInitiatedCancellation.tr,
                 bulletPoints: [
-                  Strings.inTheEventThatTheDriverCancellsTheTrip,
+                  LocaleKeys.app_inTheEventThatTheDriverCancelsTheTrip.tr,
                 ],
               ).paddingSymmetric(horizontal: 24.kw),
             ],

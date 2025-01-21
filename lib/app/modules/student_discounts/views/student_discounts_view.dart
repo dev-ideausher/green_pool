@@ -14,6 +14,7 @@ import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../constants/image_constant.dart';
 import '../../home/controllers/home_controller.dart';
 import '../controllers/student_discounts_controller.dart';
@@ -24,7 +25,7 @@ class StudentDiscountsView extends GetView<StudentDiscountsController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: GreenPoolAppBar(
-        title: Text(Strings.studentDiscount),
+        title: Text(LocaleKeys.app_studentDiscount.tr),
       ),
       resizeToAvoidBottomInset: false,
       body: Obx(
@@ -54,14 +55,14 @@ class StudentDiscountsView extends GetView<StudentDiscountsController> {
                         Positioned(
                           top: 390.kh,
                           child: Text(
-                            Strings.requestSentExclamation,
+                            LocaleKeys.app_requestSentExclamation.tr,
                             style: TextStyleUtil.k24Heading700(),
                           ),
                         ),
                         Positioned(
                             top: 440.kh,
                             child: Text(
-                              Strings.verificationRequestSent,
+                              LocaleKeys.app_verificationRequestSent.tr,
                               style: TextStyleUtil.k16Regular(
                                   color: ColorUtil.kBlack04),
                               textAlign: TextAlign.center,
@@ -74,7 +75,7 @@ class StudentDiscountsView extends GetView<StudentDiscountsController> {
                     onPressed: () {
                       Get.back();
                     },
-                    label: Strings.continueText,
+                    label: LocaleKeys.app_continueText.tr,
                   ).paddingSymmetric(vertical: 40.kh),
                 ],
               )
@@ -85,11 +86,11 @@ class StudentDiscountsView extends GetView<StudentDiscountsController> {
                     TextSpan(
                       children: [
                         TextSpan(
-                          text: Strings.studentReceive,
+                          text: LocaleKeys.app_studentReceive.tr,
                           style: TextStyleUtil.k16Bold(),
                         ),
                         TextSpan(
-                          text: Strings.dollar5,
+                          text: LocaleKeys.app_dollar5.tr,
                           style: TextStyleUtil.k18Bold(
                               color:
                                   Get.find<HomeController>().isPinkModeOn.value
@@ -97,18 +98,18 @@ class StudentDiscountsView extends GetView<StudentDiscountsController> {
                                       : ColorUtil.kPrimary01),
                         ),
                         TextSpan(
-                          text: Strings.discountAfterVerifyingEmail,
+                          text: LocaleKeys.app_discountAfterVerifyingEmail.tr,
                           style: TextStyleUtil.k16Bold(),
                         ),
                       ],
                     ),
                   ).paddingOnly(top: 32.kh, bottom: 24.kh),
                   Text(
-                    Strings.school,
+                    LocaleKeys.app_school.tr,
                     style: TextStyleUtil.k14Semibold(),
                   ).paddingOnly(bottom: 8.kh),
                   GreenPoolTextField(
-                          hintText: Strings.searchForSchool,
+                          hintText: LocaleKeys.app_searchForSchool.tr,
                           controller: controller.searchTextController,
                           onchanged: (v) {
                             controller.searchMethod();
@@ -179,11 +180,11 @@ class StudentDiscountsView extends GetView<StudentDiscountsController> {
                           ).paddingOnly(bottom: 16.kh),
                   ),
                   Text(
-                    Strings.studentEmailID,
+                    LocaleKeys.app_studentEmailID.tr,
                     style: TextStyleUtil.k14Semibold(),
                   ).paddingOnly(bottom: 8.kh),
                   GreenPoolTextField(
-                    hintText: Strings.enterStudentEmail,
+                    hintText: LocaleKeys.app_enterStudentEmail.tr,
                     keyboardType: TextInputType.emailAddress,
                     controller: controller.emailTextController,
                     onchanged: (p0) {
@@ -196,7 +197,7 @@ class StudentDiscountsView extends GetView<StudentDiscountsController> {
                       onPressed: () {
                         controller.checkEmailPostFix();
                       },
-                      label: Strings.verifyEmail,
+                      label: LocaleKeys.app_verifyEmail.tr,
                       isActive: controller.isActive.value,
                     ).paddingSymmetric(vertical: 40.kh),
                   ),

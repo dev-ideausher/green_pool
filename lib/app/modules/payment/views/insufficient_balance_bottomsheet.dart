@@ -8,6 +8,7 @@ import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../constants/image_constant.dart';
 
 class InsufficientBalanceSheet extends StatelessWidget {
@@ -25,7 +26,7 @@ class InsufficientBalanceSheet extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Text(Strings.insufficientBalance,
+          Text(LocaleKeys.app_insufficientBalance.tr,
                   style: TextStyleUtil.k18Heading600())
               .paddingOnly(bottom: 24.kh),
           CommonImageView(
@@ -33,7 +34,7 @@ class InsufficientBalanceSheet extends StatelessWidget {
             height: 64.kh,
             width: 64.kw,
           ).paddingOnly(bottom: 16.kh),
-          Text(Strings.paymentUnsuccessful,
+          Text(LocaleKeys.app_paymentUnsuccessful.tr,
               style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
               textAlign: TextAlign.center),
           GreenPoolButton(
@@ -41,7 +42,7 @@ class InsufficientBalanceSheet extends StatelessWidget {
               Get.back();
               Get.toNamed(Routes.WALLET);
             },
-            label: Strings.addMoneyToWallet,
+            label: LocaleKeys.app_addMoneyToWallet.tr,
           ).paddingOnly(top: 40.kh),
         ],
       ),

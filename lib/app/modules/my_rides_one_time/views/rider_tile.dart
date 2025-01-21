@@ -5,6 +5,7 @@ import 'package:green_pool/app/data/my_rides_model.dart';
 import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../components/common_image_view.dart';
 import '../../../components/green_pool_divider.dart';
 import '../../../components/origin_to_destination.dart';
@@ -140,7 +141,7 @@ class RiderTile extends StatelessWidget {
                                             TextSpan(
                                               children: [
                                                 TextSpan(
-                                                  text: Strings.fare,
+                                                  text: LocaleKeys.app_fare.tr,
                                                   style:
                                                       TextStyleUtil.k14Semibold(
                                                           color: ColorUtil
@@ -291,7 +292,7 @@ class RiderTile extends StatelessWidget {
                             color: ColorUtil.kBlack01,
                           ).paddingOnly(right: 8.kw),
                           Text(
-                            Strings.ongoingRide,
+                            LocaleKeys.app_ongoingRide.tr,
                             style: TextStyleUtil.k14Regular(),
                           ),
                         ],
@@ -323,7 +324,7 @@ class RiderTile extends StatelessWidget {
                               onPressed: () {
                                 controller.riderPagePageOpen(myRidesModelData!);
                               },
-                              label: Strings.viewDetails,
+                              label: LocaleKeys.app_viewDetails.tr,
                               fontSize: 14.kh,
                               borderColor:
                                   Get.find<HomeController>().isPinkModeOn.value
@@ -345,7 +346,7 @@ class RiderTile extends StatelessWidget {
                                       .riderCancelRideAPI(myRidesModelData!);
                                 },
                                 isBorder: true,
-                                label: Strings.cancelRide,
+                                label: LocaleKeys.app_cancelRide.tr,
                                 fontSize: 14.kh,
                                 borderColor: Get.find<HomeController>()
                                         .isPinkModeOn

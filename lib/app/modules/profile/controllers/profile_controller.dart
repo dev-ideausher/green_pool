@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/services/dio/api_service.dart';
 import 'package:green_pool/app/services/snackbar.dart';
-import '../../../res/strings.dart';
+import 'package:green_pool/generated/locales.g.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/auth.dart';
 import '../../../services/push_notification_service.dart';
@@ -68,7 +68,7 @@ class ProfileController extends GetxController {
       });
       if (response.statusMessage == "OK") {
         Get.back();
-        showMySnackbar(msg: Strings.thankyouForRatingTheApp);
+        showMySnackbar(msg: LocaleKeys.app_thankYouForRatingTheApp.tr); 
         ratingTextController.clear();
       } else {
         showMySnackbar(msg: response.data['message'].toString());

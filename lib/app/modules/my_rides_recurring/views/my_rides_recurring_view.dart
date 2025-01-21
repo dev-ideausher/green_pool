@@ -11,6 +11,7 @@ import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../../generated/assets.dart';
+import '../../../../generated/locales.g.dart';
 import '../../../components/common_image_view.dart';
 import '../../../constants/image_constant.dart';
 import '../../../services/colors.dart';
@@ -36,7 +37,7 @@ class MyRidesRecurringView extends GetView<MyRidesRecurringController> {
                               ? CommonImageView(svgPath: Assets.svgPinkModegirl)
                               : SvgPicture.asset(ImageConstant.svgNoRides)),
                       Text(
-                        Strings.youHavePostedNoRides,
+                        LocaleKeys.app_youHavePostedNoRides.tr,
                         style: TextStyleUtil.k24Heading600(),
                         textAlign: TextAlign.center,
                       )
@@ -154,7 +155,7 @@ class MyRidesRecurringView extends GetView<MyRidesRecurringController> {
                                       const GreenPoolDivider().paddingOnly(
                                           top: 8.kh, bottom: 16.kh),
                                       Text(
-                                        Strings.riderDetails,
+                                        LocaleKeys.app_riderDetails.tr,
                                         style: TextStyleUtil.k14Bold(),
                                       ).paddingOnly(bottom: 16.kh),
                                       SizedBox(

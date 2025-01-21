@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../constants/image_constant.dart';
 import '../../../res/strings.dart';
 import '../../../services/colors.dart';
@@ -19,7 +20,7 @@ class RiderMyRideRequestView extends GetView<RiderMyRideRequestController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: GreenPoolAppBar(
-        title: Text(Strings.myRides),
+        title: Text(LocaleKeys.app_myRides.tr),
         actions: [
           Obx(
             () => GestureDetector(
@@ -68,12 +69,12 @@ class RiderMyRideRequestView extends GetView<RiderMyRideRequestController> {
                   tabs: [
                     Tab(
                       child: Text(
-                        Strings.confirmRequests,
+                        LocaleKeys.app_confirmRequests.tr,
                       ),
                     ),
                     Tab(
                       child: Text(
-                        Strings.sendRequests,
+                        LocaleKeys.app_sendRequests.tr,
                       ),
                     ),
                   ]).paddingSymmetric(horizontal: 16.kw),

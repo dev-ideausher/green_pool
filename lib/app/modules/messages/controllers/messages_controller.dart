@@ -7,6 +7,7 @@ import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/dio/api_service.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../data/chat_arg.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/gp_util.dart';
@@ -69,7 +70,7 @@ class MessagesController extends GetxController {
               destination:
                   message?.driverRideDetails?.destination?.split(",").first,
               date: GpUtil.formatDate(DateTime.parse(
-                  message?.driverRideDetails?.date ?? Strings.defaultDate)),
+                  message?.driverRideDetails?.date ?? LocaleKeys.app_defaultDate.tr)),
             ))!
         .then((value) async {
       if (value != true) {

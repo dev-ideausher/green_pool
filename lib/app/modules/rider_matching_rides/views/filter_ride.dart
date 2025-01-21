@@ -8,6 +8,7 @@ import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../constants/image_constant.dart';
 import '../../../res/strings.dart';
 import '../../home/controllers/home_controller.dart';
@@ -21,19 +22,19 @@ class FilterRide extends GetView<MatchingRidesController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: GreenPoolAppBar(
-        title: Text(Strings.filter),
+        title: Text(LocaleKeys.app_filter.tr),
       ),
       body: Obx(
         () => Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              Strings.sortBy,
+              LocaleKeys.app_sortBy.tr,
               style: TextStyleUtil.k16Bold(),
             ).paddingOnly(top: 24.kh, bottom: 16.kh),
             FilterList(
               image: ImageConstant.svgIconTime,
-              text: Strings.earlyDeparture,
+              text: LocaleKeys.app_earlyDeparture.tr,
               onChanged: (value) {
                 controller.earlyDeparture.value = value!;
               },
@@ -41,7 +42,7 @@ class FilterRide extends GetView<MatchingRidesController> {
             ),
             FilterList(
               image: ImageConstant.svgAmenities10,
-              text: Strings.lowestPrice,
+              text: LocaleKeys.app_lowestPrice.tr,
               onChanged: (value) {
                 controller.lowestPrice.value = value!;
               },
@@ -49,7 +50,7 @@ class FilterRide extends GetView<MatchingRidesController> {
             ),
             FilterList(
               image: ImageConstant.svgAmenities9,
-              text: Strings.closeToDeparture,
+              text: LocaleKeys.app_closeToDeparture.tr,
               onChanged: (value) {
                 controller.closeToDeparture.value = value!;
               },
@@ -57,7 +58,7 @@ class FilterRide extends GetView<MatchingRidesController> {
             ),
             FilterList(
               image: ImageConstant.svgAmenities9,
-              text: Strings.closeToArrival,
+              text: LocaleKeys.app_closeToArrival.tr,
               onChanged: (value) {
                 controller.closeToArrival.value = value!;
               },
@@ -65,12 +66,12 @@ class FilterRide extends GetView<MatchingRidesController> {
             ),
             const GreenPoolDivider().paddingSymmetric(vertical: 16.kh),
             Text(
-              Strings.preferences,
+              LocaleKeys.app_preferences.tr,
               style: TextStyleUtil.k16Bold(),
             ).paddingOnly(bottom: 16.kh),
             FilterList(
               image: ImageConstant.svgAmenities1,
-              text: Strings.appreciatesConversation,
+              text: LocaleKeys.app_appreciatesConversation.tr,
               onChanged: (value) {
                 controller.appreciatesConvo.value = value!;
               },
@@ -78,7 +79,7 @@ class FilterRide extends GetView<MatchingRidesController> {
             ),
             FilterList(
               image: ImageConstant.svgAmenities2,
-              text: Strings.enjoysMusic,
+              text: LocaleKeys.app_enjoysMusic.tr,
               onChanged: (value) {
                 controller.enjoysMusic.value = value!;
               },
@@ -86,7 +87,7 @@ class FilterRide extends GetView<MatchingRidesController> {
             ),
             FilterList(
               image: ImageConstant.svgAmenities3,
-              text: Strings.smokeFree,
+              text: LocaleKeys.app_smokeFree.tr,
               onChanged: (value) {
                 controller.smokeFree.value = value!;
               },
@@ -94,7 +95,7 @@ class FilterRide extends GetView<MatchingRidesController> {
             ),
             FilterList(
               image: ImageConstant.svgAmenities4,
-              text: Strings.petFriendly,
+              text: LocaleKeys.app_petFriendly.tr,
               onChanged: (value) {
                 controller.petFriendly.value = value!;
               },
@@ -102,7 +103,7 @@ class FilterRide extends GetView<MatchingRidesController> {
             ),
             FilterList(
               image: ImageConstant.svgAmenities5,
-              text: Strings.winterTires,
+              text: LocaleKeys.app_winterTires.tr,
               onChanged: (value) {
                 controller.winterTires.value = value!;
               },
@@ -110,7 +111,7 @@ class FilterRide extends GetView<MatchingRidesController> {
             ),
             FilterList(
               image: ImageConstant.svgAmenities6,
-              text: Strings.coolingOrHeating,
+              text: LocaleKeys.app_coolingOrHeating.tr,
               onChanged: (value) {
                 controller.coolOrHeat.value = value!;
               },
@@ -118,7 +119,7 @@ class FilterRide extends GetView<MatchingRidesController> {
             ),
             FilterList(
               image: ImageConstant.svgAmenities7,
-              text: Strings.babySeat,
+              text: LocaleKeys.app_babySeat.tr,
               onChanged: (value) {
                 controller.babySeat.value = value!;
               },
@@ -126,7 +127,7 @@ class FilterRide extends GetView<MatchingRidesController> {
             ),
             FilterList(
               image: ImageConstant.svgAmenities8,
-              text: Strings.heatedSeats,
+              text: LocaleKeys.app_heatedSeats.tr,
               onChanged: (value) {
                 controller.heatedSeats.value = value!;
               },
@@ -140,7 +141,7 @@ class FilterRide extends GetView<MatchingRidesController> {
                   onPressed: () {
                     controller.filterRideAPI();
                   },
-                  label: Strings.filter,
+                  label: LocaleKeys.app_filter.tr,
                   width: 156.kw,
                   height: 56.kh,
                 ),
@@ -148,7 +149,7 @@ class FilterRide extends GetView<MatchingRidesController> {
                   onPressed: () {
                     controller.clearAll();
                   },
-                  label: Strings.clearAll,
+                  label: LocaleKeys.app_clearAll.tr,
                   isBorder: true,
                   width: 156.kw,
                   height: 56.kh,

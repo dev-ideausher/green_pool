@@ -10,6 +10,7 @@ import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../components/greenpool_textfield.dart';
 import '../../../components/socials.dart';
 import '../../create_account/controllers/create_account_controller.dart';
@@ -30,20 +31,20 @@ class LoginView extends GetView<LoginController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  Strings.login,
+                  LocaleKeys.app_login.tr,
                   style: TextStyleUtil.k32Heading700(),
                 ).paddingOnly(top: 48.kh, bottom: 4.kh),
                 Text(
-                  Strings.enterLoginDetails,
+                  LocaleKeys.app_enterLoginDetails.tr,
                   style: TextStyleUtil.k16Regular(color: ColorUtil.kBlack04),
                 ).paddingOnly(bottom: 40.kh),
                 //
                 Text(
-                  Strings.phoneNumber,
+                  LocaleKeys.app_phoneNumber.tr,
                   style: TextStyleUtil.k14Semibold(),
                 ).paddingOnly(bottom: 8.kh),
                 GreenPoolTextField(
-                  hintText: Strings.enterHere,
+                  hintText: LocaleKeys.app_enterHere.tr,
                   controller: controller.phoneNumberController,
                   inputFormatters: [
                     FilteringTextInputFormatter.allow(
@@ -124,7 +125,7 @@ class LoginView extends GetView<LoginController> {
                     // await controller.otpAuth();
                     await controller.checkLogin();
                   },
-                  label: Strings.login,
+                  label: LocaleKeys.app_login.tr,
                   // isActive: controller.isActive.value,
                 ).paddingSymmetric(vertical: 40.kh),
 
@@ -139,7 +140,7 @@ class LoginView extends GetView<LoginController> {
                       ).paddingOnly(right: 8.kw),
                     ),
                     Text(
-                      Strings.orLoginWith,
+                      LocaleKeys.app_orLoginWith.tr,
                       style:
                           TextStyleUtil.k12Semibold(color: ColorUtil.kNeutral3),
                     ),
@@ -168,11 +169,11 @@ class LoginView extends GetView<LoginController> {
                     TextSpan(
                       children: [
                         TextSpan(
-                            text: Strings.dontHaveAccount,
+                            text: LocaleKeys.app_dontHaveAccount.tr,
                             style: TextStyleUtil.k14Regular(
                                 color: ColorUtil.kBlack04)),
                         TextSpan(
-                            text: Strings.createAccount,
+                            text: LocaleKeys.app_createAccount.tr,
                             style: TextStyleUtil.k14Regular(
                                 color: ColorUtil.kSecondary01),
                             recognizer: TapGestureRecognizer()

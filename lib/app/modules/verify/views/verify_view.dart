@@ -12,6 +12,8 @@ import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 import 'package:pinput/pinput.dart';
 
+import '../../../../generated/locales.g.dart';
+
 class VerifyView extends GetView<VerifyController> {
   const VerifyView({super.key});
   @override
@@ -25,7 +27,7 @@ class VerifyView extends GetView<VerifyController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            Strings.enterOTP,
+            LocaleKeys.app_enterOTP.tr,
             style: TextStyleUtil.k32Heading700(),
           ).paddingOnly(bottom: 4.kh),
           80.kheightBox,
@@ -36,7 +38,7 @@ class VerifyView extends GetView<VerifyController> {
                   TextSpan(
                     children: [
                       TextSpan(
-                          text: Strings.enterVerificationCode,
+                          text: LocaleKeys.app_enterVerificationCode.tr,
                           style: TextStyleUtil.k16Regular(
                               color: ColorUtil.kBlack04)),
                       TextSpan(
@@ -89,12 +91,12 @@ class VerifyView extends GetView<VerifyController> {
                     TextSpan(
                       children: [
                         TextSpan(
-                            text: Strings.didNotGetCode,
+                            text: LocaleKeys.app_didNotGetCode.tr,
                             style: TextStyleUtil.k14Regular(
                                 color: ColorUtil.kBlack04)),
                         controller.seconds.value == 0
                             ? TextSpan(
-                                text: Strings.resend,
+                                text: LocaleKeys.app_resend.tr,
                                 style: TextStyleUtil.k16Semibold(
                                     fontSize: 16.kh,
                                     color: ColorUtil.kSecondary01),
@@ -102,7 +104,7 @@ class VerifyView extends GetView<VerifyController> {
                                   ..onTap = () => controller.otpAuth())
                             : TextSpan(
                                 text:
-                                    "${controller.seconds.value} ${Strings.sec}",
+                                    "${controller.seconds.value} ${LocaleKeys.app_sec.tr}",
                                 style: TextStyleUtil.k16Semibold(
                                     fontSize: 16.kh,
                                     color: ColorUtil.kSecondary01),
@@ -124,7 +126,7 @@ class VerifyView extends GetView<VerifyController> {
               isLoading: controller.isButtonLoading.value,
               isActive: controller.isActive.value,
               label: controller.isActive.value
-                  ? Strings.verify
+                  ? LocaleKeys.app_verify.tr
                   : "${controller.buttonSeconds.value}",
             ).paddingSymmetric(vertical: 40.kh),
           )
