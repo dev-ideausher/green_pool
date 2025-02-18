@@ -10,12 +10,12 @@ import 'package:green_pool/app/services/dialog_helper.dart';
 import 'package:green_pool/app/services/dio/api_service.dart';
 import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/snackbar.dart';
+import 'package:green_pool/app/services/storage.dart';
 
 import '../../../../generated/locales.g.dart';
 import '../../../data/booking_detail_model.dart';
 import '../../../data/recurring_rides_model.dart';
 import '../../../data/ride_detail_id.dart';
-import '../../../res/strings.dart';
 import '../../../routes/app_pages.dart';
 
 class MyRidesOneTimeController extends GetxController {
@@ -141,7 +141,7 @@ class MyRidesOneTimeController extends GetxController {
               if (cancelRideResponse.data['status']) {
                 await myRidesAPI();
                 Get.find<HomeController>().changeTabIndex(0);
-                await Get.find<HomeController>().userInfoAPI();
+                Get.find<GetStorageService>().accSuspended = true;
                 Get.find<HomeController>().changeTabIndex(0);
               } else {
                 showMySnackbar(

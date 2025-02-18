@@ -15,7 +15,6 @@ import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../generated/locales.g.dart';
-import '../../../res/strings.dart';
 import '../../../services/text_style_util.dart';
 import '../controllers/profile_controller.dart';
 import 'profile_container.dart';
@@ -82,7 +81,9 @@ class ProfileView extends GetView<ProfileController> {
                                       borderRadius: BorderRadius.circular(8.kh),
                                     ),
                                     child: Text(
-                                      LocaleKeys.app_travelWithConfidenceWithOurPinkMode.tr,
+                                      LocaleKeys
+                                          .app_travelWithConfidenceWithOurPinkMode
+                                          .tr,
                                       style: TextStyleUtil.k14Regular(
                                           color: ColorUtil.kBlack03),
                                     )),
@@ -179,6 +180,11 @@ class ProfileView extends GetView<ProfileController> {
                     image: ImageConstant.svgProfileBug,
                     text: LocaleKeys.app_reportABug.tr)
                 .paddingOnly(bottom: 8.kh),
+            /*ProfileContainer(
+                    onTap: () => Get.toNamed(Routes.LANGUAGE),
+                    image: ImageConstant.svgProfileLanguage,
+                    text: LocaleKeys.app_language_pref.tr)
+                .paddingOnly(bottom: 8.kh),*/
             ProfileContainer(
               onTap: () => Get.dialog(
                 useSafeArea: true,

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/data/message_list_model.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
-import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/dio/api_service.dart';
 
 import '../../../../generated/locales.g.dart';
@@ -57,21 +56,22 @@ class MessagesController extends GetxController {
 
   Future<void> getToChatPage(
       message, GlobalKey<RefreshIndicatorState> refreshIndicatorKey) async {
-    Get.toNamed(Routes.CHAT_PAGE,
-            arguments: ChatArg(
-              chatRoomId: message?.chatRoomId ?? "",
-              id: message?.reciver?.Id ?? "",
-              driverRideId: message.driverRideDetails?.Id ?? "",
-              riderRideId: message.riderRideId ?? "",
-              image: message?.reciver?.profilePic?.url,
-              deleteUpdateTime: message?.deleteUpdateTime ?? "",
-              name: message?.reciver?.fullName,
-              origin: message?.driverRideDetails?.origin?.split(",").first,
-              destination:
-                  message?.driverRideDetails?.destination?.split(",").first,
-              date: GpUtil.formatDate(DateTime.parse(
-                  message?.driverRideDetails?.date ?? LocaleKeys.app_defaultDate.tr)),
-            ))!
+    Get.toNamed(Routes.CHAT_PAGE, arguments: {
+      "chatArg": ChatArg(
+        chatRoomId: message?.chatRoomId ?? "",
+        id: message?.reciver?.Id ?? "",
+        driverRideId: message.ridesDetails?.Id ?? "",
+        riderRideId: message.riderRideId ?? "",
+        image: message?.reciver?.profilePic?.url,
+        deleteUpdateTime: message?.deleteUpdateTime ?? "",
+        name: message?.reciver?.fullName,
+        origin: message?.ridesDetails?.origin?.name?.split(",").first,
+        destination: message?.ridesDetails?.destination?.name?.split(",").first,
+        date: GpUtil.formatDate(DateTime.parse(
+            message?.ridesDetails?.date ?? LocaleKeys.app_defaultDate.tr)),
+      ),
+      "ridePostId": message?.ridePostId ?? "",
+    })!
         .then((value) async {
       if (value != true) {
         Future.delayed(const Duration(milliseconds: 100), () {

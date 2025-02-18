@@ -3,7 +3,6 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 
 import 'package:get/get.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
-import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/gp_util.dart';
@@ -13,7 +12,6 @@ import 'package:green_pool/app/services/text_style_util.dart';
 import '../../../../generated/locales.g.dart';
 import '../../../components/common_image_view.dart';
 import '../../../components/greenpool_appbar.dart';
-import '../../../res/strings.dart';
 import '../controllers/messages_controller.dart';
 
 class MessagesView extends GetView<MessagesController> {
@@ -33,7 +31,7 @@ class MessagesView extends GetView<MessagesController> {
                 controller.moveToUnarchive();
               },
               isBorder: true,
-              label: "Archived",
+              label: LocaleKeys.app_archived.tr,
               height: 24.kh,
               width: 76.kw,
               fontSize: 12.kh,
@@ -119,11 +117,17 @@ class MessagesView extends GetView<MessagesController> {
                                       color: isPinkModeOn
                                           ? ColorUtil.kPrimary5PinkMode
                                           : ColorUtil.kSecondary07),
-                              title:
-                                  "${message?.reciver?.fullName ?? "User"} • ${message?.paymentStatus ?? "Inquiry"}",
+                              title: message?.reciver?.fullName ?? "User",
+                              paymentStatus:
+                                  message?.paymentStatus ?? "Inquiry",
+                              titleColor: message?.paymentStatus == "Inquiry"
+                                  ? Colors.orange
+                                  : message?.paymentStatus == "Completed"
+                                      ? Colors.green
+                                      : Colors.red,
                               path: message?.reciver?.profilePic?.url ?? "",
                               subtitle:
-                                  "${message?.driverRideDetails?.origin?.split(",").first ?? "City"} to ${message?.driverRideDetails?.destination?.split(",").first ?? "City"}, ${GpUtil.formatDate(DateTime.parse(message?.driverRideDetails?.date ?? LocaleKeys.app_defaultDate.tr))}",
+                                  "${message?.ridesDetails?.origin?.name?.split(",").first ?? "City"} to ${message?.ridesDetails?.destination?.name?.split(",").first ?? "City"}, ${GpUtil.formatDate(DateTime.parse(message?.ridesDetails?.date ?? LocaleKeys.app_defaultDate.tr))}",
                               lastMsg: message?.lastMessage ?? "...",
                               lastMsgStyle: messageRead
                                   ? TextStyleUtil.k12Regular(
@@ -143,7 +147,8 @@ class MessagesView extends GetView<MessagesController> {
                                       value: 0,
                                       height: 45.kh,
                                       textStyle: TextStyleUtil.k12Medium(),
-                                      child: Text(LocaleKeys.app_moveToArchive.tr,
+                                      child: Text(
+                                          LocaleKeys.app_moveToArchive.tr,
                                           style: TextStyleUtil.k14Regular()),
                                     ),
                                   ];
@@ -216,22 +221,24 @@ class LoadingWidget extends StatelessWidget {
 }
 
 class MessageTile extends StatelessWidget {
-  final String title, path, subtitle, lastMsg;
+  final String title, path, subtitle, lastMsg, paymentStatus;
   final Widget trailing;
   final TextStyle? subtitleStyle, lastMsgStyle;
   final Function() onTap;
-  final Color? tileColor;
+  final Color? tileColor, titleColor;
   final BorderSide borderSide;
 
   const MessageTile({
     super.key,
     required this.title,
+    required this.paymentStatus,
     required this.path,
     required this.onTap,
     required this.subtitle,
     required this.trailing,
     this.subtitleStyle,
     this.tileColor,
+    this.titleColor,
     this.borderSide = BorderSide.none,
     required this.lastMsg,
     this.lastMsgStyle,
@@ -246,9 +253,25 @@ class MessageTile extends StatelessWidget {
         onTap: onTap,
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8.kh), side: borderSide),
-        title: Text(
-          title,
-          style: TextStyleUtil.k14Semibold(),
+        // title: Text(
+        //   title,
+        //   style: TextStyleUtil.k14Semibold(
+        //     color: titleColor ?? ColorUtil.kBlack01,
+        //   ),
+        // ),
+        title: RichText(
+          text: TextSpan(children: [
+            TextSpan(
+              text: "$title • ",
+              style: TextStyleUtil.k14Semibold(),
+            ),
+            TextSpan(
+              text: paymentStatus,
+              style: TextStyleUtil.k14Semibold(
+                color: titleColor ?? ColorUtil.kBlack01,
+              ),
+            ),
+          ]),
         ),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

@@ -9,8 +9,6 @@ import 'package:green_pool/app/components/greenpool_textfield.dart';
 import 'package:green_pool/app/components/origin_to_destination.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/modules/payment/controllers/payment_controller.dart';
-import 'package:green_pool/app/modules/payment/views/promo_code.dart';
-import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
@@ -92,7 +90,7 @@ class PaymentView extends GetView<PaymentController> {
                         title: SizedBox(
                           width: 20.w,
                           child: GreenPoolTextField(
-                            hintText: "Apply Code",
+                            hintText: LocaleKeys.app_applyCode.tr,
                             controller: controller.code,
                             readOnly: controller.promoCodeApplied.value,
                             inputFormatters: [
@@ -130,7 +128,7 @@ class PaymentView extends GetView<PaymentController> {
                                           controller.code.value.text);
                                     },
                                     child: Text(
-                                      "Apply",
+                                      LocaleKeys.app_apply.tr,
                                       style: TextStyleUtil.k14Bold(),
                                     )),
                         /*leading: Icon(

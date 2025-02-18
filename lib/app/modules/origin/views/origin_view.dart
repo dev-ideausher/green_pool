@@ -7,7 +7,6 @@ import 'package:green_pool/app/services/responsive_size.dart';
 import '../../../../generated/locales.g.dart';
 import '../../../components/gp_progress.dart';
 import '../../../components/greenpool_textfield.dart';
-import '../../../res/strings.dart';
 import '../../../services/colors.dart';
 import '../../home/controllers/home_controller.dart';
 import '../controllers/origin_controller.dart';
@@ -19,9 +18,14 @@ class OriginView extends GetView<OriginController> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: GreenPoolAppBar(
-          title: controller.locationValues.name == LocationValues.origin.name || controller.locationValues.name == LocationValues.findRideOrigin.name
-              ?  Text(LocaleKeys.app_pickup.tr)
-              : controller.locationValues.name == LocationValues.destination.name || controller.locationValues.name == LocationValues.findRideDestination.name
+          title: controller.locationValues.name == LocationValues.origin.name ||
+                  controller.locationValues.name ==
+                      LocationValues.findRideOrigin.name
+              ? Text(LocaleKeys.app_pickup.tr)
+              : controller.locationValues.name ==
+                          LocationValues.destination.name ||
+                      controller.locationValues.name ==
+                          LocationValues.findRideDestination.name
                   ? Text(LocaleKeys.app_destination.tr)
                   : Text(LocaleKeys.app_addStops.tr),
         ),
@@ -29,11 +33,18 @@ class OriginView extends GetView<OriginController> {
           children: [
             Obx(
               () => GreenPoolTextField(
-                hintText: controller.locationValues.name == LocationValues.origin.name || controller.locationValues.name == LocationValues.findRideOrigin.name
+                hintText: controller.locationValues.name ==
+                            LocationValues.origin.name ||
+                        controller.locationValues.name ==
+                            LocationValues.findRideOrigin.name
                     ? LocaleKeys.app_enterOrigin.tr
-                    : controller.locationValues.name == LocationValues.destination.name || controller.locationValues.name == LocationValues.findRideDestination.name
+                    : controller.locationValues.name ==
+                                LocationValues.destination.name ||
+                            controller.locationValues.name ==
+                                LocationValues.findRideDestination.name
                         ? LocaleKeys.app_enterDestinationAddress.tr
-                        : controller.locationValues.name == LocationValues.addStop1.name
+                        : controller.locationValues.name ==
+                                LocationValues.addStop1.name
                             ? LocaleKeys.app_addStop1.tr
                             : LocaleKeys.app_addStop2.tr,
                 controller: controller.originController,
@@ -44,7 +55,9 @@ class OriginView extends GetView<OriginController> {
                 prefix: Icon(
                   Icons.location_on,
                   size: 24.kh,
-                  color: Get.find<HomeController>().isPinkModeOn.value ? ColorUtil.kPrimary3PinkMode : ColorUtil.kSecondary01,
+                  color: Get.find<HomeController>().isPinkModeOn.value
+                      ? ColorUtil.kPrimary3PinkMode
+                      : ColorUtil.kSecondary01,
                 ),
               ).paddingOnly(top: 32.kh, bottom: 16.kh),
             ),
@@ -56,14 +69,21 @@ class OriginView extends GetView<OriginController> {
                         itemCount: controller.addressSugestionList.length,
                         itemBuilder: (context, index) {
                           return Container(
-                            decoration: BoxDecoration(border: Border(bottom: BorderSide(width: 1.kh, color: ColorUtil.kNeutral7)), borderRadius: BorderRadius.circular(8.kh)),
+                            decoration: BoxDecoration(
+                                border: Border(
+                                    bottom: BorderSide(
+                                        width: 1.kh,
+                                        color: ColorUtil.kNeutral7)),
+                                borderRadius: BorderRadius.circular(8.kh)),
                             child: ListTile(
-                              title: Text(controller.addressSugestionList[index]['description']),
+                              title: Text(controller.addressSugestionList[index]
+                                  ['description']),
                               onTap: () async {
-                                await controller.setLocationData(controller.addressSugestionList[index]['place_id']);
+                                await controller.setLocationData(controller
+                                    .addressSugestionList[index]['place_id']);
+                                controller.resetSessionToken();
                                 // Get.back(
                                 //     result: controller.postRideModel.value);
-
                               },
                             ),
                           );

@@ -5,7 +5,6 @@ import 'package:green_pool/app/components/common_image_view.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/components/origin_to_destination.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
-import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
@@ -185,8 +184,8 @@ class MyRidesRecurringDetailsView
                             .paddingOnly(bottom: 8.kh)
                         : const SizedBox(),
 
-                    const GreenPoolDivider().paddingSymmetric(vertical: 16.kh),
-                    /*Text(
+                    /*const GreenPoolDivider().paddingSymmetric(vertical: 16.kh),
+                    Text(
                       LocaleKeys.app_description.tr,
                       style: TextStyleUtil.k14Bold(),
                     ).paddingOnly(bottom: 8.kh),
@@ -264,7 +263,8 @@ class MyRidesRecurringDetailsView
                                 Align(
                                   alignment: Alignment.bottomRight,
                                   child: GreenPoolButton(
-                                      label: LocaleKeys.app_viewMatchingRiders.tr,
+                                      label:
+                                          LocaleKeys.app_viewMatchingRiders.tr,
                                       height: 40.kh,
                                       width: 192.kw,
                                       fontSize: 14.kh,

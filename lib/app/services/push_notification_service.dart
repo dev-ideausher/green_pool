@@ -377,6 +377,10 @@ class PushNotificationService {
       }
     }
 
+    navigateToNotifications() {
+      Get.toNamed(Routes.NOTIFICATIONS);
+    }
+
     switch (payload) {
       //for riders
       case "New Ride Match!":
@@ -522,6 +526,11 @@ class PushNotificationService {
         } else {
           navigateToBottomNavigation(1);
         }
+        break;
+
+      case "Admin Notification":
+      case "ADMIN_NOTIFICATION":
+        navigateToNotifications();
         break;
 
       default:

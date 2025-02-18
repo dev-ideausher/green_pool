@@ -4,7 +4,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
 import 'package:green_pool/app/modules/home/views/welcome_tile.dart';
-import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/dialog_helper.dart';
@@ -68,27 +67,20 @@ class HomeView extends GetView<HomeController> {
                         top: storageService.isPinkMode ? 0 : null,
                         bottom: 0,
                         child: storageService.isPinkMode
-                            ? SvgPicture.asset(
-                                ImageConstant.svgPinkPostRide,
-                                fit: BoxFit.fill,
-                              )
-                            : SvgPicture.asset(
-                                ImageConstant.svgPostRide,
-                              )),
+                            ? SvgPicture.asset(ImageConstant.svgPinkPostRide,
+                                fit: BoxFit.fill)
+                            : SvgPicture.asset(ImageConstant.svgPostRide)),
                     Positioned(
                       left: 16.kw,
                       top: 48.kh,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            LocaleKeys.app_postRide.tr,
-                            style: TextStyleUtil.k20Heading700(),
-                          ).paddingOnly(bottom: 4.kh),
-                          Text(
-                            LocaleKeys.app_offerRideNearby.tr,
-                            style: TextStyleUtil.k14Regular(),
-                          ),
+                          Text(LocaleKeys.app_postRide.tr,
+                                  style: TextStyleUtil.k20Heading700())
+                              .paddingOnly(bottom: 4.kh),
+                          Text(LocaleKeys.app_offerRideNearby.tr,
+                              style: TextStyleUtil.k14Regular()),
                         ],
                       ),
                     ),

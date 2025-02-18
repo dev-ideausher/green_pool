@@ -8,7 +8,6 @@ import 'package:get/get.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:green_pool/app/modules/home/views/noti_bottomsheet.dart';
 import 'package:green_pool/app/modules/home/views/permissions_location.dart';
-import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/dialog_helper.dart';
 import 'package:green_pool/app/services/location_service.dart';
 import 'package:green_pool/app/services/push_notification_service.dart';
@@ -49,35 +48,21 @@ class HomeController extends GetxController with Versionk {
   @override
   Future<void> onInit() async {
     super.onInit();
+
+    final storageService = Get.find<GetStorageService>();
+
     try {
-      await userInfoAPI();
-      latitude.value = await locationService.getLatitude();
-      longitude.value = await locationService.getLongitude();
+      if (storageService.isLoggedIn && storageService.getUserName == "") {
+        await userInfoAPI();
+      }
+
+      isPinkModeOn.value = storageService.isPinkMode;
+      onChangeLocation();
       handleNewUpdate();
-      getReqsCount();
-      getUnreadCount();
+      fetchCount();
     } catch (e) {
       debugPrint(e.toString());
     }
-  }
-
-  void onChangeLocation() {
-    const LocationSettings locationSettings = LocationSettings(
-        accuracy: LocationAccuracy.bestForNavigation, distanceFilter: 100);
-    Geolocator.getPositionStream(locationSettings: locationSettings)
-        .listen((Position? position) async {
-      if (position != null) {
-        DatabaseReference databaseReference =
-            FirebaseDatabase.instance.ref().child('locations');
-        databaseReference
-            .child(Get.find<GetStorageService>().getUserAppId ?? "")
-            .set({
-          'latitude': position.latitude,
-          'longitude': position.longitude,
-          'heading': position.heading
-        });
-      }
-    });
   }
 
   @override
@@ -85,65 +70,77 @@ class HomeController extends GetxController with Versionk {
     super.onReady();
   }
 
+  Future<void> onChangeLocation() async {
+    LocationPermission permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied ||
+        permission == LocationPermission.deniedForever) {
+      debugPrint("Location permission not granted. Skipping onChangeLocation.");
+    } else {
+      latitude.value = await locationService.getLatitude();
+      longitude.value = await locationService.getLongitude();
+
+      const LocationSettings locationSettings = LocationSettings(
+          accuracy: LocationAccuracy.bestForNavigation, distanceFilter: 100);
+      Geolocator.getPositionStream(locationSettings: locationSettings)
+          .listen((Position? position) async {
+        if (position != null) {
+          DatabaseReference databaseReference =
+              FirebaseDatabase.instance.ref().child('locations');
+          databaseReference
+              .child(Get.find<GetStorageService>().getUserAppId ?? "")
+              .set({
+            'latitude': position.latitude,
+            'longitude': position.longitude,
+            'heading': position.heading
+          });
+        }
+      });
+    }
+  }
+
+  fetchCount() async {
+    if (Get.find<GetStorageService>().isLoggedIn) {
+      await getReqsCount();
+      await getUnreadCount();
+    }
+  }
+
   userInfoAPI() async {
     final storageService = Get.find<GetStorageService>();
 
-    // Check the current location permission status
-    LocationPermission permission;
-    permission = await Geolocator.checkPermission();
-
-    // Check if the user is logged in
     if (storageService.isLoggedIn == true) {
       try {
         final response = await APIManager.getUserByID();
         var data = jsonDecode(response.toString());
         userInfo.value = UserInfoModel.fromJson(data);
 
-        //store values
-        storageService.setUserAppId = userInfo.value.data?.Id;
-        storageService.setFirebaseUid = userInfo.value.data?.firebaseUid ?? "";
+        // Store values locally
+        storageService.assignLocally(userInfo.value);
 
-        storageService.profilePicUrl =
-            userInfo.value.data?.profilePic?.url ?? "";
-        storageService.setUserName = userInfo.value.data?.fullName ?? "";
-        storageService.emailId = userInfo.value.data?.email ?? "";
-        storageService.phoneNumber = userInfo.value.data?.phone ?? "";
-        storageService.gender = userInfo.value.data?.gender ?? "";
-        storageService.city = userInfo.value.data?.city ?? "";
-        storageService.dateOfBirth = userInfo.value.data?.dob ?? "";
-        storageService.idVerificationPicUrl =
-            userInfo.value.data?.idPic?.url ?? "";
-
-        if (userInfo.value.data?.status == "active") {
-          storageService.accSuspended = false;
-        } else {
-          storageService.accSuspended = true;
-        }
-        userInfo.refresh();
-
-        // Subscribe to FCM notifications using the user ID
-        PushNotificationService.subFcm("${userInfo.value.data?.Id}");
-        debugPrint("USER ID: ${userInfo.value.data?.Id}");
-        debugPrint(storageService.encjwToken);
-
-        // Update the pink mode status from storage service
+        // Update the pink mode status
         isPinkModeOn.value = storageService.isPinkMode;
 
-        //method to handle location changes
-        onChangeLocation();
+        if (!storageService.hasSubscribedToFCM) {
+          PushNotificationService.subFcm("${userInfo.value.data?.Id}");
+          storageService.hasSubscribedToFCM = true;
+        }
 
-        // Check and request location permission if necessary
+        //1. Handle Location Permission First
         if (!Get.find<GetStorageService>().hasTappedAllowLocation) {
           Get.to(() => const PermissionsLocation());
           return Future.error('Location services are disabled.');
-        } /*else {
-          await determinePosition().then((value) => {
-                latitude.value = value.latitude,
-                longitude.value = value.longitude,
-              });
-        }*/
-        // Setup message notifications
+        }
+
+        //2. Start location tracking if permission is granted
+        onChangeLocation();
+
+        //3. Prompt for Notification Permission (only after location permission is resolved)
+        await promptNotificationPermission();
+
+        //4. Setup notifications
         setupMessage();
+
+        debugPrint(storageService.encjwToken);
       } catch (e) {
         debugPrint(e.toString());
       }
@@ -165,6 +162,15 @@ class HomeController extends GetxController with Versionk {
         .setupInteractedMessage();
   }
 
+  Future<void> promptNotificationPermission() async {
+    if (!Get.find<GetStorageService>().hasTappedAllowNotification) {
+      bool isNotificationDenied = await Permission.notification.isDenied;
+      if (isNotificationDenied) {
+        Get.bottomSheet(const NotificationBottomSheet());
+      }
+    }
+  }
+
   Future<Position> determinePosition() async {
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
@@ -172,15 +178,6 @@ class HomeController extends GetxController with Versionk {
     }
 
     LocationPermission permission = await Geolocator.checkPermission();
-
-    Future<void> promptNotificationPermission() async {
-      if (!Get.find<GetStorageService>().hasTappedAllowNotification) {
-        bool isNotificationDenied = await Permission.notification.isDenied;
-        if (isNotificationDenied) {
-          Get.bottomSheet(const NotificationBottomSheet());
-        }
-      }
-    }
 
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
@@ -243,7 +240,7 @@ class HomeController extends GetxController with Versionk {
     }
   }
 
-  void getUnreadCount() async {
+  Future<void> getUnreadCount() async {
     var chatList = [].obs;
     try {
       final resp = await APIManager.getChatList();

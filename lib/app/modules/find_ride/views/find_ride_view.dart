@@ -7,7 +7,6 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/components/richtext_heading.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
-import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../../generated/locales.g.dart';
@@ -192,7 +191,7 @@ class FindRideView extends GetView<FindRideController> {
                 Obx(
                   () => Visibility(
                       visible: controller.locationModelNames.isNotEmpty,
-                      child: SizedBox(
+                      child: SizedBox( 
                         height: 158.kh,
                         child: ListView.builder(
                             itemCount: controller.locationModelNames.length,

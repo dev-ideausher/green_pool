@@ -79,7 +79,6 @@ class RiderMyRideRequestController extends GetxController {
     }
   }
 
-
   rejectDriversRequestAPI(int index) async {
     try {
       final response = await APIManager.rejectDriversRequest(body: {
@@ -160,31 +159,31 @@ class RiderMyRideRequestController extends GetxController {
       required String driverRideId,
       required String riderRideId,
       required String ridePostId,
-      required int seats      }) async {
+      required int seats}) async {
     try {
       final res = await APIManager.postChatRoomId(
           receiverId: data?.driverDetails?.firstOrNull?.Id ?? "",
           body: {
             "driverRideId": driverRideId,
             "riderRideId": riderRideId,
-            "seatsRequired": seats
+            "seatsRequired": seats,
+            "ridePostId": ridePostId
           });
-      Get.toNamed(Routes.CHAT_PAGE,
-          arguments: {
-            "chatArg": ChatArg(
-              chatRoomId: res.data["data"]["chatRoomId"] ?? "",
-              deleteUpdateTime: res.data["data"]["deleteUpdateTime"] ?? "",
-              id: data?.driverDetails?.firstOrNull?.Id,
-              name: data?.driverDetails?.firstOrNull?.fullName ?? "",
-              image: data?.driverDetails?.firstOrNull?.profilePic?.url,
-              driverRideId: driverRideId,
-              riderRideId: riderRideId,
-              origin: data?.origin?.name?.split(',').first ?? "City",
-              destination: data?.destination?.name?.split(',').first ?? "City",
-              date: GpUtil.formatDate(
-                  DateTime.parse(data?.date ?? LocaleKeys.app_defaultDate.tr))),
-                  "ridePostId": ridePostId
-          });
+      Get.toNamed(Routes.CHAT_PAGE, arguments: {
+        "chatArg": ChatArg(
+            chatRoomId: res.data["data"]["chatRoomId"] ?? "",
+            deleteUpdateTime: res.data["data"]["deleteUpdateTime"] ?? "",
+            id: data?.driverDetails?.firstOrNull?.Id,
+            name: data?.driverDetails?.firstOrNull?.fullName ?? "",
+            image: data?.driverDetails?.firstOrNull?.profilePic?.url,
+            driverRideId: driverRideId,
+            riderRideId: riderRideId,
+            origin: data?.origin?.name?.split(',').first ?? "City",
+            destination: data?.destination?.name?.split(',').first ?? "City",
+            date: GpUtil.formatDate(
+                DateTime.parse(data?.date ?? LocaleKeys.app_defaultDate.tr))),
+        "ridePostId": ridePostId
+      });
     } catch (e) {
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
@@ -197,8 +196,8 @@ class RiderMyRideRequestController extends GetxController {
               riderRideId: riderRideId,
               origin: data?.origin?.name?.split(',').first ?? "City",
               destination: data?.destination?.name?.split(',').first ?? "City",
-              date: GpUtil.formatDate(
-                  DateTime.parse(data?.date ?? LocaleKeys.app_defaultDate.tr))));
+              date: GpUtil.formatDate(DateTime.parse(
+                  data?.date ?? LocaleKeys.app_defaultDate.tr))));
     }
   }
 

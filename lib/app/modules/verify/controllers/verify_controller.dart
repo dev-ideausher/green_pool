@@ -15,7 +15,6 @@ import '../../../routes/app_pages.dart';
 import '../../../services/auth.dart';
 import '../../../services/dio/api_service.dart';
 import '../../../services/dio/exceptions.dart';
-import '../../../services/push_notification_service.dart';
 import '../../../services/storage.dart';
 
 class VerifyController extends GetxController {
@@ -146,8 +145,6 @@ class VerifyController extends GetxController {
           storageService.setUserName = "";
           storageService.emailId = "";
           storageService.phoneNumber = "";
-          PushNotificationService.unsubFcm(
-              "${homeController.userInfo.value.data?.Id}");
           Get.find<AuthService>().logOutUser();
           showMySnackbar(msg: response.data['message'].toString() ?? "");
         }
@@ -171,8 +168,6 @@ class VerifyController extends GetxController {
           storageService.setUserName = "";
           storageService.emailId = "";
           storageService.phoneNumber = "";
-          PushNotificationService.unsubFcm(
-              "${homeController.userInfo.value.data?.Id}");
           Get.find<AuthService>().logOutUser();
           showMySnackbar(msg: response.data['message'].toString() ?? "");
         }

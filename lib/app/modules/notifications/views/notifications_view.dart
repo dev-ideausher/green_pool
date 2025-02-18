@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
-import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
@@ -41,6 +40,7 @@ class NotificationsView extends GetView<NotificationsController> {
                         margin: EdgeInsets.only(bottom: 8.kh),
                         decoration: BoxDecoration(
                             color: ColorUtil.kWhiteColor,
+                            border: Border.all(color: ColorUtil.kBlack07),
                             borderRadius: BorderRadius.circular(8.kh)),
                         padding: EdgeInsets.symmetric(horizontal: 2.kw),
                         child: Obx(
@@ -61,20 +61,32 @@ class NotificationsView extends GetView<NotificationsController> {
                             },
                             title: Text(
                               notification.title ?? '',
-                              style: TextStyleUtil.k14Regular(),
+                              style: TextStyleUtil.k14Bold(),
                             ),
-                            subtitle: controller.isExpandedList[index].value
-                                ? Text(
-                                    notification.body ?? '',
-                                  )
-                                : Text(
-                                    notification.body ?? '',
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                            trailing: Text(
-                              GpUtil.getAgoTime(notification.createdAt),
-                              style: TextStyleUtil.k12Regular(
-                                  color: ColorUtil.kBlack04),
+                            isThreeLine: true,
+                            titleAlignment: ListTileTitleAlignment.center,
+                            subtitle: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                controller.isExpandedList[index].value
+                                    ? Text(
+                                        notification.body ?? '',
+                                        style: TextStyleUtil.k14Regular(),
+                                      )
+                                    : Text(
+                                        notification.body ?? '',
+                                        style: TextStyleUtil.k14Regular(),
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                2.kheightBox,
+                                Text(
+                                  GpUtil.getAgoTime(notification.createdAt),
+                                  style: TextStyleUtil.k12Regular(
+                                      color: ColorUtil.kBlack04),
+                                ),
+                              ],
                             ),
                           ).paddingOnly(right: 8.kw),
                         ),

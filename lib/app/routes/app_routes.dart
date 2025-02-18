@@ -94,6 +94,7 @@ abstract class Routes {
   static const WEB_ADD_TO_BANK = _Paths.WEB_ADD_TO_BANK;
   static const MY_RIDES_CONFIRM_DETAILS = _Paths.MY_RIDES_CONFIRM_DETAILS;
   static const ARCHIVED = _Paths.ARCHIVED;
+  static const LANGUAGE = _Paths.LANGUAGE;
 }
 
 abstract class _Paths {
@@ -186,4 +187,5 @@ abstract class _Paths {
   static const WEB_ADD_TO_BANK = '/web-add-to-bank';
   static const MY_RIDES_CONFIRM_DETAILS = '/my-rides-confirm-details';
   static const ARCHIVED = '/archived';
+  static const LANGUAGE = '/language';
 }

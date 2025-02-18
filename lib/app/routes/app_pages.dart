@@ -1,6 +1,4 @@
 import 'package:get/get.dart';
-import 'package:green_pool/app/modules/archived/bindings/archived_binding.dart';
-import 'package:green_pool/app/modules/archived/views/archived_view.dart';
 
 import '../modules/about/bindings/about_binding.dart';
 import '../modules/about/views/about_view.dart';
@@ -10,6 +8,8 @@ import '../modules/add_card/bindings/add_card_binding.dart';
 import '../modules/add_card/views/add_card_view.dart';
 import '../modules/add_gift/bindings/add_gift_binding.dart';
 import '../modules/add_gift/views/add_gift_view.dart';
+import '../modules/archived/bindings/archived_binding.dart';
+import '../modules/archived/views/archived_view.dart';
 import '../modules/chat_page/bindings/chat_page_binding.dart';
 import '../modules/chat_page/views/chat_page_view.dart';
 import '../modules/chat_with_experts/bindings/chat_with_experts_binding.dart';
@@ -29,6 +29,8 @@ import '../modules/help_support/views/help_support_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/bottom_navigation_view.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/language/bindings/language_binding.dart';
+import '../modules/language/views/language_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 import '../modules/map_driver_confirm_request/bindings/map_driver_confirm_request_binding.dart';
@@ -534,6 +536,11 @@ class AppPages {
       name: _Paths.ARCHIVED,
       page: () => const ArchivedView(),
       binding: ArchivedBinding(),
+    ),
+    GetPage(
+      name: _Paths.LANGUAGE,
+      page: () => const LanguageView(),
+      binding: LanguageBinding(),
     ),
   ];
 }

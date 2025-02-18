@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:ui';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -7,35 +8,46 @@ import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:ui' as ui;
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 import 'dio/endpoints.dart';
 
 class GpUtil {
-  /*static Future<String> calculateDistance({
+  static Future<num> calculateDistanceInInt({
     required double startLat,
     required double startLong,
     required double endLat,
     required double endLong,
   }) async {
-    GoogleMapsDirections directions =
-        GoogleMapsDirections(apiKey: Endpoints.googleApiKey);
-    DirectionsResponse response = await directions.directionsWithLocation(
-      Location(lat: startLat, lng: startLong),
-      Location(lat: endLat, lng: endLong),
-      travelMode: TravelMode.driving,
-    );
+    try {
+      final apiKey = Endpoints.googleApiKey;
+      final url = Uri.parse(
+        'https://maps.googleapis.com/maps/api/distancematrix/json?'
+        'origins=$startLat,$startLong&destinations=$endLat,$endLong'
+        '&mode=driving&key=$apiKey',
+      );
 
-    if (response.isOkay) {
-      final distanceInMeters = response.routes.first.legs.first.distance;
-      // Convert distance from meters to kilometers
-      //final distanceInKilometers = distanceInMeters / 1000.0;
-      return distanceInMeters.text.toString();
-    } else {
-      return "0"; // Return a double value for consistency
+      final response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        if (data['status'] == 'OK' &&
+            data['rows'][0]['elements'][0]['status'] == 'OK') {
+          final distanceInMeters =
+              data['rows'][0]['elements'][0]['distance']['value'];
+          final distanceInKilometers = distanceInMeters / 1000.0;
+          return distanceInKilometers;
+        }
+      }
+      return 0;
+    } catch (e) {
+      print("Error calculating distance: $e");
+      return 0;
     }
-  }*/
+  }
 
-  static Future<num> calculateDistanceInInt({
+  /*static Future<num> calculateDistanceInInt({
     required double startLat,
     required double startLong,
     required double endLat,
@@ -54,9 +66,9 @@ class GpUtil {
       final distanceInKilometers = distanceInMeters / 1000.0;
       return distanceInKilometers;
     } else {
-      return 0; // Return 0 if the response is not okay
+      return 0;
     }
-  }
+  }*/
 
   /* static double calculateDistance({
     required double startLat,
@@ -456,3 +468,27 @@ class GpUtil {
     return displayTime;
   }
 }
+
+/*static Future<String> calculateDistance({
+    required double startLat,
+    required double startLong,
+    required double endLat,
+    required double endLong,
+  }) async {
+    GoogleMapsDirections directions =
+        GoogleMapsDirections(apiKey: Endpoints.googleApiKey);
+    DirectionsResponse response = await directions.directionsWithLocation(
+      Location(lat: startLat, lng: startLong),
+      Location(lat: endLat, lng: endLong),
+      travelMode: TravelMode.driving,
+    );
+
+    if (response.isOkay) {
+      final distanceInMeters = response.routes.first.legs.first.distance;
+      // Convert distance from meters to kilometers
+      //final distanceInKilometers = distanceInMeters / 1000.0;
+      return distanceInMeters.text.toString();
+    } else {
+      return "0"; // Return a double value for consistency
+    }
+  }*/

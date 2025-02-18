@@ -7,7 +7,6 @@ import 'package:green_pool/app/components/green_pool_divider.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/components/origin_to_destination.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
-import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
@@ -76,7 +75,7 @@ class PayNowView extends GetView<PayNowController> {
                         title: SizedBox(
                           width: 20.w,
                           child: GreenPoolTextField(
-                            hintText: "Apply Code",
+                            hintText: LocaleKeys.app_applyCode.tr,
                             controller: controller.code,
                             readOnly: controller.promoCodeApplied.value,
                             inputFormatters: [
@@ -112,7 +111,7 @@ class PayNowView extends GetView<PayNowController> {
                                           controller.code.value.text);
                                     },
                                     child: Text(
-                                      "Apply",
+                                      LocaleKeys.app_apply.tr,
                                       style: TextStyleUtil.k14Bold(),
                                     )),
                         /*leading: Icon(
@@ -288,11 +287,13 @@ class PayNowView extends GetView<PayNowController> {
                               TextSpan(
                                 children: [
                                   TextSpan(
-                                    text: LocaleKeys.app_iConsentToTheseGuidelines.tr,
+                                    text: LocaleKeys
+                                        .app_iConsentToTheseGuidelines.tr,
                                     style: TextStyleUtil.k12Regular(),
                                   ),
                                   TextSpan(
-                                    text: LocaleKeys.app_driverCancellationPolicyf.tr,
+                                    text: LocaleKeys
+                                        .app_driverCancellationPolicyf.tr,
                                     style: TextStyleUtil.k12Semibold(
                                         color: isPinkModeOn
                                             ? ColorUtil.kPrimary2PinkMode
@@ -302,7 +303,8 @@ class PayNowView extends GetView<PayNowController> {
                                           () => controller.getDriverPolicy(),
                                   ),
                                   TextSpan(
-                                    text: LocaleKeys.app_riderCancellationPolicyf.tr,
+                                    text: LocaleKeys
+                                        .app_riderCancellationPolicyf.tr,
                                     style: TextStyleUtil.k12Semibold(
                                         color: isPinkModeOn
                                             ? ColorUtil.kPrimary2PinkMode
@@ -336,7 +338,9 @@ class PayNowView extends GetView<PayNowController> {
                                           Get.toNamed(Routes.POLICY_PRIVACY),
                                   ),
                                   TextSpan(
-                                    text: LocaleKeys.app_iAcknowledgeThatMyAccMayFaceSuspension.tr,
+                                    text: LocaleKeys
+                                        .app_iAcknowledgeThatMyAccMayFaceSuspension
+                                        .tr,
                                     style: TextStyleUtil.k12Regular(),
                                   ),
                                 ],

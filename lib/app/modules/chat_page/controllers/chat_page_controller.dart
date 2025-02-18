@@ -74,7 +74,8 @@ class ChatPageController extends GetxController {
           driverRideId: chatArg.value.driverRideId ?? "");
       isPayBtnVisible.value = response.data["riderCheck"] == false &&
           response.data["driver"] == false; //to show pay button
-      confirmByDriver.value = response.data["requestByDriver"]; //if driver has requested the rider
+      confirmByDriver.value =
+          response.data["requestByDriver"]; //if driver has requested the rider
       rideCreated = response.data["rideRequested"] ==
           true; //if false then rider has not requested ride so we need to create a riderRide
     } catch (e) {
@@ -139,9 +140,7 @@ class ChatPageController extends GetxController {
   }
 
   Future<void> setMessageInApi() async {
-    String msg = eMsg.text;
-    eMsg.clear();
-    final RegExp phoneRegex = RegExp(
+    /*final RegExp phoneRegex = RegExp(
       r'(?<!\w)'
       r'('
       r'(\+?(\d|zero|one|two|three|four|five|six|seven|eight|nine|oh|eye|won){1,3})?[\s\-\.]?'
@@ -160,7 +159,9 @@ class ChatPageController extends GetxController {
       r'(?!\w)',
       caseSensitive: false,
     );
-    msg = msg.replaceAll(phoneRegex, '(Phone Number Hidden)');
+    msg = msg.replaceAll(phoneRegex, '(Phone Number Hidden)');*/
+    String msg = eMsg.text;
+    eMsg.clear();
     final timestamp = DateTime.now().toUtc();
     final senderId = Get.find<GetStorageService>().getUserAppId;
     try {

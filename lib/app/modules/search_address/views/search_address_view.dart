@@ -9,6 +9,7 @@ import '../../../components/greenpool_appbar.dart';
 import '../../../components/greenpool_textfield.dart';
 import '../../../res/strings.dart';
 import '../../../services/colors.dart';
+import '../../../services/text_style_util.dart';
 import '../../home/controllers/home_controller.dart';
 import '../../origin/controllers/origin_controller.dart';
 import '../controllers/search_address_controller.dart';
@@ -63,6 +64,54 @@ class SearchAddressView extends GetView<SearchAddressController> {
                 ),
               ).paddingOnly(top: 32.kh, bottom: 16.kh),
             ),
+            Obx(
+              () => Visibility(
+                visible: controller.locationModels.isNotEmpty &&
+                    !controller.hidePrevLoc.value,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      LocaleKeys.app_previouslySearched.tr,
+                      style: TextStyleUtil.k14Semibold(),
+                    ).paddingOnly(bottom: 8.kh),
+                    SizedBox(
+                      height: 250.kh,
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        physics:
+                            const ClampingScrollPhysics(), // Avoid conflicting scroll physics
+                        itemCount: controller.locationModels.length,
+                        itemBuilder: (context, index) {
+                          var item = controller.locationModels[index];
+                          return Container(
+                            decoration: BoxDecoration(
+                                color: ColorUtil.kNeutral7.withOpacity(0.5),
+                                border: Border(
+                                    top: BorderSide.none,
+                                    bottom: BorderSide(
+                                        width: 1.kh,
+                                        color: ColorUtil.kNeutral7)),
+                                borderRadius: BorderRadius.circular(8.kh)),
+                            child: ListTile(
+                              onTap: () {
+                                controller.setLocationFromCache(
+                                    controller.locationValues.name, index);
+                              },
+                              leading: const Icon(
+                                Icons.history,
+                                color: ColorUtil.kNeutral4,
+                              ),
+                              title: Text(item["address"] ?? "Unknown Address"),
+                            ),
+                          ).paddingOnly(bottom: 2.kh);
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
             Expanded(
               child: Obx(
                 () => controller.isLoading.value
@@ -85,9 +134,9 @@ class SearchAddressView extends GetView<SearchAddressController> {
                                   controller.addressSugestionList[index]
                                       ['place_id'],
                                 );
+                                controller.resetSessionToken();
                                 // Get.back(
                                 //     result: controller.postRideModel.value);
-                                Get.back();
                               },
                             ),
                           );

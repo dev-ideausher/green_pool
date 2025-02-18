@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
+import 'package:green_pool/generated/locales.g.dart';
 
 import '../services/colors.dart';
 import '../services/text_style_util.dart';
@@ -55,7 +56,7 @@ class OriginToDestination extends StatelessWidget {
                       // needPickupText
                       //     ?
                       Text(
-                        'Pick up: ',
+                        LocaleKeys.app_pick_up.tr,
                         style: TextStyleUtil.k14Semibold(
                             color: ColorUtil.kBlack02),
                       ).paddingOnly(right: 4.kw)
@@ -92,7 +93,7 @@ class OriginToDestination extends StatelessWidget {
                         // needPickupText
                         //     ?
                         Text(
-                          'Stop 1:   ',
+                          LocaleKeys.app_stop_1.tr,
                           style: TextStyleUtil.k14Semibold(
                               color: ColorUtil.kBlack02),
                         ).paddingOnly(right: 4.kw)
@@ -130,7 +131,7 @@ class OriginToDestination extends StatelessWidget {
                         // needPickupText
                         //     ?
                         Text(
-                          'Stop 2:   ',
+                          LocaleKeys.app_stop_2.tr,
                           style: TextStyleUtil.k14Semibold(
                               color: ColorUtil.kBlack02),
                         ).paddingOnly(right: 4.kw)
@@ -165,7 +166,7 @@ class OriginToDestination extends StatelessWidget {
                       // needPickupText
                       //     ?
                       Text(
-                        'Drop off:',
+                        LocaleKeys.app_drop_off.tr,
                         style: TextStyleUtil.k14Semibold(
                             color: ColorUtil.kBlack02),
                       ).paddingOnly(right: 4.kw)

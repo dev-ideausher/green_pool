@@ -121,6 +121,7 @@ class ImageConstant {
 //profile
   static String svgProfileAbout = 'assets/images/profile/about.svg';
   static String svgProfileBug = 'assets/images/profile/bug.svg';
+  static String svgProfileLanguage = 'assets/images/profile/language.svg';
   static String svgProfileCall = 'assets/images/profile/call.svg';
   static String svgProfileEditPen = 'assets/images/profile/edit_pen.svg';
   static String svgProfileFile = 'assets/images/profile/file.svg';

@@ -66,7 +66,8 @@ class RiderMyRidesConfirmDetailsController extends GetxController {
             "driverRideId": riderConfirmRequestModel.driverRideId,
             "riderRideId": riderConfirmRequestModel.riderRideId,
             "seatsRequired":
-                riderConfirmRequestModel.riderRideDetails?.seatAvailable
+                riderConfirmRequestModel.riderRideDetails?.seatAvailable,
+            "ridePostId": riderConfirmRequestModel.Id
           });
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
@@ -78,8 +79,9 @@ class RiderMyRidesConfirmDetailsController extends GetxController {
               driverRideId: riderConfirmRequestModel.driverRideId,
               riderRideId: riderConfirmRequestModel.riderRideId,
               origin: data?.origin?.name?.split(',').first ?? "City",
-              destination: data?.destination?.name?.split(',').first ?? "City",              
-              date: GpUtil.formatDate(DateTime.parse(data?.date ?? LocaleKeys.app_defaultDate.tr))));
+              destination: data?.destination?.name?.split(',').first ?? "City",
+              date: GpUtil.formatDate(DateTime.parse(
+                  data?.date ?? LocaleKeys.app_defaultDate.tr))));
       isBtnLoading.value = false;
     } catch (e) {
       Get.toNamed(Routes.CHAT_PAGE,
@@ -93,7 +95,8 @@ class RiderMyRidesConfirmDetailsController extends GetxController {
               riderRideId: riderConfirmRequestModel.riderRideId,
               origin: data?.origin?.name?.split(',').first ?? "City",
               destination: data?.destination?.name?.split(',').first ?? "City",
-              date: GpUtil.formatDate(DateTime.parse(data?.date ?? LocaleKeys.app_defaultDate.tr))));
+              date: GpUtil.formatDate(DateTime.parse(
+                  data?.date ?? LocaleKeys.app_defaultDate.tr))));
       isBtnLoading.value = false;
     }
   }

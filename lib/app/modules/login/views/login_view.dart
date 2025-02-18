@@ -154,12 +154,15 @@ class LoginView extends GetView<LoginController> {
                 ).paddingOnly(bottom: 40.kh),
                 Socials(
                   onPressedGoogle: () {
+                    FocusScope.of(context).unfocus();
                     controller.googleAuth();
                   },
                   onPressedFacebook: () {
+                    FocusScope.of(context).unfocus();
                     controller.facebookAuth();
                   },
                   onPressedApple: () {
+                    FocusScope.of(context).unfocus();
                     controller.appleAuth();
                   },
                 ),

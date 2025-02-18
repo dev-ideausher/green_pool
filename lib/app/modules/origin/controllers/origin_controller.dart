@@ -12,6 +12,7 @@ import 'package:uuid/uuid.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../data/google_location_model.dart';
+import '../../../services/storage.dart';
 
 enum LocationValues {
   origin,
@@ -26,6 +27,9 @@ class OriginController extends GetxController {
   TextEditingController originController = TextEditingController();
   var uuid = const Uuid();
   String? _sessionToken;
+  DateTime? _sessionStartTime;
+  final int sessionTimeout = 5 * 60; // 5 minutes timeout in seconds
+
   RxList<dynamic> addressSugestionList = [].obs;
   final debouncer = Debouncer(delay: const Duration(seconds: 1));
   RxBool isLoading = false.obs;
@@ -40,10 +44,32 @@ class OriginController extends GetxController {
   }
 
   void setSessionToken() {
-    _sessionToken ??= uuid.v4();
-    if (originController.text.length >= 3) {
+    // Check if session has expired or not started
+    if (_sessionToken == null || hasSessionExpired()) {
+      _sessionToken = uuid.v4();
+      _sessionStartTime = DateTime.now(); // Record session start time
+    }
+
+    if (originController.text.length > 3) {
       debouncer(() => addressAutoComplete(originController.text));
     }
+  }
+
+  bool hasSessionExpired() {
+    if (_sessionStartTime == null) return true;
+    return DateTime.now().difference(_sessionStartTime!).inSeconds >=
+        sessionTimeout;
+  }
+
+// Call this when a place is selected to reset session
+  void resetSessionToken() {
+    if (_sessionToken != null && _sessionStartTime != null) {
+      int sessionDuration =
+          DateTime.now().difference(_sessionStartTime!).inSeconds;
+      debugPrint('Session lasted for $sessionDuration seconds');
+    }
+    _sessionToken = null;
+    _sessionStartTime = null;
   }
 
   addressAutoComplete(String input) async {
@@ -77,23 +103,33 @@ class OriginController extends GetxController {
   }
 
   Future<List<dynamic>> getLatLong(String placeId) async {
+    final storageService = Get.find<GetStorageService>();
+
+    // Check the cache for the placeId
+    if (storageService.locationCache.containsKey(placeId)) {
+      return storageService.locationCache[placeId]!;
+    }
+
+    //if not found in cache then fetch from google api
     String placeApiKey = Endpoints.googleApiKey;
     String baseurl = 'https://maps.googleapis.com/maps/api/place';
+
     try {
       String request =
           '$baseurl/details/json?place_id=$placeId&key=$placeApiKey';
       var response = await http.get(Uri.parse(request));
       final geometry =
           GoogleLocationModel.fromJson(jsonDecode(response.body)).result;
-
       double lat = geometry?.geometry?.location?.lat ?? 0.0;
       double long = geometry?.geometry?.location?.lng ?? 0.0;
       String nameOfLocation = geometry?.formattedAddress ?? "";
 
-      List<dynamic> newLocation = [lat, long, nameOfLocation];
-      return newLocation;
+      // Add the fetched data to the cache
+      storageService.addToLocationCache(placeId, [lat, long, nameOfLocation]);
+
+      return [lat, long, nameOfLocation];
     } catch (e) {
-      log("getLatLong error: $e");
+      debugPrint("getLatLong error: $e");
       throw Exception('Failed to load data');
     }
   }
@@ -104,6 +140,7 @@ class OriginController extends GetxController {
     try {
       //? how to place this in getLatLong directly
       List<dynamic> fetchLatLong = await getLatLong(placeId);
+
       if (locationValues.name == LocationValues.findRideOrigin.name) {
         Get.find<FindRideController>().riderOriginLat = fetchLatLong[0];
         Get.find<FindRideController>().riderOriginLong = fetchLatLong[1];

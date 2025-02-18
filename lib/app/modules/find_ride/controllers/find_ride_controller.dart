@@ -35,7 +35,6 @@ class FindRideController extends GetxController {
   double riderDestinationLong = 0.0;
 
   RxList<LocationModel> locationModelNames = <LocationModel>[].obs;
-  // var rideresponse = FindRideResponseModel().obs;
 
   RxBool isOriginAdded = false.obs;
   RxBool isDestinationAdded = false.obs;
@@ -149,23 +148,83 @@ class FindRideController extends GetxController {
     Get.toNamed(Routes.MATCHING_RIDES, arguments: rideDetails.toJson());
   }
 
-  /*Future<void> riderPostRideAPI() async {
-    final findRideData = _getRideDetails();
-
-    try {
-      final response =
-          await APIManager.postRiderFindRide(body: findRideData.toJson());
-      if (response.data['status']) {
-        rideresponse.value =
-            FindRideResponseModel.fromJson(jsonDecode(response.toString()));
-        log("this is rider's ride id: ${rideresponse.value.data![0]?.Id}");
-      } else {
-        showMySnackbar(msg: rideresponse.value?.message ?? "");
-      }
-    } catch (e) {
-      throw Exception(e);
+  void _storePreviousLocations() {
+    if (riderOriginTextController.text.isNotEmpty &&
+        riderDestinationTextController.text.isNotEmpty) {
+      addLocationModel(
+        riderOriginLat: riderOriginLat,
+        riderOriginLong: riderOriginLong,
+        riderOriginTextController: riderOriginTextController,
+        riderDestinationLat: riderDestinationLat,
+        riderDestinationLong: riderDestinationLong,
+        riderDestinationTextController: riderDestinationTextController,
+      );
     }
-  }*/
+  }
+
+  bool isDuplicate(LocationModel newLocationModel) {
+    return locationModelNames.any((location) =>
+        location.originLocation!.lat == newLocationModel.originLocation!.lat &&
+        location.originLocation!.long ==
+            newLocationModel.originLocation!.long &&
+        location.originLocation!.nameOfLocation ==
+            newLocationModel.originLocation!.nameOfLocation &&
+        location.destinationLocation!.lat ==
+            newLocationModel.destinationLocation!.lat &&
+        location.destinationLocation!.long ==
+            newLocationModel.destinationLocation!.long &&
+        location.destinationLocation!.nameOfLocation ==
+            newLocationModel.destinationLocation!.nameOfLocation);
+  }
+
+  void addLocationModel({
+    required double riderOriginLat,
+    required double riderOriginLong,
+    required TextEditingController riderOriginTextController,
+    required double riderDestinationLat,
+    required double riderDestinationLong,
+    required TextEditingController riderDestinationTextController,
+  }) {
+    final newLocationModel = LocationModel(
+      originLocation: LocationModelOriginLocation(
+        lat: riderOriginLat,
+        long: riderOriginLong,
+        nameOfLocation: riderOriginTextController.text,
+      ),
+      destinationLocation: LocationModelDestinationLocation(
+        lat: riderDestinationLat,
+        long: riderDestinationLong,
+        nameOfLocation: riderDestinationTextController.text,
+      ),
+    );
+
+    if (!isDuplicate(newLocationModel)) {
+      locationModelNames.add(newLocationModel);
+      Get.find<GetStorageService>().locationsName =
+          jsonEncode(locationModelNames);
+    } else {
+      debugPrint("This location model already exists in the list.");
+    }
+  }
+
+  void setLocation(int index) {
+    final location = locationModelNames[index];
+    riderOriginLat = location.originLocation!.lat ?? 0.0;
+    riderOriginLong = location.originLocation!.long ?? 0.0;
+    riderOriginTextController.text =
+        location.originLocation!.nameOfLocation ?? "";
+
+    riderDestinationLat = location.destinationLocation!.lat ?? 0.0;
+    riderDestinationLong = location.destinationLocation!.long ?? 0.0;
+    riderDestinationTextController.text =
+        location.destinationLocation!.nameOfLocation ?? "";
+
+    // Update flags
+    isOriginAdded.value = riderOriginTextController.text.isNotEmpty;
+    isDestinationAdded.value = riderDestinationTextController.text.isNotEmpty;
+
+    setActiveState();
+  }
 
   Future<void> setDate(BuildContext context) async {
     DateTime? pickedDate = Platform.isIOS
@@ -237,70 +296,6 @@ class FindRideController extends GetxController {
     return null;
   }
 
-  bool isDuplicate(LocationModel newLocationModel) {
-    return locationModelNames.any((location) =>
-        location.originLocation!.lat == newLocationModel.originLocation!.lat &&
-        location.originLocation!.long ==
-            newLocationModel.originLocation!.long &&
-        location.originLocation!.nameOfLocation ==
-            newLocationModel.originLocation!.nameOfLocation &&
-        location.destinationLocation!.lat ==
-            newLocationModel.destinationLocation!.lat &&
-        location.destinationLocation!.long ==
-            newLocationModel.destinationLocation!.long &&
-        location.destinationLocation!.nameOfLocation ==
-            newLocationModel.destinationLocation!.nameOfLocation);
-  }
-
-  void addLocationModel({
-    required double riderOriginLat,
-    required double riderOriginLong,
-    required TextEditingController riderOriginTextController,
-    required double riderDestinationLat,
-    required double riderDestinationLong,
-    required TextEditingController riderDestinationTextController,
-  }) {
-    final newLocationModel = LocationModel(
-      originLocation: LocationModelOriginLocation(
-        lat: riderOriginLat,
-        long: riderOriginLong,
-        nameOfLocation: riderOriginTextController.text,
-      ),
-      destinationLocation: LocationModelDestinationLocation(
-        lat: riderDestinationLat,
-        long: riderDestinationLong,
-        nameOfLocation: riderDestinationTextController.text,
-      ),
-    );
-
-    if (!isDuplicate(newLocationModel)) {
-      locationModelNames.add(newLocationModel);
-      Get.find<GetStorageService>().locationsName =
-          jsonEncode(locationModelNames);
-    } else {
-      print("This location model already exists in the list.");
-    }
-  }
-
-  void setLocation(int index) {
-    final location = locationModelNames[index];
-    riderOriginLat = location.originLocation!.lat ?? 0.0;
-    riderOriginLong = location.originLocation!.long ?? 0.0;
-    riderOriginTextController.text =
-        location.originLocation!.nameOfLocation ?? "";
-
-    riderDestinationLat = location.destinationLocation!.lat ?? 0.0;
-    riderDestinationLong = location.destinationLocation!.long ?? 0.0;
-    riderDestinationTextController.text =
-        location.destinationLocation!.nameOfLocation ?? "";
-
-    // Update flags
-    isOriginAdded.value = riderOriginTextController.text.isNotEmpty;
-    isDestinationAdded.value = riderDestinationTextController.text.isNotEmpty;
-
-    setActiveState();
-  }
-
   Widget _pickerTheme(BuildContext context, Widget? child) {
     return Theme(
       data: ThemeData(
@@ -323,20 +318,6 @@ class FindRideController extends GetxController {
     );
   }
 
-  void _storePreviousLocations() {
-    if (riderOriginTextController.text.isNotEmpty &&
-        riderDestinationTextController.text.isNotEmpty) {
-      addLocationModel(
-        riderOriginLat: riderOriginLat,
-        riderOriginLong: riderOriginLong,
-        riderOriginTextController: riderOriginTextController,
-        riderDestinationLat: riderDestinationLat,
-        riderDestinationLong: riderDestinationLong,
-        riderDestinationTextController: riderDestinationTextController,
-      );
-    }
-  }
-
   removeOrigin() {
     riderOriginTextController.clear();
     isOriginAdded.value = false;
@@ -351,3 +332,21 @@ class FindRideController extends GetxController {
     riderDestinationLong = 0.0;
   }
 }
+
+/*Future<void> riderPostRideAPI() async {
+    final findRideData = _getRideDetails();
+
+    try {
+      final response =
+          await APIManager.postRiderFindRide(body: findRideData.toJson());
+      if (response.data['status']) {
+        rideresponse.value =
+            FindRideResponseModel.fromJson(jsonDecode(response.toString()));
+        log("this is rider's ride id: ${rideresponse.value.data![0]?.Id}");
+      } else {
+        showMySnackbar(msg: rideresponse.value?.message ?? "");
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+  }*/

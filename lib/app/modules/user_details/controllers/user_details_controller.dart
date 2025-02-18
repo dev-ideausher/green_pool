@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
-import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/storage.dart';
@@ -19,7 +18,6 @@ import '../../../services/custom_button.dart';
 import '../../../services/dialog_helper.dart';
 import '../../../services/dio/api_service.dart';
 import '../../../services/image_helper.dart';
-import '../../../services/push_notification_service.dart';
 import '../../../services/snackbar.dart';
 
 import 'package:dio/dio.dart' as dio;
@@ -247,18 +245,9 @@ class UserDetailsController extends GetxController {
                     ),
                     GreenPoolButton(
                       onPressed: () async {
-                        final res = await APIManager.deleteAccount();
-                        PushNotificationService.unsubFcm(
-                            "${Get.find<HomeController>().userInfo.value.data?.Id}");
+                        final res = await APIManager.deleteAccount();                        
                         Get.find<AuthService>().logOutUser();
                         Get.find<HomeController>().userInfoAPI();
-                        Get.find<HomeController>().changeTabIndex(0);
-                        Get.find<HomeController>()
-                            .userInfo
-                            .value
-                            .data
-                            ?.emergencyContactDetails = [];
-                        Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
                       },
                       height: 40.kh,
                       width: 124.kw,

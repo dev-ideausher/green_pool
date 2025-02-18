@@ -4,7 +4,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/common_image_view.dart';
 import 'package:green_pool/app/components/origin_to_destination.dart';
-import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
@@ -74,10 +73,15 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                             children: [
                               Text(
                                 // 'Sam Alexander',
-                                "${controller.matchingRidesModelData.value.driverDetails?[0]?.fullName}",
+                                "${controller.matchingRidesModelData.value.driverDetails?[0]?.fullName?.split(" ").first}",
                                 style: TextStyleUtil.k18Bold(),
                               ),
-                              Text.rich(
+                              Text(
+                                '\$ ${controller.matchingRidesModelData.value.price}',
+                                style: TextStyleUtil.k18Semibold(
+                                    color: ColorUtil.kSecondary01),
+                              ),
+                              /*Text.rich(
                                 TextSpan(
                                   children: [
                                     TextSpan(
@@ -94,7 +98,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                                     ),
                                   ],
                                 ),
-                              ),
+                              ),*/
                             ],
                           ).paddingOnly(bottom: 8.kh, top: 4.kh),
                           Row(
@@ -273,7 +277,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                       Text(
                         isRider
                             ? "${controller.matchingRidesModelData.value.ridersDetatils?[passengerIndex]?.fullName.toString().split(" ").first}"
-                            : "Empty Seat",
+                            : LocaleKeys.app_emptySeat.tr,
                         style: TextStyleUtil.k12Semibold(),
                         textAlign: TextAlign.center,
                       ),

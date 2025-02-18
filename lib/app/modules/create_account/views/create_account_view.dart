@@ -6,7 +6,6 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/greenpool_textfield.dart';
 import 'package:green_pool/app/components/socials.dart';
-import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/custom_button.dart';
@@ -209,12 +208,15 @@ class CreateAccountView extends GetView<CreateAccountController> {
                 ).paddingOnly(bottom: 24.kh),
                 Socials(
                   onPressedGoogle: () {
+                    FocusScope.of(context).unfocus();
                     controller.googleAuth();
                   },
                   onPressedFacebook: () {
+                    FocusScope.of(context).unfocus();
                     controller.facebookAuth();
                   },
                   onPressedApple: () {
+                    FocusScope.of(context).unfocus();
                     controller.appleAuth();
                   },
                 ).paddingOnly(bottom: 40.kh),

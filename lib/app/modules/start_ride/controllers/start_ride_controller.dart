@@ -18,7 +18,6 @@ import 'package:green_pool/app/services/snackbar.dart';
 import '../../../../generated/locales.g.dart';
 import '../../../data/booking_detail_model.dart';
 import '../../../data/chat_arg.dart';
-import '../../../res/strings.dart';
 import '../../../services/gp_util.dart';
 import '../../home/controllers/home_controller.dart';
 
@@ -341,73 +340,6 @@ class StartRideController extends GetxController {
     }
   }
 
-  /*pickUpAPI(String riderId) async {
-    try {
-      final response = await APIManager.pickUpRider(body: {
-        "riderId": riderId,
-        "riderRideId": myRidesModel.value.riderRideId,
-        "riderNotificationPreferences": myRidesModel
-            .value
-            .driverBookingDetails
-            ?.riderBookingDetails?[selectedRider.value]
-            ?.riderDetails
-            ?.notificationPreferences
-            ?.toJson(),
-        "riderName": myRidesModel.value.driverBookingDetails
-            ?.riderBookingDetails?.firstOrNull?.riderDetails?.fullName,
-        "driverId": myRidesModel.value.driverId
-      });
-      if (response.data['status']) {
-        myRidesModel.value.driverBookingDetails
-            ?.riderBookingDetails?[selectedRider.value].isStarted = true;
-        myRidesModel.refresh();
-        showMySnackbar(msg: response.data['message']);
-      } else {
-        showMySnackbar(msg: response.data['message']);
-      }
-    } catch (e) {
-      debugPrint(e.toString());
-    }
-    myRidesModel.value.driverBookingDetails!.isCompleted = true;
-    myRidesModel.refresh();
-  }
-
-  dropOffAPI(String riderId) async {
-    try {
-      final res = await APIManager.dropOffRider(body: {
-        "riderId": riderId,
-        "riderRideId": myRidesModel.value.riderRideId,
-        "riderNotificationPreferences": myRidesModel
-            .value
-            .driverBookingDetails
-            ?.riderBookingDetails?[selectedRider.value]
-            ?.riderDetails
-            ?.notificationPreferences!
-            .toJson(),
-        "riderName": myRidesModel.value.driverBookingDetails
-            ?.riderBookingDetails?.firstOrNull?.riderDetails?.fullName,
-        "driverRideId": myRidesModel.value.driverRideId
-      });
-      if (res.data["status"]) {
-        myRidesModel.value.driverBookingDetails
-            ?.riderBookingDetails?[selectedRider.value].isCompleted = true;
-      } else {
-        showMySnackbar(msg: res.data["message"]);
-      }
-    } catch (e) {
-      debugPrint(e.toString());
-    }
-  }*/
-
-  @override
-  void onClose() {
-    positionStream?.cancel();
-    mapController.dispose();
-    markers.clear();
-    polylineCoordinates.clear();
-    super.onClose();
-  }
-
   showChatBottomSheet() async {
     try {
       final res = await APIManager.postChatRoomId(
@@ -446,16 +378,19 @@ class StartRideController extends GetxController {
                       ?.profilePic
                       ?.url ??
                   "",
-                  driverRideId: myRidesModel.value.driverBookingDetails?.Id,
-                  riderRideId: myRidesModel.value.driverBookingDetails
-                ?.riderBookingDetails?[selectedRider.value].Id,
-              origin: myRidesModel.value.driverBookingDetails?.origin?.name?.split(',').first ??
+              driverRideId: myRidesModel.value.driverBookingDetails?.Id,
+              riderRideId: myRidesModel.value.driverBookingDetails
+                  ?.riderBookingDetails?[selectedRider.value].Id,
+              origin: myRidesModel.value.driverBookingDetails?.origin?.name
+                      ?.split(',')
+                      .first ??
                   "City",
-              destination:
-                  myRidesModel.value.driverBookingDetails?.destination?.name?.split(',').first ??
-                      "City",
-              date: GpUtil.formatDate(DateTime.parse(myRidesModel.value.driverBookingDetails?.date ??
-                  LocaleKeys.app_defaultDate.tr))));
+              destination: myRidesModel
+                      .value.driverBookingDetails?.destination?.name
+                      ?.split(',')
+                      .first ??
+                  "City",
+              date: GpUtil.formatDate(DateTime.parse(myRidesModel.value.driverBookingDetails?.date ?? LocaleKeys.app_defaultDate.tr))));
     } catch (e) {
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
@@ -478,16 +413,19 @@ class StartRideController extends GetxController {
                       ?.profilePic
                       ?.url ??
                   "",
-                  driverRideId: myRidesModel.value.driverBookingDetails?.Id,
-                  riderRideId: myRidesModel.value.driverBookingDetails
-                ?.riderBookingDetails?[selectedRider.value].Id,
-              origin: myRidesModel.value.driverBookingDetails?.origin?.name?.split(',').first ??
+              driverRideId: myRidesModel.value.driverBookingDetails?.Id,
+              riderRideId: myRidesModel.value.driverBookingDetails
+                  ?.riderBookingDetails?[selectedRider.value].Id,
+              origin: myRidesModel.value.driverBookingDetails?.origin?.name
+                      ?.split(',')
+                      .first ??
                   "City",
-              destination:
-                  myRidesModel.value.driverBookingDetails?.destination?.name?.split(',').first ??
-                      "City",
-              date: GpUtil.formatDate(DateTime.parse(myRidesModel.value.driverBookingDetails?.date ??
-                  LocaleKeys.app_defaultDate.tr))));
+              destination: myRidesModel
+                      .value.driverBookingDetails?.destination?.name
+                      ?.split(',')
+                      .first ??
+                  "City",
+              date: GpUtil.formatDate(DateTime.parse(myRidesModel.value.driverBookingDetails?.date ?? LocaleKeys.app_defaultDate.tr))));
     }
   }
 
@@ -616,4 +554,71 @@ class StartRideController extends GetxController {
                 .value.driverBookingDetails?.destination?.coordinates?.first ??
             0.0);
   }
+
+  @override
+  void onClose() {
+    positionStream?.cancel();
+    mapController.dispose();
+    markers.clear();
+    polylineCoordinates.clear();
+    super.onClose();
+  }
 }
+
+  /*pickUpAPI(String riderId) async {
+    try {
+      final response = await APIManager.pickUpRider(body: {
+        "riderId": riderId,
+        "riderRideId": myRidesModel.value.riderRideId,
+        "riderNotificationPreferences": myRidesModel
+            .value
+            .driverBookingDetails
+            ?.riderBookingDetails?[selectedRider.value]
+            ?.riderDetails
+            ?.notificationPreferences
+            ?.toJson(),
+        "riderName": myRidesModel.value.driverBookingDetails
+            ?.riderBookingDetails?.firstOrNull?.riderDetails?.fullName,
+        "driverId": myRidesModel.value.driverId
+      });
+      if (response.data['status']) {
+        myRidesModel.value.driverBookingDetails
+            ?.riderBookingDetails?[selectedRider.value].isStarted = true;
+        myRidesModel.refresh();
+        showMySnackbar(msg: response.data['message']);
+      } else {
+        showMySnackbar(msg: response.data['message']);
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+    myRidesModel.value.driverBookingDetails!.isCompleted = true;
+    myRidesModel.refresh();
+  }
+
+  dropOffAPI(String riderId) async {
+    try {
+      final res = await APIManager.dropOffRider(body: {
+        "riderId": riderId,
+        "riderRideId": myRidesModel.value.riderRideId,
+        "riderNotificationPreferences": myRidesModel
+            .value
+            .driverBookingDetails
+            ?.riderBookingDetails?[selectedRider.value]
+            ?.riderDetails
+            ?.notificationPreferences!
+            .toJson(),
+        "riderName": myRidesModel.value.driverBookingDetails
+            ?.riderBookingDetails?.firstOrNull?.riderDetails?.fullName,
+        "driverRideId": myRidesModel.value.driverRideId
+      });
+      if (res.data["status"]) {
+        myRidesModel.value.driverBookingDetails
+            ?.riderBookingDetails?[selectedRider.value].isCompleted = true;
+      } else {
+        showMySnackbar(msg: res.data["message"]);
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }*/

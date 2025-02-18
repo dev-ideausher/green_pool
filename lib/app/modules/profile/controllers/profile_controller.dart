@@ -8,7 +8,6 @@ import 'package:green_pool/app/services/snackbar.dart';
 import 'package:green_pool/generated/locales.g.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/auth.dart';
-import '../../../services/push_notification_service.dart';
 import '../../../services/storage.dart';
 
 class ProfileController extends GetxController {
@@ -68,7 +67,7 @@ class ProfileController extends GetxController {
       });
       if (response.statusMessage == "OK") {
         Get.back();
-        showMySnackbar(msg: LocaleKeys.app_thankYouForRatingTheApp.tr); 
+        showMySnackbar(msg: LocaleKeys.app_thankYouForRatingTheApp.tr);
         ratingTextController.clear();
       } else {
         showMySnackbar(msg: response.data['message'].toString());
@@ -81,11 +80,6 @@ class ProfileController extends GetxController {
   void logoutUser() {
     Get.find<AuthService>().logOutUser();
     pinkMode.value = false;
-    PushNotificationService.unsubFcm("${userInfo.value.data?.Id}");
-    Get.find<HomeController>().changeTabIndex(0);
-    Get.find<HomeController>().userInfo.value.data?.emergencyContactDetails =
-        [];
-    Get.offAllNamed(Routes.ONBOARDING);
   }
 
   void updateInfo() {

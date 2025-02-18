@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
-import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:stacked_firebase_auth/stacked_firebase_auth.dart';
+import '../routes/app_pages.dart';
 import 'snackbar.dart';
 import 'storage.dart';
 import 'dart:developer';
@@ -190,14 +190,11 @@ class AuthService extends GetxService {
   Future<void> logOutUser() async {
     DialogHelper.showLoading();
     // erase the user's token and data in GetStorageService
-    Get.find<HomeController>().reqsCount.value = 0;
-    Get.find<HomeController>().totUnreadMsgs.value = 0;
     Get.find<GetStorageService>().logout();
-    Get.find<GetStorageService>().isLoggedIn = false;
     // firbase logout
     auth.logout();
     // navigate to login page
-    // await Get.offAll(Routes.ONBOARDING);
+    Get.offAllNamed(Routes.ONBOARDING);
     await DialogHelper.hideDialog();
   }
 }

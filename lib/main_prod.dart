@@ -22,9 +22,11 @@ import 'generated/locales.g.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   if (Platform.isIOS) {
-    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+    await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform);
   } else {
-    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform, name: "prod");
+    await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform, name: "prod");
   }
 
   await initGetServices();
@@ -37,31 +39,26 @@ Future<void> main() async {
     child: GetMaterialApp(
       builder: (context, child) {
         return MediaQuery(
-          data: MediaQuery.of(context).copyWith(textScaler: const TextScaler.linear(1.0)),
+          data: MediaQuery.of(context)
+              .copyWith(textScaler: const TextScaler.linear(1.0)),
           child: child!,
         );
       },
       theme: ThemeData(
         scaffoldBackgroundColor: ColorUtil.kBackgroundColor,
       ),
-      supportedLocales: const [
-        Locale("en"),
-      ],
-      // theme: AppTheme.light,
-      // darkTheme: AppTheme.dark,
       defaultTransition: Transition.fade,
       smartManagement: SmartManagement.full,
       debugShowCheckedModeBanner: false,
-      locale: const Locale('en', 'US'),
+      supportedLocales: const [Locale("en"), Locale("fr"), Locale("es")],
+      locale: Get.find<GetStorageService>().appLocale,
       translationsKeys: AppTranslation.translations,
       initialRoute: AppPages.INITIAL,
       initialBinding: HomeBinding(),
       getPages: AppPages.routes,
-      localizationsDelegates: const [
-        CountryLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ],
+      localizationsDelegates: GlobalMaterialLocalizations.delegates,
+      // theme: AppTheme.light,
+      // darkTheme: AppTheme.dark,
     ),
   ));
 }
