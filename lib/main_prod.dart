@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:country_code_picker/country_code_picker.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 
@@ -34,6 +35,11 @@ Future<void> main() async {
     [DeviceOrientation.portraitUp],
   );
 
+  FirebaseAnalytics analytics =
+      FirebaseAnalytics.instance; // Initialize Firebase Analytics
+  FirebaseAnalyticsObserver analyticsObserver =
+      FirebaseAnalyticsObserver(analytics: analytics); // Create Observer
+
   return runApp(GestureDetector(
     onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
     child: GetMaterialApp(
@@ -47,6 +53,7 @@ Future<void> main() async {
       theme: ThemeData(
         scaffoldBackgroundColor: ColorUtil.kBackgroundColor,
       ),
+      navigatorObservers: [analyticsObserver],
       defaultTransition: Transition.fade,
       smartManagement: SmartManagement.full,
       debugShowCheckedModeBanner: false,
