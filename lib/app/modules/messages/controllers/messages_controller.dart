@@ -60,7 +60,7 @@ class MessagesController extends GetxController {
       "chatArg": ChatArg(
         chatRoomId: message?.chatRoomId ?? "",
         id: message?.reciver?.Id ?? "",
-        driverRideId: message.ridesDetails?.Id ?? "",
+        driverRideId: message.driverRideId ?? "",
         riderRideId: message.riderRideId ?? "",
         image: message?.reciver?.profilePic?.url,
         deleteUpdateTime: message?.deleteUpdateTime ?? "",
