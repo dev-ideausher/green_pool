@@ -349,8 +349,7 @@ class DriverRideHistTile extends StatelessWidget {
                               ?.profilePic
                               ?.url))),
               title: Text(
-                  Get.find<HomeController>().userInfo.value.data?.fullName ??
-                      "",
+                  Get.find<GetStorageService>().getUserName,
                   style: TextStyleUtil.k16Bold()),
               subtitle: Text(
                 // GpUtil.getDateFormat(his?.date) ??

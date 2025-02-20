@@ -10,9 +10,9 @@ import '../../../../generated/locales.g.dart';
 import '../../../components/common_image_view.dart';
 import '../../../components/origin_to_destination.dart';
 import '../../../constants/image_constant.dart';
-import '../../../res/strings.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
+import '../../../services/storage.dart';
 import '../../../services/text_style_util.dart';
 import '../../home/controllers/home_controller.dart';
 import '../controllers/my_rides_one_time_controller.dart';
@@ -47,15 +47,8 @@ class DriverTile extends StatelessWidget {
                     child: ClipRRect(
                         borderRadius: BorderRadius.circular(100.kh),
                         child: CommonImageView(
-                            url: Get.find<HomeController>()
-                                .userInfo
-                                .value
-                                .data
-                                ?.profilePic
-                                ?.url))),
-                title: Text(
-                    Get.find<HomeController>().userInfo.value.data?.fullName ??
-                        "",
+                            url: Get.find<GetStorageService>().profilePicUrl))),
+                title: Text(Get.find<GetStorageService>().getUserName,
                     style: TextStyleUtil.k16Bold()),
                 subtitle: Text(
                   // GpUtil.getDateFormat(myRidesModelData.date) ??
@@ -135,11 +128,12 @@ class DriverTile extends StatelessWidget {
               const GreenPoolDivider().paddingOnly(bottom: 8.kh),
               OriginToDestination(
                 needPickupText: true,
-                origin: myRidesModelData.origin?.name ?? LocaleKeys.app_pickup.tr,
+                origin:
+                    myRidesModelData.origin?.name ?? LocaleKeys.app_pickup.tr,
                 stop1: myRidesModelData.stops?[0]?.name ?? "",
                 stop2: myRidesModelData.stops?[1]?.name ?? "",
-                destination:
-                    myRidesModelData.destination?.name ?? LocaleKeys.app_destination.tr,
+                destination: myRidesModelData.destination?.name ??
+                    LocaleKeys.app_destination.tr,
               ).paddingOnly(bottom: 8.kh),
               const GreenPoolDivider().paddingOnly(bottom: 16.kh),
               myRidesModelData.isStarted == true

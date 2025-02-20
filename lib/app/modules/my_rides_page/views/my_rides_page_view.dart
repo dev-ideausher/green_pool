@@ -11,6 +11,7 @@ import '../../../components/greenpool_appbar.dart';
 import '../../../res/strings.dart';
 import '../../../services/colors.dart';
 
+import '../../../services/storage.dart';
 import '../../../services/text_style_util.dart';
 import '../../home/controllers/home_controller.dart';
 import '../controllers/my_rides_page_controller.dart';
@@ -28,8 +29,7 @@ class MyRidesPageView extends GetView<MyRidesPageController> {
           leading: const SizedBox(),
         ),
         body: SafeArea(
-          child: Get.find<HomeController>().userInfo.value.data?.isDriver ??
-                  false
+          child: Get.find<GetStorageService>().isDriver
               ? DefaultTabController(
                   length: 3,
                   child: Column(

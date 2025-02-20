@@ -52,14 +52,17 @@ class HomeController extends GetxController with Versionk {
     final storageService = Get.find<GetStorageService>();
 
     try {
-      if (storageService.isLoggedIn && storageService.getUserName == "") {
-        await userInfoAPI();
+      if (storageService.isLoggedIn) {
+        if (storageService.getUserName == "" ||
+            storageService.vehicleImageUrl == "") {
+          await userInfoAPI();
+        }
       }
 
       isPinkModeOn.value = storageService.isPinkMode;
-      onChangeLocation();
-      handleNewUpdate();
-      fetchCount();
+      await onChangeLocation();
+      await handleNewUpdate();
+      await fetchCount();
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -98,7 +101,7 @@ class HomeController extends GetxController with Versionk {
     }
   }
 
-  fetchCount() async {
+  Future<void> fetchCount() async {
     if (Get.find<GetStorageService>().isLoggedIn) {
       await getReqsCount();
       await getUnreadCount();
@@ -116,6 +119,7 @@ class HomeController extends GetxController with Versionk {
 
         // Store values locally
         storageService.assignLocally(userInfo.value);
+        storageService.assignVehicleDetails(userInfo.value);
 
         // Update the pink mode status
         isPinkModeOn.value = storageService.isPinkMode;

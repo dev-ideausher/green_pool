@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/services/dio/api_service.dart';
+import 'package:green_pool/app/services/storage.dart';
 import 'package:http_parser/http_parser.dart';
-import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../routes/app_pages.dart';
@@ -16,44 +16,16 @@ import 'package:dio/dio.dart' as dio;
 import 'package:path/path.dart' as path;
 
 class VehicleDetailsController extends GetxController {
-  var vehicleInfoModel =
-      Get.find<HomeController>().userInfo.value.data?.vehicleDetails?[0];
-  TextEditingController modelTextController = TextEditingController(
-      text: Get.find<HomeController>()
-          .userInfo
-          .value
-          .data
-          ?.vehicleDetails?[0]
-          ?.model);
-  TextEditingController yearTextController = TextEditingController(
-      text: Get.find<HomeController>()
-          .userInfo
-          .value
-          .data
-          ?.vehicleDetails?[0]
-          ?.year
-          .toString());
-  TextEditingController licenseTextController = TextEditingController(
-      text: Get.find<HomeController>()
-          .userInfo
-          .value
-          .data
-          ?.vehicleDetails?[0]
-          ?.licencePlate);
-  TextEditingController type = TextEditingController(
-      text: Get.find<HomeController>()
-          .userInfo
-          .value
-          .data
-          ?.vehicleDetails?[0]
-          ?.type);
-  TextEditingController color = TextEditingController(
-      text: Get.find<HomeController>()
-          .userInfo
-          .value
-          .data
-          ?.vehicleDetails?[0]
-          ?.color);
+  TextEditingController modelTextController =
+      TextEditingController(text: Get.find<GetStorageService>().vehicleModel);
+  TextEditingController yearTextController =
+      TextEditingController(text: Get.find<GetStorageService>().vehicleYear);
+  TextEditingController licenseTextController =
+      TextEditingController(text: Get.find<GetStorageService>().licensePlate);
+  TextEditingController type =
+      TextEditingController(text: Get.find<GetStorageService>().vehicleType);
+  TextEditingController color =
+      TextEditingController(text: Get.find<GetStorageService>().vehicleColor);
   Rx<File?>? selectedVehicleImagePath = Rx<File?>(null);
   RxBool isVehiclePicUpdated = false.obs;
   RxBool isTypeListExpanded = false.obs;
@@ -158,6 +130,7 @@ class VehicleDetailsController extends GetxController {
   }
 
   Future<void> updateVehicleDetailsAPI() async {
+    final storageService = Get.find<GetStorageService>();
     btnLoading.value = true;
     final File? pickedImageFile = selectedVehicleImagePath!.value;
 
@@ -177,17 +150,19 @@ class VehicleDetailsController extends GetxController {
     if (isVehiclePicUpdated.value == true) {
       userData = dio.FormData.fromMap({
         "model": modelTextController.value.text.isEmpty
-            ? vehicleInfoModel?.model
+            ? storageService.vehicleModel
             : modelTextController.value.text,
-        "type":
-            type.value.text == "" ? vehicleInfoModel?.type : type.value.text,
-        "color":
-            color.value.text == "" ? vehicleInfoModel?.color : color.value.text,
+        "type": type.value.text == ""
+            ? storageService.vehicleType
+            : type.value.text,
+        "color": color.value.text == ""
+            ? storageService.vehicleColor
+            : color.value.text,
         "year": yearTextController.value.text.isEmpty
-            ? vehicleInfoModel?.year
+            ? storageService.vehicleYear
             : yearTextController.value.text,
         "licencePlate": licenseTextController.value.text.isEmpty
-            ? vehicleInfoModel?.licencePlate
+            ? storageService.licensePlate
             : licenseTextController.value.text,
         if (pickedImageFile != null)
           'vehiclePic': await dio.MultipartFile.fromFile(
@@ -199,17 +174,19 @@ class VehicleDetailsController extends GetxController {
     } else {
       userData = dio.FormData.fromMap({
         "model": modelTextController.value.text.isEmpty
-            ? vehicleInfoModel?.model
+            ? storageService.vehicleModel
             : modelTextController.value.text,
-        "type":
-            type.value.text == "" ? vehicleInfoModel?.type : type.value.text,
-        "color":
-            color.value.text == "" ? vehicleInfoModel?.color : color.value.text,
+        "type": type.value.text == ""
+            ? storageService.vehicleType
+            : type.value.text,
+        "color": color.value.text == ""
+            ? storageService.vehicleColor
+            : color.value.text,
         "year": yearTextController.value.text.isEmpty
-            ? vehicleInfoModel?.year
+            ? storageService.vehicleYear
             : yearTextController.value.text,
         "licencePlate": licenseTextController.value.text.isEmpty
-            ? vehicleInfoModel?.licencePlate
+            ? storageService.licensePlate
             : licenseTextController.value.text,
       });
     }

@@ -59,7 +59,7 @@ class ProfileSettingsView extends GetView<ProfileSettingsController> {
                   ),
               image: ImageConstant.svgProfileDetails,
               text: LocaleKeys.app_userDetails.tr),
-          Get.find<HomeController>().userInfo.value.data?.vehicleStatus == true
+          Get.find<GetStorageService>().vehicleStatus == true
               ? ProfileContainer(
                   onTap: () => Get.toNamed(Routes.VEHICLE_DETAILS),
                   image: ImageConstant.svgProfileCar,

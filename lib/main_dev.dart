@@ -51,7 +51,7 @@ Future<void> main() async {
       initialRoute: AppPages.INITIAL,
       initialBinding: HomeBinding(),
       getPages: AppPages.routes,
-      localizationsDelegates: GlobalMaterialLocalizations.delegates, 
+      localizationsDelegates: GlobalMaterialLocalizations.delegates,
       // theme: AppTheme.light,
       // darkTheme: AppTheme.dark,
     ),
@@ -59,9 +59,9 @@ Future<void> main() async {
 }
 
 Future<void> initGetServices() async {
+  AppEnvironment.setupEnv(Environment.dev);
   await Get.putAsync<GetStorageService>(() => GetStorageService().initState());
   await Get.putAsync<AuthService>(() async => AuthService());
   Get.put(HomeController());
   await DependencyInjection.init();
-  AppEnvironment.setupEnv(Environment.dev);
 }

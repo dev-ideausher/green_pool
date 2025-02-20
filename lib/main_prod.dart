@@ -71,9 +71,9 @@ Future<void> main() async {
 }
 
 Future<void> initGetServices() async {
+  AppEnvironment.setupEnv(Environment.prod);
   await Get.putAsync<GetStorageService>(() => GetStorageService().initState());
   await Get.putAsync<AuthService>(() async => AuthService());
   Get.put(HomeController());
   await DependencyInjection.init();
-  AppEnvironment.setupEnv(Environment.prod);
 }

@@ -318,14 +318,14 @@ class ProfileSetupController extends GetxController
         storageService.isLoggedIn = true;
         storageService.setDriver = true;
         decideRoutingAfterSignUp();
+        isVehicleBtnLoading.value = false;
+        homeController.userInfoAPI();
         /*Get.offNamed(Routes.EMERGENCY_CONTACTS, arguments: {
           'fromNavBar': fromNavBar,
           'postRideModel': postRideModel.value
         }, parameters: {
           "profileType": "driver"
         });*/
-        isVehicleBtnLoading.value = false;
-        homeController.userInfoAPI();
       } catch (e) {
         isVehicleBtnLoading.value = false;
         throw Exception(e);

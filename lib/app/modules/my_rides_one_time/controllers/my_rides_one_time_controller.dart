@@ -121,13 +121,16 @@ class MyRidesOneTimeController extends GetxController {
   }
 
   checkCancellationCount(MyRidesModelData myRidesModelData) async {
-    final userInfo = Get.find<HomeController>().userInfo.value.data;
+    final int rideCancellationCounts =
+        Get.find<GetStorageService>().cancelCounts;
+    final String rideCancellationDate =
+        Get.find<GetStorageService>().cancellationDate;
+
     if (myRidesModelData.postsInfo?.isEmpty ?? true) {
       cancelRideAPI(myRidesModelData);
     } else {
-      if ((userInfo?.rideCancellationDetails?.count ?? 0) >= 2 &&
-          GpUtil.checkSixMonthsDuration(
-              userInfo!.rideCancellationDetails!.cancellationDate!)) {
+      if (rideCancellationCounts >= 2 &&
+          GpUtil.checkSixMonthsDuration(rideCancellationDate)) {
         DialogHelper.accSuspensionWarningDialog(
           () async {
             Get.back();
@@ -172,12 +175,16 @@ class MyRidesOneTimeController extends GetxController {
               await APIManager.cancelRide(body: driverRideId);
           if (cancelRideResponse.data['status']) {
             await myRidesAPI();
+            final storageService = Get.find<GetStorageService>();
+            int currentCancelCount = storageService.cancelCounts;
+            storageService.cancelCounts = currentCancelCount + 1;
           } else {
             showMySnackbar(msg: cancelRideResponse.data["message"].toString());
           }
-          isLoad.value = false;
         } catch (e) {
           debugPrint(e.toString());
+        } finally {
+          isLoad.value = false;
         }
       },
     );

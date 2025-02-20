@@ -6,7 +6,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/common_image_view.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
-import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -51,10 +50,10 @@ class VehicleDetailsView extends GetView<VehicleDetailsController> {
                               File(''),
                         )
                       : CommonImageView(
-                          url:
-                              "${controller.vehicleInfoModel!.vehiclePic!.url}"))),
+                          url: Get.find<GetStorageService>().vehicleImageUrl))),
             ).paddingOnly(bottom: 16.kh),
-            RichTextHeading(text: LocaleKeys.app_model.tr).paddingOnly(bottom: 8.kh),
+            RichTextHeading(text: LocaleKeys.app_model.tr)
+                .paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
               hintText: LocaleKeys.app_enterVehicleModel.tr,
               controller: controller.modelTextController,
@@ -70,7 +69,8 @@ class VehicleDetailsView extends GetView<VehicleDetailsController> {
                           : ColorUtil.kSecondary01,
                       BlendMode.srcIn)),
             ).paddingOnly(bottom: 16.kh),
-            RichTextHeading(text: LocaleKeys.app_type.tr).paddingOnly(bottom: 8.kh),
+            RichTextHeading(text: LocaleKeys.app_type.tr)
+                .paddingOnly(bottom: 8.kh),
             Obx(
               () => GreenPoolTextField(
                 hintText: LocaleKeys.app_selectVehicleType.tr,
@@ -131,7 +131,8 @@ class VehicleDetailsView extends GetView<VehicleDetailsController> {
                 ).paddingOnly(bottom: 16.kh),
               ),
             ),
-            RichTextHeading(text: LocaleKeys.app_color.tr).paddingOnly(bottom: 8.kh),
+            RichTextHeading(text: LocaleKeys.app_color.tr)
+                .paddingOnly(bottom: 8.kh),
             Obx(
               () => GreenPoolTextField(
                 hintText: LocaleKeys.app_selectVehicleColor.tr,
@@ -192,7 +193,8 @@ class VehicleDetailsView extends GetView<VehicleDetailsController> {
                 ).paddingOnly(bottom: 16.kh),
               ),
             ),
-            RichTextHeading(text: LocaleKeys.app_year.tr).paddingOnly(bottom: 8.kh),
+            RichTextHeading(text: LocaleKeys.app_year.tr)
+                .paddingOnly(bottom: 8.kh),
             GreenPoolTextField(
               hintText: LocaleKeys.app_enterYear.tr,
               controller: controller.yearTextController,

@@ -38,6 +38,15 @@ class GetStorageService extends GetxService {
       'hasTappedAllowNotification';
   static const String _appLocale = 'appLocale';
   static const String _locationCache = 'locationCache';
+  static const String _cancelCounts = 'cancelCounts';
+  static const String _cancellationDate = 'cancellationDate';
+  static const String _vehicleStatus = 'vehicleStatus';
+  static const String _vehicleModel = 'vehicleModel';
+  static const String _vehicleYear = 'vehicleYear';
+  static const String _licensePlate = 'licensePlate';
+  static const String _vehicleType = 'vehicleType';
+  static const String _vehicleColor = 'vehicleColor';
+  static const String _vehicleImageUrl = 'vehicleImageUrl';
   final String _subscribedToFcmKey = 'hasSubscribedToFCM';
 
   Future<GetStorageService> initState() async {
@@ -111,6 +120,33 @@ class GetStorageService extends GetxService {
 
   String? get getUserAppId => _runData.read(_userAppId) ?? '';
   set setUserAppId(String? val) => _runData.write(_userAppId, val);
+
+  String get cancellationDate => _runData.read(_cancellationDate) ?? '';
+  set cancellationDate(String val) => _runData.write(_cancellationDate, val);
+
+  int get cancelCounts => _runData.read(_cancelCounts) ?? 0;
+  set cancelCounts(int val) => _runData.write(_cancelCounts, val);
+
+  bool get vehicleStatus => _runData.read(_vehicleStatus) ?? false;
+  set vehicleStatus(bool val) => _runData.write(_vehicleStatus, val);
+
+  String get vehicleModel => _runData.read(_vehicleModel);
+  set vehicleModel(String val) => _runData.write(_vehicleModel, val);
+
+  String get vehicleYear => _runData.read(_vehicleYear);
+  set vehicleYear(String val) => _runData.write(_vehicleYear, val);
+
+  String get licensePlate => _runData.read(_licensePlate);
+  set licensePlate(String val) => _runData.write(_licensePlate, val);
+
+  String get vehicleType => _runData.read(_vehicleType);
+  set vehicleType(String val) => _runData.write(_vehicleType, val);
+
+  String get vehicleColor => _runData.read(_vehicleColor);
+  set vehicleColor(String val) => _runData.write(_vehicleColor, val);
+
+  String get vehicleImageUrl => _runData.read(_vehicleImageUrl) ?? '';
+  set vehicleImageUrl(String val) => _runData.write(_vehicleImageUrl, val);
 
   String get getSupportChatRoomId => _runData.read(_supportChatRoomId) ?? '';
   set setSupportChatRoomId(String val) =>
@@ -190,12 +226,30 @@ class GetStorageService extends GetxService {
     dateOfBirth = userInfo.data?.dob ?? "";
     idVerificationPicUrl = userInfo.data?.idPic?.url ?? "";
     isPinkMode = userInfo.data?.pinkMode ?? false;
+    setDriver = userInfo.data?.isDriver ?? false;
+    cancelCounts = userInfo.data?.rideCancellationDetails?.count ?? 0;
+    cancellationDate =
+        userInfo.data?.rideCancellationDetails?.cancellationDate ??
+            "2024-07-25T13:27:23.879Z";
+    vehicleStatus = userInfo.data?.vehicleStatus ?? false;
 
     if (userInfo.data?.status == "active") {
       accSuspended = false;
     } else {
       accSuspended = true;
     }
+  }
+
+  assignVehicleDetails(UserInfoModel userInfo) {
+    vehicleModel = userInfo.data?.vehicleDetails?.firstOrNull?.model ?? "";
+    vehicleYear =
+        userInfo.data?.vehicleDetails?.firstOrNull?.year.toString() ?? "";
+    licensePlate =
+        userInfo.data?.vehicleDetails?.firstOrNull?.licencePlate ?? "";
+    vehicleType = userInfo.data?.vehicleDetails?.firstOrNull?.type ?? "";
+    vehicleColor = userInfo.data?.vehicleDetails?.firstOrNull?.color ?? "";
+    vehicleImageUrl =
+        userInfo.data?.vehicleDetails?.firstOrNull?.vehiclePic?.url ?? "";
   }
 
   void logout() {
@@ -209,6 +263,6 @@ class GetStorageService extends GetxService {
 
     _runData.remove("runData");
     _runData.erase();
-    //Get.find<HomeController>().userInfo.value.data?.emergencyContactDetails = [];
+    //userInfo.value.data?.emergencyContactDetails = [];
   }
 }

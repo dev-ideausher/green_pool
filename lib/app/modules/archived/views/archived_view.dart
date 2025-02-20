@@ -11,7 +11,6 @@ import 'package:green_pool/app/services/text_style_util.dart';
 import '../../../../generated/locales.g.dart';
 import '../../../components/common_image_view.dart';
 import '../../../components/greenpool_appbar.dart';
-import '../../../res/strings.dart';
 import '../controllers/archived_controller.dart';
 
 class ArchivedView extends GetView<ArchivedController> {
@@ -20,8 +19,7 @@ class ArchivedView extends GetView<ArchivedController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: GreenPoolAppBar(
-            title: Text(LocaleKeys.app_archivedMsgs.tr), leading: const SizedBox()),
+        appBar: GreenPoolAppBar(title: Text(LocaleKeys.app_archivedMsgs.tr)),
         body: Obx(
           () => RefreshIndicator(
             backgroundColor: ColorUtil.kWhiteColor,
