@@ -16,7 +16,6 @@ import '../../../../generated/locales.g.dart';
 import '../../../components/gp_progress.dart';
 import '../../../components/green_pool_divider.dart';
 import '../../../components/origin_to_destination.dart';
-import '../../../res/strings.dart';
 import '../../../services/colors.dart';
 import '../../home/controllers/home_controller.dart';
 import '../controllers/ride_history_controller.dart';
@@ -188,7 +187,8 @@ class RiderRideHistTile extends StatelessWidget {
                                         color: ColorUtil.kSecondary01),
                                   ),
                                   TextSpan(
-                                    text: '${LocaleKeys.app_dollar.tr} ${his?.price}',
+                                    text:
+                                        '${LocaleKeys.app_dollar.tr} ${his?.price}',
                                     style: TextStyleUtil.k16Semibold(
                                         fontSize: 16.kh,
                                         color: ColorUtil.kSecondary01),
@@ -342,14 +342,8 @@ class DriverRideHistTile extends StatelessWidget {
                   child: ClipRRect(
                       borderRadius: BorderRadius.circular(100.kh),
                       child: CommonImageView(
-                          url: Get.find<HomeController>()
-                              .userInfo
-                              .value
-                              .data
-                              ?.profilePic
-                              ?.url))),
-              title: Text(
-                  Get.find<GetStorageService>().getUserName,
+                          url: Get.find<GetStorageService>().profilePicUrl))),
+              title: Text(Get.find<GetStorageService>().getUserName,
                   style: TextStyleUtil.k16Bold()),
               subtitle: Text(
                 // GpUtil.getDateFormat(his?.date) ??
@@ -423,7 +417,8 @@ class DriverRideHistTile extends StatelessWidget {
               origin: his?.origin?.name ?? LocaleKeys.app_pickup.tr,
               stop1: his?.stops?[0]?.name ?? "",
               stop2: his?.stops?[1]?.name ?? "",
-              destination: his?.destination?.name ?? LocaleKeys.app_destination.tr,
+              destination:
+                  his?.destination?.name ?? LocaleKeys.app_destination.tr,
             ).paddingOnly(bottom: 8.kh),
             const GreenPoolDivider().paddingOnly(bottom: 16.kh),
             Visibility(

@@ -43,7 +43,6 @@ class PostRideStepFourController extends GetxController {
 
   decideRouting() {
     final storageService = Get.find<GetStorageService>();
-    final homeController = Get.find<HomeController>();
 
     //if user is logged in
     if (storageService.isLoggedIn) {
@@ -56,7 +55,7 @@ class PostRideStepFourController extends GetxController {
           'postRideModel': postRideModel.value
         });
       } //else if user has not filled vehicle details then move to vehicle details and back to step four
-      else if (homeController.userInfo.value.data?.vehicleStatus == false) {
+      else if (storageService.vehicleStatus == false) {
         showMySnackbar(msg: LocaleKeys.app_plsFillVehicleDetails.tr);
         Get.toNamed(Routes.VEHICLE_SETUP, arguments: postRideModel.value);
       } //else Post the ride

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
+import 'package:green_pool/app/services/storage.dart';
 
 import '../../../../generated/locales.g.dart';
 import '../../../components/common_image_view.dart';
@@ -39,19 +40,8 @@ class TransactionHistoryView extends GetView<TransactionHistoryController> {
                     itemBuilder: (context, index) {
                       final transaction = controller.transactions[index];
                       return TransactionTile(
-                              title: Get.find<HomeController>()
-                                      .userInfo
-                                      .value
-                                      .data
-                                      ?.fullName ??
-                                  "",
-                              path: Get.find<HomeController>()
-                                      .userInfo
-                                      .value
-                                      .data
-                                      ?.profilePic
-                                      ?.url ??
-                                  "",
+                              title: Get.find<GetStorageService>().getUserName,
+                              path: Get.find<GetStorageService>().profilePicUrl,
                               onTap: () {
                                 Get.dialog(
                                   useSafeArea: true,
