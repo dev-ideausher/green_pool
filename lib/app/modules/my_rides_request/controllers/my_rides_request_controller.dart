@@ -10,7 +10,7 @@ import '../../../data/driver_send_request_model.dart';
 import '../../../data/send_rider_request_model.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/dio/api_service.dart';
-import '../../../services/gp_util.dart';
+import '../../../services/utils/date_utils.dart';
 import '../../../services/snackbar.dart';
 import '../../home/controllers/home_controller.dart';
 import '../views/booking_confirm_bottom.dart';
@@ -81,7 +81,7 @@ class MyRidesRequestController extends GetxController {
   }
 
   rejectRidersRequestAPI(int index) async {
-    final String ridePostId = "${confirmRequestModel.value.data?[index]?.Id}";
+    final String ridePostId = "${confirmRequestModel.value.data?[index].Id}";
 
     final Map<String, dynamic> rideData = {"ridePostId": ridePostId};
 
@@ -163,7 +163,7 @@ class MyRidesRequestController extends GetxController {
               riderRideId: rideDetailId.value.riderRidId,
               origin: data.origin?.name?.split(',').first ?? "City",
               destination: data.destination?.name?.split(',').first ?? "City",
-              date: GpUtil.formatDate(
+              date: DateTimeUtils.formatDate(
                   DateTime.parse(data.date ?? LocaleKeys.app_defaultDate.tr))));
     } catch (e) {
       Get.toNamed(Routes.CHAT_PAGE,
@@ -177,7 +177,7 @@ class MyRidesRequestController extends GetxController {
               riderRideId: rideDetailId.value.riderRidId,
               origin: data.origin?.name?.split(',').first ?? "City",
               destination: data.destination?.name?.split(',').first ?? "City",
-              date: GpUtil.formatDate(
+              date: DateTimeUtils.formatDate(
                   DateTime.parse(data.date ?? LocaleKeys.app_defaultDate.tr))));
     }
   }
@@ -205,7 +205,7 @@ class MyRidesRequestController extends GetxController {
               destination:
                   data.rideDetails?[0]?.destination?.name?.split(',').first ??
                       "City",
-              date: GpUtil.formatDate(DateTime.parse(
+              date: DateTimeUtils.formatDate(DateTime.parse(
                   data.rideDetails?[0]?.date ??
                       LocaleKeys.app_defaultDate.tr))));
     } catch (e) {
@@ -223,7 +223,7 @@ class MyRidesRequestController extends GetxController {
               destination:
                   data.rideDetails?[0]?.destination?.name?.split(',').first ??
                       "City",
-              date: GpUtil.formatDate(DateTime.parse(
+              date: DateTimeUtils.formatDate(DateTime.parse(
                   data.rideDetails?[0]?.date ??
                       LocaleKeys.app_defaultDate.tr))));
     }

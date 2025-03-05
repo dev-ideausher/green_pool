@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:green_pool/app/res/strings.dart';
-import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:intl/intl.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/common_image_view.dart';
@@ -14,7 +12,7 @@ import 'package:green_pool/app/services/text_style_util.dart';
 
 import '../../../../generated/locales.g.dart';
 import '../../../components/gp_progress.dart';
-import '../../../services/gp_util.dart';
+import '../../../services/utils/date_utils.dart';
 import '../../home/controllers/home_controller.dart';
 import '../controllers/chat_page_controller.dart';
 
@@ -50,7 +48,7 @@ class ChatPageView extends GetView<ChatPageController> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      controller.chatArg.value.name ?? "",
+                      controller.chatArg.value.name ?? "User",
                       style: TextStyleUtil.k14Bold(),
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
@@ -196,7 +194,7 @@ class ChatPageView extends GetView<ChatPageController> {
                                                     MainAxisAlignment.end,
                                                 children: [
                                                   Text(
-                                                    GpUtil.formatTime(message
+                                                    DateTimeUtils.formatTime(message
                                                         .timestamp), // Replace with actual time
                                                     style: TextStyleUtil
                                                         .k10Regular(
@@ -272,14 +270,14 @@ class ChatPageView extends GetView<ChatPageController> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Text(
-                                      GpUtil.isToday(nextMessage.timestamp)
+                                      DateTimeUtils.isToday(nextMessage.timestamp)
                                           ? LocaleKeys.app_today.tr
                                           : DateFormat.E()
                                               .format(nextMessage.timestamp),
                                       style: TextStyleUtil.k14Regular(),
                                     ),
                                     Text(
-                                      GpUtil.formatDateddMMMyyyy(
+                                      DateTimeUtils.formatDateddMMMyyyy(
                                           nextMessage.timestamp.toString()),
                                       style: TextStyleUtil.k12Regular(
                                           color: ColorUtil.kBlack04),

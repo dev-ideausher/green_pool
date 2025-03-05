@@ -6,10 +6,11 @@ import 'package:http_parser/http_parser.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../data/post_ride_model.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/dio/api_service.dart';
-import '../../../services/image_helper.dart';
+import '../../../services/utils/image_util.dart';
 import '../../../services/snackbar.dart';
 import '../../../services/storage.dart';
 import '../../home/controllers/home_controller.dart';
@@ -89,7 +90,7 @@ class VehicleSetupController extends GetxController {
       Get.back();
       update();
     } else {
-      showMySnackbar(msg: 'No image selected');
+      showMySnackbar(msg: LocaleKeys.app_no_img_selected.tr);
     }
   }
 
@@ -103,7 +104,7 @@ class VehicleSetupController extends GetxController {
       Get.back();
       update();
     } else {
-      showMySnackbar(msg: 'No image selected');
+      showMySnackbar(msg: LocaleKeys.app_no_img_selected.tr);
     }
   }
 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/data/post_ride_model.dart';
 import 'package:green_pool/app/services/dio/api_service.dart';
-import 'package:green_pool/app/services/gp_util.dart';
+import 'package:green_pool/app/services/utils/gp_util.dart';
 import 'package:green_pool/app/services/storage.dart';
 
 import '../../../data/ride_fare_model.dart';
@@ -25,6 +25,7 @@ class PostRideStepThreeController extends GetxController {
   double minFarePrice = 0.0;
 
   num totalDistance = 0;
+  var prevRideData = PostRideModel().obs;
 
   @override
   Future<void> onInit() async {
@@ -36,17 +37,11 @@ class PostRideStepThreeController extends GetxController {
 
   @override
   void onClose() {
-    // totalPrice.dispose();
-    // originToStop1Price.dispose();
-    // originToStop2Price.dispose();
-    // stop1ToStop2Price.dispose();
-    // stop1ToDestinationPrice.dispose();
-    // stop2toDestinationPrice.dispose();
-    // descriptionTextController.dispose();
     super.onClose();
   }
 
   getRideFareAPI() async {
+    //to set price from origin to destination
     try {
       totalDistance = await GpUtil.calculateDistanceInInt(
           startLat: postRideModel.value.ridesDetails?.origin?.latitude ?? 0.0,
@@ -171,101 +166,103 @@ class PostRideStepThreeController extends GetxController {
   Future<void> createPrice() async {
     try {
       isActivePricingButton.value = false;
+      final totalPriceValue = int.tryParse(totalPrice.text) ?? 0;
+
+      if (totalPriceValue <= 0) {
+        debugPrint("Invalid total price value.");
+        return;
+      }
+
       final ratePerKm = calculateRatePerKm(
-          totalDistance: totalDistance, totalPrice: int.parse(totalPrice.text));
-      if (postRideModel.value.ridesDetails?.stops?.first.name?.isNotEmpty ??
-          false) {
-        final originToStop1Distance = await GpUtil.calculateDistanceInInt(
-            startLat: postRideModel.value.ridesDetails?.origin?.latitude ?? 0.0,
-            startLong:
-                postRideModel.value.ridesDetails?.origin?.longitude ?? 0.0,
-            endLat:
-                postRideModel.value.ridesDetails?.stops?.first.latitude ?? 0.0,
-            endLong: postRideModel.value.ridesDetails?.stops?.first.longitude ??
-                0.0);
-        originToStop1Price.text =
-            (originToStop1Distance * ratePerKm).round().toString();
+          totalDistance: totalDistance, totalPrice: totalPriceValue);
 
-        //price should not go less than 5 dollars
-        if (int.parse(originToStop1Price.text) < 5) {
-          originToStop1Price.text = "5";
-        }
+      final rideDetails = postRideModel.value.ridesDetails;
+      if (rideDetails == null) {
+        debugPrint("Ride details not available.");
+        return;
+      }
 
-        final stop1toDestinationDistance = await GpUtil.calculateDistanceInInt(
-            startLat:
-                postRideModel.value.ridesDetails?.stops?.first.latitude ?? 0.0,
-            startLong:
-                postRideModel.value.ridesDetails?.stops?.first.longitude ?? 0.0,
-            endLat:
-                postRideModel.value.ridesDetails?.destination?.latitude ?? 0.0,
-            endLong: postRideModel.value.ridesDetails?.destination?.longitude ??
-                0.0);
-        stop1ToDestinationPrice.text =
-            (stop1toDestinationDistance * ratePerKm).round().toString();
+      final origin = rideDetails.origin;
+      final destination = rideDetails.destination;
+      final stops = rideDetails.stops ?? [];
 
-        //price should not go less than 5 dollars
-        if (int.parse(stop1ToDestinationPrice.text) < 5) {
-          stop1ToDestinationPrice.text = "5";
-        }
+      if (stops.isNotEmpty && stops.first.name?.isNotEmpty == true) {
+        //origin to stop1
+        await _calculateAndSetPrice(
+            startLat: origin?.latitude,
+            startLong: origin?.longitude,
+            endLat: stops.first.latitude,
+            endLong: stops.first.longitude,
+            priceField: originToStop1Price,
+            ratePerKm: ratePerKm);
 
-        if (postRideModel.value.ridesDetails?.stops?[1].name?.isNotEmpty ??
-            false) {
-          final originToStop2Distance = await GpUtil.calculateDistanceInInt(
-              startLat:
-                  postRideModel.value.ridesDetails?.origin?.latitude ?? 0.0,
-              startLong:
-                  postRideModel.value.ridesDetails?.origin?.longitude ?? 0.0,
-              endLat:
-                  postRideModel.value.ridesDetails?.stops?[1].latitude ?? 0.0,
-              endLong:
-                  postRideModel.value.ridesDetails?.stops?[1].longitude ?? 0.0);
-          final stop1toStop2Distance = await GpUtil.calculateDistanceInInt(
-              startLat:
-                  postRideModel.value.ridesDetails?.origin?.latitude ?? 0.0,
-              startLong:
-                  postRideModel.value.ridesDetails?.origin?.longitude ?? 0.0,
-              endLat:
-                  postRideModel.value.ridesDetails?.stops?[1].latitude ?? 0.0,
-              endLong:
-                  postRideModel.value.ridesDetails?.stops?[1].longitude ?? 0.0);
+        //stop1 to destination
+        await _calculateAndSetPrice(
+            startLat: stops.first.latitude,
+            startLong: stops.first.longitude,
+            endLat: destination?.latitude,
+            endLong: destination?.longitude,
+            priceField: stop1ToDestinationPrice,
+            ratePerKm: ratePerKm);
+      }
 
-          final stop2toDestinationDistance =
-              await GpUtil.calculateDistanceInInt(
-                  startLat:
-                      postRideModel.value.ridesDetails?.stops?[1].latitude ??
-                          0.0,
-                  startLong:
-                      postRideModel.value.ridesDetails?.stops?[1].longitude ??
-                          0.0,
-                  endLat:
-                      postRideModel.value.ridesDetails?.destination?.latitude ??
-                          0.0,
-                  endLong: postRideModel
-                          .value.ridesDetails?.destination?.longitude ??
-                      0.0);
+      if (stops.length > 1 && stops[1].name?.isNotEmpty == true) {
+        //origin to stop2
+        await _calculateAndSetPrice(
+            startLat: origin?.latitude,
+            startLong: origin?.longitude,
+            endLat: stops[1].latitude,
+            endLong: stops[1].longitude,
+            priceField: originToStop2Price,
+            ratePerKm: ratePerKm);
 
-          originToStop2Price.text =
-              (originToStop2Distance * ratePerKm).round().toString();
-          stop1ToStop2Price.text =
-              (stop1toStop2Distance * ratePerKm).round().toString();
-          stop2toDestinationPrice.text =
-              (stop2toDestinationDistance * ratePerKm).round().toString();
+        //stop1 to stop2
+        await _calculateAndSetPrice(
+            startLat: stops.first.latitude,
+            startLong: stops.first.longitude,
+            endLat: stops[1].latitude,
+            endLong: stops[1].longitude,
+            priceField: stop1ToStop2Price,
+            ratePerKm: ratePerKm);
 
-          //price should not go less than 5 dollars
-          if (int.parse(originToStop2Price.text) < 5) {
-            originToStop2Price.text = "5";
-          }
-          if (int.parse(stop1ToStop2Price.text) < 5) {
-            stop1ToStop2Price.text = "5";
-          }
-          if (int.parse(stop2toDestinationPrice.text) < 5) {
-            stop2toDestinationPrice.text = "5";
-          }
-        }
+        //stop2 to destination
+        await _calculateAndSetPrice(
+            startLat: stops[1].latitude,
+            startLong: stops[1].longitude,
+            endLat: destination?.latitude,
+            endLong: destination?.longitude,
+            priceField: stop2toDestinationPrice,
+            ratePerKm: ratePerKm);
       }
     } catch (e) {
-      debugPrint(e.toString());
+      debugPrint("Error in createPrice: $e");
     }
+  }
+
+  /// Calculates distance and sets price, ensuring a minimum of 5 dollars.
+  Future<void> _calculateAndSetPrice(
+      {required double? startLat,
+      required double? startLong,
+      required double? endLat,
+      required double? endLong,
+      required TextEditingController priceField,
+      required double ratePerKm}) async {
+    if (startLat == null ||
+        startLong == null ||
+        endLat == null ||
+        endLong == null) {
+      debugPrint("Invalid coordinates, skipping distance calculation.");
+      return;
+    }
+
+    final distance = await GpUtil.calculateDistanceInInt(
+        startLat: startLat,
+        startLong: startLong,
+        endLat: endLat,
+        endLong: endLong);
+
+    final price = (distance * ratePerKm).round();
+    priceField.text = price < 5 ? "5" : price.toString();
   }
 
   double calculateRatePerKm(
@@ -284,6 +281,30 @@ class PostRideStepThreeController extends GetxController {
         double.parse(val) > minFarePrice) {
       postRideModel.value.ridesDetails?.origin?.originDestinationFair = val;
       setActiveStatePricing();
+    }
+  }
+
+  setPrevRideData() {
+    final prevRide = Get.find<GetStorageService>().getPostRideData();
+    prevRideData.value = prevRide ?? PostRideModel();
+    final rideDetails = prevRideData.value.ridesDetails;
+    final stops = rideDetails?.stops ?? [];
+    final fareString = rideDetails?.origin?.originDestinationFair ?? "0";
+    final fare = double.tryParse(fareString) ?? 0.0;
+
+    if (fare > minFarePrice && fare < maxFarePrice) {
+      totalPrice.text = fare.toString();
+    }
+
+    if (stops.isNotEmpty && stops.first.name?.isNotEmpty == true) {
+      originToStop1Price.text = stops.first.originToStopFair ?? "5";
+      stop1ToDestinationPrice.text = stops.first.stopTodestinationFair ?? "5";
+    }
+
+    if (stops.length > 1 && stops[1].name?.isNotEmpty == true) {
+      originToStop2Price.text = stops[1].originToStopFair ?? "5";
+      stop1ToStop2Price.text = stops[1].stopToStopFair ?? "5";
+      stop2toDestinationPrice.text = stops[1].stopTodestinationFair ?? "5";
     }
   }
 }

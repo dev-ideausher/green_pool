@@ -1,0 +1,229 @@
+import 'dart:ui';
+import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_google_maps_webservices/directions.dart';
+import 'package:intl/intl.dart';
+import 'package:flutter/services.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'dart:ui' as ui;
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+import '../dio/endpoints.dart';
+
+
+class GpUtil {
+  static Future<num> calculateDistanceInInt({
+    required double startLat,
+    required double startLong,
+    required double endLat,
+    required double endLong,
+  }) async {
+    try {
+      final apiKey = Endpoints.googleApiKey;
+      final url = Uri.parse(
+        'https://maps.googleapis.com/maps/api/distancematrix/json?'
+        'origins=$startLat,$startLong&destinations=$endLat,$endLong'
+        '&mode=driving&key=$apiKey',
+      );
+
+      final response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        if (data['status'] == 'OK' &&
+            data['rows'][0]['elements'][0]['status'] == 'OK') {
+          final distanceInMeters =
+              data['rows'][0]['elements'][0]['distance']['value'];
+          final distanceInKilometers = distanceInMeters / 1000.0;
+          return distanceInKilometers;
+        }
+      }
+      return 0;
+    } catch (e) {
+      print("Error calculating distance: $e");
+      return 0;
+    }
+  }
+
+  /*static Future<num> calculateDistanceInInt({
+    required double startLat,
+    required double startLong,
+    required double endLat,
+    required double endLong,
+  }) async {
+    final directions = GoogleMapsDirections(apiKey: Endpoints.googleApiKey);
+    final response = await directions.directionsWithLocation(
+      Location(lat: startLat, lng: startLong),
+      Location(lat: endLat, lng: endLong),
+      travelMode: TravelMode.driving,
+    );
+
+    if (response.isOkay) {
+      final distanceInMeters = response.routes.first.legs.first.distance.value;
+      // Convert distance from meters to kilometers
+      final distanceInKilometers = distanceInMeters / 1000.0;
+      return distanceInKilometers;
+    } else {
+      return 0;
+    }
+  }*/
+
+  /* static double calculateDistance({
+    required double startLat,
+    required double startLong,
+    required double endLat,
+    required double endLong,
+  }) {
+    const double earthRadius = 6371.0; // Radius of the Earth in kilometers
+
+    double toRadians(double degree) {
+      return degree * (pi / 180.0);
+    }
+
+    double lat1 = toRadians(startLat);
+    double lon1 = toRadians(startLong);
+    double lat2 = toRadians(endLat);
+    double lon2 = toRadians(endLong);
+
+    double dLat = lat2 - lat1;
+    double dLon = lon2 - lon1;
+
+    double a = sin(dLat / 2) * sin(dLat / 2) + cos(lat1) * cos(lat2) * sin(dLon / 2) * sin(dLon / 2);
+
+    double c = 2 * atan2(sqrt(a), sqrt(1 - a));
+
+    double distance = earthRadius * c;
+
+    return distance;
+  }*/
+
+  static LatLngBounds boundsFromLatLngList(List<LatLng> list) {
+    double minLat = double.infinity;
+    double maxLat = -double.infinity;
+    double minLong = double.infinity;
+    double maxLong = -double.infinity;
+
+    for (LatLng latLng in list) {
+      if (latLng.latitude < minLat) minLat = latLng.latitude;
+      if (latLng.latitude > maxLat) maxLat = latLng.latitude;
+      if (latLng.longitude < minLong) minLong = latLng.longitude;
+      if (latLng.longitude > maxLong) maxLong = latLng.longitude;
+    }
+
+    return LatLngBounds(
+      southwest: LatLng(minLat, minLong),
+      northeast: LatLng(maxLat, maxLong),
+    );
+  }
+
+  static void moveCamera(GoogleMapController mapController, LatLng target) {
+    if (!isPositionInsideBounds(target)) {
+      mapController.moveCamera(CameraUpdate.newLatLngBounds(
+          LatLngBounds(
+            southwest: const LatLng(41.675537, -141.001873), // Canada
+            northeast: const LatLng(83.110626, -52.619403), //  Canada
+          ),
+          0));
+    }
+  }
+
+  static bool isPositionInsideBounds(LatLng position) {
+    return position.latitude >= 41.675537 &&
+        position.latitude <= 83.110626 &&
+        position.longitude >= -141.001873 &&
+        position.longitude <= -52.619403;
+  }
+
+  static Future<Uint8List> getMarker(String path, int width) async {
+    ByteData data = await rootBundle.load(path);
+    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
+        targetWidth: width);
+    ui.FrameInfo fi = await codec.getNextFrame();
+    return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!
+        .buffer
+        .asUint8List();
+  }
+
+  static String getAgoTime(String? dateTimeString) {
+    if (dateTimeString == null) {
+      return '';
+    } else {
+      DateTime dateTime = DateTime.parse(dateTimeString);
+      DateTime now = DateTime.now();
+
+      Duration difference = now.difference(dateTime);
+
+      if (now.year == dateTime.year &&
+          now.month == dateTime.month &&
+          now.day == dateTime.day) {
+        // If the date is today
+        if (difference.inHours > 0) {
+          return "${difference.inHours} hour${difference.inHours > 1 ? 's' : ''} ago";
+        } else if (difference.inMinutes > 0) {
+          return "${difference.inMinutes} minute${difference.inMinutes > 1 ? 's' : ''} ago";
+        } else {
+          return "just now";
+        }
+      } else {
+        // Otherwise, show date in 'dd MMM yyyy' format
+        return DateFormat('dd MMM yyyy').format(dateTime);
+      }
+    }
+  }
+
+  static Future<BitmapDescriptor> getMarkerIconFromUrl(String url) async {
+    final Dio dio = Dio();
+    final Response response =
+        await dio.get(url, options: Options(responseType: ResponseType.bytes));
+    if (response.statusCode != 200) {
+      throw Exception('Failed to load image');
+    }
+    final Uint8List bytes = Uint8List.fromList(response.data);
+    final ui.Codec codec = await ui.instantiateImageCodec(bytes,
+        targetWidth: 100, targetHeight: 100);
+    final ui.FrameInfo frameInfo = await codec.getNextFrame();
+    final ui.Image image = frameInfo.image;
+
+    final ui.PictureRecorder pictureRecorder = ui.PictureRecorder();
+    final Canvas canvas = Canvas(pictureRecorder);
+    final Paint paint = Paint();
+    final double size = 66.0;
+
+    // Draw a circle and clip the image to this circle
+    canvas.drawCircle(Offset(size / 2, size / 2), size / 2, paint);
+    paint.isAntiAlias = true;
+    canvas.clipPath(Path()..addOval(Rect.fromLTWH(0, 0, size, size)));
+    canvas.drawImage(image, Offset(0, 0), paint);
+
+    final ui.Image circularImage = await pictureRecorder
+        .endRecording()
+        .toImage(size.toInt(), size.toInt());
+    final ByteData? byteData =
+        await circularImage.toByteData(format: ui.ImageByteFormat.png);
+    final Uint8List resizedBytes = byteData!.buffer.asUint8List();
+
+    return BitmapDescriptor.fromBytes(resizedBytes);
+  }
+
+  static Future<void> openGoogleMap(double pickupLat, double pickupLng,
+      double destinationLat, double destinationLng) async {
+    String googleUrl =
+        'https://www.google.com/maps/dir/?api=1&origin=$pickupLat,$pickupLng&destination=$destinationLat,$destinationLng';
+    //if stops added List<Map<String, double>> stops
+    /*if (stops.isNotEmpty) {
+      String waypoints =
+          stops.map((stop) => '${stop['lat']},${stop['lng']}').join('|');
+      googleUrl =
+          'https://www.google.com/maps/dir/?api=1&origin=$pickupLat,$pickupLng&destination=$destinationLat,$destinationLng&waypoints=$waypoints';
+    }*/
+    if (await canLaunchUrl(Uri.parse(googleUrl))) {
+      await launchUrl(Uri.parse(googleUrl));
+    } else {
+      throw 'Could not open the map.';
+    }
+  }
+
+  
+}

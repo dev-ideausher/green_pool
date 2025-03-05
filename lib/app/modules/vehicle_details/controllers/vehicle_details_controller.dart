@@ -7,8 +7,9 @@ import 'package:green_pool/app/services/storage.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../routes/app_pages.dart';
-import '../../../services/image_helper.dart';
+import '../../../services/utils/image_util.dart';
 import '../../../services/snackbar.dart';
 import '../../home/controllers/home_controller.dart';
 
@@ -67,7 +68,7 @@ class VehicleDetailsController extends GetxController {
       isVehiclePicUpdated.value = true;
       isBtnActive.value = true;
     } else {
-      showMySnackbar(msg: 'No image selected');
+      showMySnackbar(msg: LocaleKeys.app_no_img_selected.tr);
     }
   }
 
@@ -81,7 +82,7 @@ class VehicleDetailsController extends GetxController {
       isIDPicUpdated.value = true;
       isBtnActive.value = true;
     } else {
-      showMySnackbar(msg: 'No image selected');
+      showMySnackbar(msg: LocaleKeys.app_no_img_selected.tr);
     }
   }
 

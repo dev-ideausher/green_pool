@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/data/post_ride_model.dart';
 
 import '../../../routes/app_pages.dart';
+import '../../../services/storage.dart';
 import '../../origin/controllers/origin_controller.dart';
 
 class PostRideStepOneController extends GetxController {
@@ -14,6 +15,7 @@ class PostRideStepOneController extends GetxController {
   RxBool isDestinationAdded = false.obs;
   final RxBool isDriver = false.obs;
   var postRideModel = PostRideModel().obs;
+  var prevRideData = PostRideModel().obs;
 
   RxDouble originLatitude = 0.0.obs;
   RxDouble originLongitude = 0.0.obs;
@@ -164,5 +166,40 @@ class PostRideStepOneController extends GetxController {
     isDestinationAdded.value = false;
     destLatitude.value = 0.0;
     destLongitude.value = 0.0;
+  }
+
+  void setPrevRideData() {
+    final prevRide = Get.find<GetStorageService>().getPostRideData();
+    prevRideData.value = prevRide ?? PostRideModel();
+    final rideDetails = prevRideData.value.ridesDetails;
+
+    originLatitude.value = rideDetails!.origin!.latitude!;
+    originLongitude.value = rideDetails.origin!.longitude!;
+    originTextController.text = rideDetails.origin!.name!;
+    if (originTextController.text != "") {
+      isOriginAdded.value = true;
+    }
+
+    destLatitude.value = rideDetails.destination!.latitude!;
+    destLongitude.value = rideDetails.destination!.longitude!;
+    destinationTextController.text = rideDetails.destination!.name!;
+    if (destinationTextController.text != "") {
+      isDestinationAdded.value = true;
+    }
+
+    stop1Lat.value = rideDetails.stops![0].latitude!;
+    stop1Long.value = rideDetails.stops![0].longitude!;
+    stop1TextController.text = rideDetails.stops![0].name!;
+    if (stop1TextController.text != "") {
+      isStop1Added.value = true;
+    }
+
+    stop2Lat.value = rideDetails.stops![1].latitude!;
+    stop2Long.value = rideDetails.stops![1].longitude!;
+    stop2TextController.text = rideDetails.stops![1].name!;
+    if (stop2TextController.text != "") {
+      isStop2Added.value = true;
+    }
+    setActiveStatePostRideView();
   }
 }

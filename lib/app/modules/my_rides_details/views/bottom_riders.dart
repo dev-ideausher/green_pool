@@ -6,7 +6,6 @@ import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../../generated/locales.g.dart';
 import '../../../components/common_image_view.dart';
-import '../../../res/strings.dart';
 import '../../../services/text_style_util.dart';
 
 typedef RiderTapCallback = void Function(
@@ -44,7 +43,7 @@ class BottomRiders extends StatelessWidget {
                         child: SizedBox.fromSize(
                           size: Size.fromRadius(20.kh),
                           child: CommonImageView(
-                              url: rider?.riderDetails?.profilePic?.url ?? ""),
+                              url: rider.riderDetails?.profilePic?.url ?? ""),
                         ),
                       ),
                       trailing: GreenPoolButton(

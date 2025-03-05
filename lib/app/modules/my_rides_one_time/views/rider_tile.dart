@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/data/my_rides_model.dart';
-import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../../generated/locales.g.dart';
@@ -10,10 +9,10 @@ import '../../../components/common_image_view.dart';
 import '../../../components/green_pool_divider.dart';
 import '../../../components/origin_to_destination.dart';
 import '../../../constants/image_constant.dart';
-import '../../../res/strings.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
 import '../../../services/text_style_util.dart';
+import '../../../services/utils/date_utils.dart';
 import '../../home/controllers/home_controller.dart';
 import '../controllers/my_rides_one_time_controller.dart';
 
@@ -66,9 +65,12 @@ class RiderTile extends StatelessWidget {
                                       child: ClipRRect(
                                         borderRadius:
                                             BorderRadius.circular(8.kh),
-                                        child: myRidesModelData!
-                                                    .confirmDriverDetails?[0]
-                                                    ?.driverPostsDetails ==
+                                        child: (myRidesModelData
+                                                        ?.confirmDriverDetails?[
+                                                            0]
+                                                        ?.driverPostsDetails
+                                                        ?.length ??
+                                                    0) ==
                                                 0
                                             ? CommonImageView(
                                                 imagePath: ImageConstant
@@ -183,7 +185,7 @@ class RiderTile extends StatelessWidget {
                                                     BlendMode.srcIn),
                                               ).paddingOnly(right: 4.kw),
                                               Text(
-                                                '${GpUtil.getDateFormat(myRidesModelData?.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.time ?? "")}  ${GpUtil.convertUtcToLocal(myRidesModelData?.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.time ?? "")}',
+                                                '${DateTimeUtils.getDateFormat(myRidesModelData?.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.time ?? "")}  ${DateTimeUtils.convertUtcToLocal(myRidesModelData?.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.time ?? "")}',
                                                 style: TextStyleUtil.k12Regular(
                                                     color: ColorUtil.kBlack03),
                                               ),
@@ -243,7 +245,7 @@ class RiderTile extends StatelessWidget {
                                 ? const SizedBox()
                                 : Text(
                                     // '07 Nov 2023, 3:00pm',
-                                    '${GpUtil.getDateFormat(myRidesModelData?.time ?? "")}  ${GpUtil.convertUtcToLocal(myRidesModelData?.time ?? "")}',
+                                    '${DateTimeUtils.getDateFormat(myRidesModelData?.time ?? "")}  ${DateTimeUtils.convertUtcToLocal(myRidesModelData?.time ?? "")}',
                                     style: TextStyleUtil.k16Bold(),
                                   ),
                             const Spacer(),
@@ -387,7 +389,7 @@ class RiderTile extends StatelessWidget {
                     4.kwidthBox,
                     Text(
                       myRidesModelData?.rideStatus == "Confirmed"
-                          ? GpUtil.getArrivalTimeOfDriver(DateTime.parse(
+                          ? DateTimeUtils.getArrivalTimeOfDriver(DateTime.parse(
                               myRidesModelData?.confirmDriverDetails?.first
                                       ?.driverPostsDetails?.first?.time ??
                                   ""))

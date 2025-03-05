@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:green_pool/app/res/strings.dart';
-import 'package:green_pool/app/services/gp_util.dart';
 
 import '../../../../generated/locales.g.dart';
 import '../../../data/chat_arg.dart';
@@ -9,6 +7,7 @@ import '../../../data/driver_cofirm_request_model.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/dio/api_service.dart';
 import '../../../services/snackbar.dart';
+import '../../../services/utils/date_utils.dart';
 import '../../my_rides_one_time/controllers/my_rides_one_time_controller.dart';
 import '../../my_rides_request/controllers/my_rides_request_controller.dart';
 import '../../my_rides_request/views/booking_confirm_bottom.dart';
@@ -86,7 +85,7 @@ class MyRidesConfirmDetailsController extends GetxController {
               riderRideId: riderRideDetails.riderRideId,
               origin: data.origin?.name?.split(',').first ?? "City",
               destination: data.destination?.name?.split(',').first ?? "City",
-              date: GpUtil.formatDate(
+              date: DateTimeUtils.formatDate(
                   DateTime.parse(data.date ?? LocaleKeys.app_defaultDate.tr))));
       isBtnLoading.value = false;
     } catch (e) {
@@ -101,7 +100,7 @@ class MyRidesConfirmDetailsController extends GetxController {
               riderRideId: riderRideDetails.riderRideId,
               origin: data.origin?.name?.split(',').first ?? "City",
               destination: data.destination?.name?.split(',').first ?? "City",
-              date: GpUtil.formatDate(
+              date: DateTimeUtils.formatDate(
                   DateTime.parse(data.date ?? LocaleKeys.app_defaultDate.tr))));
       isBtnLoading.value = false;
     }

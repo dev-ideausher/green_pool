@@ -7,13 +7,12 @@ import 'package:green_pool/app/components/green_pool_divider.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/components/origin_to_destination.dart';
 import 'package:green_pool/app/services/colors.dart';
-import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
 import '../../../../generated/locales.g.dart';
 import '../../../constants/image_constant.dart';
-import '../../../res/strings.dart';
+import '../../../services/utils/date_utils.dart';
 import '../../home/controllers/home_controller.dart';
 import '../controllers/ride_details_controller.dart';
 
@@ -179,7 +178,7 @@ class RideDetailsView extends GetView<RideDetailsController> {
                                 ).paddingOnly(right: 4.kw),
                                 Text(
                                   // '07 Nov 2023, 3:00pm',
-                                  "${GpUtil.getDateFormat(controller.rideHistory.value.time ?? "")} ${GpUtil.convertUtcToLocal(controller.rideHistory.value.time ?? "")}",
+                                  "${DateTimeUtils.getDateFormat(controller.rideHistory.value.time ?? "")} ${DateTimeUtils.convertUtcToLocal(controller.rideHistory.value.time ?? "")}",
                                   style: TextStyleUtil.k12Regular(
                                       color: ColorUtil.kBlack03),
                                 ),

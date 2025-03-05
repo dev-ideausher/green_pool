@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:get/get.dart';
-import 'package:green_pool/app/modules/post_ride_step_two/views/amenities_list.dart';
-import 'package:green_pool/app/res/strings.dart';
+import 'package:green_pool/app/modules/post_ride_step_two/widgets/amenities_list.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../../generated/locales.g.dart';
@@ -12,11 +11,12 @@ import '../../../components/richtext_heading.dart';
 import '../../../constants/image_constant.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
+import '../../../services/storage.dart';
 import '../../../services/text_style_util.dart';
 import '../../post_ride_step_one/views/greenpool_chip.dart';
 import '../controllers/post_ride_step_two_controller.dart';
-import 'one_time_trip_view.dart';
-import 'recurring_trip_view.dart';
+import '../widgets/one_time_trip_view.dart';
+import '../widgets/recurring_trip_view.dart';
 
 class PostRideStepTwoView extends GetView<PostRideStepTwoController> {
   const PostRideStepTwoView({super.key});
@@ -25,6 +25,14 @@ class PostRideStepTwoView extends GetView<PostRideStepTwoController> {
     return Scaffold(
       appBar: GreenPoolAppBar(
         title: Text(LocaleKeys.app_postARide.tr),
+        actions: [
+          Visibility(
+            visible: Get.find<GetStorageService>().getPostRideData() != null,
+            child: InkWell(
+                onTap: () => controller.setPrevRideData(),
+                child: Text("Copy", style: TextStyleUtil.k16Bold())),
+          ).paddingOnly(right: 16.kw)
+        ],
       ),
       body: SingleChildScrollView(
         child: DefaultTabController(
@@ -48,50 +56,54 @@ class PostRideStepTwoView extends GetView<PostRideStepTwoController> {
                   ),
                 ],
               ).paddingOnly(top: 32.kh),
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(80.kh),
-                  border: Border.all(color: ColorUtil.kNeutral1),
-                  color: ColorUtil.kWhiteColor,
-                ),
-                child: TabBar(
-                    onTap: (index) {
-                      controller.tabIndex.value = index;
-                    },
-                    indicatorSize: TabBarIndicatorSize.tab,
-                    indicator: BoxDecoration(
-                        borderRadius: BorderRadius.circular(80.kh),
-                        color: controller.isPinkMode.value
-                            ? ColorUtil.kPrimaryPinkMode
-                            : ColorUtil.kSecondary01),
-                    unselectedLabelColor: ColorUtil.kSecondary01,
-                    dividerColor: Colors.transparent,
-                    indicatorColor: Colors.transparent,
-                    overlayColor: MaterialStatePropertyAll(
-                        ColorUtil.kSecondary01.withOpacity(0.05)),
-                    labelColor: controller.isPinkMode.value
-                        ? ColorUtil.kBlack01
-                        : ColorUtil.kWhiteColor,
-                    splashBorderRadius: BorderRadius.circular(80.kh),
-                    unselectedLabelStyle: TextStyleUtil.k14Semibold(
-                        color: ColorUtil.kSecondary01),
-                    labelStyle: TextStyleUtil.k14Semibold(
-                        color: controller.isPinkMode.value
-                            ? ColorUtil.kBlack01
-                            : ColorUtil.kSecondary01),
-                    tabs: [
-                      Tab(
-                        child: Text(
-                          LocaleKeys.app_oneTimeTrip.tr,
+              Obx(
+                () => Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(80.kh),
+                    border: Border.all(color: ColorUtil.kNeutral1),
+                    color: ColorUtil.kWhiteColor,
+                  ),
+                  child: TabBar(
+                      onTap: (index) {
+                        controller.setTabIndex(index);
+                      },
+                      controller: controller.tabController,
+                      enableFeedback: true,
+                      indicatorSize: TabBarIndicatorSize.tab,
+                      indicator: BoxDecoration(
+                          borderRadius: BorderRadius.circular(80.kh),
+                          color: controller.isPinkMode.value
+                              ? ColorUtil.kPrimaryPinkMode
+                              : ColorUtil.kSecondary01),
+                      unselectedLabelColor: ColorUtil.kSecondary01,
+                      dividerColor: Colors.transparent,
+                      indicatorColor: Colors.transparent,
+                      overlayColor: MaterialStatePropertyAll(
+                          ColorUtil.kSecondary01.withOpacity(0.05)),
+                      labelColor: controller.isPinkMode.value
+                          ? ColorUtil.kBlack01
+                          : ColorUtil.kWhiteColor,
+                      splashBorderRadius: BorderRadius.circular(80.kh),
+                      unselectedLabelStyle: TextStyleUtil.k14Semibold(
+                          color: ColorUtil.kSecondary01),
+                      labelStyle: TextStyleUtil.k14Semibold(
+                          color: controller.isPinkMode.value
+                              ? ColorUtil.kBlack01
+                              : ColorUtil.kSecondary01),
+                      tabs: [
+                        Tab(
+                          child: Text(
+                            LocaleKeys.app_oneTimeTrip.tr,
+                          ),
                         ),
-                      ),
-                      Tab(
-                        child: Text(
-                          LocaleKeys.app_recurringTrip.tr,
+                        Tab(
+                          child: Text(
+                            LocaleKeys.app_recurringTrip.tr,
+                          ),
                         ),
-                      ),
-                    ]),
-              ).paddingOnly(top: 24.kh),
+                      ]),
+                ).paddingOnly(top: 24.kh),
+              ),
               Obx(() => controller.tabIndex.value == 0
                   ? const OneTimeTripView()
                   : const RecurringTripView()),
@@ -204,7 +216,7 @@ class PostRideStepTwoView extends GetView<PostRideStepTwoController> {
                             : false,
                         onPressed: () {
                           controller.selectedCHIP.value = 'No';
-                          controller.luggageWeight.value = 'No';
+                          controller.setLuggageWeight("No");
                         }),
                     GreenPoolChip(
                         controller: controller,
@@ -214,7 +226,7 @@ class PostRideStepTwoView extends GetView<PostRideStepTwoController> {
                             controller.selectedCHIP.value == 'S' ? true : false,
                         onPressed: () {
                           controller.selectedCHIP.value = 'S';
-                          controller.luggageWeight.value = '5 kg';
+                          controller.setLuggageWeight("S");
                         }),
                     GreenPoolChip(
                         controller: controller,
@@ -224,7 +236,7 @@ class PostRideStepTwoView extends GetView<PostRideStepTwoController> {
                             controller.selectedCHIP.value == 'M' ? true : false,
                         onPressed: () {
                           controller.selectedCHIP.value = 'M';
-                          controller.luggageWeight.value = '10 kg';
+                          controller.setLuggageWeight("M");
                         }),
                     GreenPoolChip(
                         controller: controller,
@@ -234,7 +246,7 @@ class PostRideStepTwoView extends GetView<PostRideStepTwoController> {
                             controller.selectedCHIP.value == 'L' ? true : false,
                         onPressed: () {
                           controller.selectedCHIP.value = 'L';
-                          controller.luggageWeight.value = '15 kg';
+                          controller.setLuggageWeight("L");
                         }),
                   ],
                 ),

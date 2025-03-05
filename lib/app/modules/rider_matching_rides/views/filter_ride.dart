@@ -10,7 +10,6 @@ import 'package:green_pool/app/services/text_style_util.dart';
 
 import '../../../../generated/locales.g.dart';
 import '../../../constants/image_constant.dart';
-import '../../../res/strings.dart';
 import '../../home/controllers/home_controller.dart';
 import '../../rider_matching_rides/views/filter_list.dart';
 import '../controllers/matching_rides_controller.dart';

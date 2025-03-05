@@ -8,7 +8,6 @@ import '../../../../generated/locales.g.dart';
 import '../../../components/greenpool_textfield.dart';
 import '../../../components/richtext_heading.dart';
 import '../../../constants/image_constant.dart';
-import '../../../res/strings.dart';
 import '../../../services/text_style_util.dart';
 import '../controllers/post_ride_step_two_controller.dart';
 

@@ -1,12 +1,11 @@
 import 'package:get/get.dart';
-import 'package:green_pool/app/res/strings.dart';
 
 import '../../../../generated/locales.g.dart';
 import '../../../data/chat_arg.dart';
 import '../../../data/rider_send_request_model.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/dio/api_service.dart';
-import '../../../services/gp_util.dart';
+import '../../../services/utils/date_utils.dart';
 
 class RiderMyRidesSendDetailsController extends GetxController {
   var riderSendRequestModelData = RiderSendRequestModelData();
@@ -39,7 +38,7 @@ class RiderMyRidesSendDetailsController extends GetxController {
               riderRideId: riderRideDetails.Id,
               origin: data.origin?.name?.split(',').first ?? "City",
               destination: data.destination?.name?.split(',').first ?? "City",
-              date: GpUtil.formatDate(DateTime.parse(data.date ?? LocaleKeys.app_defaultDate.tr))));
+              date: DateTimeUtils.formatDate(DateTime.parse(data.date ?? LocaleKeys.app_defaultDate.tr))));
     } catch (e) {
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
@@ -52,7 +51,7 @@ class RiderMyRidesSendDetailsController extends GetxController {
               riderRideId: riderRideDetails.Id,
               origin: data.origin?.name?.split(',').first ?? "City",
               destination: data.destination?.name?.split(',').first ?? "City",
-              date: GpUtil.formatDate(DateTime.parse(data.date ?? LocaleKeys.app_defaultDate.tr))));
+              date: DateTimeUtils.formatDate(DateTime.parse(data.date ?? LocaleKeys.app_defaultDate.tr))));
     }
   }
 

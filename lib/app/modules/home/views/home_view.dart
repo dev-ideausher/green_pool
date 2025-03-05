@@ -79,8 +79,11 @@ class HomeView extends GetView<HomeController> {
                           Text(LocaleKeys.app_postRide.tr,
                                   style: TextStyleUtil.k20Heading700())
                               .paddingOnly(bottom: 4.kh),
-                          Text(LocaleKeys.app_offerRideNearby.tr,
-                              style: TextStyleUtil.k14Regular()),
+                          SizedBox(
+                            width: 125.kw,
+                            child: Text(LocaleKeys.app_offerRideNearby.tr,
+                                style: TextStyleUtil.k14Regular()),
+                          ),
                         ],
                       ),
                     ),
@@ -145,9 +148,12 @@ class HomeView extends GetView<HomeController> {
                             LocaleKeys.app_findRide.tr,
                             style: TextStyleUtil.k20Heading700(),
                           ).paddingOnly(bottom: 4.kh),
-                          Text(
-                            LocaleKeys.app_takeRidesNearby.tr,
-                            style: TextStyleUtil.k14Regular(),
+                          SizedBox(
+                            width: 125.kw,
+                            child: Text(
+                              LocaleKeys.app_takeRidesNearby.tr,
+                              style: TextStyleUtil.k14Regular(),
+                            ),
                           ),
                         ],
                       ),

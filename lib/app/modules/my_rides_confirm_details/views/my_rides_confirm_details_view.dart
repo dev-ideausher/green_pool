@@ -10,10 +10,9 @@ import '../../../components/green_pool_divider.dart';
 import '../../../components/greenpool_appbar.dart';
 import '../../../components/origin_to_destination.dart';
 import '../../../constants/image_constant.dart';
-import '../../../res/strings.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
-import '../../../services/gp_util.dart';
+import '../../../services/utils/date_utils.dart';
 import '../../../services/text_style_util.dart';
 import '../../home/controllers/home_controller.dart';
 import '../controllers/my_rides_confirm_details_controller.dart';
@@ -113,7 +112,7 @@ class MyRidesConfirmDetailsView
                                       BlendMode.srcIn),
                                 ).paddingOnly(right: 4.kw),
                                 Text(
-                                  "${GpUtil.getDateFormat(controller.riderRideDetails.rideDetails?.first?.time ?? "")}  ${GpUtil.convertUtcToLocal(controller.riderRideDetails.rideDetails?.first?.time ?? "")}",
+                                  "${DateTimeUtils.getDateFormat(controller.riderRideDetails.rideDetails?.first?.time ?? "")}  ${DateTimeUtils.convertUtcToLocal(controller.riderRideDetails.rideDetails?.first?.time ?? "")}",
                                   style: TextStyleUtil.k12Regular(
                                       color: ColorUtil.kBlack03),
                                 ),

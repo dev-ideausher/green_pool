@@ -4,16 +4,15 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/components/common_image_view.dart';
 import 'package:green_pool/app/components/origin_to_destination.dart';
 import 'package:green_pool/app/data/driver_send_request_model.dart';
-import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../../generated/locales.g.dart';
 import '../../../components/green_pool_divider.dart';
 import '../../../constants/image_constant.dart';
-import '../../../res/strings.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
 import '../../../services/text_style_util.dart';
+import '../../../services/utils/date_utils.dart';
 import '../../home/controllers/home_controller.dart';
 
 class MapDriverSendBottomsheet extends StatelessWidget {
@@ -76,8 +75,8 @@ class MapDriverSendBottomsheet extends StatelessWidget {
                                       BlendMode.srcIn),
                                 ).paddingOnly(right: 4.kw),
                                 Text(
-                                  (GpUtil.getDateFormat(element?.time ?? "") +
-                                      GpUtil.convertUtcToLocal(
+                                  (DateTimeUtils.getDateFormat(element?.time ?? "") +
+                                      DateTimeUtils.convertUtcToLocal(
                                           element?.time ?? "")),
                                   style: TextStyleUtil.k12Regular(
                                       color: ColorUtil.kBlack02),

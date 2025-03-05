@@ -9,13 +9,12 @@ import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/custom_button.dart';
-import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
 import '../../../../generated/locales.g.dart';
 import '../../../components/origin_to_destination.dart';
-import '../../../res/strings.dart';
+import '../../../services/utils/date_utils.dart';
 import '../../home/controllers/home_controller.dart';
 import '../controllers/file_dispute_controller.dart';
 
@@ -36,6 +35,7 @@ class FileDisputeView extends GetView<FileDisputeController> {
                     child: Text(
                       LocaleKeys.app_noRideHistory.tr,
                       style: TextStyleUtil.k18Heading600(),
+                      textAlign: TextAlign.center,
                     ),
                   )
                 : Column(
@@ -96,12 +96,13 @@ class FileDisputeView extends GetView<FileDisputeController> {
                                                     BlendMode.srcIn),
                                               ).paddingOnly(right: 4.kw),
                                               Text(
-                                                GpUtil.getDateFormat(controller
-                                                        .fileDisputeModel
-                                                        .value
-                                                        .data?[index]
-                                                        ?.time ??
-                                                    ""),
+                                                DateTimeUtils.getDateFormat(
+                                                    controller
+                                                            .fileDisputeModel
+                                                            .value
+                                                            .data?[index]
+                                                            ?.time ??
+                                                        ""),
                                                 style: TextStyleUtil.k12Regular(
                                                     color: ColorUtil.kBlack03),
                                               ),
@@ -243,7 +244,8 @@ class FileDisputeView extends GetView<FileDisputeController> {
                                                       color: ColorUtil.kBlack01,
                                                     ).paddingOnly(right: 8.kw),
                                                     Text(
-                                                      LocaleKeys.app_resolved.tr,
+                                                      LocaleKeys
+                                                          .app_resolved.tr,
                                                       style: TextStyleUtil
                                                           .k14Regular(
                                                               color: ColorUtil
@@ -288,7 +290,8 @@ class FileDisputeView extends GetView<FileDisputeController> {
                                                             .kPrimary3PinkMode
                                                         : ColorUtil
                                                             .kSecondary01,
-                                                label: LocaleKeys.app_fileDispute.tr,
+                                                label: LocaleKeys
+                                                    .app_fileDispute.tr,
                                               ),
                                   ),
                                 ],

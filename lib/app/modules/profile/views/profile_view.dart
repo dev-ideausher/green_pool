@@ -180,11 +180,11 @@ class ProfileView extends GetView<ProfileController> {
                     image: ImageConstant.svgProfileBug,
                     text: LocaleKeys.app_reportABug.tr)
                 .paddingOnly(bottom: 8.kh),
-            /*ProfileContainer(
+            ProfileContainer(
                     onTap: () => Get.toNamed(Routes.LANGUAGE),
                     image: ImageConstant.svgProfileLanguage,
                     text: LocaleKeys.app_language_pref.tr)
-                .paddingOnly(bottom: 8.kh),*/
+                .paddingOnly(bottom: 8.kh),
             ProfileContainer(
               onTap: () => Get.dialog(
                 useSafeArea: true,

@@ -3,7 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/green_pool_divider.dart';
 import 'package:green_pool/app/data/my_rides_model.dart';
-import 'package:green_pool/app/services/gp_util.dart';
+import 'package:green_pool/app/services/utils/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../../generated/locales.g.dart';
@@ -14,6 +14,7 @@ import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
 import '../../../services/storage.dart';
 import '../../../services/text_style_util.dart';
+import '../../../services/utils/date_utils.dart';
 import '../../home/controllers/home_controller.dart';
 import '../controllers/my_rides_one_time_controller.dart';
 
@@ -54,7 +55,7 @@ class DriverTile extends StatelessWidget {
                   // GpUtil.getDateFormat(myRidesModelData.date) ??
                   ((myRidesModelData.time ?? "") == ""
                       ? ""
-                      : GpUtil.convertUtcToLocal(myRidesModelData.time ?? "")),
+                      : DateTimeUtils.convertUtcToLocal(myRidesModelData.time ?? "")),
                   style: TextStyleUtil.k12Regular(color: ColorUtil.kBlack03),
                 ),
                 trailing: SizedBox(
@@ -118,8 +119,7 @@ class DriverTile extends StatelessWidget {
                               BlendMode.srcIn),
                         ).paddingOnly(right: 4.kw),
                         Text(
-                          GpUtil.getDateFormat(myRidesModelData.time ?? "") ??
-                              "",
+                          DateTimeUtils.getDateFormat(myRidesModelData.time ?? ""),
                           style: TextStyleUtil.k12Regular(
                               color: ColorUtil.kBlack03),
                         ),
@@ -304,7 +304,7 @@ class DriverTile extends StatelessWidget {
 
       return false; // If the timeString is not today and not around midnight
     } catch (e) {
-      print('Error parsing time string: $e');
+      debugPrint('Error parsing time string: $e');
       return false;
     }
   }

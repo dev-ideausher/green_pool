@@ -9,7 +9,7 @@ import 'package:green_pool/app/services/dio/api_service.dart';
 import '../../../../generated/locales.g.dart';
 import '../../../data/chat_arg.dart';
 import '../../../routes/app_pages.dart';
-import '../../../services/gp_util.dart';
+import '../../../services/utils/date_utils.dart';
 
 class MessagesController extends GetxController {
   RxBool refreshPage = true.obs;
@@ -67,7 +67,7 @@ class MessagesController extends GetxController {
         name: message?.reciver?.fullName,
         origin: message?.ridesDetails?.origin?.name?.split(",").first,
         destination: message?.ridesDetails?.destination?.name?.split(",").first,
-        date: GpUtil.formatDate(DateTime.parse(
+        date: DateTimeUtils.formatDate(DateTime.parse(
             message?.ridesDetails?.date ?? LocaleKeys.app_defaultDate.tr)),
       ),
       "ridePostId": message?.ridePostId ?? "",

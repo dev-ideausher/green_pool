@@ -3,14 +3,13 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/data/archived_model.dart';
-import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/dio/api_service.dart';
 import 'package:green_pool/app/services/snackbar.dart';
 
 import '../../../../generated/locales.g.dart';
 import '../../../data/chat_arg.dart';
 import '../../../routes/app_pages.dart';
-import '../../../services/gp_util.dart';
+import '../../../services/utils/date_utils.dart';
 
 class ArchivedController extends GetxController {
   RxBool refreshPage = true.obs;
@@ -72,8 +71,9 @@ class ArchivedController extends GetxController {
               origin: message?.driverRideDetails?.origin?.split(",").first,
               destination:
                   message?.driverRideDetails?.destination?.split(",").first,
-              date: GpUtil.formatDate(DateTime.parse(
-                  message?.driverRideDetails?.date ?? LocaleKeys.app_defaultDate.tr)),
+              date: DateTimeUtils.formatDate(DateTime.parse(
+                  message?.driverRideDetails?.date ??
+                      LocaleKeys.app_defaultDate.tr)),
             ))!
         .then((value) async {
       if (value != true) {

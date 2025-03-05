@@ -1,23 +1,23 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:green_pool/app/components/gp_imagepicker.dart';
 import 'package:green_pool/app/data/post_ride_model.dart';
 import 'package:green_pool/app/services/dialog_helper.dart';
-import 'package:green_pool/app/services/gp_util.dart';
-import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/snackbar.dart';
-import 'package:green_pool/app/services/text_style_util.dart';
 import 'package:intl/intl.dart';
 
 import '../../../routes/app_pages.dart';
 import '../../../services/colors.dart';
+import '../../../services/storage.dart';
+import '../../../services/utils/date_utils.dart';
 import '../../home/controllers/home_controller.dart';
 
-class PostRideStepTwoController extends GetxController {
+class PostRideStepTwoController extends GetxController
+    with GetSingleTickerProviderStateMixin {
   final Rx<PostRideModel> postRideModel = PostRideModel().obs;
+  var prevRideData = PostRideModel().obs;
+
   RxBool isPinkMode = Get.find<HomeController>().isPinkModeOn;
   RxInt tabIndex = 0.obs;
   TextEditingController selectedDate = TextEditingController();
@@ -37,13 +37,13 @@ class PostRideStepTwoController extends GetxController {
       : ColorUtil.kPrimary01;
 
   //for Days of week
-  RxBool isMonday = false.obs;
-  RxBool isTuesday = false.obs;
-  RxBool isWednesday = false.obs;
-  RxBool isThursDay = false.obs;
-  RxBool isFriday = false.obs;
-  RxBool isSaturday = false.obs;
-  RxBool isSunday = false.obs;
+  RxBool isMonday = false.obs; //1
+  RxBool isTuesday = false.obs; //2
+  RxBool isWednesday = false.obs; //3
+  RxBool isThursDay = false.obs; //4
+  RxBool isFriday = false.obs; //5
+  RxBool isSaturday = false.obs; //6
+  RxBool isSunday = false.obs; //7
   List<int?>? daysOfWeek = <int>[].obs;
 
   //luggage allowance
@@ -64,10 +64,22 @@ class PostRideStepTwoController extends GetxController {
   RxBool babySeat = false.obs;
   RxBool heatedSeats = false.obs;
 
+  late TabController tabController;
+
   @override
   void onInit() {
     super.onInit();
+    tabController = TabController(length: 2, vsync: this);
+    tabController.addListener(() {
+      tabIndex.value = tabController.index; // Sync TabController with RxInt
+    });
     _setInitialTimeAndDate();
+    setActiveStateCarpoolSchedule();
+  }
+
+  void setTabIndex(int index) {
+    tabIndex.value = index;
+    tabController.animateTo(index); // Ensure tab UI updates
     setActiveStateCarpoolSchedule();
   }
 
@@ -140,8 +152,8 @@ class PostRideStepTwoController extends GetxController {
           alwaysUse24HourFormat: false);
 
       if (selectedDate.text.isNotEmpty) {
-        if (GpUtil.isToday(DateTime.parse(selectedDate.text))) {
-          if (GpUtil.isAfterCurrentTime(formattedTime)) {
+        if (DateTimeUtils.isToday(DateTime.parse(selectedDate.text))) {
+          if (DateTimeUtils.isAfterCurrentTime(formattedTime)) {
             selectedTime.text = formattedTime;
             setActiveStateCarpoolSchedule();
           } else {
@@ -171,11 +183,12 @@ class PostRideStepTwoController extends GetxController {
 
     if (pickedDate != null) {
       String formattedDate = pickedDate.toIso8601String();
-      if (!GpUtil.isToday(DateTime.parse(selectedDate.text)) &&
-          GpUtil.isToday(DateTime.parse(formattedDate))) {
+      if (!DateTimeUtils.isToday(DateTime.parse(selectedDate.text)) &&
+          DateTimeUtils.isToday(DateTime.parse(formattedDate))) {
         showMySnackbar(msg: "Please select a valid date");
       } else {
         selectedReturnDate.text = formattedDate;
+        debugPrint("SELECTED RETURN DATE ${selectedReturnDate.text}");
         selectedReturnTime.clear();
         formattedReturnDate.text =
             "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
@@ -199,7 +212,8 @@ class PostRideStepTwoController extends GetxController {
           MaterialLocalizations.of(context);
       String formattedTime = localizations.formatTimeOfDay(pickedTime,
           alwaysUse24HourFormat: false);
-      if (GpUtil.isToday(DateTime.parse(selectedReturnDate.value.text))) {
+      if (DateTimeUtils.isToday(
+          DateTime.parse(selectedReturnDate.value.text))) {
         // If the date is today, validate the return time
         if (validateReturnTime(formattedTime)) {
           selectedReturnTime.text = formattedTime.toString();
@@ -279,7 +293,8 @@ class PostRideStepTwoController extends GetxController {
     final combinedDateTime =
         "${selectedDate.text.toString().split("T").first}T${selectedTime.text}";
 
-    final combinedDateTimeUTC = GpUtil.convertCombinedToGmt(combinedDateTime);
+    final combinedDateTimeUTC =
+        DateTimeUtils.convertCombinedToGmt(combinedDateTime);
 
     final date = combinedDateTimeUTC.split("T").first;
     final time = combinedDateTimeUTC;
@@ -288,14 +303,15 @@ class PostRideStepTwoController extends GetxController {
         "${selectedReturnDate.text.toString().split("T").first}T${selectedReturnTime.text}";
 
     final combinedReturnDateTimeUTC =
-        GpUtil.convertCombinedToGmt(combinedReturnDateTime);
+        DateTimeUtils.convertCombinedToGmt(combinedReturnDateTime);
 
     final returnDate = combinedReturnDateTimeUTC.split("T").first;
     final returnTime = combinedReturnDateTimeUTC;
 
     final combinedRecurringTime =
         "${dateForRecurringRide.text.toString().split("T").first}T${selectedRecurringTime.text}";
-    final recurringTime = GpUtil.convertCombinedToGmt(combinedRecurringTime);
+    final recurringTime =
+        DateTimeUtils.convertCombinedToGmt(combinedRecurringTime);
 
     Get.toNamed(Routes.POST_RIDE_STEP_THREE,
         arguments: PostRideModel(
@@ -312,17 +328,17 @@ class PostRideStepTwoController extends GetxController {
                     postRideModel.value.ridesDetails?.destination?.longitude),
             stops: [
               PostRideModelRidesDetailsStops(
-                  name: postRideModel.value.ridesDetails?.stops?[0]?.name,
+                  name: postRideModel.value.ridesDetails?.stops?[0].name,
                   latitude:
-                      postRideModel.value.ridesDetails?.stops?[0]?.latitude,
+                      postRideModel.value.ridesDetails?.stops?[0].latitude,
                   longitude:
-                      postRideModel.value.ridesDetails?.stops?[0]?.longitude),
+                      postRideModel.value.ridesDetails?.stops?[0].longitude),
               PostRideModelRidesDetailsStops(
-                  name: postRideModel.value.ridesDetails?.stops?[1]?.name,
+                  name: postRideModel.value.ridesDetails?.stops?[1].name,
                   latitude:
-                      postRideModel.value.ridesDetails?.stops?[1]?.latitude,
+                      postRideModel.value.ridesDetails?.stops?[1].latitude,
                   longitude:
-                      postRideModel.value.ridesDetails?.stops?[1]?.longitude),
+                      postRideModel.value.ridesDetails?.stops?[1].longitude),
             ],
             tripType: tabIndex.value == 0 ? "oneTime" : "recurring",
             date: tabIndex.value == 0
@@ -384,7 +400,7 @@ class PostRideStepTwoController extends GetxController {
       // Check if the return time is at least 2 hours more than the scheduled time
       return returnDateTime.isAfter(validTime);
     } catch (e) {
-      print("Error parsing time string: $e");
+      debugPrint("Error parsing time string: $e");
       return false;
     }
   }
@@ -409,5 +425,139 @@ class PostRideStepTwoController extends GetxController {
       ),
       child: child!,
     );
+  }
+
+  void setPrevRideData() {
+    // Retrieve previous ride data from storage
+    final storageService = Get.find<GetStorageService>();
+    final prevRide = storageService.getPostRideData() ?? PostRideModel();
+    prevRideData.value = prevRide;
+    final rideDetails = prevRideData.value.ridesDetails;
+
+    //before setting date and time it should check if it is past the current time
+
+    // Set various sections of the ride data
+    _setRideTime(rideDetails);
+    _setReturnTrip(rideDetails);
+    _setRidePreferences(rideDetails);
+    _setRecurringTrip(rideDetails);
+
+    // Validate active state for the next button
+    setActiveStateCarpoolSchedule();
+  }
+
+  void _setRideTime(PostRideModelRidesDetails? rideDetails) {
+    // Use a default time if none is provided
+    final now = DateTime.now();
+    const defaultRideTime = "2025-03-04T09:39:00.000Z";
+    final actualTime = rideDetails?.time ?? defaultRideTime;
+    final actualTimeUtc = DateTimeUtils.dateUtcToLocal(actualTime);
+    final rideTimeUtc = rideDetails?.time ?? defaultRideTime;
+    final rideTimeLocal = DateTimeUtils.convertUtcToLocal(rideTimeUtc);
+    if (DateTime.parse(actualTimeUtc).isBefore(now)) {
+      debugPrint("Ride time is in the past");
+    } else {
+      selectedTime.text = rideTimeLocal;
+    }
+  }
+
+  void _setReturnTrip(PostRideModelRidesDetails? rideDetails) {
+    const defaultReturnDate = "2024-01-30T07:00:17.320+00:00";
+    final returnTrip = rideDetails?.returnTrip;
+    isReturn.value = returnTrip?.isReturnTrip ?? false;
+
+    if (isReturn.value) {
+      // Parse and set the return date details
+      final returnDate =
+          DateTime.parse(returnTrip?.returnDate ?? defaultReturnDate);
+      if (returnDate.isBefore(DateTime.now())) {
+        debugPrint("Return date is in the past");
+      } else {
+        selectedReturnDate.text = returnDate.toIso8601String();
+        formattedReturnDate.text =
+            "${returnDate.day}/${returnDate.month}/${returnDate.year}";
+      }
+
+      // Set return time
+      final returnTimeUtc = returnTrip?.returnTime ?? "11:00AM";
+      //check if return date is today
+      if (DateTimeUtils.isToday(returnDate)) {
+        //if yes then check if return time is after scheduled time
+        if (validateReturnTime(returnTimeUtc)) {
+          selectedReturnTime.text =
+              DateTimeUtils.convertUtcToLocal(returnTimeUtc);
+        } else {
+          showMySnackbar(
+              msg:
+                  "Please ensure that the return time is a minimum of 2 hours later than the scheduled time.");
+        }
+      } else {
+        //if not directly set the return time
+        selectedReturnTime.text =
+            DateTimeUtils.convertUtcToLocal(returnTimeUtc);
+      }
+    }
+  }
+
+  void _setRidePreferences(PostRideModelRidesDetails? rideDetails) {
+    const defaultLuggageType = "No";
+
+    // Set basic preferences
+    count.value = rideDetails?.seatAvailable ?? 1;
+    final luggageType =
+        rideDetails?.preferences?.luggageType ?? defaultLuggageType;
+    selectedCHIP.value = luggageType;
+    setLuggageWeight(luggageType);
+
+    // Set additional ride preferences
+    final otherPrefs = rideDetails?.preferences?.other;
+    appreciatesConversation.value =
+        otherPrefs?.AppreciatesConversation ?? false;
+    enjoysMusic.value = otherPrefs?.EnjoysMusic ?? false;
+    smokeFree.value = otherPrefs?.SmokeFree ?? false;
+    petFriendly.value = otherPrefs?.PetFriendly ?? false;
+    winterTires.value = otherPrefs?.WinterTires ?? false;
+    coolingOrHeating.value = otherPrefs?.CoolingOrHeating ?? false;
+    babySeat.value = otherPrefs?.BabySeat ?? false;
+    heatedSeats.value = otherPrefs?.HeatedSeats ?? false;
+  }
+
+  void _setRecurringTrip(PostRideModelRidesDetails? rideDetails) {
+    const defaultRideTime = "2025-03-04T09:39:00.000Z";
+
+    // Determine the tab index based on trip type
+    tabIndex.value = rideDetails?.tripType == "recurring" ? 1 : 0;
+    tabController.animateTo(tabIndex.value);
+
+    // Set recurring trip days
+    final recurringTrip = rideDetails?.recurringTrip;
+    final recurringDays = recurringTrip?.recurringTripDays ?? [];
+    isMonday.value = recurringDays.contains(1);
+    isTuesday.value = recurringDays.contains(2);
+    isWednesday.value = recurringDays.contains(3);
+    isThursDay.value = recurringDays.contains(4);
+    isFriday.value = recurringDays.contains(5);
+    isSaturday.value = recurringDays.contains(6);
+    isSunday.value = recurringDays.contains(7);
+
+    // Update the daysOfWeek list after clearing previous values
+    daysOfWeek?.clear();
+    daysOfWeek?.addAll(recurringDays);
+
+    // Set recurring trip time using the same ride time as default
+    selectedRecurringTime.text =
+        DateTimeUtils.convertUtcToLocal(rideDetails?.time ?? defaultRideTime);
+  }
+
+  void setLuggageWeight(String s) {
+    if (selectedCHIP.value == "No") {
+      luggageWeight.value = "No";
+    } else if (selectedCHIP.value == "S") {
+      luggageWeight.value = "5 kg";
+    } else if (selectedCHIP.value == "M") {
+      luggageWeight.value = "10 kg";
+    } else if (selectedCHIP.value == "L") {
+      luggageWeight.value = "15 kg";
+    }
   }
 }

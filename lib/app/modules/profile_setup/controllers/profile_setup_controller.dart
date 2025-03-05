@@ -10,6 +10,7 @@ import 'package:green_pool/app/modules/rider_profile_setup/controllers/city_list
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/snackbar.dart';
 import 'package:green_pool/app/services/storage.dart';
+import 'package:green_pool/generated/locales.g.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
@@ -18,7 +19,7 @@ import 'package:path/path.dart' as path;
 import '../../../services/colors.dart';
 import '../../../services/dialog_helper.dart';
 import '../../../services/dio/api_service.dart';
-import '../../../services/image_helper.dart';
+import '../../../services/utils/image_util.dart';
 
 class ProfileSetupController extends GetxController
     with GetSingleTickerProviderStateMixin {
@@ -185,7 +186,7 @@ class ProfileSetupController extends GetxController
             imagePath: selectedProfileImagePath.value!,
           ));
     } else {
-      showMySnackbar(msg: 'No image selected');
+      showMySnackbar(msg: LocaleKeys.app_no_img_selected.tr);
     }
   }
 
@@ -198,7 +199,7 @@ class ProfileSetupController extends GetxController
       Get.back();
       update();
     } else {
-      showMySnackbar(msg: 'No image selected');
+      showMySnackbar(msg: LocaleKeys.app_no_img_selected.tr);
     }
   }
 
@@ -211,7 +212,7 @@ class ProfileSetupController extends GetxController
       Get.back();
       update();
     } else {
-      showMySnackbar(msg: 'No image selected');
+      showMySnackbar(msg: LocaleKeys.app_no_img_selected.tr);
     }
   }
 

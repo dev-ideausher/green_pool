@@ -7,12 +7,13 @@ import 'package:green_pool/app/data/find_ride_model.dart';
 import 'package:green_pool/app/data/location_model.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/services/colors.dart';
-import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/snackbar.dart';
+import 'package:green_pool/generated/locales.g.dart';
 
 import '../../../routes/app_pages.dart';
 import '../../../services/dialog_helper.dart';
 import '../../../services/storage.dart';
+import '../../../services/utils/date_utils.dart';
 import '../../origin/controllers/origin_controller.dart';
 
 class FindRideController extends GetxController {
@@ -114,7 +115,7 @@ class FindRideController extends GetxController {
       final combinedDateTime =
           "${date.text.split("T").first}T${selectedTime.text}";
       String combinedDateTimeUTC =
-          GpUtil.convertCombinedToGmt(combinedDateTime);
+          DateTimeUtils.convertCombinedToGmt(combinedDateTime);
       rideDate = combinedDateTimeUTC.split("T").first;
       rideTime = combinedDateTimeUTC;
     } else {
@@ -259,18 +260,18 @@ class FindRideController extends GetxController {
       final formattedTime = localizations.formatTimeOfDay(pickedTime,
           alwaysUse24HourFormat: false);
       if (date.text.isNotEmpty) {
-        if (GpUtil.isToday(DateTime.parse(date.text))) {
-          if (GpUtil.isAfterCurrentTime(formattedTime)) {
+        if (DateTimeUtils.isToday(DateTime.parse(date.text))) {
+          if (DateTimeUtils.isAfterCurrentTime(formattedTime)) {
             selectedTime.text = formattedTime;
           } else {
-            showMySnackbar(msg: "Please select a valid time");
+            showMySnackbar(msg: LocaleKeys.app_select_valid_time.tr);
             selectedTime.clear();
           }
         } else {
           selectedTime.text = formattedTime;
         }
       } else {
-        showMySnackbar(msg: "Please select a date");
+        showMySnackbar(msg: LocaleKeys.app_select_valid_date.tr);
       }
     }
   }
@@ -287,11 +288,13 @@ class FindRideController extends GetxController {
   }
 
   String? seatsValidator(String? value) {
-    if (value == null || value.isEmpty) return 'Please enter a value';
+    if (value == null || value.isEmpty) {
+      return LocaleKeys.app_pls_enter_value.tr;
+    }
 
     final parsedValue = int.tryParse(value);
     if (parsedValue == null || parsedValue < 1 || parsedValue > 10) {
-      return 'You can only book up to 10 seats.';
+      return LocaleKeys.app_only_book_up_to_10_seats.tr;
     }
     return null;
   }

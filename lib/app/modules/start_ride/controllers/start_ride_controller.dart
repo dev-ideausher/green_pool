@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 
-//test
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
@@ -18,7 +17,8 @@ import 'package:green_pool/app/services/snackbar.dart';
 import '../../../../generated/locales.g.dart';
 import '../../../data/booking_detail_model.dart';
 import '../../../data/chat_arg.dart';
-import '../../../services/gp_util.dart';
+import '../../../services/utils/date_utils.dart';
+import '../../../services/utils/gp_util.dart';
 import '../../home/controllers/home_controller.dart';
 
 class StartRideController extends GetxController {
@@ -51,7 +51,6 @@ class StartRideController extends GetxController {
       final response = await APIManager.getMyRidesDetails(rideId: rideId);
       var data = jsonDecode(response.toString());
       myRidesModel.value = BookingDetailModel.fromJson(data).data!;
-      print(myRidesModel.value);
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -90,7 +89,7 @@ class StartRideController extends GetxController {
           myRidesModel.value.driverBookingDetails!.stops![0]!.coordinates!;
       wayPoints.add(PolylineWayPoint(
           location:
-              "${stop1Coordinates?.last.toString()},${stop1Coordinates?.first.toString()}"));
+              "${stop1Coordinates.last.toString()},${stop1Coordinates.first.toString()}"));
       if (myRidesModel
               .value.driverBookingDetails?.stops?[1]?.coordinates!.first !=
           0.0) {
@@ -98,10 +97,10 @@ class StartRideController extends GetxController {
             myRidesModel.value.driverBookingDetails!.stops![1]!.coordinates!;
         wayPoints.add(PolylineWayPoint(
             location:
-                "${stop2Coordinates?.last.toString()},${stop2Coordinates?.first.toString()}"));
+                "${stop2Coordinates.last.toString()},${stop2Coordinates.first.toString()}"));
       }
     } else {
-      print("Waypoints not added");
+      debugPrint("Waypoints not added");
     }
     try {
       final List<double?> originCoordinates =
@@ -204,7 +203,7 @@ class StartRideController extends GetxController {
             .value
             .driverBookingDetails
             ?.riderBookingDetails?[selectedRider.value]
-            ?.origin
+            .origin
             ?.coordinates = [currentLong, currentLat];
         mapController.animateCamera(
           CameraUpdate.newCameraPosition(
@@ -276,7 +275,7 @@ class StartRideController extends GetxController {
         if (myRidesModel.value.driverBookingDetails?.stops?[0]?.coordinates !=
                 null ||
             myRidesModel.value.driverBookingDetails?.stops?[0]?.coordinates !=
-                "") {
+                []) {
           addMarkers(
               LatLng(
                   myRidesModel.value.driverBookingDetails?.stops?[0]
@@ -291,7 +290,7 @@ class StartRideController extends GetxController {
           if (myRidesModel.value.driverBookingDetails?.stops?[1]?.coordinates !=
                   null ||
               myRidesModel.value.driverBookingDetails?.stops?[1]?.coordinates !=
-                  "") {
+                  []) {
             addMarkers(
                 LatLng(
                     myRidesModel.value.driverBookingDetails?.stops?[1]
@@ -347,7 +346,7 @@ class StartRideController extends GetxController {
                   .value
                   .driverBookingDetails
                   ?.riderBookingDetails?[selectedRider.value]
-                  ?.riderDetails
+                  .riderDetails
                   ?.Id ??
               "",
           body: {
@@ -362,19 +361,19 @@ class StartRideController extends GetxController {
               chatRoomId: res.data["data"]["chatRoomId"] ?? "",
               deleteUpdateTime: res.data["data"]["deleteUpdateTime"] ?? "",
               id: myRidesModel.value.driverBookingDetails
-                  ?.riderBookingDetails?[selectedRider.value]?.riderDetails?.Id,
+                  ?.riderBookingDetails?[selectedRider.value].riderDetails?.Id,
               name: myRidesModel
                       .value
                       .driverBookingDetails
                       ?.riderBookingDetails?[selectedRider.value]
-                      ?.riderDetails
+                      .riderDetails
                       ?.fullName ??
                   "",
               image: myRidesModel
                       .value
                       .driverBookingDetails
                       ?.riderBookingDetails?[selectedRider.value]
-                      ?.riderDetails
+                      .riderDetails
                       ?.profilePic
                       ?.url ??
                   "",
@@ -390,26 +389,26 @@ class StartRideController extends GetxController {
                       ?.split(',')
                       .first ??
                   "City",
-              date: GpUtil.formatDate(DateTime.parse(myRidesModel.value.driverBookingDetails?.date ?? LocaleKeys.app_defaultDate.tr))));
+              date: DateTimeUtils.formatDate(DateTime.parse(myRidesModel.value.driverBookingDetails?.date ?? LocaleKeys.app_defaultDate.tr))));
     } catch (e) {
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
               chatRoomId: "",
               deleteUpdateTime: "",
               id: myRidesModel.value.driverBookingDetails
-                  ?.riderBookingDetails?[selectedRider.value]?.riderDetails?.Id,
+                  ?.riderBookingDetails?[selectedRider.value].riderDetails?.Id,
               name: myRidesModel
                       .value
                       .driverBookingDetails
                       ?.riderBookingDetails?[selectedRider.value]
-                      ?.riderDetails
+                      .riderDetails
                       ?.fullName ??
                   "",
               image: myRidesModel
                       .value
                       .driverBookingDetails
                       ?.riderBookingDetails?[selectedRider.value]
-                      ?.riderDetails
+                      .riderDetails
                       ?.profilePic
                       ?.url ??
                   "",
@@ -425,7 +424,7 @@ class StartRideController extends GetxController {
                       ?.split(',')
                       .first ??
                   "City",
-              date: GpUtil.formatDate(DateTime.parse(myRidesModel.value.driverBookingDetails?.date ?? LocaleKeys.app_defaultDate.tr))));
+              date: DateTimeUtils.formatDate(DateTime.parse(myRidesModel.value.driverBookingDetails?.date ?? LocaleKeys.app_defaultDate.tr))));
     }
   }
 
@@ -449,7 +448,7 @@ class StartRideController extends GetxController {
             ? myRidesModel.value.driverBookingDetails?.riders?.isNotEmpty ??
                     false
                 ? myRidesModel.value.driverBookingDetails?.riderBookingDetails
-                    ?.first?.origin?.coordinates?.first
+                    ?.first.origin?.coordinates?.first
                 : null
             : null;
 
@@ -460,7 +459,7 @@ class StartRideController extends GetxController {
   getOrigin() {
     try {
       return myRidesModel.value.driverBookingDetails
-          ?.riderBookingDetails?[selectedRider.value]?.origin?.name;
+          ?.riderBookingDetails?[selectedRider.value].origin?.name;
     } catch (e) {
       debugPrint(e.toString());
       return "";
@@ -470,7 +469,7 @@ class StartRideController extends GetxController {
   getDestination() {
     try {
       return myRidesModel.value.driverBookingDetails
-          ?.riderBookingDetails?[selectedRider.value]?.destination?.name;
+          ?.riderBookingDetails?[selectedRider.value].destination?.name;
     } catch (e) {
       debugPrint(e.toString());
       return "";
@@ -483,7 +482,7 @@ class StartRideController extends GetxController {
           .value
           .driverBookingDetails
           ?.riderBookingDetails?[selectedRider.value]
-          ?.riderDetails
+          .riderDetails
           ?.profilePic
           ?.url;
     } catch (e) {
@@ -498,7 +497,7 @@ class StartRideController extends GetxController {
               .value
               .driverBookingDetails
               ?.riderBookingDetails?[selectedRider.value]
-              ?.riderDetails
+              .riderDetails
               ?.fullName ??
           "";
     } catch (e) {

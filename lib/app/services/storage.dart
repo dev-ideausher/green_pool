@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 import '../constants/image_constant.dart';
+import '../data/post_ride_model.dart';
 import '../data/user_info_model.dart';
 import '../modules/home/controllers/home_controller.dart';
 import 'enigma.dart';
@@ -48,6 +49,7 @@ class GetStorageService extends GetxService {
   static const String _vehicleColor = 'vehicleColor';
   static const String _vehicleImageUrl = 'vehicleImageUrl';
   final String _subscribedToFcmKey = 'hasSubscribedToFCM';
+  final String _prevRideData = 'prevRideData';
 
   Future<GetStorageService> initState() async {
     await GetStorage.init('runData');
@@ -197,6 +199,19 @@ class GetStorageService extends GetxService {
     final cache = locationCache; // Get the current cache
     cache[placeId] = locationData; // Add new data
     locationCache = cache; // Update the stored cache
+  }
+
+  //save prev ride data
+  PostRideModel? getPostRideData() {
+    final data = _runData.read(_prevRideData);
+    if (data != null) {
+      return PostRideModel.fromJson(data);
+    }
+    return null;
+  }
+
+  void savePrevRideData(Map<String, dynamic> postRideDataJson) {
+    _runData.write(_prevRideData, postRideDataJson);
   }
 
   // to save origin, destination, addStop1, addStop2 and display while posting ride

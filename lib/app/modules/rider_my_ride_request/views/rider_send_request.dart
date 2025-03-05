@@ -3,7 +3,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/modules/map_rider_send_request/views/map_rider_send_request_view.dart';
 import 'package:green_pool/app/modules/rider_my_ride_request/controllers/rider_my_ride_request_controller.dart';
-import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../../generated/assets.dart';
@@ -13,11 +12,10 @@ import '../../../components/gp_progress.dart';
 import '../../../components/green_pool_divider.dart';
 import '../../../components/origin_to_destination.dart';
 import '../../../constants/image_constant.dart';
-import '../../../res/strings.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
-import '../../../services/snackbar.dart';
 import '../../../services/text_style_util.dart';
+import '../../../services/utils/date_utils.dart';
 import '../../home/controllers/home_controller.dart';
 
 class RiderSendRequest extends GetView<RiderMyRideRequestController> {
@@ -88,7 +86,7 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                                 height: 64.kh,
                                                 width: 64.kw,
                                                 url:
-                                                    "${rideDetails?.driverDetails![0]?.profilePic?.url}"),
+                                                    "${rideDetails.driverDetails![0]?.profilePic?.url}"),
                                           ),
                                         ).paddingOnly(bottom: 8.kh),
                                         Positioned(
@@ -126,8 +124,7 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                                   size: 12.kh,
                                                 ).paddingOnly(right: 2.kw),
                                                 Text(
-                                                  rideDetails
-                                                          ?.driverDetails?[0]!
+                                                  rideDetails.driverDetails?[0]!
                                                           .rating
                                                           ?.toStringAsFixed(
                                                               1) ??
@@ -158,7 +155,7 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                             children: [
                                               Expanded(
                                                 child: Text(
-                                                  "${rideDetails!.driverDetails![0]!.fullName.toString().split(" ").first}  ",
+                                                  "${rideDetails.driverDetails![0]!.fullName.toString().split(" ").first}  ",
                                                   style:
                                                       TextStyleUtil.k16Semibold(
                                                           fontSize: 16.kh),
@@ -169,7 +166,7 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                                   children: [
                                                     TextSpan(
                                                       text:
-                                                          "${LocaleKeys.app_dollar.tr} ${rideDetails?.price ?? "0"}",
+                                                          "${LocaleKeys.app_dollar.tr} ${rideDetails.price ?? "0"}",
                                                       style:
                                                           TextStyleUtil.k16Bold(
                                                               color: ColorUtil
@@ -186,7 +183,7 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                             children: [
                                               Row(
                                                 children: [
-                                                  if (rideDetails?.date != null)
+                                                  if (rideDetails.date != null)
                                                     SvgPicture.asset(
                                                       ImageConstant
                                                           .svgIconCalendarTime,
@@ -200,9 +197,9 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                                                   .kSecondary01,
                                                           BlendMode.srcIn),
                                                     ).paddingOnly(right: 4.kw),
-                                                  if (rideDetails?.date != null)
+                                                  if (rideDetails.date != null)
                                                     Text(
-                                                      "${GpUtil.getDateFormat(rideDetails?.time ?? "")}  ${GpUtil.convertUtcToLocal(rideDetails?.time ?? "")}",
+                                                      "${DateTimeUtils.getDateFormat(rideDetails.time ?? "")}  ${DateTimeUtils.convertUtcToLocal(rideDetails.time ?? "")}",
                                                       style: TextStyleUtil
                                                           .k12Regular(
                                                               color: ColorUtil
@@ -225,7 +222,7 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                                             .kSecondary01,
                                                   ).paddingOnly(right: 4.kw),
                                                   Text(
-                                                    '${rideDetails?.seatAvailable ?? "0"} seats',
+                                                    '${rideDetails.seatAvailable ?? "0"} seats',
                                                     style: TextStyleUtil
                                                         .k14Regular(
                                                             color: ColorUtil
@@ -246,13 +243,13 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                     .paddingOnly(bottom: 16.kh),
                                 OriginToDestination(
                                         needPickupText: false,
-                                        origin: "${rideDetails?.origin?.name}",
+                                        origin: "${rideDetails.origin?.name}",
                                         stop1:
                                             rideDetails.stops?[0]?.name ?? "",
                                         stop2:
                                             rideDetails.stops?[1]?.name ?? "",
                                         destination:
-                                            "${rideDetails?.destination?.name}")
+                                            "${rideDetails.destination?.name}")
                                     .paddingOnly(bottom: 8.kh),
                                 const GreenPoolDivider()
                                     .paddingOnly(bottom: 16.kh),
@@ -284,7 +281,7 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                     // ).paddingAll(8.kh),
                                     GreenPoolButton(
                                       onPressed: () {
-                                        controller.openMessage(rideDetails!);
+                                        controller.openMessage(rideDetails);
                                       },
                                       label: LocaleKeys.app_message.tr,
                                       isBorder: true,

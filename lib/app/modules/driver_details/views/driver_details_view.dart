@@ -12,7 +12,7 @@ import '../../../components/green_pool_divider.dart';
 import '../../../components/greenpool_appbar.dart';
 import '../../../constants/image_constant.dart';
 import '../../../services/colors.dart';
-import '../../../services/gp_util.dart';
+import '../../../services/utils/date_utils.dart';
 import '../../../services/text_style_util.dart';
 import '../../home/controllers/home_controller.dart';
 import '../../post_ride_step_one/views/amenities.dart';
@@ -118,7 +118,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                                         BlendMode.srcIn),
                                   ).paddingOnly(right: 4.kw),
                                   Text(
-                                    "${GpUtil.getDateFormat(controller.matchingRidesModelData.value.time ?? "")}  ${GpUtil.convertUtcToLocal(controller.matchingRidesModelData.value.time ?? "")}",
+                                    "${DateTimeUtils.getDateFormat(controller.matchingRidesModelData.value.time ?? "")}  ${DateTimeUtils.convertUtcToLocal(controller.matchingRidesModelData.value.time ?? "")}",
                                     style: TextStyleUtil.k12Regular(
                                         color: ColorUtil.kBlack03),
                                   ),
@@ -244,14 +244,14 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
               height: 76.kh,
               child: ListView.builder(
                 itemCount: ((controller.matchingRidesModelData.value
-                            ?.ridersDetatils?.length ??
+                            .ridersDetatils?.length ??
                         0) +
-                    (controller.matchingRidesModelData.value?.seatAvailable ??
+                    (controller.matchingRidesModelData.value.seatAvailable ??
                         0)),
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, passengerIndex) {
                   int ridersCount = controller.matchingRidesModelData.value
-                          ?.ridersDetatils?.length ??
+                          .ridersDetatils?.length ??
                       0;
                   bool isRider = passengerIndex < ridersCount;
 

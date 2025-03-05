@@ -9,10 +9,9 @@ import '../../../components/common_image_view.dart';
 import '../../../components/green_pool_divider.dart';
 import '../../../components/origin_to_destination.dart';
 import '../../../constants/image_constant.dart';
-import '../../../res/strings.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
-import '../../../services/gp_util.dart';
+import '../../../services/utils/date_utils.dart';
 import '../../../services/text_style_util.dart';
 import '../../home/controllers/home_controller.dart';
 
@@ -102,7 +101,7 @@ class BookingConfirmBottom extends StatelessWidget {
                                   ),
                                 ).paddingOnly(right: 4.kw),
                                 Text(
-                                  "${GpUtil.getDateFormat(driverRideData?.rideDetails?[0]?.time ?? "")}  ${GpUtil.convertUtcToLocal(driverRideData?.rideDetails?[0]?.time ?? "")}",
+                                  "${DateTimeUtils.getDateFormat(driverRideData?.rideDetails?[0]?.time ?? "")}  ${DateTimeUtils.convertUtcToLocal(driverRideData?.rideDetails?[0]?.time ?? "")}",
                                   style: TextStyleUtil.k12Regular(
                                     color: ColorUtil.kBlack02,
                                   ),

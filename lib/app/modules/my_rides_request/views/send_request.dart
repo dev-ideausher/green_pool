@@ -3,7 +3,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/modules/map_driver_send_request/controllers/map_driver_send_request_controller.dart';
 import 'package:green_pool/app/modules/map_driver_send_request/views/map_driver_send_request_view.dart';
-import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import '../../../../generated/assets.dart';
 import '../../../../generated/locales.g.dart';
@@ -14,7 +13,8 @@ import '../../../components/origin_to_destination.dart';
 import '../../../constants/image_constant.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
-import '../../../services/gp_util.dart';
+import '../../../services/utils/date_utils.dart';
+import '../../../services/utils/gp_util.dart';
 import '../../../services/snackbar.dart';
 import '../../../services/text_style_util.dart';
 import '../../home/controllers/home_controller.dart';
@@ -77,7 +77,7 @@ class SendRequest extends GetView<MyRidesRequestController> {
                                         size: Size.fromRadius(20.kh),
                                         child: CommonImageView(
                                           url:
-                                              "${controller.sendRequestModel.value.data![index]!.riderDetails?.profilePic?.url}",
+                                              "${controller.sendRequestModel.value.data![index].riderDetails?.profilePic?.url}",
                                         ),
                                       ),
                                     ),
@@ -91,7 +91,7 @@ class SendRequest extends GetView<MyRidesRequestController> {
                                           controller
                                               .sendRequestModel
                                               .value
-                                              .data![index]!
+                                              .data![index]
                                               .riderDetails!
                                               .fullName
                                               .toString(),
@@ -119,7 +119,7 @@ class SendRequest extends GetView<MyRidesRequestController> {
                                                   ),
                                                 ).paddingOnly(right: 4.kw),
                                                 Text(
-                                                  "${GpUtil.getDateFormat(controller.sendRequestModel.value.data![index]?.time ?? "")}  ${GpUtil.convertUtcToLocal(controller.sendRequestModel.value.data![index]?.time ?? "")}",
+                                                  "${DateTimeUtils.getDateFormat(controller.sendRequestModel.value.data![index].time ?? "")}  ${DateTimeUtils.convertUtcToLocal(controller.sendRequestModel.value.data![index].time ?? "")}",
                                                   style:
                                                       TextStyleUtil.k12Regular(
                                                           color: ColorUtil
@@ -139,9 +139,9 @@ class SendRequest extends GetView<MyRidesRequestController> {
                                   .paddingOnly(bottom: 8.kh),
                               OriginToDestination(
                                       origin:
-                                          "${controller.sendRequestModel.value.data![index]?.origin?.name}",
+                                          "${controller.sendRequestModel.value.data![index].origin?.name}",
                                       destination:
-                                          "${controller.sendRequestModel.value.data![index]?.destination?.name}",
+                                          "${controller.sendRequestModel.value.data![index].destination?.name}",
                                       needPickupText: false)
                                   .paddingOnly(bottom: 8.kh),
                               const GreenPoolDivider()
@@ -156,7 +156,7 @@ class SendRequest extends GetView<MyRidesRequestController> {
                                   GreenPoolButton(
                                     onPressed: () => controller.openMessage(
                                         controller.sendRequestModel.value
-                                            .data![index]!),
+                                            .data![index]),
                                     width: 144.kw,
                                     height: 40.kh,
                                     fontSize: 14.kh,

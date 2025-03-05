@@ -17,7 +17,7 @@ import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
 import '../../../services/dialog_helper.dart';
 import '../../../services/dio/api_service.dart';
-import '../../../services/image_helper.dart';
+import '../../../services/utils/image_util.dart';
 import '../../../services/snackbar.dart';
 
 import 'package:dio/dio.dart' as dio;
@@ -66,10 +66,9 @@ class UserDetailsController extends GetxController {
       isProfilePicUpdated.value = true;
       isBtnActive.value = true;
     } else {
-      showMySnackbar(msg: 'No image selected');
+      showMySnackbar(msg: LocaleKeys.app_no_img_selected.tr);
     }
   }
-
 
   bool _isFieldEmpty(
       String fieldValue, FocusNode focusNode, String errorMessage) {
@@ -245,7 +244,7 @@ class UserDetailsController extends GetxController {
                     ),
                     GreenPoolButton(
                       onPressed: () async {
-                        final res = await APIManager.deleteAccount();                        
+                        final res = await APIManager.deleteAccount();
                         Get.find<AuthService>().logOutUser();
                         Get.find<HomeController>().userInfoAPI();
                       },

@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/data/chat_arg.dart';
 import 'package:green_pool/app/data/matching_rides_model.dart';
-import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
-import 'package:green_pool/app/services/gp_util.dart';
 
 import '../../../../generated/locales.g.dart';
 import '../../../services/dio/api_service.dart';
 import '../../../services/storage.dart';
+import '../../../services/utils/date_utils.dart';
 
 class DriverDetailsController extends GetxController {
   var matchingRidesModelData = MatchingRidesModelData().obs;
@@ -57,7 +56,7 @@ class DriverDetailsController extends GetxController {
       } else {
         Get.toNamed(Routes.RIDER_PROFILE_SETUP, arguments: {
           "fromNavBar": false,
-          "fullName": Get.find<GetStorageService>().getUserName ?? "",
+          "fullName": Get.find<GetStorageService>().getUserName,
           "findRideModel": rideDetails
         });
       }
@@ -138,7 +137,7 @@ class DriverDetailsController extends GetxController {
                       ?.split(',')
                       .first ??
                   "City",
-              date: GpUtil.formatDate(DateTime.parse(
+              date: DateTimeUtils.formatDate(DateTime.parse(
                   matchingRidesModelData.value.date ?? LocaleKeys.app_defaultDate.tr))));
       messageBtnLoading.value = false;
     } catch (e) {
@@ -161,7 +160,7 @@ class DriverDetailsController extends GetxController {
                         ?.split(',')
                         .first ??
                     "City",
-                date: GpUtil.formatDate(DateTime.parse(
+                date: DateTimeUtils.formatDate(DateTime.parse(
                     matchingRidesModelData.value.date ??
                         LocaleKeys.app_defaultDate.tr))));
         messageBtnLoading.value = false;

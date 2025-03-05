@@ -7,7 +7,6 @@ import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
 import 'package:green_pool/app/data/ride_history_model.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
-import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/storage.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
@@ -17,6 +16,7 @@ import '../../../components/gp_progress.dart';
 import '../../../components/green_pool_divider.dart';
 import '../../../components/origin_to_destination.dart';
 import '../../../services/colors.dart';
+import '../../../services/utils/date_utils.dart';
 import '../../home/controllers/home_controller.dart';
 import '../controllers/ride_history_controller.dart';
 
@@ -45,6 +45,7 @@ class RideHistoryView extends GetView<RideHistoryController> {
                       child: Text(
                         LocaleKeys.app_noRideHistory.tr,
                         style: TextStyleUtil.k18Heading600(),
+                        textAlign: TextAlign.center,
                       ),
                     )
                   : Column(
@@ -215,7 +216,7 @@ class RiderRideHistTile extends StatelessWidget {
                                       BlendMode.srcIn),
                                 ).paddingOnly(right: 4.kw),
                                 Text(
-                                  "${GpUtil.getDateFormat(his?.time ?? "")} ${GpUtil.convertUtcToLocal(his?.time ?? "")}",
+                                  "${DateTimeUtils.getDateFormat(his?.time ?? "")} ${DateTimeUtils.convertUtcToLocal(his?.time ?? "")}",
                                   style: TextStyleUtil.k12Regular(
                                       color: ColorUtil.kBlack03),
                                 ),
@@ -266,7 +267,7 @@ class RiderRideHistTile extends StatelessWidget {
                         ? const SizedBox()
                         : Text(
                             // '07 Nov 2023, 3:00pm',
-                            '${GpUtil.getDateFormat(his?.time ?? "")}  ${GpUtil.convertUtcToLocal(his?.time ?? "")}',
+                            '${DateTimeUtils.getDateFormat(his?.time ?? "")}  ${DateTimeUtils.convertUtcToLocal(his?.time ?? "")}',
                             style: TextStyleUtil.k16Bold(),
                           ),
                   ],
@@ -349,7 +350,7 @@ class DriverRideHistTile extends StatelessWidget {
                 // GpUtil.getDateFormat(his?.date) ??
                 ((his?.time ?? "") == ""
                     ? ""
-                    : GpUtil.convertUtcToLocal(his?.time ?? "")),
+                    : DateTimeUtils.convertUtcToLocal(his?.time ?? "")),
                 style: TextStyleUtil.k12Regular(color: ColorUtil.kBlack03),
               ),
               trailing: SizedBox(
@@ -405,7 +406,7 @@ class DriverRideHistTile extends StatelessWidget {
                             BlendMode.srcIn),
                       ).paddingOnly(right: 4.kw),
                       Text(
-                        GpUtil.getDateFormat(his?.time ?? ""),
+                        DateTimeUtils.getDateFormat(his?.time ?? ""),
                         style:
                             TextStyleUtil.k12Regular(color: ColorUtil.kBlack03),
                       ),

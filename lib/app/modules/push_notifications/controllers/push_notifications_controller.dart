@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/services/dio/api_service.dart';
 
+import '../../../../generated/locales.g.dart';
 import '../../../services/snackbar.dart';
 
 class PushNotificationsController extends GetxController {
@@ -76,7 +77,7 @@ class PushNotificationsController extends GetxController {
       if (response.data['status']) {
         Get.find<HomeController>().userInfoAPI();
         Get.back();
-        showMySnackbar(msg: "Notification preferences updated");
+        showMySnackbar(msg: LocaleKeys.app_noti_pref_updated.tr);
       } else {
         showMySnackbar(msg: response.data["message"].toString());
       }

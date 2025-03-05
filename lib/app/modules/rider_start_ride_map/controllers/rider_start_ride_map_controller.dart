@@ -9,7 +9,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:green_pool/app/data/chat_arg.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/dio/api_service.dart';
-import 'package:green_pool/app/services/gp_util.dart';
+import 'package:green_pool/app/services/utils/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/storage.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -19,8 +19,8 @@ import '../../../constants/image_constant.dart';
 import '../../../data/booking_detail_model.dart';
 import '../../../data/live_location_model.dart';
 import '../../../data/my_rides_model.dart';
-import '../../../res/strings.dart';
 import '../../../services/dio/endpoints.dart';
+import '../../../services/utils/date_utils.dart';
 import '../views/sos_dialog.dart';
 
 class RiderStartRideMapController extends GetxController {
@@ -258,7 +258,7 @@ class RiderStartRideMapController extends GetxController {
           bookingDetail.value.driverBookingDetails!.stops![0]!.coordinates!;
       wayPoints.add(PolylineWayPoint(
           location:
-              "${stop1Coordinates?.last.toString()},${stop1Coordinates?.first.toString()}"));
+              "${stop1Coordinates.last.toString()},${stop1Coordinates.first.toString()}"));
       if (bookingDetail
               .value.driverBookingDetails?.stops?[1]?.coordinates!.first !=
           0.0) {
@@ -266,10 +266,10 @@ class RiderStartRideMapController extends GetxController {
             bookingDetail.value.driverBookingDetails!.stops![1]!.coordinates!;
         wayPoints.add(PolylineWayPoint(
             location:
-                "${stop2Coordinates?.last.toString()},${stop2Coordinates?.first.toString()}"));
+                "${stop2Coordinates.last.toString()},${stop2Coordinates.first.toString()}"));
       }
     } else {
-      print("Waypoints not added");
+      debugPrint("Waypoints not added");
     }
     try {
       markers.clear();
@@ -399,7 +399,8 @@ class RiderStartRideMapController extends GetxController {
       if (isLessThanFiveMinutes(arrivalTime.value)) {
         return LocaleKeys.app_youAreAboutToReachYourDestination.tr;
       } else {
-        return LocaleKeys.app_youWillReachYourDestinationIn.tr + arrivalTime.value;
+        return LocaleKeys.app_youWillReachYourDestinationIn.tr +
+            arrivalTime.value;
       }
     }
   }
@@ -410,7 +411,7 @@ class RiderStartRideMapController extends GetxController {
       return minutes < 5;
     } catch (e) {
       // Handle parsing errors, invalid format, etc.
-      print('Error parsing minutes: $e');
+      debugPrint('Error parsing minutes: $e');
       return false;
     }
   }
@@ -439,14 +440,18 @@ class RiderStartRideMapController extends GetxController {
               image: bookingDetail.value.driverDetails?.profilePic?.url,
               driverRideId: bookingDetail.value.driverRideId,
               riderRideId: bookingDetail.value.riderRideId,
-              origin: bookingDetail.value.driverBookingDetails?.origin?.name?.split(',').first ??
+              origin: bookingDetail.value.driverBookingDetails?.origin?.name
+                      ?.split(',')
+                      .first ??
                   "City",
-              destination:
-                  bookingDetail.value.driverBookingDetails?.destination?.name?.split(',').first ??
-                      "City",
-              
-                  date: GpUtil.formatDate(DateTime.parse(bookingDetail.value.driverBookingDetails?.date ??
-                  LocaleKeys.app_defaultDate.tr))));
+              destination: bookingDetail
+                      .value.driverBookingDetails?.destination?.name
+                      ?.split(',')
+                      .first ??
+                  "City",
+              date: DateTimeUtils.formatDate(DateTime.parse(
+                  bookingDetail.value.driverBookingDetails?.date ??
+                      LocaleKeys.app_defaultDate.tr))));
     } catch (e) {
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
@@ -457,13 +462,18 @@ class RiderStartRideMapController extends GetxController {
               image: bookingDetail.value.driverDetails?.profilePic?.url,
               driverRideId: bookingDetail.value.driverRideId,
               riderRideId: bookingDetail.value.riderRideId,
-              origin: bookingDetail.value.driverBookingDetails?.origin?.name?.split(',').first ??
+              origin: bookingDetail.value.driverBookingDetails?.origin?.name
+                      ?.split(',')
+                      .first ??
                   "City",
-              destination:
-                  bookingDetail.value.driverBookingDetails?.destination?.name?.split(',').first ??
-                      "City",
-              date: GpUtil.formatDate(DateTime.parse(bookingDetail.value.driverBookingDetails?.date ??
-                  LocaleKeys.app_defaultDate.tr))));
+              destination: bookingDetail
+                      .value.driverBookingDetails?.destination?.name
+                      ?.split(',')
+                      .first ??
+                  "City",
+              date: DateTimeUtils.formatDate(DateTime.parse(
+                  bookingDetail.value.driverBookingDetails?.date ??
+                      LocaleKeys.app_defaultDate.tr))));
     }
   }
 
@@ -475,9 +485,9 @@ class RiderStartRideMapController extends GetxController {
 
   void startSOS() {
     isSOSActive = true;
-    print('SOS activated!');
+    debugPrint('SOS activated!');
 
-    Timer(Duration(seconds: 10), () {
+    Timer(const Duration(seconds: 10), () {
       if (isSOSActive) {
         sendSOSMessage();
       }
@@ -486,11 +496,11 @@ class RiderStartRideMapController extends GetxController {
 
   void cancelSOS() {
     isSOSActive = false;
-    print('SOS canceled.');
+    debugPrint('SOS canceled.');
   }
 
   void sendSOSMessage() {
-    print('Sending SOS message to emergency contacts: $emergencyContacts');
+    debugPrint('Sending SOS message to emergency contacts: $emergencyContacts');
     // Code to send SOS message to emergency contacts
   }
 

@@ -8,9 +8,8 @@ import '../../../components/common_image_view.dart';
 import '../../../components/gp_progress.dart';
 import '../../../components/greenpool_textfield.dart';
 import '../../../constants/image_constant.dart';
-import '../../../res/strings.dart';
 import '../../../services/colors.dart';
-import '../../../services/gp_util.dart';
+import '../../../services/utils/date_utils.dart';
 import '../../../services/storage.dart';
 import '../../../services/text_style_util.dart';
 import '../../home/controllers/home_controller.dart';
@@ -138,7 +137,7 @@ class ChatWithExpertsView extends GetView<ChatWithExpertsController> {
                                                     MainAxisAlignment.end,
                                                 children: [
                                                   Text(
-                                                    GpUtil.formatTime(message
+                                                    DateTimeUtils.formatTime(message
                                                         .timestamp), // Replace with actual time
                                                     style: TextStyleUtil
                                                         .k10Regular(
@@ -193,18 +192,23 @@ class ChatWithExpertsView extends GetView<ChatWithExpertsController> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           SuggestionsChip(
+                                            index: 0,
                                             topic: LocaleKeys.app_wallet.tr,
                                             controller: controller,
                                           ),
                                           SuggestionsChip(
+                                            index: 1,
                                             topic: LocaleKeys.app_refund.tr,
                                             controller: controller,
                                           ),
                                           SuggestionsChip(
-                                            topic: LocaleKeys.app_rideRelated.tr,
+                                            index: 2,
+                                            topic:
+                                                LocaleKeys.app_rideRelated.tr,
                                             controller: controller,
                                           ),
                                           SuggestionsChip(
+                                            index: 3,
                                             topic: LocaleKeys.app_accRelated.tr,
                                             controller: controller,
                                           ),
@@ -242,9 +246,11 @@ class ChatWithExpertsView extends GetView<ChatWithExpertsController> {
 
 class SuggestionsChip extends StatelessWidget {
   final String topic;
+  final int index;
   final ChatWithExpertsController controller;
   const SuggestionsChip({
     super.key,
+    required this.index,
     required this.topic,
     required this.controller,
   });
@@ -255,6 +261,7 @@ class SuggestionsChip extends StatelessWidget {
       onTap: controller.isChatStarted.value
           ? () {}
           : () {
+              controller.chipIndex = index;
               controller.eMsg.text = topic;
             },
       child: IntrinsicWidth(

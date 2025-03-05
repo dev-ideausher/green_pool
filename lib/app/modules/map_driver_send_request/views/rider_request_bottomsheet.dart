@@ -4,17 +4,16 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/components/common_image_view.dart';
 import 'package:green_pool/app/components/origin_to_destination.dart';
 import 'package:green_pool/app/data/driver_send_request_model.dart';
-import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/snackbar.dart';
 
 import '../../../../generated/locales.g.dart';
 import '../../../components/green_pool_divider.dart';
 import '../../../constants/image_constant.dart';
-import '../../../res/strings.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
 import '../../../services/text_style_util.dart';
+import '../../../services/utils/date_utils.dart';
 import '../../home/controllers/home_controller.dart';
 import '../../my_rides_request/controllers/my_rides_request_controller.dart';
 
@@ -46,11 +45,11 @@ class RiderRequestBottomsheet extends StatelessWidget {
                 child: SizedBox.fromSize(
                     size: Size.fromRadius(20.kh),
                     child: CommonImageView(
-                      url: element?.riderDetails?.profilePic?.url,
+                      url: element.riderDetails?.profilePic?.url,
                     )),
               ),
               title: Text(
-                element?.riderDetails?.fullName ?? "",
+                element.riderDetails?.fullName ?? "",
                 style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
               ),
               subtitle: Row(
@@ -65,7 +64,7 @@ class RiderRequestBottomsheet extends StatelessWidget {
                         BlendMode.srcIn),
                   ).paddingOnly(right: 4.kw),
                   Text(
-                    ("${GpUtil.getDateFormat(element?.time ?? "")}, ${GpUtil.convertUtcToLocal(element?.time ?? "")}"),
+                    ("${DateTimeUtils.getDateFormat(element.time ?? "")}, ${DateTimeUtils.convertUtcToLocal(element.time ?? "")}"),
                     style: TextStyleUtil.k12Regular(color: ColorUtil.kBlack02),
                   ),
                 ],
@@ -96,8 +95,8 @@ class RiderRequestBottomsheet extends StatelessWidget {
             ),
             const GreenPoolDivider().paddingOnly(bottom: 8.kh),
             OriginToDestination(
-                    origin: element?.origin?.name ?? "",
-                    destination: element?.destination?.name ?? "",
+                    origin: element.origin?.name ?? "",
+                    destination: element.destination?.name ?? "",
                     needPickupText: false)
                 .paddingOnly(bottom: 8.kh),
             const GreenPoolDivider().paddingOnly(bottom: 8.kh),
@@ -127,7 +126,7 @@ class RiderRequestBottomsheet extends StatelessWidget {
                           size: 12.kh,
                         ).paddingOnly(right: 4.kw),
                         Text(
-                          element?.riderDetails?.rating.toString() ?? "0.0",
+                          element.riderDetails?.rating.toString() ?? "0.0",
                           style: TextStyleUtil.k14Regular(),
                         ),
                       ]),
@@ -142,7 +141,7 @@ class RiderRequestBottomsheet extends StatelessWidget {
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Text(
-                      element?.riderDetails?.totalRides.toString() ?? "0",
+                      element.riderDetails?.totalRides.toString() ?? "0",
                       style:
                           TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                     ),
@@ -156,7 +155,7 @@ class RiderRequestBottomsheet extends StatelessWidget {
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Text(
-                      '${LocaleKeys.app_inA.tr} ${element?.riderDetails?.createdAt?.substring(0, 4) ?? 2024}',
+                      '${LocaleKeys.app_inA.tr} ${element.riderDetails?.createdAt?.substring(0, 4) ?? 2024}',
                       style:
                           TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                     ),
@@ -167,15 +166,15 @@ class RiderRequestBottomsheet extends StatelessWidget {
             const GreenPoolDivider().paddingOnly(bottom: 16.kh, top: 8.kh),
             GreenPoolButton(
               onPressed: () {
-                if (element?.requestSent ?? false) {
+                if (element.requestSent ?? false) {
                   showMySnackbar(msg: LocaleKeys.app_reqHasAlreadySent.tr);
                 } else {
                   Get.back();
                   Get.find<MyRidesRequestController>()
-                      .sendRequestToRiderAPI(element!);
+                      .sendRequestToRiderAPI(element);
                 }
               },
-              label: element?.requestSent ?? false
+              label: element.requestSent ?? false
                   ? LocaleKeys.app_sent.tr
                   : LocaleKeys.app_requestRider.tr,
               fontSize: 14.kh,

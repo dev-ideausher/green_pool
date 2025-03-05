@@ -10,7 +10,6 @@ import 'package:green_pool/app/modules/my_rides_request/controllers/my_rides_req
 import 'package:green_pool/app/modules/rider_confirmed_ride_details/controllers/rider_confirmed_ride_details_controller.dart';
 import 'package:green_pool/app/modules/rider_my_ride_request/controllers/rider_my_ride_request_controller.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
-import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/storage.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../data/chat_arg.dart';

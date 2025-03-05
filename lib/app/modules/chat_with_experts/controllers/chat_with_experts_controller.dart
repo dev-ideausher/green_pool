@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:green_pool/app/services/snackbar.dart';
 import 'package:green_pool/app/services/storage.dart';
+import '../../../../generated/locales.g.dart';
 import '../../../data/message_model.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,7 @@ class ChatWithExpertsController extends GetxController {
   final TextEditingController eMsg = TextEditingController();
   final RxBool isLoad = true.obs;
   final RxBool isChatStarted = true.obs;
+  int chipIndex = 5;
 
   @override
   void onInit() {
@@ -30,8 +32,7 @@ class ChatWithExpertsController extends GetxController {
           MessageModel(
             id: "admin",
             senderId: "admin",
-            message:
-                "Hi, how can I help you to resolve your queries? Pick a topic to start our chat.",
+            message: LocaleKeys.app_default_support_msg.tr,
             timestamp: DateTime.now().subtract(const Duration(minutes: 2)),
           ),
         );
@@ -61,8 +62,7 @@ class ChatWithExpertsController extends GetxController {
           MessageModel(
             id: "admin",
             senderId: "admin",
-            message:
-                "Hi, how can I help you to resolve your queries? Pick a topic to start our chat.",
+            message: LocaleKeys.app_default_support_msg.tr,
             timestamp: DateTime.now().subtract(const Duration(minutes: 5)),
           ),
         );
@@ -85,12 +85,37 @@ class ChatWithExpertsController extends GetxController {
     if (eMsg.text.trim().isEmpty) {
       return;
     } else {
-      await setMessageInApi();
+      // await setMessageInApi();
+      final msg = editMsg();
+      debugPrint(msg);
+    }
+  }
+
+  String editMsg() {
+    if (chipIndex == 0) {
+      eMsg.text = "Wallet";
+      //reset it so that when user is sending a message after sending a suggestion chip, it will send the written text
+      chipIndex = 5;
+      return eMsg.text;
+    } else if (chipIndex == 1) {
+      eMsg.text = "Refund";
+      chipIndex = 5;
+      return eMsg.text;
+    } else if (chipIndex == 2) {
+      eMsg.text = "Ride Related";
+      chipIndex = 5;
+      return eMsg.text;
+    } else if (chipIndex == 3) {
+      eMsg.text = "Account Related";
+      chipIndex = 5;
+      return eMsg.text;
+    } else {
+      return eMsg.text;
     }
   }
 
   Future<void> setMessageInApi() async {
-    final msg = eMsg.text;
+    final msg = editMsg();
     eMsg.clear();
     final timestamp = DateTime.now().toUtc();
     try {

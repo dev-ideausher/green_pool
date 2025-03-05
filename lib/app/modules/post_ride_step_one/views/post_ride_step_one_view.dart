@@ -10,10 +10,10 @@ import 'package:green_pool/app/components/richtext_heading.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
+import 'package:green_pool/app/services/storage.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
 import '../../../../generated/locales.g.dart';
-import '../../../res/strings.dart';
 import '../../../services/custom_button.dart';
 import '../../home/controllers/home_controller.dart';
 import '../controllers/post_ride_step_one_controller.dart';
@@ -24,12 +24,21 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
   @override
   Widget build(BuildContext context) {
     final isPinkModeOn = Get.find<HomeController>().isPinkModeOn.value;
-    final borderforStopField = OutlineInputBorder(
+    final borStopFld = OutlineInputBorder(
         borderSide: const BorderSide(color: ColorUtil.kBlack06),
         borderRadius: BorderRadius.circular(8.kh));
     return Scaffold(
       appBar: GreenPoolAppBar(
         title: Text(LocaleKeys.app_postARide.tr),
+        actions: [
+          Visibility(
+            visible: Get.find<GetStorageService>().getPostRideData() != null,
+            child: InkWell(
+                onTap: () => controller.setPrevRideData(),
+                splashColor: Colors.transparent,
+                child: Text("Copy", style: TextStyleUtil.k16Bold())),
+          ).paddingOnly(right: 16.kw)
+        ],
       ),
       resizeToAvoidBottomInset: false,
       body: Stack(
@@ -105,8 +114,8 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
                     hintText: LocaleKeys.app_addStops.tr,
                     keyboardType: TextInputType.streetAddress,
                     fillColor: Colors.transparent,
-                    border: borderforStopField,
-                    focusedBorder: borderforStopField,
+                    border: borStopFld,
+                    focusedBorder: borStopFld,
                     onTap: () {
                       controller.moveToSetStop1();
                     },
@@ -141,8 +150,8 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
                     hintText: LocaleKeys.app_addStops.tr,
                     keyboardType: TextInputType.streetAddress,
                     fillColor: Colors.transparent,
-                    border: borderforStopField,
-                    focusedBorder: borderforStopField,
+                    border: borStopFld,
+                    focusedBorder: borStopFld,
                     onTap: () {
                       controller.moveToSetStop2();
                     },

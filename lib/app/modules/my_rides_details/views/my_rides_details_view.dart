@@ -7,16 +7,15 @@ import 'package:green_pool/app/components/gp_progress.dart';
 import 'package:green_pool/app/components/origin_to_destination.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/services/custom_button.dart';
-import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../../generated/locales.g.dart';
 import '../../../components/green_pool_divider.dart';
 import '../../../components/greenpool_appbar.dart';
 import '../../../constants/image_constant.dart';
-import '../../../res/strings.dart';
 import '../../../services/colors.dart';
 import '../../../services/text_style_util.dart';
+import '../../../services/utils/date_utils.dart';
 import '../../post_ride_step_one/views/amenities.dart';
 import '../controllers/my_rides_details_controller.dart';
 
@@ -56,7 +55,7 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                                       BlendMode.srcIn),
                                 ).paddingOnly(right: 8.kw),
                                 Text(
-                                  "${GpUtil.getDateFormat(controller.myRidesModelData.value.driverBookingDetails?.time ?? "")}  ${GpUtil.convertUtcToLocal(controller.myRidesModelData.value.driverBookingDetails?.time ?? "")}",
+                                  "${DateTimeUtils.getDateFormat(controller.myRidesModelData.value.driverBookingDetails?.time ?? "")}  ${DateTimeUtils.convertUtcToLocal(controller.myRidesModelData.value.driverBookingDetails?.time ?? "")}",
                                   style: TextStyleUtil.k16Bold(
                                       color: ColorUtil.kBlack02),
                                 )
@@ -161,7 +160,7 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                                 shrinkWrap:
                                     true, // Allows ListView to shrink to fit its content
                                 physics:
-                                    NeverScrollableScrollPhysics(), // Prevents ListView from scrolling
+                                    const NeverScrollableScrollPhysics(), // Prevents ListView from scrolling
                                 itemBuilder: (context, index1) {
                                   final rider = controller
                                       .myRidesModelData
@@ -238,14 +237,14 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              '${controller.myRidesModelData.value?.driverDetails?.vehicleDetails?.model}',
+                              '${controller.myRidesModelData.value.driverDetails?.vehicleDetails?.model}',
                               style: TextStyleUtil.k16Bold(
                                   color: ColorUtil.kBlack02),
                             ).paddingOnly(bottom: 4.kh),
                             Row(
                               children: [
                                 Text(
-                                  '${controller.myRidesModelData.value?.driverDetails?.vehicleDetails?.type}',
+                                  '${controller.myRidesModelData.value.driverDetails?.vehicleDetails?.type}',
                                   style: TextStyleUtil.k14Semibold(
                                       color: ColorUtil.kBlack03),
                                 ),
@@ -256,7 +255,7 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                                 ).paddingSymmetric(
                                     vertical: 2.5.kh, horizontal: 8.kw),
                                 Text(
-                                  '${controller.myRidesModelData.value?.driverDetails?.vehicleDetails?.licencePlate}',
+                                  '${controller.myRidesModelData.value.driverDetails?.vehicleDetails?.licencePlate}',
                                   style: TextStyleUtil.k14Semibold(
                                       color: ColorUtil.kBlack03),
                                 ),

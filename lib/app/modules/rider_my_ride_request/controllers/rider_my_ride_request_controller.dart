@@ -1,16 +1,16 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/data/rider_confirm_request_model.dart';
-import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
-import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/snackbar.dart';
 import '../../../../generated/locales.g.dart';
 import '../../../data/chat_arg.dart';
 import '../../../data/confirm_ride_by_rider_model.dart';
 import '../../../data/rider_send_request_model.dart';
 import '../../../services/dio/api_service.dart';
+import '../../../services/utils/date_utils.dart';
 import '../views/request_sent_bottom.dart';
 
 class RiderMyRideRequestController extends GetxController {
@@ -135,7 +135,7 @@ class RiderMyRideRequestController extends GetxController {
               riderRideId: rideIdFromMyRides,
               origin: data.origin?.name?.split(',').first ?? "City",
               destination: data.destination?.name?.split(',').first ?? "City",
-              date: GpUtil.formatDate(
+              date: DateTimeUtils.formatDate(
                   DateTime.parse(data.date ?? LocaleKeys.app_defaultDate.tr))));
     } catch (e) {
       Get.toNamed(Routes.CHAT_PAGE,
@@ -149,7 +149,7 @@ class RiderMyRideRequestController extends GetxController {
               riderRideId: rideIdFromMyRides,
               origin: data.origin?.name?.split(',').first ?? "City",
               destination: data.destination?.name?.split(',').first ?? "City",
-              date: GpUtil.formatDate(
+              date: DateTimeUtils.formatDate(
                   DateTime.parse(data.date ?? LocaleKeys.app_defaultDate.tr))));
     }
   }
@@ -180,7 +180,7 @@ class RiderMyRideRequestController extends GetxController {
             riderRideId: riderRideId,
             origin: data?.origin?.name?.split(',').first ?? "City",
             destination: data?.destination?.name?.split(',').first ?? "City",
-            date: GpUtil.formatDate(
+            date: DateTimeUtils.formatDate(
                 DateTime.parse(data?.date ?? LocaleKeys.app_defaultDate.tr))),
         "ridePostId": ridePostId
       });
@@ -196,13 +196,13 @@ class RiderMyRideRequestController extends GetxController {
               riderRideId: riderRideId,
               origin: data?.origin?.name?.split(',').first ?? "City",
               destination: data?.destination?.name?.split(',').first ?? "City",
-              date: GpUtil.formatDate(DateTime.parse(
+              date: DateTimeUtils.formatDate(DateTime.parse(
                   data?.date ?? LocaleKeys.app_defaultDate.tr))));
     }
   }
 
   void showBottom() {
-    Get.bottomSheet(RequestSentBottom());
+    Get.bottomSheet(const RequestSentBottom());
   }
 
   moveToPaymentFromConfirmSection(
@@ -238,7 +238,7 @@ class RiderMyRideRequestController extends GetxController {
           (riderSendRequestModel.value.riderRideDetails!.seatAvailable!)
     };
 
-    print(
+    debugPrint(
         "PRICE: ${int.parse(riderSendRequestModelData.price!) * (riderSendRequestModel.value.riderRideDetails!.seatAvailable!)}");
 
     Get.toNamed(Routes.PAYMENT, arguments: {

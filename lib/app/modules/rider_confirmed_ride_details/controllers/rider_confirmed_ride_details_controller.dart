@@ -1,14 +1,13 @@
 import 'package:get/get.dart';
-import 'package:green_pool/app/services/gp_util.dart';
 
 import '../../../../generated/locales.g.dart';
 import '../../../data/chat_arg.dart';
 import '../../../data/my_rides_model.dart';
-import '../../../res/strings.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/dialog_helper.dart';
 import '../../../services/dio/api_service.dart';
 import '../../../services/snackbar.dart';
+import '../../../services/utils/date_utils.dart';
 
 class RiderConfirmedRideDetailsController extends GetxController {
   final Rx<MyRidesModelData> myRidesModel = MyRidesModelData().obs;
@@ -58,7 +57,7 @@ class RiderConfirmedRideDetailsController extends GetxController {
                       ?.destination?.name?.split(',').first ??
                   "City",
               date:
-                  GpUtil.formatDate(DateTime.parse(data.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.date ??
+                  DateTimeUtils.formatDate(DateTime.parse(data.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.date ??
                       LocaleKeys.app_defaultDate.tr))));
       messageBtnLoading.value = false;
     } catch (e) {
@@ -81,7 +80,7 @@ class RiderConfirmedRideDetailsController extends GetxController {
                       ?.destination?.name?.split(',').first ??
                   "City",
               date:
-                  GpUtil.formatDate(DateTime.parse(data.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.date ??
+                  DateTimeUtils.formatDate(DateTime.parse(data.confirmDriverDetails?[0]?.driverPostsDetails?[0]?.date ??
                       LocaleKeys.app_defaultDate.tr))));
       messageBtnLoading.value = false;
     }

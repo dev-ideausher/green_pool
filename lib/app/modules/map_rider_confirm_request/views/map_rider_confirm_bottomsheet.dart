@@ -10,10 +10,9 @@ import '../../../components/common_image_view.dart';
 import '../../../components/green_pool_divider.dart';
 import '../../../constants/image_constant.dart';
 import '../../../data/rider_confirm_request_model.dart';
-import '../../../res/strings.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
-import '../../../services/gp_util.dart';
+import '../../../services/utils/date_utils.dart';
 import '../../../services/text_style_util.dart';
 import '../../home/controllers/home_controller.dart';
 
@@ -49,7 +48,7 @@ class MapRiderConfirmBottomsheet extends StatelessWidget {
                             height: 64.kh,
                             width: 64.kw,
                             url:
-                                "${element?.driverRideDetails?.driverDetails?.firstOrNull?.profilePic?.url}"))
+                                "${element.driverRideDetails?.driverDetails?.firstOrNull?.profilePic?.url}"))
                     .paddingOnly(right: 16.kw, bottom: 8.kh),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,7 +57,7 @@ class MapRiderConfirmBottomsheet extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "${element?.driverRideDetails?.driverDetails?.firstOrNull?.fullName}",
+                          "${element.driverRideDetails?.driverDetails?.firstOrNull?.fullName}",
                           style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
                         ),
                         8.kwidthBox,
@@ -67,7 +66,7 @@ class MapRiderConfirmBottomsheet extends StatelessWidget {
                             children: [
                               TextSpan(
                                 text:
-                                    "\$ ${(element?.driverRideDetails?.origin?.originDestinationFair ?? 0)}",
+                                    "\$ ${(element.driverRideDetails?.origin?.originDestinationFair ?? 0)}",
                                 style: TextStyleUtil.k16Bold(
                                     color: ColorUtil.kSecondary01),
                               ),
@@ -114,7 +113,7 @@ class MapRiderConfirmBottomsheet extends StatelessWidget {
                                   BlendMode.srcIn),
                             ).paddingOnly(right: 4.kw),
                             Text(
-                              "${GpUtil.getDateFormat(element.driverRideDetails?.time ?? "")}  ${GpUtil.convertUtcToLocal(element.driverRideDetails?.time ?? "")}",
+                              "${DateTimeUtils.getDateFormat(element.driverRideDetails?.time ?? "")}  ${DateTimeUtils.convertUtcToLocal(element.driverRideDetails?.time ?? "")}",
                               style: TextStyleUtil.k12Regular(
                                   color: ColorUtil.kBlack02),
                             ),
@@ -197,7 +196,7 @@ class MapRiderConfirmBottomsheet extends StatelessWidget {
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Text(
-                      element?.driverRideDetails?.driverDetails?.firstOrNull
+                      element.driverRideDetails?.driverDetails?.firstOrNull
                               ?.totalRides
                               .toString() ??
                           "0",
@@ -214,7 +213,7 @@ class MapRiderConfirmBottomsheet extends StatelessWidget {
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Text(
-                      '${LocaleKeys.app_inA.tr} ${element?.driverRideDetails?.driverDetails?.firstOrNull?.createdAt?.substring(0, 4) ?? 2024}',
+                      '${LocaleKeys.app_inA.tr} ${element.driverRideDetails?.driverDetails?.firstOrNull?.createdAt?.substring(0, 4) ?? 2024}',
                       style:
                           TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                     ),

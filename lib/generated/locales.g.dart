@@ -508,6 +508,17 @@ class LocaleKeys {
   static const app_drop_off = 'app_drop_off';
   static const app_stop_1 = 'app_stop_1';
   static const app_stop_2 = 'app_stop_2';
+  static const app_feedback_msg = 'app_feedback_msg';
+  static const app_ride_posted = 'app_ride_posted';
+  static const app_default_support_msg = 'app_default_support_msg';
+  static const app_noti_pref_updated = 'app_noti_pref_updated';
+  static const app_enter_all_details = 'app_enter_all_details';
+  static const app_no_img_selected = 'app_no_img_selected';
+  static const app_pls_enter_value = 'app_pls_enter_value';
+  static const app_only_book_up_to_10_seats = 'app_only_book_up_to_10_seats';
+  static const app_select_valid_time = 'app_select_valid_time';
+  static const app_select_valid_date = 'app_select_valid_date';
+  static const app_copy = 'app_copy';
   static const app_language_pref = 'app_language_pref';
   static const app_language = 'app_language';
   static const app_defaultDate = 'app_defaultDate';
@@ -1033,6 +1044,20 @@ class Locales {
     'app_drop_off': 'Drop off:',
     'app_stop_1': 'Stop 1:   ',
     'app_stop_2': 'Stop 2:   ',
+    'app_feedback_msg':
+        'Thankyou for giving a feedback, our team will get back to you soon!',
+    'app_ride_posted': 'Ride posted successfully',
+    'app_default_support_msg':
+        'Hi, how can I help you to resolve your queries? Pick a topic to start our chat.',
+    'app_noti_pref_updated': 'Notification preferences updated',
+    'app_enter_all_details':
+        'To create a ride alert please enter all the details',
+    'app_no_img_selected': 'No image selected',
+    'app_pls_enter_value': 'Please enter a value',
+    'app_only_book_up_to_10_seats': 'You can only book up to 10 seats.',
+    'app_select_valid_time': 'Please select a valid time',
+    'app_select_valid_date': 'Please select a date',
+    'app_copy': 'Copy',
     'app_language_pref': 'Language Preferences',
     'app_language': 'Language',
     'app_defaultDate': '2024-12-31T00:00:00.000Z',
@@ -1566,6 +1591,20 @@ class Locales {
     'app_drop_off': 'Devolución:',
     'app_stop_1': 'Parada 1: ',
     'app_stop_2': 'Parada 2: ',
+    'app_feedback_msg':
+        '¡Gracias por tu comentario! Nuestro equipo se pondrá en contacto contigo pronto.',
+    'app_ride_posted': 'Viaje publicado con éxito',
+    'app_default_support_msg':
+        'Hola, ¿cómo puedo ayudarte a resolver tus dudas? Elige un tema para comenzar nuestro chat.',
+    'app_noti_pref_updated': 'Preferencias de notificación actualizadas',
+    'app_enter_all_details':
+        'Para crear una alerta de viaje, ingresa todos los detalles',
+    'app_no_img_selected': 'Ninguna imagen seleccionada',
+    'app_pls_enter_value': 'Por favor, ingrese un valor',
+    'app_only_book_up_to_10_seats': 'Solo puedes reservar hasta 10 asientos.',
+    'app_select_valid_time': 'Por favor, seleccione una hora válida',
+    'app_select_valid_date': 'Por favor, seleccione una fecha',
+    'app_copy': 'Copiar',
     'app_language_pref': 'Preferencias de idioma',
     'app_language': 'Idioma',
     'app_defaultDate': '2024-12-31T00:00:00.000Z',
@@ -2101,6 +2140,21 @@ class Locales {
     'app_drop_off': 'Déposer:',
     'app_stop_1': 'Arrêt 1:   ',
     'app_stop_2': 'Arrêt 2:   ',
+    'app_feedback_msg':
+        'Merci pour votre retour, notre équipe vous répondra bientôt !',
+    'app_ride_posted': 'Trajet publié avec succès',
+    'app_default_support_msg':
+        'Bonjour, comment puis-je vous aider à résoudre vos questions ? Choisissez un sujet pour commencer notre discussion.',
+    'app_noti_pref_updated': 'Préférences de notification mises à jour',
+    'app_enter_all_details':
+        'Pour créer une alerte de trajet, veuillez saisir tous les détails',
+    'app_no_img_selected': 'Aucune image sélectionnée',
+    'app_pls_enter_value': 'Veuillez entrer une valeur',
+    'app_only_book_up_to_10_seats':
+        'Vous ne pouvez réserver que jusqu\'à 10 sièges.',
+    'app_select_valid_time': 'Veuillez sélectionner une heure valide',
+    'app_select_valid_date': 'Veuillez sélectionner une date',
+    'app_copy': 'Copier',
     'app_language_pref': 'Préférences linguistiques',
     'app_language': 'Langue',
     'app_plsPayInApp': 'Veuillez payer dans l\'application',

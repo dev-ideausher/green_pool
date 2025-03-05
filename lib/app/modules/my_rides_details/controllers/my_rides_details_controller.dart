@@ -1,14 +1,13 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:green_pool/app/res/strings.dart';
-import 'package:green_pool/app/services/gp_util.dart';
 import '../../../../generated/locales.g.dart';
 import '../../../data/booking_detail_model.dart';
 import '../../../data/chat_arg.dart';
 import '../../../data/ride_detail_id.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/dio/api_service.dart';
+import '../../../services/utils/date_utils.dart';
 import '../views/bottom_riders.dart';
 
 class MyRidesDetailsController extends GetxController {
@@ -74,7 +73,7 @@ class MyRidesDetailsController extends GetxController {
                   origin: rider.origin?.name?.split(',').first ?? "City",
                   destination:
                       rider.destination?.name?.split(',').first ?? "City",
-                  date: GpUtil.formatDate(
+                  date: DateTimeUtils.formatDate(
                       DateTime.parse(rider.date ?? LocaleKeys.app_defaultDate.tr))));
         } catch (e) {
           Get.toNamed(Routes.CHAT_PAGE,
@@ -88,7 +87,7 @@ class MyRidesDetailsController extends GetxController {
                   origin: rider.origin?.name?.split(',').first ?? "City",
                   destination:
                       rider.destination?.name?.split(',').first ?? "City",
-                  date: GpUtil.formatDate(
+                  date: DateTimeUtils.formatDate(
                       DateTime.parse(rider.date ?? LocaleKeys.app_defaultDate.tr))));
         }
       },

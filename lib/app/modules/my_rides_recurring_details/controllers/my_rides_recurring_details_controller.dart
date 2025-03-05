@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/data/recurring_ride_details_model.dart';
 import 'package:green_pool/app/services/dio/api_service.dart';
-import 'package:green_pool/app/services/gp_util.dart';
 import 'package:intl/intl.dart';
+
+import '../../../services/utils/date_utils.dart';
 
 class MyRidesRecurringDetailsController extends GetxController {
   int numberOfDays = 7;
@@ -73,7 +74,7 @@ class MyRidesRecurringDetailsController extends GetxController {
     var outputDate = "";
     if (dateTime != "") {
       try {
-        var combinedDateUtc = GpUtil.convertCombinedUtcToLocal(dateTime);
+        var combinedDateUtc = DateTimeUtils.convertCombinedUtcToLocal(dateTime);
         outputDate =
             formatDate(DateTime.parse(combinedDateUtc.split("T").first))
                 .toString();

@@ -5,9 +5,7 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/components/gp_progress.dart';
 import 'package:green_pool/app/components/green_pool_divider.dart';
 import 'package:green_pool/app/components/origin_to_destination.dart';
-import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
-import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../../generated/assets.dart';
@@ -16,6 +14,7 @@ import '../../../components/common_image_view.dart';
 import '../../../constants/image_constant.dart';
 import '../../../services/colors.dart';
 import '../../../services/text_style_util.dart';
+import '../../../services/utils/date_utils.dart';
 import '../../home/controllers/home_controller.dart';
 import '../controllers/my_rides_recurring_controller.dart';
 
@@ -80,7 +79,7 @@ class MyRidesRecurringView extends GetView<MyRidesRecurringController> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            GpUtil.convertUtcToLocal(controller
+                                            DateTimeUtils.convertUtcToLocal(controller
                                                     .recurringResp
                                                     .value
                                                     .data?[index]

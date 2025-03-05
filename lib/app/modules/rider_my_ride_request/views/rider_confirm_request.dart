@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/modules/map_rider_confirm_request/views/map_rider_confirm_request_view.dart';
 import 'package:green_pool/app/modules/rider_my_ride_request/controllers/rider_my_ride_request_controller.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
-import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../../generated/assets.dart';
@@ -14,10 +13,10 @@ import '../../../components/gp_progress.dart';
 import '../../../components/green_pool_divider.dart';
 import '../../../components/origin_to_destination.dart';
 import '../../../constants/image_constant.dart';
-import '../../../res/strings.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
 import '../../../services/text_style_util.dart';
+import '../../../services/utils/date_utils.dart';
 import '../../home/controllers/home_controller.dart';
 
 class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
@@ -87,7 +86,7 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                                   height: 64.kh,
                                                   width: 64.kw,
                                                   url:
-                                                      "${data?.driverRideDetails!?.driverDetails?[0]?.profilePic?.url}")),
+                                                      "${data?.driverRideDetails!.driverDetails?[0]?.profilePic?.url}")),
                                         ).paddingOnly(bottom: 8.kh),
                                         Positioned(
                                           top: 52.kh,
@@ -247,7 +246,7 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                                       BlendMode.srcIn),
                                                 ).paddingOnly(right: 4.kw),
                                                 Text(
-                                                  "${GpUtil.getDateFormat(data?.driverRideDetails?.time ?? "")} ${GpUtil.convertUtcToLocal(data?.driverRideDetails?.time ?? "")}",
+                                                  "${DateTimeUtils.getDateFormat(data?.driverRideDetails?.time ?? "")} ${DateTimeUtils.convertUtcToLocal(data?.driverRideDetails?.time ?? "")}",
                                                   style:
                                                       TextStyleUtil.k12Regular(
                                                           color: ColorUtil

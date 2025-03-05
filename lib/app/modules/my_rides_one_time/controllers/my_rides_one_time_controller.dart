@@ -8,7 +8,6 @@ import 'package:green_pool/app/data/my_rides_model.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/services/dialog_helper.dart';
 import 'package:green_pool/app/services/dio/api_service.dart';
-import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/snackbar.dart';
 import 'package:green_pool/app/services/storage.dart';
 
@@ -17,6 +16,7 @@ import '../../../data/booking_detail_model.dart';
 import '../../../data/recurring_rides_model.dart';
 import '../../../data/ride_detail_id.dart';
 import '../../../routes/app_pages.dart';
+import '../../../services/utils/date_utils.dart';
 
 class MyRidesOneTimeController extends GetxController {
   RxString ridePostId = ''.obs;
@@ -130,7 +130,7 @@ class MyRidesOneTimeController extends GetxController {
       cancelRideAPI(myRidesModelData);
     } else {
       if (rideCancellationCounts >= 2 &&
-          GpUtil.checkSixMonthsDuration(rideCancellationDate)) {
+          DateTimeUtils.checkSixMonthsDuration(rideCancellationDate)) {
         DialogHelper.accSuspensionWarningDialog(
           () async {
             Get.back();
@@ -329,7 +329,7 @@ class MyRidesOneTimeController extends GetxController {
   Future<void> moveToRequests(MyRidesModelData value) async {
     await Get.toNamed(Routes.MY_RIDES_REQUEST,
             arguments: RideDetailId(
-                driverRidId: value?.Id ?? "",
+                driverRidId: value.Id ?? "",
                 // riderRidId: myRidesModelData.value.riderRideId ?? ""
                 riderRidId: ""))
         ?.then((v) => myRidesAPI());

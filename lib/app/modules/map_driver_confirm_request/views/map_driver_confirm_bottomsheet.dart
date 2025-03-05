@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/data/driver_cofirm_request_model.dart';
-import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../../generated/locales.g.dart';
@@ -10,10 +9,10 @@ import '../../../components/common_image_view.dart';
 import '../../../components/green_pool_divider.dart';
 import '../../../components/origin_to_destination.dart';
 import '../../../constants/image_constant.dart';
-import '../../../res/strings.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
 import '../../../services/text_style_util.dart';
+import '../../../services/utils/date_utils.dart';
 import '../../home/controllers/home_controller.dart';
 import '../../my_rides_request/controllers/my_rides_request_controller.dart';
 
@@ -45,12 +44,12 @@ class MapDriverConfirmBottomsheet extends StatelessWidget {
                 child: SizedBox.fromSize(
                     size: Size.fromRadius(20.kh),
                     child: CommonImageView(
-                      url: element?.rideDetails?.first?.riderDetails?.first
+                      url: element.rideDetails?.first?.riderDetails?.first
                           ?.profilePic?.url,
                     )),
               ),
               title: Text(
-                element?.rideDetails?.first?.riderDetails?.first?.fullName ??
+                element.rideDetails?.first?.riderDetails?.first?.fullName ??
                     "",
                 style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
               ),
@@ -66,7 +65,7 @@ class MapDriverConfirmBottomsheet extends StatelessWidget {
                         BlendMode.srcIn),
                   ).paddingOnly(right: 4.kw),
                   Text(
-                    ("${GpUtil.getDateFormat(element?.rideDetails?.first?.time ?? "")}, ${GpUtil.convertUtcToLocal(element?.rideDetails?.first?.time ?? "")}"),
+                    ("${DateTimeUtils.getDateFormat(element.rideDetails?.first?.time ?? "")}, ${DateTimeUtils.convertUtcToLocal(element.rideDetails?.first?.time ?? "")}"),
                     style: TextStyleUtil.k12Regular(color: ColorUtil.kBlack02),
                   ),
                 ],
@@ -99,9 +98,9 @@ class MapDriverConfirmBottomsheet extends StatelessWidget {
             ),
             const GreenPoolDivider().paddingOnly(bottom: 8.kh),
             OriginToDestination(
-                    origin: element?.rideDetails?.first?.origin?.name ?? "",
+                    origin: element.rideDetails?.first?.origin?.name ?? "",
                     destination:
-                        element?.rideDetails?.first?.destination?.name ?? "",
+                        element.rideDetails?.first?.destination?.name ?? "",
                     needPickupText: false)
                 .paddingOnly(bottom: 8.kh),
             const GreenPoolDivider().paddingOnly(bottom: 8.kh),
@@ -131,7 +130,7 @@ class MapDriverConfirmBottomsheet extends StatelessWidget {
                           size: 12.kh,
                         ).paddingOnly(right: 4.kw),
                         Text(
-                          element?.rideDetails?.first?.riderDetails?.first
+                          element.rideDetails?.first?.riderDetails?.first
                                   ?.rating
                                   .toString() ??
                               "0.0",
@@ -149,7 +148,7 @@ class MapDriverConfirmBottomsheet extends StatelessWidget {
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Text(
-                      element?.rideDetails?.first?.riderDetails?.first
+                      element.rideDetails?.first?.riderDetails?.first
                               ?.totalRides
                               .toString() ??
                           "0",
@@ -166,7 +165,7 @@ class MapDriverConfirmBottomsheet extends StatelessWidget {
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Text(
-                      '${LocaleKeys.app_inA.tr} ${element?.rideDetails?.first?.riderDetails?.first?.createdAt?.substring(0, 4) ?? 2024}',
+                      '${LocaleKeys.app_inA.tr} ${element.rideDetails?.first?.riderDetails?.first?.createdAt?.substring(0, 4) ?? 2024}',
                       style:
                           TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                     ),

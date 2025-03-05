@@ -77,7 +77,8 @@ class PostRideStepFourController extends GetxController {
       final res = await APIManager.postDriverPostRide(body: postRideDataJson);
 
       if (res.data['status']) {
-        showMySnackbar(msg: "Ride posted successfully");
+        Get.find<GetStorageService>().savePrevRideData(postRideDataJson);
+        showMySnackbar(msg: LocaleKeys.app_ride_posted.tr);
         await Get.offAllNamed(Routes.BOTTOM_NAVIGATION);
       } else {
         showMySnackbar(msg: res.data['message']);

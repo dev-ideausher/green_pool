@@ -6,16 +6,15 @@ import 'package:green_pool/app/components/common_image_view.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
 import 'package:green_pool/app/services/custom_button.dart';
-import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../../generated/locales.g.dart';
 import '../../../components/gp_progress.dart';
 import '../../../components/green_pool_divider.dart';
 import '../../../components/origin_to_destination.dart';
-import '../../../res/strings.dart';
 import '../../../services/colors.dart';
 import '../../../services/text_style_util.dart';
+import '../../../services/utils/date_utils.dart';
 import '../../home/controllers/home_controller.dart';
 import '../controllers/matching_rides_controller.dart';
 
@@ -257,7 +256,7 @@ class MatchingRidesView extends GetView<MatchingRidesController> {
                                                                       right:
                                                                           4.kw),
                                                                   Text(
-                                                                    "${GpUtil.getDateFormat(controller.matchingRidesModel.value.data![index]?.time ?? "")} ${GpUtil.convertUtcToLocal(controller.matchingRidesModel.value.data![index]?.time ?? "")}",
+                                                                    "${DateTimeUtils.getDateFormat(controller.matchingRidesModel.value.data![index]?.time ?? "")} ${DateTimeUtils.convertUtcToLocal(controller.matchingRidesModel.value.data![index]?.time ?? "")}",
                                                                     style: TextStyleUtil
                                                                         .k12Regular(
                                                                             color:

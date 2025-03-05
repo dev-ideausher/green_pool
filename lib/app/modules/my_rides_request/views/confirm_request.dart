@@ -3,7 +3,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/modules/map_driver_confirm_request/controllers/map_driver_confirm_request_controller.dart';
 import 'package:green_pool/app/modules/map_driver_confirm_request/views/map_driver_confirm_request_view.dart';
-import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/generated/assets.dart';
 
@@ -16,6 +15,7 @@ import '../../../constants/image_constant.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
 import '../../../services/text_style_util.dart';
+import '../../../services/utils/date_utils.dart';
 import '../../home/controllers/home_controller.dart';
 import '../controllers/my_rides_request_controller.dart';
 
@@ -84,12 +84,12 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
                                           size: Size.fromRadius(20.kh),
                                           child: CommonImageView(
                                               url:
-                                                  "${controller.confirmRequestModel.value.data?[index]?.rideDetails?[0]?.riderDetails?[0]?.profilePic?.url}"),
+                                                  "${controller.confirmRequestModel.value.data?[index].rideDetails?[0]?.riderDetails?[0]?.profilePic?.url}"),
                                         ),
                                       ),
                                     ).paddingOnly(right: 8.kw),
                                     title: Text(
-                                      "${controller.confirmRequestModel.value.data?[index]?.rideDetails?[0]?.riderDetails?[0]?.fullName}",
+                                      "${controller.confirmRequestModel.value.data?[index].rideDetails?[0]?.riderDetails?[0]?.fullName}",
                                       style: TextStyleUtil.k16Semibold(
                                           fontSize: 16.kh),
                                     ),
@@ -115,7 +115,7 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
                                                   BlendMode.srcIn),
                                             ).paddingOnly(right: 4.kw),
                                             Text(
-                                              "${GpUtil.getDateFormat(controller.confirmRequestModel.value.data?[index]?.rideDetails?[0]?.time ?? "")} ${GpUtil.convertUtcToLocal(controller.confirmRequestModel.value.data?[index]?.rideDetails?[0]?.time ?? "")}",
+                                              "${DateTimeUtils.getDateFormat(controller.confirmRequestModel.value.data?[index].rideDetails?[0]?.time ?? "")} ${DateTimeUtils.convertUtcToLocal(controller.confirmRequestModel.value.data?[index].rideDetails?[0]?.time ?? "")}",
                                               style: TextStyleUtil.k12Regular(
                                                   color: ColorUtil.kBlack02),
                                             ),
@@ -141,9 +141,9 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
                                 OriginToDestination(
                                         needPickupText: false,
                                         origin:
-                                            "${controller.confirmRequestModel.value.data?[index]?.rideDetails?[0]?.origin?.name}",
+                                            "${controller.confirmRequestModel.value.data?[index].rideDetails?[0]?.origin?.name}",
                                         destination:
-                                            "${controller.confirmRequestModel.value.data?[index]?.rideDetails?[0]?.destination?.name}")
+                                            "${controller.confirmRequestModel.value.data?[index].rideDetails?[0]?.destination?.name}")
                                     .paddingOnly(bottom: 8.kh),
                                 const GreenPoolDivider()
                                     .paddingOnly(bottom: 16.kh),

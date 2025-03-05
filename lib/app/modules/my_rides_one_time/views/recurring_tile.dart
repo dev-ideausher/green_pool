@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/data/recurring_rides_model.dart';
 import 'package:green_pool/app/services/custom_button.dart';
-import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../../generated/locales.g.dart';
@@ -10,10 +9,10 @@ import '../../../components/common_image_view.dart';
 import '../../../components/green_pool_divider.dart';
 import '../../../components/origin_to_destination.dart';
 import '../../../constants/image_constant.dart';
-import '../../../res/strings.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/colors.dart';
 import '../../../services/text_style_util.dart';
+import '../../../services/utils/date_utils.dart';
 import '../../home/controllers/home_controller.dart';
 import '../controllers/my_rides_one_time_controller.dart';
 
@@ -45,7 +44,7 @@ class RecurringTile extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    GpUtil.convertUtcToLocal(recurringResp?.time ?? ""),
+                    DateTimeUtils.convertUtcToLocal(recurringResp?.time ?? ""),
                     style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
                   ),
                   GreenPoolButton(

@@ -5,13 +5,13 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/custom_button.dart';
-import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
 import '../../../../generated/locales.g.dart';
 import '../../../components/common_image_view.dart';
 import '../../../components/greenpool_appbar.dart';
+import '../../../services/utils/date_utils.dart';
 import '../controllers/messages_controller.dart';
 
 class MessagesView extends GetView<MessagesController> {
@@ -127,7 +127,7 @@ class MessagesView extends GetView<MessagesController> {
                                       : Colors.red,
                               path: message?.reciver?.profilePic?.url ?? "",
                               subtitle:
-                                  "${message?.ridesDetails?.origin?.name?.split(",").first ?? "City"} to ${message?.ridesDetails?.destination?.name?.split(",").first ?? "City"}, ${GpUtil.formatDate(DateTime.parse(message?.ridesDetails?.date ?? LocaleKeys.app_defaultDate.tr))}",
+                                  "${message?.ridesDetails?.origin?.name?.split(",").first ?? "City"} to ${message?.ridesDetails?.destination?.name?.split(",").first ?? "City"}, ${DateTimeUtils.formatDate(DateTime.parse(message?.ridesDetails?.date ?? LocaleKeys.app_defaultDate.tr))}",
                               lastMsg: message?.lastMessage ?? "...",
                               lastMsgStyle: messageRead
                                   ? TextStyleUtil.k12Regular(

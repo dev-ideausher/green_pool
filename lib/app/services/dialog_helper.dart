@@ -93,13 +93,13 @@ class DialogHelper {
       Center(
         child: Container(
           padding: EdgeInsets.all(16.kh),
-          height: 40.h,
-          // width: 375.kw,
           decoration: BoxDecoration(
             color: ColorUtil.kWhiteColor,
             borderRadius: BorderRadius.circular(40.kh),
           ),
-          child: ListView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               GestureDetector(
                 onTap: () => Get.back(),
@@ -199,8 +199,11 @@ class DialogHelper {
                 number: '2.',
                 title: LocaleKeys.app_cancellationLessThan12Hours.tr,
                 bulletPoints: [
-                  LocaleKeys.app_ifYouCancelBookingLessThan12HoursBeforeTheScheduledDeparture.tr,
-                  LocaleKeys.app_theDriverIsEntitledToReceiveHalfOfThePriceSeat.tr,
+                  LocaleKeys
+                      .app_ifYouCancelBookingLessThan12HoursBeforeTheScheduledDeparture
+                      .tr,
+                  LocaleKeys
+                      .app_theDriverIsEntitledToReceiveHalfOfThePriceSeat.tr,
                 ],
               ).paddingSymmetric(horizontal: 24.kw),
               Text(LocaleKeys.app_riderCancellationNote.tr,
@@ -210,7 +213,9 @@ class DialogHelper {
                 number: '3.',
                 title: LocaleKeys.app_cancellationMoreThan12Hours.tr,
                 bulletPoints: [
-                  LocaleKeys.app_ifYouCancelBookingMoreThan12HoursBeforeScheduledDeparture.tr,
+                  LocaleKeys
+                      .app_ifYouCancelBookingMoreThan12HoursBeforeScheduledDeparture
+                      .tr,
                 ],
               ).paddingSymmetric(horizontal: 24.kw),
               PolicySection(
@@ -248,7 +253,7 @@ class DialogHelper {
       Center(
         child: Container(
           padding: EdgeInsets.all(16.kh),
-          height: 212.kh,
+          height: 216.kh,
           width: 80.w,
           decoration: BoxDecoration(
             color: ColorUtil.kWhiteColor,
@@ -300,7 +305,7 @@ class DialogHelper {
       Center(
         child: Container(
           padding: EdgeInsets.all(16.kh),
-          height: 246.kh,
+          height: 250.kh,
           width: 80.w,
           decoration: BoxDecoration(
             color: ColorUtil.kWhiteColor,
@@ -322,7 +327,8 @@ class DialogHelper {
                 textAlign: TextAlign.left,
               ).paddingSymmetric(vertical: 4.kh),
               Text(
-                LocaleKeys.app_pleaseNoteYouHaveCancelledTwoRidesInPastSixMonths.tr,
+                LocaleKeys
+                    .app_pleaseNoteYouHaveCancelledTwoRidesInPastSixMonths.tr,
                 style: TextStyleUtil.k14Regular(
                   color: ColorUtil.kBlack04,
                 ),

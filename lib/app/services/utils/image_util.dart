@@ -6,8 +6,8 @@ import 'package:green_pool/app/services/snackbar.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../modules/home/controllers/home_controller.dart';
-import 'colors.dart';
+import '../../modules/home/controllers/home_controller.dart';
+import '../colors.dart';
 
 class ImageUtil {
   static Future<XFile?> squareCropCompressImage(

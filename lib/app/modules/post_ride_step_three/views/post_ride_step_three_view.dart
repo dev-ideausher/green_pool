@@ -13,6 +13,7 @@ import '../../../components/greenpool_textfield.dart';
 import '../../../components/richtext_heading.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
+import '../../../services/storage.dart';
 import '../../../services/text_style_util.dart';
 import '../controllers/post_ride_step_three_controller.dart';
 
@@ -24,6 +25,18 @@ class PostRideStepThreeView extends GetView<PostRideStepThreeController> {
     return Scaffold(
       appBar: GreenPoolAppBar(
         title: Text(LocaleKeys.app_postARide.tr),
+        actions: [
+          Obx(
+            () => Visibility(
+              visible:
+                  Get.find<GetStorageService>().getPostRideData() != null &&
+                      !controller.isLoading.value,
+              child: InkWell(
+                  onTap: () => controller.setPrevRideData(),
+                  child: Text("Copy", style: TextStyleUtil.k16Bold())),
+            ).paddingOnly(right: 16.kw),
+          )
+        ],
       ),
       body: Obx(
         () => controller.isLoading.value
@@ -116,7 +129,7 @@ class PostRideStepThreeView extends GetView<PostRideStepThreeController> {
                     ),
                     GestureDetector(
                       onTap: controller.postRideModel.value.ridesDetails!
-                                  .stops?[0]?.name?.isEmpty ??
+                                  .stops?[0].name?.isEmpty ??
                               false
                           ? () {}
                           : () {

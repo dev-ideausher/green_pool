@@ -6,11 +6,12 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/modules/rider_matching_rides/views/filter_ride.dart';
 import 'package:green_pool/app/services/snackbar.dart';
+import '../../../../generated/locales.g.dart';
 import '../../../data/find_ride_response_model.dart';
 import '../../../data/matching_rides_model.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/dio/api_service.dart';
-import '../../../services/gp_util.dart';
+import '../../../services/utils/gp_util.dart';
 import '../../../services/storage.dart';
 import '../views/create_ride_alert_bottomsheet.dart';
 
@@ -142,8 +143,7 @@ class MatchingRidesController extends GetxController {
           }
         } else {
           Get.back();
-          showMySnackbar(
-              msg: "To create a ride alert please enter all the details");
+          showMySnackbar(msg: LocaleKeys.app_enter_all_details.tr);
         }
       } else {
         Get.toNamed(Routes.RIDER_PROFILE_SETUP, arguments: {

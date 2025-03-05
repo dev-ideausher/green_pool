@@ -3,7 +3,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/common_image_view.dart';
-import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../../generated/locales.g.dart';
@@ -11,10 +10,10 @@ import '../../../components/green_pool_divider.dart';
 import '../../../components/greenpool_appbar.dart';
 import '../../../components/origin_to_destination.dart';
 import '../../../constants/image_constant.dart';
-import '../../../res/strings.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
 import '../../../services/text_style_util.dart';
+import '../../../services/utils/date_utils.dart';
 import '../../home/controllers/home_controller.dart';
 import '../../post_ride_step_one/views/amenities.dart';
 import '../../rider_my_ride_request/controllers/rider_my_ride_request_controller.dart';
@@ -105,7 +104,7 @@ class RiderMyRidesConfirmDetailsView
                                         BlendMode.srcIn),
                                   ).paddingOnly(right: 4.kw),
                                   Text(
-                                    "${GpUtil.getDateFormat(controller.riderConfirmRequestModel.driverRideDetails?.time ?? "")}  ${GpUtil.convertUtcToLocal(controller.riderConfirmRequestModel.driverRideDetails?.time ?? "")}",
+                                    "${DateTimeUtils.getDateFormat(controller.riderConfirmRequestModel.driverRideDetails?.time ?? "")}  ${DateTimeUtils.convertUtcToLocal(controller.riderConfirmRequestModel.driverRideDetails?.time ?? "")}",
                                     style: TextStyleUtil.k12Regular(
                                         color: ColorUtil.kBlack03),
                                   ),

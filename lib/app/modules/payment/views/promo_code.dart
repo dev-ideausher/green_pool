@@ -4,13 +4,12 @@ import 'package:green_pool/app/components/gp_progress.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/services/colors.dart';
-import 'package:green_pool/app/services/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/snackbar.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
 import '../../../../generated/locales.g.dart';
-import '../../../res/strings.dart';
+import '../../../services/utils/date_utils.dart';
 import '../controllers/payment_controller.dart';
 
 class PromoCode extends GetView<PaymentController> {
@@ -69,7 +68,7 @@ class PromoCode extends GetView<PaymentController> {
                       ],
                     ),
                     subtitle: Text(
-                      "Expires: ${GpUtil.formatDate(DateTime.parse(promoCode?.expireDate ?? ""))}",
+                      "Expires: ${DateTimeUtils.formatDate(DateTime.parse(promoCode?.expireDate ?? ""))}",
                       style:
                           TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                     ),

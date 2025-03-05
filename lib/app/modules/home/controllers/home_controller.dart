@@ -48,21 +48,20 @@ class HomeController extends GetxController with Versionk {
   @override
   Future<void> onInit() async {
     super.onInit();
-
     final storageService = Get.find<GetStorageService>();
 
     try {
       if (storageService.isLoggedIn) {
+        //change this condition after one update because for riders last check will always imply c.v 1.0.11
         if (storageService.getUserName == "" ||
             storageService.vehicleImageUrl == "") {
           await userInfoAPI();
         }
+        isPinkModeOn.value = storageService.isPinkMode;
+        await onChangeLocation();
+        await fetchCount();
+        await handleNewUpdate();
       }
-
-      isPinkModeOn.value = storageService.isPinkMode;
-      await onChangeLocation();
-      await handleNewUpdate();
-      await fetchCount();
     } catch (e) {
       debugPrint(e.toString());
     }
