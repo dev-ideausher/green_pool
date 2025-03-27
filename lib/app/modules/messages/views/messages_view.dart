@@ -85,19 +85,27 @@ class MessagesView extends GetView<MessagesController> {
                             startActionPane: ActionPane(
                                 motion: const DrawerMotion(),
                                 children: [
-                                  SlidableAction(
-                                    onPressed: (context) {
-                                      controller.archiveMsgAPI(
-                                          message?.chatRoomId ?? "");
-                                    },
-                                    icon: Icons.archive,
-                                    label: LocaleKeys.app_archive.tr,
-                                    backgroundColor: isPinkModeOn
-                                        ? ColorUtil.kPrimary3PinkMode
-                                        : ColorUtil.kSecondary01,
-                                    foregroundColor: isPinkModeOn
-                                        ? ColorUtil.kPrimary4PinkMode
-                                        : ColorUtil.kPrimary01,
+                                  IconTheme(
+                                    data: IconThemeData(
+                                      color: isPinkModeOn
+                                          ? ColorUtil.kPrimary4PinkMode
+                                          : ColorUtil.kPrimary01,
+                                    ),
+                                    child: SlidableAction(
+                                      onPressed: (context) {
+                                        controller.archiveMsgAPI(
+                                            message?.chatRoomId ?? "");
+                                      },
+                                      icon: Icons.archive,
+                                      autoClose: true,
+                                      label: LocaleKeys.app_archive.tr,
+                                      backgroundColor: isPinkModeOn
+                                          ? ColorUtil.kPrimary3PinkMode
+                                          : ColorUtil.kSecondary01,
+                                      foregroundColor: isPinkModeOn
+                                          ? ColorUtil.kPrimary4PinkMode
+                                          : ColorUtil.kPrimary01,
+                                    ),
                                   )
                                 ]),
                             child: MessageTile(

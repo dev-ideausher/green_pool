@@ -7,8 +7,8 @@ import '../widget/history_filter.dart';
 
 class TransactionHistoryController extends GetxController {
   final RxBool isLoad = true.obs;
-  final RxList<TransactionsModelTransactions> transactions =
-      <TransactionsModelTransactions>[].obs;
+  final RxList<TransactionsModelDataTransactions> transactions =
+      <TransactionsModelDataTransactions>[].obs;
 
   RxBool isMonthSelected = true.obs;
   RxString selectedMonth = "July".obs;
@@ -41,7 +41,7 @@ class TransactionHistoryController extends GetxController {
     try {
       final res = await APIManager.transactions();
       final transactionsModel = TransactionsModel.fromJson(res.data);
-      transactions.value = transactionsModel.transactions!;
+      transactions.value = transactionsModel.data!.transactions!;
       isLoad.value = false;
     } catch (e) {
       debugPrint(e.toString());

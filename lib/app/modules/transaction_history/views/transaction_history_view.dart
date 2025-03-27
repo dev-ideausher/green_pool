@@ -3,10 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/green_pool_divider.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
-import 'package:green_pool/app/components/origin_to_destination.dart';
-import 'package:green_pool/app/data/transactions_model.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
-import 'package:green_pool/app/services/storage.dart';
 import 'package:green_pool/app/utils/date_utils.dart';
 
 import '../../../../generated/locales.g.dart';
@@ -52,129 +49,128 @@ class TransactionHistoryView extends GetView<TransactionHistoryController> {
                     itemCount: controller.transactions.length,
                     itemBuilder: (context, index) {
                       final transaction = controller.transactions[index];
-                      return TransactionTile(
-                        name: Get.find<GetStorageService>().getUserName,
-                        path: Get.find<GetStorageService>().profilePicUrl,
-                        dateTime: transaction.ride?.date ??
-                            LocaleKeys.app_defaultDate.tr,
-                        origin: transaction.ride?.pickupLocation?.name ?? "",
-                        destination: transaction.ride?.dropLocation?.name ?? "",
-                        subtitle: "Id: #${transaction.Id}",
-                        onTap: () {
-                          /*Get.dialog(
-                            useSafeArea: true,
-                            Center(
-                              child: Container(
-                                  padding: EdgeInsets.all(16.kh),
-                                  width: 80.w,
-                                  decoration: BoxDecoration(
-                                    color: ColorUtil.kWhiteColor,
-                                    borderRadius: BorderRadius.circular(8.kh),
+                      final ride = transaction.rideDetails;
+                      final isDebit =
+                          (transaction.transactionType ?? "Debit") == "Debit";
+                      return transaction.type != "wallet"
+                          ? TransactionTile(
+                              name: ride?.otherParty?.name ?? "",
+                              path: ride?.otherParty?.profilePic?.url ?? "",
+                              paidBy: ride?.otherParty?.role ?? "",
+                              dateTime: transaction.date ??
+                                  LocaleKeys.app_defaultDate.tr,
+                              origin: ride?.origin?.name ?? "",
+                              destination: ride?.destination?.name ?? "",
+                              subtitle: "Id: #${transaction.transactionId}",
+                              trailing: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    (transaction.amount ?? 0)
+                                        .toStringAsFixed(2),
+                                    style: TextStyleUtil.k16Semibold(
+                                        fontSize: 16.kh),
                                   ),
-                                  child: _infoPopup(transaction)),
-                            ),
-                          );*/
-                        },
-                        trailing: Text(
-                          (transaction?.type ?? "") == "Credit"
-                              ? "+${LocaleKeys.app_dollar.tr} ${(transaction.amount ?? 0).toStringAsFixed(2)}"
-                              : "-${LocaleKeys.app_dollar.tr} ${(transaction.amount ?? 0).toStringAsFixed(2)}",
-                          style: TextStyleUtil.k16Semibold(
-                              fontSize: 16.kh,
-                              color: (transaction?.type ?? "") == "Credit"
-                                  ? ColorUtil.kGreenColor
-                                  : ColorUtil.kError2),
-                        ),
-                      ).paddingOnly(bottom: 8.kh, left: 16.kw, right: 16.kw);
+                                  2.kwidthBox,
+                                  Icon(
+                                    !isDebit
+                                        ? Icons.call_received
+                                        : Icons.arrow_outward,
+                                    color: !isDebit
+                                        ? ColorUtil.kGreenColor
+                                        : ColorUtil.kError2,
+                                  )
+                                ],
+                              ),
+                            ).paddingOnly(
+                              bottom: 8.kh, left: 16.kw, right: 16.kw)
+                          : Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 24.kw, vertical: 8.kh),
+                              decoration: BoxDecoration(
+                                color: ColorUtil.kWhiteColor,
+                                borderRadius: BorderRadius.circular(8.kh),
+                              ),
+                              child: ListTile(
+                                onTap: null,
+                                tileColor: ColorUtil.kWhiteColor,
+                                titleAlignment: ListTileTitleAlignment.top,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8.kh)),
+                                title: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                        DateTimeUtils.dayDateMonthYearTime(
+                                            transaction.date ??
+                                                LocaleKeys.app_defaultDate.tr),
+                                        style: TextStyleUtil.k14Medium(
+                                            fontWeight: FontWeight.w500,
+                                            color: ColorUtil.kBlack03)),
+                                    Text(
+                                      transaction.description ??
+                                          LocaleKeys.app_loading.tr,
+                                      style: TextStyleUtil.k14Semibold(),
+                                    ),
+                                  ],
+                                ),
+                                contentPadding: EdgeInsets.zero,
+                                leading: ClipRRect(
+                                  borderRadius: BorderRadius.circular(80.kh),
+                                  child: CommonImageView(
+                                    url:
+                                        ride?.otherParty?.profilePic?.url ?? "",
+                                    height: 40.kh,
+                                    width: 40.kw,
+                                  ),
+                                ),
+                                trailing: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      !isDebit
+                                          ? (transaction.amount ?? 0)
+                                              .toStringAsFixed(2)
+                                          : (transaction.amount ?? 0)
+                                              .toStringAsFixed(2),
+                                      style: TextStyleUtil.k16Semibold(
+                                          fontSize: 16.kh),
+                                    ),
+                                    2.kwidthBox,
+                                    Icon(
+                                      !isDebit
+                                          ? Icons.call_received
+                                          : Icons.arrow_outward,
+                                      color: !isDebit
+                                          ? ColorUtil.kGreenColor
+                                          : ColorUtil.kError2,
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ).paddingOnly(
+                              bottom: 8.kh, left: 16.kw, right: 16.kw);
                     }).paddingOnly(top: 8.kh),
       ),
-    );
-  }
-
-  Column _infoPopup(TransactionsModelTransactions transaction) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text.rich(
-          TextSpan(
-            children: [
-              TextSpan(
-                text: "Reason: ",
-                style: TextStyleUtil.k14Bold(color: ColorUtil.kBlack01),
-              ),
-              TextSpan(
-                text: "${transaction.reason}",
-                style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
-              ),
-            ],
-          ),
-        ),
-        4.kheightBox,
-        Text.rich(
-          TextSpan(
-            children: [
-              TextSpan(
-                text: "Id: ",
-                style: TextStyleUtil.k14Bold(color: ColorUtil.kBlack01),
-              ),
-              TextSpan(
-                text: "${transaction.Id}",
-                style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
-              ),
-            ],
-          ),
-        ),
-        4.kheightBox,
-        Text.rich(
-          TextSpan(
-            children: [
-              TextSpan(
-                text: "Origin: ",
-                style: TextStyleUtil.k14Bold(color: ColorUtil.kBlack01),
-              ),
-              TextSpan(
-                text: "${transaction.ride?.pickupLocation?.name}",
-                style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
-              ),
-            ],
-          ),
-        ),
-        4.kheightBox,
-        Text.rich(
-          TextSpan(
-            children: [
-              TextSpan(
-                text: "Destination: ",
-                style: TextStyleUtil.k14Bold(color: ColorUtil.kBlack01),
-              ),
-              TextSpan(
-                text: "${transaction.ride?.dropLocation?.name}",
-                style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
-              ),
-            ],
-          ),
-        ),
-      ],
     );
   }
 }
 
 class TransactionTile extends StatelessWidget {
-  final String name, path, subtitle, dateTime, origin, destination;
-  final Function() onTap;
+  final String name, path, subtitle, dateTime, origin, destination, paidBy;
   final Widget? trailing;
 
   const TransactionTile({
     super.key,
     required this.name,
     required this.path,
-    required this.onTap,
     this.trailing,
     required this.subtitle,
     required this.dateTime,
     required this.origin,
     required this.destination,
+    required this.paidBy,
   });
 
   @override
@@ -191,9 +187,26 @@ class TransactionTile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
+            /* completed ride as rider/driver
+              Container(
+              padding: EdgeInsets.symmetric(horizontal: 12.kw, vertical: 2.kh),
+              decoration: BoxDecoration(
+                  color: isPinkModeOn
+                      ? ColorUtil.kSecondaryPinkMode
+                      : ColorUtil.kPrimary06,
+                  borderRadius: BorderRadius.circular(16.kh)),
+              child: Text(
+                paidBy,
+                style: TextStyleUtil.k12Semibold(
+                  color: isPinkModeOn
+                      ? ColorUtil.kPrimary3PinkMode
+                      : ColorUtil.kSecondary01,
+                ),
+              ),
+            ),*/
             ListTile(
               tileColor: ColorUtil.kWhiteColor,
-              onTap: onTap,
+              onTap: null,
               titleAlignment: ListTileTitleAlignment.top,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8.kh)),
