@@ -7,7 +7,7 @@ import 'package:green_pool/app/modules/my_rides_request/controllers/my_rides_req
 
 import '../../../data/driver_cofirm_request_model.dart';
 import '../../../services/dio/endpoints.dart';
-import '../../../services/utils/gp_util.dart';
+import '../../../utils/gp_util.dart';
 import '../../home/controllers/home_controller.dart';
 
 class MapDriverConfirmRequestController extends GetxController {

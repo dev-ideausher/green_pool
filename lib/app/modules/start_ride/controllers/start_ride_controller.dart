@@ -17,8 +17,8 @@ import 'package:green_pool/app/services/snackbar.dart';
 import '../../../../generated/locales.g.dart';
 import '../../../data/booking_detail_model.dart';
 import '../../../data/chat_arg.dart';
-import '../../../services/utils/date_utils.dart';
-import '../../../services/utils/gp_util.dart';
+import '../../../utils/date_utils.dart';
+import '../../../utils/gp_util.dart';
 import '../../home/controllers/home_controller.dart';
 
 class StartRideController extends GetxController {

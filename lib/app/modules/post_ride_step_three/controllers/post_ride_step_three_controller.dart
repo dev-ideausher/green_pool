@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_rx/src/rx_workers/utils/debouncer.dart';
 import 'package:green_pool/app/data/post_ride_model.dart';
 import 'package:green_pool/app/services/dio/api_service.dart';
-import 'package:green_pool/app/services/utils/gp_util.dart';
+import 'package:green_pool/app/utils/gp_util.dart';
 import 'package:green_pool/app/services/storage.dart';
 
 import '../../../data/ride_fare_model.dart';
@@ -81,6 +82,7 @@ class PostRideStepThreeController extends GetxController {
 
     if (validationResult != null) {
       isActivePricingButton.value = false;
+      return;
     } else {
       if (postRideModel.value.ridesDetails?.stops?.isNotEmpty ?? false) {
         if (postRideModel.value.ridesDetails?.stops?.first.name?.isNotEmpty ??
@@ -274,16 +276,20 @@ class PostRideStepThreeController extends GetxController {
   }
 
   void onchanged(String? val) {
+    final debouncer = Debouncer(delay: const Duration(milliseconds: 50));
     if (val != null &&
         val.isNotEmpty &&
         val != "0" &&
         double.parse(val) < maxFarePrice &&
         double.parse(val) > minFarePrice) {
       postRideModel.value.ridesDetails?.origin?.originDestinationFair = val;
-      setActiveStatePricing();
+      debouncer(() {
+        setActiveStatePricing();
+      });
     }
   }
 
+  //copy details from previous ride
   setPrevRideData() {
     final prevRide = Get.find<GetStorageService>().getPostRideData();
     prevRideData.value = prevRide ?? PostRideModel();

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:green_pool/app/components/route_widget.dart';
 import 'package:green_pool/app/data/my_rides_model.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
@@ -12,7 +13,7 @@ import '../../../constants/image_constant.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
 import '../../../services/text_style_util.dart';
-import '../../../services/utils/date_utils.dart';
+import '../../../utils/date_utils.dart';
 import '../../home/controllers/home_controller.dart';
 import '../controllers/my_rides_one_time_controller.dart';
 
@@ -26,11 +27,14 @@ class RiderTile extends StatelessWidget {
     final bool isConfirmedAndNotStarted =
         (myRidesModelData?.rideStatus == "Confirmed" &&
             myRidesModelData?.isStarted == false);
+    final isPinkModeOn = Get.find<HomeController>().isPinkModeOn.value;
+    final pendingReq = (myRidesModelData?.driverRequestCount ?? 0);
 
     return GetBuilder<MyRidesOneTimeController>(builder: (controller) {
       return GestureDetector(
         onTap: () => controller.riderPagePageOpen(myRidesModelData!),
         child: Stack(
+          clipBehavior: Clip.none,
           children: [
             Container(
               padding: EdgeInsets.only(
@@ -41,8 +45,13 @@ class RiderTile extends StatelessWidget {
               decoration: BoxDecoration(
                   color: ColorUtil.kWhiteColor,
                   borderRadius: BorderRadius.circular(8.kh),
-                  border:
-                      Border.all(width: 0.3.kh, color: ColorUtil.kNeutral10)),
+                  border: Border.all(
+                      width: pendingReq > 0 ? 0.8.kh : 0.3.kh,
+                      color: pendingReq > 0
+                          ? isPinkModeOn
+                              ? ColorUtil.kPrimaryPinkMode
+                              : ColorUtil.kPrimary01
+                          : ColorUtil.kNeutral10)),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -90,9 +99,7 @@ class RiderTile extends StatelessWidget {
                                         padding: EdgeInsets.symmetric(
                                             horizontal: 8.kw),
                                         decoration: BoxDecoration(
-                                            color: Get.find<HomeController>()
-                                                    .isPinkModeOn
-                                                    .value
+                                            color: isPinkModeOn
                                                 ? ColorUtil.kPrimary3PinkMode
                                                 : ColorUtil.kSecondary01,
                                             borderRadius:
@@ -101,9 +108,7 @@ class RiderTile extends StatelessWidget {
                                           children: [
                                             Icon(
                                               Icons.star,
-                                              color: Get.find<HomeController>()
-                                                      .isPinkModeOn
-                                                      .value
+                                              color: isPinkModeOn
                                                   ? ColorUtil.kWhiteColor
                                                   : ColorUtil.kYellowColor,
                                               size: 12.kh,
@@ -175,9 +180,7 @@ class RiderTile extends StatelessWidget {
                                                 ImageConstant
                                                     .svgIconCalendarTime,
                                                 colorFilter: ColorFilter.mode(
-                                                    Get.find<HomeController>()
-                                                            .isPinkModeOn
-                                                            .value
+                                                    isPinkModeOn
                                                         ? ColorUtil
                                                             .kPrimary3PinkMode
                                                         : ColorUtil
@@ -196,14 +199,10 @@ class RiderTile extends StatelessWidget {
                                               Icon(
                                                 Icons.time_to_leave,
                                                 size: 16.kh,
-                                                color:
-                                                    Get.find<HomeController>()
-                                                            .isPinkModeOn
-                                                            .value
-                                                        ? ColorUtil
-                                                            .kPrimary3PinkMode
-                                                        : ColorUtil
-                                                            .kSecondary01,
+                                                color: isPinkModeOn
+                                                    ? ColorUtil
+                                                        .kPrimary3PinkMode
+                                                    : ColorUtil.kSecondary01,
                                               ).paddingOnly(right: 4.kw),
                                               Text(
                                                 '${myRidesModelData?.seatAvailable} seats',
@@ -234,9 +233,7 @@ class RiderTile extends StatelessWidget {
                                 : SvgPicture.asset(
                                     ImageConstant.svgIconCalendarTime,
                                     colorFilter: ColorFilter.mode(
-                                        Get.find<HomeController>()
-                                                .isPinkModeOn
-                                                .value
+                                        isPinkModeOn
                                             ? ColorUtil.kPrimary3PinkMode
                                             : ColorUtil.kSecondary01,
                                         BlendMode.srcIn),
@@ -262,14 +259,10 @@ class RiderTile extends StatelessWidget {
                                 padding: EdgeInsets.all(0.kh),
                                 isBorder: true,
                                 fontSize: 12.kh,
-                                borderColor: Get.find<HomeController>()
-                                        .isPinkModeOn
-                                        .value
+                                borderColor: isPinkModeOn
                                     ? ColorUtil.kPrimary3PinkMode
                                     : ColorUtil.kSecondary01,
-                                labelColor: Get.find<HomeController>()
-                                        .isPinkModeOn
-                                        .value
+                                labelColor: isPinkModeOn
                                     ? ColorUtil.kPrimary3PinkMode
                                     : ColorUtil.kSecondary01,
                               ),
@@ -305,8 +298,8 @@ class RiderTile extends StatelessWidget {
                   myRidesModelData?.date == null
                       ? const SizedBox()
                       : const GreenPoolDivider().paddingOnly(bottom: 8.kh),
-                  OriginToDestination(
-                          needPickupText: true,
+                  RouteWidget(
+                          needPickUp: true,
                           origin: "${myRidesModelData?.origin?.name}",
                           stop1: myRidesModelData?.stops?[0]?.name ?? "",
                           stop2: myRidesModelData?.stops?[1]?.name ?? "",
@@ -328,14 +321,12 @@ class RiderTile extends StatelessWidget {
                               },
                               label: LocaleKeys.app_viewDetails.tr,
                               fontSize: 14.kh,
-                              borderColor:
-                                  Get.find<HomeController>().isPinkModeOn.value
-                                      ? ColorUtil.kPrimary3PinkMode
-                                      : ColorUtil.kSecondary01,
-                              labelColor:
-                                  Get.find<HomeController>().isPinkModeOn.value
-                                      ? ColorUtil.kPrimary3PinkMode
-                                      : ColorUtil.kSecondary01,
+                              borderColor: isPinkModeOn
+                                  ? ColorUtil.kPrimary3PinkMode
+                                  : ColorUtil.kSecondary01,
+                              labelColor: isPinkModeOn
+                                  ? ColorUtil.kPrimary3PinkMode
+                                  : ColorUtil.kSecondary01,
                             ),
                             Visibility(
                               visible: myRidesModelData?.isStarted != true,
@@ -350,14 +341,10 @@ class RiderTile extends StatelessWidget {
                                 isBorder: true,
                                 label: LocaleKeys.app_cancelRide.tr,
                                 fontSize: 14.kh,
-                                borderColor: Get.find<HomeController>()
-                                        .isPinkModeOn
-                                        .value
+                                borderColor: isPinkModeOn
                                     ? ColorUtil.kPrimary3PinkMode
                                     : ColorUtil.kSecondary01,
-                                labelColor: Get.find<HomeController>()
-                                        .isPinkModeOn
-                                        .value
+                                labelColor: isPinkModeOn
                                     ? ColorUtil.kPrimary3PinkMode
                                     : ColorUtil.kSecondary01,
                               ),
@@ -369,58 +356,78 @@ class RiderTile extends StatelessWidget {
             ).paddingOnly(bottom: 16.kh),
             Visibility(
               visible: isConfirmedAndNotStarted,
-              child: Container(
-                height: 48.kh,
-                padding:
-                    EdgeInsets.symmetric(horizontal: 16.kw, vertical: 12.kh),
-                decoration: BoxDecoration(
-                    color: Get.find<HomeController>().isPinkModeOn.value
-                        ? ColorUtil.kPrimary2PinkMode
-                        : ColorUtil.kSecondary01,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(8.kh),
-                        topRight: Radius.circular(8.kh))),
-                child: Row(
-                  children: [
-                    Icon(Icons.watch_later_outlined,
-                        color: Get.find<HomeController>().isPinkModeOn.value
-                            ? ColorUtil.kBlack01
-                            : ColorUtil.kWhiteColor),
-                    4.kwidthBox,
-                    Text(
-                      myRidesModelData?.rideStatus == "Confirmed"
-                          ? DateTimeUtils.getArrivalTimeOfDriver(DateTime.parse(
-                              myRidesModelData?.confirmDriverDetails?.first
-                                      ?.driverPostsDetails?.first?.time ??
-                                  ""))
-                          : "",
-                      style: TextStyleUtil.k12Regular(
-                          color: Get.find<HomeController>().isPinkModeOn.value
-                              ? ColorUtil.kBlack01
-                              : ColorUtil.kWhiteColor),
-                    ),
-                    const Spacer(),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Get.find<HomeController>().isPinkModeOn.value
-                            ? ColorUtil.kWhiteColor
-                            : ColorUtil.kPrimary01,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Icon(
-                        Icons.location_on,
-                        color: Get.find<HomeController>().isPinkModeOn.value
-                            ? ColorUtil.kPrimary2PinkMode
-                            : ColorUtil.kSecondary01,
-                      ),
-                    )
-                  ],
-                ),
-              ).paddingOnly(bottom: 12.kh),
+              child:
+                  _driverArrivalTime(isPinkModeOn).paddingOnly(bottom: 12.kh),
             ),
+            Visibility(
+                visible: pendingReq > 0, child: _requestCount(isPinkModeOn)),
           ],
         ),
       );
     });
+  }
+
+  Container _driverArrivalTime(bool isPinkModeOn) {
+    return Container(
+      height: 48.kh,
+      padding: EdgeInsets.symmetric(horizontal: 16.kw, vertical: 12.kh),
+      decoration: BoxDecoration(
+          color: isPinkModeOn
+              ? ColorUtil.kPrimary2PinkMode
+              : ColorUtil.kSecondary01,
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(8.kh), topRight: Radius.circular(8.kh))),
+      child: Row(
+        children: [
+          Icon(Icons.watch_later_outlined,
+              color: isPinkModeOn ? ColorUtil.kBlack01 : ColorUtil.kWhiteColor),
+          4.kwidthBox,
+          Text(
+            myRidesModelData?.rideStatus == "Confirmed"
+                ? DateTimeUtils.getArrivalTimeOfDriver(DateTime.parse(
+                    myRidesModelData?.confirmDriverDetails?.first
+                            ?.driverPostsDetails?.first?.time ??
+                        ""))
+                : "",
+            style: TextStyleUtil.k12Regular(
+                color:
+                    isPinkModeOn ? ColorUtil.kBlack01 : ColorUtil.kWhiteColor),
+          ),
+          const Spacer(),
+          Container(
+            decoration: BoxDecoration(
+              color:
+                  isPinkModeOn ? ColorUtil.kWhiteColor : ColorUtil.kPrimary01,
+              shape: BoxShape.circle,
+            ),
+            child: Icon(
+              Icons.location_on,
+              color: isPinkModeOn
+                  ? ColorUtil.kPrimary2PinkMode
+                  : ColorUtil.kSecondary01,
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Positioned _requestCount(bool isPinkModeOn) {
+    return Positioned(
+      right: 0.0.kh,
+      top: -12.0.kh,
+      child: Container(
+        padding: EdgeInsets.all(6.kh),
+        decoration: BoxDecoration(
+          color:
+              isPinkModeOn ? ColorUtil.kPrimary3PinkMode : ColorUtil.kPrimary01,
+          shape: BoxShape.circle,
+        ),
+        child: Text(
+          "${myRidesModelData?.driverRequestCount}",
+          style: TextStyleUtil.k12Regular(),
+        ),
+      ),
+    );
   }
 }

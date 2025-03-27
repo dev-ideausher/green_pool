@@ -10,7 +10,7 @@ import 'package:intl/intl.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/colors.dart';
 import '../../../services/storage.dart';
-import '../../../services/utils/date_utils.dart';
+import '../../../utils/date_utils.dart';
 import '../../home/controllers/home_controller.dart';
 
 class PostRideStepTwoController extends GetxController

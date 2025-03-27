@@ -1,7 +1,7 @@
+import 'dart:math';
 import 'dart:ui';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_google_maps_webservices/directions.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -10,8 +10,7 @@ import 'dart:ui' as ui;
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import '../dio/endpoints.dart';
-
+import '../services/dio/endpoints.dart';
 
 class GpUtil {
   static Future<num> calculateDistanceInInt({
@@ -42,7 +41,7 @@ class GpUtil {
       }
       return 0;
     } catch (e) {
-      print("Error calculating distance: $e");
+      debugPrint("Error calculating distance: $e");
       return 0;
     }
   }
@@ -70,7 +69,7 @@ class GpUtil {
     }
   }*/
 
-  /* static double calculateDistance({
+  static int calculateDistance({
     required double startLat,
     required double startLong,
     required double endLat,
@@ -90,14 +89,15 @@ class GpUtil {
     double dLat = lat2 - lat1;
     double dLon = lon2 - lon1;
 
-    double a = sin(dLat / 2) * sin(dLat / 2) + cos(lat1) * cos(lat2) * sin(dLon / 2) * sin(dLon / 2);
+    double a = sin(dLat / 2) * sin(dLat / 2) +
+        cos(lat1) * cos(lat2) * sin(dLon / 2) * sin(dLon / 2);
 
     double c = 2 * atan2(sqrt(a), sqrt(1 - a));
 
     double distance = earthRadius * c;
 
-    return distance;
-  }*/
+    return distance.round(); // Convert to int by rounding
+  }
 
   static LatLngBounds boundsFromLatLngList(List<LatLng> list) {
     double minLat = double.infinity;
@@ -224,6 +224,4 @@ class GpUtil {
       throw 'Could not open the map.';
     }
   }
-
-  
 }

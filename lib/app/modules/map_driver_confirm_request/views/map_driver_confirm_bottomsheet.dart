@@ -8,11 +8,12 @@ import '../../../../generated/locales.g.dart';
 import '../../../components/common_image_view.dart';
 import '../../../components/green_pool_divider.dart';
 import '../../../components/origin_to_destination.dart';
+import '../../../components/route_widget.dart';
 import '../../../constants/image_constant.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
 import '../../../services/text_style_util.dart';
-import '../../../services/utils/date_utils.dart';
+import '../../../utils/date_utils.dart';
 import '../../home/controllers/home_controller.dart';
 import '../../my_rides_request/controllers/my_rides_request_controller.dart';
 
@@ -97,11 +98,13 @@ class MapDriverConfirmBottomsheet extends StatelessWidget {
               ),
             ),
             const GreenPoolDivider().paddingOnly(bottom: 8.kh),
-            OriginToDestination(
+            RouteWidget(
                     origin: element.rideDetails?.first?.origin?.name ?? "",
+                    stop1: "",
+                    stop2: "",
                     destination:
                         element.rideDetails?.first?.destination?.name ?? "",
-                    needPickupText: false)
+                    needPickUp: false)
                 .paddingOnly(bottom: 8.kh),
             const GreenPoolDivider().paddingOnly(bottom: 8.kh),
             Row(

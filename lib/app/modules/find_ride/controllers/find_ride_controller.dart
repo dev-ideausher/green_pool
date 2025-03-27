@@ -13,7 +13,7 @@ import 'package:green_pool/generated/locales.g.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/dialog_helper.dart';
 import '../../../services/storage.dart';
-import '../../../services/utils/date_utils.dart';
+import '../../../utils/date_utils.dart';
 import '../../origin/controllers/origin_controller.dart';
 
 class FindRideController extends GetxController {

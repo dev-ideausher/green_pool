@@ -7,7 +7,7 @@ import 'package:green_pool/app/routes/app_pages.dart';
 import '../../../../generated/locales.g.dart';
 import '../../../services/dio/api_service.dart';
 import '../../../services/storage.dart';
-import '../../../services/utils/date_utils.dart';
+import '../../../utils/date_utils.dart';
 
 class DriverDetailsController extends GetxController {
   var matchingRidesModelData = MatchingRidesModelData().obs;
@@ -138,7 +138,8 @@ class DriverDetailsController extends GetxController {
                       .first ??
                   "City",
               date: DateTimeUtils.formatDate(DateTime.parse(
-                  matchingRidesModelData.value.date ?? LocaleKeys.app_defaultDate.tr))));
+                  matchingRidesModelData.value.date ??
+                      LocaleKeys.app_defaultDate.tr))));
       messageBtnLoading.value = false;
     } catch (e) {
       try {
@@ -168,5 +169,9 @@ class DriverDetailsController extends GetxController {
         debugPrint(e.toString());
       }
     }
+  }
+
+  void toPrevRides(MatchingRidesModelDataDriverDetails? driverDetails) {
+    Get.toNamed(Routes.PREVIOUS_RIDES, arguments: driverDetails);
   }
 }

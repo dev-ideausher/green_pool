@@ -10,7 +10,7 @@ import '../../../data/driver_send_request_model.dart';
 import '../../../data/send_rider_request_model.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/dio/api_service.dart';
-import '../../../services/utils/date_utils.dart';
+import '../../../utils/date_utils.dart';
 import '../../../services/snackbar.dart';
 import '../../home/controllers/home_controller.dart';
 import '../views/booking_confirm_bottom.dart';
@@ -139,6 +139,8 @@ class MyRidesRequestController extends GetxController {
         showMySnackbar(msg: sendRiderRequestModel.value.message ?? "");
       }
     } catch (e) {
+      showMySnackbar(msg: LocaleKeys.app_somethingWentWrong.tr);
+      debugPrint(e.toString());
       throw Exception(e);
     }
   }

@@ -7,7 +7,7 @@ import '../../../data/chat_arg.dart';
 import '../../../data/ride_detail_id.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/dio/api_service.dart';
-import '../../../services/utils/date_utils.dart';
+import '../../../utils/date_utils.dart';
 import '../views/bottom_riders.dart';
 
 class MyRidesDetailsController extends GetxController {
@@ -73,8 +73,8 @@ class MyRidesDetailsController extends GetxController {
                   origin: rider.origin?.name?.split(',').first ?? "City",
                   destination:
                       rider.destination?.name?.split(',').first ?? "City",
-                  date: DateTimeUtils.formatDate(
-                      DateTime.parse(rider.date ?? LocaleKeys.app_defaultDate.tr))));
+                  date: DateTimeUtils.formatDate(DateTime.parse(
+                      rider.date ?? LocaleKeys.app_defaultDate.tr))));
         } catch (e) {
           Get.toNamed(Routes.CHAT_PAGE,
               arguments: ChatArg(
@@ -87,10 +87,14 @@ class MyRidesDetailsController extends GetxController {
                   origin: rider.origin?.name?.split(',').first ?? "City",
                   destination:
                       rider.destination?.name?.split(',').first ?? "City",
-                  date: DateTimeUtils.formatDate(
-                      DateTime.parse(rider.date ?? LocaleKeys.app_defaultDate.tr))));
+                  date: DateTimeUtils.formatDate(DateTime.parse(
+                      rider.date ?? LocaleKeys.app_defaultDate.tr))));
         }
       },
     ));
+  }
+
+  toEditRide() {
+    Get.toNamed(Routes.MY_RIDES_EDIT, arguments: myRidesModelData.value);
   }
 }

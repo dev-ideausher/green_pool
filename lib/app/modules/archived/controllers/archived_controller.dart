@@ -9,7 +9,7 @@ import 'package:green_pool/app/services/snackbar.dart';
 import '../../../../generated/locales.g.dart';
 import '../../../data/chat_arg.dart';
 import '../../../routes/app_pages.dart';
-import '../../../services/utils/date_utils.dart';
+import '../../../utils/date_utils.dart';
 
 class ArchivedController extends GetxController {
   RxBool refreshPage = true.obs;

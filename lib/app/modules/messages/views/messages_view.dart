@@ -11,7 +11,7 @@ import 'package:green_pool/app/services/text_style_util.dart';
 import '../../../../generated/locales.g.dart';
 import '../../../components/common_image_view.dart';
 import '../../../components/greenpool_appbar.dart';
-import '../../../services/utils/date_utils.dart';
+import '../../../utils/date_utils.dart';
 import '../controllers/messages_controller.dart';
 
 class MessagesView extends GetView<MessagesController> {
@@ -122,7 +122,7 @@ class MessagesView extends GetView<MessagesController> {
                                   message?.paymentStatus ?? "Inquiry",
                               titleColor: message?.paymentStatus == "Inquiry"
                                   ? Colors.orange
-                                  : message?.paymentStatus == "Completed"
+                                  : message?.paymentStatus == "Confirmed"
                                       ? Colors.green
                                       : Colors.red,
                               path: message?.reciver?.profilePic?.url ?? "",

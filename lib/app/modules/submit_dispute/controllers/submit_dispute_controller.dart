@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import '../../../../generated/locales.g.dart';
 import '../../../services/dio/api_service.dart';
-import '../../../services/utils/image_util.dart';
+import '../../../utils/image_util.dart';
 import '../../../services/snackbar.dart';
 import 'package:image_picker/image_picker.dart';
 

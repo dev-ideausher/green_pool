@@ -11,6 +11,7 @@ import 'package:green_pool/app/services/responsive_size.dart';
 import '../../../../generated/locales.g.dart';
 import '../../../components/gp_progress.dart';
 import '../../../components/green_pool_divider.dart';
+import '../../../components/route_widget.dart';
 import '../../../data/ride_detail_id.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
@@ -42,9 +43,11 @@ class MyRidesRecurringDetailsView
                         Text(
                           LocaleKeys.app_pickupToDrop.tr,
                           style: TextStyleUtil.k16Bold(),
-                        ).paddingOnly(bottom: 16.kh),
-                        OriginToDestination(
-                          needPickupText: true,
+                        ).paddingOnly(bottom: 8.kh),
+                        RouteWidget(
+                          needPickUp: true,
+                          stop1: "",
+                          stop2: "",
                           origin:
                               "${controller.recurringModel.value.data?.driverRideDetails?[0]?.origin?.name}",
                           destination:

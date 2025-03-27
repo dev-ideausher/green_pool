@@ -36,7 +36,7 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
             child: InkWell(
                 onTap: () => controller.setPrevRideData(),
                 splashColor: Colors.transparent,
-                child: Text("Copy", style: TextStyleUtil.k16Bold())),
+                child: Text(LocaleKeys.app_copy.tr, style: TextStyleUtil.k16Bold())),
           ).paddingOnly(right: 16.kw)
         ],
       ),

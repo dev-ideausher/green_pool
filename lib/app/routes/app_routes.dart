@@ -95,6 +95,8 @@ abstract class Routes {
   static const MY_RIDES_CONFIRM_DETAILS = _Paths.MY_RIDES_CONFIRM_DETAILS;
   static const ARCHIVED = _Paths.ARCHIVED;
   static const LANGUAGE = _Paths.LANGUAGE;
+  static const MY_RIDES_EDIT = _Paths.MY_RIDES_EDIT;
+  static const PREVIOUS_RIDES = _Paths.PREVIOUS_RIDES;
 }
 
 abstract class _Paths {
@@ -188,4 +190,6 @@ abstract class _Paths {
   static const MY_RIDES_CONFIRM_DETAILS = '/my-rides-confirm-details';
   static const ARCHIVED = '/archived';
   static const LANGUAGE = '/language';
+  static const MY_RIDES_EDIT = '/my-rides-edit';
+  static const PREVIOUS_RIDES = '/previous-rides';
 }

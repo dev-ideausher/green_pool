@@ -10,7 +10,7 @@ import 'package:green_pool/app/services/text_style_util.dart';
 import '../../../../generated/locales.g.dart';
 import '../../../components/common_image_view.dart';
 import '../../../components/greenpool_appbar.dart';
-import '../../../services/utils/date_utils.dart';
+import '../../../utils/date_utils.dart';
 import '../controllers/archived_controller.dart';
 
 class ArchivedView extends GetView<ArchivedController> {

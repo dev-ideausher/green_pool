@@ -12,10 +12,11 @@ import 'package:green_pool/app/services/responsive_size.dart';
 import '../../../../generated/locales.g.dart';
 import '../../../components/green_pool_divider.dart';
 import '../../../components/greenpool_appbar.dart';
+import '../../../components/route_widget.dart';
 import '../../../constants/image_constant.dart';
 import '../../../services/colors.dart';
 import '../../../services/text_style_util.dart';
-import '../../../services/utils/date_utils.dart';
+import '../../../utils/date_utils.dart';
 import '../../post_ride_step_one/views/amenities.dart';
 import '../controllers/my_rides_details_controller.dart';
 
@@ -27,6 +28,13 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
     return Scaffold(
       appBar: GreenPoolAppBar(
         title: Text(LocaleKeys.app_rideDetails.tr),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.edit),
+            color: ColorUtil.kBlack01,
+            onPressed: () => controller.toEditRide(),
+          ).paddingOnly(right: 8.kw, bottom: 2.kh)
+        ],
       ),
       body: Obx(
         () => controller.isLoad.value
@@ -74,8 +82,8 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                         Text(
                           LocaleKeys.app_pickupToDrop.tr,
                           style: TextStyleUtil.k16Bold(),
-                        ).paddingOnly(bottom: 16.kh),
-                        OriginToDestination(
+                        ).paddingOnly(bottom: 8.kh),
+                        RouteWidget(
                                 origin: controller.myRidesModelData.value
                                         .driverBookingDetails?.origin?.name ??
                                     "",
@@ -100,7 +108,7 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                                         ?.destination
                                         ?.name ??
                                     "",
-                                needPickupText: true)
+                                needPickUp: true)
                             .paddingOnly(bottom: 8.kh),
                         //bottom line
                         const GreenPoolDivider(),

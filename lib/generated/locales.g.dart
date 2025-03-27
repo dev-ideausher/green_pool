@@ -519,6 +519,19 @@ class LocaleKeys {
   static const app_select_valid_time = 'app_select_valid_time';
   static const app_select_valid_date = 'app_select_valid_date';
   static const app_copy = 'app_copy';
+  static const app_editRide = 'app_editRide';
+  static const app_needHelpPleaseProvideDescriptionAndUploadPic =
+      'app_needHelpPleaseProvideDescriptionAndUploadPic';
+  static const app_saveChanges = 'app_saveChanges';
+  static const app_rideUpdated = 'app_rideUpdated';
+  static const app_filterBy = 'app_filterBy';
+  static const app_month = 'app_month';
+  static const app_driverHistory = 'app_driverHistory';
+  static const app_loading = 'app_loading';
+  static const app_ridesCompleted = 'app_ridesCompleted';
+  static const app_ridesCancelled = 'app_ridesCancelled';
+  static const app_completed = 'app_completed';
+  static const app_cancelled = 'app_cancelled';
   static const app_language_pref = 'app_language_pref';
   static const app_language = 'app_language';
   static const app_defaultDate = 'app_defaultDate';
@@ -1058,6 +1071,19 @@ class Locales {
     'app_select_valid_time': 'Please select a valid time',
     'app_select_valid_date': 'Please select a date',
     'app_copy': 'Copy',
+    'app_editRide': 'Edit Ride',
+    'app_needHelpPleaseProvideDescriptionAndUploadPic':
+        'Need Help? Please provide a description and upload a picture to help us assist you better.',
+    'app_saveChanges': 'Save Changes',
+    'app_rideUpdated': 'Your ride has been updated successfully',
+    'app_filterBy': 'Filter by',
+    'app_month': 'Month',
+    'app_driverHistory': 'Driver History',
+    'app_loading': 'Loading...',
+    'app_ridesCompleted': 'Rides Completed',
+    'app_ridesCancelled': 'Rides Cancelled',
+    'app_completed': 'Completed',
+    'app_cancelled': 'cancelled',
     'app_language_pref': 'Language Preferences',
     'app_language': 'Language',
     'app_defaultDate': '2024-12-31T00:00:00.000Z',
@@ -1605,6 +1631,19 @@ class Locales {
     'app_select_valid_time': 'Por favor, seleccione una hora válida',
     'app_select_valid_date': 'Por favor, seleccione una fecha',
     'app_copy': 'Copiar',
+    'app_editRide': 'Editar viaje',
+    'app_needHelpPleaseProvideDescriptionAndUploadPic':
+        '¿Necesitas ayuda? Proporcione una descripción y cargue una imagen para que podamos ayudarle mejor.',
+    'app_saveChanges': 'Guardar cambios',
+    'app_rideUpdated': 'Tu viaje ha sido actualizado con éxito',
+    'app_filterBy': 'Filtrar por',
+    'app_month': 'Mes',
+    'app_driverHistory': 'Historial del conductor',
+    'app_loading': 'Cargando...',
+    'app_ridesCompleted': 'Viajes completados',
+    'app_ridesCancelled': 'Viajes cancelados',
+    'app_completed': 'Completado',
+    'app_cancelled': 'Cancelado',
     'app_language_pref': 'Preferencias de idioma',
     'app_language': 'Idioma',
     'app_defaultDate': '2024-12-31T00:00:00.000Z',
@@ -2155,6 +2194,19 @@ class Locales {
     'app_select_valid_time': 'Veuillez sélectionner une heure valide',
     'app_select_valid_date': 'Veuillez sélectionner une date',
     'app_copy': 'Copier',
+    'app_editRide': 'Modifier la course',
+    'app_needHelpPleaseProvideDescriptionAndUploadPic':
+        'Besoin d\'aide ? Veuillez fournir une description et télécharger une image pour nous aider à mieux vous assister.',
+    'app_saveChanges': 'Enregistrer les modifications',
+    'app_rideUpdated': 'Votre trajet a été mis à jour avec succès',
+    'app_filterBy': 'Filtrer par',
+    'app_month': 'Mois',
+    'app_driverHistory': 'Historique du conducteur',
+    'app_loading': 'Chargement...',
+    'app_ridesCompleted': 'Trajets terminés',
+    'app_ridesCancelled': 'Trajets annulés',
+    'app_completed': 'Terminé',
+    'app_cancelled': 'Annulé',
     'app_language_pref': 'Préférences linguistiques',
     'app_language': 'Langue',
     'app_plsPayInApp': 'Veuillez payer dans l\'application',

@@ -10,7 +10,7 @@ import '../../../../generated/locales.g.dart';
 import '../../../data/post_ride_model.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/dio/api_service.dart';
-import '../../../services/utils/image_util.dart';
+import '../../../utils/image_util.dart';
 import '../../../services/snackbar.dart';
 import '../../../services/storage.dart';
 import '../../home/controllers/home_controller.dart';

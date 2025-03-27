@@ -14,7 +14,7 @@ import '../../../components/green_pool_divider.dart';
 import '../../../components/origin_to_destination.dart';
 import '../../../services/colors.dart';
 import '../../../services/text_style_util.dart';
-import '../../../services/utils/date_utils.dart';
+import '../../../utils/date_utils.dart';
 import '../../home/controllers/home_controller.dart';
 import '../controllers/matching_rides_controller.dart';
 

@@ -4,7 +4,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/components/richtext_heading.dart';
-import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -22,7 +21,7 @@ class ReportView extends GetView<ReportController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:  GreenPoolAppBar(
+      appBar: GreenPoolAppBar(
         title: Text(LocaleKeys.app_reportABug.tr),
       ),
       resizeToAvoidBottomInset: false,
@@ -30,7 +29,7 @@ class ReportView extends GetView<ReportController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            LocaleKeys.app_makeItEasyToTellUsAboutProblems.tr,
+            LocaleKeys.app_needHelpPleaseProvideDescriptionAndUploadPic.tr,
             style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
           ).paddingOnly(bottom: 24.kh, top: 32.kh),
           RichTextHeading(

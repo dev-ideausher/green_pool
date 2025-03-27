@@ -13,8 +13,8 @@ import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
 import '../../../../generated/locales.g.dart';
-import '../../../components/origin_to_destination.dart';
-import '../../../services/utils/date_utils.dart';
+import '../../../components/route_widget.dart';
+import '../../../utils/date_utils.dart';
 import '../../home/controllers/home_controller.dart';
 import '../controllers/file_dispute_controller.dart';
 
@@ -177,8 +177,8 @@ class FileDisputeView extends GetView<FileDisputeController> {
                                     ],
                                   ).paddingOnly(bottom: 8.kh),
                                   const GreenPoolDivider(),
-                                  OriginToDestination(
-                                          needPickupText: false,
+                                  RouteWidget(
+                                          needPickUp: false,
                                           origin:
                                               "${controller.fileDisputeModel.value.data?[index]?.origin?.name}",
                                           stop1: controller

@@ -11,7 +11,7 @@ import '../../../data/find_ride_response_model.dart';
 import '../../../data/matching_rides_model.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/dio/api_service.dart';
-import '../../../services/utils/gp_util.dart';
+import '../../../utils/gp_util.dart';
 import '../../../services/storage.dart';
 import '../views/create_ride_alert_bottomsheet.dart';
 

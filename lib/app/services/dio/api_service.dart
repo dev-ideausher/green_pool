@@ -298,6 +298,10 @@ class APIManager {
       await DioClient(Dio(), showSnakbar: false, isOverlayLoader: false)
           .get(Endpoints.stripeOnboarding);
 
+  static Future<Response> getDriverHistory({required String driverId}) async =>
+      await DioClient(Dio(), showSnakbar: false, isOverlayLoader: false)
+          .get(Endpoints.driverHistory + driverId);
+
   //--------------------patch--------------------//
   static Future<Response> userDetails({required dynamic body}) async =>
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).patch(
@@ -434,4 +438,9 @@ class APIManager {
   static Future<Response> putCreateStripeAccount() async =>
       await DioClient(Dio(), showSnakbar: false, isOverlayLoader: false)
           .put(Endpoints.createStripeAccount);
+
+  static Future<Response> putEditRide(
+          {required String driverRideId, required dynamic body}) async =>
+      await DioClient(Dio(), showSnakbar: false, isOverlayLoader: true)
+          .put(Endpoints.editRide + driverRideId, data: body);
 }

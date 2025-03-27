@@ -7,7 +7,7 @@ import '../../../data/driver_cofirm_request_model.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/dio/api_service.dart';
 import '../../../services/snackbar.dart';
-import '../../../services/utils/date_utils.dart';
+import '../../../utils/date_utils.dart';
 import '../../my_rides_one_time/controllers/my_rides_one_time_controller.dart';
 import '../../my_rides_request/controllers/my_rides_request_controller.dart';
 import '../../my_rides_request/views/booking_confirm_bottom.dart';

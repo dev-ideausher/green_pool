@@ -19,7 +19,7 @@ import 'package:path/path.dart' as path;
 import '../../../services/colors.dart';
 import '../../../services/dialog_helper.dart';
 import '../../../services/dio/api_service.dart';
-import '../../../services/utils/image_util.dart';
+import '../../../utils/image_util.dart';
 
 class ProfileSetupController extends GetxController
     with GetSingleTickerProviderStateMixin {

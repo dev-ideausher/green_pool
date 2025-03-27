@@ -3,7 +3,8 @@ import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/common_image_view.dart';
-import 'package:green_pool/app/components/origin_to_destination.dart';
+import 'package:green_pool/app/components/route_widget.dart';
+import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
@@ -12,7 +13,7 @@ import '../../../components/green_pool_divider.dart';
 import '../../../components/greenpool_appbar.dart';
 import '../../../constants/image_constant.dart';
 import '../../../services/colors.dart';
-import '../../../services/utils/date_utils.dart';
+import '../../../utils/date_utils.dart';
 import '../../../services/text_style_util.dart';
 import '../../home/controllers/home_controller.dart';
 import '../../post_ride_step_one/views/amenities.dart';
@@ -38,6 +39,16 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
             ),
           ),
         ),
+        actions: [
+          GestureDetector(
+            onTap: () {
+              controller.toPrevRides(
+                  controller.matchingRidesModelData.value.driverDetails?.first);
+            },
+            child: Icon(Icons.history, color: ColorUtil.kBlack01, size: 24.kh)
+                .paddingOnly(right: 8.kw),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -151,8 +162,8 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                 ).paddingOnly(top: 8.kh),
                 //middle divider
                 const GreenPoolDivider(),
-                OriginToDestination(
-                        needPickupText: true,
+                RouteWidget(
+                        needPickUp: true,
                         origin:
                             "${controller.matchingRidesModelData.value.origin?.name}",
                         stop1:

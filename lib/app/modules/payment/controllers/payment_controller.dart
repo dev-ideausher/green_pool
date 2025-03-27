@@ -12,7 +12,6 @@ import 'package:green_pool/generated/locales.g.dart';
 import '../../../data/request_ride_by_rider_model.dart';
 import '../../../data/rider_confirm_request_model.dart';
 import '../../../data/rider_send_request_model.dart';
-import '../../../res/strings.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/colors.dart';
 import '../../../services/dio/api_service.dart';

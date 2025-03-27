@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/gp_progress.dart';
-import 'package:green_pool/app/modules/post_ride_step_three/views/price_tile.dart';
+import 'package:green_pool/app/components/price_tile.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../../generated/locales.g.dart';
@@ -28,12 +28,11 @@ class PostRideStepThreeView extends GetView<PostRideStepThreeController> {
         actions: [
           Obx(
             () => Visibility(
-              visible:
-                  Get.find<GetStorageService>().getPostRideData() != null &&
-                      !controller.isLoading.value,
+              visible: !controller.isLoading.value &&
+                  Get.find<GetStorageService>().getPostRideData() != null,
               child: InkWell(
                   onTap: () => controller.setPrevRideData(),
-                  child: Text("Copy", style: TextStyleUtil.k16Bold())),
+                  child: Text(LocaleKeys.app_copy.tr, style: TextStyleUtil.k16Bold())),
             ).paddingOnly(right: 16.kw),
           )
         ],

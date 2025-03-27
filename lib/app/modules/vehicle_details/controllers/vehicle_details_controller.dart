@@ -9,7 +9,7 @@ import 'package:image_picker/image_picker.dart';
 
 import '../../../../generated/locales.g.dart';
 import '../../../routes/app_pages.dart';
-import '../../../services/utils/image_util.dart';
+import '../../../utils/image_util.dart';
 import '../../../services/snackbar.dart';
 import '../../home/controllers/home_controller.dart';
 

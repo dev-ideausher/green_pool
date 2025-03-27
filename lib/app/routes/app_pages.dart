@@ -47,6 +47,8 @@ import '../modules/my_rides_confirm_details/bindings/my_rides_confirm_details_bi
 import '../modules/my_rides_confirm_details/views/my_rides_confirm_details_view.dart';
 import '../modules/my_rides_details/bindings/my_rides_details_binding.dart';
 import '../modules/my_rides_details/views/my_rides_details_view.dart';
+import '../modules/my_rides_edit/bindings/my_rides_edit_binding.dart';
+import '../modules/my_rides_edit/views/my_rides_edit_view.dart';
 import '../modules/my_rides_one_time/bindings/my_rides_one_time_binding.dart';
 import '../modules/my_rides_one_time/views/my_rides_one_time_view.dart';
 import '../modules/my_rides_page/bindings/my_rides_page_binding.dart';
@@ -83,6 +85,8 @@ import '../modules/post_ride_step_three/bindings/post_ride_step_three_binding.da
 import '../modules/post_ride_step_three/views/post_ride_step_three_view.dart';
 import '../modules/post_ride_step_two/bindings/post_ride_step_two_binding.dart';
 import '../modules/post_ride_step_two/views/post_ride_step_two_view.dart';
+import '../modules/driver_previous_rides/bindings/previous_rides_binding.dart';
+import '../modules/driver_previous_rides/views/previous_rides_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
 import '../modules/profile_settings/bindings/profile_settings_binding.dart';
@@ -541,6 +545,16 @@ class AppPages {
       name: _Paths.LANGUAGE,
       page: () => const LanguageView(),
       binding: LanguageBinding(),
+    ),
+    GetPage(
+      name: _Paths.MY_RIDES_EDIT,
+      page: () => const MyRidesEditView(),
+      binding: MyRidesEditBinding(),
+    ),
+    GetPage(
+      name: _Paths.PREVIOUS_RIDES,
+      page: () => const PreviousRidesView(),
+      binding: PreviousRidesBinding(),
     ),
   ];
 }

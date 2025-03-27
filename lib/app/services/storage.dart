@@ -48,6 +48,11 @@ class GetStorageService extends GetxService {
   static const String _vehicleType = 'vehicleType';
   static const String _vehicleColor = 'vehicleColor';
   static const String _vehicleImageUrl = 'vehicleImageUrl';
+  static const String _trips = 'trips';
+  static const String _alerts = 'alerts';
+  static const String _payments = 'payments';
+  static const String _transactions = 'transactions';
+  static const String _offers = 'offers';
   final String _subscribedToFcmKey = 'hasSubscribedToFCM';
   final String _prevRideData = 'prevRideData';
 
@@ -167,6 +172,21 @@ class GetStorageService extends GetxService {
   set hasTappedAllowNotification(bool val) =>
       _runData.write(_hasTappedAllowNotification, val);
 
+  bool get trips => _runData.read(_trips) ?? false;
+  set trips(bool val) => _runData.write(_trips, val);
+
+  bool get alerts => _runData.read(_alerts) ?? false;
+  set alerts(bool val) => _runData.write(_alerts, val);
+
+  bool get payments => _runData.read(_payments) ?? false;
+  set payments(bool val) => _runData.write(_payments, val);
+
+  bool get transactions => _runData.read(_transactions) ?? false;
+  set transactions(bool val) => _runData.write(_transactions, val);
+
+  bool get offers => _runData.read(_offers) ?? false;
+  set offers(bool val) => _runData.write(_offers, val);
+
   Locale get appLocale {
     String? localeString = _runData.read(_appLocale);
     if (localeString != null) {
@@ -247,6 +267,13 @@ class GetStorageService extends GetxService {
         userInfo.data?.rideCancellationDetails?.cancellationDate ??
             "2024-07-25T13:27:23.879Z";
     vehicleStatus = userInfo.data?.vehicleStatus ?? false;
+
+    //set notification preferences
+    trips = userInfo.data?.notificationPreferences?.trip ?? false;
+    alerts = userInfo.data?.notificationPreferences?.alerts ?? false;
+    payments = userInfo.data?.notificationPreferences?.payments ?? false;
+    transactions = userInfo.data?.notificationPreferences?.transactions ?? false;
+    offers = userInfo.data?.notificationPreferences?.offers ?? false;
 
     if (userInfo.data?.status == "active") {
       accSuspended = false;

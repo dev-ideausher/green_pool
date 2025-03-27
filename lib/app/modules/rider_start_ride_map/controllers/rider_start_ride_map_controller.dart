@@ -9,7 +9,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:green_pool/app/data/chat_arg.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/dio/api_service.dart';
-import 'package:green_pool/app/services/utils/gp_util.dart';
+import 'package:green_pool/app/utils/gp_util.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/storage.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -20,7 +20,7 @@ import '../../../data/booking_detail_model.dart';
 import '../../../data/live_location_model.dart';
 import '../../../data/my_rides_model.dart';
 import '../../../services/dio/endpoints.dart';
-import '../../../services/utils/date_utils.dart';
+import '../../../utils/date_utils.dart';
 import '../views/sos_dialog.dart';
 
 class RiderStartRideMapController extends GetxController {

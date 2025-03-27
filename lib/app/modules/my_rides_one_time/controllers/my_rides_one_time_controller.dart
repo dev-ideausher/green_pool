@@ -16,7 +16,7 @@ import '../../../data/booking_detail_model.dart';
 import '../../../data/recurring_rides_model.dart';
 import '../../../data/ride_detail_id.dart';
 import '../../../routes/app_pages.dart';
-import '../../../services/utils/date_utils.dart';
+import '../../../utils/date_utils.dart';
 
 class MyRidesOneTimeController extends GetxController {
   RxString ridePostId = ''.obs;
@@ -274,6 +274,26 @@ class MyRidesOneTimeController extends GetxController {
                   originDestinationFair:
                       myRidesModelData.origin?.originDestinationFair,
                   type: myRidesModelData.origin!.type),
+              stops: [
+                BookingDetailModelDataDriverBookingDetailsStops(
+                  coordinates: myRidesModelData.stops?[0]?.coordinates,
+                  name: myRidesModelData.stops?[0]?.name,
+                  originToStopFair:
+                      myRidesModelData.stops?[0]?.originToStopFair,
+                  stopTodestinationFair:
+                      myRidesModelData.stops?[0]?.stopTodestinationFair,
+                  stopToStopFair: myRidesModelData.stops?[0]?.stopToStopFair,
+                ),
+                BookingDetailModelDataDriverBookingDetailsStops(
+                  coordinates: myRidesModelData.stops?[1]?.coordinates,
+                  name: myRidesModelData.stops?[1]?.name,
+                  originToStopFair:
+                      myRidesModelData.stops?[1]?.originToStopFair,
+                  stopTodestinationFair:
+                      myRidesModelData.stops?[1]?.stopTodestinationFair,
+                  stopToStopFair: myRidesModelData.stops?[1]?.stopToStopFair,
+                ),
+              ],
               destination:
                   BookingDetailModelDataDriverBookingDetailsDestination(
                       coordinates: myRidesModelData.destination!.coordinates,

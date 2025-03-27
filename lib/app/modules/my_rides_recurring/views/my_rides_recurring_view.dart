@@ -14,7 +14,7 @@ import '../../../components/common_image_view.dart';
 import '../../../constants/image_constant.dart';
 import '../../../services/colors.dart';
 import '../../../services/text_style_util.dart';
-import '../../../services/utils/date_utils.dart';
+import '../../../utils/date_utils.dart';
 import '../../home/controllers/home_controller.dart';
 import '../controllers/my_rides_recurring_controller.dart';
 

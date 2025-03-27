@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +33,8 @@ class AppInterceptors extends Interceptor {
             "timezone": currentTimeZone,
             "Content-Type": "application/json"
           };
+          log("Bearer ${Get.find<GetStorageService>().encjwToken}");
+          log("User App Id : ${Get.find<GetStorageService>().getUserAppId}");
           super.onRequest(options, handler);
         },
       );

@@ -56,7 +56,7 @@ class GreenPoolTextField extends StatelessWidget {
     return TextFormField(
       enabled: enabled,
       inputFormatters: inputFormatters,
-      style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack01),
+      style: TextStyleUtil.k14Medium(color: ColorUtil.kBlack01),
       maxLines: maxLines ?? 1,
       onTap: onTap,
       cursorColor: ColorUtil.kBlack01,

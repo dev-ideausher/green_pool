@@ -7,7 +7,7 @@ import '../../../routes/app_pages.dart';
 import '../../../services/dialog_helper.dart';
 import '../../../services/dio/api_service.dart';
 import '../../../services/snackbar.dart';
-import '../../../services/utils/date_utils.dart';
+import '../../../utils/date_utils.dart';
 
 class RiderConfirmedRideDetailsController extends GetxController {
   final Rx<MyRidesModelData> myRidesModel = MyRidesModelData().obs;

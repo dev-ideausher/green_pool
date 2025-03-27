@@ -4,7 +4,7 @@ import 'package:green_pool/app/data/recurring_ride_details_model.dart';
 import 'package:green_pool/app/services/dio/api_service.dart';
 import 'package:intl/intl.dart';
 
-import '../../../services/utils/date_utils.dart';
+import '../../../utils/date_utils.dart';
 
 class MyRidesRecurringDetailsController extends GetxController {
   int numberOfDays = 7;

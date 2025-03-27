@@ -13,7 +13,7 @@ import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
 import '../../../services/storage.dart';
 import '../../../services/text_style_util.dart';
-import '../../post_ride_step_one/views/greenpool_chip.dart';
+import '../../../components/greenpool_chip.dart';
 import '../controllers/post_ride_step_two_controller.dart';
 import '../widgets/one_time_trip_view.dart';
 import '../widgets/recurring_trip_view.dart';
@@ -30,7 +30,8 @@ class PostRideStepTwoView extends GetView<PostRideStepTwoController> {
             visible: Get.find<GetStorageService>().getPostRideData() != null,
             child: InkWell(
                 onTap: () => controller.setPrevRideData(),
-                child: Text("Copy", style: TextStyleUtil.k16Bold())),
+                child: Text(LocaleKeys.app_copy.tr,
+                    style: TextStyleUtil.k16Bold())),
           ).paddingOnly(right: 16.kw)
         ],
       ),
@@ -187,6 +188,7 @@ class PostRideStepTwoView extends GetView<PostRideStepTwoController> {
                       )),
                 ],
               ).paddingOnly(bottom: 24.kh),
+              //set luggage allowance
               RichTextHeading(
                 text: LocaleKeys.app_luggageAllowance.tr,
                 style: TextStyleUtil.k16Semibold(fontSize: 16.kh),
@@ -251,6 +253,7 @@ class PostRideStepTwoView extends GetView<PostRideStepTwoController> {
                   ],
                 ),
               ),
+              //set other preferences
               Text(
                 LocaleKeys.app_other.tr,
                 style: TextStyleUtil.k16Bold(color: ColorUtil.kNeutral5),

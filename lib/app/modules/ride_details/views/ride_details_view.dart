@@ -12,7 +12,7 @@ import 'package:green_pool/app/services/text_style_util.dart';
 
 import '../../../../generated/locales.g.dart';
 import '../../../constants/image_constant.dart';
-import '../../../services/utils/date_utils.dart';
+import '../../../utils/date_utils.dart';
 import '../../home/controllers/home_controller.dart';
 import '../controllers/ride_details_controller.dart';
 

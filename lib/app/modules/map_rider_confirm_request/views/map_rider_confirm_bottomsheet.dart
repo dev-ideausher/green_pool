@@ -12,7 +12,7 @@ import '../../../constants/image_constant.dart';
 import '../../../data/rider_confirm_request_model.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
-import '../../../services/utils/date_utils.dart';
+import '../../../utils/date_utils.dart';
 import '../../../services/text_style_util.dart';
 import '../../home/controllers/home_controller.dart';
 

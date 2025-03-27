@@ -6,7 +6,6 @@ import 'package:green_pool/app/constants/image_constant.dart';
 import 'package:green_pool/app/modules/my_rides_one_time/views/driver_tile.dart';
 import 'package:green_pool/app/modules/my_rides_one_time/views/recurring_tile.dart';
 import 'package:green_pool/app/modules/my_rides_one_time/views/rider_tile.dart';
-import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import '../../../../generated/assets.dart';
 import '../../../../generated/locales.g.dart';

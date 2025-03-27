@@ -9,7 +9,7 @@ import '../../../components/gp_progress.dart';
 import '../../../components/greenpool_textfield.dart';
 import '../../../constants/image_constant.dart';
 import '../../../services/colors.dart';
-import '../../../services/utils/date_utils.dart';
+import '../../../utils/date_utils.dart';
 import '../../../services/storage.dart';
 import '../../../services/text_style_util.dart';
 import '../../home/controllers/home_controller.dart';

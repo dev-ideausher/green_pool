@@ -40,6 +40,23 @@ class DateTimeUtils {
         dateToCheck.day == now.day;
   }
 
+  static String getTimeAMPM(String date) {
+    if (date.isEmpty) return '00:00';
+
+    try {
+      DateTime dateTime;
+      // Check if the input contains only time (HH:mm)
+      if (RegExp(r'^\d{1,2}:\d{2}$').hasMatch(date)) {
+        dateTime = DateFormat('HH:mm').parse(date); // Parse time-only string
+      } else {
+        dateTime = DateTime.parse(date); // Parse full date-time string
+      }
+      return DateFormat('h:mm a').format(dateTime); // Format as AM/PM
+    } catch (e) {
+      return 'Invalid Time';
+    }
+  }
+
   static String getDateFormat(String time) {
     var outputDate = "";
     if (time != "") {
@@ -272,6 +289,64 @@ class DateTimeUtils {
     } catch (e) {
       debugPrint("INVALID DATE FORMAT: $e");
       return "";
+    }
+  }
+
+  static String dayDateMonthYearTime(String dateString) {
+    DateTime dt;
+
+    try {
+      // Try parsing ISO 8601 format 2024-09-16T08:00:00.000Z
+      dt = DateTime.parse(dateString).toLocal();
+    } catch (e) {
+      // If parsing fails, assume it's in "MM/dd/yyyy, h:mm:ss a" format //"Fri, 23rd Sept 2022 (10:30)"
+      dt = DateFormat('MM/dd/yyyy, h:mm:ss a').parse(dateString);
+    }
+
+    String formattedDate = _formatDateWithSuffix(dt);
+    String time = DateFormat('HH:mm').format(dt);
+
+    return '$formattedDate, $time';
+  }
+
+  static String dateMonthYear(String dateString) {
+    DateTime dt;
+
+    try {
+      // Try parsing ISO 8601 format 2024-09-16T08:00:00.000Z
+      dt = DateTime.parse(dateString).toLocal();
+    } catch (e) {
+      // If parsing fails, assume it's in "MM/dd/yyyy, h:mm:ss a" format //"Fri, 23rd Sept 2022 (10:30)"
+      dt = DateFormat('MM/dd/yyyy, h:mm:ss a').parse(dateString);
+    }
+
+    String formattedDate = _formatDateWithSuffix(dt);
+
+    return formattedDate;
+  }
+
+  // Helper method to format the date with the ordinal suffix
+  static String _formatDateWithSuffix(DateTime dt) {
+    int dayNumber = dt.day;
+    String suffix = _getOrdinalSuffix(dayNumber);
+    String month = DateFormat('MMM').format(dt);
+    String year = dt.year.toString();
+    return '$dayNumber$suffix $month $year';
+  }
+
+  static String _getOrdinalSuffix(int day) {
+    if (day >= 11 && day <= 13) {
+      return 'th';
+    }
+    switch (day % 10) {
+      case 1:
+        return 'st';
+      case 2:
+        return 'nd';
+      case 3:
+        return 'rd';
+      default:
+        return 'th';
     }
   }
 }

@@ -85,9 +85,7 @@ class ChatWithExpertsController extends GetxController {
     if (eMsg.text.trim().isEmpty) {
       return;
     } else {
-      // await setMessageInApi();
-      final msg = editMsg();
-      debugPrint(msg);
+      await setMessageInApi();
     }
   }
 

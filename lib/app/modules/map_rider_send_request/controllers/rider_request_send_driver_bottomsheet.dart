@@ -13,7 +13,7 @@ import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
 import '../../../services/snackbar.dart';
 import '../../../services/text_style_util.dart';
-import '../../../services/utils/date_utils.dart';
+import '../../../utils/date_utils.dart';
 import '../../home/controllers/home_controller.dart';
 import '../../rider_my_ride_request/controllers/rider_my_ride_request_controller.dart';
 

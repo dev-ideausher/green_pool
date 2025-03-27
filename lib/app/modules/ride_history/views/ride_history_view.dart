@@ -16,7 +16,7 @@ import '../../../components/gp_progress.dart';
 import '../../../components/green_pool_divider.dart';
 import '../../../components/origin_to_destination.dart';
 import '../../../services/colors.dart';
-import '../../../services/utils/date_utils.dart';
+import '../../../utils/date_utils.dart';
 import '../../home/controllers/home_controller.dart';
 import '../controllers/ride_history_controller.dart';
 

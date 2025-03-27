@@ -5,7 +5,7 @@ import '../../../../generated/locales.g.dart';
 import '../../../data/chat_arg.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/dio/api_service.dart';
-import '../../../services/utils/date_utils.dart';
+import '../../../utils/date_utils.dart';
 import '../../../services/snackbar.dart';
 import '../../rider_my_ride_request/controllers/rider_my_ride_request_controller.dart';
 

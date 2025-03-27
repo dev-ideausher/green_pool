@@ -7,7 +7,7 @@ import 'package:green_pool/app/modules/rider_my_ride_request/controllers/rider_m
 
 import '../../../data/rider_send_request_model.dart';
 import '../../../services/dio/endpoints.dart';
-import '../../../services/utils/gp_util.dart';
+import '../../../utils/gp_util.dart';
 import '../../home/controllers/home_controller.dart';
 
 class MapRiderSendRequestController extends GetxController {

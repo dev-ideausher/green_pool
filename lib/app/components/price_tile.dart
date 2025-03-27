@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
-import '../../../components/greenpool_textfield.dart';
-import '../../../services/colors.dart';
-import '../../../services/text_style_util.dart';
+import 'greenpool_textfield.dart';
+import '../services/colors.dart';
+import '../services/text_style_util.dart';
 
 class PriceTile extends StatelessWidget {
   final Function(String?)? onchanged;

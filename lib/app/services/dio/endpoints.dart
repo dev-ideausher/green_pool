@@ -98,6 +98,7 @@ class Endpoints {
   static const String verifyPromo = "admin/promoCode/search?search=";
   static const String unreadCount = "driver/rides/unreadCount";
   static const String allArchivedChats = "chat/archivedChats";
+  static const String driverHistory = "driver/driverHistory/";
 
   //patch url
   static const String emergencyContactsUpdate = "user/emergencyContacts";
@@ -124,4 +125,7 @@ class Endpoints {
   //delete url
   static const String deleteChat = "chat/deleteChat";
   static const String deleteAccount = "/user";
+
+  //put url
+  static const String editRide = "driver/rides/";
 }

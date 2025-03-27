@@ -17,7 +17,7 @@ import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
 import '../../../services/dialog_helper.dart';
 import '../../../services/dio/api_service.dart';
-import '../../../services/utils/image_util.dart';
+import '../../../utils/image_util.dart';
 import '../../../services/snackbar.dart';
 
 import 'package:dio/dio.dart' as dio;

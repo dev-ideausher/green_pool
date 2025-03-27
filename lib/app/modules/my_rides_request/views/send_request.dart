@@ -13,8 +13,8 @@ import '../../../components/origin_to_destination.dart';
 import '../../../constants/image_constant.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
-import '../../../services/utils/date_utils.dart';
-import '../../../services/utils/gp_util.dart';
+import '../../../utils/date_utils.dart';
+import '../../../utils/gp_util.dart';
 import '../../../services/snackbar.dart';
 import '../../../services/text_style_util.dart';
 import '../../home/controllers/home_controller.dart';
@@ -189,7 +189,8 @@ class SendRequest extends GetView<MyRidesRequestController> {
                                                 .data![index].requestSent ??
                                             false) {
                                           showMySnackbar(
-                                              msg: LocaleKeys.app_reqHasAlreadySent.tr);
+                                              msg: LocaleKeys
+                                                  .app_reqHasAlreadySent.tr);
                                         } else {
                                           await controller
                                               .sendRequestToRiderAPI(controller

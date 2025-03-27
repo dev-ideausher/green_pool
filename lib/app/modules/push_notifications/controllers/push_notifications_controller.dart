@@ -1,49 +1,17 @@
-import 'dart:convert';
-import 'dart:developer';
-
 import 'package:get/get.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/services/dio/api_service.dart';
+import 'package:green_pool/app/services/storage.dart';
 
 import '../../../../generated/locales.g.dart';
 import '../../../services/snackbar.dart';
 
 class PushNotificationsController extends GetxController {
-  RxBool trips = Get.find<HomeController>()
-      .userInfo
-      .value
-      .data!
-      .notificationPreferences!
-      .trip!
-      .obs;
-  RxBool alerts = Get.find<HomeController>()
-      .userInfo
-      .value
-      .data!
-      .notificationPreferences!
-      .alerts!
-      .obs;
-  RxBool payments = Get.find<HomeController>()
-      .userInfo
-      .value
-      .data!
-      .notificationPreferences!
-      .payments!
-      .obs;
-  RxBool transactions = Get.find<HomeController>()
-      .userInfo
-      .value
-      .data!
-      .notificationPreferences!
-      .transactions!
-      .obs;
-  RxBool offers = Get.find<HomeController>()
-      .userInfo
-      .value
-      .data!
-      .notificationPreferences!
-      .offers!
-      .obs;
+  RxBool trips = Get.find<GetStorageService>().trips.obs;
+  RxBool alerts = Get.find<GetStorageService>().alerts.obs;
+  RxBool payments = Get.find<GetStorageService>().payments.obs;
+  RxBool transactions = Get.find<GetStorageService>().transactions.obs;
+  RxBool offers = Get.find<GetStorageService>().offers.obs;
 
   // @override
   // void onInit() {

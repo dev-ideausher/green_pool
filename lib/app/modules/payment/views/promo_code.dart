@@ -9,7 +9,7 @@ import 'package:green_pool/app/services/snackbar.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
 import '../../../../generated/locales.g.dart';
-import '../../../services/utils/date_utils.dart';
+import '../../../utils/date_utils.dart';
 import '../controllers/payment_controller.dart';
 
 class PromoCode extends GetView<PaymentController> {

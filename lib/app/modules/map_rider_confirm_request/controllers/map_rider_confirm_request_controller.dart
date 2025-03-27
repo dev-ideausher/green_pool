@@ -5,7 +5,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../../data/rider_confirm_request_model.dart';
 import '../../../services/dio/endpoints.dart';
-import '../../../services/utils/gp_util.dart';
+import '../../../utils/gp_util.dart';
 import '../../home/controllers/home_controller.dart';
 import '../../rider_my_ride_request/controllers/rider_my_ride_request_controller.dart';
 import '../views/map_rider_confirm_bottomsheet.dart';

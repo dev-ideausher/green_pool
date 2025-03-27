@@ -9,7 +9,7 @@ import 'package:path/path.dart' as path;
 
 import '../../../../generated/locales.g.dart';
 import '../../../services/dio/api_service.dart';
-import '../../../services/utils/image_util.dart';
+import '../../../utils/image_util.dart';
 import '../../../services/snackbar.dart';
 
 class ReportController extends GetxController {

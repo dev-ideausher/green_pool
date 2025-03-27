@@ -46,18 +46,29 @@ class HomeController extends GetxController with Versionk {
   }
 
   @override
-  Future<void> onInit() async {
+  void onInit() {
     super.onInit();
+    initializeData();
+  }
+
+  @override
+  void onReady() {
+    super.onReady();
+  }
+
+  Future<void> initializeData() async {
     final storageService = Get.find<GetStorageService>();
 
     try {
       if (storageService.isLoggedIn) {
-        //change this condition after one update because for riders last check will always imply c.v 1.0.11
-        if (storageService.getUserName == "" ||
-            storageService.vehicleImageUrl == "") {
-          await userInfoAPI();
-        }
+        //change this condition after one update because for riders last check will always imply c.v->1.0.11
+        // if (storageService.getUserName == "" ||
+        //     storageService.vehicleImageUrl == "") {
+        //   await userInfoAPI();
+        // }
+        await userInfoAPI();
         isPinkModeOn.value = storageService.isPinkMode;
+        await setupMessage();
         await onChangeLocation();
         await fetchCount();
         await handleNewUpdate();
@@ -65,11 +76,6 @@ class HomeController extends GetxController with Versionk {
     } catch (e) {
       debugPrint(e.toString());
     }
-  }
-
-  @override
-  void onReady() async {
-    super.onReady();
   }
 
   Future<void> onChangeLocation() async {
@@ -123,10 +129,7 @@ class HomeController extends GetxController with Versionk {
         // Update the pink mode status
         isPinkModeOn.value = storageService.isPinkMode;
 
-        if (!storageService.hasSubscribedToFCM) {
-          PushNotificationService.subFcm("${userInfo.value.data?.Id}");
-          storageService.hasSubscribedToFCM = true;
-        }
+        PushNotificationService.subFcm("${userInfo.value.data?.Id}");
 
         //1. Handle Location Permission First
         if (!Get.find<GetStorageService>().hasTappedAllowLocation) {
@@ -235,7 +238,6 @@ class HomeController extends GetxController with Versionk {
   Future<void> getReqsCount() async {
     try {
       final res = await APIManager.getUnreadCount();
-      debugPrint(res.data['data'].toString());
       reqsCount.value = res.data['data']['finalCount'];
     } catch (e) {
       debugPrint(e.toString());
@@ -253,9 +255,6 @@ class HomeController extends GetxController with Versionk {
         0,
         (sum, item) => sum + (item['unReadCount'] as int? ?? 0),
       );
-
-      // Print total unread count
-      print("Total Unread Count: ${totUnreadMsgs.value}");
     } catch (e) {
       debugPrint("Error fetching chat list: ${e.toString()}");
     }

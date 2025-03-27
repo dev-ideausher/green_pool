@@ -10,7 +10,7 @@ import '../../../data/chat_arg.dart';
 import '../../../data/confirm_ride_by_rider_model.dart';
 import '../../../data/rider_send_request_model.dart';
 import '../../../services/dio/api_service.dart';
-import '../../../services/utils/date_utils.dart';
+import '../../../utils/date_utils.dart';
 import '../views/request_sent_bottom.dart';
 
 class RiderMyRideRequestController extends GetxController {
