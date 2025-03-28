@@ -76,16 +76,15 @@ class DriverTile extends StatelessWidget {
                             ),
                           ],
                         ).paddingOnly(bottom: 8.kh),
-                  const GreenPoolDivider().paddingOnly(bottom: 8.kh),
+                  const GreenPoolDivider(),
                   RouteWidget(
-                          needPickUp: false,
-                          origin: myRidesModelData.origin?.name ??
-                              LocaleKeys.app_pickup.tr,
-                          stop1: myRidesModelData.stops?[0]?.name ?? "",
-                          stop2: myRidesModelData.stops?[1]?.name ?? "",
-                          destination: myRidesModelData.destination?.name ??
-                              LocaleKeys.app_destination.tr)
-                      .paddingOnly(bottom: 8.kh),
+                      needPickUp: false,
+                      origin: myRidesModelData.origin?.name ??
+                          LocaleKeys.app_pickup.tr,
+                      stop1: myRidesModelData.stops?[0]?.name ?? "",
+                      stop2: myRidesModelData.stops?[1]?.name ?? "",
+                      destination: myRidesModelData.destination?.name ??
+                          LocaleKeys.app_destination.tr),
                   const GreenPoolDivider().paddingOnly(bottom: 16.kh),
                   myRidesModelData.isStarted == true
                       ? _viewDetailsBtn(controller)
