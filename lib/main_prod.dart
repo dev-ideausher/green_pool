@@ -13,6 +13,7 @@ import 'app/routes/app_pages.dart';
 import 'app/services/auth.dart';
 import 'app/services/colors.dart';
 import 'app/services/dependency_injection.dart';
+import 'app/services/push_notification_service.dart';
 import 'app/services/storage.dart';
 import 'app_environment.dart';
 import 'firebase_options.dart';
@@ -34,6 +35,8 @@ Future<void> main() async {
   await SystemChrome.setPreferredOrientations(
     [DeviceOrientation.portraitUp],
   );
+
+  PushNotificationService().setupInteractedMessage();
 
   FirebaseAnalytics analytics =
       FirebaseAnalytics.instance; // Initialize Firebase Analytics

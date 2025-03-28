@@ -11,6 +11,7 @@ import 'app/routes/app_pages.dart';
 import 'app/services/auth.dart';
 import 'app/services/colors.dart';
 import 'app/services/dependency_injection.dart';
+import 'app/services/push_notification_service.dart';
 import 'app/services/storage.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -25,6 +26,8 @@ Future<void> main() async {
   await SystemChrome.setPreferredOrientations(
     [DeviceOrientation.portraitUp],
   );
+
+  PushNotificationService().setupInteractedMessage();
 
   return runApp(GestureDetector(
     onTap: () => FocusManager.instance.primaryFocus?.unfocus(),

@@ -61,14 +61,12 @@ class HomeController extends GetxController with Versionk {
 
     try {
       if (storageService.isLoggedIn) {
-        //change this condition after one update because for riders last check will always imply c.v->1.0.11
-        // if (storageService.getUserName == "" ||
-        //     storageService.vehicleImageUrl == "") {
-        //   await userInfoAPI();
-        // }
-        await userInfoAPI();
+        //change this condition after one update because it will always imply c.v->1.0.11
+        if (storageService.getUserName != "" ||
+            storageService.vehicleImageUrl == "") {
+          await userInfoAPI();
+        }
         isPinkModeOn.value = storageService.isPinkMode;
-        await setupMessage();
         await onChangeLocation();
         await fetchCount();
         await handleNewUpdate();
@@ -156,16 +154,8 @@ class HomeController extends GetxController with Versionk {
     }
   }
 
-  setupMessage() async {
-    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-        FlutterLocalNotificationsPlugin();
-    const InitializationSettings initializationSettings =
-        InitializationSettings(
-            android: AndroidInitializationSettings('logo'),
-            iOS: DarwinInitializationSettings());
-    await flutterLocalNotificationsPlugin.initialize(initializationSettings);
-    PushNotificationService(flutterLocalNotificationsPlugin)
-        .setupInteractedMessage();
+  setupMessage() {
+    PushNotificationService().setupInteractedMessage();
   }
 
   Future<void> promptNotificationPermission() async {

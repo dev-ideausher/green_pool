@@ -18,68 +18,100 @@ import '../modules/my_rides_one_time/controllers/my_rides_one_time_controller.da
 import '../modules/wallet/controllers/wallet_controller.dart';
 import 'dio/api_service.dart';
 
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  debugPrint("Background Message Handler Working...");
+
+  try {
+    await Future.delayed(const Duration(seconds: 2));
+    PushNotificationService().saveNotification(message);
+  } catch (e) {
+    debugPrint("Firebase Messaging Background Handler Error: $e");
+  }
+}
+
+// class PushNotificationService {
+//   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+//   PushNotificationService(this.flutterLocalNotificationsPlugin);
 class PushNotificationService {
-  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
-
-  PushNotificationService(this.flutterLocalNotificationsPlugin);
-
   RemoteMessage? actionData;
+  final _firebaseMessaging = FirebaseMessaging.instance;
+  final _androidChannel = const AndroidNotificationChannel(
+    'high_importance_channel', // id
+    'High Importance Notifications', // title
+    description:
+        'This channel is used for important notifications.', // description
+    importance: Importance.max,
+  );
+  final _localNotifications = FlutterLocalNotificationsPlugin();
 
   Future<void> setupInteractedMessage() async {
+    if (!Get.find<GetStorageService>().isLoggedIn) {
+      debugPrint("User not logged in");
+      return;
+    }
     try {
-      await Permission.notification.isDenied.then((value) async {
-        if (value) {
-          await Permission.notification.request();
-        }
-      });
-      FirebaseMessaging.instance
-          .getInitialMessage()
-          .then((RemoteMessage? message) {
-        if (message != null) {
-          _handleNotificationClick(message);
-        }
-      });
-      FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-        _handleNotificationClick(message);
-      });
-      enableIOSNotifications();
-      await registerNotificationListeners();
+      NotificationSettings settings =
+          await _firebaseMessaging.requestPermission(
+        alert: true,
+        badge: true,
+        sound: true,
+        announcement: false,
+        carPlay: false,
+        criticalAlert: false,
+        provisional: false,
+      );
+
+      if (settings.authorizationStatus == AuthorizationStatus.authorized) {
+        debugPrint('✅ User granted permission');
+      } else if (settings.authorizationStatus ==
+          AuthorizationStatus.provisional) {
+        debugPrint('⚠️ User granted provisional permission');
+      } else {
+        debugPrint('❌ User declined or has not accepted permission');
+      }
+
+      // Check if denied and re-request using permission_handler
+      if (await Permission.notification.isDenied) {
+        await Permission.notification.request();
+      }
+
       await getFirebaseToken();
+      await initPushNotifications();
+      await initLocalNotifications();
     } catch (e) {
       debugPrint('Error in setupInteractedMessage: $e');
     }
   }
 
-  Future<void> registerNotificationListeners() async {
-    final AndroidNotificationChannel channel = androidNotificationChannel();
-
-    await flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>()
-        ?.createNotificationChannel(channel);
-    const AndroidInitializationSettings androidSettings =
-        AndroidInitializationSettings('logo');
-    const DarwinInitializationSettings iOSSettings =
-        DarwinInitializationSettings(
-            requestSoundPermission: true,
-            requestBadgePermission: true,
-            requestAlertPermission: true);
-    const InitializationSettings initSettings =
-        InitializationSettings(android: androidSettings, iOS: iOSSettings);
-    flutterLocalNotificationsPlugin.initialize(
-      initSettings,
-      onDidReceiveNotificationResponse: (NotificationResponse details) {
-        _handleNotificationClickPayload(
-            actionData?.data['notification_type'] ?? "");
-        debugPrint("NotificationResponse: $details");
-      },
+  Future initPushNotifications() async {
+    await FirebaseMessaging.instance
+        .setForegroundNotificationPresentationOptions(
+      alert: true,
+      badge: true,
+      sound: true,
     );
+
+    //handle when app is openend from terminated state
+    FirebaseMessaging.instance
+        .getInitialMessage()
+        .then((RemoteMessage? message) {
+      if (message != null) {
+        _handleNotificationClick(message);
+      }
+    });
+
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      _handleNotificationClick(message);
+    });
+
     try {
       FirebaseMessaging.onBackgroundMessage(
           _firebaseMessagingBackgroundHandler);
     } catch (e) {
-      debugPrint("onBackgroundMessage error: $e");
+      debugPrint("onBackgroundMessage ERROR: $e");
     }
+
+    //
     FirebaseMessaging.onMessage.listen((RemoteMessage? message) {
       if (message == null) return;
 
@@ -88,73 +120,46 @@ class PushNotificationService {
       final AndroidNotification? android = message.notification?.android;
 
       if (notification != null && android != null) {
-        flutterLocalNotificationsPlugin.show(
+        _localNotifications.show(
             notification.hashCode,
             notification.title,
             notification.body,
             NotificationDetails(
                 android: AndroidNotificationDetails(
-              channel.id,
-              channel.name,
-              channelDescription: channel.description,
+              _androidChannel.id,
+              _androidChannel.name,
+              channelDescription: _androidChannel.description,
               icon: "logo",
               color: Get.context!.theme.primaryColor,
             )),
             payload: message.data['notification_type'] ?? "");
-        saveNotification(message);
       }
+      saveNotification(message);
     });
   }
 
-  Future<void> enableIOSNotifications() async {
-    FirebaseMessaging messaging = FirebaseMessaging.instance;
-    NotificationSettings settings = await messaging.requestPermission(
-      alert: true,
-      announcement: false,
-      badge: true,
-      carPlay: false,
-      criticalAlert: false,
-      provisional: false,
-      sound: true,
+  Future initLocalNotifications() async {
+    const android = AndroidInitializationSettings('logo');
+    const iOS = DarwinInitializationSettings(
+        requestSoundPermission: true,
+        requestBadgePermission: true,
+        requestAlertPermission: true);
+
+    const settings = InitializationSettings(android: android, iOS: iOS);
+
+    await _localNotifications.initialize(
+      settings,
+      //when user taps on a local notification
+      onDidReceiveNotificationResponse: (NotificationResponse details) {
+        _handleNotificationClickPayload(
+            actionData?.data['notification_type'] ?? "");
+        debugPrint("NotificationResponse: $details");
+      },
     );
-    if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-      debugPrint('User granted permission');
-    } else if (settings.authorizationStatus ==
-        AuthorizationStatus.provisional) {
-      debugPrint('User granted provisional permission');
-    } else {
-      debugPrint('User declined or has not accepted permission');
-    }
-    await FirebaseMessaging.instance
-        .setForegroundNotificationPresentationOptions(
-      alert: true,
-      badge: true,
-      sound: true,
-    );
-  }
 
-  AndroidNotificationChannel androidNotificationChannel() =>
-      const AndroidNotificationChannel(
-        'high_importance_channel', // id
-        'High Importance Notifications', // title
-        description:
-            'This channel is used for important notifications.', // description
-        importance: Importance.max,
-      );
-
-  Future<void> _firebaseMessagingBackgroundHandler(
-      RemoteMessage message) async {
-    await Firebase.initializeApp();
-    debugPrint("Background Message Handler Working...");
-
-    try {
-      actionData = message;
-      await Future.delayed(const Duration(seconds: 2));
-      saveNotification(message);
-      _handleNotificationClickPayload(message.data['notification_type']);
-    } catch (e) {
-      debugPrint("_firebaseMessagingBackgroundHandler error: $e");
-    }
+    final platform = _localNotifications.resolvePlatformSpecificImplementation<
+        AndroidFlutterLocalNotificationsPlugin>();
+    await platform?.createNotificationChannel(_androidChannel);
   }
 
   void saveNotification(RemoteMessage message) {
