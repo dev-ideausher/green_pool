@@ -19,6 +19,13 @@ class RiderMyRidesConfirmDetailsController extends GetxController {
     riderConfirmRequestModel = Get.arguments;
   }
 
+  void toPrevRides({required String driverName, required String driverId}) {
+    Get.toNamed(Routes.PREVIOUS_RIDES, arguments: {
+      "driverName": driverName,
+      "driverId": driverId
+    });
+  }
+
   rejectDriversRequestAPI() async {
     try {
       final response = await APIManager.rejectDriversRequest(

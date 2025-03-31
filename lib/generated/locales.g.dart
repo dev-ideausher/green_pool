@@ -1083,7 +1083,7 @@ class Locales {
     'app_ridesCompleted': 'Rides Completed',
     'app_ridesCancelled': 'Rides Cancelled',
     'app_completed': 'Completed',
-    'app_cancelled': 'cancelled',
+    'app_cancelled': 'Cancelled',
     'app_language_pref': 'Language Preferences',
     'app_language': 'Language',
     'app_defaultDate': '2024-12-31T00:00:00.000Z',

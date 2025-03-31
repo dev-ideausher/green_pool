@@ -18,6 +18,11 @@ class RiderMyRidesSendDetailsController extends GetxController {
     riderRideDetails = Get.arguments["riderRideData"];
   }
 
+  void toPrevRides({required String driverName, required String driverId}) {
+    Get.toNamed(Routes.PREVIOUS_RIDES,
+        arguments: {"driverName": driverName, "driverId": driverId});
+  }
+
   openMessage(RiderSendRequestModelData data) async {
     try {
       final res = await APIManager.postChatRoomId(
@@ -38,7 +43,8 @@ class RiderMyRidesSendDetailsController extends GetxController {
               riderRideId: riderRideDetails.Id,
               origin: data.origin?.name?.split(',').first ?? "City",
               destination: data.destination?.name?.split(',').first ?? "City",
-              date: DateTimeUtils.formatDate(DateTime.parse(data.date ?? LocaleKeys.app_defaultDate.tr))));
+              date: DateTimeUtils.formatDate(
+                  DateTime.parse(data.date ?? LocaleKeys.app_defaultDate.tr))));
     } catch (e) {
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
@@ -51,7 +57,8 @@ class RiderMyRidesSendDetailsController extends GetxController {
               riderRideId: riderRideDetails.Id,
               origin: data.origin?.name?.split(',').first ?? "City",
               destination: data.destination?.name?.split(',').first ?? "City",
-              date: DateTimeUtils.formatDate(DateTime.parse(data.date ?? LocaleKeys.app_defaultDate.tr))));
+              date: DateTimeUtils.formatDate(
+                  DateTime.parse(data.date ?? LocaleKeys.app_defaultDate.tr))));
     }
   }
 

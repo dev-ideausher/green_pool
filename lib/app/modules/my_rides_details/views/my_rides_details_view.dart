@@ -29,16 +29,19 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
       appBar: GreenPoolAppBar(
         title: Text(LocaleKeys.app_rideDetails.tr),
         actions: [
-          Visibility(
-            visible: (controller.myRidesModelData.value.driverBookingDetails
-                        ?.riderBookingDetails?.length ??
-                    0) ==
-                0,
-            child: IconButton(
-              icon: const Icon(Icons.edit),
-              color: ColorUtil.kBlack01,
-              onPressed: () => controller.toEditRide(),
-            ).paddingOnly(right: 8.kw, bottom: 2.kh),
+          Obx(
+            () => Visibility(
+              visible: !controller.isLoad.value &&
+                  (controller.myRidesModelData.value.driverBookingDetails
+                              ?.riderBookingDetails?.length ??
+                          0) ==
+                      0,
+              child: IconButton(
+                icon: const Icon(Icons.edit),
+                color: ColorUtil.kBlack01,
+                onPressed: () => controller.toEditRide(),
+              ).paddingOnly(right: 8.kw, bottom: 2.kh),
+            ),
           )
         ],
       ),

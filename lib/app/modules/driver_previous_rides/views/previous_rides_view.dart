@@ -32,8 +32,7 @@ class PreviousRidesView extends GetView<PreviousRidesController> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      controller.driverData.value.fullName ??
-                          LocaleKeys.app_loading.tr,
+                      controller.driverName.value,
                       style: TextStyleUtil.k20Heading600(),
                     ),
                     24.kheightBox,
@@ -190,7 +189,7 @@ class Tabs extends StatelessWidget {
               icon,
               4.kwidthBox,
               Text(
-                percentage,
+                "$percentage %",
                 style: TextStyleUtil.k14Semibold(),
               )
             ],

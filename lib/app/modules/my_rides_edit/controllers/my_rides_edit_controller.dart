@@ -382,6 +382,7 @@ class MyRidesEditController extends GetxController {
   }
 
   void saveChanges() async {
+    final data = editData.value.driverBookingDetails;
     final combinedDateTime =
         "${selectedDate.text.toString().split("T").first}T${selectedTime.text}";
 
@@ -396,18 +397,22 @@ class MyRidesEditController extends GetxController {
       "time": time,
       "seatAvailable": seatCount.value,
       "origin": {"originDestinationFair": orToDestPrice.value.text},
-      "stops": [
-        {
-          "originToStopFair": originToStop1Price.value.text,
-          "stopToStopFair": stop1ToStop2Price.value.text,
-          "stopTodestinationFair": stop1ToDestinationPrice.value.text
-        },
-        {
-          "originToStopFair": originToStop2Price.value.text,
-          "stopToStopFair": stop1ToStop2Price.value.text,
-          "stopTodestinationFair": stop2toDestinationPrice.value.text
-        }
-      ],
+      if (data?.stops?.first?.name?.isNotEmpty ?? false)
+        "stops": [
+          {
+            "originToStopFair": int.tryParse(originToStop1Price.value.text),
+            "stopToStopFair": int.tryParse(stop1ToStop2Price.value.text),
+            "stopTodestinationFair":
+                int.tryParse(stop1ToDestinationPrice.value.text)
+          },
+          if (data?.stops?[1]?.name?.isNotEmpty ?? false)
+            {
+              "originToStopFair": int.tryParse(originToStop2Price.value.text),
+              "stopToStopFair": int.tryParse(stop1ToStop2Price.value.text),
+              "stopTodestinationFair":
+                  int.tryParse(stop2toDestinationPrice.value.text)
+            }
+        ],
       "preferences": {
         "luggageType": luggageWeight.value,
         "other": {

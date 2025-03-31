@@ -29,6 +29,21 @@ class RiderMyRidesSendDetailsView
     return Scaffold(
       appBar: GreenPoolAppBar(
         title: Text(LocaleKeys.app_driverDetails.tr),
+        actions: [
+          GestureDetector(
+            onTap: () {
+              controller.toPrevRides(
+                  driverName: controller.riderSendRequestModelData.driverDetails
+                          ?.firstOrNull?.fullName ??
+                      "",
+                  driverId: controller.riderSendRequestModelData.driverDetails
+                          ?.firstOrNull?.Id ??
+                      "");
+            },
+            child: Icon(Icons.history, color: ColorUtil.kBlack01, size: 24.kh)
+                .paddingOnly(right: 8.kw),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -148,12 +163,10 @@ class RiderMyRidesSendDetailsView
                 OriginToDestination(
                   origin:
                       "${controller.riderSendRequestModelData.origin?.name}",
-                  stop1:
-                      controller.riderSendRequestModelData.stops?[0]?.name ??
-                          "",
-                  stop2:
-                      controller.riderSendRequestModelData.stops?[1]?.name ??
-                          "",
+                  stop1: controller.riderSendRequestModelData.stops?[0]?.name ??
+                      "",
+                  stop2: controller.riderSendRequestModelData.stops?[1]?.name ??
+                      "",
                   destination:
                       "${controller.riderSendRequestModelData.destination?.name}",
                   needPickupText: true,

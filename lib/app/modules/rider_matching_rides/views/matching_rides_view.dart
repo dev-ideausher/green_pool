@@ -206,7 +206,20 @@ class MatchingRidesView extends GetView<MatchingRidesController> {
                                                           children: [
                                                             Text(
                                                               // 'Sam Alexander',
-                                                              "${controller.matchingRidesModel.value.data![index]?.driverDetails![0]?.fullName}",
+                                                              controller
+                                                                      .matchingRidesModel
+                                                                      .value
+                                                                      .data?[
+                                                                          index]
+                                                                      ?.driverDetails?[
+                                                                          0]
+                                                                      ?.fullName
+                                                                      ?.split(
+                                                                          " ")
+                                                                      .first ??
+                                                                  LocaleKeys
+                                                                      .app_loading
+                                                                      .tr,
                                                               style:
                                                                   TextStyleUtil
                                                                       .k16Bold(),

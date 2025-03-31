@@ -125,7 +125,10 @@ class MessagesView extends GetView<MessagesController> {
                                       color: isPinkModeOn
                                           ? ColorUtil.kPrimary5PinkMode
                                           : ColorUtil.kSecondary07),
-                              title: message?.reciver?.fullName ?? "User",
+                              title: message?.reciver?.fullName
+                                      ?.split(" ")
+                                      .first ??
+                                  "User",
                               paymentStatus:
                                   message?.paymentStatus ?? "Inquiry",
                               titleColor: message?.paymentStatus == "Inquiry"

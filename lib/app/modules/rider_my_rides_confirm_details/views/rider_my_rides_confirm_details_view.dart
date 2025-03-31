@@ -28,6 +28,25 @@ class RiderMyRidesConfirmDetailsView
     return Scaffold(
       appBar: GreenPoolAppBar(
         title: Text(LocaleKeys.app_driverDetails.tr),
+        actions: [
+          GestureDetector(
+            onTap: () {
+              controller.toPrevRides(
+                  driverName: controller
+                          .riderConfirmRequestModel
+                          .driverRideDetails
+                          ?.driverDetails
+                          ?.firstOrNull
+                          ?.fullName ??
+                      "",
+                  driverId: controller.riderConfirmRequestModel
+                          .driverRideDetails?.driverId ??
+                      "");
+            },
+            child: Icon(Icons.history, color: ColorUtil.kBlack01, size: 24.kh)
+                .paddingOnly(right: 8.kw),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(

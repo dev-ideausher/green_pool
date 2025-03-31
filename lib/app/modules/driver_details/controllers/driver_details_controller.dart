@@ -172,6 +172,9 @@ class DriverDetailsController extends GetxController {
   }
 
   void toPrevRides(MatchingRidesModelDataDriverDetails? driverDetails) {
-    Get.toNamed(Routes.PREVIOUS_RIDES, arguments: driverDetails);
+    Get.toNamed(Routes.PREVIOUS_RIDES, arguments: {
+      "driverName": driverDetails?.fullName,
+      "driverId": driverDetails?.Id
+    });
   }
 }
