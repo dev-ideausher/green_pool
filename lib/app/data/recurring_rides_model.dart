@@ -25,7 +25,8 @@ class RecurringRidesModelDataRidesDetailsRidersDetailsNotificationPreferences {
     this.transactions,
     this.offers,
   });
-  RecurringRidesModelDataRidesDetailsRidersDetailsNotificationPreferences.fromJson(Map<String, dynamic> json) {
+  RecurringRidesModelDataRidesDetailsRidersDetailsNotificationPreferences.fromJson(
+      Map<String, dynamic> json) {
     trip = json['trip'];
     alerts = json['alerts'];
     payments = json['payments'];
@@ -61,7 +62,8 @@ class RecurringRidesModelDataRidesDetailsRidersDetailsRideCancellationDetailsSus
     this.dateFrom,
     this.dateTo,
   });
-  RecurringRidesModelDataRidesDetailsRidersDetailsRideCancellationDetailsSuspensionDetails.fromJson(Map<String, dynamic> json) {
+  RecurringRidesModelDataRidesDetailsRidersDetailsRideCancellationDetailsSuspensionDetails.fromJson(
+      Map<String, dynamic> json) {
     cancelPolicy = json['cancelPolicy']?.toString();
     dateFrom = json['dateFrom']?.toString();
     dateTo = json['dateTo']?.toString();
@@ -90,17 +92,22 @@ class RecurringRidesModelDataRidesDetailsRidersDetailsRideCancellationDetails {
 
   int? count;
   String? cancellationDate;
-  RecurringRidesModelDataRidesDetailsRidersDetailsRideCancellationDetailsSuspensionDetails? suspensionDetails;
+  RecurringRidesModelDataRidesDetailsRidersDetailsRideCancellationDetailsSuspensionDetails?
+      suspensionDetails;
 
   RecurringRidesModelDataRidesDetailsRidersDetailsRideCancellationDetails({
     this.count,
     this.cancellationDate,
     this.suspensionDetails,
   });
-  RecurringRidesModelDataRidesDetailsRidersDetailsRideCancellationDetails.fromJson(Map<String, dynamic> json) {
+  RecurringRidesModelDataRidesDetailsRidersDetailsRideCancellationDetails.fromJson(
+      Map<String, dynamic> json) {
     count = json['count']?.toInt();
     cancellationDate = json['cancellationDate']?.toString();
-    suspensionDetails = (json['suspensionDetails'] != null) ? RecurringRidesModelDataRidesDetailsRidersDetailsRideCancellationDetailsSuspensionDetails.fromJson(json['suspensionDetails']) : null;
+    suspensionDetails = (json['suspensionDetails'] != null)
+        ? RecurringRidesModelDataRidesDetailsRidersDetailsRideCancellationDetailsSuspensionDetails
+            .fromJson(json['suspensionDetails'])
+        : null;
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -131,7 +138,8 @@ class RecurringRidesModelDataRidesDetailsRidersDetailsIdPic {
     this.url,
     this.Id,
   });
-  RecurringRidesModelDataRidesDetailsRidersDetailsIdPic.fromJson(Map<String, dynamic> json) {
+  RecurringRidesModelDataRidesDetailsRidersDetailsIdPic.fromJson(
+      Map<String, dynamic> json) {
     key = json['key']?.toString();
     url = json['url']?.toString();
     Id = json['_id']?.toString();
@@ -160,7 +168,8 @@ class RecurringRidesModelDataRidesDetailsRidersDetailsProfilePic {
     this.key,
     this.url,
   });
-  RecurringRidesModelDataRidesDetailsRidersDetailsProfilePic.fromJson(Map<String, dynamic> json) {
+  RecurringRidesModelDataRidesDetailsRidersDetailsProfilePic.fromJson(
+      Map<String, dynamic> json) {
     key = json['key']?.toString();
     url = json['url']?.toString();
   }
@@ -244,13 +253,15 @@ class RecurringRidesModelDataRidesDetailsRidersDetails {
   bool? profileStatus;
   bool? vehicleStatus;
   String? status;
-  RecurringRidesModelDataRidesDetailsRidersDetailsRideCancellationDetails? rideCancellationDetails;
+  RecurringRidesModelDataRidesDetailsRidersDetailsRideCancellationDetails?
+      rideCancellationDetails;
   int? wallet;
   String? connectedAccountId;
   int? rating;
   int? totalRides;
   bool? isRecurringTripEnabled;
-  RecurringRidesModelDataRidesDetailsRidersDetailsNotificationPreferences? notificationPreferences;
+  RecurringRidesModelDataRidesDetailsRidersDetailsNotificationPreferences?
+      notificationPreferences;
   String? firebaseUid;
   String? firebaseSignInProvider;
   String? createdAt;
@@ -286,7 +297,8 @@ class RecurringRidesModelDataRidesDetailsRidersDetails {
     this.createdAt,
     this.updatedAt,
   });
-  RecurringRidesModelDataRidesDetailsRidersDetails.fromJson(Map<String, dynamic> json) {
+  RecurringRidesModelDataRidesDetailsRidersDetails.fromJson(
+      Map<String, dynamic> json) {
     Id = json['_id']?.toString();
     isRegister = json['isRegister'];
     role = json['role']?.toString();
@@ -295,8 +307,14 @@ class RecurringRidesModelDataRidesDetailsRidersDetails {
     phone = json['phone']?.toString();
     email = json['email']?.toString();
     city = json['city']?.toString();
-    profilePic = (json['profilePic'] != null) ? RecurringRidesModelDataRidesDetailsRidersDetailsProfilePic.fromJson(json['profilePic']) : null;
-    idPic = (json['idPic'] != null) ? RecurringRidesModelDataRidesDetailsRidersDetailsIdPic.fromJson(json['idPic']) : null;
+    profilePic = (json['profilePic'] != null)
+        ? RecurringRidesModelDataRidesDetailsRidersDetailsProfilePic.fromJson(
+            json['profilePic'])
+        : null;
+    idPic = (json['idPic'] != null)
+        ? RecurringRidesModelDataRidesDetailsRidersDetailsIdPic.fromJson(
+            json['idPic'])
+        : null;
     dob = json['dob']?.toString();
     gender = json['gender']?.toString();
     isDriver = json['isDriver'];
@@ -304,13 +322,19 @@ class RecurringRidesModelDataRidesDetailsRidersDetails {
     profileStatus = json['profileStatus'];
     vehicleStatus = json['vehicleStatus'];
     status = json['status']?.toString();
-    rideCancellationDetails = (json['rideCancellationDetails'] != null) ? RecurringRidesModelDataRidesDetailsRidersDetailsRideCancellationDetails.fromJson(json['rideCancellationDetails']) : null;
+    rideCancellationDetails = (json['rideCancellationDetails'] != null)
+        ? RecurringRidesModelDataRidesDetailsRidersDetailsRideCancellationDetails
+            .fromJson(json['rideCancellationDetails'])
+        : null;
     wallet = json['wallet']?.toInt();
     connectedAccountId = json['connected_account_id']?.toString();
     rating = json['rating']?.toInt();
     totalRides = json['totalRides']?.toInt();
     isRecurringTripEnabled = json['isRecurringTripEnabled'];
-    notificationPreferences = (json['notificationPreferences'] != null) ? RecurringRidesModelDataRidesDetailsRidersDetailsNotificationPreferences.fromJson(json['notificationPreferences']) : null;
+    notificationPreferences = (json['notificationPreferences'] != null)
+        ? RecurringRidesModelDataRidesDetailsRidersDetailsNotificationPreferences
+            .fromJson(json['notificationPreferences'])
+        : null;
     firebaseUid = json['firebaseUid']?.toString();
     firebaseSignInProvider = json['firebaseSignInProvider']?.toString();
     createdAt = json['createdAt']?.toString();
@@ -366,6 +390,7 @@ class RecurringRidesModelDataRidesDetails {
   "day": "Sunday",
   "totalSeatAvailable": 4,
   "seatAvailable": 4,
+  "totalRequests": 1,
   "ridersDetails": [
     {
       "_id": "66a24c9cccdad87a58c6428d",
@@ -427,6 +452,7 @@ class RecurringRidesModelDataRidesDetails {
   String? day;
   int? totalSeatAvailable;
   int? seatAvailable;
+  int? totalRequests;
   List<RecurringRidesModelDataRidesDetailsRidersDetails?>? ridersDetails;
 
   RecurringRidesModelDataRidesDetails({
@@ -435,6 +461,7 @@ class RecurringRidesModelDataRidesDetails {
     this.day,
     this.totalSeatAvailable,
     this.seatAvailable,
+    this.totalRequests,
     this.ridersDetails,
   });
   RecurringRidesModelDataRidesDetails.fromJson(Map<String, dynamic> json) {
@@ -443,13 +470,14 @@ class RecurringRidesModelDataRidesDetails {
     day = json['day']?.toString();
     totalSeatAvailable = json['totalSeatAvailable']?.toInt();
     seatAvailable = json['seatAvailable']?.toInt();
-  if (json['ridersDetails'] != null) {
-  final v = json['ridersDetails'];
-  final arr0 = <RecurringRidesModelDataRidesDetailsRidersDetails>[];
-  v.forEach((v) {
-  arr0.add(RecurringRidesModelDataRidesDetailsRidersDetails.fromJson(v));
-  });
-    ridersDetails = arr0;
+    totalRequests = json['totalRequests']?.toInt();
+    if (json['ridersDetails'] != null) {
+      final v = json['ridersDetails'];
+      final arr0 = <RecurringRidesModelDataRidesDetailsRidersDetails>[];
+      v.forEach((v) {
+        arr0.add(RecurringRidesModelDataRidesDetailsRidersDetails.fromJson(v));
+      });
+      ridersDetails = arr0;
     }
   }
   Map<String, dynamic> toJson() {
@@ -459,12 +487,13 @@ class RecurringRidesModelDataRidesDetails {
     data['day'] = day;
     data['totalSeatAvailable'] = totalSeatAvailable;
     data['seatAvailable'] = seatAvailable;
+    data['totalRequests'] = totalRequests;
     if (ridersDetails != null) {
       final v = ridersDetails;
       final arr0 = [];
-  v!.forEach((v) {
-  arr0.add(v!.toJson());
-  });
+      v!.forEach((v) {
+        arr0.add(v!.toJson());
+      });
       data['ridersDetails'] = arr0;
     }
     return data;
@@ -554,7 +583,9 @@ class RecurringRidesModelDataPreferences {
   });
   RecurringRidesModelDataPreferences.fromJson(Map<String, dynamic> json) {
     luggageType = json['luggageType']?.toString();
-    other = (json['other'] != null) ? RecurringRidesModelDataPreferencesOther.fromJson(json['other']) : null;
+    other = (json['other'] != null)
+        ? RecurringRidesModelDataPreferencesOther.fromJson(json['other'])
+        : null;
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -611,13 +642,13 @@ class RecurringRidesModelDataDestination {
   RecurringRidesModelDataDestination.fromJson(Map<String, dynamic> json) {
     name = json['name']?.toString();
     type = json['type']?.toString();
-  if (json['coordinates'] != null) {
-  final v = json['coordinates'];
-  final arr0 = <double>[];
-  v.forEach((v) {
-  arr0.add(v.toDouble());
-  });
-    coordinates = arr0;
+    if (json['coordinates'] != null) {
+      final v = json['coordinates'];
+      final arr0 = <double>[];
+      v.forEach((v) {
+        arr0.add(v.toDouble());
+      });
+      coordinates = arr0;
     }
   }
   Map<String, dynamic> toJson() {
@@ -627,9 +658,9 @@ class RecurringRidesModelDataDestination {
     if (coordinates != null) {
       final v = coordinates;
       final arr0 = [];
-  v!.forEach((v) {
-  arr0.add(v);
-  });
+      v!.forEach((v) {
+        arr0.add(v);
+      });
       data['coordinates'] = arr0;
     }
     return data;
@@ -665,13 +696,13 @@ class RecurringRidesModelDataOrigin {
   RecurringRidesModelDataOrigin.fromJson(Map<String, dynamic> json) {
     name = json['name']?.toString();
     type = json['type']?.toString();
-  if (json['coordinates'] != null) {
-  final v = json['coordinates'];
-  final arr0 = <double>[];
-  v.forEach((v) {
-  arr0.add(v.toDouble());
-  });
-    coordinates = arr0;
+    if (json['coordinates'] != null) {
+      final v = json['coordinates'];
+      final arr0 = <double>[];
+      v.forEach((v) {
+        arr0.add(v.toDouble());
+      });
+      coordinates = arr0;
     }
     originDestinationFair = json['originDestinationFair']?.toString();
     time = json['time']?.toString();
@@ -683,9 +714,9 @@ class RecurringRidesModelDataOrigin {
     if (coordinates != null) {
       final v = coordinates;
       final arr0 = [];
-  v!.forEach((v) {
-  arr0.add(v);
-  });
+      v!.forEach((v) {
+        arr0.add(v);
+      });
       data['coordinates'] = arr0;
     }
     data['originDestinationFair'] = originDestinationFair;
@@ -740,6 +771,7 @@ class RecurringRidesModelData {
       "day": "Sunday",
       "totalSeatAvailable": 4,
       "seatAvailable": 4,
+      "totalRequests": 1,
       "ridersDetails": [
         {
           "_id": "66a24c9cccdad87a58c6428d",
@@ -821,20 +853,28 @@ class RecurringRidesModelData {
   });
   RecurringRidesModelData.fromJson(Map<String, dynamic> json) {
     Id = json['_id']?.toString();
-    origin = (json['origin'] != null) ? RecurringRidesModelDataOrigin.fromJson(json['origin']) : null;
-    destination = (json['destination'] != null) ? RecurringRidesModelDataDestination.fromJson(json['destination']) : null;
-    recurringTrip = (json['recurringTrip'] != null) ? RecurringRidesModelDataRecurringTrip.fromJson(json['recurringTrip']) : null;
+    origin = (json['origin'] != null)
+        ? RecurringRidesModelDataOrigin.fromJson(json['origin'])
+        : null;
+    destination = (json['destination'] != null)
+        ? RecurringRidesModelDataDestination.fromJson(json['destination'])
+        : null;
+    recurringTrip = (json['recurringTrip'] != null)
+        ? RecurringRidesModelDataRecurringTrip.fromJson(json['recurringTrip'])
+        : null;
     date = json['date']?.toString();
     time = json['time']?.toString();
-    preferences = (json['preferences'] != null) ? RecurringRidesModelDataPreferences.fromJson(json['preferences']) : null;
+    preferences = (json['preferences'] != null)
+        ? RecurringRidesModelDataPreferences.fromJson(json['preferences'])
+        : null;
     description = json['description']?.toString();
-  if (json['ridesDetails'] != null) {
-  final v = json['ridesDetails'];
-  final arr0 = <RecurringRidesModelDataRidesDetails>[];
-  v.forEach((v) {
-  arr0.add(RecurringRidesModelDataRidesDetails.fromJson(v));
-  });
-    ridesDetails = arr0;
+    if (json['ridesDetails'] != null) {
+      final v = json['ridesDetails'];
+      final arr0 = <RecurringRidesModelDataRidesDetails>[];
+      v.forEach((v) {
+        arr0.add(RecurringRidesModelDataRidesDetails.fromJson(v));
+      });
+      ridesDetails = arr0;
     }
   }
   Map<String, dynamic> toJson() {
@@ -858,9 +898,9 @@ class RecurringRidesModelData {
     if (ridesDetails != null) {
       final v = ridesDetails;
       final arr0 = [];
-  v!.forEach((v) {
-  arr0.add(v!.toJson());
-  });
+      v!.forEach((v) {
+        arr0.add(v!.toJson());
+      });
       data['ridesDetails'] = arr0;
     }
     return data;
@@ -916,6 +956,7 @@ class RecurringRidesModel {
           "day": "Sunday",
           "totalSeatAvailable": 4,
           "seatAvailable": 4,
+          "totalRequests": 1,
           "ridersDetails": [
             {
               "_id": "66a24c9cccdad87a58c6428d",
@@ -988,13 +1029,13 @@ class RecurringRidesModel {
   });
   RecurringRidesModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
-  if (json['data'] != null) {
-  final v = json['data'];
-  final arr0 = <RecurringRidesModelData>[];
-  v.forEach((v) {
-  arr0.add(RecurringRidesModelData.fromJson(v));
-  });
-    this.data = arr0;
+    if (json['data'] != null) {
+      final v = json['data'];
+      final arr0 = <RecurringRidesModelData>[];
+      v.forEach((v) {
+        arr0.add(RecurringRidesModelData.fromJson(v));
+      });
+      this.data = arr0;
     }
     message = json['message']?.toString();
   }
@@ -1004,9 +1045,9 @@ class RecurringRidesModel {
     if (this.data != null) {
       final v = this.data;
       final arr0 = [];
-  v!.forEach((v) {
-  arr0.add(v!.toJson());
-  });
+      v!.forEach((v) {
+        arr0.add(v!.toJson());
+      });
       data['data'] = arr0;
     }
     data['message'] = message;

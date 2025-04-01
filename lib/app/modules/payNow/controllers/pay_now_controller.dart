@@ -103,7 +103,7 @@ class PayNowController extends GetxController {
       stop2 = payNowDetail.value.data?.firstOrNull?.stops?.last?.name ?? "";
       seatsBooked =
           payNowDetail.value.data?.firstOrNull?.seatsRequired.toString() ?? "";
-      price = (payNowDetail.value.data?.firstOrNull?.seatsRequired ?? 0) *
+      price = (payNowDetail.value.data?.firstOrNull?.seatsRequired ?? 1) *
           (int.parse(payNowDetail
                   .value.data?.firstOrNull?.origin?.originDestinationFair ??
               "1"));

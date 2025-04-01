@@ -209,7 +209,7 @@ class APIManager {
 
   static Future<Response> getUnreadCount() async =>
       //count of requests pending in my rides
-      await DioClient(Dio(), showSnakbar: true, isOverlayLoader: false)
+      await DioClient(Dio(), showSnakbar: false, isOverlayLoader: false)
           .get(Endpoints.unreadCount);
 
   static Future<Response> getCompanyDetails() async =>

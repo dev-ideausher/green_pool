@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/common_image_view.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
-import 'package:green_pool/app/components/origin_to_destination.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
@@ -16,6 +15,7 @@ import '../../../data/ride_detail_id.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
 import '../../../services/text_style_util.dart';
+import '../../home/controllers/home_controller.dart';
 import '../../post_ride_step_one/views/amenities.dart';
 import '../controllers/my_rides_recurring_details_controller.dart';
 
@@ -53,7 +53,6 @@ class MyRidesRecurringDetailsView
                           destination:
                               "${controller.recurringModel.value.data?.driverRideDetails?[0]?.destination?.name}",
                         ).paddingOnly(bottom: 8.kh),
-                        //bottom line
                         const GreenPoolDivider(),
                       ],
                     ).paddingOnly(bottom: 16.kh),
@@ -206,7 +205,7 @@ class MyRidesRecurringDetailsView
                     SizedBox(
                       height: controller.recurringModel.value.data!
                               .recurringRides!.length *
-                          112.kh,
+                          116.kh,
                       child: ListView.builder(
                           itemCount: controller.recurringModel.value.data
                               ?.recurringRides?.length,
@@ -220,10 +219,28 @@ class MyRidesRecurringDetailsView
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(
-                                      "${controller.getDateFormat(recurringRides?.date ?? "")}",
-                                      style: TextStyleUtil.k14Semibold(
-                                          color: ColorUtil.kBlack02),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "${controller.getDateFormat(recurringRides?.date ?? "")}",
+                                          style: TextStyleUtil.k14Semibold(
+                                              color: ColorUtil.kBlack02),
+                                        ),
+                                        2.kwidthBox,
+                                        Visibility(
+                                          visible:
+                                              (recurringRides?.totalRequests ??
+                                                      0) >
+                                                  0,
+                                          child: _requestCount(
+                                              Get.find<HomeController>()
+                                                  .isPinkModeOn
+                                                  .value,
+                                              recurringRides?.totalRequests
+                                                      ?.toString() ??
+                                                  ""),
+                                        )
+                                      ],
                                     ),
                                     SizedBox(
                                       height: 24.kh,
@@ -254,7 +271,7 @@ class MyRidesRecurringDetailsView
                                                         )
                                                       : CommonImageView(
                                                           url:
-                                                              "${recurringRides?.riders?[index1 - (recurringRides?.seatAvailable ?? 0)]?.profilePic?.url}",
+                                                              "${recurringRides?.riders?[index1 - (recurringRides.seatAvailable ?? 0)]?.profilePic?.url}",
                                                         )),
                                             ),
                                           ).paddingOnly(right: 4.kw);
@@ -284,9 +301,25 @@ class MyRidesRecurringDetailsView
                             ).paddingOnly(bottom: 24.kh);
                           }),
                     ),
+                    24.kheightBox,
                   ],
                 ).paddingSymmetric(horizontal: 16.kw),
               ),
+      ),
+    );
+  }
+
+  Container _requestCount(bool isPinkModeOn, String pendingReq) {
+    return Container(
+      padding: EdgeInsets.all(6.kh),
+      decoration: BoxDecoration(
+        color:
+            isPinkModeOn ? ColorUtil.kPrimary3PinkMode : ColorUtil.kPrimary01,
+        shape: BoxShape.circle,
+      ),
+      child: Text(
+        pendingReq,
+        style: TextStyleUtil.k12Regular(),
       ),
     );
   }

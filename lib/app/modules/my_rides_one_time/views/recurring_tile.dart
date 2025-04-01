@@ -110,7 +110,7 @@ class RecurringTile extends StatelessWidget {
                 style: TextStyleUtil.k14Bold(),
               ).paddingOnly(bottom: 16.kh),
               SizedBox(
-                height: (recurringResp?.ridesDetails?.length ?? 0) * 36.kh,
+                height: (recurringResp?.ridesDetails?.length ?? 0) * 40.kh,
                 child: ListView.builder(
                     itemCount: recurringResp?.ridesDetails?.length,
                     physics: const NeverScrollableScrollPhysics(),
@@ -118,10 +118,29 @@ class RecurringTile extends StatelessWidget {
                       return Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            "${recurringResp?.ridesDetails?[index1]?.day}",
-                            style: TextStyleUtil.k14Semibold(
-                                color: ColorUtil.kBlack02),
+                          Row(
+                            children: [
+                              Text(
+                                "${recurringResp?.ridesDetails?[index1]?.day}",
+                                style: TextStyleUtil.k14Semibold(
+                                    color: ColorUtil.kBlack02),
+                              ),
+                              2.kwidthBox,
+                              Visibility(
+                                visible: (recurringResp?.ridesDetails?[index1]
+                                            ?.totalRequests ??
+                                        0) >
+                                    0,
+                                child: _requestCount(
+                                    Get.find<HomeController>()
+                                        .isPinkModeOn
+                                        .value,
+                                    recurringResp?.ridesDetails?[index1]
+                                            ?.totalRequests
+                                            ?.toString() ??
+                                        ""),
+                              )
+                            ],
                           ),
                           SizedBox(
                             height: 24.kh,
@@ -170,5 +189,20 @@ class RecurringTile extends StatelessWidget {
         ).paddingOnly(top: 12.kh, bottom: 12.kh),
       );
     });
+  }
+
+  Container _requestCount(bool isPinkModeOn, String pendingReq) {
+    return Container(
+      padding: EdgeInsets.all(6.kh),
+      decoration: BoxDecoration(
+        color:
+            isPinkModeOn ? ColorUtil.kPrimary3PinkMode : ColorUtil.kPrimary01,
+        shape: BoxShape.circle,
+      ),
+      child: Text(
+        pendingReq,
+        style: TextStyleUtil.k12Regular(),
+      ),
+    );
   }
 }
