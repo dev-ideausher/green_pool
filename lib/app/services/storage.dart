@@ -39,6 +39,7 @@ class GetStorageService extends GetxService {
       'hasTappedAllowNotification';
   static const String _appLocale = 'appLocale';
   static const String _locationCache = 'locationCache';
+  static const String _findLocationCache = 'findLocationCache';
   static const String _cancelCounts = 'cancelCounts';
   static const String _cancellationDate = 'cancellationDate';
   static const String _vehicleStatus = 'vehicleStatus';
@@ -202,6 +203,19 @@ class GetStorageService extends GetxService {
     Get.updateLocale(locale);
   }
 
+  //save prev ride data
+  PostRideModel? getPostRideData() {
+    final data = _runData.read(_prevRideData);
+    if (data != null) {
+      return PostRideModel.fromJson(data);
+    }
+    return null;
+  }
+
+  void savePrevRideData(Map<String, dynamic> postRideDataJson) {
+    _runData.write(_prevRideData, postRideDataJson);
+  }
+
   // Methods to manage locationCache
   Map<String, List<dynamic>> get locationCache {
     final jsonString = _runData.read(_locationCache) ?? '{}';
@@ -221,19 +235,6 @@ class GetStorageService extends GetxService {
     locationCache = cache; // Update the stored cache
   }
 
-  //save prev ride data
-  PostRideModel? getPostRideData() {
-    final data = _runData.read(_prevRideData);
-    if (data != null) {
-      return PostRideModel.fromJson(data);
-    }
-    return null;
-  }
-
-  void savePrevRideData(Map<String, dynamic> postRideDataJson) {
-    _runData.write(_prevRideData, postRideDataJson);
-  }
-
   // to save origin, destination, addStop1, addStop2 and display while posting ride
   // Get location data by type
   String? getLocationByType(String locationType) {
@@ -243,6 +244,36 @@ class GetStorageService extends GetxService {
   // Set location data by type
   void setLocationByType(String locationType, String data) {
     _runData.write(locationType, data);
+  }
+
+  // Methods to manage findLocationCache
+  Map<String, List<dynamic>> get findLocationCache {
+    final jsonString = _runData.read(_findLocationCache) ?? '{}';
+    Map<String, dynamic> decoded = jsonDecode(jsonString);
+    return decoded
+        .map((key, value) => MapEntry(key, List<dynamic>.from(value)));
+  }
+
+  set findLocationCache(Map<String, List<dynamic>> cache) {
+    final jsonString = jsonEncode(cache);
+    _runData.write(_findLocationCache, jsonString);
+  }
+
+  void addToFindLocationCache(String placeId, List<dynamic> findLocationData) {
+    final cache = findLocationCache; // Get the current cache
+    cache[placeId] = findLocationData; // Add new data
+    findLocationCache = cache; // Update the stored cache
+  }
+
+  // to save find origin, find destination
+  // Get location data by type
+  String? getFindLocationByType(String findLocationType) {
+    return _runData.read(findLocationType);
+  }
+
+  // Set location data by type
+  void setFindLocationByType(String findLocationType, String data) {
+    _runData.write(findLocationType, data);
   }
 
   bool get hasSubscribedToFCM => _runData.read(_subscribedToFcmKey) ?? false;
@@ -272,7 +303,8 @@ class GetStorageService extends GetxService {
     trips = userInfo.data?.notificationPreferences?.trip ?? false;
     alerts = userInfo.data?.notificationPreferences?.alerts ?? false;
     payments = userInfo.data?.notificationPreferences?.payments ?? false;
-    transactions = userInfo.data?.notificationPreferences?.transactions ?? false;
+    transactions =
+        userInfo.data?.notificationPreferences?.transactions ?? false;
     offers = userInfo.data?.notificationPreferences?.offers ?? false;
 
     if (userInfo.data?.status == "active") {

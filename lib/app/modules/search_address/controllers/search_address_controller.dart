@@ -98,8 +98,7 @@ class SearchAddressController extends GetxController {
       isLoading.value = true;
       hidePrevLoc.value = true;
 
-      String baseURL =
-          'https://maps.googleapis.com/maps/api/place/autocomplete/json';
+      String baseURL = Endpoints.googleAutocompleteApiUrl;
       String components = 'country:ca';
       String request =
           '$baseURL?input=$input&location=$lat,$long&radius=500&key=$apiKey&sessiontoken=$_sessionToken&components=$components';
@@ -143,7 +142,7 @@ class SearchAddressController extends GetxController {
     }
     //if not found in cache then fetch from google api
     String placeApiKey = Endpoints.googleApiKey;
-    String baseurl = 'https://maps.googleapis.com/maps/api/place';
+    String baseurl = Endpoints.googlePlaceApiUrl;
 
     try {
       String request =

@@ -45,6 +45,7 @@ class FindRideView extends GetView<FindRideController> {
                   style: TextStyleUtil.k14Semibold(),
                 ).paddingOnly(top: 12.kh),
                 GreenPoolTextField(
+                  textStyle: TextStyleUtil.k14Medium(color: ColorUtil.kBlack01),
                   hintText: LocaleKeys.app_enterOrigin.tr,
                   keyboardType: TextInputType.streetAddress,
                   onchanged: (v) {
@@ -73,6 +74,7 @@ class FindRideView extends GetView<FindRideController> {
                   style: TextStyleUtil.k14Semibold(),
                 ),
                 GreenPoolTextField(
+                  textStyle: TextStyleUtil.k14Medium(color: ColorUtil.kBlack01),
                   hintText: LocaleKeys.app_enterAdestination.tr,
                   keyboardType: TextInputType.streetAddress,
                   onchanged: (v) {
@@ -117,6 +119,8 @@ class FindRideView extends GetView<FindRideController> {
                     SizedBox(
                       width: 55.w,
                       child: GreenPoolTextField(
+                        textStyle:
+                            TextStyleUtil.k14Medium(color: ColorUtil.kBlack01),
                         hintText: LocaleKeys.app_enterDate.tr,
                         controller: controller.departureDate,
                         isSuffixNeeded: false,
@@ -136,6 +140,8 @@ class FindRideView extends GetView<FindRideController> {
                     ),
                     Flexible(
                       child: GreenPoolTextField(
+                        textStyle:
+                            TextStyleUtil.k14Medium(color: ColorUtil.kBlack01),
                         hintText: LocaleKeys.app_time.tr,
                         controller: controller.selectedTime,
                         isSuffixNeeded: false,
@@ -158,6 +164,7 @@ class FindRideView extends GetView<FindRideController> {
                 RichTextHeading(text: LocaleKeys.app_seatsNeeded.tr)
                     .paddingOnly(bottom: 8.kh),
                 GreenPoolTextField(
+                  textStyle: TextStyleUtil.k14Medium(color: ColorUtil.kBlack01),
                   hintText: LocaleKeys.app_enterNumberOfSeats.tr,
                   controller: controller.seatAvailable,
                   inputFormatters: [
@@ -191,7 +198,7 @@ class FindRideView extends GetView<FindRideController> {
                 Obx(
                   () => Visibility(
                       visible: controller.locationModelNames.isNotEmpty,
-                      child: SizedBox( 
+                      child: SizedBox(
                         height: 158.kh,
                         child: ListView.builder(
                             itemCount: controller.locationModelNames.length,
@@ -227,6 +234,7 @@ class FindRideView extends GetView<FindRideController> {
                   style: TextStyleUtil.k14Semibold(),
                 ).paddingOnly(bottom: 8.kh),
                 GreenPoolTextField(
+                textStyle: TextStyleUtil.k14Medium(color: ColorUtil.kBlack01),
                   hintText: LocaleKeys.app_enterTextHere.tr,
                   controller: controller.descriptionTextController,
                   maxLines: 6,

@@ -10,6 +10,7 @@ import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/services/dio/endpoints.dart';
 import 'package:uuid/uuid.dart';
 import 'package:http/http.dart' as http;
+import 'package:async/async.dart'; // Import this for CancelableOperation
 
 import '../../../data/google_location_model.dart';
 import '../../../services/storage.dart';
@@ -37,10 +38,37 @@ class OriginController extends GetxController {
   LocationValues locationValues = LocationValues.origin;
   var postRideModel = PostRideModel().obs;
 
+  CancelableOperation? _cancelableOperation;
+  RxList<dynamic> findLocationModels = [].obs;
+  RxBool hidePrevLoc = false.obs;
+
   @override
   void onInit() {
     super.onInit();
     locationValues = Get.arguments;
+    _loadLocationNames(locationValues.name);
+  }
+
+  void _loadLocationNames(String type) {
+    try {
+      // Fetch the location data for the specified type
+      String? storedLocations =
+          Get.find<GetStorageService>().getFindLocationByType(type);
+
+      if (storedLocations != null && storedLocations.isNotEmpty) {
+        // Decode the stored JSON into a list of maps
+        List<dynamic> locationListMap = jsonDecode(storedLocations);
+
+        // Update the reactive locationModels list
+        findLocationModels.value = locationListMap.toList();
+      } else {
+        // If no data is found, clear the locationModels list
+        findLocationModels.clear();
+        debugPrint("No locations found for type: $type");
+      }
+    } catch (e) {
+      debugPrint("Error loading location names: $e");
+    }
   }
 
   void setSessionToken() {
@@ -80,25 +108,39 @@ class OriginController extends GetxController {
 
     try {
       isLoading.value = true;
-      String baseURL =
-          'https://maps.googleapis.com/maps/api/place/autocomplete/json';
+      hidePrevLoc.value = true;
+
+      String baseURL = Endpoints.googleAutocompleteApiUrl;
       String components = 'country:ca';
       String request =
           '$baseURL?input=$input&location=$lat%$long&radius=500&key=$apiKey&sessiontoken=$_sessionToken&components=$components';
-      // String request =
-      //     '$baseURL?input=$input&location=$lat%$long&radius=500&key=$apiKey&sessiontoken=$_sessionToken';
 
-      var response = await http.get(Uri.parse(request));
+      _cancelableOperation = CancelableOperation.fromFuture(
+        http.get(Uri.parse(request)),
+        onCancel: () {
+          debugPrint('Google API call cancelled');
+        },
+      );
 
-      if (response.statusCode == 200) {
-        addressSugestionList.value =
-            jsonDecode(response.body.toString())['predictions'];
+      var response = await _cancelableOperation?.value;
+
+      if (response != null && response.statusCode == 200) {
+        final predictions = jsonDecode(response.body.toString())['predictions'];
+        addressSugestionList.value = predictions;
+        if (predictions.isEmpty) {
+          hidePrevLoc.value = false;
+        }
       } else {
         throw Exception('Failed to load data');
       }
-      isLoading.value = false;
     } catch (e) {
-      throw Exception(e);
+      if (_cancelableOperation?.isCanceled == true) {
+        debugPrint('Request was canceled');
+      } else {
+        throw Exception(e);
+      }
+    } finally {
+      isLoading.value = false;
     }
   }
 
@@ -112,7 +154,7 @@ class OriginController extends GetxController {
 
     //if not found in cache then fetch from google api
     String placeApiKey = Endpoints.googleApiKey;
-    String baseurl = 'https://maps.googleapis.com/maps/api/place';
+    String baseurl = Endpoints.googlePlaceApiUrl;
 
     try {
       String request =
@@ -125,7 +167,8 @@ class OriginController extends GetxController {
       String nameOfLocation = geometry?.formattedAddress ?? "";
 
       // Add the fetched data to the cache
-      storageService.addToLocationCache(placeId, [lat, long, nameOfLocation]);
+      storageService
+          .addToFindLocationCache(placeId, [lat, long, nameOfLocation]);
 
       return [lat, long, nameOfLocation];
     } catch (e) {
@@ -135,27 +178,100 @@ class OriginController extends GetxController {
   }
 
   Future<void> setLocationData(String placeId) async {
-    // set lat and long to origin latlong if isOrigin is true
-
     try {
-      //? how to place this in getLatLong directly
       List<dynamic> fetchLatLong = await getLatLong(placeId);
 
-      if (locationValues.name == LocationValues.findRideOrigin.name) {
-        Get.find<FindRideController>().riderOriginLat = fetchLatLong[0];
-        Get.find<FindRideController>().riderOriginLong = fetchLatLong[1];
-        Get.find<FindRideController>().riderOriginTextController.text =
-            fetchLatLong[2];
-      } else if (locationValues.name ==
-          LocationValues.findRideDestination.name) {
-        Get.find<FindRideController>().riderDestinationLat = fetchLatLong[0];
-        Get.find<FindRideController>().riderDestinationLong = fetchLatLong[1];
-        Get.find<FindRideController>().riderDestinationTextController.text =
-            fetchLatLong[2];
-      }
+      setLocationToFindRideController(fetchLatLong);
     } catch (e) {
       log("setLocationData error: $e");
     }
+  }
+
+  //TO SET LOCATION FROM CACHE
+  Future<void> setLocationFromCache(String type, int index) async {
+    try {
+      // fetch the serialized JSON string from storage
+      String? storedLocation =
+          Get.find<GetStorageService>().getFindLocationByType(type);
+
+      // decode the JSON string
+      List<dynamic> decodedList = jsonDecode(storedLocation ?? "");
+
+      // access the specific location in the list
+      var location = decodedList[index];
+
+      List<dynamic> fetchLatLong = [
+        location["latitude"],
+        location["longitude"],
+        location["address"]
+      ];
+
+      // set the location to the controller
+      setLocationToFindRideController(fetchLatLong);
+    } catch (e) {
+      debugPrint("setLocationFromCache error: $e");
+    }
+  }
+
+  void setLocationToFindRideController(List<dynamic> fetchLatLong) {
+    if (locationValues.name == LocationValues.findRideOrigin.name) {
+      Get.find<FindRideController>().riderOriginLat = fetchLatLong[0];
+      Get.find<FindRideController>().riderOriginLong = fetchLatLong[1];
+      Get.find<FindRideController>().riderOriginTextController.text =
+          fetchLatLong[2];
+      _saveLocation(fetchLatLong, "findRideOrigin");
+    } else if (locationValues.name == LocationValues.findRideDestination.name) {
+      Get.find<FindRideController>().riderDestinationLat = fetchLatLong[0];
+      Get.find<FindRideController>().riderDestinationLong = fetchLatLong[1];
+      Get.find<FindRideController>().riderDestinationTextController.text =
+          fetchLatLong[2];
+      _saveLocation(fetchLatLong, "findRideDestination");
+    }
+  }
+
+  //TO SAVE LOCATION DATA
+  void _saveLocation(List<dynamic> fetchLatLong, String locationType) {
+    final getStorageService = Get.find<GetStorageService>();
+
+    // create a new location model
+    Map<String, dynamic> newLocationModel = {
+      "latitude": fetchLatLong[0],
+      "longitude": fetchLatLong[1],
+      "address": fetchLatLong[2],
+    };
+
+    // retrieve existing locations for the specific type
+    String? storedLocations = getStorageService.getLocationByType(locationType);
+
+    if (storedLocations != null && storedLocations.isNotEmpty) {
+      findLocationModels.value = jsonDecode(storedLocations);
+    }
+
+    // check if the new location is a duplicate
+    if (!isDuplicate(newLocationModel, findLocationModels)) {
+      findLocationModels.add(newLocationModel);
+
+      // save the updated list back to storage
+      getStorageService.setLocationByType(
+          locationType, jsonEncode(findLocationModels));
+
+      debugPrint("$locationType saved successfully.");
+    } else {
+      debugPrint("$locationType already exists in the list.");
+    }
     Get.back();
+  }
+
+  // Helper function to check if a location is a duplicate
+  bool isDuplicate(
+      Map<String, dynamic> newLocationModel, List<dynamic> findLocationModels) {
+    for (var model in findLocationModels) {
+      if (model["latitude"] == newLocationModel["latitude"] &&
+          model["longitude"] == newLocationModel["longitude"] &&
+          model["address"] == newLocationModel["address"]) {
+        return true;
+      }
+    }
+    return false;
   }
 }

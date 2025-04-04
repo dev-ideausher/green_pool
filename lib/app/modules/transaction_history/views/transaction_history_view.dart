@@ -40,7 +40,7 @@ class TransactionHistoryView extends GetView<TransactionHistoryController> {
                 ? Center(
                     child: Center(
                     child: Text(
-                      LocaleKeys.app_futureTransactionsWillBeVisibleHere.tr,
+                      LocaleKeys.app_looksLikeThereAreNoTransactions.tr,
                       style: TextStyleUtil.k24Heading600(),
                       textAlign: TextAlign.center,
                     ),

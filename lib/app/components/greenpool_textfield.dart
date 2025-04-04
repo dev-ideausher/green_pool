@@ -23,6 +23,7 @@ class GreenPoolTextField extends StatelessWidget {
   final Function()? onTap, onPressedSuffix;
   final AutovalidateMode? autovalidateMode;
   final List<TextInputFormatter>? inputFormatters;
+  final TextStyle? textStyle;
 
   const GreenPoolTextField(
       {super.key,
@@ -49,14 +50,15 @@ class GreenPoolTextField extends StatelessWidget {
       this.hintColor,
       this.textCapitalization = TextCapitalization.none,
       this.inputFormatters,
-      this.focusedBorder});
+      this.focusedBorder,
+      this.textStyle});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       enabled: enabled,
       inputFormatters: inputFormatters,
-      style: TextStyleUtil.k14Medium(color: ColorUtil.kBlack01),
+      style: textStyle ?? TextStyleUtil.k14Regular(color: ColorUtil.kBlack01),
       maxLines: maxLines ?? 1,
       onTap: onTap,
       cursorColor: ColorUtil.kBlack01,

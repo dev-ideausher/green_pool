@@ -31,6 +31,7 @@ class OneTimeTripView extends GetView<PostRideStepTwoController> {
 
         RichTextHeading(text: LocaleKeys.app_date.tr),
         GreenPoolTextField(
+          textStyle: TextStyleUtil.k14Medium(color: ColorUtil.kBlack01),
             controller: controller.formattedOneTimeDate,
             hintText: LocaleKeys.app_selectDate.tr,
             readOnly: true,
@@ -53,6 +54,7 @@ class OneTimeTripView extends GetView<PostRideStepTwoController> {
             }).paddingOnly(top: 8.kh, bottom: 16.kh),
         RichTextHeading(text: LocaleKeys.app_time.tr),
         GreenPoolTextField(
+          textStyle: TextStyleUtil.k14Medium(color: ColorUtil.kBlack01),
           hintText: LocaleKeys.app_selectTime.tr,
           controller: controller.selectedTime,
           onTap: () {
@@ -120,6 +122,7 @@ class OneTimeTripView extends GetView<PostRideStepTwoController> {
                     ).paddingSymmetric(vertical: 16.kh),
                     RichTextHeading(text: LocaleKeys.app_date.tr),
                     GreenPoolTextField(
+                      textStyle: TextStyleUtil.k14Medium(color: ColorUtil.kBlack01),
                       hintText: LocaleKeys.app_selectDate.tr,
                       controller: controller.formattedReturnDate,
                       onTap: () {
@@ -141,6 +144,7 @@ class OneTimeTripView extends GetView<PostRideStepTwoController> {
                     ).paddingOnly(top: 8.kh, bottom: 16.kh),
                     RichTextHeading(text: LocaleKeys.app_time.tr),
                     GreenPoolTextField(
+                      textStyle: TextStyleUtil.k14Medium(color: ColorUtil.kBlack01),
                       hintText: LocaleKeys.app_selectTime.tr,
                       onTap: () {
                         controller.setReturnTime(context);

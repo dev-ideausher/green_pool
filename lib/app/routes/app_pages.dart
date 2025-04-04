@@ -43,8 +43,6 @@ import '../modules/map_rider_send_request/bindings/map_rider_send_request_bindin
 import '../modules/map_rider_send_request/views/map_rider_send_request_view.dart';
 import '../modules/messages/bindings/messages_binding.dart';
 import '../modules/messages/views/messages_view.dart';
-import '../modules/my_rides_confirm_details/bindings/my_rides_confirm_details_binding.dart';
-import '../modules/my_rides_confirm_details/views/my_rides_confirm_details_view.dart';
 import '../modules/my_rides_details/bindings/my_rides_details_binding.dart';
 import '../modules/my_rides_details/views/my_rides_details_view.dart';
 import '../modules/my_rides_edit/bindings/my_rides_edit_binding.dart';
@@ -530,11 +528,6 @@ class AppPages {
       name: _Paths.WEB_ADD_TO_BANK,
       page: () => const WebAddToBankView(),
       binding: WebAddToBankBinding(),
-    ),
-    GetPage(
-      name: _Paths.MY_RIDES_CONFIRM_DETAILS,
-      page: () => const MyRidesConfirmDetailsView(),
-      binding: MyRidesConfirmDetailsBinding(),
     ),
     GetPage(
       name: _Paths.ARCHIVED,

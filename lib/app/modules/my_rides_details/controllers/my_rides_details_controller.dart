@@ -59,7 +59,8 @@ class MyRidesDetailsController extends GetxController {
               receiverId: rider.riderDetails?.Id ?? "",
               body: {
                 "driverRideId": myRidesModelData.value.driverRideId,
-                "seatsRequired": "",
+                "seatsRequired":
+                    "", //no need for payment from here hence seatsRequired is empty
                 "riderRideId": ""
               });
           Get.toNamed(Routes.CHAT_PAGE,

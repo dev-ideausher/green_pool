@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/services/colors.dart';
+import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/storage.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
@@ -19,8 +20,24 @@ class HistoryFilter extends GetView<TransactionHistoryController> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(LocaleKeys.app_filterBy.tr,
-              style: TextStyleUtil.k24Heading600()),
+          // Title and apply button
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(LocaleKeys.app_filterBy.tr,
+                  style: TextStyleUtil.k24Heading600()),
+              GreenPoolButton(
+                onPressed: () {
+                  controller.getTransactionHistory();
+                  Get.back();
+                },
+                width: 90.kw,
+                height: 32.kh,
+                padding: EdgeInsets.zero,
+                label: LocaleKeys.app_apply.tr,
+              ),
+            ],
+          ),
 
           10.kheightBox,
 

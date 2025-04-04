@@ -36,7 +36,8 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
             child: InkWell(
                 onTap: () => controller.setPrevRideData(),
                 splashColor: Colors.transparent,
-                child: Text(LocaleKeys.app_copy.tr, style: TextStyleUtil.k16Bold())),
+                child: Text(LocaleKeys.app_copy.tr,
+                    style: TextStyleUtil.k16Bold())),
           ).paddingOnly(right: 16.kw)
         ],
       ),
@@ -51,6 +52,7 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
                     .paddingOnly(top: 12.kh),
                 GreenPoolTextField(
                   hintText: LocaleKeys.app_enterOrigin.tr,
+                  textStyle: TextStyleUtil.k14Medium(color: ColorUtil.kBlack01),
                   keyboardType: TextInputType.streetAddress,
                   onchanged: (v) {
                     controller.setActiveStatePostRideView();
@@ -76,6 +78,7 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
                 RichTextHeading(text: LocaleKeys.app_destination.tr),
                 GreenPoolTextField(
                   hintText: LocaleKeys.app_enterAdestination.tr,
+                  textStyle: TextStyleUtil.k14Medium(color: ColorUtil.kBlack01),
                   keyboardType: TextInputType.streetAddress,
                   onchanged: (v) {
                     controller.setActiveStatePostRideView();
@@ -112,6 +115,8 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
                       controller.isOriginAdded.value,
                   child: GreenPoolTextField(
                     hintText: LocaleKeys.app_addStops.tr,
+                    textStyle:
+                        TextStyleUtil.k14Medium(color: ColorUtil.kBlack01),
                     keyboardType: TextInputType.streetAddress,
                     fillColor: Colors.transparent,
                     border: borStopFld,
@@ -148,6 +153,8 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
                   visible: controller.isStop1Added.value,
                   child: GreenPoolTextField(
                     hintText: LocaleKeys.app_addStops.tr,
+                    textStyle:
+                        TextStyleUtil.k14Medium(color: ColorUtil.kBlack01),
                     keyboardType: TextInputType.streetAddress,
                     fillColor: Colors.transparent,
                     border: borStopFld,

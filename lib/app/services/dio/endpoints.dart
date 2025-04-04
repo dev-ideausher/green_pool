@@ -10,6 +10,11 @@ class Endpoints {
       ? 'AIzaSyAs_QL4LPuvaU23w-t0wOUJyUziRmSIlkE'
       : 'AIzaSyBq5jpn2f8NAb4pb562ejP2YCg47uX1_nU';
 
+  static const String googleAutocompleteApiUrl =
+      'https://maps.googleapis.com/maps/api/place/autocomplete/json';
+  static const String googlePlaceApiUrl =
+      'https://maps.googleapis.com/maps/api/place';
+
   // base url
   static String baseUrl = AppEnvironment.baseApiUrl;
 

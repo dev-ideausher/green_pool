@@ -11,8 +11,8 @@ class TransactionHistoryController extends GetxController {
       <TransactionsModelDataTransactions>[].obs;
 
   RxBool isMonthSelected = true.obs;
-  RxString selectedMonth = "July".obs;
-  RxInt selectedYear = 2025.obs;
+  RxString selectedMonth = "".obs;
+  RxInt selectedMonthIndex = 0.obs;
 
   List<String> months = [
     "January",
@@ -29,7 +29,9 @@ class TransactionHistoryController extends GetxController {
     "December"
   ];
 
-  List<int> years = List.generate(11, (index) => 2025 - index); // Last 10 years
+  RxnInt selectedYear = RxnInt(); // Nullable to allow deselection
+  List<int> years = List.generate(
+      11, (index) => DateTime.now().year - index); // Last 10 years
 
   @override
   void onInit() {
@@ -38,10 +40,33 @@ class TransactionHistoryController extends GetxController {
   }
 
   Future<void> getTransactionHistory() async {
+    /**GET /wallet-transactions?month=3&year=2024 */
+
+    //set query parameters
+    Map<String, dynamic> queryParameters = {};
+    if (selectedMonthIndex.value > 0) {
+      queryParameters["month"] = selectedMonthIndex.value;
+    }
+
+    if (selectedYear.value != null) {
+      queryParameters["year"] = selectedYear.value;
+    }
+
+    debugPrint("Query Params: $queryParameters");
+
+    //api call
     try {
-      final res = await APIManager.transactions();
+      isLoad.value = true;
+      final res =
+          await APIManager.transactions(queryParameters: queryParameters);
       final transactionsModel = TransactionsModel.fromJson(res.data);
       transactions.value = transactionsModel.data!.transactions!;
+
+      // Remove the last transaction if the list is not empty
+      if (transactions.isNotEmpty) {
+        transactions.removeLast();
+      }
+
       isLoad.value = false;
     } catch (e) {
       debugPrint(e.toString());
@@ -53,11 +78,21 @@ class TransactionHistoryController extends GetxController {
   }
 
   void selectMonth(String month) {
-    selectedMonth.value = month;
+    if (selectedMonth.value == month) {
+      selectedMonth.value = "";
+      selectedMonthIndex.value = 0; // Set index to 0 (none selected)
+    } else {
+      selectedMonth.value = month;
+      selectedMonthIndex.value = months.indexOf(month) + 1;
+    }
   }
 
   void selectYear(int year) {
-    selectedYear.value = year;
+    if (selectedYear.value == year) {
+      selectedYear.value = null; // Deselect if clicked again
+    } else {
+      selectedYear.value = year;
+    }
   }
 
   void openFilterBottomsheet(BuildContext context) {
@@ -66,6 +101,8 @@ class TransactionHistoryController extends GetxController {
       const HistoryFilter(),
       isScrollControlled: true,
       backgroundColor: Colors.white,
+      enterBottomSheetDuration: const Duration(milliseconds: 500),
+      exitBottomSheetDuration: const Duration(milliseconds: 500),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),

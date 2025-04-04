@@ -19,6 +19,7 @@ import '../../../services/text_style_util.dart';
 import '../controllers/profile_controller.dart';
 import 'profile_container.dart';
 import 'rating_bottomsheet.dart';
+import 'socials_bottomsheet.dart';
 
 class ProfileView extends GetView<ProfileController> {
   const ProfileView({super.key});
@@ -147,7 +148,12 @@ class ProfileView extends GetView<ProfileController> {
             ProfileContainer(
                     onTap: () {
                       Get.bottomSheet(const RatingBottomSheet(),
-                          enableDrag: true, isScrollControlled: true);
+                          enableDrag: true,
+                          isScrollControlled: true,
+                          enterBottomSheetDuration:
+                              const Duration(milliseconds: 500),
+                          exitBottomSheetDuration:
+                              const Duration(milliseconds: 300));
                     },
                     image: ImageConstant.svgProfileStar,
                     text: LocaleKeys.app_rateUs.tr)
@@ -171,7 +177,8 @@ class ProfileView extends GetView<ProfileController> {
                 text: LocaleKeys.app_termsAmbersentConditions.tr),
             ProfileContainer(
                 onTap: () async {
-                  await launchUrl(Uri.parse("https://carpooll.com"));
+                  Get.bottomSheet(SocialsBottomsheet(),
+                      enableDrag: true, isScrollControlled: true);
                 },
                 image: ImageConstant.svgProfileFollow,
                 text: LocaleKeys.app_followUsOnSocialMedia.tr),

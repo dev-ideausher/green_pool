@@ -152,7 +152,7 @@ class MyRidesRequestController extends GetxController {
           body: {
             "driverRideId": rideDetailId.value.driverRidId,
             "riderRideId": rideDetailId.value.riderRidId,
-            "seatsRequired": ""
+            "seatsRequired": data.seatAvailable
           });
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(
@@ -191,7 +191,7 @@ class MyRidesRequestController extends GetxController {
           body: {
             "driverRideId": rideDetailId.value.driverRidId,
             "riderRideId": rideDetailId.value.riderRidId,
-            "seatsRequired": ""
+            "seatsRequired": data.rideDetails?[0]?.seatAvailable
           });
       Get.toNamed(Routes.CHAT_PAGE,
           arguments: ChatArg(

@@ -478,6 +478,7 @@
         "ridesCancelled": "Trajets annulés",
         "completed": "Terminé",
         "cancelled": "Annulé",
+        "looksLikeThereAreNoTransactions": "Il semble qu’il n’y ait aucune transaction ici.",
         "language_pref": "Préférences linguistiques",
         "language": "Langue",
         "plsPayInApp": "Veuillez payer dans l'application",

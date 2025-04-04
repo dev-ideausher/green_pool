@@ -8,6 +8,7 @@ import '../../../../generated/locales.g.dart';
 import '../../../components/gp_progress.dart';
 import '../../../components/greenpool_textfield.dart';
 import '../../../services/colors.dart';
+import '../../../services/text_style_util.dart';
 import '../../home/controllers/home_controller.dart';
 import '../controllers/origin_controller.dart';
 
@@ -60,6 +61,55 @@ class OriginView extends GetView<OriginController> {
                       : ColorUtil.kSecondary01,
                 ),
               ).paddingOnly(top: 32.kh, bottom: 16.kh),
+            ),
+            //cache location
+            Obx(
+              () => Visibility(
+                visible: controller.findLocationModels.isNotEmpty &&
+                    !controller.hidePrevLoc.value,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      LocaleKeys.app_previouslySearched.tr,
+                      style: TextStyleUtil.k14Semibold(),
+                    ).paddingOnly(bottom: 8.kh),
+                    SizedBox(
+                      height: 250.kh,
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        physics:
+                            const ClampingScrollPhysics(), // Avoid conflicting scroll physics
+                        itemCount: controller.findLocationModels.length,
+                        itemBuilder: (context, index) {
+                          var item = controller.findLocationModels[index];
+                          return Container(
+                            decoration: BoxDecoration(
+                                color: ColorUtil.kNeutral7.withOpacity(0.5),
+                                border: Border(
+                                    top: BorderSide.none,
+                                    bottom: BorderSide(
+                                        width: 1.kh,
+                                        color: ColorUtil.kNeutral7)),
+                                borderRadius: BorderRadius.circular(8.kh)),
+                            child: ListTile(
+                              onTap: () {
+                                controller.setLocationFromCache(
+                                    controller.locationValues.name, index);
+                              },
+                              leading: const Icon(
+                                Icons.history,
+                                color: ColorUtil.kNeutral4,
+                              ),
+                              title: Text(item["address"] ?? "Unknown Address"),
+                            ),
+                          ).paddingOnly(bottom: 2.kh);
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
             Expanded(
               child: Obx(

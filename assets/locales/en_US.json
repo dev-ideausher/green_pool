@@ -479,6 +479,7 @@
         "ridesCancelled": "Rides Cancelled",
         "completed": "Completed",
         "cancelled": "Cancelled",
+        "looksLikeThereAreNoTransactions": "Looks like there are no transactions here.",
         "language_pref": "Language Preferences",
         "language": "Language",
         "defaultDate": "2024-12-31T00:00:00.000Z",

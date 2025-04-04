@@ -90,6 +90,7 @@ class PostRideStepThreeView extends GetView<PostRideStepThreeController> {
                             height: 10.h,
                             child: GreenPoolTextField(
                               hintText: '',
+                              textStyle: TextStyleUtil.k14Medium(color: ColorUtil.kBlack01),
                               isSuffixNeeded: false,
                               keyboardType:
                                   const TextInputType.numberWithOptions(),

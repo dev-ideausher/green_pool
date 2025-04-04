@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../../generated/locales.g.dart';
@@ -141,6 +140,7 @@ class RecurringTripView extends GetView<PostRideStepTwoController> {
         ),
          RichTextHeading(text: LocaleKeys.app_time.tr),
         GreenPoolTextField(
+          textStyle: TextStyleUtil.k14Medium(color: ColorUtil.kBlack01),
           hintText: LocaleKeys.app_selectTime.tr,
           controller: controller.selectedRecurringTime,
           onTap: () {

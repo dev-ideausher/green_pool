@@ -188,10 +188,12 @@ class APIManager {
         showSnakbar: true,
       ).get(Endpoints.walletBalance);
 
-  static Future<Response> transactions() async => await DioClient(
+  static Future<Response> transactions(
+          {Map<String, dynamic>? queryParameters}) async =>
+      await DioClient(
         Dio(),
         showSnakbar: true,
-      ).get(Endpoints.transactions);
+      ).get(Endpoints.transactions, queryParameters: queryParameters);
 
   static Future<Response> notifications() async => await DioClient(
         Dio(),

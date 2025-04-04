@@ -163,4 +163,11 @@ class ImageConstant {
   static String pngSourceIcon = 'assets/images/navigation/source_location.png';
   static String pngDestinationIcon =
       'assets/images/navigation/destination_location.png';
+
+  //socials
+  static String facebook = 'assets/images/icons/fb.png';
+  static String instagram = 'assets/images/icons/insta.png';
+  static String linkedin = 'assets/images/icons/linkedin.png';
+  static String tiktok = 'assets/images/icons/tiktok.png';
+  static String twitter = 'assets/images/icons/x.png';
 }

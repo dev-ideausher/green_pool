@@ -532,6 +532,8 @@ class LocaleKeys {
   static const app_ridesCancelled = 'app_ridesCancelled';
   static const app_completed = 'app_completed';
   static const app_cancelled = 'app_cancelled';
+  static const app_looksLikeThereAreNoTransactions =
+      'app_looksLikeThereAreNoTransactions';
   static const app_language_pref = 'app_language_pref';
   static const app_language = 'app_language';
   static const app_defaultDate = 'app_defaultDate';
@@ -1084,6 +1086,8 @@ class Locales {
     'app_ridesCancelled': 'Rides Cancelled',
     'app_completed': 'Completed',
     'app_cancelled': 'Cancelled',
+    'app_looksLikeThereAreNoTransactions':
+        'Looks like there are no transactions here.',
     'app_language_pref': 'Language Preferences',
     'app_language': 'Language',
     'app_defaultDate': '2024-12-31T00:00:00.000Z',
@@ -1644,6 +1648,8 @@ class Locales {
     'app_ridesCancelled': 'Viajes cancelados',
     'app_completed': 'Completado',
     'app_cancelled': 'Cancelado',
+    'app_looksLikeThereAreNoTransactions':
+        'Parece que no hay transacciones aquí.',
     'app_language_pref': 'Preferencias de idioma',
     'app_language': 'Idioma',
     'app_defaultDate': '2024-12-31T00:00:00.000Z',
@@ -2207,6 +2213,8 @@ class Locales {
     'app_ridesCancelled': 'Trajets annulés',
     'app_completed': 'Terminé',
     'app_cancelled': 'Annulé',
+    'app_looksLikeThereAreNoTransactions':
+        'Il semble qu’il n’y ait aucune transaction ici.',
     'app_language_pref': 'Préférences linguistiques',
     'app_language': 'Langue',
     'app_plsPayInApp': 'Veuillez payer dans l\'application',
