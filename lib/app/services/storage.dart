@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -37,7 +36,6 @@ class GetStorageService extends GetxService {
   static const String _hasTappedAllowLocation = 'hasTappedAllowLocation';
   static const String _hasTappedAllowNotification =
       'hasTappedAllowNotification';
-  static const String _appLocale = 'appLocale';
   static const String _locationCache = 'locationCache';
   static const String _findLocationCache = 'findLocationCache';
   static const String _cancelCounts = 'cancelCounts';
@@ -54,6 +52,8 @@ class GetStorageService extends GetxService {
   static const String _payments = 'payments';
   static const String _transactions = 'transactions';
   static const String _offers = 'offers';
+  static const String _langCode = 'langCode';
+  static const String _langCodeV = 'langCodeV';
   final String _subscribedToFcmKey = 'hasSubscribedToFCM';
   final String _prevRideData = 'prevRideData';
 
@@ -188,20 +188,12 @@ class GetStorageService extends GetxService {
   bool get offers => _runData.read(_offers) ?? false;
   set offers(bool val) => _runData.write(_offers, val);
 
-  Locale get appLocale {
-    String? localeString = _runData.read(_appLocale);
-    if (localeString != null) {
-      List<String> parts = localeString.split('_');
-      return Locale(parts[0], parts.length > 1 ? parts[1] : null);
-    }
-    return const Locale('en', 'US');
-  }
+  //App Localization
+  String get langCode => _runData.read(_langCode) ?? 'en';
+  set langCode(String langCode) => _runData.write(_langCode, langCode);
 
-  set appLocale(Locale locale) {
-    String localeString = '${locale.languageCode}_${locale.countryCode ?? ''}';
-    _runData.write(_appLocale, localeString);
-    Get.updateLocale(locale);
-  }
+  String get langCodeV => _runData.read(_langCodeV) ?? 'US';
+  set langCodeV(String langCodeV) => _runData.write(_langCodeV, langCodeV);
 
   //save prev ride data
   PostRideModel? getPostRideData() {

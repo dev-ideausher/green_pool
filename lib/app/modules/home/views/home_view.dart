@@ -80,7 +80,7 @@ class HomeView extends GetView<HomeController> {
                                   style: TextStyleUtil.k20Heading700())
                               .paddingOnly(bottom: 4.kh),
                           SizedBox(
-                            width: 125.kw,
+                            width: 170.kw,
                             child: Text(LocaleKeys.app_offerRideNearby.tr,
                                 style: TextStyleUtil.k14Regular()),
                           ),
@@ -149,7 +149,7 @@ class HomeView extends GetView<HomeController> {
                             style: TextStyleUtil.k20Heading700(),
                           ).paddingOnly(bottom: 4.kh),
                           SizedBox(
-                            width: 125.kw,
+                            width: 170.kw,
                             child: Text(
                               LocaleKeys.app_takeRidesNearby.tr,
                               style: TextStyleUtil.k14Regular(),

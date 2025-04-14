@@ -536,6 +536,11 @@ class LocaleKeys {
       'app_looksLikeThereAreNoTransactions';
   static const app_language_pref = 'app_language_pref';
   static const app_language = 'app_language';
+  static const app_english = 'app_english';
+  static const app_french = 'app_french';
+  static const app_spanish = 'app_spanish';
+  static const app_payNowWarning = 'app_payNowWarning';
+  static const app_to = 'app_to';
   static const app_defaultDate = 'app_defaultDate';
   static const app_carpoollCash = 'app_carpoollCash';
   static const app_dollar5 = 'app_dollar5';
@@ -1090,6 +1095,12 @@ class Locales {
         'Looks like there are no transactions here.',
     'app_language_pref': 'Language Preferences',
     'app_language': 'Language',
+    'app_english': 'English',
+    'app_french': 'French',
+    'app_spanish': 'Spanish',
+    'app_payNowWarning':
+        'To prevent scams and phishing, never message or pay outside Carpooll.com',
+    'app_to': 'to',
     'app_defaultDate': '2024-12-31T00:00:00.000Z',
     'app_carpoollCash': 'Carpooll.com Cash',
     'app_dollar5': '“\$5”',
@@ -1652,6 +1663,12 @@ class Locales {
         'Parece que no hay transacciones aquí.',
     'app_language_pref': 'Preferencias de idioma',
     'app_language': 'Idioma',
+    'app_english': 'Inglés',
+    'app_french': 'Francés',
+    'app_spanish': 'Español',
+    'app_payNowWarning':
+        'Para prevenir fraudes y phishing, nunca envíe mensajes o pague fuera de Carpooll.com',
+    'app_to': 'a',
     'app_defaultDate': '2024-12-31T00:00:00.000Z',
     'app_carpoollCash': 'Carpooll.com efectivo',
     'app_dollar5': '“\$5”',
@@ -2217,7 +2234,13 @@ class Locales {
         'Il semble qu’il n’y ait aucune transaction ici.',
     'app_language_pref': 'Préférences linguistiques',
     'app_language': 'Langue',
+    'app_english': 'Anglais',
+    'app_french': 'Français',
+    'app_spanish': 'Espagnol',
     'app_plsPayInApp': 'Veuillez payer dans l\'application',
+    'app_payNowWarning':
+        'Pour éviter les fraudes et les hameçons, n\'envoyez jamais de messages ou payez en dehors de Carpooll.com',
+    'app_to': 'à',
     'app_defaultDate': '2024-12-31T00:00:00.000Z',
     'app_carpoollCash': 'Carpooll.com argent liquide',
     'app_dollar5': '“\$5”',

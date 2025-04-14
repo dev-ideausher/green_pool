@@ -84,7 +84,12 @@ class PostRideStepTwoController extends GetxController
   }
 
   void addDays(int heading) {
-    daysOfWeek?.add(heading);
+    if (daysOfWeek == null) return;
+
+    if (!daysOfWeek!.contains(heading)) {
+      daysOfWeek!.add(heading);
+      daysOfWeek!.sort();
+    }
   }
 
   void removeDays(int heading) {

@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'app/routes/app_pages.dart';
+import 'app/services/app_language.dart';
 import 'app/services/auth.dart';
 import 'app/services/colors.dart';
 import 'app/services/dependency_injection.dart';
@@ -60,7 +61,9 @@ Future<void> main() async {
       smartManagement: SmartManagement.full,
       debugShowCheckedModeBanner: false,
       supportedLocales: const [Locale("en"), Locale("fr"), Locale("es")],
-      locale: Get.find<GetStorageService>().appLocale,
+      locale: Locale(Get.find<GetStorageService>().langCode,
+          Get.find<GetStorageService>().langCodeV),
+      fallbackLocale: AppLanguage.getLocale(),
       translationsKeys: AppTranslation.translations,
       initialRoute: AppPages.INITIAL,
       initialBinding: HomeBinding(),

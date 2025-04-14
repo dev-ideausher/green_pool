@@ -12,7 +12,6 @@ import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../generated/locales.g.dart';
 import '../../../services/text_style_util.dart';
@@ -134,15 +133,18 @@ class ProfileView extends GetView<ProfileController> {
                 image: ImageConstant.svgProfileDiscount,
                 text: LocaleKeys.app_studentDiscount.tr),
             ProfileContainer(
-                onTap: Platform.isIOS
-                    ? () async {
-                        await Share.share(
-                            "Check this cool app! \nhttps://apps.apple.com/in/app/carpooll-com/id6480311009");
-                      }
-                    : () async {
-                        await Share.share(
-                            "Check this cool app! \nhttps://play.google.com/store/apps/details?id=com.greenpool.app");
-                      },
+                onTap: () async {
+                  final box = context.findRenderObject() as RenderBox;
+                  final shareText = Platform.isIOS
+                      ? "Check this cool app! \nhttps://apps.apple.com/in/app/carpooll-com/id6480311009"
+                      : "Check this cool app! \nhttps://play.google.com/store/apps/details?id=com.greenpool.app";
+
+                  await Share.share(
+                    shareText,
+                    sharePositionOrigin:
+                        box.localToGlobal(Offset.zero) & box.size,
+                  );
+                },
                 image: ImageConstant.svgProfileRefer,
                 text: LocaleKeys.app_referAFriend.tr),
             ProfileContainer(
