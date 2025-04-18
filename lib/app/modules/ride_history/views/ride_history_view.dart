@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/common_image_view.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
+import 'package:green_pool/app/components/route_widget.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
 import 'package:green_pool/app/data/ride_history_model.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
@@ -274,14 +275,13 @@ class RiderRideHistTile extends StatelessWidget {
                 ).paddingOnly(bottom: 16.kh)),
 
             //middle divider
-            const GreenPoolDivider().paddingOnly(bottom: 8.kh),
-            OriginToDestination(
-                    needPickupText: false,
-                    origin: "${his?.origin?.name}",
-                    stop1: his?.stops?[0]?.name ?? "",
-                    stop2: his?.stops?[1]?.name ?? "",
-                    destination: "${his?.destination?.name}")
-                .paddingOnly(bottom: 8.kh),
+            const GreenPoolDivider(),
+            RouteWidget(
+                needPickUp: false,
+                origin: "${his?.origin?.name}",
+                stop1: his?.stops?[0]?.name ?? "",
+                stop2: his?.stops?[1]?.name ?? "",
+                destination: "${his?.destination?.name}"),
             const GreenPoolDivider(),
             Visibility(
                 visible: his?.rideStatus == "Cancel" || his?.rideStatus == 'NA',
@@ -412,15 +412,15 @@ class DriverRideHistTile extends StatelessWidget {
                       ),
                     ],
                   ).paddingOnly(bottom: 8.kh),
-            const GreenPoolDivider().paddingOnly(bottom: 8.kh),
-            OriginToDestination(
-              needPickupText: false,
+            const GreenPoolDivider(),
+            RouteWidget(
+              needPickUp: false,
               origin: his?.origin?.name ?? LocaleKeys.app_pickup.tr,
               stop1: his?.stops?[0]?.name ?? "",
               stop2: his?.stops?[1]?.name ?? "",
               destination:
                   his?.destination?.name ?? LocaleKeys.app_destination.tr,
-            ).paddingOnly(bottom: 8.kh),
+            ),
             const GreenPoolDivider().paddingOnly(bottom: 16.kh),
             Visibility(
                 visible: his?.rideStatus == "Cancel" || his?.rideStatus == 'NA',

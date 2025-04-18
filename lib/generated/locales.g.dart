@@ -541,6 +541,15 @@ class LocaleKeys {
   static const app_spanish = 'app_spanish';
   static const app_payNowWarning = 'app_payNowWarning';
   static const app_to = 'app_to';
+  static const app_newUpdate = 'app_newUpdate';
+  static const app_yayThereIsNewUpdateFrom = 'app_yayThereIsNewUpdateFrom';
+  static const app_pleaseUpdateNow = 'app_pleaseUpdateNow';
+  static const app_wouldYouLikeToUpdate = 'app_wouldYouLikeToUpdate';
+  static const app_releaseNote = 'app_releaseNote';
+  static const app_later = 'app_later';
+  static const app_updateNow = 'app_updateNow';
+  static const app_postedRides = 'app_postedRides';
+  static const app_enterCostBetween = 'app_enterCostBetween';
   static const app_defaultDate = 'app_defaultDate';
   static const app_carpoollCash = 'app_carpoollCash';
   static const app_dollar5 = 'app_dollar5';
@@ -1101,6 +1110,15 @@ class Locales {
     'app_payNowWarning':
         'To prevent scams and phishing, never message or pay outside Carpooll.com',
     'app_to': 'to',
+    'app_newUpdate': 'New Update',
+    'app_yayThereIsNewUpdateFrom': 'Yay! there is new update from',
+    'app_pleaseUpdateNow': 'Please update now!',
+    'app_wouldYouLikeToUpdate': 'Would you like to update?',
+    'app_releaseNote': 'Release Note',
+    'app_later': 'Later',
+    'app_updateNow': 'Update Now',
+    'app_postedRides': 'Posted Rides',
+    'app_enterCostBetween': 'Enter cost between',
     'app_defaultDate': '2024-12-31T00:00:00.000Z',
     'app_carpoollCash': 'Carpooll.com Cash',
     'app_dollar5': '“\$5”',
@@ -1669,6 +1687,15 @@ class Locales {
     'app_payNowWarning':
         'Para prevenir fraudes y phishing, nunca envíe mensajes o pague fuera de Carpooll.com',
     'app_to': 'a',
+    'app_newUpdate': 'Nueva actualización',
+    'app_yayThereIsNewUpdateFrom': '¡Sí! hay una nueva actualización de',
+    'app_pleaseUpdateNow': '¡Por favor, actualiza ahora!',
+    'app_wouldYouLikeToUpdate': '¿Te gustaría actualizar?',
+    'app_releaseNote': 'Notas de la versión',
+    'app_later': 'Más tarde',
+    'app_updateNow': 'Actualizar ahora',
+    'app_postedRides': 'Viajes Publicados',
+    'app_enterCostBetween': 'Ingrese el precio entre',
     'app_defaultDate': '2024-12-31T00:00:00.000Z',
     'app_carpoollCash': 'Carpooll.com efectivo',
     'app_dollar5': '“\$5”',
@@ -2241,6 +2268,15 @@ class Locales {
     'app_payNowWarning':
         'Pour éviter les fraudes et les hameçons, n\'envoyez jamais de messages ou payez en dehors de Carpooll.com',
     'app_to': 'à',
+    'app_newUpdate': 'Nouvelle mise à jour',
+    'app_yayThereIsNewUpdateFrom': 'Youpi ! il y a une nouvelle mise à jour de',
+    'app_pleaseUpdateNow': 'Veuillez mettre à jour maintenant !',
+    'app_wouldYouLikeToUpdate': 'Souhaitez-vous mettre à jour ?',
+    'app_releaseNote': 'Notes de version',
+    'app_later': 'Plus tard',
+    'app_updateNow': 'Mettre à jour maintenant',
+    'app_postedRides': 'Trajets Publiés',
+    'app_enterCostBetween': 'Entrez le prix entre',
     'app_defaultDate': '2024-12-31T00:00:00.000Z',
     'app_carpoollCash': 'Carpooll.com argent liquide',
     'app_dollar5': '“\$5”',

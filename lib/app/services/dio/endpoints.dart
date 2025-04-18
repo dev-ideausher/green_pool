@@ -104,6 +104,7 @@ class Endpoints {
   static const String unreadCount = "driver/rides/unreadCount";
   static const String allArchivedChats = "chat/archivedChats";
   static const String driverHistory = "driver/driverHistory/";
+  static const String prevPostedRides = "driver/rides/recent";
 
   //patch url
   static const String emergencyContactsUpdate = "user/emergencyContacts";

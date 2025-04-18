@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:green_pool/app/components/gp_progress.dart';
 import 'package:green_pool/app/components/green_pool_divider.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
-import 'package:green_pool/app/components/origin_to_destination.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/custom_button.dart';
@@ -14,6 +13,7 @@ import 'package:green_pool/app/services/text_style_util.dart';
 import 'package:green_pool/generated/locales.g.dart';
 
 import '../../../components/greenpool_textfield.dart';
+import '../../../components/route_widget.dart';
 import '../../../routes/app_pages.dart';
 import '../controllers/pay_now_controller.dart';
 
@@ -35,13 +35,19 @@ class PayNowView extends GetView<PayNowController> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    OriginToDestination(
-                            origin: controller.origin ?? "",
-                            stop1: controller.stop1 ?? "",
-                            stop2: controller.stop2 ?? "",
-                            destination: controller.destination ?? "",
-                            needPickupText: false)
-                        .paddingSymmetric(horizontal: 16.kw),
+                    Container(
+                      padding: EdgeInsets.all(12.kh),
+                      decoration: BoxDecoration(
+                        color: ColorUtil.kWhiteColor,
+                        borderRadius: BorderRadius.circular(12.kh),
+                      ),
+                      child: RouteWidget(
+                          origin: controller.origin ?? "",
+                          stop1: controller.stop1 ?? "",
+                          stop2: controller.stop2 ?? "",
+                          destination: controller.destination ?? "",
+                          needPickUp: false),
+                    ),
                     24.kheightBox,
                     Text(
                       LocaleKeys.app_promotions.tr,

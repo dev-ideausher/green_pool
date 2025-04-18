@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:green_pool/app/components/route_widget.dart';
 import 'package:green_pool/app/modules/map_driver_send_request/controllers/map_driver_send_request_controller.dart';
 import 'package:green_pool/app/modules/map_driver_send_request/views/map_driver_send_request_view.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
@@ -9,12 +10,10 @@ import '../../../../generated/locales.g.dart';
 import '../../../components/common_image_view.dart';
 import '../../../components/gp_progress.dart';
 import '../../../components/green_pool_divider.dart';
-import '../../../components/origin_to_destination.dart';
 import '../../../constants/image_constant.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
 import '../../../utils/date_utils.dart';
-import '../../../utils/gp_util.dart';
 import '../../../services/snackbar.dart';
 import '../../../services/text_style_util.dart';
 import '../../home/controllers/home_controller.dart';
@@ -135,15 +134,16 @@ class SendRequest extends GetView<MyRidesRequestController> {
                                 ],
                               ).paddingOnly(bottom: 8.kh),
 
-                              const GreenPoolDivider()
-                                  .paddingOnly(bottom: 8.kh),
-                              OriginToDestination(
-                                      origin:
-                                          "${controller.sendRequestModel.value.data![index].origin?.name}",
-                                      destination:
-                                          "${controller.sendRequestModel.value.data![index].destination?.name}",
-                                      needPickupText: false)
-                                  .paddingOnly(bottom: 8.kh),
+                              const GreenPoolDivider(),
+                              RouteWidget(
+                                needPickUp: false,
+                                origin:
+                                    "${controller.sendRequestModel.value.data![index].origin?.name}",
+                                destination:
+                                    "${controller.sendRequestModel.value.data![index].destination?.name}",
+                                stop1: "",
+                                stop2: "",
+                              ),
                               const GreenPoolDivider()
                                   .paddingOnly(bottom: 16.kh),
                               //

@@ -5,8 +5,10 @@ import 'package:get/get.dart';
 import 'package:get/get_rx/src/rx_workers/utils/debouncer.dart';
 import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/generated/locales.g.dart';
+import 'package:intl/intl.dart';
 
 import '../../../data/booking_detail_model.dart';
+import '../../../data/post_ride_model.dart';
 import '../../../data/ride_fare_model.dart';
 import '../../../services/colors.dart';
 import '../../../services/dialog_helper.dart';
@@ -17,12 +19,31 @@ import '../../../utils/gp_util.dart';
 import '../../../utils/validation.dart';
 import '../../home/controllers/home_controller.dart';
 
-class MyRidesEditController extends GetxController {
+class MyRidesEditController extends GetxController
+    with GetSingleTickerProviderStateMixin {
   TextEditingController selectedDate = TextEditingController();
   TextEditingController formattedOneTimeDate = TextEditingController();
   TextEditingController selectedTime = TextEditingController();
   final RxInt seatCount = 1.obs;
   var editData = BookingDetailModelData().obs;
+
+  //return trip
+  RxBool isReturn = false.obs;
+  TextEditingController selectedReturnDate = TextEditingController();
+  TextEditingController formattedReturnDate = TextEditingController();
+  TextEditingController selectedReturnTime = TextEditingController();
+
+  //recurring trip
+  //for Days of week
+  RxBool isMonday = false.obs; //1
+  RxBool isTuesday = false.obs; //2
+  RxBool isWednesday = false.obs; //3
+  RxBool isThursDay = false.obs; //4
+  RxBool isFriday = false.obs; //5
+  RxBool isSaturday = false.obs; //6
+  RxBool isSunday = false.obs; //7
+  List<int?>? daysOfWeek = <int>[].obs;
+  TextEditingController selectedRecurringTime = TextEditingController();
 
   //amenities
   RxBool appreciatesConversation = false.obs;
@@ -47,8 +68,7 @@ class MyRidesEditController extends GetxController {
   RxBool isLoading = true.obs;
   RxDouble maxFarePrice = 0.0.obs;
   RxDouble minFarePrice = 0.0.obs;
-  num totalDistance =
-      0; //need to add this data and stops data to myRidesModel from backend
+  num totalDistance = 0;
   RxBool isActivePricingButton = false.obs;
 
   var orToDestPrice = TextEditingController();
@@ -58,9 +78,20 @@ class MyRidesEditController extends GetxController {
   var stop1ToDestinationPrice = TextEditingController();
   var stop2toDestinationPrice = TextEditingController();
 
+  bool fromPrevPosted = false;
+  RxInt tabIndex = 0.obs;
+  late TabController tabController;
+  RxBool isPinkMode = Get.find<HomeController>().isPinkModeOn;
+  RxBool isButtonActive = false.obs;
+
   @override
   void onInit() {
     super.onInit();
+    fromPrevPosted = Get.previousRoute == Routes.PREV_POSTED;
+    tabController = TabController(length: 2, vsync: this);
+    tabController.addListener(() {
+      tabIndex.value = tabController.index; // Sync TabController with RxInt
+    });
     editData.value = Get.arguments;
     _setExistingDateTime();
   }
@@ -68,6 +99,12 @@ class MyRidesEditController extends GetxController {
   @override
   void onReady() {
     super.onReady();
+  }
+
+  @override
+  void onClose() {
+    super.onClose();
+    tabController.dispose();
   }
 
   void _setExistingDateTime() {
@@ -81,6 +118,7 @@ class MyRidesEditController extends GetxController {
     seatCount.value = data?.seatAvailable ?? 1;
 
     luggageWeight.value = data?.preferences?.luggageType ?? "No";
+    setLuggageWeight(luggageWeight.value);
 
     appreciatesConversation.value =
         data?.preferences?.other?.AppreciatesConversation ?? false;
@@ -109,6 +147,31 @@ class MyRidesEditController extends GetxController {
             data?.stops?[1]?.originToStopFair?.toString() ?? "";
         stop2toDestinationPrice.text =
             data?.stops?[1]?.stopTodestinationFair?.toString() ?? "";
+      }
+    }
+
+    // set values for recurring ride and return ride
+    isReturn.value = data?.returnTrip?.isReturnTrip ?? false;
+    if (data?.recurringTrip?.isRecurringTripEnabled ?? false) {
+      setTabIndex(1);
+      final recurringDays = data?.recurringTrip?.recurringTripDays ?? [];
+      if (recurringDays.isNotEmpty) {
+        daysOfWeek = recurringDays;
+        debugPrint("DAYS OF WEEK $daysOfWeek");
+
+        final dayMap = {
+          1: isMonday,
+          2: isTuesday,
+          3: isWednesday,
+          4: isThursDay,
+          5: isFriday,
+          6: isSaturday,
+          7: isSunday,
+        };
+
+        dayMap.forEach((day, value) {
+          value.value = recurringDays.contains(day);
+        });
       }
     }
 
@@ -213,7 +276,8 @@ class MyRidesEditController extends GetxController {
       maxFarePrice.value = rideFareModel.data!.maxPrice!;
       minFarePrice.value = rideFareModel.data!.minPrice!;
 
-      if (double.parse(orToDestPrice.text) < minFarePrice.value ||
+      if (orToDestPrice.text == "" ||
+          double.parse(orToDestPrice.text) < minFarePrice.value ||
           double.parse(orToDestPrice.text) > maxFarePrice.value) {
         orToDestPrice.text = minFarePrice.round().toString();
       }
@@ -463,8 +527,242 @@ class MyRidesEditController extends GetxController {
     );
   }
 
-  @override
-  void onClose() {
-    super.onClose();
+  //PREVIOUS RIDE UTILS
+
+  Future<void> setReturnDate(BuildContext context) async {
+    DateTime? pickedDate = Platform.isIOS
+        ? await DialogHelper.cupertinoDatePicker(context, DateTime.now(),
+            DateTime.now().add(const Duration(days: 3 * 30)), DateTime.now())
+        : await showDatePicker(
+            context: context,
+            builder: _pickerTheme,
+            firstDate: DateTime.now(),
+            lastDate: DateTime.now().add(const Duration(days: 3 * 30)),
+            initialDate: DateTime.now());
+
+    if (pickedDate != null) {
+      String formattedDate = pickedDate.toIso8601String();
+      if (!DateTimeUtils.isToday(DateTime.parse(selectedDate.text)) &&
+          DateTimeUtils.isToday(DateTime.parse(formattedDate))) {
+        showMySnackbar(msg: "Please select a valid date");
+      } else {
+        selectedReturnDate.text = formattedDate;
+        debugPrint("SELECTED RETURN DATE ${selectedReturnDate.text}");
+        selectedReturnTime.clear();
+        formattedReturnDate.text =
+            "${pickedDate.day}/${pickedDate.month}/${pickedDate.year}";
+        setActiveStateCarpoolSchedule();
+      }
+    }
+  }
+
+  Future<void> setReturnTime(BuildContext context) async {
+    TimeOfDay? pickedTime = Platform.isIOS
+        ? await DialogHelper.cupertinoTimePicker(context)
+        : await showTimePicker(
+            context: context,
+            builder: _pickerTheme,
+            initialTime: TimeOfDay.now(),
+            initialEntryMode: TimePickerEntryMode.dial,
+          );
+
+    if (pickedTime != null) {
+      final MaterialLocalizations localizations =
+          MaterialLocalizations.of(context);
+      String formattedTime = localizations.formatTimeOfDay(pickedTime,
+          alwaysUse24HourFormat: false);
+      if (DateTimeUtils.isToday(
+          DateTime.parse(selectedReturnDate.value.text))) {
+        // If the date is today, validate the return time
+        if (validateReturnTime(formattedTime)) {
+          selectedReturnTime.text = formattedTime.toString();
+          setActiveStateCarpoolSchedule();
+        } else {
+          showMySnackbar(
+              msg:
+                  "Please ensure that the return time is a minimum of 2 hours later than the scheduled time.");
+        }
+      } else {
+        selectedReturnTime.text = formattedTime.toString();
+        setActiveStateCarpoolSchedule();
+      }
+    }
+  }
+
+  bool validateReturnTime(String returnTime) {
+    try {
+      // Parse the input time strings
+      DateFormat format = DateFormat("hh:mm a");
+      DateTime parsedReturnTime = format.parse(returnTime);
+      DateTime scheduledTime = format.parse(selectedTime.value.text);
+
+      // Combine the date parts from current date and the time parts from parsed times
+      DateTime now = DateTime.now();
+      DateTime scheduledDateTime = DateTime(
+        now.year,
+        now.month,
+        now.day,
+        scheduledTime.hour,
+        scheduledTime.minute,
+      );
+      DateTime returnDateTime = DateTime(
+        now.year,
+        now.month,
+        now.day,
+        parsedReturnTime.hour,
+        parsedReturnTime.minute,
+      );
+
+      // Add 2 hours to the scheduled time
+      DateTime validTime =
+          scheduledDateTime.add(const Duration(hours: 1, minutes: 59));
+
+      // Check if the return time is at least 2 hours more than the scheduled time
+      return returnDateTime.isAfter(validTime);
+    } catch (e) {
+      debugPrint("Error parsing time string: $e");
+      return false;
+    }
+  }
+
+  void setTabIndex(int index) {
+    tabIndex.value = index;
+    tabController.animateTo(index);
+    // setActiveStateCarpoolSchedule();
+  }
+
+  void addDays(int heading) {
+    if (daysOfWeek == null) return;
+
+    if (!daysOfWeek!.contains(heading)) {
+      daysOfWeek!.add(heading);
+      daysOfWeek!.sort();
+    }
+  }
+
+  void removeDays(int heading) {
+    daysOfWeek?.remove(heading);
+  }
+
+  Future<void> setRecurringTime(BuildContext context) async {
+    TimeOfDay? pickedTime = Platform.isIOS
+        ? await DialogHelper.cupertinoTimePicker(context)
+        : await showTimePicker(
+            context: context,
+            builder: _pickerTheme,
+            initialTime: TimeOfDay.now(),
+            initialEntryMode: TimePickerEntryMode.dial,
+          );
+
+    if (pickedTime != null) {
+      // Use MaterialLocalizations to format the time in 24-hour format
+      final MaterialLocalizations localizations =
+          MaterialLocalizations.of(context);
+      String formattedTime = localizations.formatTimeOfDay(pickedTime,
+          alwaysUse24HourFormat: false);
+      selectedRecurringTime.text = formattedTime;
+      setActiveStateCarpoolSchedule();
+
+      /*if (GpUtil.isAfterCurrentTime(formattedTime)) {
+        selectedRecurringTime.text = formattedTime;
+        setActiveStateCarpoolSchedule();
+      } else {
+        showMySnackbar(msg: "Please select a valid time");
+        selectedRecurringTime.clear();
+      }*/
+    }
+  }
+
+  setActiveStateCarpoolSchedule() {
+    if (tabIndex.value == 0
+        ? isReturn.value
+            ? (formattedOneTimeDate.value.text.isNotEmpty &&
+                selectedTime.value.text.isNotEmpty &&
+                selectedReturnDate.value.text.isNotEmpty &&
+                selectedReturnTime.value.text.isNotEmpty)
+            : (formattedOneTimeDate.value.text.isNotEmpty &&
+                selectedTime.value.text.isNotEmpty)
+        : (daysOfWeek!.isNotEmpty && selectedRecurringTime.text.isNotEmpty)) {
+      isButtonActive.value = true;
+    } else {
+      isButtonActive.value = false;
+    }
+  }
+
+  toPublishRide() {
+    final combinedDateTime =
+        "${selectedDate.text.toString().split("T").first}T${selectedTime.text}";
+
+    final combinedDateTimeUTC =
+        DateTimeUtils.convertCombinedToGmt(combinedDateTime);
+
+    final date = combinedDateTimeUTC.split("T").first;
+    final time = combinedDateTimeUTC;
+
+    final combinedReturnDateTime =
+        "${selectedReturnDate.text.toString().split("T").first}T${selectedReturnTime.text}";
+
+    final combinedReturnDateTimeUTC =
+        DateTimeUtils.convertCombinedToGmt(combinedReturnDateTime);
+
+    final returnDate = combinedReturnDateTimeUTC.split("T").first;
+    final returnTime = combinedReturnDateTimeUTC;
+
+    final combinedRecurringTime =
+        "${selectedDate.text.toString().split("T").first}T${selectedRecurringTime.text}";
+    final recurringTime =
+        DateTimeUtils.convertCombinedToGmt(combinedRecurringTime);
+
+    Get.toNamed(Routes.POST_RIDE_STEP_FOUR,
+        arguments: PostRideModel(
+          ridesDetails: PostRideModelRidesDetails(
+            origin: PostRideModelRidesDetailsOrigin(
+                name: editData.value.driverBookingDetails?.origin?.name,
+                latitude: editData
+                    .value.driverBookingDetails?.origin?.coordinates?.last,
+                longitude: editData
+                    .value.driverBookingDetails?.origin?.coordinates?.first),
+            destination: PostRideModelRidesDetailsDestination(
+                name: editData.value.driverBookingDetails?.destination?.name,
+                latitude: editData
+                    .value.driverBookingDetails?.destination?.coordinates?.last,
+                longitude: editData.value.driverBookingDetails?.destination
+                    ?.coordinates?.first),
+            stops: editData.value.driverBookingDetails?.stops
+                ?.map((e) => PostRideModelRidesDetailsStops(
+                    name: e?.name ?? "",
+                    latitude: e?.coordinates?.last ?? 0,
+                    longitude: e?.coordinates?.first ?? 0,
+                    originToStopFair: e?.originToStopFair ?? "",
+                    stopToStopFair: e?.stopToStopFair ?? "",
+                    stopTodestinationFair: e?.stopTodestinationFair ?? ""))
+                .toList(),
+            tripType: tabIndex.value == 0 ? "oneTime" : "recurring",
+            date: tabIndex.value == 0
+                ? date
+                : recurringTime.toString().split("T").first,
+            time: tabIndex.value == 1 ? recurringTime : time,
+            recurringTrip: PostRideModelRidesDetailsRecurringTrip(
+                recurringTripDays: tabIndex.value == 1 ? daysOfWeek : []),
+            seatAvailable: seatCount.value,
+            preferences: PostRideModelRidesDetailsPreferences(
+                luggageType: selectedCHIP.value,
+                other: PostRideModelRidesDetailsPreferencesOther(
+                  AppreciatesConversation: appreciatesConversation.value,
+                  EnjoysMusic: enjoysMusic.value,
+                  SmokeFree: smokeFree.value,
+                  PetFriendly: petFriendly.value,
+                  WinterTires: winterTires.value,
+                  CoolingOrHeating: coolingOrHeating.value,
+                  BabySeat: babySeat.value,
+                  HeatedSeats: heatedSeats.value,
+                )),
+            returnTrip: PostRideModelRidesDetailsReturnTrip(
+              isReturnTrip: tabIndex.value != 1 ? isReturn.value : false,
+              returnDate: tabIndex.value != 1 ? returnDate : "",
+              returnTime: tabIndex.value != 1 ? returnTime : "",
+            ),
+          ),
+        ));
   }
 }

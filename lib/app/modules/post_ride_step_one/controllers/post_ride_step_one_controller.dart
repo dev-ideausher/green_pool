@@ -168,7 +168,11 @@ class PostRideStepOneController extends GetxController {
     destLongitude.value = 0.0;
   }
 
-  void setPrevRideData() {
+  toPrevRides() {
+    Get.toNamed(Routes.PREV_POSTED);
+  }
+}
+  /*void setPrevRideData() {
     final prevRide = Get.find<GetStorageService>().getPostRideData();
     prevRideData.value = prevRide ?? PostRideModel();
     final rideDetails = prevRideData.value.ridesDetails;
@@ -201,5 +205,5 @@ class PostRideStepOneController extends GetxController {
       isStop2Added.value = true;
     }
     setActiveStatePostRideView();
-  }
-}
+  }*/
+

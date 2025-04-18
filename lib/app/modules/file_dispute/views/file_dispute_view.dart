@@ -178,26 +178,17 @@ class FileDisputeView extends GetView<FileDisputeController> {
                                   ).paddingOnly(bottom: 8.kh),
                                   const GreenPoolDivider(),
                                   RouteWidget(
-                                          needPickUp: false,
-                                          origin:
-                                              "${controller.fileDisputeModel.value.data?[index]?.origin?.name}",
-                                          stop1: controller
-                                                  .fileDisputeModel
-                                                  .value
-                                                  .data?[index]
-                                                  ?.stops?[0]
-                                                  ?.name ??
-                                              "",
-                                          stop2: controller
-                                                  .fileDisputeModel
-                                                  .value
-                                                  .data?[index]
-                                                  ?.stops?[1]
-                                                  ?.name ??
-                                              "",
-                                          destination:
-                                              "${controller.fileDisputeModel.value.data?[index]?.destination?.name}")
-                                      .paddingSymmetric(vertical: 8.kh),
+                                      needPickUp: false,
+                                      origin:
+                                          "${controller.fileDisputeModel.value.data?[index]?.origin?.name}",
+                                      stop1: controller.fileDisputeModel.value
+                                              .data?[index]?.stops?[0]?.name ??
+                                          "",
+                                      stop2: controller.fileDisputeModel.value
+                                              .data?[index]?.stops?[1]?.name ??
+                                          "",
+                                      destination:
+                                          "${controller.fileDisputeModel.value.data?[index]?.destination?.name}"),
                                   const GreenPoolDivider()
                                       .paddingOnly(bottom: 16.kh),
                                   Obx(

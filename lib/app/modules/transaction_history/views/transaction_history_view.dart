@@ -235,14 +235,14 @@ class TransactionTile extends StatelessWidget {
               ),
               trailing: trailing ?? const SizedBox(),
             ),
-            const GreenPoolDivider().paddingSymmetric(vertical: 8.kh),
+            const GreenPoolDivider().paddingOnly(top: 8.kh),
             RouteWidget(
                 origin: origin,
                 destination: destination,
                 stop1: "",
                 stop2: "",
                 needPickUp: true),
-            const GreenPoolDivider().paddingSymmetric(vertical: 8.kh),
+            const GreenPoolDivider().paddingOnly(bottom: 8.kh),
             // Text(
             //   subtitle,
             //   style: TextStyleUtil.k14Regular(color: ColorUtil.kBlack04),

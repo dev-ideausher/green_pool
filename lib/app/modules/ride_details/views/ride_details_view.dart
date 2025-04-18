@@ -6,6 +6,7 @@ import 'package:green_pool/app/components/common_image_view.dart';
 import 'package:green_pool/app/components/green_pool_divider.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/components/origin_to_destination.dart';
+import 'package:green_pool/app/components/route_widget.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
@@ -210,15 +211,14 @@ class RideDetailsView extends GetView<RideDetailsController> {
                 ],
               ),
               //middle divider
-              const GreenPoolDivider().paddingOnly(bottom: 16.kh),
-              OriginToDestination(
-                      origin: '${controller.rideHistory.value.origin?.name}',
-                      stop1: controller.rideHistory.value.stops?[0]?.name ?? "",
-                      stop2: controller.rideHistory.value.stops?[1]?.name ?? "",
-                      destination:
-                          '${controller.rideHistory.value.destination?.name}',
-                      needPickupText: true)
-                  .paddingOnly(bottom: 8.kh),
+              const GreenPoolDivider(),
+              RouteWidget(
+                  origin: '${controller.rideHistory.value.origin?.name}',
+                  stop1: controller.rideHistory.value.stops?[0]?.name ?? "",
+                  stop2: controller.rideHistory.value.stops?[1]?.name ?? "",
+                  destination:
+                      '${controller.rideHistory.value.destination?.name}',
+                  needPickUp: true),
               //bottom line
               const GreenPoolDivider(),
             ],

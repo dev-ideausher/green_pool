@@ -304,6 +304,10 @@ class APIManager {
       await DioClient(Dio(), showSnakbar: false, isOverlayLoader: false)
           .get(Endpoints.driverHistory + driverId);
 
+  static Future<Response> getPrevPostedRides() async =>
+      await DioClient(Dio(), showSnakbar: false, isOverlayLoader: false)
+          .get(Endpoints.prevPostedRides);
+
   //--------------------patch--------------------//
   static Future<Response> userDetails({required dynamic body}) async =>
       await DioClient(Dio(), showSnakbar: true, isOverlayLoader: true).patch(

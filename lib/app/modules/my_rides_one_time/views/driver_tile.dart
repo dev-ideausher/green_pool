@@ -8,7 +8,6 @@ import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../../generated/locales.g.dart';
 import '../../../components/common_image_view.dart';
-import '../../../components/origin_to_destination.dart';
 import '../../../constants/image_constant.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';

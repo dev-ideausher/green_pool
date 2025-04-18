@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:green_pool/app/modules/my_rides_edit/controllers/my_rides_edit_controller.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
@@ -9,10 +10,9 @@ import '../../../components/greenpool_textfield.dart';
 import '../../../components/richtext_heading.dart';
 import '../../../constants/image_constant.dart';
 import '../../../services/text_style_util.dart';
-import '../controllers/post_ride_step_two_controller.dart';
 
-class OneTimeTripView extends GetView<PostRideStepTwoController> {
-  const OneTimeTripView({super.key});
+class TripView extends GetView<MyRidesEditController> {
+  const TripView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class OneTimeTripView extends GetView<PostRideStepTwoController> {
 
         RichTextHeading(text: LocaleKeys.app_date.tr),
         GreenPoolTextField(
-          textStyle: TextStyleUtil.k14Medium(color: ColorUtil.kBlack01),
+            textStyle: TextStyleUtil.k14Medium(color: ColorUtil.kBlack01),
             controller: controller.formattedOneTimeDate,
             hintText: LocaleKeys.app_selectDate.tr,
             readOnly: true,
@@ -87,11 +87,11 @@ class OneTimeTripView extends GetView<PostRideStepTwoController> {
                   activeTrackColor: controller.isPinkMode.value
                       ? ColorUtil.kPrimary3PinkMode
                       : ColorUtil.kSecondary01,
-                  trackOutlineWidth: const WidgetStatePropertyAll(0),
+                  trackOutlineWidth: const MaterialStatePropertyAll(0),
                   thumbColor:
-                      const WidgetStatePropertyAll(ColorUtil.kWhiteColor),
+                      const MaterialStatePropertyAll(ColorUtil.kWhiteColor),
                   trackOutlineColor:
-                      const WidgetStatePropertyAll(ColorUtil.kNeutral1),
+                      const MaterialStatePropertyAll(ColorUtil.kNeutral1),
                 ),
               ),
             ),
@@ -122,7 +122,8 @@ class OneTimeTripView extends GetView<PostRideStepTwoController> {
                     ).paddingSymmetric(vertical: 16.kh),
                     RichTextHeading(text: LocaleKeys.app_date.tr),
                     GreenPoolTextField(
-                      textStyle: TextStyleUtil.k14Medium(color: ColorUtil.kBlack01),
+                      textStyle:
+                          TextStyleUtil.k14Medium(color: ColorUtil.kBlack01),
                       hintText: LocaleKeys.app_selectDate.tr,
                       controller: controller.formattedReturnDate,
                       onTap: () {
@@ -144,7 +145,8 @@ class OneTimeTripView extends GetView<PostRideStepTwoController> {
                     ).paddingOnly(top: 8.kh, bottom: 16.kh),
                     RichTextHeading(text: LocaleKeys.app_time.tr),
                     GreenPoolTextField(
-                      textStyle: TextStyleUtil.k14Medium(color: ColorUtil.kBlack01),
+                      textStyle:
+                          TextStyleUtil.k14Medium(color: ColorUtil.kBlack01),
                       hintText: LocaleKeys.app_selectTime.tr,
                       onTap: () {
                         controller.setReturnTime(context);

@@ -10,7 +10,7 @@ import '../../../../generated/locales.g.dart';
 import '../../../components/common_image_view.dart';
 import '../../../components/gp_progress.dart';
 import '../../../components/green_pool_divider.dart';
-import '../../../components/origin_to_destination.dart';
+import '../../../components/route_widget.dart';
 import '../../../constants/image_constant.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
@@ -239,18 +239,14 @@ class RiderSendRequest extends GetView<RiderMyRideRequestController> {
                                     ),
                                   ],
                                 ),
-                                const GreenPoolDivider()
-                                    .paddingOnly(bottom: 16.kh),
-                                OriginToDestination(
-                                        needPickupText: false,
-                                        origin: "${rideDetails.origin?.name}",
-                                        stop1:
-                                            rideDetails.stops?[0]?.name ?? "",
-                                        stop2:
-                                            rideDetails.stops?[1]?.name ?? "",
-                                        destination:
-                                            "${rideDetails.destination?.name}")
-                                    .paddingOnly(bottom: 8.kh),
+                                const GreenPoolDivider(),
+                                RouteWidget(
+                                    needPickUp: false,
+                                    origin: "${rideDetails.origin?.name}",
+                                    stop1: rideDetails.stops?[0]?.name ?? "",
+                                    stop2: rideDetails.stops?[1]?.name ?? "",
+                                    destination:
+                                        "${rideDetails.destination?.name}"),
                                 const GreenPoolDivider()
                                     .paddingOnly(bottom: 16.kh),
                                 //

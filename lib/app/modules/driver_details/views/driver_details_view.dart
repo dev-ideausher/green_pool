@@ -4,7 +4,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/common_image_view.dart';
 import 'package:green_pool/app/components/route_widget.dart';
-import 'package:green_pool/app/routes/app_pages.dart';
 import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
@@ -23,6 +22,10 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
   const DriverDetailsView({super.key});
   @override
   Widget build(BuildContext context) {
+    final driverDetails =
+        controller.matchingRidesModelData.value.driverDetails?[0];
+    final otherPrefs =
+        controller.matchingRidesModelData.value.preferences?.other;
     return Scaffold(
       appBar: GreenPoolAppBar(
         title: Text(LocaleKeys.app_driverDetails.tr),
@@ -163,16 +166,15 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                 //middle divider
                 const GreenPoolDivider(),
                 RouteWidget(
-                        needPickUp: true,
-                        origin:
-                            "${controller.matchingRidesModelData.value.origin?.name}",
-                        stop1:
-                            "${controller.matchingRidesModelData.value.stops?[0]?.name}",
-                        stop2:
-                            "${controller.matchingRidesModelData.value.stops?[1]?.name}",
-                        destination:
-                            "${controller.matchingRidesModelData.value.destination?.name}")
-                    .paddingSymmetric(vertical: 8.kh),
+                    needPickUp: true,
+                    origin:
+                        "${controller.matchingRidesModelData.value.origin?.name}",
+                    stop1:
+                        "${controller.matchingRidesModelData.value.stops?[0]?.name}",
+                    stop2:
+                        "${controller.matchingRidesModelData.value.stops?[1]?.name}",
+                    destination:
+                        "${controller.matchingRidesModelData.value.destination?.name}"),
                 //bottom line
                 const GreenPoolDivider(),
               ],
@@ -356,78 +358,63 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
               style: TextStyleUtil.k14Bold(),
             ).paddingOnly(bottom: 16.kh),
 
-            controller.matchingRidesModelData.value.preferences?.other
-                        ?.AppreciatesConversation ==
-                    true
-                ? Amenities(
-                        toggleSwitch: false,
-                        text: LocaleKeys.app_appreciatesConversation.tr,
-                        image: ImageConstant.svgAmenities1)
-                    .paddingOnly(bottom: 8.kh)
-                : const SizedBox(),
-            controller.matchingRidesModelData.value.preferences?.other
-                        ?.EnjoysMusic ==
-                    true
-                ? Amenities(
-                        toggleSwitch: false,
-                        text: LocaleKeys.app_enjoysMusic.tr,
-                        image: ImageConstant.svgAmenities2)
-                    .paddingOnly(bottom: 8.kh)
-                : const SizedBox(),
-            controller.matchingRidesModelData.value.preferences?.other
-                        ?.SmokeFree ==
-                    true
-                ? Amenities(
-                        toggleSwitch: false,
-                        text: LocaleKeys.app_smokeFree.tr,
-                        image: ImageConstant.svgAmenities3)
-                    .paddingOnly(bottom: 8.kh)
-                : const SizedBox(),
-            controller.matchingRidesModelData.value.preferences?.other
-                        ?.PetFriendly ==
-                    true
-                ? Amenities(
-                        toggleSwitch: false,
-                        text: LocaleKeys.app_petFriendly.tr,
-                        image: ImageConstant.svgAmenities4)
-                    .paddingOnly(bottom: 8.kh)
-                : const SizedBox(),
-            controller.matchingRidesModelData.value.preferences?.other
-                        ?.WinterTires ==
-                    true
-                ? Amenities(
-                        toggleSwitch: false,
-                        text: LocaleKeys.app_winterTires.tr,
-                        image: ImageConstant.svgAmenities5)
-                    .paddingOnly(bottom: 8.kh)
-                : const SizedBox(),
-            controller.matchingRidesModelData.value.preferences?.other
-                        ?.CoolingOrHeating ==
-                    true
-                ? Amenities(
-                        toggleSwitch: false,
-                        text: LocaleKeys.app_coolingOrHeating.tr,
-                        image: ImageConstant.svgAmenities6)
-                    .paddingOnly(bottom: 8.kh)
-                : const SizedBox(),
-            controller.matchingRidesModelData.value.preferences?.other
-                        ?.BabySeat ==
-                    true
-                ? Amenities(
-                        toggleSwitch: false,
-                        text: LocaleKeys.app_babySeat.tr,
-                        image: ImageConstant.svgAmenities7)
-                    .paddingOnly(bottom: 8.kh)
-                : const SizedBox(),
-            controller.matchingRidesModelData.value.preferences?.other
-                        ?.HeatedSeats ==
-                    true
-                ? Amenities(
-                        toggleSwitch: false,
-                        text: LocaleKeys.app_heatedSeats.tr,
-                        image: ImageConstant.svgAmenities8)
-                    .paddingOnly(bottom: 8.kh)
-                : const SizedBox(),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Wrap(
+                spacing: 24.kw,
+                runSpacing: 12.kh,
+                children: [
+                  if (otherPrefs?.AppreciatesConversation == true)
+                    Amenities(
+                      toggleSwitch: false,
+                      text: LocaleKeys.app_appreciatesConversation.tr,
+                      image: ImageConstant.svgAmenities1,
+                    ),
+                  if (otherPrefs?.EnjoysMusic == true)
+                    Amenities(
+                      toggleSwitch: false,
+                      text: LocaleKeys.app_enjoysMusic.tr,
+                      image: ImageConstant.svgAmenities2,
+                    ),
+                  if (otherPrefs?.SmokeFree == true)
+                    Amenities(
+                      toggleSwitch: false,
+                      text: LocaleKeys.app_smokeFree.tr,
+                      image: ImageConstant.svgAmenities3,
+                    ),
+                  if (otherPrefs?.PetFriendly == true)
+                    Amenities(
+                      toggleSwitch: false,
+                      text: LocaleKeys.app_petFriendly.tr,
+                      image: ImageConstant.svgAmenities4,
+                    ),
+                  if (otherPrefs?.WinterTires == true)
+                    Amenities(
+                      toggleSwitch: false,
+                      text: LocaleKeys.app_winterTires.tr,
+                      image: ImageConstant.svgAmenities5,
+                    ),
+                  if (otherPrefs?.CoolingOrHeating == true)
+                    Amenities(
+                      toggleSwitch: false,
+                      text: LocaleKeys.app_coolingOrHeating.tr,
+                      image: ImageConstant.svgAmenities6,
+                    ),
+                  if (otherPrefs?.BabySeat == true)
+                    Amenities(
+                      toggleSwitch: false,
+                      text: LocaleKeys.app_babySeat.tr,
+                      image: ImageConstant.svgAmenities7,
+                    ),
+                  if (otherPrefs?.HeatedSeats == true)
+                    Amenities(
+                      toggleSwitch: false,
+                      text: LocaleKeys.app_heatedSeats.tr,
+                      image: ImageConstant.svgAmenities8,
+                    ),
+                ],
+              ),
+            ),
 
             const GreenPoolDivider().paddingSymmetric(vertical: 16.kh),
             /*Text(

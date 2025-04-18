@@ -13,7 +13,6 @@ import '../../../components/greenpool_textfield.dart';
 import '../../../components/richtext_heading.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
-import '../../../services/storage.dart';
 import '../../../services/text_style_util.dart';
 import '../controllers/post_ride_step_three_controller.dart';
 
@@ -25,17 +24,6 @@ class PostRideStepThreeView extends GetView<PostRideStepThreeController> {
     return Scaffold(
       appBar: GreenPoolAppBar(
         title: Text(LocaleKeys.app_postARide.tr),
-        actions: [
-          Obx(
-            () => Visibility(
-              visible: !controller.isLoading.value &&
-                  Get.find<GetStorageService>().getPostRideData() != null,
-              child: InkWell(
-                  onTap: () => controller.setPrevRideData(),
-                  child: Text(LocaleKeys.app_copy.tr, style: TextStyleUtil.k16Bold())),
-            ).paddingOnly(right: 16.kw),
-          )
-        ],
       ),
       body: Obx(
         () => controller.isLoading.value
@@ -76,7 +64,7 @@ class PostRideStepThreeView extends GetView<PostRideStepThreeController> {
                           TextStyleUtil.k14Semibold(color: ColorUtil.kBlack04),
                     ),
                     Text(
-                      '(Enter cost between ${controller.minFarePrice!.toStringAsFixed(0)} and ${controller.maxFarePrice!.toStringAsFixed(0)})',
+                      '(${LocaleKeys.app_enterCostBetween.tr} ${controller.minFarePrice.toStringAsFixed(0)} ${LocaleKeys.app_and.tr} ${controller.maxFarePrice.toStringAsFixed(0)})',
                       style:
                           TextStyleUtil.k14Semibold(color: ColorUtil.kBlack04),
                     ).paddingOnly(bottom: 8.kh),
@@ -90,7 +78,8 @@ class PostRideStepThreeView extends GetView<PostRideStepThreeController> {
                             height: 10.h,
                             child: GreenPoolTextField(
                               hintText: '',
-                              textStyle: TextStyleUtil.k14Medium(color: ColorUtil.kBlack01),
+                              textStyle: TextStyleUtil.k14Medium(
+                                  color: ColorUtil.kBlack01),
                               isSuffixNeeded: false,
                               keyboardType:
                                   const TextInputType.numberWithOptions(),

@@ -11,7 +11,7 @@ import '../../../../generated/locales.g.dart';
 import '../../../components/common_image_view.dart';
 import '../../../components/gp_progress.dart';
 import '../../../components/green_pool_divider.dart';
-import '../../../components/origin_to_destination.dart';
+import '../../../components/route_widget.dart';
 import '../../../constants/image_constant.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
@@ -283,9 +283,8 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                     ),
                                   ],
                                 ),
-                                const GreenPoolDivider()
-                                    .paddingOnly(bottom: 8.kh),
-                                OriginToDestination(
+                                const GreenPoolDivider(),
+                                RouteWidget(
                                   origin:
                                       "${data?.driverRideDetails?.origin?.name}",
                                   stop1: data?.driverRideDetails?.stops?[0]
@@ -296,8 +295,8 @@ class RiderConfirmRequest extends GetView<RiderMyRideRequestController> {
                                       "",
                                   destination:
                                       "${data?.driverRideDetails?.destination?.name}",
-                                  needPickupText: false,
-                                ).paddingOnly(bottom: 8.kh),
+                                  needPickUp: false,
+                                ),
                                 const GreenPoolDivider()
                                     .paddingOnly(bottom: 16.kh),
                                 Row(

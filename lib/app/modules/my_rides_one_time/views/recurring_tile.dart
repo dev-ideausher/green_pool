@@ -7,7 +7,6 @@ import 'package:green_pool/app/services/responsive_size.dart';
 import '../../../../generated/locales.g.dart';
 import '../../../components/common_image_view.dart';
 import '../../../components/green_pool_divider.dart';
-import '../../../components/origin_to_destination.dart';
 import '../../../components/route_widget.dart';
 import '../../../constants/image_constant.dart';
 import '../../../routes/app_pages.dart';
@@ -65,45 +64,16 @@ class RecurringTile extends StatelessWidget {
                         ? ColorUtil.kPrimary3PinkMode
                         : ColorUtil.kSecondary01,
                   )
-                  /*Obx(
-                    () => Transform.scale(
-                      scale: 0.8.kh,
-                      child: Switch(
-                        // value: controller
-                        //     .isScheduled[index].value,
-                        value: recurringResp
-                                ?.recurringTrip?.isRecurringTripEnabled ??
-                            false,
-                        onChanged: (value) {
-                          controller.enableRecurringAPI(recurringResp?.Id);
-                        },
-                        inactiveThumbColor: ColorUtil.kNeutral1,
-                        inactiveTrackColor:
-                            Get.find<HomeController>().isPinkModeOn.value
-                                ? ColorUtil.kSecondaryPinkMode
-                                : ColorUtil.kPrimary05,
-                        activeTrackColor:
-                            Get.find<HomeController>().isPinkModeOn.value
-                                ? ColorUtil.kPrimary3PinkMode
-                                : ColorUtil.kSecondary01,
-                        trackOutlineWidth: const MaterialStatePropertyAll(0),
-                        thumbColor: const MaterialStatePropertyAll(
-                            ColorUtil.kWhiteColor),
-                        trackOutlineColor:
-                            const MaterialStatePropertyAll(ColorUtil.kNeutral1),
-                      ),
-                    ),
-                  ),*/
                 ],
               ),
-              const GreenPoolDivider().paddingOnly(top: 8.kh, bottom: 8.kh),
+              const GreenPoolDivider().paddingOnly(top: 8.kh),
               RouteWidget(
                 needPickUp: false,
                 origin: "${recurringResp?.origin?.name}",
                 stop1: "",
                 stop2: "",
                 destination: "${recurringResp?.destination?.name}",
-              ).paddingOnly(bottom: 8.kh),
+              ),
               const GreenPoolDivider().paddingOnly(bottom: 16.kh),
               Text(
                 LocaleKeys.app_riderDetails.tr,

@@ -31,14 +31,11 @@ class PostRideStepOneView extends GetView<PostRideStepOneController> {
       appBar: GreenPoolAppBar(
         title: Text(LocaleKeys.app_postARide.tr),
         actions: [
-          Visibility(
-            visible: Get.find<GetStorageService>().getPostRideData() != null,
-            child: InkWell(
-                onTap: () => controller.setPrevRideData(),
-                splashColor: Colors.transparent,
-                child: Text(LocaleKeys.app_copy.tr,
-                    style: TextStyleUtil.k16Bold())),
-          ).paddingOnly(right: 16.kw)
+          IconButton(
+            icon: const Icon(Icons.history),
+            color: ColorUtil.kBlack01,
+            onPressed: () => controller.toPrevRides(),
+          )
         ],
       ),
       resizeToAvoidBottomInset: false,

@@ -9,7 +9,6 @@ import 'package:intl/intl.dart';
 
 import '../../../routes/app_pages.dart';
 import '../../../services/colors.dart';
-import '../../../services/storage.dart';
 import '../../../utils/date_utils.dart';
 import '../../home/controllers/home_controller.dart';
 
@@ -75,6 +74,12 @@ class PostRideStepTwoController extends GetxController
     });
     _setInitialTimeAndDate();
     setActiveStateCarpoolSchedule();
+  }
+
+  @override
+  void onClose() {
+    super.onClose();
+    tabController.dispose();
   }
 
   void setTabIndex(int index) {
@@ -432,7 +437,7 @@ class PostRideStepTwoController extends GetxController
     );
   }
 
-  void setPrevRideData() {
+  /*void setPrevRideData() {
     // Retrieve previous ride data from storage
     final storageService = Get.find<GetStorageService>();
     final prevRide = storageService.getPostRideData() ?? PostRideModel();
@@ -553,6 +558,7 @@ class PostRideStepTwoController extends GetxController
     selectedRecurringTime.text =
         DateTimeUtils.convertUtcToLocal(rideDetails?.time ?? defaultRideTime);
   }
+  */
 
   void setLuggageWeight(String s) {
     if (selectedCHIP.value == "No") {

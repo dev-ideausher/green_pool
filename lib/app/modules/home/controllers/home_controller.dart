@@ -3,7 +3,6 @@ import 'dart:developer';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:green_pool/app/modules/home/views/noti_bottomsheet.dart';
@@ -14,12 +13,17 @@ import 'package:green_pool/app/services/push_notification_service.dart';
 import 'package:green_pool/app/services/storage.dart';
 import 'package:green_pool/app/services/version_k.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:green_pool/app/constants/image_constant.dart';
+import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../../generated/locales.g.dart';
 import '../../../data/user_info_model.dart';
 import '../../../routes/app_pages.dart';
+import '../../../services/colors.dart';
 import '../../../services/dio/api_service.dart';
 import '../../../services/snackbar.dart';
+import '../../../services/text_style_util.dart';
 
 class HomeController extends GetxController with Versionk {
   final RxInt selectedIndex = 0.obs;
@@ -248,5 +252,107 @@ class HomeController extends GetxController with Versionk {
     } catch (e) {
       debugPrint("Error fetching chat list: ${e.toString()}");
     }
+  }
+
+  List<Map<String, dynamic>> get navItemsData => [
+        {
+          "activeIcon": SvgPicture.asset(
+            ImageConstant.svgNavHomeFilled,
+            colorFilter: ColorFilter.mode(
+              Get.find<GetStorageService>().isPinkMode
+                  ? ColorUtil.kPrimary3PinkMode
+                  : ColorUtil.kSecondary01,
+              BlendMode.srcIn,
+            ),
+          ),
+          "icon": SvgPicture.asset(ImageConstant.svgNavHome),
+          "label": LocaleKeys.app_home.tr,
+        },
+        {
+          "activeIcon": Stack(
+            alignment: Alignment.topRight,
+            children: [
+              SvgPicture.asset(
+                ImageConstant.svgNavCarFilled,
+                colorFilter: ColorFilter.mode(
+                  Get.find<GetStorageService>().isPinkMode
+                      ? ColorUtil.kPrimary3PinkMode
+                      : ColorUtil.kSecondary01,
+                  BlendMode.srcIn,
+                ),
+              ),
+              if (reqsCount.value > 0) _buildBadge(reqsCount.value),
+            ],
+          ),
+          "icon": Stack(
+            alignment: Alignment.topRight,
+            children: [
+              SvgPicture.asset(ImageConstant.svgNavCar),
+              if (reqsCount.value > 0) _buildBadge(reqsCount.value),
+            ],
+          ),
+          "label": LocaleKeys.app_myRides.tr,
+        },
+        {
+          "activeIcon": Stack(
+            alignment: Alignment.topRight,
+            children: [
+              SvgPicture.asset(
+                ImageConstant.svgNavMessagesFilled,
+                colorFilter: ColorFilter.mode(
+                  Get.find<GetStorageService>().isPinkMode
+                      ? ColorUtil.kPrimary3PinkMode
+                      : ColorUtil.kSecondary01,
+                  BlendMode.srcIn,
+                ),
+              ),
+              if (totUnreadMsgs.value > 0) _buildBadge(totUnreadMsgs.value),
+            ],
+          ),
+          "icon": Stack(
+            alignment: Alignment.topRight,
+            children: [
+              SvgPicture.asset(ImageConstant.svgNavMessages),
+              if (totUnreadMsgs.value > 0) _buildBadge(totUnreadMsgs.value),
+            ],
+          ),
+          "label": LocaleKeys.app_messages.tr,
+        },
+        {
+          "activeIcon": SvgPicture.asset(
+            ImageConstant.svgNavProfileFilled,
+            colorFilter: ColorFilter.mode(
+              Get.find<GetStorageService>().isPinkMode
+                  ? ColorUtil.kPrimary3PinkMode
+                  : ColorUtil.kSecondary01,
+              BlendMode.srcIn,
+            ),
+          ),
+          "icon": SvgPicture.asset(ImageConstant.svgNavProfile),
+          "label": LocaleKeys.app_profile.tr,
+        },
+      ];
+
+  Widget _buildBadge(int count) {
+    return Container(
+      height: 14.kh,
+      width: 14.kw,
+      alignment: Alignment.center,
+      padding: EdgeInsets.symmetric(vertical: 1.kh, horizontal: 4.kw),
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: Get.find<GetStorageService>().isPinkMode
+            ? ColorUtil.kSecondaryPinkMode
+            : ColorUtil.kPrimary05,
+      ),
+      child: Text(
+        "$count",
+        style: TextStyleUtil.k8Semibold(
+          color: Get.find<GetStorageService>().isPinkMode
+              ? ColorUtil.kPrimary3PinkMode
+              : ColorUtil.kSecondary01,
+        ),
+      ),
+    );
   }
 }

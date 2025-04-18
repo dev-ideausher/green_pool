@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/components/common_image_view.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
+import 'package:green_pool/app/components/route_widget.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
 import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
@@ -11,7 +12,6 @@ import 'package:green_pool/app/services/responsive_size.dart';
 import '../../../../generated/locales.g.dart';
 import '../../../components/gp_progress.dart';
 import '../../../components/green_pool_divider.dart';
-import '../../../components/origin_to_destination.dart';
 import '../../../services/colors.dart';
 import '../../../services/text_style_util.dart';
 import '../../../utils/date_utils.dart';
@@ -312,15 +312,16 @@ class MatchingRidesView extends GetView<MatchingRidesController> {
                                                 ],
                                               ),
                                               //middle divider
-                                              const GreenPoolDivider()
-                                                  .paddingOnly(bottom: 8.kh),
-                                              OriginToDestination(
+                                              const GreenPoolDivider(),
+                                              RouteWidget(
+                                                needPickUp: false,
                                                 origin:
                                                     "${controller.matchingRidesModel.value.data![index]?.matchedOriginLocation?.name}",
                                                 destination:
                                                     "${controller.matchingRidesModel.value.data![index]?.matchedDestinationLocation?.name}",
-                                                needPickupText: false,
-                                              ).paddingOnly(bottom: 8.kh),
+                                                stop1: "",
+                                                stop2: "",
+                                              ),
                                               //bottom line
                                               const GreenPoolDivider(),
                                             ],

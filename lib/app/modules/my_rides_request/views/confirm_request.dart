@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:green_pool/app/components/route_widget.dart';
 import 'package:green_pool/app/modules/map_driver_confirm_request/controllers/map_driver_confirm_request_controller.dart';
 import 'package:green_pool/app/modules/map_driver_confirm_request/views/map_driver_confirm_request_view.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
@@ -10,7 +11,6 @@ import '../../../../generated/locales.g.dart';
 import '../../../components/common_image_view.dart';
 import '../../../components/gp_progress.dart';
 import '../../../components/green_pool_divider.dart';
-import '../../../components/origin_to_destination.dart';
 import '../../../constants/image_constant.dart';
 import '../../../services/colors.dart';
 import '../../../services/custom_button.dart';
@@ -136,15 +136,16 @@ class ConfirmRequest extends GetView<MyRidesRequestController> {
                                             svgPath: Assets.svgChat,
                                           )),
                                     )),
-                                const GreenPoolDivider()
-                                    .paddingOnly(bottom: 16.kh),
-                                OriginToDestination(
-                                        needPickupText: false,
-                                        origin:
-                                            "${controller.confirmRequestModel.value.data?[index].rideDetails?[0]?.origin?.name}",
-                                        destination:
-                                            "${controller.confirmRequestModel.value.data?[index].rideDetails?[0]?.destination?.name}")
-                                    .paddingOnly(bottom: 8.kh),
+                                const GreenPoolDivider(),
+                                RouteWidget(
+                                  needPickUp: false,
+                                  origin:
+                                      "${controller.confirmRequestModel.value.data?[index].rideDetails?[0]?.origin?.name}",
+                                  destination:
+                                      "${controller.confirmRequestModel.value.data?[index].rideDetails?[0]?.destination?.name}",
+                                  stop1: "",
+                                  stop2: "",
+                                ),
                                 const GreenPoolDivider()
                                     .paddingOnly(bottom: 16.kh),
                                 Row(

@@ -23,7 +23,10 @@ class Amenities extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isSwitch = toggleSwitch ?? true;
+
     return Row(
+      mainAxisSize: MainAxisSize.min,
       children: [
         SvgPicture.asset(
           image,
@@ -37,8 +40,8 @@ class Amenities extends StatelessWidget {
           text,
           style: TextStyleUtil.k14Semibold(),
         ),
-        const Expanded(child: SizedBox()),
-        toggleSwitch ?? true
+        Visibility(visible: isSwitch, child: const Expanded(child: SizedBox())),
+        isSwitch
             ? Transform.scale(
                 scale: 0.8.kh,
                 child: Switch(

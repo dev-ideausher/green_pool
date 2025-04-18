@@ -159,8 +159,9 @@ class DateTimeUtils {
   }
 
   static String convertUtcToLocal(String utcTimeString) {
+    //out put format 1:30 PM
     if (utcTimeString.isEmpty) {
-      return "";
+      return "00:00";
     }
 
     try {
@@ -176,7 +177,7 @@ class DateTimeUtils {
       return outputFormat.format(localDateTime);
     } catch (e) {
       debugPrint("INVALID DATE FORMAT: $e");
-      return "";
+      return "00:00";
     }
   }
 

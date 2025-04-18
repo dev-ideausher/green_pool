@@ -4,14 +4,12 @@ import 'package:green_pool/app/data/post_ride_model.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/generated/locales.g.dart';
 
-import '../../../res/strings.dart';
 import '../../../routes/app_pages.dart';
 import '../../../services/colors.dart';
 import '../../../services/dio/api_service.dart';
 import '../../../services/snackbar.dart';
 import '../../../services/storage.dart';
 import '../../../services/text_style_util.dart';
-import '../../home/controllers/home_controller.dart';
 
 class PostRideStepFourController extends GetxController {
   RxBool isChecked = false.obs;
@@ -21,6 +19,7 @@ class PostRideStepFourController extends GetxController {
   void onInit() {
     super.onInit();
     postRideModel.value = Get.arguments;
+    debugPrint(postRideModel.value.ridesDetails.toString());
   }
 
   void toggleCheckbox() {

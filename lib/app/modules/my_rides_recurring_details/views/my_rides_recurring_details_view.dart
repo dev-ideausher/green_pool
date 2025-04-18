@@ -29,8 +29,11 @@ class MyRidesRecurringDetailsView
       appBar: GreenPoolAppBar(
         title: Text(LocaleKeys.app_rideDetails.tr),
       ),
-      body: Obx(
-        () => controller.isLoading.value
+      body: Obx(() {
+        final driverDetails =
+            controller.recurringModel.value.data?.driverRideDetails?[0];
+        final otherPrefs = driverDetails?.preferences?.other;
+        return controller.isLoading.value
             ? const GpProgress()
             : SingleChildScrollView(
                 child: Column(
@@ -43,16 +46,14 @@ class MyRidesRecurringDetailsView
                         Text(
                           LocaleKeys.app_pickupToDrop.tr,
                           style: TextStyleUtil.k16Bold(),
-                        ).paddingOnly(bottom: 8.kh),
+                        ),
                         RouteWidget(
                           needPickUp: true,
                           stop1: "",
                           stop2: "",
-                          origin:
-                              "${controller.recurringModel.value.data?.driverRideDetails?[0]?.origin?.name}",
-                          destination:
-                              "${controller.recurringModel.value.data?.driverRideDetails?[0]?.destination?.name}",
-                        ).paddingOnly(bottom: 8.kh),
+                          origin: "${driverDetails?.origin?.name}",
+                          destination: "${driverDetails?.destination?.name}",
+                        ),
                         const GreenPoolDivider(),
                       ],
                     ).paddingOnly(bottom: 16.kh),
@@ -71,20 +72,20 @@ class MyRidesRecurringDetailsView
                                     width: 64.kw,
                                     child: CommonImageView(
                                         url:
-                                            "${controller.recurringModel.value.data?.driverRideDetails?[0]?.driverVehiclesDetails?[0]?.vehiclePic?.url}")))
+                                            "${driverDetails?.driverVehiclesDetails?[0]?.vehiclePic?.url}")))
                             .paddingOnly(right: 8.kw),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              '${controller.recurringModel.value.data?.driverRideDetails?[0]?.driverVehiclesDetails?[0]?.model}',
+                              '${driverDetails?.driverVehiclesDetails?[0]?.model}',
                               style: TextStyleUtil.k16Bold(
                                   color: ColorUtil.kBlack02),
                             ).paddingOnly(bottom: 4.kh),
                             Row(
                               children: [
                                 Text(
-                                  '${controller.recurringModel.value.data?.driverRideDetails?[0]?.driverVehiclesDetails?[0]?.type}',
+                                  '${driverDetails?.driverVehiclesDetails?[0]?.type}',
                                   style: TextStyleUtil.k14Semibold(
                                       color: ColorUtil.kBlack03),
                                 ),
@@ -95,7 +96,7 @@ class MyRidesRecurringDetailsView
                                 ).paddingSymmetric(
                                     vertical: 2.5.kh, horizontal: 8.kw),
                                 Text(
-                                  '${controller.recurringModel.value.data?.driverRideDetails?[0]?.driverVehiclesDetails?[0]?.licencePlate}',
+                                  '${driverDetails?.driverVehiclesDetails?[0]?.licencePlate}',
                                   style: TextStyleUtil.k14Semibold(
                                       color: ColorUtil.kBlack03),
                                 ),
@@ -113,78 +114,63 @@ class MyRidesRecurringDetailsView
                       style: TextStyleUtil.k14Bold(),
                     ).paddingOnly(bottom: 16.kh),
 
-                    controller.recurringModel.value.data?.driverRideDetails?[0]
-                                ?.preferences?.other?.AppreciatesConversation ==
-                            true
-                        ? Amenities(
-                                toggleSwitch: false,
-                                text: LocaleKeys.app_appreciatesConversation.tr,
-                                image: ImageConstant.svgAmenities1)
-                            .paddingOnly(bottom: 8.kh)
-                        : const SizedBox(),
-                    controller.recurringModel.value.data?.driverRideDetails?[0]
-                                ?.preferences?.other?.EnjoysMusic ==
-                            true
-                        ? Amenities(
-                                toggleSwitch: false,
-                                text: LocaleKeys.app_enjoysMusic.tr,
-                                image: ImageConstant.svgAmenities2)
-                            .paddingOnly(bottom: 8.kh)
-                        : const SizedBox(),
-                    controller.recurringModel.value.data?.driverRideDetails?[0]
-                                ?.preferences?.other?.SmokeFree ==
-                            true
-                        ? Amenities(
-                                toggleSwitch: false,
-                                text: LocaleKeys.app_smokeFree.tr,
-                                image: ImageConstant.svgAmenities3)
-                            .paddingOnly(bottom: 8.kh)
-                        : const SizedBox(),
-                    controller.recurringModel.value.data?.driverRideDetails?[0]
-                                ?.preferences?.other?.PetFriendly ==
-                            true
-                        ? Amenities(
-                                toggleSwitch: false,
-                                text: LocaleKeys.app_petFriendly.tr,
-                                image: ImageConstant.svgAmenities4)
-                            .paddingOnly(bottom: 8.kh)
-                        : const SizedBox(),
-                    controller.recurringModel.value.data?.driverRideDetails?[0]
-                                ?.preferences?.other?.WinterTires ==
-                            true
-                        ? Amenities(
-                                toggleSwitch: false,
-                                text: LocaleKeys.app_winterTires.tr,
-                                image: ImageConstant.svgAmenities5)
-                            .paddingOnly(bottom: 8.kh)
-                        : const SizedBox(),
-                    controller.recurringModel.value.data?.driverRideDetails?[0]
-                                ?.preferences?.other?.CoolingOrHeating ==
-                            true
-                        ? Amenities(
-                                toggleSwitch: false,
-                                text: LocaleKeys.app_coolingOrHeating.tr,
-                                image: ImageConstant.svgAmenities6)
-                            .paddingOnly(bottom: 8.kh)
-                        : const SizedBox(),
-                    controller.recurringModel.value.data?.driverRideDetails?[0]
-                                ?.preferences?.other?.BabySeat ==
-                            true
-                        ? Amenities(
-                                toggleSwitch: false,
-                                text: LocaleKeys.app_babySeat.tr,
-                                image: ImageConstant.svgAmenities7)
-                            .paddingOnly(bottom: 8.kh)
-                        : const SizedBox(),
-                    controller.recurringModel.value.data?.driverRideDetails?[0]
-                                ?.preferences?.other?.HeatedSeats ==
-                            true
-                        ? Amenities(
-                                toggleSwitch: false,
-                                text: LocaleKeys.app_heatedSeats.tr,
-                                image: ImageConstant.svgAmenities8)
-                            .paddingOnly(bottom: 8.kh)
-                        : const SizedBox(),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Wrap(
+                        spacing: 24.kw,
+                        runSpacing: 12.kh,
+                        children: [
+                          if (otherPrefs?.AppreciatesConversation == true)
+                            Amenities(
+                              toggleSwitch: false,
+                              text: LocaleKeys.app_appreciatesConversation.tr,
+                              image: ImageConstant.svgAmenities1,
+                            ),
+                          if (otherPrefs?.EnjoysMusic == true)
+                            Amenities(
+                              toggleSwitch: false,
+                              text: LocaleKeys.app_enjoysMusic.tr,
+                              image: ImageConstant.svgAmenities2,
+                            ),
+                          if (otherPrefs?.SmokeFree == true)
+                            Amenities(
+                              toggleSwitch: false,
+                              text: LocaleKeys.app_smokeFree.tr,
+                              image: ImageConstant.svgAmenities3,
+                            ),
+                          if (otherPrefs?.PetFriendly == true)
+                            Amenities(
+                              toggleSwitch: false,
+                              text: LocaleKeys.app_petFriendly.tr,
+                              image: ImageConstant.svgAmenities4,
+                            ),
+                          if (otherPrefs?.WinterTires == true)
+                            Amenities(
+                              toggleSwitch: false,
+                              text: LocaleKeys.app_winterTires.tr,
+                              image: ImageConstant.svgAmenities5,
+                            ),
+                          if (otherPrefs?.CoolingOrHeating == true)
+                            Amenities(
+                              toggleSwitch: false,
+                              text: LocaleKeys.app_coolingOrHeating.tr,
+                              image: ImageConstant.svgAmenities6,
+                            ),
+                          if (otherPrefs?.BabySeat == true)
+                            Amenities(
+                              toggleSwitch: false,
+                              text: LocaleKeys.app_babySeat.tr,
+                              image: ImageConstant.svgAmenities7,
+                            ),
+                          if (otherPrefs?.HeatedSeats == true)
+                            Amenities(
+                              toggleSwitch: false,
+                              text: LocaleKeys.app_heatedSeats.tr,
+                              image: ImageConstant.svgAmenities8,
+                            ),
+                        ],
+                      ),
+                    ),
 
                     /*const GreenPoolDivider().paddingSymmetric(vertical: 16.kh),
                     Text(
@@ -304,8 +290,8 @@ class MyRidesRecurringDetailsView
                     24.kheightBox,
                   ],
                 ).paddingSymmetric(horizontal: 16.kw),
-              ),
-      ),
+              );
+      }),
     );
   }
 

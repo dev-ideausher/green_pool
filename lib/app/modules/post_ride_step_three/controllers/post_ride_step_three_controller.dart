@@ -289,7 +289,7 @@ class PostRideStepThreeController extends GetxController {
     }
   }
 
-  //copy details from previous ride
+  /*//copy details from previous ride
   setPrevRideData() {
     final prevRide = Get.find<GetStorageService>().getPostRideData();
     prevRideData.value = prevRide ?? PostRideModel();
@@ -312,5 +312,5 @@ class PostRideStepThreeController extends GetxController {
       stop1ToStop2Price.text = stops[1].stopToStopFair ?? "5";
       stop2toDestinationPrice.text = stops[1].stopTodestinationFair ?? "5";
     }
-  }
+  }*/
 }

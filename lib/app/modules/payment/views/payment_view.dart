@@ -6,7 +6,6 @@ import 'package:green_pool/app/components/gp_progress.dart';
 import 'package:green_pool/app/components/green_pool_divider.dart';
 import 'package:green_pool/app/components/greenpool_appbar.dart';
 import 'package:green_pool/app/components/greenpool_textfield.dart';
-import 'package:green_pool/app/components/origin_to_destination.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/modules/payment/controllers/payment_controller.dart';
 import 'package:green_pool/app/services/colors.dart';
@@ -15,6 +14,7 @@ import 'package:green_pool/app/services/responsive_size.dart';
 import 'package:green_pool/app/services/text_style_util.dart';
 
 import '../../../../generated/locales.g.dart';
+import '../../../components/route_widget.dart';
 import '../../../routes/app_pages.dart';
 
 class PaymentView extends GetView<PaymentController> {
@@ -34,29 +34,19 @@ class PaymentView extends GetView<PaymentController> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Container(
-                    //   height: 53.kh,
-                    //   padding: EdgeInsets.all(16.kh),
-                    //   decoration: BoxDecoration(
-                    //     borderRadius: BorderRadius.circular(8.kh),
-                    //     color: ColorUtil.kGreyColor,
-                    //   ),
-                    // ).paddingOnly(left: 16.kw, right: 16.kw, bottom: 8.kh),
-                    // Container(
-                    //   height: 53.kh,
-                    //   padding: EdgeInsets.all(16.kh),
-                    //   decoration: BoxDecoration(
-                    //     borderRadius: BorderRadius.circular(8.kh),
-                    //     color: ColorUtil.kGreyColor,
-                    //   ),
-                    // ).paddingSymmetric(horizontal: 16.kw),
-                    OriginToDestination(
-                            origin: controller.origin ?? "",
-                            stop1: controller.stop1 ?? "",
-                            stop2: controller.stop2 ?? "",
-                            destination: controller.destination ?? "",
-                            needPickupText: false)
-                        .paddingSymmetric(horizontal: 16.kw),
+                    Container(
+                      padding: EdgeInsets.all(12.kh),
+                      decoration: BoxDecoration(
+                        color: ColorUtil.kWhiteColor,
+                        borderRadius: BorderRadius.circular(12.kh),
+                      ),
+                      child: RouteWidget(
+                          origin: controller.origin ?? "",
+                          stop1: controller.stop1 ?? "",
+                          stop2: controller.stop2 ?? "",
+                          destination: controller.destination ?? "",
+                          needPickUp: false),
+                    ),
                     24.kheightBox,
                     Text(
                       LocaleKeys.app_promotions.tr,
@@ -305,11 +295,13 @@ class PaymentView extends GetView<PaymentController> {
                               TextSpan(
                                 children: [
                                   TextSpan(
-                                    text: LocaleKeys.app_iConsentToTheseGuidelines.tr,
+                                    text: LocaleKeys
+                                        .app_iConsentToTheseGuidelines.tr,
                                     style: TextStyleUtil.k12Regular(),
                                   ),
                                   TextSpan(
-                                    text: LocaleKeys.app_driverCancellationPolicyf.tr,
+                                    text: LocaleKeys
+                                        .app_driverCancellationPolicyf.tr,
                                     style: TextStyleUtil.k12Semibold(
                                         color: Get.find<HomeController>()
                                                 .isPinkModeOn
@@ -321,7 +313,8 @@ class PaymentView extends GetView<PaymentController> {
                                           () => controller.getDriverPolicy(),
                                   ),
                                   TextSpan(
-                                    text: LocaleKeys.app_riderCancellationPolicyf.tr,
+                                    text: LocaleKeys
+                                        .app_riderCancellationPolicyf.tr,
                                     style: TextStyleUtil.k12Semibold(
                                         color: Get.find<HomeController>()
                                                 .isPinkModeOn
@@ -361,7 +354,9 @@ class PaymentView extends GetView<PaymentController> {
                                           Get.toNamed(Routes.POLICY_PRIVACY),
                                   ),
                                   TextSpan(
-                                    text: LocaleKeys.app_iAcknowledgeThatMyAccMayFaceSuspension.tr,
+                                    text: LocaleKeys
+                                        .app_iAcknowledgeThatMyAccMayFaceSuspension
+                                        .tr,
                                     style: TextStyleUtil.k12Regular(),
                                   ),
                                 ],

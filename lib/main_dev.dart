@@ -44,11 +44,6 @@ Future<void> main() async {
       ),
       defaultTransition: Transition.fade,
       smartManagement: SmartManagement.full,
-      supportedLocales: const [
-        Locale("en", "US"),
-        Locale("fr", "FR"),
-        Locale("es", "ES")
-      ],
       locale: Locale(Get.find<GetStorageService>().langCode,
           Get.find<GetStorageService>().langCodeV),
       fallbackLocale: AppLanguage.getLocale(),

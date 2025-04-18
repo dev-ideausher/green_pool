@@ -8,6 +8,7 @@ import 'package:lottie/lottie.dart';
 import 'package:flutter/material.dart';
 
 import 'package:url_launcher/url_launcher.dart';
+import '../../generated/locales.g.dart';
 import 'colors.dart';
 import 'text_style_util.dart';
 
@@ -32,13 +33,15 @@ mixin class Versionk {
             status.canUpdate) {
           showUpdateDialog(
               isMandatory: true,
+              title: "${LocaleKeys.app_newUpdate.tr}!",
               localver: status.localVersion,
               storever: status.storeVersion,
               releaseNote: status.releaseNotes ?? '',
               appStoreLink: status.appStoreLink);
         } else if (status.canUpdate) {
           showUpdateDialog(
-              isMandatory: false,
+              isMandatory: true,
+              title: "${LocaleKeys.app_newUpdate.tr}!",
               localver: status.localVersion,
               storever: status.storeVersion,
               releaseNote: status.releaseNotes ?? '',
@@ -52,7 +55,7 @@ mixin class Versionk {
   }
 
   void showUpdateDialog(
-      {String title = ' New Update!',
+      {String title = 'New Update!',
       String? localver = '',
       String? storever = '',
       bool isMandatory = true,
@@ -62,6 +65,7 @@ mixin class Versionk {
     Get.defaultDialog(
       titlePadding: EdgeInsets.only(top: 16.kh),
       title: title,
+      titleStyle: TextStyleUtil.k18Semibold(),
       content: Padding(
         padding: EdgeInsets.only(left: 8.0.kw, right: 8.0.kw, top: 8.0.kw),
         child: Column(
@@ -74,22 +78,24 @@ mixin class Versionk {
               fit: BoxFit.fill,
             ),*/
             Text(
-              'Yay! there is new update from $localver to $storever',
+              '${LocaleKeys.app_yayThereIsNewUpdateFrom.tr} $localver ${LocaleKeys.app_to.tr} $storever',
               textAlign: TextAlign.center,
+              style: TextStyleUtil.k14Regular(),
             ),
             SizedBox(height: 20.kh),
             Text(
-              isMandatory ? 'Please update now!' : 'Would you like to update?',
+              isMandatory
+                  ? LocaleKeys.app_pleaseUpdateNow.tr
+                  : LocaleKeys.app_wouldYouLikeToUpdate.tr,
               textAlign: TextAlign.center,
+              style: TextStyleUtil.k16Bold(),
             ),
             SizedBox(height: 20.kh),
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                'Release Note:',
-                style: TextStyleUtil.k14Regular(
-                  color: Colors.black,
-                ),
+                '${LocaleKeys.app_releaseNote.tr}:',
+                style: TextStyleUtil.k14Semibold(),
                 textAlign: TextAlign.left,
               ),
             ),
@@ -110,11 +116,10 @@ mixin class Versionk {
                         onPressed: () {
                           hideDialog();
                         },
-                        child: const Text(
-                          'Later',
-                          style: TextStyle(
-                            color: ColorUtil.kBlack01,
-                            fontSize: 16.0,
+                        child: Text(
+                          LocaleKeys.app_later.tr,
+                          style: TextStyleUtil.k16Semibold(
+                            fontSize: 16.0.kh,
                           ),
                         ),
                       ),
@@ -141,11 +146,11 @@ mixin class Versionk {
                       ),
                     ),
                   ),
-                  child: const Text(
-                    'Update Now',
-                    style: TextStyle(
+                  child: Text(
+                    LocaleKeys.app_updateNow.tr,
+                    style: TextStyleUtil.k16Semibold(
                       color: ColorUtil.kWhiteColor,
-                      fontSize: 16.0,
+                      fontSize: 16.0.kh,
                     ),
                   ),
                 ),

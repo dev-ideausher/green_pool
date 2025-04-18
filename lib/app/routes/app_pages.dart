@@ -18,6 +18,8 @@ import '../modules/create_account/bindings/create_account_binding.dart';
 import '../modules/create_account/views/create_account_view.dart';
 import '../modules/driver_details/bindings/driver_details_binding.dart';
 import '../modules/driver_details/views/driver_details_view.dart';
+import '../modules/driver_previous_rides/bindings/previous_rides_binding.dart';
+import '../modules/driver_previous_rides/views/previous_rides_view.dart';
 import '../modules/emergency_contacts/bindings/emergency_contacts_binding.dart';
 import '../modules/emergency_contacts/views/emergency_contacts_view.dart';
 import '../modules/file_dispute/bindings/file_dispute_binding.dart';
@@ -51,8 +53,6 @@ import '../modules/my_rides_one_time/bindings/my_rides_one_time_binding.dart';
 import '../modules/my_rides_one_time/views/my_rides_one_time_view.dart';
 import '../modules/my_rides_page/bindings/my_rides_page_binding.dart';
 import '../modules/my_rides_page/views/my_rides_page_view.dart';
-import '../modules/my_rides_recurring/bindings/my_rides_recurring_binding.dart';
-import '../modules/my_rides_recurring/views/my_rides_recurring_view.dart';
 import '../modules/my_rides_recurring_details/bindings/my_rides_recurring_details_binding.dart';
 import '../modules/my_rides_recurring_details/views/my_rides_recurring_details_view.dart';
 import '../modules/my_rides_request/bindings/my_rides_request_binding.dart';
@@ -83,8 +83,8 @@ import '../modules/post_ride_step_three/bindings/post_ride_step_three_binding.da
 import '../modules/post_ride_step_three/views/post_ride_step_three_view.dart';
 import '../modules/post_ride_step_two/bindings/post_ride_step_two_binding.dart';
 import '../modules/post_ride_step_two/views/post_ride_step_two_view.dart';
-import '../modules/driver_previous_rides/bindings/previous_rides_binding.dart';
-import '../modules/driver_previous_rides/views/previous_rides_view.dart';
+import '../modules/prev_posted/bindings/prev_posted_binding.dart';
+import '../modules/prev_posted/views/prev_posted_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
 import '../modules/profile_settings/bindings/profile_settings_binding.dart';
@@ -330,11 +330,6 @@ class AppPages {
       binding: RiderMyRideRequestBinding(),
     ),
     GetPage(
-      name: _Paths.MY_RIDES_RECURRING,
-      page: () => const MyRidesRecurringView(),
-      binding: MyRidesRecurringBinding(),
-    ),
-    GetPage(
       name: _Paths.RESET_PASSWORD,
       page: () => const ResetPasswordView(),
       binding: ResetPasswordBinding(),
@@ -548,6 +543,11 @@ class AppPages {
       name: _Paths.PREVIOUS_RIDES,
       page: () => const PreviousRidesView(),
       binding: PreviousRidesBinding(),
+    ),
+    GetPage(
+      name: _Paths.PREV_POSTED,
+      page: () => const PrevPostedView(),
+      binding: PrevPostedBinding(),
     ),
   ];
 }

@@ -54,7 +54,7 @@ class ChatPageView extends GetView<ChatPageController> {
                       maxLines: 1,
                     ),
                     Text(
-                      "${controller.chatArg.value.origin} to ${controller.chatArg.value.destination}, ${controller.chatArg.value.date}",
+                      "${controller.chatArg.value.origin} ${LocaleKeys.app_to.tr} ${controller.chatArg.value.destination}, ${controller.chatArg.value.date}",
                       style: TextStyleUtil.k12Regular(),
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
@@ -270,7 +270,8 @@ class ChatPageView extends GetView<ChatPageController> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Text(
-                                      DateTimeUtils.isToday(nextMessage.timestamp)
+                                      DateTimeUtils.isToday(
+                                              nextMessage.timestamp)
                                           ? LocaleKeys.app_today.tr
                                           : DateFormat.E()
                                               .format(nextMessage.timestamp),
@@ -342,7 +343,7 @@ class PayNowBtn extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Pay Now!",
+              "${LocaleKeys.app_payNow.tr}!",
               style: TextStyleUtil.k14Semibold(),
             ),
             CommonImageView(
@@ -384,7 +385,7 @@ class WarningMsg extends StatelessWidget {
                     .paddingOnly(right: 8.kw),
                 Expanded(
                   child: Text(
-                    "To prevent scams and phishing, never message or pay outside Carpooll.com",
+                    LocaleKeys.app_payNowWarning.tr,
                     style: TextStyleUtil.k14Regular(),
                   ),
                 )

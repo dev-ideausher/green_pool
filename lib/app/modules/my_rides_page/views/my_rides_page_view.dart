@@ -3,12 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/modules/my_rides_one_time/controllers/my_rides_one_time_controller.dart';
 import 'package:green_pool/app/modules/my_rides_one_time/views/my_rides_one_time_view.dart';
-import 'package:green_pool/app/modules/my_rides_recurring/controllers/my_rides_recurring_controller.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../../generated/locales.g.dart';
 import '../../../components/greenpool_appbar.dart';
-import '../../../res/strings.dart';
 import '../../../services/colors.dart';
 
 import '../../../services/storage.dart';
@@ -21,10 +19,9 @@ class MyRidesPageView extends GetView<MyRidesPageController> {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(MyRidesRecurringController());
     Get.lazyPut(() => MyRidesPageController());
     return Scaffold(
-        appBar:  GreenPoolAppBar(
+        appBar: GreenPoolAppBar(
           title: Text(LocaleKeys.app_myRides.tr),
           leading: const SizedBox(),
         ),
@@ -97,7 +94,8 @@ class MyRidesPageView extends GetView<MyRidesPageController> {
                           children: [
                             MyRidesOneTimeView(),
                             MyRidesOneTimeView(type: LocaleKeys.app_booked.tr),
-                            MyRidesOneTimeView(type: LocaleKeys.app_published.tr),
+                            MyRidesOneTimeView(
+                                type: LocaleKeys.app_published.tr),
                             //  MyRidesRecurringView()
                           ],
                         ),
