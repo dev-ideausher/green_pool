@@ -16,19 +16,20 @@ class BottomNavigationView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     final storageService = Get.find<GetStorageService>();
-    return PopScope(
-      canPop: controller.canPop,
-      onPopInvoked: (didPop) {
-        controller.canPop = didPop;
-        if (controller.selectedIndex.value == 0) {
-          controller.canPop = true;
-        } else {
-          controller.changeTabIndex(0);
-        }
-      },
-      child: Scaffold(
-        bottomNavigationBar: Obx(
-          () => BottomNavigationBar(
+    return Obx(
+      () => PopScope(
+        canPop: controller.canPop.value,
+        onPopInvokedWithResult: (result, pop) {
+          controller.canPop.value = result;
+          if (controller.selectedIndex.value == 0) {
+            controller.canPop.value = true;
+            Get.back();
+          } else {
+            controller.changeTabIndex(0);
+          }
+        },
+        child: Scaffold(
+          bottomNavigationBar: BottomNavigationBar(
             selectedLabelStyle: storageService.isPinkMode
                 ? TextStyleUtil.k12Semibold(color: ColorUtil.kPrimary3PinkMode)
                 : TextStyleUtil.k12Semibold(color: ColorUtil.kSecondary01),
@@ -53,19 +54,19 @@ class BottomNavigationView extends GetView<HomeController> {
               );
             }).toList(),
           ),
-        ),
-        body: PageView(
-          controller: controller.pageController,
-          physics: const NeverScrollableScrollPhysics(),
-          onPageChanged: (index) {
-            controller.changeTabIndex(index);
-          },
-          children: const [
-            HomeView(),
-            MyRidesPageView(),
-            MessagesView(),
-            ProfileView(),
-          ],
+          body: PageView(
+            controller: controller.pageController,
+            physics: const NeverScrollableScrollPhysics(),
+            onPageChanged: (index) {
+              controller.changeTabIndex(index);
+            },
+            children: const [
+              HomeView(),
+              MyRidesPageView(),
+              MessagesView(),
+              ProfileView(),
+            ],
+          ),
         ),
       ),
     );

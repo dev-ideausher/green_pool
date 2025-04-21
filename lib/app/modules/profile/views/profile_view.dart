@@ -132,21 +132,30 @@ class ProfileView extends GetView<ProfileController> {
                 onTap: () => Get.toNamed(Routes.STUDENT_DISCOUNTS),
                 image: ImageConstant.svgProfileDiscount,
                 text: LocaleKeys.app_studentDiscount.tr),
-            ProfileContainer(
-                onTap: () async {
-                  final box = context.findRenderObject() as RenderBox;
-                  final shareText = Platform.isIOS
-                      ? "Check this cool app! \nhttps://apps.apple.com/in/app/carpooll-com/id6480311009"
-                      : "Check this cool app! \nhttps://play.google.com/store/apps/details?id=com.greenpool.app";
+            Builder(
+              builder: (tileContext) {
+                return ProfileContainer(
+                  onTap: () async {
+                    final shareText = Platform.isIOS
+                        ? "Check this cool app! \nhttps://apps.apple.com/in/app/carpooll-com/id6480311009"
+                        : "Check this cool app! \nhttps://play.google.com/store/apps/details?id=com.greenpool.app";
 
-                  await Share.share(
-                    shareText,
-                    sharePositionOrigin:
-                        box.localToGlobal(Offset.zero) & box.size,
-                  );
-                },
-                image: ImageConstant.svgProfileRefer,
-                text: LocaleKeys.app_referAFriend.tr),
+                    try {
+                      final box = tileContext.findRenderObject() as RenderBox;
+                      await Share.share(
+                        shareText,
+                        sharePositionOrigin:
+                            box.localToGlobal(Offset.zero) & box.size,
+                      );
+                    } catch (e) {
+                      await Share.share(shareText);
+                    }
+                  },
+                  image: ImageConstant.svgProfileRefer,
+                  text: LocaleKeys.app_referAFriend.tr,
+                );
+              },
+            ),
             ProfileContainer(
                     onTap: () {
                       Get.bottomSheet(const RatingBottomSheet(),

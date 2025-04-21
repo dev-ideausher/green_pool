@@ -34,7 +34,7 @@ class HomeController extends GetxController with Versionk {
   var userInfo = UserInfoModel().obs;
   RxString welcomeText = LocaleKeys.app_welcome.tr.obs;
   RxBool isPinkModeOn = false.obs;
-  bool canPop = false;
+  RxBool canPop = false.obs;
   final RxBool newMsgReceived = false.obs;
   final LocationService locationService = LocationService();
   RxInt reqsCount = 0.obs;

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_pool/app/constants/image_constant.dart';
-import 'package:green_pool/app/res/strings.dart';
 import 'package:green_pool/app/services/colors.dart';
 import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
@@ -44,7 +43,7 @@ class PermissionsLocation extends GetView<HomeController> {
                 controller.determinePosition();
                 Get.find<GetStorageService>().hasTappedAllowLocation = true;
               },
-              label: LocaleKeys.app_allowAccess.tr,
+              label: LocaleKeys.app_continueText.tr,
             ).paddingSymmetric(vertical: 40.kh),
           ),
         ],

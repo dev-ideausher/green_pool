@@ -176,6 +176,8 @@ class MyRidesEditController extends GetxController
     }
 
     getRideFareAPI();
+    setActiveStatePricing();
+    setActiveStateCarpoolSchedule();
   }
 
   Future<void> setDate(BuildContext context) async {
