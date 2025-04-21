@@ -93,5 +93,9 @@
      <string>We need access to your camera so you can take a picture for your profile.</string>
      <key>GoogleService-Info</key>
      <string>${PROJECT_DIR}/GoogleService-Info.plist</string>
+	<key>com.apple.developer.associated-domains</key>
+    <array>
+        <string>applinks:carpooll.com</string>
+    </array>
 </dict>
 </plist>
