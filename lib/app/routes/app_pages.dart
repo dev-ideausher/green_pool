@@ -105,6 +105,8 @@ import '../modules/ride_details/bindings/ride_details_binding.dart';
 import '../modules/ride_details/views/ride_details_view.dart';
 import '../modules/ride_history/bindings/ride_history_binding.dart';
 import '../modules/ride_history/views/ride_history_view.dart';
+import '../modules/ride_invite_screen/bindings/ride_invite_screen_binding.dart';
+import '../modules/ride_invite_screen/views/ride_invite_screen_view.dart';
 import '../modules/rider_confirmed_ride_details/bindings/rider_confirmed_ride_details_binding.dart';
 import '../modules/rider_confirmed_ride_details/views/rider_confirmed_ride_details_view.dart';
 import '../modules/rider_matching_rides/bindings/matching_rides_binding.dart';
@@ -548,6 +550,11 @@ class AppPages {
       name: _Paths.PREV_POSTED,
       page: () => const PrevPostedView(),
       binding: PrevPostedBinding(),
+    ),
+    GetPage(
+      name: _Paths.RIDE_INVITE_SCREEN,
+      page: () => const RideInviteScreenView(),
+      binding: RideInviteScreenBinding(),
     ),
   ];
 }

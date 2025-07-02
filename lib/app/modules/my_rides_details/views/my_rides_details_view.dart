@@ -296,7 +296,7 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                       alignment: Alignment.centerLeft,
                       child: Wrap(
                         spacing: 24.kw,
-                        runSpacing: 12.kh, 
+                        runSpacing: 12.kh,
                         children: [
                           if (otherPrefs?.AppreciatesConversation == true)
                             Amenities(
@@ -377,26 +377,22 @@ class MyRidesDetailsView extends GetView<MyRidesDetailsController> {
                                 onPressed: () =>
                                     controller.viewMatchingRiders())
                             .paddingOnly(bottom: 16.kh, top: 40.kh),
+
+                    GreenPoolButton(
+                            label: LocaleKeys.app_shareRide.tr,
+                            onPressed: () => controller.toShareRide(context))
+                        .paddingOnly(bottom: 16.kh),
+
                     Visibility(
-                        visible: controller.myRidesModelData.value
-                                .driverBookingDetails?.riders?.isNotEmpty ??
-                            false,
-                        child: InkWell(
-                          onTap: () => controller.openMessage(),
-                          child: Container(
-                            width: 100.w,
-                            height: 50.kh,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(40.kh),
-                                border:
-                                    Border.all(color: ColorUtil.kSecondary01)),
-                            child: Text(
-                              LocaleKeys.app_message.tr,
-                              style: TextStyleUtil.k16Bold(),
-                            ),
-                          ).paddingOnly(bottom: 40.kh),
-                        ))
+                      visible: controller.myRidesModelData.value
+                              .driverBookingDetails?.riders?.isNotEmpty ??
+                          false,
+                      child: GreenPoolButton(
+                        label: LocaleKeys.app_message.tr,
+                        isBorder: true,
+                        onPressed: () => controller.openMessage(),
+                      ).paddingOnly(bottom: 40.kh),
+                    )
                   ],
                 ).paddingSymmetric(horizontal: 16.kw),
               );

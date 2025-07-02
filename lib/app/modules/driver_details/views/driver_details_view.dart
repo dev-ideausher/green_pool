@@ -74,8 +74,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                       child: ClipRRect(
                           borderRadius: BorderRadius.circular(8.kh),
                           child: CommonImageView(
-                              url:
-                                  "${controller.matchingRidesModelData.value.driverDetails?[0]?.profilePic?.url}")),
+                              url: "${driverDetails?.profilePic?.url}")),
                     ).paddingOnly(right: 16.kw, bottom: 16.kh),
                     //for name and date
                     Expanded(
@@ -87,7 +86,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                             children: [
                               Text(
                                 // 'Sam Alexander',
-                                "${controller.matchingRidesModelData.value.driverDetails?[0]?.fullName?.split(" ").first}",
+                                "${driverDetails?.fullName?.split(" ").first}",
                                 style: TextStyleUtil.k18Bold(),
                               ),
                               Text(
@@ -208,7 +207,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                           size: 12.kh,
                         ).paddingOnly(right: 4.kw),
                         Text(
-                          "${controller.matchingRidesModelData.value.driverDetails?[0]?.rating}",
+                          "${driverDetails?.rating}",
                           style: TextStyleUtil.k14Regular(),
                         ),
                       ]),
@@ -223,7 +222,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Text(
-                      "${controller.matchingRidesModelData.value.driverDetails?[0]?.totalRides ?? "0"}",
+                      "${driverDetails?.totalRides ?? "0"}",
                       style:
                           TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                     ),
@@ -237,7 +236,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                       style: TextStyleUtil.k12Semibold(),
                     ).paddingOnly(bottom: 4.kh),
                     Text(
-                      '${LocaleKeys.app_inA.tr} ${controller.matchingRidesModelData.value.driverDetails?[0]?.createdAt.toString().split("-")[0]}',
+                      '${LocaleKeys.app_inA.tr} ${driverDetails?.createdAt.toString().split("-")[0]}',
                       style:
                           TextStyleUtil.k14Regular(color: ColorUtil.kBlack03),
                     ),
@@ -315,21 +314,21 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                       height: 64.kh,
                       width: 64.kw,
                       url:
-                          "${controller.matchingRidesModelData.value.driverDetails?[0]?.vehicleDetails?[0]?.vehiclePic?.url}"),
+                          "${driverDetails?.vehicleDetails?[0]?.vehiclePic?.url}"),
                 ).paddingOnly(right: 8.kh),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       // 'Toyota Corolla',
-                      "${controller.matchingRidesModelData.value.driverDetails?[0]?.vehicleDetails?[0]?.model}",
+                      "${driverDetails?.vehicleDetails?[0]?.model}",
                       style: TextStyleUtil.k16Bold(color: ColorUtil.kBlack02),
                     ).paddingOnly(bottom: 4.kh),
                     Row(
                       children: [
                         Text(
                           // 'Sedan',
-                          "${controller.matchingRidesModelData.value.driverDetails?[0]?.vehicleDetails?[0]?.type}",
+                          "${driverDetails?.vehicleDetails?[0]?.type}",
                           style: TextStyleUtil.k14Semibold(
                               color: ColorUtil.kBlack03),
                         ),
@@ -339,7 +338,7 @@ class DriverDetailsView extends GetView<DriverDetailsController> {
                           color: ColorUtil.kBlack03,
                         ).paddingSymmetric(vertical: 2.5.kh, horizontal: 8.kw),
                         Text(
-                          "${controller.matchingRidesModelData.value.driverDetails?[0]?.vehicleDetails?[0]?.licencePlate}",
+                          "${driverDetails?.vehicleDetails?[0]?.licencePlate}",
                           style: TextStyleUtil.k14Semibold(
                               color: ColorUtil.kBlack03),
                         ),

@@ -8,8 +8,6 @@ import 'app/modules/home/bindings/home_binding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'app/modules/splash/bindings/splash_binding.dart';
-import 'app/modules/splash/views/splash_view.dart';
 import 'app/routes/app_pages.dart';
 import 'app/services/app_language.dart';
 import 'app/services/auth.dart';

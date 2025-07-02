@@ -98,6 +98,7 @@ abstract class Routes {
   static const MY_RIDES_EDIT = _Paths.MY_RIDES_EDIT;
   static const PREVIOUS_RIDES = _Paths.PREVIOUS_RIDES;
   static const PREV_POSTED = _Paths.PREV_POSTED;
+  static const RIDE_INVITE_SCREEN = _Paths.RIDE_INVITE_SCREEN;
 }
 
 abstract class _Paths {
@@ -194,4 +195,5 @@ abstract class _Paths {
   static const MY_RIDES_EDIT = '/my-rides-edit';
   static const PREVIOUS_RIDES = '/previous-rides';
   static const PREV_POSTED = '/prev-posted';
+  static const RIDE_INVITE_SCREEN = '/ride-invite-screen';
 }

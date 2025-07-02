@@ -496,6 +496,8 @@
         "updateNow": "Update Now",
         "postedRides": "Posted Rides",
         "enterCostBetween": "Enter cost between",
+        "shareRide": "Share Ride",
+        "thisRideHasAlreadyExpired": "This ride has already expired.",
         "defaultDate": "2024-12-31T00:00:00.000Z",
         "carpoollCash": "Carpooll.com Cash",
         "dollar5": "\u201c$5\u201d",

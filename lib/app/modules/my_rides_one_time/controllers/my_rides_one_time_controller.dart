@@ -268,6 +268,7 @@ class MyRidesOneTimeController extends GetxController {
         arguments: BookingDetailModelData(
             driverRideId: myRidesModelData.Id,
             driverBookingDetails: BookingDetailModelDataDriverBookingDetails(
+              // Id: myRidesModelData.Id,
               origin: BookingDetailModelDataDriverBookingDetailsOrigin(
                   coordinates: myRidesModelData.origin!.coordinates,
                   name: myRidesModelData.origin!.name,

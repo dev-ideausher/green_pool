@@ -496,6 +496,8 @@
         "updateNow": "Actualizar ahora",
         "postedRides": "Viajes Publicados",
         "enterCostBetween": "Ingrese el precio entre",
+        "shareRide": "Compartir Viaje",
+        "thisRideHasAlreadyExpired": "Este viaje ya ha caducado.",
         "defaultDate": "2024-12-31T00:00:00.000Z",
         "carpoollCash": "Carpooll.com efectivo",
         "dollar5": "\u201c$5\u201d",

@@ -19,5 +19,4 @@ class OnboardingController extends GetxController {
   // void onClose() {
   //   super.onClose();
   // }
-
 }

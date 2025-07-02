@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:share_plus/share_plus.dart';
 import '../../../../generated/locales.g.dart';
 import '../../../data/booking_detail_model.dart';
 import '../../../data/chat_arg.dart';
@@ -18,6 +20,8 @@ class MyRidesDetailsController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
+    final previousRoute = Get.previousRoute;
+    debugPrint("PREVIOUS ROUTE: $previousRoute");
     try {
       myRidesModelData.value = Get.arguments;
     } catch (e) {
@@ -97,5 +101,21 @@ class MyRidesDetailsController extends GetxController {
 
   toEditRide() {
     Get.toNamed(Routes.MY_RIDES_EDIT, arguments: myRidesModelData.value);
+  }
+
+  toShareRide(BuildContext context) async {
+    final shareText =
+        "Join my ride on Carpooll.com! 🚘\nCheck it out here:\nhttps://carpooll.com/?data=booking&rideId=${myRidesModelData.value.driverRideId}";
+    debugPrint(shareText);
+
+    try {
+      final box = context.findRenderObject() as RenderBox;
+      await Share.share(
+        shareText,
+        sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size,
+      );
+    } catch (e) {
+      await Share.share(shareText);
+    }
   }
 }

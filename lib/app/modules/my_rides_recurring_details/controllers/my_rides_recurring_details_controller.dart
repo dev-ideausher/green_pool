@@ -32,7 +32,7 @@ class MyRidesRecurringDetailsController extends GetxController {
   recurringRideDetailsAPI() async {
     try {
       isLoading.value = true;
-      final String driverRideId = "/$rideId";
+      final String driverRideId = rideId;
       final response =
           await APIManager.getRecurringRideDetails(rideId: driverRideId);
       recurringModel.value = RecurringRideDetailsModel.fromJson(response.data);

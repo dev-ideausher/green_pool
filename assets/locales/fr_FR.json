@@ -496,6 +496,8 @@
         "updateNow": "Mettre à jour maintenant",
         "postedRides": "Trajets Publiés",
         "enterCostBetween": "Entrez le prix entre",
+        "shareRide": "Partager le trajet",
+        "thisRideHasAlreadyExpired": "Cette course a déjà expiré.",
         "defaultDate": "2024-12-31T00:00:00.000Z",
         "carpoollCash": "Carpooll.com argent liquide",
         "dollar5": "\u201c$5\u201d",

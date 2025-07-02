@@ -550,6 +550,8 @@ class LocaleKeys {
   static const app_updateNow = 'app_updateNow';
   static const app_postedRides = 'app_postedRides';
   static const app_enterCostBetween = 'app_enterCostBetween';
+  static const app_shareRide = 'app_shareRide';
+  static const app_thisRideHasAlreadyExpired = 'app_thisRideHasAlreadyExpired';
   static const app_defaultDate = 'app_defaultDate';
   static const app_carpoollCash = 'app_carpoollCash';
   static const app_dollar5 = 'app_dollar5';
@@ -1119,6 +1121,8 @@ class Locales {
     'app_updateNow': 'Update Now',
     'app_postedRides': 'Posted Rides',
     'app_enterCostBetween': 'Enter cost between',
+    'app_shareRide': 'Share Ride',
+    'app_thisRideHasAlreadyExpired': 'This ride has already expired.',
     'app_defaultDate': '2024-12-31T00:00:00.000Z',
     'app_carpoollCash': 'Carpooll.com Cash',
     'app_dollar5': '“\$5”',
@@ -1696,6 +1700,8 @@ class Locales {
     'app_updateNow': 'Actualizar ahora',
     'app_postedRides': 'Viajes Publicados',
     'app_enterCostBetween': 'Ingrese el precio entre',
+    'app_shareRide': 'Compartir Viaje',
+    'app_thisRideHasAlreadyExpired': 'Este viaje ya ha caducado.',
     'app_defaultDate': '2024-12-31T00:00:00.000Z',
     'app_carpoollCash': 'Carpooll.com efectivo',
     'app_dollar5': '“\$5”',
@@ -2277,6 +2283,8 @@ class Locales {
     'app_updateNow': 'Mettre à jour maintenant',
     'app_postedRides': 'Trajets Publiés',
     'app_enterCostBetween': 'Entrez le prix entre',
+    'app_shareRide': 'Partager le trajet',
+    'app_thisRideHasAlreadyExpired': 'Cette course a déjà expiré.',
     'app_defaultDate': '2024-12-31T00:00:00.000Z',
     'app_carpoollCash': 'Carpooll.com argent liquide',
     'app_dollar5': '“\$5”',
