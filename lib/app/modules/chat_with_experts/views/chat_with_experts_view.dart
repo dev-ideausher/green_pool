@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:green_pool/app/services/custom_button.dart';
 import 'package:green_pool/app/services/responsive_size.dart';
 
 import '../../../../generated/locales.g.dart';
@@ -16,7 +17,7 @@ import '../../home/controllers/home_controller.dart';
 import '../controllers/chat_with_experts_controller.dart';
 
 class ChatWithExpertsView extends GetView<ChatWithExpertsController> {
-  const ChatWithExpertsView({Key? key}) : super(key: key);
+  const ChatWithExpertsView({super.key});
   @override
   Widget build(BuildContext context) {
     controller.getChat();
@@ -188,6 +189,7 @@ class ChatWithExpertsView extends GetView<ChatWithExpertsController> {
                                       width: 60.w,
                                       child: Column(
                                         mainAxisSize: MainAxisSize.min,
+                                        
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
@@ -224,18 +226,28 @@ class ChatWithExpertsView extends GetView<ChatWithExpertsController> {
                     ),
                   ),
                   Obx(
-                    () => GreenPoolTextField(
-                      controller: controller.eMsg,
-                      hintText: LocaleKeys.app_writeMsg.tr,
-                      readOnly: !controller.isChatStarted.value,
-                      keyboardType: TextInputType.text,
-                      textCapitalization: TextCapitalization.sentences,
-                      suffix: InkWell(
-                          onTap: () {
-                            controller.sendMsg();
-                          },
-                          child: SvgPicture.asset(ImageConstant.svgIconSend)),
-                    ).paddingOnly(bottom: 40.kh, top: 5.kh),
+                    () => controller.isChatEnded.value
+                        ? GreenPoolButton(
+                            onPressed: () {
+                              controller.startNewChat();
+                            },
+                            label: LocaleKeys.app_startNewChat.tr,
+                          ).paddingOnly(bottom: 40.kh, top: 5.kh)
+                        : GreenPoolTextField(
+                            controller: controller.eMsg,
+                            hintText: LocaleKeys.app_writeMsg.tr,
+                            readOnly: !controller.isChatStarted.value ||
+                                controller.isChatEnded
+                                    .value, //chat is not yet started / chat is ended
+                            keyboardType: TextInputType.text,
+                            textCapitalization: TextCapitalization.sentences,
+                            suffix: InkWell(
+                                onTap: () {
+                                  controller.sendMsg();
+                                },
+                                child: SvgPicture.asset(
+                                    ImageConstant.svgIconSend)),
+                          ).paddingOnly(bottom: 40.kh, top: 5.kh),
                   )
                 ],
               ).paddingSymmetric(horizontal: 16.kw),

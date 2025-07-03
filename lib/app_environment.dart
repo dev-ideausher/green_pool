@@ -18,10 +18,9 @@ abstract class AppEnvironment {
     switch (env) {
       case Environment.dev:
         {
-          baseApiUrl =
-              "https://748d-2409-40e3-b-e7c-5004-b6e8-da3c-2152.ngrok-free.app/v1/";
-          // baseApiUrl = "https://green-pool-backend.vercel.app/v1/";
+          baseApiUrl = "https://green-pool-backend.vercel.app/v1/";
           // baseApiUrl = "http://16.171.116.188:4000/v1/";
+          // baseApiUrl = "https://6ef6-2409-40e3-505b-4a68-216d-d130-10a0-8a17.ngrok-free.app/v1/";
           title = 'Flutter flavors dev';
           publishableKey = "";
           cardEncryptionKey = "";

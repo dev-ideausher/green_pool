@@ -129,7 +129,8 @@ class CreateAccountView extends GetView<CreateAccountController> {
                         TextSpan(
                           children: [
                             TextSpan(
-                              text: LocaleKeys.app_readAndAgree.tr,
+                              text:
+                                  "${LocaleKeys.app_readAndAgree.tr}Carpooll.com's ",
                               style: TextStyleUtil.k12Regular(),
                             ),
                             TextSpan(

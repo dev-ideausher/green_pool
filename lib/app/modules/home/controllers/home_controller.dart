@@ -244,7 +244,7 @@ class HomeController extends GetxController with Versionk {
   Future<void> getUnreadCount() async {
     var chatList = [].obs;
     try {
-      final resp = await APIManager.getChatList();
+      final resp = await APIManager.getChatList(showSnackbar: false);
       chatList.value = resp.data['chatRoomIds'];
 
       totUnreadMsgs.value = chatList.fold<int>(
