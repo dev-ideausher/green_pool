@@ -58,7 +58,7 @@ Future<void> main() async {
         localizationsDelegates: GlobalMaterialLocalizations.delegates,
         navigatorObservers: [
           GetObserver(
-            (value) {
+                (value) {
               value;
             },
           ),
@@ -82,9 +82,9 @@ Future<void> main() async {
           }
           return null;
         }
-        // theme: AppTheme.light,
-        // darkTheme: AppTheme.dark,
-        ),
+      // theme: AppTheme.light,
+      // darkTheme: AppTheme.dark,
+    ),
   ));
 }
 
