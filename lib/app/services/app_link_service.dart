@@ -3,7 +3,9 @@ import 'dart:developer';
 import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:green_pool/app/services/snackbar.dart';
 
+import '../../generated/locales.g.dart';
 import '../modules/home/controllers/home_controller.dart';
 import '../routes/app_pages.dart';
 import 'storage.dart';
@@ -44,11 +46,11 @@ class AppLinkService {
   /// Handle incoming deep link and navigate using GetX with parameters
   void handleIncomingDeepLink(Uri uri) async {
     // Prevent immediate duplicate processing (e.g., during cold start + background resume)
-    if (_latestUri == uri) {
+    /*if (_latestUri == uri) {
       debugPrint(
           'Skipping duplicate deep link detected within a short time: $uri');
       return;
-    }
+    }*/
 
     // Set the latest URI temporarily
     _latestUri = uri;
@@ -58,28 +60,29 @@ class AppLinkService {
     if (!Get.find<GetStorageService>().isLoggedIn) {
       debugPrint('User not logged in. Redirecting to onboarding page.');
       Get.offAllNamed(Routes.ONBOARDING);
+      showMySnackbar(msg: LocaleKeys.app_pleaseLoginOrSignUp.tr);
       clearLatestUriAfterDelay();
       return;
     }
 
     // Extract 'data' parameter from the URL
-    final String? data = uri.queryParameters['data'];
+    final Map<String, String> decodedData = uri.queryParameters;
+    final String? data = decodedData['data'];
+    final String? rideId = decodedData['rideId'];
 
     if (data != null) {
       switch (data) {
         case "chats":
           debugPrint('Navigating to MESSAGES with data: $data');
-          Get.toNamed(Routes.POST_RIDE_STEP_ONE);
+          Get.find<HomeController>().changeTabIndex(2);
           break;
 
         case "booking":
-          debugPrint(
-              'Navigating to BOOKING_DETAILS_PAGE with bookingId: $data');
-          Get.toNamed(Routes.POST_RIDE_STEP_ONE);
-          // Get.toNamed(
-          //   Routes.BOOKING_DETAILS_PAGE,
-          //   arguments: BookingDetailArgModel(Id: id),
-          // );
+          //also fetch driverId or userId to match with the stored app id and navigate acoordingly
+          debugPrint('Navigating to MY_RIDES_DETAILS with data: $data');
+          debugPrint('Navigating to MY_RIDES_DETAILS with bookingId: $rideId');
+          Get.toNamed(Routes.RIDE_INVITE_SCREEN,
+              arguments: {"driverRideId": rideId ?? ""});
           break;
 
         default:

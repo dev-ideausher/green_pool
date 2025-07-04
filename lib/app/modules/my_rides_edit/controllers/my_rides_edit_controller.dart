@@ -719,11 +719,15 @@ class MyRidesEditController extends GetxController
         arguments: PostRideModel(
           ridesDetails: PostRideModelRidesDetails(
             origin: PostRideModelRidesDetailsOrigin(
-                name: editData.value.driverBookingDetails?.origin?.name,
-                latitude: editData
-                    .value.driverBookingDetails?.origin?.coordinates?.last,
-                longitude: editData
-                    .value.driverBookingDetails?.origin?.coordinates?.first),
+              name: editData.value.driverBookingDetails?.origin?.name,
+              latitude: editData
+                  .value.driverBookingDetails?.origin?.coordinates?.last,
+              longitude: editData
+                  .value.driverBookingDetails?.origin?.coordinates?.first,
+              originDestinationFair: editData.value.driverBookingDetails?.origin
+                      ?.originDestinationFair ??
+                  "",
+            ),
             destination: PostRideModelRidesDetailsDestination(
                 name: editData.value.driverBookingDetails?.destination?.name,
                 latitude: editData

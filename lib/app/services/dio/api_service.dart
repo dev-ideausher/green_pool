@@ -163,9 +163,9 @@ class APIManager {
         showSnakbar: true,
       ).get(Endpoints.userByID);
 
-  static Future<Response> getChatList() async => await DioClient(
+  static Future<Response> getChatList({bool showSnackbar = true}) async => await DioClient(
         Dio(),
-        showSnakbar: true,
+        showSnakbar: showSnackbar,
       ).get(Endpoints.getChatList);
 
   static Future<Response> getArchivedChatList() async => await DioClient(

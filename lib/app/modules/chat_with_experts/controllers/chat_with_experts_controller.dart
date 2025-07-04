@@ -15,6 +15,7 @@ class ChatWithExpertsController extends GetxController {
   final TextEditingController eMsg = TextEditingController();
   final RxBool isLoad = true.obs;
   final RxBool isChatStarted = true.obs;
+  final RxBool isChatEnded = false.obs;
   int chipIndex = 5;
 
   @override
@@ -66,6 +67,11 @@ class ChatWithExpertsController extends GetxController {
             timestamp: DateTime.now().subtract(const Duration(minutes: 5)),
           ),
         );
+        // Check if chat has ended
+        bool chatEnded = liveLocation.messages.any(
+          (msg) => msg.message == "Chat has been ended. Thank you!",
+        );
+        isChatEnded.value = chatEnded;
         // WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToBottom());
       }
     }, onError: (Object error) {
@@ -153,5 +159,17 @@ class ChatWithExpertsController extends GetxController {
     } catch (e) {
       debugPrint(e.toString());
     }
+  }
+
+  Future<void> startNewChat() async {
+    isLoad.value = true;
+    isChatEnded.value = false;
+    messages.clear();
+    addInitialMessage();
+    chatRoomId = "";
+    Get.find<GetStorageService>().setSupportChatRoomId = "";
+    eMsg.text = "";
+    await getChat();
+    isLoad.value = false;
   }
 }

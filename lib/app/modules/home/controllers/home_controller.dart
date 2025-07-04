@@ -20,6 +20,7 @@ import 'package:green_pool/app/services/responsive_size.dart';
 import '../../../../generated/locales.g.dart';
 import '../../../data/user_info_model.dart';
 import '../../../routes/app_pages.dart';
+import '../../../services/app_link_service.dart';
 import '../../../services/colors.dart';
 import '../../../services/dio/api_service.dart';
 import '../../../services/snackbar.dart';
@@ -73,8 +74,9 @@ class HomeController extends GetxController with Versionk {
         isPinkModeOn.value = storageService.isPinkMode;
         await onChangeLocation();
         await fetchCount();
-        await handleNewUpdate();
       }
+      await AppLinkService().initDeepLinks();
+      await handleNewUpdate();
     } catch (e) {
       debugPrint(e.toString());
     }
@@ -242,7 +244,7 @@ class HomeController extends GetxController with Versionk {
   Future<void> getUnreadCount() async {
     var chatList = [].obs;
     try {
-      final resp = await APIManager.getChatList();
+      final resp = await APIManager.getChatList(showSnackbar: false);
       chatList.value = resp.data['chatRoomIds'];
 
       totUnreadMsgs.value = chatList.fold<int>(

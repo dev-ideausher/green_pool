@@ -550,6 +550,10 @@ class LocaleKeys {
   static const app_updateNow = 'app_updateNow';
   static const app_postedRides = 'app_postedRides';
   static const app_enterCostBetween = 'app_enterCostBetween';
+  static const app_shareRide = 'app_shareRide';
+  static const app_thisRideHasAlreadyExpired = 'app_thisRideHasAlreadyExpired';
+  static const app_noPastRidePostingsFound = 'app_noPastRidePostingsFound';
+  static const app_startNewChat = 'app_startNewChat';
   static const app_defaultDate = 'app_defaultDate';
   static const app_carpoollCash = 'app_carpoollCash';
   static const app_dollar5 = 'app_dollar5';
@@ -798,8 +802,8 @@ class Locales {
         'Enter the specific date and time, specifying  am (morning) or pm (afternoon)',
     'app_returnTrip': 'Return trip',
     'app_enterDetails': 'Enter your details',
-    'app_readAndAgree': 'I have read and I agree to Green Pool\'s ',
-    'app_termsCondition': 'Terms and \nConditions',
+    'app_readAndAgree': 'I have read and I agree to ',
+    'app_termsCondition': 'Terms and Conditions',
     'app_and': ' and ',
     'app_createRideAlert': 'Create a ride alert',
     'app_signUp': 'Sign Up',
@@ -1119,6 +1123,10 @@ class Locales {
     'app_updateNow': 'Update Now',
     'app_postedRides': 'Posted Rides',
     'app_enterCostBetween': 'Enter cost between',
+    'app_shareRide': 'Share Ride',
+    'app_thisRideHasAlreadyExpired': 'This ride has already expired.',
+    'app_noPastRidePostingsFound': 'No past ride postings found.',
+    'app_startNewChat': 'Start a new chat',
     'app_defaultDate': '2024-12-31T00:00:00.000Z',
     'app_carpoollCash': 'Carpooll.com Cash',
     'app_dollar5': '“\$5”',
@@ -1370,8 +1378,8 @@ class Locales {
         'Introduce la fecha y hora específica, especificando am (mañana) o pm (tarde)',
     'app_returnTrip': 'Viaje de Regreso',
     'app_enterDetails': 'Introduce tus detalles',
-    'app_readAndAgree': 'He leído y estoy de acuerdo con los',
-    'app_termsCondition': 'Términos y \nCondiciones',
+    'app_readAndAgree': 'He leído y acepto ',
+    'app_termsCondition': 'Términos y Condiciones',
     'app_and': ' y ',
     'app_createRideAlert': 'Crear una alerta de viaje',
     'app_signUp': 'Registrarse',
@@ -1696,6 +1704,11 @@ class Locales {
     'app_updateNow': 'Actualizar ahora',
     'app_postedRides': 'Viajes Publicados',
     'app_enterCostBetween': 'Ingrese el precio entre',
+    'app_shareRide': 'Compartir Viaje',
+    'app_thisRideHasAlreadyExpired': 'Este viaje ya ha caducado.',
+    'app_noPastRidePostingsFound':
+        'No se encontraron publicaciones de viajes anteriores.',
+    'app_startNewChat': 'Iniciar un nuevo chat',
     'app_defaultDate': '2024-12-31T00:00:00.000Z',
     'app_carpoollCash': 'Carpooll.com efectivo',
     'app_dollar5': '“\$5”',
@@ -1951,7 +1964,7 @@ class Locales {
         'Saisissez la date et l\'heure spécifiques en précisant matin (am) ou après-midi (pm)',
     'app_returnTrip': 'Voyage retour',
     'app_enterDetails': 'Entrez vos informations',
-    'app_readAndAgree': 'J\'ai lu et j\'accepte les ',
+    'app_readAndAgree': 'J\'ai lu et j\'accepte ',
     'app_termsCondition': 'Conditions générales',
     'app_and': ' et ',
     'app_createRideAlert': 'Créer une alerte de trajet',
@@ -2277,6 +2290,11 @@ class Locales {
     'app_updateNow': 'Mettre à jour maintenant',
     'app_postedRides': 'Trajets Publiés',
     'app_enterCostBetween': 'Entrez le prix entre',
+    'app_shareRide': 'Partager le trajet',
+    'app_thisRideHasAlreadyExpired': 'Cette course a déjà expiré.',
+    'app_noPastRidePostingsFound':
+        'Aucune publication de trajet antérieure trouvée.',
+    'app_startNewChat': 'Démarrer une nouvelle discussion',
     'app_defaultDate': '2024-12-31T00:00:00.000Z',
     'app_carpoollCash': 'Carpooll.com argent liquide',
     'app_dollar5': '“\$5”',
