@@ -61,23 +61,22 @@
             <!-- Deep linking Start-->
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 
-                <data android:scheme="https" />
-                <data android:host="api.carpooll.com" />
+                <data android:scheme="https" android:host="carpooll.com" android:pathPrefix="/app" />
+
+                <data android:scheme="http" android:host="carpooll.com" android:pathPrefix="/app" />
             </intent-filter>
             <!-- Deep linking Close-->
 
+        </activity>
         <!-- Deep linking Start-->
         <meta-data
             android:name="flutter_deeplinking_enabled"
             android:value="true" />
-
         <!-- Deep linking Close-->
-
-        </activity>
+        
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
         <meta-data

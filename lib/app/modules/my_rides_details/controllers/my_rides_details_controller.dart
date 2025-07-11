@@ -104,8 +104,24 @@ class MyRidesDetailsController extends GetxController {
   }
 
   toShareRide(BuildContext context) async {
+    final origin = myRidesModelData.value.driverBookingDetails?.origin?.name
+            ?.split(",")
+            .first ??
+        "City";
+    final destination = myRidesModelData
+            .value.driverBookingDetails?.destination?.name
+            ?.split(",")
+            .first ??
+        "City";
+    final date = DateTimeUtils.dayDateMonthYearTime(
+            myRidesModelData.value.driverBookingDetails?.time ?? "")
+        .split(", ")
+        .first;
+    final time = DateTimeUtils.convertUtcToLocal(
+        myRidesModelData.value.driverBookingDetails?.time ?? "");
+
     final shareText =
-        "Join my ride on Carpooll.com! 🚘\nCheck it out here:\nhttps://carpooll.com/?data=booking&rideId=${myRidesModelData.value.driverRideId}";
+        "https://carpooll.com/app/?data=booking&rideId=${myRidesModelData.value.driverRideId} \n Carpool from $origin to $destination on $date at $time \n";
     debugPrint(shareText);
 
     try {
