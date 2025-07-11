@@ -75,7 +75,7 @@ class HomeController extends GetxController with Versionk {
         await onChangeLocation();
         await fetchCount();
       }
-      await AppLinkService().initDeepLinks();
+      //await AppLinkService().initDeepLinks();
       await handleNewUpdate();
     } catch (e) {
       debugPrint(e.toString());

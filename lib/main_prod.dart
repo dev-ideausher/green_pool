@@ -4,6 +4,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 
+import 'app/gp_get_materialApp.dart';
 import 'app/modules/home/bindings/home_binding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,6 +13,7 @@ import 'app/modules/splash/bindings/splash_binding.dart';
 import 'app/modules/splash/views/splash_view.dart';
 import 'app/routes/app_pages.dart';
 import 'app/services/app_language.dart';
+import 'app/services/app_link_service.dart';
 import 'app/services/auth.dart';
 import 'app/services/colors.dart';
 import 'app/services/dependency_injection.dart';
@@ -47,36 +49,26 @@ Future<void> main() async {
 
   return runApp(GestureDetector(
     onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-    child: GetMaterialApp(
-      builder: (context, child) {
-        return MediaQuery(
-          data: MediaQuery.of(context)
-              .copyWith(textScaler: const TextScaler.linear(1.0)),
-          child: child!,
-        );
-      },
-      theme: ThemeData(
-        scaffoldBackgroundColor: ColorUtil.kBackgroundColor,
-      ),
-      navigatorObservers: [analyticsObserver],
-      defaultTransition: Transition.fade,
-      smartManagement: SmartManagement.full,
-      debugShowCheckedModeBanner: false,
-      locale: Locale(Get.find<GetStorageService>().langCode,
-          Get.find<GetStorageService>().langCodeV),
-      fallbackLocale: AppLanguage.getLocale(),
-      translationsKeys: AppTranslation.translations,
-      initialRoute: AppPages.INITIAL,
-      initialBinding: HomeBinding(),
-      getPages: AppPages.routes,
-      localizationsDelegates: GlobalMaterialLocalizations.delegates,
-      unknownRoute: GetPage(
-        name: "/splash",
-        page: () => const SplashView(),
-        binding: SplashBinding(),
-      ),
-      // theme: AppTheme.light,
-      // darkTheme: AppTheme.dark,
+    child: GpGetMaterialApp(
+        builder: (context, child) {
+          return MediaQuery(
+            data: MediaQuery.of(context).copyWith(textScaler: const TextScaler.linear(1.0)),
+            child: child!,
+          );
+        },
+        theme: ThemeData(
+          scaffoldBackgroundColor: ColorUtil.kBackgroundColor,
+        ),
+        defaultTransition: Transition.fade,
+        smartManagement: SmartManagement.full,
+        locale: Locale(Get.find<GetStorageService>().langCode, Get.find<GetStorageService>().langCodeV),
+        fallbackLocale: AppLanguage.getLocale(),
+        translationsKeys: AppTranslation.translations,
+        initialRoute: AppPages.INITIAL,
+        initialBinding: HomeBinding(),
+        getPages: AppPages.routes,
+        localizationsDelegates: GlobalMaterialLocalizations.delegates,
+
     ),
   ));
 }

@@ -66,7 +66,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 
                 <data android:scheme="https" />
-                <data android:host="carpooll.com" />
+                <data android:host="api.carpooll.com" />
             </intent-filter>
             <!-- Deep linking Close-->
 

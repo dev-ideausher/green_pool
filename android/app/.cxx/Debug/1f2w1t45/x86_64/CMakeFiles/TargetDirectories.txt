@@ -1,0 +1,2 @@
+/Users/amar/Amar/IU/green_pool/android/app/.cxx/Debug/1f2w1t45/x86_64/CMakeFiles/edit_cache.dir
+/Users/amar/Amar/IU/green_pool/android/app/.cxx/Debug/1f2w1t45/x86_64/CMakeFiles/rebuild_cache.dir

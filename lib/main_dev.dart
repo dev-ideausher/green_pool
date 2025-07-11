@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:green_pool/app/modules/home/controllers/home_controller.dart';
 import 'package:green_pool/app/services/app_link_service.dart';
@@ -22,8 +24,12 @@ import 'generated/locales.g.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-      options: DefaultFirebaseOptionsDev.currentPlatform, name: "dev");
+  if (Platform.isIOS) {
+    await Firebase.initializeApp(options: DefaultFirebaseOptionsDev.currentPlatform);
+  } else {
+    await Firebase.initializeApp(options: DefaultFirebaseOptionsDev.currentPlatform, name: "dev");
+  }
+
   await initGetServices();
   await SystemChrome.setPreferredOrientations(
     [DeviceOrientation.portraitUp],
@@ -36,8 +42,7 @@ Future<void> main() async {
     child: GpGetMaterialApp(
         builder: (context, child) {
           return MediaQuery(
-            data: MediaQuery.of(context)
-                .copyWith(textScaler: const TextScaler.linear(1.0)),
+            data: MediaQuery.of(context).copyWith(textScaler: const TextScaler.linear(1.0)),
             child: child!,
           );
         },
@@ -46,43 +51,18 @@ Future<void> main() async {
         ),
         defaultTransition: Transition.fade,
         smartManagement: SmartManagement.full,
-        locale: Locale(Get.find<GetStorageService>().langCode,
-            Get.find<GetStorageService>().langCodeV),
+        locale: Locale(Get.find<GetStorageService>().langCode, Get.find<GetStorageService>().langCodeV),
         fallbackLocale: AppLanguage.getLocale(),
         translationsKeys: AppTranslation.translations,
         initialRoute: AppPages.INITIAL,
         initialBinding: HomeBinding(),
         getPages: AppPages.routes,
         localizationsDelegates: GlobalMaterialLocalizations.delegates,
-        navigatorObservers: [
-          GetObserver(
-                (value) {
-              value;
-            },
-          ),
-        ],
-        onUnknownRoute: (settings) {
-          Uri? uri = Uri.tryParse(settings.name ?? '');
-          if (uri != null) {
-            AppLinkService().handleIncomingDeepLink(uri);
-          }
-          return GetPageRoute(
-            page: () => const Scaffold(
-              body: Center(child: Text('404 Not Found')),
-            ),
-            settings: settings,
-          );
-        },
-        onGenerateRoute: (RouteSettings settings) {
-          Uri? uri = Uri.tryParse(settings.name ?? '');
-          if (uri != null) {
-            AppLinkService().handleIncomingDeepLink(uri);
-          }
-          return null;
-        }
-      // theme: AppTheme.light,
-      // darkTheme: AppTheme.dark,
-    ),
+
+
+        // theme: AppTheme.light,
+        // darkTheme: AppTheme.dark,
+        ),
   ));
 }
 
